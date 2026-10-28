@@ -240,3 +240,34 @@ TEST_CASE("LC_SplinePoints keeps its control points when fit points cannot be so
         CHECK(near(spline.getControlPoints()[i], before[i]));
     }
 }
+
+TEST_CASE("LC_SplinePoints: open control-net spline ends at its first and last control points",
+          "[lc-hatchfix][moments]") {
+    // #2559 regression precursor: before update() has run on an open
+    // control-net LC_SplinePoints the fit-point cache getPoints() is empty, so
+    // getStartpoint()/getEndpoint() returned RS_Vector(false). A DXF hatch
+    // with a degree-2 control-net SPLINE boundary edge was then dropped on
+    // import ("no loops generated"). An open control net passes through its
+    // first and last control points.
+    SECTION("open quadratic lens") {
+        const LC_SplinePoints spline = fromControlPoints(
+            {{9.0, 5.0}, {9.5, 6.2}, {10.5, 6.2}, {11.0, 5.0}}, /*closed=*/false);
+        const RS_Vector start = spline.getStartpoint();
+        const RS_Vector end = spline.getEndpoint();
+        REQUIRE(start.valid);
+        REQUIRE(end.valid);
+        CHECK(near(start, RS_Vector{9.0, 5.0}));
+        CHECK(near(end, RS_Vector{11.0, 5.0}));
+    }
+    SECTION("closed control net has no endpoints") {
+        const LC_SplinePoints diamond = fromControlPoints(
+            {{0.0, 0.0}, {2.0, 0.0}, {2.0, 2.0}, {0.0, 2.0}}, /*closed=*/true);
+        CHECK_FALSE(diamond.getStartpoint().valid);
+        CHECK_FALSE(diamond.getEndpoint().valid);
+    }
+    SECTION("empty control net stays invalid") {
+        const LC_SplinePoints empty = fromControlPoints({}, /*closed=*/false);
+        CHECK_FALSE(empty.getStartpoint().valid);
+        CHECK_FALSE(empty.getEndpoint().valid);
+    }
+}

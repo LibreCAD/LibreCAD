@@ -27,14 +27,13 @@
 #include <algorithm>
 #include <cmath>
 #include <functional>
-#include <random>
-#include <set>
 #include <unordered_map>
 
 #include <QPen>
 #include <QPainterPath>
 
 #include "lc_looputils.h"
+#include "lc_loopclassifier.h"
 #include "lc_pathbuilder.h"
 #include "lc_parabola.h"
 #include "lc_rect.h"
@@ -53,53 +52,55 @@
 #include "rs_vector.h"
 
 namespace {
+    using VertexMap = std::unordered_map<const RS_EntityContainer*, std::vector<RS_Vector>>;
+
     // Definition for buildLC_Loops (moved to namespace level for accessibility)
     /**
      * @brief Recursively builds an LC_Loops hierarchy from a container and all loops.
-     * Clones atomic entities and traverses children via parent pointers.
-     * @param cont The root container.
-     * @param allLoops All loops for parent-child lookup.
-     * @return The built LC_Loops tree.
+     * Clones atomic entities and traverses children via parent pointers. If
+     * vertexMap carries this container's vertex table, the clone's geometry
+     * is built from the clone (so generic pieces, which point at entities,
+     * outlive the sorter's containers) and attached with eps.
      */
-    LC_LoopUtils::LC_Loops buildLoops(const RS_EntityContainer* cont, const std::vector<std::unique_ptr<RS_EntityContainer>>& allLoops) {
+    LC_LoopUtils::LC_Loops buildLoops(const RS_EntityContainer* cont,
+                                      const std::vector<std::unique_ptr<RS_EntityContainer>>& allLoops,
+                                      const VertexMap* vertexMap,
+                                      double eps) {
         const auto loopCopy = std::make_shared<RS_EntityContainer>(nullptr, true);
         for (const RS_Entity* e : *cont) {
             if (e && !e->isContainer()) {
-                loopCopy->addEntity(e->clone()); // Clone atomics for independent ownership
+                RS_Entity* copy = e->clone(); // Clone atomics for independent ownership
+                // Clear the clone's parent and layer: both would otherwise
+                // keep pointing at the source container and its drawing, which
+                // can outlive the sorter result or disappear while the
+                // boundary cache is still read. RS_Hatch::validate wipes
+                // these on its own input, but every other caller of the
+                // LoopSorter has to be covered here.
+                copy->setParent(nullptr);
+                copy->setLayer(nullptr);
+                loopCopy->addEntity(copy);
             }
         }
         LC_LoopUtils::LC_Loops lc(loopCopy, true);
+        if (vertexMap != nullptr && eps > 0.0) {
+            auto it = vertexMap->find(cont);
+            std::vector<RS_Vector> vertices = (it != vertexMap->end()) ? it->second : std::vector<RS_Vector>{};
+            auto geom = LC_LoopUtils::LoopGeometry::fromChain(*loopCopy, std::move(vertices));
+            lc.setGeometry(std::move(geom), eps);
+        }
         for (const auto& p : allLoops) {
             if (p.get()->getParent() == cont) {
-                lc.addChild(buildLoops(p.get(), allLoops));
+                lc.addChild(buildLoops(p.get(), allLoops, vertexMap, eps));
             }
         }
         return lc;
     }
 
-    /**
-     * @brief Extends a line to cover the bounding box by computing intersections with box sides.
-     * @param line The line to extend.
-     * @param bbox The bounding rectangle.
-     */
-    void extendLineToBBox(RS_Line& line, const LC_Rect& bbox) {
-        const double maxSize = 1.5 * std::max(bbox.width(), bbox.height());
-        const RS_Vector offset = line.getTangentDirection({}).normalized() * maxSize;
-
-        line.setStartpoint(line.getStartpoint() - offset);
-        line.setEndpoint(line.getEndpoint() + offset);
+    /** Overload with no vertex map and no eps (legacy LoopSorter ctor). */
+    LC_LoopUtils::LC_Loops buildLoops(const RS_EntityContainer* cont,
+                                      const std::vector<std::unique_ptr<RS_EntityContainer>>& allLoops) {
+        return buildLoops(cont, allLoops, nullptr, 0.0);
     }
-
-    // Compare double with tolerance
-    struct DoublePredicate {
-        bool operator()(double a, double b) const {
-            // If the absolute difference is within epsilon, consider them equal
-            if (std::abs(a - b) <= RS_TOLERANCE * 100.) {
-                return false; // They are considered equal, so neither is "less than" the other in a strict sense
-            }
-            return a < b; // Otherwise, use standard less-than comparison
-        }
-    };
 
 // Returns true if the entity forms a closed loop by itself (circle, full ellipse,
 // full-circle arc, closed spline, or zero-length line).
@@ -164,6 +165,81 @@ VectorKey makeVectorKey(const RS_Vector& v) {
           static_cast<long long>(std::round(v.y * SCALE))};
 }
 
+/**
+ * One sub-loop produced by splitAtRepeatedVertices: the owned cloned edges and
+ * their start-vertex table in traversal order. The returned clones keep the
+ * traversal direction of the input chain; a caller orients each sub-loop to
+ * CCW before storing it.
+ */
+struct SplitSubLoop {
+    std::unique_ptr<RS_EntityContainer> edges;
+    std::vector<RS_Vector> vertices;
+};
+
+/**
+ * Splits a closed chain at every repeated start-vertex into simple sub-loops.
+ *
+ * Edges share a vertex id (a 1e-8-quantised position) whenever they begin
+ * within ENDPOINT_TOLERANCE of the same point. When an edge whose start id
+ * matches an earlier entry on the current stack arrives, the stack is
+ * truncated at that earlier entry and the popped edges form their own closed
+ * sub-loop; the remainder closes at the initial start vertex when the chain
+ * is traversed to the end. Each sub-loop's edges are cloned into its own
+ * container, preserving the input traversal order.
+ */
+std::vector<SplitSubLoop> splitAtRepeatedVertices(
+    const RS_EntityContainer& loop) {
+    std::vector<SplitSubLoop> out;
+    const unsigned n = loop.count();
+    if (n == 0) return out;
+
+    // Build start-vertex ids keyed by quantised position.
+    std::vector<VectorKey> keys;
+    keys.reserve(n);
+    for (unsigned i = 0; i < n; ++i) {
+        keys.push_back(makeVectorKey(loop.entityAt(i)->getStartpoint()));
+    }
+
+    auto flush = [&](const std::vector<unsigned>& edgeIdx,
+                     const std::vector<RS_Vector>& vs) {
+        if (edgeIdx.empty()) return;
+        auto cont = std::make_unique<RS_EntityContainer>(nullptr, true);
+        for (unsigned i : edgeIdx) {
+            RS_Entity* copy = loop.entityAt(i)->clone();
+            copy->setParent(nullptr);
+            copy->setLayer(nullptr);
+            cont->addEntity(copy);
+        }
+        out.push_back({std::move(cont), vs});
+    };
+
+    std::unordered_map<VectorKey, unsigned, VectorKeyHash> pos;
+    std::vector<unsigned> stackEdge;
+    std::vector<RS_Vector> stackV;
+
+    for (unsigned i = 0; i < n; ++i) {
+        auto it = pos.find(keys[i]);
+        if (it != pos.end()) {
+            const unsigned k = it->second;
+            std::vector<unsigned> subEdge(stackEdge.begin() + k, stackEdge.end());
+            std::vector<RS_Vector> subV(stackV.begin() + k, stackV.end());
+            flush(subEdge, subV);
+            // Pop the sub-loop's positions out of the stack and the map.
+            for (unsigned j = k; j < stackV.size(); ++j) {
+                pos.erase(makeVectorKey(stackV[j]));
+            }
+            stackEdge.resize(k);
+            stackV.resize(k);
+        }
+        pos[keys[i]] = static_cast<unsigned>(stackEdge.size());
+        stackEdge.push_back(i);
+        stackV.push_back(loop.entityAt(i)->getStartpoint());
+    }
+    // The leftover stack closes at stackV[0].
+    flush(stackEdge, stackV);
+    return out;
+}
+
 }  // anonymous namespace
 
 namespace LC_LoopUtils {
@@ -176,6 +252,9 @@ struct LoopExtractor::LoopData {
   RS_Vector endPoint;
   RS_Vector targetPoint;
   std::unordered_map<VectorKey, std::vector<RS_Entity*>, VectorKeyHash> endpointToEdges;
+  // Stable container-order index, filled in the ctor. Used by findFirst() and
+  // findOutermost() for a deterministic tie-break between candidate edges.
+  std::unordered_map<const RS_Entity*, std::size_t> order;
 };
 
 /**
@@ -188,10 +267,12 @@ struct LoopExtractor::LoopData {
 LoopExtractor::LoopExtractor(const RS_EntityContainer& edges) :
                                                                 m_data(std::make_unique<LoopData>())
 {
+  std::size_t idx = 0;
   for (RS_Entity* e : edges) {
     if (e->isAtomic() && e->getLength() > ENDPOINT_TOLERANCE) {  // Skip degenerate zero-length edges
       m_data->unprocessed.push_back(e);
       m_data->processed[e] = false;
+      m_data->order[e] = idx;
 
              // Closed entities (circles, full ellipses) have no valid endpoints — skip adjacency map
       if (!isClosed(*e)) {
@@ -202,6 +283,7 @@ LoopExtractor::LoopExtractor(const RS_EntityContainer& edges) :
         m_data->endpointToEdges[k2].push_back(e);
       }
     }
+    ++idx;
   }
 }
 
@@ -209,16 +291,24 @@ LoopExtractor::~LoopExtractor() = default;
 
 /**
  * @brief Extracts closed loops iteratively until no unprocessed edges remain.
- * Builds each loop by chaining connected edges, clones and orients for positive area.
- * @return Vector of unique_ptr to valid loop containers.
+ * Builds each loop by chaining connected edges, clones and orients for
+ * positive area, and records the per-edge start-point vertex table used by
+ * the half-open monotone classifier.
  */
-std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract()const {
-  std::vector<std::unique_ptr<RS_EntityContainer>> results;
+std::vector<ExtractedLoop> LoopExtractor::extractLoops() const {
+  std::vector<ExtractedLoop> results;
   while (!m_data->unprocessed.empty()) {
     m_loop = std::make_unique<RS_EntityContainer>();
-    RS_Entity* first = findFirst();
+    const FirstEdge choice = findFirst();
+    RS_Entity* first = choice.edge;
     if (first) {
       RS_Entity* cloned_first = first->clone();
+      // Walk the first edge in the direction we chose. For a closed atomic
+      // entity (circle, full ellipse, closed spline) revertDirection() is a
+      // no-op; for a line/arc/ellipse arc it swaps the stored traversal.
+      if (choice.reverse) {
+        cloned_first->revertDirection();
+      }
       m_loop->addEntity(cloned_first);
       m_data->processed[first] = true;
       m_data->current = cloned_first;
@@ -244,22 +334,70 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract()const {
         }
       }
       if (validate()) {
-        const double area = m_loop->areaLineIntegral();
-        if (area < 0.0) {
-          // Reverse direction for positive area (counter-clockwise)
-          auto new_loop = std::make_unique<RS_EntityContainer>();
-          for (int i = static_cast<int>(m_loop->count()) - 1; i >= 0; --i) {
-            RS_Entity* e = m_loop->entityAt(static_cast<unsigned>(i))->clone();
-            e->revertDirection();
-            new_loop->addEntity(e);
+        // Split pinched loops at any repeated start vertex: a 7-edge figure-8
+        // chain in one container must come back as two simple sub-loops.
+        const unsigned chainN = m_loop->count();
+        std::vector<SplitSubLoop> subLoops;
+        if (chainN <= 1) {
+          SplitSubLoop single;
+          single.edges = std::move(m_loop);
+          if (chainN == 1 && !isClosed(*single.edges->entityAt(0))) {
+            single.vertices.push_back(single.edges->entityAt(0)->getStartpoint());
           }
-          m_loop = std::move(new_loop);
+          subLoops.push_back(std::move(single));
+        } else {
+          subLoops = splitAtRepeatedVertices(*m_loop);
+          m_loop.reset();
         }
-        results.push_back(std::move(m_loop));
+
+        for (SplitSubLoop& sub : subLoops) {
+          if (!sub.edges || sub.edges->count() == 0) continue;
+          const double area = sub.edges->areaLineIntegral();
+          // Drop degenerate zero-area sub-loops (as validate's MIN_AREA cut).
+          constexpr double kMinArea = ENDPOINT_TOLERANCE * ENDPOINT_TOLERANCE;
+          if (std::abs(area) < kMinArea) continue;
+          if (area < 0.0) {
+            auto new_loop = std::make_unique<RS_EntityContainer>(nullptr, true);
+            const unsigned m = sub.edges->count();
+            for (int i = static_cast<int>(m) - 1; i >= 0; --i) {
+              RS_Entity* e = sub.edges->entityAt(static_cast<unsigned>(i))->clone();
+              e->setParent(nullptr);
+              e->setLayer(nullptr);
+              e->revertDirection();
+              new_loop->addEntity(e);
+            }
+            sub.edges = std::move(new_loop);
+            sub.vertices.clear();
+          }
+          ExtractedLoop el;
+          const unsigned m = sub.edges->count();
+          if (m > 1 || (m == 1 && !isClosed(*sub.edges->entityAt(0)))) {
+            el.vertices.reserve(m);
+            for (unsigned k = 0; k < m; ++k) {
+              el.vertices.push_back(sub.edges->entityAt(k)->getStartpoint());
+            }
+          }
+          el.edges = std::move(sub.edges);
+          results.push_back(std::move(el));
+        }
       } else {
         RS_DEBUG->print("LoopExtractor: Invalid loop discarded");  // Log invalid loops
       }
     }
+  }
+  return results;
+}
+
+/**
+ * @brief Legacy wrapper that returns only the containers. New callers use
+ * extractLoops() so each loop carries its vertex table alongside the edges.
+ */
+std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() const {
+  auto loops = extractLoops();
+  std::vector<std::unique_ptr<RS_EntityContainer>> results;
+  results.reserve(loops.size());
+  for (auto& el : loops) {
+    results.push_back(std::move(el.edges));
   }
   return results;
 }
@@ -352,91 +490,121 @@ bool LoopExtractor::validate() const {
 
 /**
  * @brief Finds the first edge to start a new loop.
- * Uses a fixed-seed random ray direction to avoid axis-aligned degeneracies.
- * Selects the entity the ray hits first, falling back to the geometrically
- * extremal entity if no intersection is found.
+ *
+ * Deterministic rule: picks the lexicographically smallest (x, y, container
+ * index) among the leftmostPoint() of every unprocessed edge.
+ *
+ *   - When that point is interior to its chosen edge, the reverse flag is set
+ *     if the stored traversal walks away in +y at that point (we need to
+ *     start in -y so the loop turns counter-clockwise around what lies to the
+ *     right).
+ *   - When the point is a vertex (an edge's own start or end), all edges
+ *     attached at that vertex are compared by the CCW angle from -y of their
+ *     travel direction leaving the vertex; ties within 1e-12 break by smaller
+ *     signed curvature leaving the vertex, then by lower container index.
  */
-RS_Entity* LoopExtractor::findFirst() const
+LoopExtractor::FirstEdge LoopExtractor::findFirst() const
 {
-  if (m_data->unprocessed.empty()) {
-      return nullptr;
-  }
+  FirstEdge result;
+  if (m_data->unprocessed.empty()) return result;
 
-  // Fixed-seed RNG: deterministic across runs, yet never axis-aligned
-  static std::mt19937 gen(12345);
-  static std::uniform_real_distribution<double> dist(0.0, 2.0 * M_PI);
-  const double angle = dist(gen);
-  const RS_Vector dir(std::cos(angle), std::sin(angle));
+  struct Candidate {
+    RS_Entity* edge = nullptr;
+    RS_Vector point{};
+    bool interior = false;
+    std::size_t idx = 0;
+  };
 
-  // Compute bounding box of all unprocessed entities to size the test ray correctly
-  RS_Vector sceneMin(RS_MAXDOUBLE, RS_MAXDOUBLE);
-  RS_Vector sceneMax(-RS_MAXDOUBLE, -RS_MAXDOUBLE);
+  // Find the lexicographically smallest leftmostPoint among every edge.
+  std::vector<Candidate> all;
+  all.reserve(m_data->unprocessed.size());
   for (RS_Entity* e : m_data->unprocessed) {
-    e->calculateBorders();
-    sceneMin.x = std::min(sceneMin.x, e->getMin().x);
-    sceneMin.y = std::min(sceneMin.y, e->getMin().y);
-    sceneMax.x = std::max(sceneMax.x, e->getMax().x);
-    sceneMax.y = std::max(sceneMax.y, e->getMax().y);
+    bool interior = false;
+    const RS_Vector p = LC_LoopUtils::leftmostPoint(*e, &interior);
+    if (!p.valid) continue;
+    const auto it = m_data->order.find(e);
+    const std::size_t idx = (it != m_data->order.end()) ? it->second
+                                                        : static_cast<std::size_t>(-1);
+    all.push_back({e, p, interior, idx});
   }
-  const double rayLen = 1.5 * (sceneMax - sceneMin).magnitude() + 1.0;
+  if (all.empty()) {
+    // No valid leftmost points: keep the first unprocessed edge as a fallback.
+    result.edge = m_data->unprocessed.front();
+    return result;
+  }
+  auto betterLex = [](const Candidate& a, const Candidate& b) {
+    if (a.point.x != b.point.x) return a.point.x < b.point.x;
+    if (a.point.y != b.point.y) return a.point.y < b.point.y;
+    return a.idx < b.idx;
+  };
+  const Candidate& best = *std::min_element(all.begin(), all.end(), betterLex);
 
-  // Find the extremal point (minimum projection along ray direction)
-  double minProj = RS_MAXDOUBLE;
-  RS_Vector bestPoint;
-  RS_Entity* bestEntity = m_data->unprocessed[0];
-
-  for (RS_Entity* e : m_data->unprocessed) {
-    // Closed entities have no valid start/end/middle — use bounding box center
-    std::vector<RS_Vector> pts;
-    if (isClosed(*e)) {
-      pts.push_back((e->getMin() + e->getMax()) * 0.5);
-    } else {
-      for (const RS_Vector& p : {e->getStartpoint(), e->getEndpoint(), e->getMiddlePoint()}) {
-        if (p.valid) {
-            pts.push_back(p);
-        }
-      }
-    }
-    for (const RS_Vector& p : pts) {
-      const double proj = p.dotP(dir);
-      if (proj < minProj) {
-        minProj = proj;
-        bestPoint = p;
-        bestEntity = e;
-      }
-    }
+  if (best.interior) {
+    // Pick the stored traversal if it walks in -y at the extremum, otherwise
+    // reverse. The travel direction is the tangent; at a leftmost extremum of
+    // a smooth curve the tangent is vertical, so sign(dy/du) picks the branch.
+    const RS_Vector tangent = LC_LoopUtils::travelDirection(*best.edge, true);
+    result.edge = best.edge;
+    result.reverse = (tangent.y > 0.0);
+    return result;
   }
 
-  // Shoot a ray from outside the scene toward the extremal point
-  const RS_Vector rayStart = bestPoint - dir * rayLen;
-  const RS_Line testLine(rayStart, bestPoint);
-
-         // Find the intersection *closest* to the ray origin (i.e., the first edge the ray hits)
-  double minDist = RS_MAXDOUBLE;
-  RS_Entity* closest = nullptr;
-
-  for (RS_Entity* e : m_data->unprocessed) {
-    RS_VectorSolutions sol = RS_Information::getIntersection(&testLine, e, true);
-    if (!sol.hasValid()) {
-        continue;
-    }
-
-    for (const RS_Vector& v : sol) {
-      // Parameter along the ray (positive = ahead of rayStart)
-      const double d = (v - rayStart).dotP(dir);
-      if (d > -RS_TOLERANCE && d < minDist) {
-        minDist = d;
-        closest = e;
-      }
-    }
+  // The leftmost point is a vertex: collect every edge attached there (within
+  // ENDPOINT_TOLERANCE) and pick the one whose travel direction leaving the
+  // vertex has the smallest CCW angle measured from -y.
+  struct Attach {
+    RS_Entity* edge = nullptr;
+    bool atStart = false;
+    double ccw = 0.0;
+    double curv = 0.0;
+    std::size_t idx = 0;
+  };
+  std::vector<Attach> attached;
+  attached.reserve(all.size());
+  for (const Candidate& c : all) {
+    const RS_Vector s = c.edge->getStartpoint();
+    const RS_Vector e = c.edge->getEndpoint();
+    const bool atStart = (s.valid && s.distanceTo(best.point) <= ENDPOINT_TOLERANCE);
+    const bool atEnd = (e.valid && e.distanceTo(best.point) <= ENDPOINT_TOLERANCE);
+    if (!atStart && !atEnd) continue;
+    // Prefer start attachment if the vertex matches both ends (zero-length
+    // after tolerance): we still want a deterministic choice.
+    const bool pickStart = atStart;
+    RS_Vector h = LC_LoopUtils::travelDirection(*c.edge, pickStart);
+    if (!(h.valid && (std::abs(h.x) + std::abs(h.y) > 0.0))) continue;
+    if (!pickStart) h = h * (-1.0);  // heading at an end becomes -travelDir
+    const double a = std::atan2(h.y, h.x);
+    // CCW angle from -y: the heading -y has atan2 = -pi/2 and we want 0 for it.
+    double ccw = a + M_PI_2;
+    while (ccw < 0.0) ccw += 2.0 * M_PI;
+    while (ccw >= 2.0 * M_PI) ccw -= 2.0 * M_PI;
+    double curv = LC_LoopUtils::signedCurvature(*c.edge, pickStart);
+    if (!pickStart) curv = -curv;  // leaving an end flips the sign
+    attached.push_back({c.edge, pickStart, ccw, curv, c.idx});
   }
-
-  return closest ? closest : bestEntity;
+  if (attached.empty()) {
+    result.edge = best.edge;
+    result.reverse = false;
+    return result;
+  }
+  auto betterAttach = [](const Attach& a, const Attach& b) {
+    if (std::abs(a.ccw - b.ccw) > 1e-12) return a.ccw < b.ccw;
+    if (a.curv != b.curv) return a.curv < b.curv;
+    return a.idx < b.idx;
+  };
+  const Attach& pick = *std::min_element(attached.begin(), attached.end(), betterAttach);
+  result.edge = pick.edge;
+  result.reverse = !pick.atStart;  // if the vertex is e's end, walk in reverse
+  return result;
 }
 
 /**
- * @brief Selects the next edge making the strongest left turn (maximum CCW turn).
- * Purely tangent-based, so it handles curves and splines correctly.
+ * @brief Selects the next edge making the strongest left turn (maximum CCW
+ * turn) using the type-uniform travelDirection and signedCurvature helpers.
+ *
+ * Ties within 1e-12 radians resolve to the larger signed left curvature
+ * leaving the vertex (signedCurvature is negated when the vertex is the
+ * stored end), then to the lower stored container index.
  */
 RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
 {
@@ -447,39 +615,52 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
       return edges[0];
   }
 
-  // Incoming direction (how we arrived at the junction)
-  const double incoming = m_data->current->getDirection2();
+  // Arrival direction: the travel tangent of the current edge at its end.
+  const RS_Vector dinV =
+      LC_LoopUtils::travelDirection(*m_data->current, /*atStart=*/false);
+  const double din = std::atan2(dinV.y, dinV.x);
 
-  std::vector<std::pair<double, RS_Entity*>> candidates;
+  struct Candidate {
+      RS_Entity* edge = nullptr;
+      double turn = 0.0;
+      double curv = 0.0;
+      std::size_t idx = 0;
+  };
+  std::vector<Candidate> candidates;
   candidates.reserve(edges.size());
 
   for (RS_Entity* e : edges) {
-    // Determine whether we will need to reverse this edge
     const bool attachAtStart =
         e->getStartpoint().distanceTo(m_data->endPoint) <= ENDPOINT_TOLERANCE;
 
-    double outgoing;
-    if (attachAtStart) {
-      outgoing = e->getDirection1();                    // forward as-is
-    } else {
-      // Will be reversed → outgoing tangent = original direction2 + π
-      outgoing = RS_Math::correctAngle(e->getDirection2() + M_PI);
+    RS_Vector doutV = LC_LoopUtils::travelDirection(*e, attachAtStart);
+    if (!attachAtStart) {
+      doutV = doutV * (-1.0);  // reversed traversal flips the leaving tangent
     }
+    const double dout = std::atan2(doutV.y, doutV.x);
+    double turn = dout - din;
+    while (turn > M_PI) turn -= 2.0 * M_PI;
+    while (turn <= -M_PI) turn += 2.0 * M_PI;
 
-           // Signed turn angle in [-π, π]. Positive = left turn (CCW)
-    double turn = RS_Math::correctAngle(outgoing - incoming);
-    if (turn > M_PI) {
-        turn -= 2.0 * M_PI;
-    }
+    double curv = LC_LoopUtils::signedCurvature(*e, attachAtStart);
+    if (!attachAtStart) curv = -curv;
 
-    candidates.emplace_back(turn, e);
+    const auto it = m_data->order.find(e);
+    const std::size_t idx = (it != m_data->order.end())
+                                 ? it->second
+                                 : static_cast<std::size_t>(-1);
+    candidates.push_back({e, turn, curv, idx});
   }
 
-         // Prefer maximum left turn → this is what "outermost" actually means for CCW boundary following
-  std::sort(candidates.begin(), candidates.end(),
-            [](const auto& a, const auto& b) { return a.first > b.first; });
-
-  return candidates.front().second;
+  auto better = [](const Candidate& a, const Candidate& b) {
+      if (std::abs(a.turn - b.turn) > 1e-12) return a.turn > b.turn;
+      if (a.curv != b.curv) return a.curv > b.curv;
+      return a.idx < b.idx;
+  };
+  return std::min_element(candidates.begin(), candidates.end(),
+                           [&](const Candidate& a, const Candidate& b) {
+                               return better(a, b);
+                           })->edge;
 }
 
 /**
@@ -533,6 +714,23 @@ bool LoopExtractor::findNext() const {
 struct LoopSorter::Data {
   std::vector<std::unique_ptr<RS_EntityContainer>> loops;  ///< Input loops
   std::shared_ptr<std::vector<LC_Loops>> results;          ///< Output hierarchy
+
+  // Per-loop vertex table and per-loop geometry, parallel to loops. The
+  // vertex map is keyed by the container pointer so buildLoops can look it
+  // up while recursing the forest. eps is the per-hatch ON band.
+  std::vector<std::vector<RS_Vector>> vertices;
+  std::unordered_map<const RS_EntityContainer*, std::vector<RS_Vector>> vertexMap;
+  std::unordered_map<const RS_EntityContainer*, std::shared_ptr<const LoopGeometry>> geometryMap;
+  double eps = 0.0;
+
+  // Per-loop metrics parallel to loops. absArea[i] is the loop's |area|,
+  // perimeter[i] is the sum of edge lengths and box[i] is the loop's bbox,
+  // all built once in sortAndBuild. order[] holds loop indices sorted
+  // ascending by (absArea, extraction order) for the full-list parent walk.
+  std::vector<double> absArea;
+  std::vector<double> perimeter;
+  std::vector<LC_Rect> box;
+  std::vector<std::size_t> order;
 };
 
     /**
@@ -553,39 +751,119 @@ struct LoopSorter::Data {
     };
 
     /**
-     * @brief Constructs LoopSorter, filters degenerates, sorts, and builds hierarchy.
+     * @brief Legacy ctor. Builds a per-loop start-of-edge vertex table and
+     * a per-hatch ON band tolerance from the union bbox and the edges' end
+     * points.
      */
     LoopSorter::LoopSorter(std::vector<std::unique_ptr<RS_EntityContainer>> loops) : m_data(new Data) {
         m_data->loops = std::move(loops);
+
+        // Build per-loop vertex tables from each container's edge starts.
+        m_data->vertices.reserve(m_data->loops.size());
+        RS_Vector bbMin(RS_MAXDOUBLE, RS_MAXDOUBLE);
+        RS_Vector bbMax(-RS_MAXDOUBLE, -RS_MAXDOUBLE);
+        double maxAbs = 0.0;
+        for (auto& p : m_data->loops) {
+            p->forcedCalculateBorders();
+            bbMin.x = std::min(bbMin.x, p->getMin().x);
+            bbMin.y = std::min(bbMin.y, p->getMin().y);
+            bbMax.x = std::max(bbMax.x, p->getMax().x);
+            bbMax.y = std::max(bbMax.y, p->getMax().y);
+            std::vector<RS_Vector> vs;
+            const unsigned n = p->count();
+            if (n > 1 || (n == 1 && !isClosed(*p->entityAt(0)))) {
+                vs.reserve(n);
+                for (unsigned k = 0; k < n; ++k) {
+                    const RS_Vector s = p->entityAt(k)->getStartpoint();
+                    vs.push_back(s);
+                    maxAbs = std::max({maxAbs, std::abs(s.x), std::abs(s.y)});
+                }
+            }
+            m_data->vertexMap[p.get()] = vs;
+            m_data->vertices.push_back(std::move(vs));
+        }
+        const double diag = (bbMax - bbMin).magnitude();
+        m_data->eps = hatchTolerance(diag, maxAbs);
+        sortAndBuild();
+    }
+
+    /**
+     * @brief Takes extracted loops that already carry their start-of-edge
+     * vertex table and the per-hatch ON tolerance.
+     */
+    LoopSorter::LoopSorter(std::vector<ExtractedLoop> loops, double eps) : m_data(new Data) {
+        m_data->eps = eps;
+        m_data->loops.reserve(loops.size());
+        m_data->vertices.reserve(loops.size());
+        for (auto& el : loops) {
+            RS_EntityContainer* ptr = el.edges.get();
+            m_data->vertexMap[ptr] = el.vertices;
+            m_data->vertices.push_back(std::move(el.vertices));
+            m_data->loops.push_back(std::move(el.edges));
+        }
         sortAndBuild();
     }
 
     LoopSorter::~LoopSorter() = default;
 
     /**
-     * @brief Main sorting and hierarchy building: Filters zero-area, sorts ascending area, assigns parents small-to-large.
-     * Builds forest of roots and converts to LC_Loops.
+     * @brief Main sorting and hierarchy building: filters zero-area loops,
+     * builds the per-loop geometry once, then assigns the smallest-area
+     * parent for every loop against the full sorted list. Preserves the
+     * input's extraction order for duplicate-area tie-breaks.
      */
     void LoopSorter::sortAndBuild() {
-        std::multimap<double, RS_EntityContainer*> orderedLoops;
-        for (auto& p : m_data->loops) {
+        const std::size_t n = m_data->loops.size();
+        m_data->absArea.assign(n, 0.0);
+        m_data->perimeter.assign(n, 0.0);
+        m_data->box.assign(n, LC_Rect{RS_Vector(0.0, 0.0), RS_Vector(0.0, 0.0)});
+
+        for (std::size_t i = 0; i < n; ++i) {
+            RS_EntityContainer* p = m_data->loops[i].get();
             p->setParent(nullptr); // Reset parents
             p->forcedCalculateBorders();
-            double area = std::abs(p->areaLineIntegral());
-            if (area < RS_TOLERANCE) {
+            m_data->absArea[i] = std::abs(p->areaLineIntegral());
+            double per = 0.0;
+            for (const RS_Entity* e : *p) {
+                if (e) per += e->getLength();
+            }
+            m_data->perimeter[i] = per;
+            m_data->box[i] = LC_Rect{p->getMin(), p->getMax()};
+        }
+
+        // Build each loop's geometry once; findParent reads them.
+        for (auto& p : m_data->loops) {
+            auto it = m_data->vertexMap.find(p.get());
+            std::vector<RS_Vector> vs = (it != m_data->vertexMap.end()) ? it->second : std::vector<RS_Vector>{};
+            m_data->geometryMap[p.get()] = LoopGeometry::fromChain(*p, std::move(vs));
+        }
+
+        // Keep only non-degenerate loops in the parent-search order; the walk
+        // visits every candidate in ascending (|area|, extraction index).
+        m_data->order.clear();
+        m_data->order.reserve(n);
+        for (std::size_t i = 0; i < n; ++i) {
+            if (m_data->absArea[i] < RS_TOLERANCE) {
                 RS_DEBUG->print("LoopSorter: Skipping degenerate zero-area loop");
                 continue;
             }
-            orderedLoops.emplace(area, p.get());
+            m_data->order.push_back(i);
         }
+        std::stable_sort(m_data->order.begin(), m_data->order.end(),
+                         [this](std::size_t a, std::size_t b) {
+                             if (m_data->absArea[a] != m_data->absArea[b]) {
+                                 return m_data->absArea[a] < m_data->absArea[b];
+                             }
+                             return a < b;
+                         });
+
         std::vector<RS_EntityContainer*> forest;
-        while (!orderedLoops.empty()) {
-            RS_EntityContainer* child = orderedLoops.begin()->second;
-            findParent(child, orderedLoops); // Assign immediate parent
+        for (std::size_t idx : m_data->order) {
+            findParent(idx);
+            RS_EntityContainer* child = m_data->loops[idx].get();
             if (child->getParent() == nullptr) {
-                forest.push_back(child); // Root if no parent
+                forest.push_back(child);
             }
-            orderedLoops.erase(orderedLoops.begin());
         }
         m_data->results = forestToLoops(forest);
     }
@@ -602,46 +880,70 @@ struct LoopSorter::Data {
      */
     std::shared_ptr<std::vector<LC_Loops>> LoopSorter::forestToLoops(std::vector<RS_EntityContainer*> forest) const {
         auto loops = std::make_shared<std::vector<LC_Loops>>();
+        const VertexMap* vmap = m_data->vertexMap.empty() ? nullptr : &m_data->vertexMap;
         for (const RS_EntityContainer* container : forest) {
-            loops->push_back(buildLoops(container, m_data->loops)); // Build recursive hierarchy
+            loops->push_back(buildLoops(container, m_data->loops, vmap, m_data->eps));
         }
         return loops;
     }
 
 /**
- * @brief Assigns the smallest enclosing parent using bbox inclusion and point-in-contour test.
- * Processes small-to-large to ensure immediate (direct) parent.
+ * @brief Assigns the smallest enclosing parent for the loop at index child
+ * among the full sorted list. Chooses an interior point of child (not a
+ * bbox centre), walks every candidate in ascending (|area|, extraction
+ * index) order, and accepts the first whose bbox contains child's with a
+ * per-hatch epsilon slack and whose geometry has odd parity at that point.
  */
-void LoopSorter::findParent(RS_EntityContainer* loop, const std::multimap<double, RS_EntityContainer*>& sorted) {
-  if (sorted.size() <= 1) {
-      return;
-  }
-  LC_Rect childBox{loop->getMin(), loop->getMax()};
-  double childArea = std::abs(loop->areaLineIntegral());
-  RS_Vector testPoint = (loop->getMin() + loop->getMax()) / 2.0;
-  for (auto it = sorted.begin(); it != sorted.end(); ++it) {
-    auto* potentialParent = it->second;
-    if (potentialParent == loop) {
-        continue;
-    }
-    double parentArea = it->first;
-    if (parentArea <= childArea + RS_TOLERANCE) {
-        continue;
-    }
-    LC_Rect parentBox{potentialParent->getMin(), potentialParent->getMax()};
+void LoopSorter::findParent(std::size_t child) {
+    if (child >= m_data->loops.size()) return;
+    RS_EntityContainer* childLoop = m_data->loops[child].get();
+    if (!childLoop) return;
+    const double childArea = m_data->absArea[child];
+    const double childPerim = m_data->perimeter[child];
+    const LC_Rect& childBox = m_data->box[child];
+    const double eps = m_data->eps;
 
-            if (childBox.numCornersInside(parentBox) != 4) {
-                continue; // Quick bbox containment
-            }
-            bool onContour = false;
-            if (RS_Information::isPointInsideContour(testPoint, potentialParent, &onContour)) {
-                loop->setParent(potentialParent); // Track hierarchy via parent pointer only
-                RS_DEBUG->print("LoopSorter: Assigned parent for loop with area %f", childArea);
-                return;
-            }
-        }
-        RS_DEBUG->print("LoopSorter: No parent found for loop with area %f", childArea); // Log orphan
+    auto geomIt = m_data->geometryMap.find(childLoop);
+    if (geomIt == m_data->geometryMap.end()) return;
+    const LoopGeometry* childGeom = geomIt->second.get();
+    if (!childGeom) return;
+
+    const RS_Vector p = interiorPoint(*childGeom);
+    if (!p.valid) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "LoopSorter: no interior point for loop with area %f",
+                        childArea);
+        return;
     }
+
+    for (std::size_t q : m_data->order) {
+        if (q == child) continue;
+        const double parentArea = m_data->absArea[q];
+        const double parentPerim = m_data->perimeter[q];
+        const double epsA = eps * std::max(parentPerim, childPerim);
+        if (parentArea < childArea - epsA) continue;
+        if (parentArea <= childArea + epsA && q > child) {
+            // Duplicate areas: the lower-index loop parents the higher-index twin.
+            continue;
+        }
+        RS_EntityContainer* qLoop = m_data->loops[q].get();
+        if (!qLoop) continue;
+        const LC_Rect parentBoxSlack = m_data->box[q].increaseBy(eps);
+        if (!childBox.inArea(parentBoxSlack)) continue;
+        auto parentGeomIt = m_data->geometryMap.find(qLoop);
+        if (parentGeomIt == m_data->geometryMap.end()) continue;
+        const LoopGeometry* parentGeom = parentGeomIt->second.get();
+        if (!parentGeom) continue;
+        if (oddParity(p, {parentGeom})) {
+            childLoop->setParent(qLoop);
+            RS_DEBUG->print("LoopSorter: Assigned parent for loop with area %f",
+                            childArea);
+            return;
+        }
+    }
+    RS_DEBUG->print("LoopSorter: No parent found for loop with area %f",
+                    childArea);
+}
 
     // Private implementation for LoopOptimizer
     struct LoopOptimizer::Data {
@@ -694,21 +996,71 @@ void LoopSorter::findParent(RS_EntityContainer* loop, const std::multimap<double
      */
     void LC_Loops::addEntity(const RS_Entity* entity) const {
         m_loop->addEntity(entity);
+        m_geometry.reset();  // Invalidate cached geometry; built lazily on next read.
+    }
+
+    void LC_Loops::setGeometry(std::shared_ptr<const LoopGeometry> geometry, double eps) {
+        m_geometry = std::move(geometry);
+        m_eps = eps;
+    }
+
+    const LoopGeometry& LC_Loops::geometry() const {
+        if (!m_geometry && m_loop) {
+            // Lazy build from the outer loop with a vertex table from edge
+            // starts and a per-hatch tolerance derived from the loop's own
+            // bbox and endpoint extrema.
+            std::vector<RS_Vector> vs;
+            const unsigned n = m_loop->count();
+            double maxAbs = 0.0;
+            if (n > 1 || (n == 1 && !isClosed(*m_loop->entityAt(0)))) {
+                vs.reserve(n);
+                for (unsigned k = 0; k < n; ++k) {
+                    const RS_Vector s = m_loop->entityAt(k)->getStartpoint();
+                    vs.push_back(s);
+                    maxAbs = std::max({maxAbs, std::abs(s.x), std::abs(s.y)});
+                }
+            }
+            if (m_eps <= 0.0) {
+                m_loop->forcedCalculateBorders();
+                const double diag = (m_loop->getMax() - m_loop->getMin()).magnitude();
+                m_eps = hatchTolerance(diag, maxAbs);
+            }
+            m_geometry = LoopGeometry::fromChain(*m_loop, std::move(vs));
+        }
+        return *m_geometry;
     }
 
     /**
-     * @brief Non-recursive check for point inside outer loop using winding rule.
+     * @brief Non-recursive check for the outer loop. Exact oddParity on this
+     * node's own geometry: no ON band here. getContainingDepth() calls this
+     * on every node in the tree so the ON band is applied once in classify().
      */
     bool LC_Loops::isInsideOuter(const RS_Vector& point) const {
-        bool onContour = false;
-        return RS_Information::isPointInsideContour(point, m_loop.get(), &onContour);
+        return geometry().crossingsRight(point) % 2 == 1;
     }
 
     /**
-     * @brief Recursive inside check using odd-even parity on depth.
+     * @brief Full classifier: ON if the point is within tolerance() of any
+     * edge in this tree (root and descendants), else the depth parity.
+     */
+    PointClass LC_Loops::classify(const RS_Vector& point) const {
+        if (m_eps > 0.0) {
+            std::vector<const RS_EntityContainer*> all;
+            getAllLoops(all);
+            if (isNearAnyEdge(point, all, m_eps)) {
+                return PointClass::On;
+            }
+        }
+        return (getContainingDepth(point) % 2 == 1)
+                   ? PointClass::Inside
+                   : PointClass::Outside;
+    }
+
+    /**
+     * @brief Recursive inside check using the full classifier.
      */
     bool LC_Loops::isInside(const RS_Vector& point) const {
-        return getContainingDepth(point) % 2 == 1;
+        return classify(point) != PointClass::Outside;
     }
 
     /**
@@ -892,10 +1244,10 @@ LC_SecondMoment LC_Loops::getTotalSecondMoment() const {
     }
 
     /**
-     * @brief Alias for isInside (odd-even rule).
+     * @brief Alias for isInside (full classifier).
      */
     bool LC_Loops::isPointInside(const RS_Vector& p) const {
-        return getContainingDepth(p) % 2 == 1;
+        return classify(p) != PointClass::Outside;
     }
 
     /**
@@ -920,10 +1272,17 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
 }
 
     /**
-     * @brief Generates tile offsets for pattern repetition within the bounding box.
-     * Filters tiles that intersect or contain points inside the loop.
+     * @brief Generates tile offsets for pattern repetition over this tree's
+     * bounding box, anchored at latticeAnchor.
+     *
+     * Tile indices are half-open [floor((bbMin - a)/P), ceil((bbMax - a)/P))
+     * on each axis; the pattern's minimum corner sits on the lattice points
+     * latticeAnchor + (i*W, k*H), as in 2.2.1. Each tile is kept when its
+     * rect intersects bbox *and* either overlaps the loop or contains the
+     * pattern's centre.
      */
-    std::vector<RS_Vector> LC_Loops::createTiles(const RS_Pattern& pattern) const {
+    std::vector<RS_Vector> LC_Loops::createTiles(const RS_Pattern& pattern,
+                                                 const RS_Vector& latticeAnchor) const {
         const LC_Rect bBox = getBoundingBox();
         const LC_Rect pBox{pattern.getMin(), pattern.getMax()};
         const double pWidth = pBox.width();
@@ -932,16 +1291,25 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
         {
             return {};
         }
-        const RS_Vector offsetBase = bBox.lowerLeftCorner() - pBox.lowerLeftCorner();
-        std::vector<RS_Vector> tiles;
-        // Use ceil for full coverage
-        const int nx = static_cast<int>(std::ceil(bBox.width() / pWidth)) + 1;
-        const int ny = static_cast<int>(std::ceil(bBox.height() / pHeight)) + 1;
+        // Half-open [floor, ceil) range of tile indices; indices stay in
+        // double/long long because |bbMin - anchor|/W can exceed 2^31 for a
+        // tiny tile far from the origin, and the cast would be UB in int.
+        // Never name these j0/j1 (glibc Bessel functions).
+        const double iFirst = std::floor((bBox.minP().x - latticeAnchor.x) / pWidth);
+        const double iEnd = std::ceil((bBox.maxP().x - latticeAnchor.x) / pWidth);
+        const double kFirst = std::floor((bBox.minP().y - latticeAnchor.y) / pHeight);
+        const double kEnd = std::ceil((bBox.maxP().y - latticeAnchor.y) / pHeight);
         // Use pattern center for inside check
         const RS_Vector pCenter = (pBox.lowerLeftCorner() + pBox.upperRightCorner()) / 2.0;
-        for (int i = 0; i < nx; ++i) {
-            for (int j = 0; j < ny; ++j) {
-                RS_Vector tile = offsetBase + RS_Vector{pWidth * i, pHeight * j};
+        const long long nIx = static_cast<long long>(iEnd - iFirst);
+        const long long nIy = static_cast<long long>(kEnd - kFirst);
+        std::vector<RS_Vector> tiles;
+        for (long long ci = 0; ci < nIx; ++ci) {
+            for (long long ck = 0; ck < nIy; ++ck) {
+                const RS_Vector tile = latticeAnchor
+                    + RS_Vector{(iFirst + static_cast<double>(ci)) * pWidth,
+                                (kFirst + static_cast<double>(ck)) * pHeight}
+                    - pBox.lowerLeftCorner();
                 LC_Rect tileRect{pBox.lowerLeftCorner() + tile, pBox.upperRightCorner() + tile};
                 // Quick bbox intersection
                 if (!tileRect.intersects(bBox)) {
@@ -957,16 +1325,19 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
     }
 
     /**
-     * @brief Trims pattern entities to loop boundaries: Intersects, sorts params, creates subs inside loop.
-     * Handles closed/open entities; skips odd intersections for closed.
-     * For RS_Line: extends to bbox, dedups tiles by perpendicular intercept.
+     * @brief Clips every tile copy of every atomic pattern entity to this loop
+     * hierarchy: intersect with all boundary edges, sort, split, and keep the
+     * sub-pieces whose midpoint is inside. Copies are never extended.
      */
-    std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Pattern& pattern) const {
+    std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Pattern& pattern,
+                                                                      const RS_Vector& latticeAnchor) const {
         auto trimmed = std::make_unique<RS_EntityContainer>();
-        std::vector<RS_Vector> tiles = createTiles(pattern);
+        std::vector<RS_Vector> tiles = createTiles(pattern, latticeAnchor);
         auto boundaries = getAllBoundaries();
-        std::map<const RS_Entity*, std::set<double, DoublePredicate>> savedIntercepts;
-        LC_Rect bBox = getBoundingBox();
+        PointClassifier classifier = [this](const RS_Vector& q) {
+            return this->classify(q);
+        };
+        const double epsOn = (m_eps > 0.0) ? m_eps : RS_TOLERANCE;
         for (const RS_Vector& tile : tiles) {
             for (RS_Entity* e : pattern) {
                 if (!e->isAtomic()) {
@@ -975,20 +1346,6 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
                 auto cloned = std::unique_ptr<RS_Entity>(e->clone());
                 cloned->move(tile);
 
-      if (e->rtti() == RS2::EntityLine) {
-        auto cline = static_cast<RS_Line*>(cloned.get());
-        RS_Vector normal = cline->getNormalVector();
-        double intr = normal.dotP(cline->getStartpoint());
-        constexpr double TOL = 1e-6;
-        double key = std::round(intr / TOL) * TOL;
-        std::set<double, DoublePredicate>& sset = savedIntercepts[e];
-        if (sset.find(key) != sset.end()) {
-            continue;
-        }
-        sset.insert(key);
-        // Extend to bbox
-        extendLineToBBox(*cline, bBox);
-      }
       std::vector<RS_Vector> all_inters;
       for (auto* b : boundaries) {
         RS_VectorSolutions sol = RS_Information::getIntersection(cloned.get(), b, true);
@@ -1007,7 +1364,7 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
       auto sorted_inters = sortPointsAlongEntity(cloned.get(), all_inters);
       bool closed = isEntityClosed(cloned.get());
       if (sorted_inters.empty()) {
-        if (isPointInside(cloned->getMiddlePoint())) {
+        if (keepPiece(*cloned, classifier, epsOn)) {
           cloned->setVisible(true);
           trimmed->addEntity(cloned.release());
         }
@@ -1032,8 +1389,8 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
             continue;
         }
         auto sub = std::unique_ptr<RS_Entity>(createSubEntity(cloned.get(), p1, p2));
-        // Filter short subs and add if inside
-        if (sub && sub->getLength() > RS_TOLERANCE && isPointInside(sub->getMiddlePoint())) {
+        // Filter short subs and add if the collinear-safe keepPiece says yes.
+        if (sub && sub->getLength() > RS_TOLERANCE && keepPiece(*sub, classifier, epsOn)) {
           sub->setVisible(true);
           trimmed->addEntity(sub.release());
         }
@@ -1043,7 +1400,7 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
         RS_Vector pw2 = points[0];
         if (pw1.distanceTo(pw2) >= RS_TOLERANCE) {
           auto sub = std::unique_ptr<RS_Entity>(createSubEntity(cloned.get(), pw1, pw2));
-          if (sub && sub->getLength() > RS_TOLERANCE && isPointInside(sub->getMiddlePoint())) {
+          if (sub && sub->getLength() > RS_TOLERANCE && keepPiece(*sub, classifier, epsOn)) {
             sub->setVisible(true);
             trimmed->addEntity(sub.release());
           }

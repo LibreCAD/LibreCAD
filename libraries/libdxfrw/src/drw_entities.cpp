@@ -13720,7 +13720,7 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         pixelSize = reader->getDouble();
         break;
     case 52:
-        angle = reader->getDouble();
+        angle = reader->getDouble() / ARAD;
         break;
     case 53: // pattern line angle — starts a new PatternLine record
         if (!validateCurrentPatternLineDxf())
@@ -13731,7 +13731,7 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         if (patternLines.size() >= static_cast<std::size_t>(kMaxHatchItems))
             return false;
         patternLines.push_back(PatternLine());
-        patternLines.back().angle = reader->getDouble();
+        patternLines.back().angle = reader->getDouble() / ARAD;
         m_dxfPatternDashCountExpected = -1;
         m_dxfPatternDashCountSeen = false;
         break;
@@ -14108,16 +14108,42 @@ bool DRW_Hatch::validateDxf() const {
 }
 
 bool DRW_MPolygon::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
-    // MPOLYGON shares HATCH's boundary/pattern/gradient codes, so delegate those
-    // to DRW_Hatch::parseCode. It adds a trailer that plain HATCH never emits:
-    //   63 / 421 / 430  fill color (ACI / RGB / book-name) — the filled area's
-    //                   color, which may differ from the boundary outline color;
-    //   11 / 21         boundary x-direction vector (no render impact; left to
-    //                   the base, which ignores it outside an edge context);
-    //   99              count of degenerate boundary paths.
-    // 63/421 are also gradient sub-codes in HATCH, so only claim them here when no
-    // gradient is being accumulated (gradColors empty) — otherwise defer to base.
+    // MPOLYGON shares HATCH's boundary/pattern/gradient codes but overloads
+    // several of them: 70 is the version (HATCH stores it as `solid`), 71 is
+    // the solid flag (HATCH stores it as `associative`), the after-loop 73
+    // is annotatedBoundary, and 11/21 is the boundary x-direction vector that
+    // DRW_Hatch would otherwise feed into a line-edge's end point. m_loopsDone
+    // flips once the loop list is behind us so late 73/11/21 go to the trailer
+    // instead of the current loop record.
     switch (code) {
+    case 70:
+        mpVersion = reader->getInt32();
+        return mpVersion >= 0 && mpVersion <= 32767;
+    case 71:
+        solid = reader->getInt32() != 0 ? 1 : 0;
+        return true;
+    case 76:
+        // Flip into "trailer" mode first; DRW_Hatch::parseCode stores hpattern.
+        m_loopsDone = true;
+        break;
+    case 73:
+        if (m_loopsDone) {
+            annotatedBoundary = reader->getInt32();
+            return true;
+        }
+        break;  // loop's closed bit, let DRW_Hatch::parseCode handle it
+    case 11:
+        if (m_loopsDone) {
+            xDirX = reader->getDouble();
+            return true;
+        }
+        break;  // line-edge end inside an open loop
+    case 21:
+        if (m_loopsDone) {
+            xDirY = reader->getDouble();
+            return true;
+        }
+        break;
     case 63:
         if (gradColors.empty()) { fillColorAci = reader->getInt32(); return true; }
         break;
@@ -14134,6 +14160,121 @@ bool DRW_MPolygon::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
         break;
     }
     return DRW_Hatch::parseCode(code, reader);
+}
+
+bool DRW_MPolygon::polylineLoop(const DRW_HatchLoop& loop, DRW_LWPolyline& out) {
+    out.vertlist.clear();
+    out.flags = 1;  // closed
+    // A polyline-loop record (bit 2) carries its single DRW_LWPolyline as the
+    // only object. Copy it as-is.
+    if ((loop.type & 2) == 2) {
+        if (loop.objlist.empty())
+            return false;
+        const DRW_LWPolyline* pl = dynamic_cast<const DRW_LWPolyline*>(loop.objlist.at(0).get());
+        if (pl == nullptr)
+            return false;
+        for (const std::shared_ptr<DRW_Vertex2D>& v : pl->vertlist) {
+            if (!v)
+                return false;
+            out.vertlist.push_back(std::make_shared<DRW_Vertex2D>(*v));
+        }
+        out.flags = (pl->flags & 1) ? 1 : 0;
+        return !out.vertlist.empty();
+    }
+    if (loop.objlist.empty())
+        return false;
+    struct Seg {
+        DRW_Coord p;
+        DRW_Coord q;
+        double bulge;
+    };
+    std::vector<Seg> segs;
+    segs.reserve(loop.objlist.size());
+    double bboxMinX = 0.0, bboxMinY = 0.0, bboxMaxX = 0.0, bboxMaxY = 0.0;
+    bool bboxInit = false;
+    auto track = [&](const DRW_Coord& c) {
+        if (!bboxInit) {
+            bboxMinX = bboxMaxX = c.x;
+            bboxMinY = bboxMaxY = c.y;
+            bboxInit = true;
+        } else {
+            bboxMinX = std::min(bboxMinX, c.x);
+            bboxMaxX = std::max(bboxMaxX, c.x);
+            bboxMinY = std::min(bboxMinY, c.y);
+            bboxMaxY = std::max(bboxMaxY, c.y);
+        }
+    };
+    for (const auto& ownedEdge : loop.objlist) {
+        const DRW_Entity* edge = ownedEdge.get();
+        if (edge == nullptr)
+            return false;
+        if (edge->eType == DRW::LINE) {
+            const DRW_Line* ln = static_cast<const DRW_Line*>(edge);
+            Seg s{ln->basePoint, ln->secPoint, 0.0};
+            track(s.p);
+            track(s.q);
+            segs.push_back(s);
+        } else if (edge->eType == DRW::ARC) {
+            // Hatch arc convention: isccw selects between (a0, a1) and
+            // (2*pi - a0, 2*pi - a1); the sweep is signed by direction.
+            const DRW_Arc* a = static_cast<const DRW_Arc*>(edge);
+            const int ccw = a->isccw;
+            double s = ccw ? a->staangle : (2.0 * M_PI - a->staangle);
+            double t = ccw ? a->endangle : (2.0 * M_PI - a->endangle);
+            const double rawSweep = std::fabs(a->endangle - a->staangle);
+            double sweep;
+            if (rawSweep >= 2.0 * M_PI - 1e-12) {
+                sweep = 2.0 * M_PI;
+            } else {
+                double d = ccw ? (t - s) : (s - t);
+                while (d < 0.0) d += 2.0 * M_PI;
+                while (d > 2.0 * M_PI) d -= 2.0 * M_PI;
+                sweep = d;
+            }
+            const double sign = ccw ? +1.0 : -1.0;
+            if (std::fabs(sweep - 2.0 * M_PI) < 1e-12) {
+                // Represent a full circle as two half-sweep bulges.
+                DRW_Coord ps{a->basePoint.x + a->radious * std::cos(s),
+                             a->basePoint.y + a->radious * std::sin(s),
+                             0.0};
+                DRW_Coord mid{2.0 * a->basePoint.x - ps.x,
+                              2.0 * a->basePoint.y - ps.y, 0.0};
+                segs.push_back({ps, mid, sign * 1.0});
+                segs.push_back({mid, ps, sign * 1.0});
+                track(ps);
+                track(mid);
+            } else {
+                DRW_Coord ps{a->basePoint.x + a->radious * std::cos(s),
+                             a->basePoint.y + a->radious * std::sin(s),
+                             0.0};
+                DRW_Coord qs{a->basePoint.x + a->radious * std::cos(t),
+                             a->basePoint.y + a->radious * std::sin(t),
+                             0.0};
+                segs.push_back({ps, qs, sign * std::tan(sweep / 4.0)});
+                track(ps);
+                track(qs);
+            }
+        } else {
+            // ELLIPSE / SPLINE / unknown: refused, as ezdxf does.
+            return false;
+        }
+    }
+    const double diag = std::hypot(bboxMaxX - bboxMinX, bboxMaxY - bboxMinY);
+    const double tol = 1e-9 * std::max(1.0, diag);
+    for (size_t i = 0; i < segs.size(); ++i) {
+        const Seg& cur = segs[i];
+        const Seg& nxt = segs[(i + 1) % segs.size()];
+        if (std::hypot(cur.q.x - nxt.p.x, cur.q.y - nxt.p.y) > tol)
+            return false;
+    }
+    for (const Seg& s : segs) {
+        auto v = std::make_shared<DRW_Vertex2D>();
+        v->x = s.p.x;
+        v->y = s.p.y;
+        v->bulge = s.bulge;
+        out.vertlist.push_back(v);
+    }
+    return !out.vertlist.empty();
 }
 
 // DRW_MPolygon::parseDwg — AcDbMPolygon DWG body.

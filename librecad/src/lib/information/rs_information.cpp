@@ -27,9 +27,8 @@
 
 #include "rs_information.h"
 
-#include <random>
-
 #include "lc_containertraverser.h"
+#include "lc_loopclassifier.h"
 #include "lc_parabola.h"
 #include "lc_quadratic.h"
 #include "lc_rect.h"
@@ -935,31 +934,17 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point, const RS_Entit
         }
     }
 
-    const double width = contour->getSize().magnitude() + 1.0;
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<double> dist(0.0, 2.0 * M_PI);
-
-    auto intersections = [&] {
-        const RS_Vector vector = RS_Vector::polar(width, dist(gen));
-        const RS_Line ray{point, point + vector};
-        size_t counter = 0;
-        for (const RS_Entity* en : lc::LC_ContainerTraverser{*contour, RS2::ResolveAll}.entities()) {
-            RS_VectorSolutions sol = getIntersection(en, &ray, true);
-            if (sol.isTangent()) {
-                counter += sol.size() + 1;
-            }
-            else {
-                counter += sol.size();
-            }
-        }
-        return counter;
-    };
-
-    // use two random rays to find the minimum intersections
-    const size_t counter = std::min(intersections(), intersections());
-
-    return counter % 2 == 1;
+    // Deterministic even-odd parity: build a monotone-piece geometry from the
+    // contour's atomic edges and count half-open right-ray crossings. The
+    // selection may be unoriented; the test is orientation-free. Free end
+    // points are welded at onTol so a selection with small gaps still forms
+    // a closed topology.
+    std::vector<RS_Entity*> edges;
+    for (RS_Entity* e : lc::LC_ContainerTraverser{*contour, RS2::ResolveAll}.entities()) {
+        if (e && e->isAtomic()) edges.push_back(e);
+    }
+    auto geom = LC_LoopUtils::LoopGeometry::fromContour(edges, onTol);
+    return LC_LoopUtils::oddParity(point, {geom.get()});
 }
 
 RS_VectorSolutions RS_Information::createQuadrilateral(const RS_EntityContainer& container) {

@@ -129,6 +129,13 @@
 #include "rs_debug.h"
 #endif // DWGSUPPORT
 
+// Catch distribution builds against a libdxfrw before 0.6.4, where DRW_Hatch
+// stored DXF group 52 raw instead of radians. Without this guard every legacy
+// angle would be multiplied by 57.3 (see issue #1585).
+#if !defined(DRW_HATCH_ANGLE_RADIANS) || DRW_HATCH_ANGLE_RADIANS != 1
+#error "libdxfrw stores DXF hatch angles raw; LibreCAD needs DRW_HATCH_ANGLE_RADIANS 1 (libdxfrw 0.6.4)"
+#endif
+
 namespace {
 constexpr std::int32_t kLegacyRtlLayout = 1;
 constexpr std::int32_t kLogicalRtlLayout = 2;
@@ -4285,6 +4292,8 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
   // reset library version
   m_isLibDxfRw = false;
   m_libDxfRwVersion = 0;
+  m_dxflibMajor = 0;
+  m_legacyHatchRadians = false;
   m_unsupportedDwgObjects.clear();
   m_graphic->dwgAdvancedMetadata().clear();
   // Clear per-import caches so a reused filter instance does not carry stale
@@ -10266,8 +10275,10 @@ void RS_FilterDXFRW::snapSplineEdgeEndpoints(RS_EntityContainer *hatchLoop) {
  */
 void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
   RS_DEBUG->print("RS_FilterDXF::addHatch()");
+  const double hatchAngle =
+      importedHatchAngle(data->angle, m_legacyHatchRadians, data->solid != 0);
   const auto hatch = new RS_Hatch(
-      m_currentContainer, RS_HatchData(data->solid, data->scale, data->angle,
+      m_currentContainer, RS_HatchData(data->solid, data->scale, hatchAngle,
                                        QString::fromUtf8(data->name.c_str())));
   setEntityAttributes(hatch, data);
   if (data->basePoint.z != 0.0 || data->extPoint.x != 0.0 ||
@@ -11491,6 +11502,8 @@ void RS_FilterDXFRW::addHeader(const DRW_Header *data) {
   m_oldMText = false;
   m_isLibDxfRw = false;
   m_libDxfRwVersion = 0;
+  m_dxflibMajor = 0;
+  m_legacyHatchRadians = false;
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
   constexpr auto option = Qt::SkipEmptyParts;
 #else
@@ -11503,24 +11516,70 @@ void RS_FilterDXFRW::addHeader(const DRW_Header *data) {
     if (0 < commentWords.size()) {
       if ("dxflib" == commentWords.at(0)) {
         m_oldMText = true;
+        // Record the dxflib major version so the hatch-angle reader can
+        // tell LibreCAD 1.x / QCAD 2 (raw radians) from QCAD 3 (degrees).
+        if (1 < commentWords.size()) {
+          m_dxflibMajor = commentWords.at(1).section('.', 0, 0).toInt();
+        }
         break;
       }
       if ("dxfrw" == commentWords.at(0)) {
-        const QStringList libVersionList =
-            commentWords.at(1).split('.', option);
-        if (2 < libVersionList.size()) {
-          m_isLibDxfRw = true;
-          m_libDxfRwVersion = LIBDXFRW_VERSION(libVersionList.at(0).toInt(),
-                                               libVersionList.at(1).toInt(),
-                                               libVersionList.at(2).toInt());
-          if (m_libDxfRwVersion < LIBDXFRW_VERSION(0, 5, 4)) {
-            m_oldMText = true;
+        if (1 < commentWords.size()) {
+          const QStringList libVersionList =
+              commentWords.at(1).split('.', option);
+          if (2 < libVersionList.size()) {
+            m_isLibDxfRw = true;
+            m_libDxfRwVersion = LIBDXFRW_VERSION(libVersionList.at(0).toInt(),
+                                                 libVersionList.at(1).toInt(),
+                                                 libVersionList.at(2).toInt());
+            if (m_libDxfRwVersion < LIBDXFRW_VERSION(0, 5, 4)) {
+              m_oldMText = true;
+            }
           }
         }
         break;
       }
     }
   }
+  // Legacy writers stored DXF hatch angle 52 raw. Every LibreCAD 2.x file
+  // (dxfrw < 0.6.4) and every dxflib 1.x / 2.x file; the standalone fork's
+  // 2.0.0 keeps raw too. Everything else, including bare "dxfrw" and
+  // dxflib 3+ (QCAD 3), is a degree writer.
+  m_legacyHatchRadians =
+      (1 <= m_dxflibMajor && m_dxflibMajor <= 2)
+      || (m_isLibDxfRw
+          && (m_libDxfRwVersion < kFirstDegreeHatchWriter
+              || m_libDxfRwVersion == kRawHatchForkVersion));
+}
+
+double RS_FilterDXFRW::importedHatchAngle(double drwAngle, bool legacyRadians,
+                                          bool solid) {
+  // libdxfrw now hands every DXF 52 value in radians (= raw / ARAD). Solids
+  // have no geometric angle, so leave them alone except for the normalisation
+  // that setAngle() applies.
+  double a = drwAngle;
+  if (legacyRadians && !solid) {
+    // The number that stood in group 52 before libdxfrw's divide: use it for
+    // the tie-break of the three cases below.
+    const double x = drwAngle * ARAD;
+    if (std::fabs(x) <= 2.0 * M_PI + 1.0e-9) {
+      // Within [-2pi, 2pi]: legacy LibreCAD/QCAD2 radians stored raw.
+      a = x;
+    } else {
+      // "Nice degrees" (a multiple of 0.5 deg) that is not already a nice
+      // radian value marks a DWG-origin radian value above 2pi (e.g. 7.854
+      // = 450 deg). Keep that interpretation.
+      const auto isNiceDegrees = [](double v) {
+        return std::fabs(v - 0.5 * std::round(2.0 * v)) <= 1.0e-6;
+      };
+      if (isNiceDegrees(x * ARAD) && !isNiceDegrees(x)) {
+        a = x;
+      }
+      // else: a degree value an older LibreCAD read raw and saved again.
+      // libdxfrw already divided by ARAD, so keep a = drwAngle.
+    }
+  }
+  return RS_Math::correctAngle(a);
 }
 
 /**

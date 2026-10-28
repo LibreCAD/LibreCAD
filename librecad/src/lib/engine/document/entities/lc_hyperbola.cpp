@@ -1887,16 +1887,15 @@ double LC_Hyperbola::areaLineIntegral() const
   // }\frac{\mathbf{ab}}{\mathbf{2}}\mathbf{t+
   // c}_{\mathbf{x}}\mathbf{(a}\sin \mathbf{\alpha }\cosh \mathbf{t+b}\cos
   // \mathbf{\alpha }\sinh \mathbf{t)+C}\)
-  // Reversed branch: x_local = -a·cosh φ flips the sign of every term that
-  // carries a single power of `a` from the local x coordinate. The cxTerm
-  // also flips because R/S sit in front of the local-x and local-y
-  // contributions to world x.
+  // Reversed branch: x_local = -a·cosh φ flips the terms with a single power
+  // of the local x, a·b (sinh 2φ and φ) and cx·a·cosh φ; the (a²-b²) term and
+  // cx·b·sinh φ keep their sign.
   const double sx = m_data.reversed ? -1.0 : 1.0;
   auto primitive = [&](double phi) -> double {
     double c1Term = c1 * sin2_th * std::cosh(2. * phi);
     double c2Term = c2 * cos2_th * std::sinh(2. * phi);
-    double cxTerm = cx * sx * (R * std::cosh(phi) + S * std::sinh(phi));
-    return sx * (c1Term + c2Term + c3 * phi) + cxTerm;
+    double cxTerm = cx * (sx * R * std::cosh(phi) + S * std::sinh(phi));
+    return c1Term + sx * (c2Term + c3 * phi) + cxTerm;
   };
 
   return primitive(phi2) - primitive(phi1);
@@ -1920,18 +1919,19 @@ LC_FirstMoment LC_Hyperbola::computeLocalFirstMoment(double phi1, double phi2) c
   //   mx = ½ ∫ x² dy = (a²b/2) ∫ cosh³ φ dφ      = (a²b/2)·(sinh φ + sinh³ φ /
   //   3) my = -½ ∫ y² dx = -(ab²/2) ∫ sinh³ φ dφ    = -(ab²/2)·(cosh³ φ / 3 −
   //   cosh φ)
-  // For the reversed (left) branch x_local = -a·cosh, so x² is unchanged
-  // (mx unaffected) and x doesn't appear in my (also unaffected).
+  // dx = sx·a·sinh φ dφ flips with the branch, so my = -½∫y²dx flips;
+  // mx = ½∫x²dy does not (x² is unchanged).
   if (isInfinite()) return {};
   const double a = getMajorRadius();
   const double b = getMinorRadius();
+  const double sx = m_data.reversed ? -1.0 : 1.0;
   auto F_mx = [&](double phi) {
     const double sh = std::sinh(phi);
     return (a * a * b / 2.0) * (sh + sh * sh * sh / 3.0);
   };
   auto F_my = [&](double phi) {
     const double ch = std::cosh(phi);
-    return -(a * b * b / 2.0) * (ch * ch * ch / 3.0 - ch);
+    return -sx * (a * b * b / 2.0) * (ch * ch * ch / 3.0 - ch);
   };
   return {F_mx(phi2) - F_mx(phi1), F_my(phi2) - F_my(phi1)};
 }
@@ -1941,8 +1941,7 @@ LC_SecondMoment LC_Hyperbola::computeLocalSecondMoment(double phi1, double phi2)
   //   ixx =  ⅓ ∫ x³ dy   =  (a³b/24)·(3φ + 2 sinh 2φ + ¼ sinh 4φ)
   //   iyy = -⅓ ∫ y³ dx   = -(ab³/24)·(3φ − 2 sinh 2φ + ¼ sinh 4φ)
   //   ixy =  ½ ∫ x² y dy =  (a²b²/8)·cosh⁴ φ
-  // For reversed (left) branch x_local = -a·cosh, so x³ flips sign (ixx) but
-  // x² does not (iyy and ixy unaffected).
+  // ixx (x³) and iyy (dx) flip with the branch; ixy (x² dy) does not.
   if (isInfinite()) return {};
   const double a = getMajorRadius();
   const double b = getMinorRadius();
@@ -1955,7 +1954,7 @@ LC_SecondMoment LC_Hyperbola::computeLocalSecondMoment(double phi1, double phi2)
   auto F_iyy = [&](double phi) {
     const double s2 = std::sinh(2.0 * phi);
     const double s4 = std::sinh(4.0 * phi);
-    return -(a * b * b * b / 24.0) * (3.0 * phi - 2.0 * s2 + 0.25 * s4);
+    return -sx * (a * b * b * b / 24.0) * (3.0 * phi - 2.0 * s2 + 0.25 * s4);
   };
   auto F_ixy = [&](double phi) {
     const double ch = std::cosh(phi);

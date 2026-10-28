@@ -859,6 +859,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/blocks/rs_blocklistlistener.h
      librecad/src/lib/engine/document/container/lc_containertraverser.cpp
      librecad/src/lib/engine/document/container/lc_containertraverser.h
+     librecad/src/lib/engine/document/container/lc_loopclassifier.cpp
+     librecad/src/lib/engine/document/container/lc_loopclassifier.h
      librecad/src/lib/engine/document/container/lc_looputils.cpp
      librecad/src/lib/engine/document/container/lc_looputils.h
      librecad/src/lib/engine/document/container/lc_pathbuilder.h
@@ -888,6 +890,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_rect.cpp
      librecad/src/lib/engine/document/entities/lc_rect.h
      librecad/src/lib/engine/document/entities/lc_secondmoment.h
+     librecad/src/lib/engine/document/entities/lc_momentquadrature.cpp
+     librecad/src/lib/engine/document/entities/lc_momentquadrature.h
      librecad/src/lib/engine/document/entities/lc_curvejet.h
      librecad/src/lib/engine/document/entities/lc_curveoffset.cpp
      librecad/src/lib/engine/document/entities/lc_curveoffset.h
@@ -2655,7 +2659,9 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_polylineclosing_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_dimarrowtests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_secondmoment_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_hatchmovetests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_hatchpattern_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_image_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_insert_transform_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
@@ -2665,6 +2671,9 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/rs_text_alignment_tests.cpp
         librecad/src/lib/engine/document/container/tests/lc_container_ownership_tests.cpp
         librecad/src/lib/engine/document/container/tests/lc_copy_semantics_tests.cpp
+        librecad/src/lib/engine/document/container/tests/lc_loopclassifier_tests.cpp
+        librecad/src/lib/engine/document/container/tests/lc_looputils_tests.cpp
+        librecad/src/lib/information/tests/lc_insidecontour_tests.cpp
         librecad/src/lib/engine/tests/rs_color_tests.cpp
         librecad/src/lib/engine/document/layers/tests/lc_layerlist_tests.cpp
         librecad/src/lib/engine/document/tests/lc_trackedlistener_tests.cpp
@@ -2753,6 +2762,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_object_tests.cpp
         librecad/src/lib/filters/tests/mpolygon_tests.cpp
         librecad/src/lib/filters/tests/mpolygon_dwg_tests.cpp
+        librecad/src/lib/filters/tests/lc_mpolygon_dxf_tests.cpp
         librecad/src/lib/filters/tests/mesh_tests.cpp
         librecad/src/lib/filters/tests/acis_wireframe_tests.cpp
         librecad/src/lib/filters/tests/helix_tests.cpp
@@ -2775,6 +2785,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/lc_dxf_shape_name_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_appid_registration_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_xdata_appid_tests.cpp
+        librecad/src/lib/filters/tests/lc_hatch_angle_units_tests.cpp
         librecad/src/lib/filters/tests/lc_export_commit_tests.cpp
         librecad/src/lib/filters/tests/lc_attribute_export_tests.cpp
         librecad/src/lib/filters/tests/dxf_closed_spline_tests.cpp
@@ -3302,6 +3313,8 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/lc_dxf_shape_name_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_appid_registration_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_xdata_appid_tests.cpp
+        librecad/src/lib/filters/tests/lc_hatch_angle_units_tests.cpp
+        librecad/src/lib/filters/tests/lc_mpolygon_dxf_tests.cpp
         librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
     )
     add_executable(librecad_dxf_fast_tests

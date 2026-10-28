@@ -36,6 +36,7 @@
 
 #include "lc_creation_ellipse.h"
 #include "lc_curveoffset.h"
+#include "lc_momentquadrature.h"
 #include "lc_quadratic.h"
 #include "lc_rect.h"
 #include "rs_circle.h"
@@ -1306,13 +1307,6 @@ RS_Entity& RS_Ellipse::shear(const double k) {
     return *this;
 }
 
-double RS_Ellipse::computeLocalArea(double t1, double t2) const {
-    auto F = [&](double t) {
-        return (getMajorRadius() * getMinorRadius() / 2.0) * (t + 0.5 * std::sin(2.0 * t));
-    };
-    return F(t2) - F(t1);
-}
-
 /**
  * is the Ellipse an Arc
  * @return false, if both angle1/angle2 are zero
@@ -1519,33 +1513,6 @@ LC_Quadratic RS_Ellipse::getQuadratic() const {
     return ret;
 }
 
-LC_SecondMoment RS_Ellipse::computeLocalSecondMoment(double t1, double t2) const {
-    const double a = getMajorRadius();
-    const double b = getMinorRadius();
-
-    auto F_ixx = [&](double t) {
-        const double s2 = std::sin(2.0 * t);
-        const double s4 = std::sin(4.0 * t);
-        return (a * a * a * b / 24.0) * (3.0 * t + 2.0 * s2 + 0.25 * s4);
-    };
-
-    auto F_iyy = [&](double t) {
-        const double s2 = std::sin(2.0 * t);
-        const double s4 = std::sin(4.0 * t);
-        return (a * b * b * b / 24.0) * (3.0 * t - 2.0 * s2 + 0.25 * s4);
-    };
-
-    auto F_ixy = [&](double t) {
-        return -(a * a * b * b / 8.0) * std::pow(std::cos(t), 4);
-    };
-
-    LC_SecondMoment m;
-    m.ixx = F_ixx(t2) - F_ixx(t1);
-    m.iyy = F_iyy(t2) - F_iyy(t1);
-    m.ixy = F_ixy(t2) - F_ixy(t1);
-    return m;
-}
-
 /**
  * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
  * Contour Area =\oint x dy
@@ -1585,75 +1552,60 @@ void RS_Ellipse::setReversed(const bool r) {
     calculateBorders();
 }
 
-LC_FirstMoment RS_Ellipse::computeLocalFirstMoment(double t0, double t1) const {
+/**
+ * @brief momentLineIntegrals – Green's-theorem line integrals of (P - origin).
+ *        A whole ellipse uses the closed-form region moments evaluated in the
+ *        origin-local frame; an elliptic arc is integrated by 8-node Gauss-
+ *        Legendre with h = π/8 so that a quarter-turn needs four nodes and a
+ *        full turn needs sixteen.
+ */
+LC_AreaMoments RS_Ellipse::momentLineIntegrals(const RS_Vector& origin) const {
     const double a = getMajorRadius();
     const double b = getMinorRadius();
-    // mx = (a²b/2) ∫ cos³t dt = (a²b/2)[sin t − sin³t/3]
-    // my = (ab²/2) ∫ sin³t dt = (ab²/2)[−cos t + cos³t/3]
-    auto F_mx = [&](double t) {
-        const double st = std::sin(t);
-        return (a * a * b / 2.0) * (st - st * st * st / 3.0);
-    };
-    auto F_my = [&](double t) {
-        const double ct = std::cos(t);
-        return (a * b * b / 2.0) * (-ct + ct * ct * ct / 3.0);
-    };
-    return {F_mx(t1) - F_mx(t0), F_my(t1) - F_my(t0)};
-}
-
-/**
- * @brief firstMomentLineIntegral – exact 1st-order moments via Green's theorem
- *        (local aligned frame + rotation + parallel-axis shift)
- */
-LC_FirstMoment RS_Ellipse::firstMomentLineIntegral() const {
-    if (!isEllipticArc()) {
-        const double area = M_PI * getMajorRadius() * getMinorRadius();
-        return {m_data.center.x * area, m_data.center.y * area};
-    }
-
     const double phi = getAngle();
-    const double cx  = m_data.center.x;
-    const double cy  = m_data.center.y;
-
-    double t0 = m_data.angle1;
-    double t1 = isReversed() ? t0 - getAngleLength() : t0 + getAngleLength();
-
-    const auto local = computeLocalFirstMoment(t0, t1);
-    const double area = computeLocalArea(t0, t1);
-
-    return local.rotated(phi).shifted(-cx, -cy, area);
-}
-
-/**
- * @brief secondMomentLineIntegral – exact 2nd-order moments via Green's theorem
- *        (local aligned frame + rotation + parallel-axis shift)
- */
-LC_SecondMoment RS_Ellipse::secondMomentLineIntegral() const {
-    const double cx  = m_data.center.x;
-    const double cy  = m_data.center.y;
-    const double phi = getAngle();
+    const double dx = m_data.center.x - origin.x;
+    const double dy = m_data.center.y - origin.y;
     if (!isEllipticArc()) {
-        // Full ellipse – exact closed-form (original fast formula kept)
-        const double a   = getMajorRadius();
-        const double b   = getMinorRadius();
         const double cosP = std::cos(phi);
         const double sinP = std::sin(phi);
-        const double piab = M_PI * a * b;
-
-        return {
-            piab * (cx*cx + (a*a*cosP*cosP + b*b*sinP*sinP) / 4.0),
-            piab * (cy*cy + (a*a*sinP*sinP + b*b*cosP*cosP) / 4.0),
-            piab * (cx*cy + (a*a - b*b) * cosP * sinP / 4.0)
-        };
+        const double area = M_PI * a * b;
+        LC_AreaMoments out;
+        out.area = area;
+        out.first.mx = area * dx;
+        out.first.my = area * dy;
+        out.second.ixx = area *
+            (dx * dx + (a * a * cosP * cosP + b * b * sinP * sinP) / 4.0);
+        out.second.iyy = area *
+            (dy * dy + (a * a * sinP * sinP + b * b * cosP * cosP) / 4.0);
+        out.second.ixy = area *
+            (dx * dy + (a * a - b * b) * cosP * sinP / 4.0);
+        return out;
     }
-
-    double t0 = m_data.angle1;
-    double t1 = isReversed() ? t0 - getAngleLength() : t0 + getAngleLength();
-
-    const auto local = computeLocalSecondMoment(t0, t1);
-    const double area = computeLocalArea(t0, t1);
-
-    return local.rotated(phi).shifted(-cx, -cy, area);
+    const double t0 = m_data.angle1;
+    const double sweep = LC_MomentQuadrature::signedSweep(
+        m_data.angle1, m_data.angle2, isReversed());
+    const double t1 = t0 + sweep;
+    const double cosP = std::cos(phi);
+    const double sinP = std::sin(phi);
+    // P(t) = d + R(phi)(a cos t, b sin t); P'(t) = R(phi)(-a sin t, b cos t).
+    auto eval = [dx, dy, a, b, cosP, sinP](
+                    double t, const RS_Vector& /*org*/, RS_Vector& pmo,
+                    RS_Vector& dp) {
+        const double ct = std::cos(t);
+        const double st = std::sin(t);
+        const double lx = a * ct;
+        const double ly = b * st;
+        pmo.x = dx + cosP * lx - sinP * ly;
+        pmo.y = dy + sinP * lx + cosP * ly;
+        pmo.valid = true;
+        const double tx = -a * st;
+        const double ty =  b * ct;
+        dp.x = cosP * tx - sinP * ty;
+        dp.y = sinP * tx + cosP * ty;
+        dp.valid = true;
+    };
+    return LC_MomentQuadrature::integrate(
+        eval, t0, t1, M_PI / 8.0, RS_Vector{0.0, 0.0});
 }
 
 
