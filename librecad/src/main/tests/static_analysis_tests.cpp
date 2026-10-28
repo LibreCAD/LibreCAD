@@ -738,6 +738,36 @@ private slots:
         }
     }
 
+    // Issue #3196: going back from "Select part of first line that should remain
+    // after trim" ran init(), which forgot line 1, and the next mouse move
+    // highlighted it: a null pointer.
+    void lineJoinBackKeepsFirstLine()
+    {
+        RS_Graphic graphic;
+        graphic.newDoc();
+        graphic.addEntity(new RS_Line(&graphic, RS_LineData({0, 0}, {100, 0})));
+        graphic.addEntity(new RS_Line(&graphic, RS_LineData({50, 20}, {50, 60})));
+        RS_StaticGraphicView view(200, 200, nullptr);
+        view.setContainer(&graphic);
+        LineJoinAction action(graphic, view);
+        action.init(LineJoinAction::SetLine1);
+        auto send = [&view, &action](QEvent::Type type, Qt::MouseButton button, const RS_Vector& point) {
+            const RS_Vector position = view.toGui(point);
+            QMouseEvent event(type, QPointF(position.x, position.y), button, Qt::NoButton, Qt::NoModifier);
+            if (type == QEvent::MouseMove) action.mouseMoveEvent(&event);
+            else action.mouseReleaseEvent(&event);
+        };
+        send(QEvent::MouseButtonRelease, Qt::LeftButton, {30, 0});
+        send(QEvent::MouseButtonRelease, Qt::LeftButton, {50, 40});
+        QCOMPARE(action.getStatus(), int(LineJoinAction::ResolveFirstLineTrim));
+        send(QEvent::MouseButtonRelease, Qt::RightButton, {50, 40});
+        QCOMPARE(action.getStatus(), int(LineJoinAction::SetLine2));
+        send(QEvent::MouseMove, Qt::NoButton, {80, 30});
+        // line 1 is still chosen
+        send(QEvent::MouseButtonRelease, Qt::LeftButton, {50, 40});
+        QCOMPARE(action.getStatus(), int(LineJoinAction::ResolveFirstLineTrim));
+    }
+
     void dwgSectionDefaults()
     {
         dwgSectionInfo section;

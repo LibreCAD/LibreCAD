@@ -196,6 +196,14 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
 }
 
 void LC_ActionModifyLineJoin::doBack(QMouseEvent *pEvent, int status){
+    if (status == ResolveFirstLineTrim) {
+        // Back to the choice of line 2, keeping line 1: the base doBack() runs
+        // init(), which forgets both lines (#3196).
+        linesJoinData.reset();
+        line2 = nullptr;
+        setStatus(SetLine2);
+        return;
+    }
     LC_AbstractActionWithPreview::doBack(pEvent, status);
     switch (status) {
         case SetLine1:
@@ -203,10 +211,6 @@ void LC_ActionModifyLineJoin::doBack(QMouseEvent *pEvent, int status){
             break;
         case SetLine2: {
             setStatus(SetLine1);
-            break;
-        }
-        case ResolveFirstLineTrim: {
-            setStatus(SetLine2);
             break;
         }
         default:
