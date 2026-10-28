@@ -2351,6 +2351,23 @@ the following SHA256 values:
 | hostile | `48c092b785eb8f3618760086a9a3416bbf7e2152a56317ef169e1009c67e056c` | `69dd633ff097188d5a3d36e23866ef9f19c15b61c29f24cc871f30b27f5b09a0` |
 | client | `78b14dbb9e19acb0f784053042cbbe799cc37719a6ebe113f9e25556d85de32a` | `e7de03ab9c409b87745beeb51f1ee5c9eb223219cb2f6d795434719d46fd0f0e` |
 
+W29 shared open finalization `5fe8b65e3` extracts the existing successful-open
+bookkeeping into `LC_DocumentsStorage::finalizeLoadedGraphic`, preserving the
+order of `onLoadingCompleted`, autosave/filename setup, saved timestamp, and
+re-dirtying repaired or recovery imports. Existing synchronous loading now uses
+the same operation that a later private-document GUI handoff can call. Tests
+cover clean, repaired, recovery and format-unknown partial graphics; this does
+not connect the staged session to a window or implement template finalization.
+
+Release and focused ASan full-test binaries rebuilt. Each `[documentsstorage]`
+run executes all 29 discovered declarations as 52 JUnit cases, 1202 assertions,
+zero failures/errors and one existing skip: the JWW Save As test is skipped
+because JWW is advertised as exportable although nothing writes it. ASan uses
+`detect_leaks=0`; no full-suite or visible-GUI claim is made. In the evidence
+root, `offset-W29-storage-{release,asan}.xml` have SHA256 respectively
+`52ebd0d11986696d27652468ba53f4408807213f0b39e81cddda174a1382db43` and
+`d31d4c154576cbdd3722f1ea4505c98fcd666ad5667a0596117567db0805de2c`.
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -2404,6 +2421,8 @@ into an owning MDI document only after all carriers resolve, preserve explicit
 partial-import decisions, filename/saved/autosave state and document ownership,
 and cancel on window death without stale delivery or nested event loops. Existing
 `QC_MDIWindow` does not own a supplied document; establish ownership explicitly.
+Use the W29 finalizer before publication, and audit the existing open path's
+post-load `setModified(false)` so that repair-dirty state is not discarded.
 Design and test direct synchronous, console, nested-XREF and error-dialog contracts
 without silently weakening editable imports. Qualify remaining platform faults
 without weakening the existing worker tests.
