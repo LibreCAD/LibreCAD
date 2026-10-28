@@ -568,7 +568,7 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     }
 
     // Build tiles per root; measure per-tile pair work with an early stop.
-    std::vector<std::vector<RS_Vector>> tiles;
+    std::vector<std::vector<LC_LoopUtils::LC_TileSlot>> tiles;
     tiles.reserve(m_orderedLoops->size());
     double pairWorkTotal = 0.0;
     const double pairStop = 10.0 * dpolicy.workCap;

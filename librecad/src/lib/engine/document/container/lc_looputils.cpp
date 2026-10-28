@@ -1288,17 +1288,19 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
     }
 
     /**
-     * @brief Generates tile offsets for pattern repetition over this tree's
+     * @brief Generates tile slots for pattern repetition over this tree's
      * bounding box, anchored at latticeAnchor.
      *
      * Tile indices are half-open [floor((bbMin - a)/P), ceil((bbMax - a)/P))
      * on each axis; the pattern's minimum corner sits on the lattice points
      * latticeAnchor + (i*W, k*H), as in 2.2.1. Each tile is kept when its
      * rect intersects bbox *and* either overlaps the loop or contains the
-     * pattern's centre.
+     * pattern's centre. A tile whose expanded rect (one slack per side) does
+     * not overlap any boundary edge is marked interior so the trimmer can
+     * emit its clones whole.
      */
-    std::vector<RS_Vector> LC_Loops::createTiles(const RS_Pattern& pattern,
-                                                 const RS_Vector& latticeAnchor) const {
+    std::vector<LC_TileSlot> LC_Loops::createTiles(const RS_Pattern& pattern,
+                                                   const RS_Vector& latticeAnchor) const {
         double iFirst = 0.0, iEnd = 0.0, kFirst = 0.0, kEnd = 0.0;
         if (!tileIndexRange(pattern, latticeAnchor, iFirst, iEnd, kFirst, kEnd)) {
             return {};
@@ -1311,7 +1313,14 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
         const RS_Vector pCenter = (pBox.lowerLeftCorner() + pBox.upperRightCorner()) / 2.0;
         const long long nIx = static_cast<long long>(iEnd - iFirst);
         const long long nIy = static_cast<long long>(kEnd - kFirst);
-        std::vector<RS_Vector> tiles;
+        // Interior-slot slack: two per-hatch ON tolerances, so a tile whose
+        // border lies within one ON band of a boundary edge whose bbox does
+        // not touch the tile is still treated as near-boundary. Without this,
+        // a line collinear with the region's top or left edge would be
+        // emitted whole by the fast path even though keepPiece says the top
+        // and left are not drawn.
+        const double slack = 2.0 * ((m_eps > 0.0) ? m_eps : RS_TOLERANCE);
+        std::vector<LC_TileSlot> tiles;
         for (long long ci = 0; ci < nIx; ++ci) {
             for (long long ck = 0; ck < nIy; ++ck) {
                 const RS_Vector tile = latticeAnchor
@@ -1324,9 +1333,14 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
                     continue;
                 }
                 // Include if overlaps or center inside
-                if (overlap(tileRect) || isPointInside(tile + pCenter)) {
-                    tiles.push_back(tile);
+                const bool crossed = overlap(tileRect);
+                if (!(crossed || isPointInside(tile + pCenter))) {
+                    continue;
                 }
+                const LC_Rect expandedRect{tileRect.minP() - RS_Vector{slack, slack},
+                                           tileRect.maxP() + RS_Vector{slack, slack}};
+                const bool nearBoundary = crossed || overlap(expandedRect);
+                tiles.push_back({tile, !nearBoundary});
             }
         }
         return tiles;
@@ -1357,7 +1371,7 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
      * rect. Returns early once the running sum exceeds stopAbove.
      */
     double LC_Loops::tileWork(const RS_Pattern& pattern,
-                              const std::vector<RS_Vector>& tiles,
+                              const std::vector<LC_TileSlot>& tiles,
                               double stopAbove) const {
         const LC_Rect pBox{pattern.getMin(), pattern.getMax()};
         double E = 0.0;
@@ -1368,9 +1382,9 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
         auto boundaries = getAllBoundaries();
         if (boundaries.empty()) return 0.0;
         double total = 0.0;
-        for (const RS_Vector& tile : tiles) {
-            const LC_Rect tileRect{pBox.lowerLeftCorner() + tile,
-                                   pBox.upperRightCorner() + tile};
+        for (const LC_TileSlot& slot : tiles) {
+            const LC_Rect tileRect{pBox.lowerLeftCorner() + slot.offset,
+                                   pBox.upperRightCorner() + slot.offset};
             double B = 0.0;
             for (const RS_Entity* b : boundaries) {
                 if (b == nullptr) continue;
@@ -1390,8 +1404,9 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
      * sub-pieces whose midpoint is inside. Copies are never extended.
      */
     std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Pattern& pattern,
-                                                                      const std::vector<RS_Vector>& tiles,
-                                                                      LC_HatchPieceBudget& budget) const {
+                                                                      const std::vector<LC_TileSlot>& tiles,
+                                                                      LC_HatchPieceBudget& budget,
+                                                                      bool interiorFastPath) const {
         auto trimmed = std::make_unique<RS_EntityContainer>();
         auto boundaries = getAllBoundaries();
         PointClassifier classifier = [this](const RS_Vector& q) {
@@ -1410,13 +1425,22 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
             trimmed->addEntity(ent.release());
             return true;
         };
-        for (const RS_Vector& tile : tiles) {
+        for (const LC_TileSlot& slot : tiles) {
             for (RS_Entity* e : pattern) {
                 if (!e->isAtomic()) {
                     continue;
                 }
                 auto cloned = std::unique_ptr<RS_Entity>(e->clone());
-                cloned->move(tile);
+                cloned->move(slot.offset);
+
+                // Interior fast path: no boundary edge comes within one ON
+                // band of this tile, so every clone of a pattern entity at
+                // this offset is inside the loop. Emit it whole; the slow
+                // path's no-intersection branch would do the same.
+                if (interiorFastPath && slot.interior) {
+                    if (!emitPiece(std::move(cloned))) return trimmed;
+                    continue;
+                }
 
       std::vector<RS_Vector> all_inters;
       for (auto* b : boundaries) {

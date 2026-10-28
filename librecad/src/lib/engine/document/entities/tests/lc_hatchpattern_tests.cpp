@@ -50,6 +50,9 @@
 #include "lc_filtertestsupport.h"
 #include "lc_hatchtestsupport.h"
 #include "lc_looputils.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_ellipse.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphic.h"
 #include "rs_hatch.h"
@@ -1024,5 +1027,268 @@ TEST_CASE("Hatch pattern lines: islands in a U and an L wall match the clipped c
         REQUIRE(fixed.size() == carpet.size());
         REQUIRE(matchedFraction(fixed, carpet, 1e-7) == Catch::Approx(1.0));
         REQUIRE(matchedFraction(carpet, fixed, 1e-7) == Catch::Approx(1.0));
+    }
+}
+
+// --- Interior-tile fast path. ---------------------------------------------
+// LC_Loops::createTiles now returns LC_TileSlot values whose interior flag is
+// true when the tile's expanded rect (one slack per side) does not overlap any
+// boundary edge. The trimmer's fast path emits every clone of such a slot
+// whole, without clipping; the no-intersection branch of the slow path would
+// have emitted the identical clone through keepPiece.
+
+namespace {
+
+// NOLINTBEGIN(readability-identifier-naming)
+
+// A root for the first ring of rings, built through LoopOptimizer so m_eps is
+// set from the per-hatch tolerance of the loop container.
+std::shared_ptr<LC_LoopUtils::LoopOptimizer>
+buildOptimizerFromRings(RS_EntityContainer& contour, const std::vector<Ring>& rings) {
+    for (const Ring& ring : rings) {
+        for (size_t i = 0; i < ring.size(); ++i) {
+            const RS_Vector& a = ring[i];
+            const RS_Vector& b = ring[(i + 1) % ring.size()];
+            contour.addEntity(new RS_Line(&contour, a, b));
+        }
+    }
+    contour.calculateBorders();
+    return std::make_shared<LC_LoopUtils::LoopOptimizer>(contour);
+}
+
+// A stable key for a trimmer-produced piece. Doubles use exact == comparison
+// so the fast and slow paths' bit-identical clones match element-by-element.
+struct PieceKey {
+    int rtti = 0;
+    std::array<double, 8> data{};
+    bool operator<(const PieceKey& o) const {
+        if (rtti != o.rtti) return rtti < o.rtti;
+        for (size_t i = 0; i < data.size(); ++i) {
+            if (data[i] != o.data[i]) return data[i] < o.data[i];
+        }
+        return false;
+    }
+    bool operator==(const PieceKey& o) const {
+        return rtti == o.rtti && data == o.data;
+    }
+};
+
+PieceKey pieceKey(const RS_Entity* e) {
+    PieceKey k;
+    k.rtti = static_cast<int>(e->rtti());
+    switch (e->rtti()) {
+    case RS2::EntityLine: {
+        const auto* ln = static_cast<const RS_Line*>(e);
+        k.data[0] = ln->getStartpoint().x;
+        k.data[1] = ln->getStartpoint().y;
+        k.data[2] = ln->getEndpoint().x;
+        k.data[3] = ln->getEndpoint().y;
+        break;
+    }
+    case RS2::EntityArc: {
+        const auto* ar = static_cast<const RS_Arc*>(e);
+        k.data[0] = ar->getCenter().x;
+        k.data[1] = ar->getCenter().y;
+        k.data[2] = ar->getRadius();
+        k.data[3] = ar->getAngle1();
+        k.data[4] = ar->getAngle2();
+        k.data[5] = ar->isReversed() ? 1.0 : 0.0;
+        break;
+    }
+    case RS2::EntityCircle: {
+        const auto* ci = static_cast<const RS_Circle*>(e);
+        k.data[0] = ci->getCenter().x;
+        k.data[1] = ci->getCenter().y;
+        k.data[2] = ci->getRadius();
+        break;
+    }
+    case RS2::EntityEllipse: {
+        const auto* el = static_cast<const RS_Ellipse*>(e);
+        k.data[0] = el->getCenter().x;
+        k.data[1] = el->getCenter().y;
+        k.data[2] = el->getMajorP().x;
+        k.data[3] = el->getMajorP().y;
+        k.data[4] = el->getRatio();
+        k.data[5] = el->getAngle1();
+        k.data[6] = el->getAngle2();
+        k.data[7] = el->isReversed() ? 1.0 : 0.0;
+        break;
+    }
+    default:
+        break;
+    }
+    return k;
+}
+
+std::vector<PieceKey> pieceKeys(const RS_EntityContainer& trimmed) {
+    std::vector<PieceKey> keys;
+    for (const RS_Entity* e : trimmed) {
+        if (e == nullptr) continue;
+        keys.push_back(pieceKey(e));
+    }
+    std::sort(keys.begin(), keys.end());
+    return keys;
+}
+
+// NOLINTEND(readability-identifier-naming)
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern fast path: only tiles away from the boundary are interior",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    RS_EntityContainer contour;
+    auto opt = buildOptimizerFromRings(contour, {rectRing(0, 0, 500, 300)});
+    auto roots = opt->getResults();
+    REQUIRE(roots);
+    REQUIRE_FALSE(roots->empty());
+    const LC_LoopUtils::LC_Loops& root = (*roots)[0];
+
+    SECTION("HEX") {
+        // HEX tile 100 x 60: 5 x 5 grid for 500 x 300 but the two outer rows
+        // of y-centres fall outside the rect, leaving 20 kept slots. Interior
+        // slots are the 6 tiles whose expanded rect does not overlap the
+        // boundary (columns 1-3 x rows 1-2).
+        auto scaled = scaledPattern("HEX", 1.0);
+        auto tileSlots = root.createTiles(*scaled, RS_Vector{0.0, 0.0});
+        REQUIRE(tileSlots.size() == 20u);
+        int interior = 0;
+        for (const auto& s : tileSlots) if (s.interior) ++interior;
+        CHECK(interior == 6);
+    }
+    SECTION("BRICK") {
+        // BRICK tile 100 x 100: 5 x 3 kept. Interior: columns 1-3, row 1.
+        auto scaled = scaledPattern("BRICK", 1.0);
+        auto tileSlots = root.createTiles(*scaled, RS_Vector{0.0, 0.0});
+        REQUIRE(tileSlots.size() == 15u);
+        int interior = 0;
+        for (const auto& s : tileSlots) if (s.interior) ++interior;
+        CHECK(interior == 3);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern fast path: interior tiles draw exactly what clipping draws",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+
+    auto compareFastAndSlow = [](const LC_LoopUtils::LC_Loops& root,
+                                 const RS_Pattern& scaled) {
+        auto tileSlots = root.createTiles(scaled, RS_Vector{0.0, 0.0});
+        LC_HatchPieceBudget fast{std::numeric_limits<std::size_t>::max()};
+        LC_HatchPieceBudget slow{std::numeric_limits<std::size_t>::max()};
+        auto fastOut = root.trimPatternEntities(scaled, tileSlots, fast, true);
+        auto slowOut = root.trimPatternEntities(scaled, tileSlots, slow, false);
+        REQUIRE(fastOut);
+        REQUIRE(slowOut);
+        REQUIRE(fast.taken == slow.taken);
+        const auto fastKeys = pieceKeys(*fastOut);
+        const auto slowKeys = pieceKeys(*slowOut);
+        REQUIRE(fastKeys.size() == slowKeys.size());
+        for (size_t i = 0; i < fastKeys.size(); ++i) {
+            CHECK(fastKeys[i] == slowKeys[i]);
+        }
+    };
+
+    SECTION("500 x 300 rect, BRICK") {
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour, {rectRing(0, 0, 500, 300)});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        auto scaled = scaledPattern("BRICK", 1.0);
+        compareFastAndSlow((*roots)[0], *scaled);
+    }
+    SECTION("500 x 300 rect, HEX") {
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour, {rectRing(0, 0, 500, 300)});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        auto scaled = scaledPattern("HEX", 1.0);
+        compareFastAndSlow((*roots)[0], *scaled);
+    }
+    SECTION("500 x 300 rect, ANSI31") {
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour, {rectRing(0, 0, 500, 300)});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        auto scaled = scaledPattern("ANSI31", 1.0);
+        compareFastAndSlow((*roots)[0], *scaled);
+    }
+    SECTION("500 x 300 rect, PAISLEY") {
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour, {rectRing(0, 0, 500, 300)});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        auto scaled = scaledPattern("PAISLEY", 1.0);
+        compareFastAndSlow((*roots)[0], *scaled);
+    }
+    SECTION("Rect with a square island, BRICK") {
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour,
+            {rectRing(0, 0, 400, 400), rectRing(100, 100, 300, 300)});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        REQUIRE_FALSE(roots->empty());
+        auto scaled = scaledPattern("BRICK", 1.0);
+        compareFastAndSlow((*roots)[0], *scaled);
+    }
+    SECTION("Full circle, HEX") {
+        auto contour = std::make_unique<RS_EntityContainer>(nullptr, true);
+        contour->addEntity(new RS_Circle(contour.get(),
+            RS_CircleData(RS_Vector(250.0, 150.0), 150.0)));
+        contour->calculateBorders();
+        LC_LoopUtils::LoopOptimizer opt(*contour);
+        auto roots = opt.getResults();
+        REQUIRE(roots);
+        REQUIRE_FALSE(roots->empty());
+        auto scaled = scaledPattern("HEX", 1.0);
+        compareFastAndSlow((*roots)[0], *scaled);
+    }
+    SECTION("Full ellipse rotated 20 deg, ANSI31") {
+        auto contour = std::make_unique<RS_EntityContainer>(nullptr, true);
+        RS_Vector major(240.0, 0.0);
+        major.rotate(20.0 * M_PI / 180.0);
+        contour->addEntity(new RS_Ellipse(contour.get(),
+            RS_EllipseData{RS_Vector(250.0, 150.0), major, 140.0 / 240.0,
+                           0.0, 0.0, false}));
+        contour->calculateBorders();
+        LC_LoopUtils::LoopOptimizer opt(*contour);
+        auto roots = opt.getResults();
+        REQUIRE(roots);
+        REQUIRE_FALSE(roots->empty());
+        auto scaled = scaledPattern("ANSI31", 1.0);
+        compareFastAndSlow((*roots)[0], *scaled);
+    }
+    SECTION("BRICK, slack-sensitive top-edge rect") {
+        // Top edge sits a fraction of epsOn above the BRICK line y = 300.00003
+        // (BRICK tile height is 100.00001 in the loaded pattern). The slack
+        // keeps every top-row tile non-interior so keepPiece can decide
+        // whether the top-line piece draws.
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour,
+            {rectRing(0.0, 0.0, 500.0, 300.00003 + 1e-7)});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        auto scaled = scaledPattern("BRICK", 1.0);
+        compareFastAndSlow((*roots)[0], *scaled);
+    }
+    SECTION("U-in-U, BRICK") {
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour,
+            {hatchfixOuterU(), hatchfixInnerU()});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        auto scaled = scaledPattern("BRICK", 1.0);
+        compareFastAndSlow((*roots)[0], *scaled);
+    }
+    SECTION("L wall, BRICK") {
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour,
+            {hatchfixLOuter(), hatchfixLInner()});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        auto scaled = scaledPattern("BRICK", 1.0);
+        compareFastAndSlow((*roots)[0], *scaled);
     }
 }
