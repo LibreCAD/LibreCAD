@@ -258,6 +258,28 @@ private:
 
 } // namespace
 
+TEST_CASE("Private graphic finalization preserves normal open bookkeeping", "[documentsstorage][import][offset]") {
+    ensureApp(); QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString source = directory.filePath("drawing.dxf");
+    QFile file(source); REQUIRE(file.open(QIODevice::WriteOnly)); REQUIRE(file.write("test") == 4); file.close();
+    TestStorage storage; RS_Graphic graphic; graphic.initForNewDocument();
+    graphic.setFormatType(RS2::FormatDXFRW);
+    bool expectedModified = false;
+    SECTION("clean import") {}
+    SECTION("geometry repair") { graphic.setImportGeometryMutated(true); expectedModified = true; }
+    SECTION("recovery import") { graphic.setDxfRecoverySourceFile(source); expectedModified = true; }
+    SECTION("accepted partial import") { graphic.setFormatType(RS2::FormatUnknown); }
+    const auto format = graphic.getFormatType();
+    storage.finalizeLoadedGraphic(graphic, source);
+    CHECK(graphic.getFilename() == source);
+    CHECK_FALSE(graphic.getAutoSaveFileName().isEmpty());
+    CHECK(graphic.getAutoSaveFileName() != source);
+    CHECK(graphic.getLastSaveTime() == QFileInfo(source).lastModified());
+    CHECK(graphic.getFormatType() == format);
+    CHECK(graphic.isModified() == expectedModified);
+    CHECK_FALSE(graphic.takeImportGeometryMutated());
+}
+
 TEST_CASE("Legacy DXF recovery saves a corrected copy and protects its original",
           "[documentsstorage][save][legacyutf8]") {
     ensureApp();

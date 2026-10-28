@@ -249,19 +249,21 @@ bool LC_DocumentsStorage::loadGraphic(RS_Graphic* graphic, const QString &filena
     const bool ret = RS_FileIO::instance()->fileImport(*graphic, filename, type, nullptr, encoding);
 
     if (ret) {
-        graphic->onLoadingCompleted();
-        const QFileInfo finfo(filename);
-        const auto autosaveFileName = createAutoSaveFileName(finfo);
-        graphic->setAutosaveFileName(autosaveFileName);
-        graphic->setFilename(filename);
-        // markSaved clears modified; re-dirty when import repairs rewrote coords
-        // so Save does not silently rewrite the user's file without notice.
-        const bool importMutated = graphic->takeImportGeometryMutated();
-        graphic->markSaved(finfo.lastModified());
-        if (importMutated || !graphic->dxfRecoverySourceFile().isEmpty())
-            graphic->setModified(true);
+        finalizeLoadedGraphic(*graphic, filename);
     }
     return ret;
+}
+
+void LC_DocumentsStorage::finalizeLoadedGraphic(RS_Graphic& graphic, const QString& filename) const {
+    graphic.onLoadingCompleted();
+    const QFileInfo finfo(filename);
+    graphic.setAutosaveFileName(createAutoSaveFileName(finfo));
+    graphic.setFilename(filename);
+    // Keep repairs and recovery imports dirty after markSaved clears the flag.
+    const bool importMutated = graphic.takeImportGeometryMutated();
+    graphic.markSaved(finfo.lastModified());
+    if (importMutated || !graphic.dxfRecoverySourceFile().isEmpty())
+        graphic.setModified(true);
 }
 
 bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, const bool sameFile) {
