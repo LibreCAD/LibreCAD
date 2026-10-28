@@ -105,7 +105,7 @@ This inventory compares the older attached tree with the later candidate.
 | Type/UI/source actions | Entity enum/coverage, property queue/dialog, default drag, Update/Restore actions | Candidate present. Property queue defers publication with a timer, but prepares geometry synchronously in `apply`; a deferred commit is not background computation. |
 | Stored-cache Trim | `lc_offsetcachetrim`, contacts/matching helpers, Modify Trim action and file tests | Candidate present: pure preparation, exact fragments, two-operand publication and plain-fragment persistence. Recheck precision/ownership/undo guarantees. |
 | Validation workers | `scripts/offset-curve-validation/`, X-H1 through X-H7 | Candidate has Node developer/test workers and recorded timeout fixes. These tools are not a shipped isolated geometry worker. Do not confuse their deadlines with GUI computation limits. |
-| Native geometry-worker path | Real six-operation protocol4 helper/client, typed source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip and Update GUI routing committed/qualified | W0/W1, these callers and the isolated real-geometry-entry timeout lane are recorded. Preview-cache portability, creation/repeat routing, trim, import and packaged/final acceptance remain mandatory W0-W2 work. |
+| Native geometry-worker path | Real seven-operation protocol4 helper/client, cached source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip and Update GUI routing committed/qualified | W16/W17 qualify preview-cache portability. Creation/repeat routing, trim, import and packaged/final acceptance remain mandatory W0-W2 work. |
 | Tests/build targets | Main Catch target, filter micro targets and two standalone offset allocation-failure targets | Candidate present; source registration is not discovery/execution. Use the actual targets in section5.3, not just the old grouped fast lanes. |
 | Surviving test defect | `spline_offset_representation_tests.cpp` lines205 and668 in candidate still use DWG enum ranges | `FormatDWG2007` is outside the range; those ordinary representation loops also omit it. Fix classification and add an executed R2007 regression in S0. The separate candidate matrix already lists all six DWG versions. |
 
@@ -509,6 +509,7 @@ member order, enum and count admission. Request values do not confer editability
 | TrimConic3 | `[cache,conic,conicPick,cachePick-or-null,trimLimits]`; conic complement and Trim Two | One original contact session and shared budget; prepare both operands before one parent undo/publication. |
 | CheckThrough4 | `[cache,definition,worldTolerance,point,checkLimits]`; unchanged-definition Through grip/dialog edits | Membership-only receipt; no generation, C rerun, returned curve or native admission. The exact raw input remains bound through parent completion. |
 | Produce5 | `[source,context,bounds,coordinate,fallback-or-null,distance,copies,asOffsetCurve,preview,batchLimits]`; shared ellipse/raw-native-cache copy series | Complete source diagnostics, exact per-copy output groups and definition/proposal binding. Parent uses private completion, preserves attribute policy and measures its own display expansion. Preview-cache portability and GUI routing remain open. |
+| CachedProduce6 | `[Produce5-body,ordinaryPreviewSnapshot]`; snapshot `[revision,otherEntries,cleared,entries]` | W17 qualifies pointer-free cache handoff across fresh processes. Response `[Produce5-payload,updatedSnapshot,reusedCopies]` binds sorted copy ordinals and their remaining output budgets. Cache hits consume no new producer effort; native adoption/rebase checks remain mandatory. Existing operation0-5 layouts are unchanged. |
 
 Cutters are owned Segment/Arc/Circle/Ellipse/Spline values. Every spline member,
 including latent fit/saved-open fields and flags, and every ellipse/arc render
@@ -1847,6 +1848,52 @@ routing. Implement the remaining bounded slices before closing creation/repeat:
 
 Test/commit each slice, immediately checkpoint this file and push PR #3193.
 
+Cached transport continuation W17:
+`0552876f9` implements CachedProduce6 in the existing protocol4 helper, request/
+reply admission and private completion. Source preparation is shared, not a second
+generator: side resolves once and per-copy cache/rebase/adoption diagnostics are
+retained. Sorted reuse ordinals bind to actual side/magnitude entries and remaining
+budgets; output usage may include cached usage but may not invent producer runs or
+sample/pair effort. Updated revisions bind to actual keep calls and global clears.
+Native zero-sum repeat uses the distinct stored-cache fallback, while an altered
+ordinary cached line cannot bypass ellipse adoption C. Only joined completions
+can merge a current parent's cache; moved-from and stale-revision merges refuse.
+All raw collections/scalars are bounded/scanned before native geometry copying;
+combined serialized item/frame caps are unchanged. Oversized transport refuses,
+not silently regenerates. Existing operation0-5 bodies/envelope remain unchanged.
+
+Fresh full micro discovery/execution in Release and ASan passes with zero errors,
+failures/skips, complete identities and only named SECTION extras:
+
+| W17 suite | Declarations | JUnit cases | Assertions Release / ASan |
+|---|---|---|---|
+| request | 13 | 13 | 597166 / 597166 |
+| result | 26 | 26 | 467578 / 467578 |
+| kernel | 18 | 18 | 2728 / 2728 |
+| real process | 4 | 4 | 2765 / 3215 |
+| client | 15 | 15 | 7938 / 11171 |
+| fault | 7 | 7 | 19583 / 25097 |
+| geometry timeout | 1 | 1 | 1288 / 2272 |
+| worker edit | 15 | 15 | 101553 / 101553 |
+| source preparation | 79 | 85 | 83452 / 83452 |
+
+Seven new cases cover request/reply corruption, real cubic value round trips,
+fresh-process zero-effort reuse, opposite-side misses, refusal growth, cross-source
+eviction, mandatory native C, zero-sum fallback and private/stale/moved completion
+behavior. Existing generic fault/timeout tests also pass; these are not newly
+cached-operation-specific crash proofs. Source-free local helper executables and
+real client discovery build in both configurations; qmake6 app/deployment and
+visible GUI acceptance are not claimed. ASan uses `detect_leaks=0`; polling totals
+remain scheduling-dependent. Evidence root is unchanged; `W17-evidence.sha256`
+binds54 qualified XML/log files and two final build logs, SHA256
+`d83ba2aa4bbf74df5a21c1e48a8fc5327c3234b6f65268a2fa6e74b8ee6c145a`.
+Development/probe reports are not final qualification.
+
+W16/W17 complete preview-cache value/process portability, not creation/repeat GUI
+routing. Next implement W18 ordered preparation/publication and W19 GUI ownership
+and cancellation as specified above. Retain ordinary-only behavior and all
+existing option/geometry/selection/undo assertions.
+
 Remaining creation/repeat steps after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -1855,10 +1902,9 @@ Remaining creation/repeat steps after these review follow-ups:
    An original-definition rebase followed by the existing stored-cache fallback
    intentionally uses DIFFERENT inputs/remaining allowances; do not replace that
    fallback with ordinary geometry from the rebase invocation.
-3. W16 qualifies owned cache snapshot/rebinding/merge and cross-source clearing.
-   Complete W17 transport before claiming preview-cache portability across real
-   helper processes. Preserve budget-sensitive reuse and zero new producer effort
-   on hits; leave unrelated ordinary source tools unchanged.
+3. W16/W17 qualify owned cache snapshot/rebinding/merge, cross-source clearing
+   and transport across fresh helpers. Retain this budget/side/effort parity during
+   GUI integration; leave unrelated ordinary source tools unchanged.
 4. Route preview/commit through owned continuations, complete context/source/undo/
    selection/UCS seals, cancellation/death handling and one atomic publication.
    Parent materialization must use the correct existing local attribute policy
@@ -1893,8 +1939,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** W17 cached Produce transport
-and real-process cache parity, then W18/W19 creation/repeat GUI routing in the remaining
+**Next concrete action on implementation resume:** W18 ordered preparation and
+allocation-safe creation publication, then W19 creation/repeat GUI routing in the remaining
 4.2 caller adapters. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
 Nothing is automatically copied into the dirty main tree. Native caller routing,
