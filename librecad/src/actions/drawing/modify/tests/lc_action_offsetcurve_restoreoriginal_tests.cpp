@@ -17,6 +17,7 @@
 #include "lc_action_offsetcurve_restoreoriginal.h"
 #include "lc_action_offsetcurve_updatesource.h"
 #include "lc_actiontestsupport.h"
+#include "lc_offsetcurveactiontestsupport.h"
 #include "lc_offsetcurveeditsnapshot.h"
 #include <QScopeGuard>
 #include "lc_offsetcurve.h"
@@ -1389,6 +1390,7 @@ TEST_CASE("I source update preserves hidden context selection without duplicate 
     UpdateProbe action(&f.context);
     action.init(0);
     action.useSource(source);
+    lc::test::awaitUpdate(action);
     CHECK(action.lastReport().updated == 0);
     CHECK(action.lastReport().unchanged == 0);
     CHECK(action.lastReport().refused == 1);

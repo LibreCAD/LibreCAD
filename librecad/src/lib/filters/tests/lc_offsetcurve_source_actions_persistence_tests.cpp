@@ -17,6 +17,7 @@
 #include "lc_action_offsetcurve_restoreoriginal.h"
 #include "lc_actionhandlerfactory.h"
 #include "lc_actiontestsupport.h"
+#include "lc_offsetcurveactiontestsupport.h"
 #include "lc_filtertestsupport.h"
 #include "lc_offsetcurve.h"
 #include "rs_ellipse.h"
@@ -154,6 +155,7 @@ TEST_CASE("I UI registered source actions persist updated native and restored el
     }
     auto* updateAction = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
     REQUIRE(updateAction);
+    lc::test::awaitUpdate(*updateAction);
     CHECK(updateAction->lastReport().updated == 1);
     CHECK(updateAction->lastReport().refused == 0);
     REQUIRE(curve->isDeleted());
