@@ -2082,6 +2082,29 @@ matching discovery and build logs use the same prefix. Next implement the
 owned asynchronous Trim action controller, cancellation/context seals and
 atomic publication; this prerequisite does not close that work.
 
+W21 Trim worker sequencing `47661a831` retains the exact submitted requests
+and joined completion owners across the existing one- or two-job query. A pending
+job cannot be reissued, a mismatched completion cannot advance the sequence,
+and nonconic Trim Two exposes no receipt before its second completion. An op3
+conic pair or first-job refusal finishes after one job; a refusal grants no
+second-job budget. The borrowed completed receipt is valid only while the owner
+lives. This does not own live document entities or authorize publication: the
+action must supply frozen, privately owned operands and independently seal its
+document, selection, viewport, options and undo epoch through publication.
+
+Fresh Release/ASan `librecad_offset_trim_tests` discovery/execution:103/103
+cases, zero errors/failures/skips, 55918/56728 assertions. New real-helper cases
+cover one-sided Trim, paired conics, nonconic two-job sequencing, rejection of
+an unrelated completion without exposing a prefix, and a first-job refusal
+without a second request. Existing synchronous/prepared output and work parity
+remains intact. ASan uses `detect_leaks=0`. In the receipt root,
+`offset-W21-final-release.xml` SHA256
+`b5ee355a7f9cd6804bf3df54615ac01a6694deae78e2021a1bd2e12a4ffc96dc`;
+`offset-W21-final-asan.xml` SHA256
+`fb84c9f3977e226a3b15176dedf95a49c8843f76b6b0ea56f2a5d776eee4d8fe`.
+Matching discovery/build logs use the same prefix. GUI callbacks, ownership
+on cancellation/context death, atomic handoff and visible acceptance remain open.
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -2130,7 +2153,7 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   review scoped commits, preserve reproducible evidence and close every required gap.
 
 **Next concrete action on implementation resume:** asynchronous Trim action
-routing using the W20 request builder and existing joined prepared trim values, then unpublished import
+routing using the W20 request builder and W21 owned sequence, then unpublished import
 ownership in4.2 order. W16-W19 cache portability and local creation/repeat GUI
 routing are qualified; do not restart them as absent. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
