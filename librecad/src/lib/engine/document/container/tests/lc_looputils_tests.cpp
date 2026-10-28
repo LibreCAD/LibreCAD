@@ -29,6 +29,7 @@
 #include <cfloat>
 #include <cmath>
 #include <functional>
+#include <limits>
 #include <memory>
 #include <string>
 #include <vector>
@@ -314,7 +315,9 @@ TEST_CASE("Collinear pattern pieces: bottom and right drawn, top and left not",
         REQUIRE(results);
         REQUIRE_FALSE(results->empty());
         const auto& loop = (*results)[0];
-        auto trimmed = loop.trimPatternEntities(*pattern, RS_Vector(0.0, 0.0));
+        auto tiles = loop.createTiles(*pattern, RS_Vector(0.0, 0.0));
+        LC_HatchPieceBudget budget{std::numeric_limits<std::size_t>::max()};
+        auto trimmed = loop.trimPatternEntities(*pattern, tiles, budget);
         REQUIRE(trimmed != nullptr);
 
         int bottom = 0, top = 0;
@@ -337,7 +340,9 @@ TEST_CASE("Collinear pattern pieces: bottom and right drawn, top and left not",
         REQUIRE(results);
         REQUIRE_FALSE(results->empty());
         const auto& loop = (*results)[0];
-        auto trimmed = loop.trimPatternEntities(*pattern, RS_Vector(0.0, 0.0));
+        auto tiles = loop.createTiles(*pattern, RS_Vector(0.0, 0.0));
+        LC_HatchPieceBudget budget{std::numeric_limits<std::size_t>::max()};
+        auto trimmed = loop.trimPatternEntities(*pattern, tiles, budget);
         REQUIRE(trimmed != nullptr);
 
         int left = 0, right = 0;

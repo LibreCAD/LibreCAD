@@ -35,6 +35,7 @@
 #include <vector>
 
 #include "lc_containertraverser.h"
+#include "lc_hatchdensity.h"
 #include "lc_loopclassifier.h"
 #include "lc_looputils.h"
 #include "lc_splinepoints.h"
@@ -345,6 +346,7 @@ void RS_Hatch::update() {
 
     m_updateRunning = true;
     m_updateError = HATCH_OK;
+    m_densityReport = LC_HatchDensityReport{};
 
     // Delete the pattern lines of an earlier update: validate() drops them only
     // when the loops need optimizing.
@@ -435,6 +437,24 @@ void RS_Hatch::updateSolidHatch([[maybe_unused]] RS_Layer* layer, [[maybe_unused
 void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updatePatternHatch");
 
+    // A NaN scale propagates through pattern->scale() without touching the
+    // existing size checks (NaN comparisons never trip 1e-6 / RS_MAXDOUBLE);
+    // treat it as a non-finite density outcome so the hatch stays empty of
+    // children but keeps its loops, area and picking.
+    if (!std::isfinite(m_data.scale)) {
+        m_densityReport.reason = LC_HatchDensityReport::Reason::NonFinite;
+        m_densityReport.finite = false;
+        m_updateError = HATCH_TOO_DENSE;
+        return;
+    }
+    // RS_EntityContainer::scale is a no-op when |factor| <= RS_TOLERANCE, so a
+    // sub-tolerance scale would silently leave the pattern at its loaded
+    // dimensions. Reject it up front as HATCH_TOO_SMALL.
+    if (std::abs(m_data.scale) <= RS_TOLERANCE) {
+        m_updateError = HATCH_TOO_SMALL;
+        return;
+    }
+
     // Request and clone pattern
     std::unique_ptr<RS_Pattern> pattern = RS_PATTERNLIST->requestPattern(m_data.pattern);
     if (!pattern) {
@@ -470,12 +490,35 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
         m_updateError = HATCH_TOO_SMALL;
         return;
     }
-    const double areaRatio = (contourSize.x * contourSize.y) / (patternSize.x * patternSize.y);
-    if (areaRatio > 1e4) {
-        LC_ERR<<"RS_Hatch::"<<__func__<<"(): contour to pattern ratio too large, "
-                                              "contour=["<<contourSize.x<<'x'<<contourSize.y
-               <<"], patternSize=["<<patternSize.x<<'x'<<patternSize.y<<']';
-        m_updateError = HATCH_AREA_TOO_BIG;
+    // Density guard: estimate, work bound, buffered piece budget. HATCH_TOO_DENSE
+    // keeps the loops, area, moments and picking intact; the trimmed pieces are
+    // buffered over all roots and only committed after every root finishes, so
+    // an abort leaves no FlagHatchChild children behind.
+    const LC_HatchDensityPolicy& dpolicy = LC_HatchDensity::policy();
+    LC_HatchDensityReport report = LC_HatchDensity::estimate(
+        *pattern, *m_orderedLoops, /*patternTurn*/ 0.0);
+    const double softCap = dpolicy.forced ? dpolicy.hardMax : dpolicy.maxPieces;
+    const double hardCap = dpolicy.hardMax;
+    const double effectiveCap = std::min(softCap, hardCap);
+    report.limit = effectiveCap;
+
+    auto tripTooDense = [&](LC_HatchDensityReport::Reason why) {
+        report.reason = why;
+        m_densityReport = report;
+        m_updateError = HATCH_TOO_DENSE;
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Hatch::updatePatternHatch: HATCH_TOO_DENSE "
+                        "(estimate=%.3f, work=%.3f, limit=%.3f)",
+                        report.estimatedPieces, report.work, report.limit);
+    };
+
+    if (!report.finite || !(report.estimatedPieces <= hardCap)) {
+        tripTooDense(report.finite ? LC_HatchDensityReport::Reason::Estimate
+                                    : LC_HatchDensityReport::Reason::NonFinite);
+        return;
+    }
+    if (!dpolicy.forced && report.estimatedPieces > softCap) {
+        tripTooDense(LC_HatchDensityReport::Reason::Estimate);
         return;
     }
 
@@ -487,11 +530,65 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     // back to WCS by +m_loopAngle about the same m_pivot.
     RS_Vector anchor = latticeOrigin();
     anchor.rotate(m_pivot, RS_Vector{-m_loopAngle});
+
+    // gridWork is the (grid cells) * (boundary edges) overlap-test cost of
+    // createTiles. Charge it before any tile is built so a thin diagonal
+    // strip with a small tile does not run its O(B) grid walk inside the
+    // density guard.
+    double gridWorkTotal = 0.0;
+    for (const auto& loop : *m_orderedLoops) {
+        gridWorkTotal += loop.gridWork(*pattern, anchor);
+    }
+    if (gridWorkTotal > 10.0 * dpolicy.workCap
+        || (!dpolicy.forced && gridWorkTotal > dpolicy.workCap)) {
+        report.work = gridWorkTotal;
+        tripTooDense(LC_HatchDensityReport::Reason::Work);
+        return;
+    }
+
+    // Build tiles per root; measure per-tile pair work with an early stop.
+    std::vector<std::vector<RS_Vector>> tiles;
+    tiles.reserve(m_orderedLoops->size());
+    double pairWorkTotal = 0.0;
+    const double pairStop = 10.0 * dpolicy.workCap;
+    for (const auto& loop : *m_orderedLoops) {
+        tiles.push_back(loop.createTiles(*pattern, anchor));
+        if (pairWorkTotal <= pairStop) {
+            pairWorkTotal += loop.tileWork(*pattern, tiles.back(),
+                                           pairStop - pairWorkTotal);
+        }
+    }
+    report.work = gridWorkTotal + pairWorkTotal;
+    if (report.work > 10.0 * dpolicy.workCap
+        || (!dpolicy.forced && report.work > dpolicy.workCap)) {
+        tripTooDense(LC_HatchDensityReport::Reason::Work);
+        return;
+    }
+
+    // Buffer every produced piece under one shared budget. A trip discards
+    // the whole buffer, keeping the hatch empty of FlagHatchChild children.
+    const std::size_t cap = static_cast<std::size_t>(effectiveCap);
+    LC_HatchPieceBudget budget{cap};
+    std::vector<std::unique_ptr<RS_EntityContainer>> parts;
+    parts.reserve(m_orderedLoops->size());
+    for (size_t i = 0; i < m_orderedLoops->size(); ++i) {
+        parts.push_back((*m_orderedLoops)[i].trimPatternEntities(
+            *pattern, tiles[i], budget));
+        if (budget.tripped) break;
+    }
+    if (budget.tripped) {
+        report.attempted = budget.taken + 1;  // the piece that tripped
+        parts.clear();
+        tripTooDense(LC_HatchDensityReport::Reason::Budget);
+        return;
+    }
+    report.attempted = budget.taken;
+
     const RS_Vector rotationVector{m_loopAngle};
     int addedCount = 0;
-    for (size_t i = 0; i < m_orderedLoops->size(); ++i) {
-        const auto& loop = (*m_orderedLoops)[i];
-        for (auto& owned : loop.trimPatternEntities(*pattern, anchor)->takeEntities()) {
+    for (auto& part : parts) {
+        if (!part) continue;
+        for (auto& owned : part->takeEntities()) {
             RS_Entity* entity = owned.release();
             entity->setPen(pen);
             entity->setLayer(layer);
@@ -502,6 +599,7 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
             ++addedCount;
         }
     }
+    m_densityReport = report;
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updatePatternHatch: Added %d direct entities",
                     addedCount);

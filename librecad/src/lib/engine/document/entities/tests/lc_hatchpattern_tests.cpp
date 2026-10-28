@@ -31,6 +31,7 @@
 #include <cmath>
 #include <cstddef>
 #include <filesystem>
+#include <limits>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -106,7 +107,9 @@ std::vector<Piece> tilePathPieces(const QString& name, double s,
     REQUIRE(roots);
     std::vector<Piece> out;
     for (const LC_LoopUtils::LC_Loops& root : *roots) {
-        auto trimmed = root.trimPatternEntities(*pattern, RS_Vector{0.0, 0.0});
+        auto tiles = root.createTiles(*pattern, RS_Vector{0.0, 0.0});
+        LC_HatchPieceBudget budget{std::numeric_limits<std::size_t>::max()};
+        auto trimmed = root.trimPatternEntities(*pattern, tiles, budget);
         REQUIRE(trimmed);
         for (RS_Entity* en : *trimmed) {
             if (en && en->rtti() == RS2::EntityLine) {

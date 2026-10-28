@@ -30,6 +30,7 @@
 #include <memory>
 #include <vector>
 
+#include "lc_hatchdensity.h"
 #include "lc_secondmoment.h"
 #include "rs_entitycontainer.h"
 
@@ -82,7 +83,8 @@ public:
         HATCH_INVALID_CONTOUR, ///< Failed loop optimization
         HATCH_PATTERN_NOT_FOUND, ///< Pattern not in library
         HATCH_TOO_SMALL,       ///< Contour/pattern too tiny
-        HATCH_AREA_TOO_BIG     ///< Excessive area ratio
+        HATCH_AREA_TOO_BIG,    ///< Excessive area ratio (legacy; no longer produced)
+        HATCH_TOO_DENSE        ///< Pattern pieces would exceed the piece budget
     };
 
     RS_Hatch() = default;
@@ -175,6 +177,14 @@ public:
     RS_HatchError getUpdateError() const { return m_updateError; }
 
     /**
+     * @return Diagnostic density report from the last pattern update attempt.
+     * Zero-initialised at the start of update(); fields are filled by
+     * updatePatternHatch(). Readers used by the density tint, dialog,
+     * Quick Info and property sheet.
+     */
+    const LC_HatchDensityReport& getDensityReport() const { return m_densityReport; }
+
+    /**
      * Toggles visibility of boundary contours in subcontainers.
      * @param visible true to show boundaries.
      */
@@ -219,6 +229,10 @@ private:
     /// Central second-moment tensor about m_centroid, in WCS axes.
     mutable LC_SecondMoment m_centralMoment;
     mutable bool m_secondMomentValid = false;
+    /// Diagnostic report of the last pattern update attempt; read-only to
+    /// callers through getDensityReport(). update() resets it to a
+    /// default-constructed value before validate() runs.
+    LC_HatchDensityReport m_densityReport{};
     RS_HatchError m_updateError = HATCH_UNDEFINED;
     bool m_updateRunning = false;
     bool m_needOptimization = true;

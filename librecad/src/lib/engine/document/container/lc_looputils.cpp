@@ -1263,6 +1263,31 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
 }
 
     /**
+     * @brief The half-open [floor, ceil) tile index range on each axis.
+     * Returns false when the pattern is empty on either axis; iFirst..kEnd
+     * stay unmodified in that case.
+     *
+     * Indices stay in double/long long because |bbMin - anchor|/P can
+     * exceed 2^31 for a tiny pattern tile far from the origin, and the
+     * cast would be UB in int. Never name these j0/j1 (glibc Bessel).
+     */
+    bool LC_Loops::tileIndexRange(const RS_Pattern& pattern,
+                                  const RS_Vector& latticeAnchor,
+                                  double& iFirst, double& iEnd,
+                                  double& kFirst, double& kEnd) const {
+        const LC_Rect bBox = getBoundingBox();
+        const LC_Rect pBox{pattern.getMin(), pattern.getMax()};
+        const double pWidth = pBox.width();
+        const double pHeight = pBox.height();
+        if (pWidth < 1e-6 || pHeight < 1e-6) return false;
+        iFirst = std::floor((bBox.minP().x - latticeAnchor.x) / pWidth);
+        iEnd = std::ceil((bBox.maxP().x - latticeAnchor.x) / pWidth);
+        kFirst = std::floor((bBox.minP().y - latticeAnchor.y) / pHeight);
+        kEnd = std::ceil((bBox.maxP().y - latticeAnchor.y) / pHeight);
+        return true;
+    }
+
+    /**
      * @brief Generates tile offsets for pattern repetition over this tree's
      * bounding box, anchored at latticeAnchor.
      *
@@ -1274,22 +1299,14 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
      */
     std::vector<RS_Vector> LC_Loops::createTiles(const RS_Pattern& pattern,
                                                  const RS_Vector& latticeAnchor) const {
+        double iFirst = 0.0, iEnd = 0.0, kFirst = 0.0, kEnd = 0.0;
+        if (!tileIndexRange(pattern, latticeAnchor, iFirst, iEnd, kFirst, kEnd)) {
+            return {};
+        }
         const LC_Rect bBox = getBoundingBox();
         const LC_Rect pBox{pattern.getMin(), pattern.getMax()};
         const double pWidth = pBox.width();
         const double pHeight = pBox.height();
-        if (pWidth < 1e-6 || pHeight < 1e-6) // Skip degenerate patterns
-        {
-            return {};
-        }
-        // Half-open [floor, ceil) range of tile indices; indices stay in
-        // double/long long because |bbMin - anchor|/W can exceed 2^31 for a
-        // tiny tile far from the origin, and the cast would be UB in int.
-        // Never name these j0/j1 (glibc Bessel functions).
-        const double iFirst = std::floor((bBox.minP().x - latticeAnchor.x) / pWidth);
-        const double iEnd = std::ceil((bBox.maxP().x - latticeAnchor.x) / pWidth);
-        const double kFirst = std::floor((bBox.minP().y - latticeAnchor.y) / pHeight);
-        const double kEnd = std::ceil((bBox.maxP().y - latticeAnchor.y) / pHeight);
         // Use pattern center for inside check
         const RS_Vector pCenter = (pBox.lowerLeftCorner() + pBox.upperRightCorner()) / 2.0;
         const long long nIx = static_cast<long long>(iEnd - iFirst);
@@ -1316,19 +1333,83 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
     }
 
     /**
+     * @brief Upper bound on the number of (grid cell, boundary edge) overlap
+     * tests createTiles will run: nIx * nIy * boundaries.size(). Charged by
+     * the density guard before createTiles.
+     */
+    double LC_Loops::gridWork(const RS_Pattern& pattern,
+                              const RS_Vector& latticeAnchor) const {
+        double iFirst = 0.0, iEnd = 0.0, kFirst = 0.0, kEnd = 0.0;
+        if (!tileIndexRange(pattern, latticeAnchor, iFirst, iEnd, kFirst, kEnd)) {
+            return 0.0;
+        }
+        const double cells = (iEnd - iFirst) * (kEnd - kFirst);
+        const double edges = static_cast<double>(getAllBoundaries().size());
+        if (!std::isfinite(cells) || !std::isfinite(edges) || cells <= 0.0) {
+            return 0.0;
+        }
+        return cells * edges;
+    }
+
+    /**
+     * @brief Measures the per-tile edge-pair work: Σ_tile E * B(tile) where
+     * B(tile) is the number of boundary edges whose bbox overlaps the tile
+     * rect. Returns early once the running sum exceeds stopAbove.
+     */
+    double LC_Loops::tileWork(const RS_Pattern& pattern,
+                              const std::vector<RS_Vector>& tiles,
+                              double stopAbove) const {
+        const LC_Rect pBox{pattern.getMin(), pattern.getMax()};
+        double E = 0.0;
+        for (const RS_Entity* e : pattern) {
+            if (e != nullptr && e->isAtomic()) E += 1.0;
+        }
+        if (E <= 0.0 || tiles.empty()) return 0.0;
+        auto boundaries = getAllBoundaries();
+        if (boundaries.empty()) return 0.0;
+        double total = 0.0;
+        for (const RS_Vector& tile : tiles) {
+            const LC_Rect tileRect{pBox.lowerLeftCorner() + tile,
+                                   pBox.upperRightCorner() + tile};
+            double B = 0.0;
+            for (const RS_Entity* b : boundaries) {
+                if (b == nullptr) continue;
+                if (tileRect.overlaps(LC_Rect{b->getMin(), b->getMax()})) {
+                    B += 1.0;
+                }
+            }
+            total += E * B;
+            if (std::isfinite(stopAbove) && total > stopAbove) return total;
+        }
+        return total;
+    }
+
+    /**
      * @brief Clips every tile copy of every atomic pattern entity to this loop
      * hierarchy: intersect with all boundary edges, sort, split, and keep the
      * sub-pieces whose midpoint is inside. Copies are never extended.
      */
     std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Pattern& pattern,
-                                                                      const RS_Vector& latticeAnchor) const {
+                                                                      const std::vector<RS_Vector>& tiles,
+                                                                      LC_HatchPieceBudget& budget) const {
         auto trimmed = std::make_unique<RS_EntityContainer>();
-        std::vector<RS_Vector> tiles = createTiles(pattern, latticeAnchor);
         auto boundaries = getAllBoundaries();
         PointClassifier classifier = [this](const RS_Vector& q) {
             return this->classify(q);
         };
         const double epsOn = (m_eps > 0.0) ? m_eps : RS_TOLERANCE;
+        // emitPiece() takes ownership of ent and charges the shared piece
+        // budget. Returns false after the budget trips so the caller aborts
+        // the generation deterministically and the caller discards partial
+        // output. (Not named `emit` to avoid Qt's moc macro.)
+        auto emitPiece = [&](std::unique_ptr<RS_Entity> ent) -> bool {
+            if (!budget.take()) {
+                return false;
+            }
+            ent->setVisible(true);
+            trimmed->addEntity(ent.release());
+            return true;
+        };
         for (const RS_Vector& tile : tiles) {
             for (RS_Entity* e : pattern) {
                 if (!e->isAtomic()) {
@@ -1356,8 +1437,7 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
       bool closed = isEntityClosed(cloned.get());
       if (sorted_inters.empty()) {
         if (keepPiece(*cloned, classifier, epsOn)) {
-          cloned->setVisible(true);
-          trimmed->addEntity(cloned.release());
+          if (!emitPiece(std::move(cloned))) return trimmed;
         }
         continue;
       }
@@ -1382,8 +1462,7 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
         auto sub = std::unique_ptr<RS_Entity>(createSubEntity(cloned.get(), p1, p2));
         // Filter short subs and add if the collinear-safe keepPiece says yes.
         if (sub && sub->getLength() > RS_TOLERANCE && keepPiece(*sub, classifier, epsOn)) {
-          sub->setVisible(true);
-          trimmed->addEntity(sub.release());
+          if (!emitPiece(std::move(sub))) return trimmed;
         }
       }
       if (closed && sorted_inters.size() > 0) {
@@ -1392,8 +1471,7 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
         if (pw1.distanceTo(pw2) >= RS_TOLERANCE) {
           auto sub = std::unique_ptr<RS_Entity>(createSubEntity(cloned.get(), pw1, pw2));
           if (sub && sub->getLength() > RS_TOLERANCE && keepPiece(*sub, classifier, epsOn)) {
-            sub->setVisible(true);
-            trimmed->addEntity(sub.release());
+            if (!emitPiece(std::move(sub))) return trimmed;
           }
         }
       }

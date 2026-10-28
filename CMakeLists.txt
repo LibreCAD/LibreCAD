@@ -931,6 +931,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/rs_ellipse.h
      librecad/src/lib/engine/document/entities/rs_entity.cpp
      librecad/src/lib/engine/document/entities/rs_entity.h
+     librecad/src/lib/engine/document/entities/lc_hatchdensity.cpp
+     librecad/src/lib/engine/document/entities/lc_hatchdensity.h
      librecad/src/lib/engine/document/entities/rs_hatch.cpp
      librecad/src/lib/engine/document/entities/rs_hatch.h
      librecad/src/lib/engine/document/entities/rs_image.cpp
@@ -2661,6 +2663,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_secondmoment_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_hatchmovetests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_hatchdensity_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_hatchpattern_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_image_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_insert_transform_tests.cpp

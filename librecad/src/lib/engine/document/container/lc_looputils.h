@@ -29,6 +29,7 @@
 #include <memory>
 #include <vector>
 
+#include "lc_hatchdensity.h"
 #include "lc_loopclassifier.h"
 #include "lc_secondmoment.h"
 #include "rs_entitycontainer.h"
@@ -100,25 +101,53 @@ public:
    */
   QPainterPath getPainterPath(RS_Painter* painter, int level = 0) const;
   /**
-   * @brief Trims pattern entities to the boundaries of this loop hierarchy.
-   * @param pattern The pattern to trim.
-   * @param latticeAnchor A lattice point in this tree's frame; the pattern's
-   *        minimum corner is placed on every lattice point
-   *        anchor + (i*W, k*H).
-   * @return Unique pointer to a container of trimmed entities.
+   * @brief Trims pattern entities against this loop hierarchy using the
+   * caller-supplied tile offsets, charging every emitted piece to a shared
+   * budget. Aborts and returns an empty container as soon as the budget
+   * trips; the caller discards partial buffered output in that case.
+   *
+   * @param pattern The scaled pattern (every atomic entity is used, copied
+   *        at each tile offset, intersected with the boundary, and the
+   *        in-side sub-pieces are kept).
+   * @param tiles  The tile offsets to use (as returned by createTiles with
+   *        the same pattern and lattice anchor).
+   * @param budget Shared piece budget consumed by every produced piece.
+   * @return Unique pointer to a container of trimmed entities; may be empty
+   *         after a budget trip.
    */
   std::unique_ptr<RS_EntityContainer> trimPatternEntities(const RS_Pattern& pattern,
-                                                          const RS_Vector& latticeAnchor) const;
+                                                          const std::vector<RS_Vector>& tiles,
+                                                          LC_HatchPieceBudget& budget) const;
   /**
    * @brief Generates tile offsets for pattern repetition over this loop
    * hierarchy's bounding box, anchored at latticeAnchor.
    *
    * Tile indices are half-open [floor((bbMin - a)/P), ceil((bbMax - a)/P));
    * every tile whose rect intersects the bounding box and either overlaps the
-   * loop or contains the pattern's centre is kept. H10/H11 may use this.
+   * loop or contains the pattern's centre is kept.
    */
   std::vector<RS_Vector> createTiles(const RS_Pattern& pattern,
                                      const RS_Vector& latticeAnchor) const;
+
+  /**
+   * @brief Upper bound on the number of (grid cell, boundary edge) overlap
+   * tests createTiles will perform for the same arguments. Does not run
+   * createTiles; used by the density guard to charge the grid walk's cost
+   * before any tile is built.
+   */
+  double gridWork(const RS_Pattern& pattern,
+                  const RS_Vector& latticeAnchor) const;
+
+  /**
+   * @brief Returns Σ_tile (E * B(tile)) where E is the number of atomic
+   * pattern entities and B(tile) the number of boundary edges whose bbox
+   * overlaps the pattern rect translated by tile. Returns as soon as the
+   * running sum exceeds stopAbove, so callers can bound the cost of this
+   * measurement itself.
+   */
+  double tileWork(const RS_Pattern& pattern,
+                  const std::vector<RS_Vector>& tiles,
+                  double stopAbove) const;
   /**
    * @brief Computes the total area of this loop, adding islands and subtracting holes.
    * @return The net area as a double.
@@ -265,6 +294,15 @@ private:
    * @return True if closed.
    */
   bool isEntityClosed(const RS_Entity* e) const;
+
+  /**
+   * @brief The half-open [floor, ceil) tile index range used by createTiles,
+   * gridWork and tileWork. Written to the four out-params when the pattern
+   * and bbox are non-degenerate; returns false when the pattern is empty.
+   */
+  bool tileIndexRange(const RS_Pattern& pattern, const RS_Vector& latticeAnchor,
+                      double& iFirst, double& iEnd,
+                      double& kFirst, double& kEnd) const;
 
   std::shared_ptr<RS_EntityContainer> m_loop;  ///< Outer loop container
   std::vector<LC_Loops> m_children;             ///< Child loops (holes/islands)

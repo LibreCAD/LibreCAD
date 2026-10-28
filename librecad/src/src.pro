@@ -572,6 +572,7 @@ HEADERS += \
     lib/engine/document/fonts/lc_textfontregistry.h \
     lib/engine/document/fonts/rs_fontlist.h \
     lib/engine/document/rs_graphic.h \
+    lib/engine/document/entities/lc_hatchdensity.h \
     lib/engine/document/entities/rs_hatch.h \
     lib/engine/document/entities/lc_hyperbola.h \
     lib/engine/document/entities/lc_insert_transform.h \
@@ -1255,6 +1256,7 @@ SOURCES += \
     lib/engine/document/fonts/lc_opentypefont.cpp \
     lib/engine/document/fonts/lc_textfontregistry.cpp \
     lib/engine/document/rs_graphic.cpp \
+    lib/engine/document/entities/lc_hatchdensity.cpp \
     lib/engine/document/entities/rs_hatch.cpp \
     lib/engine/document/entities/lc_hyperbola.cpp \
     lib/engine/document/entities/lc_insert_transform.cpp \
