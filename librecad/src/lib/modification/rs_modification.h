@@ -62,6 +62,7 @@ class RS_Graphic;
 class RS_GraphicView;
 class LC_GraphicViewport;
 class LC_OffsetWorkerCompletion;
+struct LC_OffsetPreviewSnapshot;
 namespace LC_OffsetWorkerRequest { struct Request; }
 class LC_SelectedSet;
 class LC_UndoSection;
@@ -330,9 +331,22 @@ public:
               const LC_CurveOffsetMaterializationResult& result);
     void clear();
 
+    /** Owned, pointer-free ordinary entries, or refusal before unbounded copying. */
+    std::unique_ptr<LC_OffsetPreviewSnapshot> snapshot(const RS_Entity* source) const;
+    /** Detached helper cache only; replaces all local state atomically. */
+    bool restore(const RS_Entity* source, const LC_OffsetPreviewSnapshot& snapshot);
+    /** Apply a joined helper's update only while its captured cache revision is
+     * current. The caller separately seals the live source and job generation.
+     */
+    bool merge(const RS_Entity* source, const LC_OffsetPreviewSnapshot& before,
+               const LC_OffsetPreviewSnapshot& after);
+
 private:
     struct Entry;
     std::map<std::tuple<const RS_Entity*, int, double>, std::unique_ptr<Entry>> m_entries;
+    std::size_t m_otherEntries = 0;
+    std::uint64_t m_revision = 0;
+    bool m_cleared = false;
 };
 
 /** The result of an offset request per source, in the order the sources were given. */

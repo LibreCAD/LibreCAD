@@ -25,6 +25,7 @@
 **
 **********************************************************************/
 #include "rs_modification.h"
+#include "lc_offsetpreviewsnapshot.h"
 #include "lc_offsetcurveeditsnapshot.h"
 #include "lc_offsetcurvefinalinput.h"
 #include "../offset_worker/lc_offsetworkerclient.h"
@@ -1425,6 +1426,62 @@ struct LC_OffsetPreviewCache::Entry {
     std::vector<std::unique_ptr<RS_Entity>> entities;
 };
 
+bool LC_OffsetPreviewSnapshot::admitted() const noexcept {
+    if (revision >= std::uint64_t(std::numeric_limits<qint64>::max()) ||
+        otherEntries > maximumEntries || entries.size() > maximumEntries - otherEntries) return false;
+    const auto hard = makeDefaultOffsetSourceBudget();
+    std::size_t values = 8;
+    auto take = [&](std::size_t n) {
+        if (n > maximumValues - values) return false;
+        values += n; return true;
+    };
+    const auto point = [](const RS_Vector& p) { return LC_EllipseOffsetGeometry::isFinite2D(p); };
+    std::optional<std::pair<int, double>> previous;
+    for (const auto& e : entries) {
+        if ((e.side != LC_CurveOffsetSide::Left && e.side != LC_CurveOffsetSide::Right) ||
+            !std::isfinite(e.magnitude) || e.magnitude <= 0 || !take(20) ||
+            !noLargerThan(e.budget, hard) || !withinBudget(e.usage, e.budget) ||
+            int(e.status) < int(LC_CurveOffsetStatus::Ok) || int(e.status) > int(LC_CurveOffsetStatus::LimitExceeded) ||
+            int(e.validation) < 0 || int(e.validation) > int(LC_OffsetValidationLevel::IntervalCertified) ||
+            (e.observedError && (!std::isfinite(*e.observedError) || *e.observedError < 0))) return false;
+        const auto key = std::make_pair(int(e.side), e.magnitude);
+        if (previous && !(*previous < key)) return false;
+        previous = key;
+        if (e.geometry.size() > e.budget.maxOutputEntities ||
+            (e.status == LC_CurveOffsetStatus::Ok ? e.geometry.size() != e.usage.outputEntities : !e.geometry.empty()))
+            return false;
+        for (const auto& value : e.geometry) {
+            if (const auto* line = std::get_if<RS_LineData>(&value)) {
+                if (!point(line->startpoint) || !point(line->endpoint) || !take(12)) return false;
+            } else {
+                const auto& d = std::get<RS_SplineData>(value);
+                const auto controls = d.controlPoints.size();
+                if ((d.degree != 1 && d.degree != 3) || controls < d.degree + 1 || controls > 16384 ||
+                    (controls - 1) % d.degree || d.type != RS_SplineData::SplineType::ClampedOpen ||
+                    d.savedOpenType != d.type || !d.fitPoints.empty() || !d.savedOpenKnots.empty() ||
+                    d.weights.size() != controls || d.knotslist.size() != controls + d.degree + 1 ||
+                    d.knotslist.size() > 32768 || !take(12 + 6 * controls + d.knotslist.size())) return false;
+                for (const auto& p : d.controlPoints) if (!point(p)) return false;
+                for (double w : d.weights) if (w != 1) return false;
+                std::size_t index = 0;
+                double last = 0;
+                const auto spans = (controls - 1) / d.degree;
+                if (spans > e.budget.maxCubicPieces) return false;
+                for (std::size_t k = 0; k <= spans; ++k) {
+                    const double knot = d.knotslist[index];
+                    if (!std::isfinite(knot) || (k && !(last < knot))) return false;
+                    const auto repeats = k == 0 || k == spans ? d.degree + 1 : d.degree;
+                    for (std::size_t j = 0; j < repeats; ++j) if (d.knotslist[index++] != knot) return false;
+                    last = knot;
+                }
+                const auto display = RS_Spline::displayEntityUpperBound(d);
+                if (!display || *display > e.budget.maxDeepEntities) return false;
+            }
+        }
+    }
+    return true;
+}
+
 LC_OffsetPreviewCache::LC_OffsetPreviewCache() = default;
 LC_OffsetPreviewCache::~LC_OffsetPreviewCache() = default;
 
@@ -1458,20 +1515,108 @@ bool LC_OffsetPreviewCache::find(const RS_Entity* source, const LC_CurveOffsetSi
 
 void LC_OffsetPreviewCache::keep(const RS_Entity* source, const LC_CurveOffsetSide side, const double magnitude,
                                  const LC_OffsetSourceBudget& budget, const LC_CurveOffsetMaterializationResult& result) {
-    constexpr std::size_t maxEntries = 256;
-    if (m_entries.size() >= maxEntries) {
-        m_entries.clear();
-    }
+    if (m_revision >= std::uint64_t(std::numeric_limits<qint64>::max()) - 1)
+        throw std::overflow_error("Offset preview cache revision exhausted");
     auto entry = std::make_unique<Entry>(
         Entry{budget, result.status, result.usage, result.validationLevel, result.maxObservedError, {}});
     for (const std::unique_ptr<RS_Entity>& entity : result.entities) {
         entry->entities.emplace_back(entity->clone());
     }
-    m_entries[{source, static_cast<int>(side), magnitude}] = std::move(entry);
+    // Allocate the map node before clearing/overwriting existing state.
+    decltype(m_entries) staged;
+    const auto key = std::make_tuple(source, static_cast<int>(side), magnitude);
+    staged.emplace(key, std::move(entry));
+    if (m_entries.size() + m_otherEntries >= LC_OffsetPreviewSnapshot::maximumEntries) {
+        m_entries.clear(); m_otherEntries = 0; m_cleared = true;
+    }
+    m_entries.erase(key);
+    m_entries.insert(staged.extract(staged.begin()));
+    ++m_revision;
 }
 
 void LC_OffsetPreviewCache::clear() {
-    m_entries.clear();
+    if (m_revision >= std::uint64_t(std::numeric_limits<qint64>::max()) - 1)
+        throw std::overflow_error("Offset preview cache revision exhausted");
+    m_entries.clear(); m_otherEntries = 0; m_cleared = true; ++m_revision;
+}
+
+std::unique_ptr<LC_OffsetPreviewSnapshot> LC_OffsetPreviewCache::snapshot(const RS_Entity* source) const {
+    auto out = std::make_unique<LC_OffsetPreviewSnapshot>();
+    out->revision = m_revision; out->cleared = m_cleared; out->otherEntries = m_otherEntries;
+    std::size_t values = 8;
+    const auto take = [&](std::size_t n) {
+        if (n > LC_OffsetPreviewSnapshot::maximumValues - values) return false;
+        values += n; return true;
+    };
+    for (const auto& item : m_entries) {
+        if (std::get<0>(item.first) != source) { ++out->otherEntries; continue; }
+        const auto& entry = *item.second;
+        if (!take(20)) return {};
+        LC_OffsetPreviewSnapshot::Entry value;
+        value.side = LC_CurveOffsetSide(std::get<1>(item.first)); value.magnitude = std::get<2>(item.first);
+        value.budget = entry.budget; value.status = entry.status; value.usage = entry.usage;
+        value.validation = entry.validationLevel;
+        if (!std::isnan(entry.maxObservedError)) value.observedError = entry.maxObservedError;
+        for (const auto& entity : entry.entities) {
+            if (entity->rtti() == RS2::EntityLine) {
+                if (!take(12)) return {};
+                value.geometry.emplace_back(static_cast<const RS_Line&>(*entity).getData());
+            } else if (entity->rtti() == RS2::EntitySpline) {
+                const auto& d = static_cast<const RS_Spline&>(*entity).getData();
+                if (d.controlPoints.size() > 16384 || d.knotslist.size() > 32768 ||
+                    d.weights.size() != d.controlPoints.size() || !d.fitPoints.empty() || !d.savedOpenKnots.empty() ||
+                    !take(12 + 6 * d.controlPoints.size() + d.knotslist.size())) return {};
+                value.geometry.emplace_back(d);
+            } else return {}; // Never transport an editable native cache as authority.
+        }
+        out->entries.push_back(std::move(value));
+    }
+    return out->admitted() ? std::move(out) : nullptr;
+}
+
+bool LC_OffsetPreviewCache::restore(const RS_Entity* source, const LC_OffsetPreviewSnapshot& snapshot) {
+    if (!snapshot.admitted()) return false;
+    LC_OffsetPreviewCache staged;
+    for (const auto& value : snapshot.entries) {
+        auto entry = std::make_unique<Entry>(Entry{value.budget, value.status, value.usage,
+            value.validation, value.observedError.value_or(std::numeric_limits<double>::quiet_NaN()), {}});
+        for (const auto& geometry : value.geometry) {
+            if (const auto* line = std::get_if<RS_LineData>(&geometry))
+                entry->entities.push_back(std::make_unique<RS_Line>(nullptr, *line));
+            else {
+                const auto& data = std::get<RS_SplineData>(geometry);
+                auto spline = std::make_unique<RS_Spline>(nullptr, data);
+                if (!spline->validate() || RS_Spline::geometryFingerprint(data) !=
+                    RS_Spline::geometryFingerprint(spline->getData())) return false;
+                entry->entities.push_back(std::move(spline));
+            }
+        }
+        staged.m_entries.emplace(std::make_tuple(source, int(value.side), value.magnitude), std::move(entry));
+    }
+    m_entries.swap(staged.m_entries); m_otherEntries = snapshot.otherEntries;
+    m_revision = snapshot.revision; m_cleared = false;
+    return true;
+}
+
+bool LC_OffsetPreviewCache::merge(const RS_Entity* source, const LC_OffsetPreviewSnapshot& before,
+    const LC_OffsetPreviewSnapshot& after) {
+    if (m_otherEntries || before.revision != m_revision || !before.admitted() || !after.admitted() ||
+        after.revision < before.revision || after.revision - before.revision > RS_OffsetData::kMaximumOffsetCopies ||
+        after.otherEntries != (after.cleared ? 0 : before.otherEntries)) return false;
+    LC_OffsetPreviewCache staged;
+    if (!staged.restore(source, after)) return false;
+    if (!after.cleared) {
+        std::size_t other = 0;
+        for (const auto& item : m_entries) if (std::get<0>(item.first) != source) {
+            staged.m_entries.emplace(item.first, nullptr); ++other;
+        }
+        if (other != before.otherEntries) return false;
+        for (auto& item : m_entries) if (std::get<0>(item.first) != source)
+            staged.m_entries.find(item.first)->second = std::move(item.second);
+    }
+    m_entries.swap(staged.m_entries); m_revision = after.revision;
+    m_cleared |= after.cleared;
+    return true;
 }
 
 /**

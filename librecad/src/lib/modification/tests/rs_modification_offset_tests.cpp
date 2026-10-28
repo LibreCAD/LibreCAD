@@ -38,6 +38,7 @@
 #include "lc_curveoffset.h"
 #include "lc_hyperbola.h"
 #include "lc_offsetresultcheck.h"
+#include "lc_offsetpreviewsnapshot.h"
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -617,6 +618,108 @@ TEST_CASE("A preview made through the cache is the preview made without it", "[m
     }
     CHECK(runs[1] == runs[0]); // filled the cache
     CHECK(runs[2] == runs[0]); // from the cache
+}
+
+TEST_CASE("Portable preview entries rebind to a fresh owned source without producer effort",
+          "[modification][offset][preview-portable]") {
+    std::unique_ptr<RS_Spline> source{sCurve()}, owned{sCurve()};
+    LC_OffsetPreviewCache parent, child;
+    const auto data = towards({6, 9}, .75);
+    BatchGuard first;
+    const auto made = RS_Modification::offsetWithOutcome(data, {source.get()}, true, {}, first.ctx, &parent);
+    REQUIRE(made.sources.size() == 1); REQUIRE(made.sources.front().complete());
+    REQUIRE(made.sources.front().cacheEngineRuns == 1);
+    const auto before = parent.snapshot(source.get()); REQUIRE(before); REQUIRE(before->admitted());
+    REQUIRE(before->entries.size() == 1);
+    REQUIRE(child.restore(owned.get(), *before));
+    LC_OffsetBatchLimits limited; limited.maxSamples = 1; limited.maxIntersectionPairs = 1;
+    LC_OffsetSourceOutcome outcome;
+    std::vector<std::unique_ptr<RS_Entity>> roots;
+    outcome.status = RS_Modification::prepareOffsetSource(data, *owned, true, limited,
+        limited.maxDeepEntitiesPerRequest, {}, roots, outcome, &child);
+    REQUIRE(outcome.complete()); CHECK(outcome.reusedCacheCopies == 1);
+    CHECK(outcome.cacheEngineRuns == 0); CHECK(outcome.rebaseEngineRuns == 0);
+    CHECK(outcome.sampleUnits == 0); CHECK(outcome.intersectionPairAllowance == 0);
+    REQUIRE(roots.size() == first.ctx.entitiesToAdd.size());
+    const auto* expected = dynamic_cast<const RS_Spline*>(first.ctx.entitiesToAdd.front());
+    const auto* actual = dynamic_cast<const RS_Spline*>(roots.front().get());
+    REQUIRE(expected); REQUIRE(actual);
+    CHECK(RS_Spline::geometryFingerprint(expected->getData()) == RS_Spline::geometryFingerprint(actual->getData()));
+    const auto after = child.snapshot(owned.get()); REQUIRE(after);
+    REQUIRE(parent.merge(source.get(), *before, *after));
+    CHECK(parent.snapshot(source.get())->entries.size() == 1);
+}
+
+TEST_CASE("Portable preview refusals retain side distance and budget-sensitive reuse",
+          "[modification][offset][preview-portable]") {
+    RS_Line source{nullptr, {0, 0}, {1, 0}}, owned{nullptr, {0, 0}, {1, 0}};
+    LC_OffsetPreviewCache parent, child;
+    const LC_OffsetSourceBudget small{8, 8, 8};
+    LC_CurveOffsetMaterializationResult refused; refused.status = LC_CurveOffsetStatus::LimitExceeded;
+    parent.keep(&source, LC_CurveOffsetSide::Left, 1, small, refused);
+    refused.status = LC_CurveOffsetStatus::SingularOffset;
+    parent.keep(&source, LC_CurveOffsetSide::Right, 1, small, refused);
+    const auto snapshot = parent.snapshot(&source); REQUIRE(snapshot);
+    REQUIRE(child.restore(&owned, *snapshot));
+    LC_CurveOffsetMaterializationResult found;
+    CHECK(child.find(&owned, LC_CurveOffsetSide::Left, 1, {4, 8, 8}, found));
+    CHECK(found.status == LC_CurveOffsetStatus::LimitExceeded);
+    CHECK_FALSE(child.find(&owned, LC_CurveOffsetSide::Left, 1, makeDefaultOffsetSourceBudget(), found));
+    CHECK(child.find(&owned, LC_CurveOffsetSide::Right, 1, makeDefaultOffsetSourceBudget(), found));
+    CHECK(found.status == LC_CurveOffsetStatus::SingularOffset);
+    CHECK_FALSE(child.find(&source, LC_CurveOffsetSide::Left, 1, small, found));
+    CHECK_FALSE(child.find(&owned, LC_CurveOffsetSide::Right, 2, small, found));
+    CHECK_FALSE(child.find(&owned, LC_CurveOffsetSide::FromDirectionPoint, 1, small, found));
+}
+
+TEST_CASE("Portable preview eviction accounts for entries belonging to other sources",
+          "[modification][offset][preview-portable]") {
+    for (bool overwrite : {false, true}) {
+        CAPTURE(overwrite);
+        RS_Line source{nullptr, {0, 0}, {1, 0}}, other{nullptr, {0, 1}, {1, 1}}, owned;
+        LC_OffsetPreviewCache parent, child;
+        LC_CurveOffsetMaterializationResult made; made.status = LC_CurveOffsetStatus::Ok;
+        made.entities.push_back(std::make_unique<RS_Line>(nullptr, RS_Vector{0, 2}, RS_Vector{1, 2}));
+        made.usage = {1, 1, 1}; const auto budget = makeDefaultOffsetSourceBudget();
+        parent.keep(&source, LC_CurveOffsetSide::Left, 1, budget, made);
+        for (unsigned i = 1; i < 256; ++i) parent.keep(&other, LC_CurveOffsetSide::Left, i, budget, made);
+        const auto before = parent.snapshot(&source); REQUIRE(before);
+        CHECK(before->otherEntries == 255); REQUIRE(before->entries.size() == 1);
+        REQUIRE(child.restore(&owned, *before));
+        child.keep(&owned, overwrite ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right, 1, budget, made);
+        const auto after = child.snapshot(&owned); REQUIRE(after);
+        CHECK(after->cleared); CHECK(after->otherEntries == 0); CHECK(after->entries.size() == 1);
+        REQUIRE(parent.merge(&source, *before, *after));
+        LC_CurveOffsetMaterializationResult found;
+        CHECK_FALSE(parent.find(&other, LC_CurveOffsetSide::Left, 255, budget, found));
+        CHECK(parent.find(&source, overwrite ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right, 1, budget, found));
+        CHECK(parent.snapshot(&source)->otherEntries == 0);
+    }
+}
+
+TEST_CASE("Portable preview updates refuse stale revisions and malformed records atomically",
+          "[modification][offset][preview-portable]") {
+    RS_Line source{nullptr, {0, 0}, {1, 0}}, other, owned;
+    LC_OffsetPreviewCache parent, child;
+    LC_CurveOffsetMaterializationResult made; made.status = LC_CurveOffsetStatus::SingularOffset;
+    const auto budget = makeDefaultOffsetSourceBudget();
+    parent.keep(&source, LC_CurveOffsetSide::Left, 1, budget, made);
+    const auto before = parent.snapshot(&source); REQUIRE(before); REQUIRE(child.restore(&owned, *before));
+    child.keep(&owned, LC_CurveOffsetSide::Right, 1, budget, made);
+    const auto after = child.snapshot(&owned); REQUIRE(after);
+    auto duplicate = *after; duplicate.entries.push_back(duplicate.entries.back());
+    CHECK_FALSE(duplicate.admitted()); CHECK_FALSE(parent.merge(&source, *before, duplicate));
+    auto nonfinite = *after; nonfinite.entries.front().magnitude = std::numeric_limits<double>::infinity();
+    CHECK_FALSE(nonfinite.admitted()); CHECK_FALSE(child.restore(&owned, nonfinite));
+    CHECK(child.snapshot(&owned)->revision == after->revision);
+    auto forgedOthers = *after; forgedOthers.otherEntries = 1;
+    CHECK_FALSE(parent.merge(&source, *before, forgedOthers));
+    parent.keep(&other, LC_CurveOffsetSide::Left, 1, budget, made);
+    CHECK_FALSE(parent.merge(&source, *before, *after));
+    LC_CurveOffsetMaterializationResult found;
+    CHECK(parent.find(&source, LC_CurveOffsetSide::Left, 1, budget, found));
+    CHECK(parent.find(&other, LC_CurveOffsetSide::Left, 1, budget, found));
+    CHECK_FALSE(parent.find(&source, LC_CurveOffsetSide::Right, 1, budget, found));
 }
 
 // ---------------------------------------------------------------------------
