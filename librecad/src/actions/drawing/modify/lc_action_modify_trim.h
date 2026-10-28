@@ -32,6 +32,7 @@
 #include <QPointer>
 
 class RS_AtomicEntity;
+class LC_OffsetTrimWorker;
 struct LC_StoredCacheTrimOptions;
 /**
  * This action class can handle user events to trim entities.
@@ -98,5 +99,8 @@ protected:
     void previewTrim(RS_Entity* entityToTrimCandidate, RS_Entity* limitingEntity, const RS_Vector& trimCoordinates, const RS_Vector& limitCoordinates, bool& trimInvalid);
     bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
     void doTriggerCompletion(bool success) override;
+private:
+    friend class LC_ActionModifyTrimTestAccess;
+    LC_OffsetTrimWorker* nativeTrimWorkerForTest() const noexcept;
 };
 #endif

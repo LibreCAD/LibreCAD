@@ -120,6 +120,7 @@ private:
     qint64 m_startedAt = 0, m_stoppedAt = 0;
     // Private deterministic lifecycle seam; never set by product inputs.
     std::function<qint64()> m_testClock;
+    std::function<void(QProcess&)> m_testStarted;
     QTimer m_timer;
     qint64 m_lastRequestId = 0;
     qint64 m_cancelledThrough = 0;

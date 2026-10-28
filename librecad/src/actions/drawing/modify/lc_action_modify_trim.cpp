@@ -405,6 +405,7 @@ bool LC_ActionModifyTrim::validateCapturedTrimInputs() {
 }
 
 bool LC_ActionModifyTrim::hasPendingNativeTrim() const noexcept { return bool(m_actionData->work); }
+LC_OffsetTrimWorker* LC_ActionModifyTrim::nativeTrimWorkerForTest() const noexcept { return m_actionData->worker.get(); }
 
 void LC_ActionModifyTrim::cancelNativeTrim() {
     m_actionData->work.reset();

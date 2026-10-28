@@ -20,6 +20,11 @@
 #include <QFileInfo>
 #include <QThread>
 #include <QProcess>
+#ifdef Q_OS_UNIX
+#include <cerrno>
+#include <csignal>
+#include <unistd.h>
+#endif
 #include "lc_actiontestsupport.h"
 #include "lc_graphicviewport.h"
 #include "lc_offsetcurve.h"
@@ -45,6 +50,15 @@ public:
         const auto& process = worker.m_client.m_process;
         return process && process->state() == QProcess::Running && process->processId() > 0;
     }
+    static void previewDeadline(LC_OffsetTrimWorker& worker, qint64 value) { worker.m_previewLimit = value; }
+    static void onStarted(LC_OffsetTrimWorker& worker, std::function<void(QProcess&)> hook) {
+        worker.m_client.m_testStarted = std::move(hook);
+    }
+};
+
+class LC_ActionModifyTrimTestAccess {
+public:
+    static LC_OffsetTrimWorker& worker(LC_ActionModifyTrim& action) { return *action.nativeTrimWorkerForTest(); }
 };
 
 namespace {
@@ -1387,6 +1401,71 @@ TEST_CASE("Native Trim action cancels a pending worker and can retry",
     f.action->click({0, .3}); REQUIRE(ordinary->isDeleted()); CHECK_FALSE(native->isDeleted());
     REQUIRE(f.graphic.undo()); CHECK_FALSE(ordinary->isDeleted()); CHECK_FALSE(f.graphic.undo());
 }
+
+namespace {
+void trimActionWorkerFailure(bool preview, bool timeout) {
+    CAPTURE(preview, timeout);
+    Drawing<false> f; auto* native = addNative(f.graphic); auto* ordinary = line(f.graphic);
+    f.action->click(preview ? RS_Vector{-2.8, .3} : RS_Vector{2, 0});
+    auto& worker = LC_ActionModifyTrimTestAccess::worker(*f.action);
+    if (timeout) {
+        LC_OffsetTrimWorkerTestAccess::deadline(worker, 500);
+        LC_OffsetTrimWorkerTestAccess::previewDeadline(worker, 500);
+    }
+    qint64 childId = 0; bool faultInjected = false;
+    LC_OffsetTrimWorkerTestAccess::onStarted(worker, [&](QProcess& process) {
+        childId = process.processId();
+        if (timeout) {
+#ifdef Q_OS_UNIX
+            faultInjected = ::kill(static_cast<pid_t>(childId), SIGSTOP) == 0;
+#endif
+        } else { process.kill(); faultInjected = true; }
+    });
+    if (preview) f.action->hoverAsync({2, 0}); else f.action->clickAsync({0, .3});
+    REQUIRE(f.action->pending());
+    int ticks = 0; QTimer heartbeat; QObject::connect(&heartbeat, &QTimer::timeout, [&] { ++ticks; }); heartbeat.start(0);
+    f.action->waitForTrim();
+    heartbeat.stop(); REQUIRE(childId > 0); REQUIRE(faultInjected);
+    if (timeout) CHECK(ticks > 0);
+    CHECK_FALSE(native->isDeleted()); CHECK_FALSE(ordinary->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
+    if (preview) { CHECK(f.action->m_preview->isEmpty()); CHECK(f.context.messages.isEmpty()); }
+    else {
+        REQUIRE(f.context.messages.size() == 1);
+        CHECK(f.context.messages.front().contains(timeout ? "timed out" : "worker failed"));
+    }
+    QElapsedTimer elapsed; elapsed.start();
+    while (worker.busy()) {
+        REQUIRE(elapsed.elapsed() < 5000);
+        QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1);
+    }
+#ifdef Q_OS_UNIX
+    errno = 0;
+    CHECK(::kill(static_cast<pid_t>(childId), 0) == -1);
+    CHECK(errno == ESRCH);
+#endif
+    LC_OffsetTrimWorkerTestAccess::deadline(worker, LC_OffsetWorkerClient::Deadlines::commit);
+    LC_OffsetTrimWorkerTestAccess::previewDeadline(worker, LC_OffsetWorkerClient::Deadlines::preview);
+    if (preview) {
+        f.action->hover({2, 0}); CHECK_FALSE(trimPreview(*f.action->m_preview).empty());
+        CHECK_FALSE(native->isDeleted()); CHECK_FALSE(canUndo(f.graphic));
+    } else {
+        f.action->click({0, .3}); REQUIRE(ordinary->isDeleted()); CHECK_FALSE(native->isDeleted());
+        REQUIRE(f.graphic.undo()); CHECK_FALSE(ordinary->isDeleted()); CHECK_FALSE(f.graphic.undo());
+    }
+}
+}
+
+TEST_CASE("Native Trim action reaps a killed real helper and retries",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-action-fault]") {
+    trimActionWorkerFailure(false, false); trimActionWorkerFailure(true, false);
+}
+
+#ifdef Q_OS_UNIX
+TEST_CASE("Native Trim action reaps a stopped helper after its deadline and retries",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-action-fault][timeout]") {
+    trimActionWorkerFailure(false, true); trimActionWorkerFailure(true, true);
+}
+#endif
 
 TEST_CASE("Native Trim action suppresses late delivery after action or document destruction",
           "[gui][lc-offsetcurve][trim-action][trim-worker-commit][lifetime][asan]") {

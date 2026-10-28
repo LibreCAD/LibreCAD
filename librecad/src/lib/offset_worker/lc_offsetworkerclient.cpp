@@ -270,6 +270,11 @@ void LC_OffsetWorkerClient::start() {
         m_process->setProcessChannelMode(QProcess::SeparateChannels);
         connect(m_process.get(), &QProcess::started, this, [this] {
             if (!m_active) return;
+            try {
+                auto hook = std::move(m_testStarted);
+                if (hook) hook(*m_process);
+            } catch (...) { stop(Status::AllocationFailed); return; }
+            if (!m_active || !m_process) return;
             m_active->started = true;
             if (m_active->stopping) m_process->terminate();
             else pump();
