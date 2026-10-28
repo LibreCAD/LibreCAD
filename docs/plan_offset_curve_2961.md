@@ -1653,8 +1653,11 @@ PR #3193 review follow-ups (execute before the remaining creation/cache work):
   latch remains set. A redraw can retire the active grip but cannot route its
   next zero-factor move into the ordinary snapper. Matching release and a new
   drag recover; ordinary neutral snapping introduced upstream is unchanged.
-- [ ] Validation recipe completeness: discover/execute `[offsetcurve]` as well
-  as `[lc-offsetcurve]`, and list the implemented worker/micro/fault targets.
+- [x] Validation recipe completeness: `691ae7469` adds `[offsetcurve]` discovery/
+  execution, XML identity/nonzero/SECTION checks and explicit skipped-row output.
+  It inventories implemented worker/caller targets, opt-in CTest registration,
+  all nine worker entries, actual helper/configuration paths and separate fault
+  processes. It removes the obsolete claim that lifecycle targets await W1.
 
 P1 fresh Release/ASan qualification on `d320a0eea`: the standalone fault target
 passes35 fresh preparation allocation ordinals and113 redo-tail ordinals, with
@@ -1716,9 +1719,71 @@ The pre-fix report retains its one stale-overlay assertion failure.
 | `PR3193-P3-qualified-asan.xml` | `dc29f269f0f7f544b303d53942e912ef6fe64ed8c0850c2e6356420207802a5e` |
 | `PR3193-P3-viewport-red.xml` (red, not acceptance) | `065bd59e45eccab104b65b052a456d631913b0472d51900831e8ebfa66206ede` |
 
-Immediate next slice: the complete selector/target recipe, with fresh broad
-Release discovery/execution and explicit skipped external-tool accounting. Test
-and commit the slice, immediately checkpoint this plan, and push to draft PR #3193.
+P4 fresh Release qualification for recipe `691ae7469`, using unchanged product
+code from `0df6469db` (built at `6a1843f43` plus the recipe-only diff):
+
+| Main selector | Declarations | JUnit cases | Assertions | Skips |
+|---|---|---|---|---|
+| `[lc-offsetcurve]` | 936 | 1241 | 3932765 | 1 |
+| `[offsetcurve]` | 168 | 180 | 131414 | 0 |
+| `[curve-offset]` | 218 | 274 | 1021409 | 0 |
+| `[entity-coverage]` | 15 | 15 | 1680 | 0 |
+
+All reports have zero errors/failures. Every discovered identity executes; named
+SECTION entries account for extra JUnit cases. The168 `[offsetcurve]` declarations
+are additional to all other selectors: sheet41, dialog56, enable17, UI helpers4,
+plugin10 and modification20+20. No tests were retagged, removed or rebaselined.
+The sole skipped case is `legacy DXF native dispatch writes visible cache
+primitives when the real legacy exporter is supplied`: this build has no
+`RS_FilterDXF`, `dl_dxf.h` or `FormatDXFOLD`. No surrogate writer or legacy-export
+PASS is claimed. Ordinary/source support assertions remain covered by the real
+`RS_FilterDXFRW` paths; full file/version interoperability remains open.
+
+The app, helper/test helper, all nine worker/edit targets and all seven caller
+micro targets build. Opt-in CTest discovers exactly the nine entries listed in5.3
+and passes9/9 in35.84s, including separate ordinary fallback and isolated fault/
+geometry-timeout execution. Replaying those exact nine CTest commands with Catch
+discovery/JUnit reports also passes with no missing, duplicate, undeclared or
+skipped cases. Separate edit/caller micro discovery/execution passes:
+
+| Micro target suffix | Declarations | JUnit cases | Assertions |
+|---|---|---|---|
+| worker_edit | 15 | 15 | 101553 |
+| native_edit | 29 | 29 | 15311 |
+| properties_dialog | 56 | 56 | 25937 |
+| properties_sheet | 41 | 53 | 9367 |
+| grip | 44 | 44 | 86128 |
+| update_source | 34 | 36 | 3406 |
+| trim | 98 | 98 | 49882 |
+| source_preparation | 75 | 81 | 83385 |
+
+All micro reports have zero errors/failures/skips and complete identity coverage.
+Scheduling-dependent worker polling assertions are not fixed expected totals;
+overlapping main/micro selectors are not summed as unique coverage. Fresh standalone
+publication allocation checks again pass35 preparation/113 redo-tail failures,
+zero publication C++ `new` calls and all recovery cases. The separately serialized
+trim allocation process passes4 directions,1616 staging allocation failures,
+20 cancellation points and4+4 conic staging failure/cancellation cases. No global
+allocation override was linked into Catch or the app. Both recipe Bash blocks
+pass syntax checks; H6 parser/inventory passes6/6 with unchanged71 original/93
+executable obligations, zero mismatch and zero pending declaration. These remain
+document checks, not completion of all93 runtime obligations.
+
+`PR3193-P4-evidence.sha256` in the evidence root binds74 current P4 XML, JSON and
+log files, SHA256 `59eb22a0a48b7f0450cddc2263c1acaab3b3c4aa3e245b32e8cae302c5b55daf`.
+The final standalone trim receipt is
+`PR3193-P4-qualified-trim-fault-serial-release.log`; the earlier overlapping
+process run is retained but is not the serialized acceptance receipt. Focused
+ASan results are the P1-P3 receipts above, not a full ASan/main-suite or leak-free
+claim. qmake6, deployment, visible UI, the full application suite and external
+writer interoperability were not freshly qualified by this review follow-up.
+
+All four PR review findings are closed within their stated scope. PR #3193 also
+now documents ordinary ellipse/parabola/bounded-hyperbola/spline/spline-points
+support versus ellipse-only editable definitions. Keep the PR draft: this does
+not complete #2961 or the entire roadmap. The next product work remains preview-
+cache portability/parity before creation/repeat routing, then the remaining4.2
+caller/import work and final acceptance below.
 
 Remaining creation/repeat steps after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
