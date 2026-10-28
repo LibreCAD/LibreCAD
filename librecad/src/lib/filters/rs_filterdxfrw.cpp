@@ -96,6 +96,7 @@
 #include "rs_block.h"
 #include "rs_blocklist.h"
 #include "rs_circle.h"
+#include "lc_hatchdefinitionlines.h"
 #include "lc_hatchdensity.h"
 #include "lc_hatchdensitytext.h"
 #include "rs_dialogfactory.h"
@@ -10316,6 +10317,20 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
       m_currentContainer, RS_HatchData(data->solid, data->scale, hatchAngle,
                                        QString::fromUtf8(data->name.c_str())));
   setEntityAttributes(hatch, data);
+  // Strip the approximate definition-line tag the writer may have added so
+  // a round-trip through LibreCAD never duplicates it: the re-export rebuilds
+  // the tag from forExport()'s own approximate flag. The strip is case-
+  // insensitive on the 1001 group name. A caller may read whether the import
+  // carried the tag through the returned bool (unused today; a future step
+  // reads it to tell "this hatch was reconstructed through our placeholder"
+  // from "an exact LibreCAD export").
+  if (hatch->hasDrwExtData()) {
+    auto extData = hatch->getDrwExtData();
+    const bool importedApproximate =
+        LC_HatchDefinitionLines::stripApproximateTag(extData);
+    if (importedApproximate)
+      hatch->setDrwExtData(std::move(extData));
+  }
   if (data->basePoint.z != 0.0 || data->extPoint.x != 0.0 ||
       data->extPoint.y != 0.0 || data->extPoint.z != 1.0) {
     std::vector<std::shared_ptr<DRW_Variant>> payload;
@@ -32694,6 +32709,32 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
     ha.name = h->getPattern().toUtf8().data();
   }
   ha.loopsnum = h->countLoops();
+
+  // Realized definition lines, pattern type 2, and the approximate XDATA tag.
+  // ODA File Converter 27.1 deletes every non-solid HATCH written with 78 = 0
+  // (LibreCAD before this change), so a pattern hatch always carries at least
+  // one line; a solid hatch keeps 78 = 0 and the stale tag is dropped. The
+  // 1001 kApplication group under which the tag lives is already registered
+  // by writeAppId (emitRequired("LibreCad")).
+  if (ha.solid) {
+    LC_HatchDefinitionLines::setApproximateTag(ha.extData, false);
+    ha.hpattern = 1;
+    ha.hstyle = 0;
+    ha.doubleflag = 0;
+  } else {
+    const LC_HatchDefinitionLines::ExportLines definition =
+        LC_HatchDefinitionLines::forExport(*h);
+    ha.patternLines.clear();
+    ha.patternLines.reserve(definition.lines.size());
+    for (const auto& line : definition.lines)
+      ha.patternLines.push_back(line);
+    ha.deflines = static_cast<int>(ha.patternLines.size());
+    ha.hpattern = 2;
+    ha.hstyle = 0;
+    ha.doubleflag = 0;
+    LC_HatchDefinitionLines::setApproximateTag(ha.extData,
+                                               definition.approximate);
+  }
 
   for (RS_Entity *l = h->firstEntity(RS2::ResolveNone); l;
        l = h->nextEntity(RS2::ResolveNone)) {

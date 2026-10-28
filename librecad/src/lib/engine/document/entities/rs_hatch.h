@@ -68,6 +68,30 @@ struct RS_HatchData {
 std::ostream& operator<<(std::ostream& os, const RS_HatchData& td);
 
 /**
+ * Pattern-frame struct used when realizing PAT-local definition lines into
+ * WCS/OCS lines for export. Mirrors the three members of RS_HatchData plus
+ * the pattern's native tile bounding box, so the realized line can be
+ * exported without any knowledge of the trimmed pattern children. See
+ * RS_Hatch::patternFrame().
+ */
+struct RS_HatchPatternFrame {
+    /// Lattice anchor h (WCS). Fixed at (0, 0) on 2.2.2; a stored origin
+    /// replaces this later.
+    RS_Vector origin{0.0, 0.0};
+    double scale = 1.0;
+    /// Hatch rotation angle in radians.
+    double angle = 0.0;
+    /// Native (unscaled, unrotated) tile bounding box minimum corner.
+    RS_Vector tileMin{0.0, 0.0};
+    /// Native (unscaled, unrotated) tile size: (width, height).
+    RS_Vector tileSize{0.0, 0.0};
+    /// True when the pattern was found and the tile bbox is finite and
+    /// positive; false for solid hatches, missing patterns, or an un-updated
+    /// RS_Hatch.
+    bool tileValid = false;
+};
+
+/**
  * Class for a hatch entity.
  *
  * @author Andrew Mustun
@@ -195,6 +219,17 @@ public:
      */
     RS_EntityContainer* getBoundaryContainer(int loopIndex) const;
 
+    /**
+     * @return The pattern frame used to realize PAT-local definition lines
+     * into WCS lines (export, Quick Info). origin is the hatch's lattice
+     * anchor h; scale and angle come from m_data; tileMin and tileSize
+     * capture the pattern's native (unscaled, unrotated) tile bounding box
+     * set during the last successful updatePatternHatch. tileValid is false
+     * for solid hatches, when the pattern was not found, when the tile is
+     * degenerate, or when update() has not yet run.
+     */
+    RS_HatchPatternFrame patternFrame() const;
+
     void draw(RS_Painter* painter) override;
     void move(const RS_Vector& offset) override;
     void rotate(const RS_Vector& center, double angle) override;
@@ -249,6 +284,12 @@ private:
     RS_Vector m_pivot{0.0, 0.0};  ///< WCS centre of the combined bbox of the loop containers.
     double m_loopAngle = 0.0;     ///< isSolid() ? 0 : m_data.angle at the last successful validate().
     double m_tolerance = 0.0;     ///< Per-hatch ε cached by validate().
+    /// Pattern tile bounding box captured by the last successful
+    /// updatePatternHatch, before scaling. Invalid for solid hatches or when
+    /// the pattern was not found or had a degenerate size. Read through
+    /// patternFrame().
+    RS_Vector m_tileMin{false};
+    RS_Vector m_tileSize{false};
 
     /**
      * The hatch's lattice origin in WCS. Every root uses one lattice through

@@ -1140,6 +1140,8 @@ set (SHARED_SOURCES
      librecad/src/lib/filters/lc_embeddedtextxdata.h
      librecad/src/lib/filters/lc_embeddedtextmodel.cpp
      librecad/src/lib/filters/lc_embeddedtextmodel.h
+     librecad/src/lib/filters/lc_hatchdefinitionlines.cpp
+     librecad/src/lib/filters/lc_hatchdefinitionlines.h
      librecad/src/lib/filters/lc_hyperbolaspline.cpp
      librecad/src/lib/filters/lc_hyperbolaspline.h
         librecad/src/lib/filters/lc_parabolaspline.cpp
@@ -2795,6 +2797,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/lc_dxf_appid_registration_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_xdata_appid_tests.cpp
         librecad/src/lib/filters/tests/lc_hatch_angle_units_tests.cpp
+        librecad/src/lib/filters/tests/lc_hatch_export_tests.cpp
         librecad/src/lib/filters/tests/lc_export_commit_tests.cpp
         librecad/src/lib/filters/tests/lc_attribute_export_tests.cpp
         librecad/src/lib/filters/tests/dxf_closed_spline_tests.cpp
@@ -3323,6 +3326,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/lc_dxf_appid_registration_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_xdata_appid_tests.cpp
         librecad/src/lib/filters/tests/lc_hatch_angle_units_tests.cpp
+        librecad/src/lib/filters/tests/lc_hatch_export_tests.cpp
         librecad/src/lib/filters/tests/lc_mpolygon_dxf_tests.cpp
         librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
     )

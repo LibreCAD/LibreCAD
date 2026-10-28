@@ -315,6 +315,24 @@ RS_EntityContainer* RS_Hatch::getBoundaryContainer(const int loopIndex) const {
     return nullptr;
 }
 
+RS_HatchPatternFrame RS_Hatch::patternFrame() const {
+    RS_HatchPatternFrame frame;
+    frame.origin = latticeOrigin();
+    frame.scale = m_data.scale;
+    frame.angle = m_data.angle;
+    frame.tileMin = m_tileMin;
+    frame.tileSize = m_tileSize;
+    const bool sizeFinite = m_tileSize.valid &&
+                             std::isfinite(m_tileSize.x) &&
+                             std::isfinite(m_tileSize.y) &&
+                             m_tileSize.x > 1e-12 && m_tileSize.y > 1e-12;
+    const bool minFinite = m_tileMin.valid &&
+                            std::isfinite(m_tileMin.x) &&
+                            std::isfinite(m_tileMin.y);
+    frame.tileValid = !isSolid() && sizeFinite && minFinite;
+    return frame;
+}
+
 /**
  * Calculates the bounding box as update() does. The contour bounds the hatch
  * even while the layer its edges were picked from is hidden.
@@ -368,6 +386,10 @@ void RS_Hatch::update() {
     // Reset caches
     m_area = RS_MAXDOUBLE;
     m_secondMomentValid = false;
+    // The tile bbox is written by updatePatternHatch only; reset it so a
+    // solid hatch or a missing pattern leaves patternFrame().tileValid false.
+    m_tileMin = RS_Vector(false);
+    m_tileSize = RS_Vector(false);
 
     // Validate and optimize loops (moves boundaries to subcontainers)
     if (!validate()) {
@@ -474,6 +496,14 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
         return;
     }
     pattern->setOwner(true);
+
+    // Capture the native (unscaled, unrotated) tile bbox before applying the
+    // hatch scale. patternFrame() returns it to the exporter and to Quick
+    // Info; it is the quantity DXF/DWG writers need to size the placeholder
+    // definition line.
+    pattern->calculateBorders();
+    m_tileMin = pattern->getMin();
+    m_tileSize = pattern->getSize();
 
     pattern->scale((pattern->getMin() + pattern->getMax()) * 0.5, RS_Vector{m_data.scale, m_data.scale});
     pattern->calculateBorders();
