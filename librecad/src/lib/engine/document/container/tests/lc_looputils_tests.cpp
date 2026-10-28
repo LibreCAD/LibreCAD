@@ -1602,6 +1602,189 @@ TEST_CASE("Distinct vertices 10 eps apart stay distinct",
     REQUIRE_THAT(hatch->getTotalArea(), WithinAbs(2.0, 1e-10));
 }
 
+namespace {
+
+// Apply (scale, rotate about origin, translate) to every loop container in
+// place. Transform order follows the Case description: scale first, rotate
+// second, move last. Each container's children are RS_Entity atomics
+// (RS_Line, RS_Arc, RS_Circle, RS_Ellipse, ...) which handle their own
+// endpoint recomputation.
+void transformLoops(std::vector<std::unique_ptr<RS_EntityContainer>>& loops,
+                    double scale, double rotateDeg, const RS_Vector& offset) {
+    const RS_Vector origin(0.0, 0.0);
+    const double theta = rotateDeg * M_PI / 180.0;
+    for (auto& loop : loops) {
+        if (!loop) continue;
+        if (scale != 1.0) {
+            loop->scale(origin, RS_Vector(scale, scale));
+        }
+        if (std::abs(theta) > 0.0) {
+            loop->rotate(origin, theta);
+        }
+        if (offset.x != 0.0 || offset.y != 0.0) {
+            loop->move(offset);
+        }
+        loop->forcedCalculateBorders();
+    }
+}
+
+} // namespace
+
+namespace {
+
+// Build a polyline-boundary loop container from an inline list of
+// (point, bulge) tuples. The polyline is closed and its atomic edges are
+// cloned into a fresh owning container, matching how the DXF filter writes
+// a hatch boundary with the polyline bit set.
+std::unique_ptr<RS_EntityContainer> makeBulgePolylineLoop(
+    const std::vector<std::tuple<double, double, double>>& pts) {
+    std::vector<std::pair<RS_Vector, double>> vs;
+    vs.reserve(pts.size());
+    for (const auto& p : pts) {
+        vs.emplace_back(RS_Vector(std::get<0>(p), std::get<1>(p)), std::get<2>(p));
+    }
+    return makePolylineLoopContainer(vs);
+}
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Bulge paths far from the origin keep their loops",
+          "[lc-hatchfix][nesting]") {
+    // Two real-world hatch boundaries drawn with bulges, replayed at the
+    // origin, at (5e5, 4e6) and at (3e7, 3e7). The welder's scale-relative
+    // tolerance keeps the chain closed at every location; the master build's
+    // fixed 1e-8 key loses one of these paths at D = 1e4 or above.
+    //
+    // The hatch-6 path has one closed boundary (5 vertices, 2 bulged).
+    // The hatch-7 path has an outer rectangle (closed) plus an inner mixed
+    // boundary (5 vertices, 3 bulged); the inner one nests inside the outer.
+    auto buildHatch6 = []() {
+        return makeBulgePolylineLoop({
+            {90.52467476398633, 25.2544690703545, 0.0},
+            {95.50272119367489, 25.2544690703545, 0.0712515982017834},
+            {94.76722237490561, 27.39219767398249, 1.507885615214488},
+            {92.5559157660329, 30.05747155033201, 0.0734835535140569},
+            {90.52467476398633, 31.20054570052284, 0.0},
+        });
+    };
+    auto buildHatch7Rect = []() {
+        return makeBulgePolylineLoop({
+            {116.8535739341333, 34.34631086375322, 0.0},
+            {102.7338310135901, 34.34631086375322, 0.0},
+            {102.7338310135901, 21.59331610156323, 0.0},
+            {116.8535739341333, 21.59331610156323, 0.0},
+        });
+    };
+    auto buildHatch7Inner = []() {
+        return makeBulgePolylineLoop({
+            {106.6036874636791, 31.35483848998607, -0.0734835535140573},
+            {108.6349284657257, 30.21176433979524, -1.507885615214487},
+            {110.8462350745984, 27.54649046344571, -0.0712515982017835},
+            {111.5817338933677, 25.40876185981773, 0.0},
+            {106.6036874636791, 25.40876185981773, 0.0},
+        });
+    };
+
+    const std::vector<RS_Vector> offsets{
+        RS_Vector(0, 0),
+        RS_Vector(5.0e5, 4.0e6),
+        RS_Vector(3.0e7, 3.0e7),
+    };
+    SECTION("hatch 6: one closed boundary") {
+        for (const RS_Vector& off : offsets) {
+            CAPTURE(off.x, off.y);
+            std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+            loops.push_back(buildHatch6());
+            if (off.x != 0.0 || off.y != 0.0) {
+                for (auto& l : loops) {
+                    l->move(off);
+                    l->forcedCalculateBorders();
+                }
+            }
+            RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+            auto hatch = makeHatch(std::move(loops), data);
+            REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+            REQUIRE(hatch->countAllLoops() == 1);
+        }
+    }
+    SECTION("hatch 7: rectangle with an inner island") {
+        for (const RS_Vector& off : offsets) {
+            CAPTURE(off.x, off.y);
+            std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+            loops.push_back(buildHatch7Rect());
+            loops.push_back(buildHatch7Inner());
+            if (off.x != 0.0 || off.y != 0.0) {
+                for (auto& l : loops) {
+                    l->move(off);
+                    l->forcedCalculateBorders();
+                }
+            }
+            RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+            auto hatch = makeHatch(std::move(loops), data);
+            REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+            REQUIRE(hatch->countAllLoops() == 2);
+        }
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Loop counts and areas are scale and rotation invariant",
+          "[lc-hatchfix][nesting]") {
+    // Replay the 24 island-nesting cases through four frames: scale 1e-4, scale 1e4,
+    // rotate 30 deg about the origin, and translate to (3e7, 3e7). Loop
+    // counts and depths must match the as-stored case; area in the three
+    // origin-based frames is identical to the original up to the arithmetic
+    // of each primitive (relative 1e-9 is well within the per-hatch
+    // tolerance of each frame). The translated frame is kept to show that
+    // the id-based attach handles the shifted M even where the floor
+    // 1e-6*D no longer dominates.
+    const CaseList cases = buildCases();
+    const auto idx = GENERATE_COPY(Catch::Generators::range<std::size_t>(
+        0, cases.size()));
+    const Case& c = cases[idx];
+
+    struct Frame {
+        const char* name;
+        double scale;
+        double rotateDeg;
+        RS_Vector offset;
+        double areaFactor;        // scaled area = baseArea * areaFactor
+        bool checkAbs;            // enforce area oracle in this frame
+    };
+    const std::vector<Frame> frames{
+        {"scale_1e-4",   1.0e-4,  0.0,  RS_Vector(0, 0),       1.0e-8,  true},
+        {"scale_1e4",    1.0e4,   0.0,  RS_Vector(0, 0),       1.0e8,   true},
+        {"rotate_30",    1.0,     30.0, RS_Vector(0, 0),       1.0,     true},
+        {"far_offset",   1.0,     0.0,  RS_Vector(3.0e7, 3.0e7), 1.0,  false},
+    };
+
+    for (const Frame& f : frames) {
+        CAPTURE(c.name, f.name);
+        auto loops = c.build();
+        transformLoops(loops, f.scale, f.rotateDeg, f.offset);
+
+        auto roots = sorterTree(std::move(loops));
+        REQUIRE(roots);
+        REQUIRE(static_cast<int>(roots->size()) == c.roots);
+
+        std::vector<int> depths;
+        for (const auto& r : *roots) collectDepths(r, 0, depths);
+        std::sort(depths.begin(), depths.end());
+        std::vector<int> expected = c.depths;
+        std::sort(expected.begin(), expected.end());
+        REQUIRE(depths == expected);
+
+        if (f.checkAbs) {
+            const double expectedArea = c.area * f.areaFactor;
+            // Allow a few ULPs of the expected area to absorb per-primitive
+            // rotation/scale arithmetic; the as-stored tolerance was 1e-6.
+            REQUIRE_THAT(totalArea(*roots),
+                         WithinRel(expectedArea, 1.0e-9));
+        }
+    }
+}
+
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("Welding at large D merges near-touching contours safely",
           "[lc-hatchfix][nesting]") {
