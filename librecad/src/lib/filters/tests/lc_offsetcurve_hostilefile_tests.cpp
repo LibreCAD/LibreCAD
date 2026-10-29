@@ -5,7 +5,10 @@
 #include <array>
 #include <limits>
 #include <stdexcept>
+#include <string>
 #include <type_traits>
+#include <utility>
+#include <vector>
 
 #include "lc_offsetcurve_persistence_fixture.h"
 #include "lc_offsetimportsession.h"
@@ -63,6 +66,13 @@ public:
     static void afterRead(LC_OffsetImportSession& session, std::function<void()> hook) {
         session.m_testAfterRead = std::move(hook);
     }
+    static void afterXrefSnapshot(LC_OffsetImportSession& session, std::function<void()> hook) {
+        session.m_testAfterXrefSnapshot = std::move(hook);
+    }
+    static void afterSnapshotParse(LC_OffsetImportSession& session,
+                                   std::function<void(RS_Graphic&)> hook) {
+        session.m_testAfterSnapshotParse = std::move(hook);
+    }
 };
 
 namespace {
@@ -116,6 +126,29 @@ void writeInput(const std::filesystem::path& path, Lane lane, const DRW_Spline& 
     default: FAIL("DWG fixture requested in a build without DWGSUPPORT");
 #endif
     }
+}
+
+void writeXrefHost(const std::filesystem::path& path,
+                   const std::vector<std::pair<std::string, std::string>>& refs) {
+    auto text = f::ascii(f::raw(3));
+    const auto entities = text.find("0\nSECTION\n2\nENTITIES\n");
+    REQUIRE(entities != std::string::npos);
+    text.resize(entities);
+    text += "0\nSECTION\n2\nBLOCKS\n";
+    for (std::size_t i = 0; i < refs.size(); ++i) {
+        const auto blockHandle = "B" + std::to_string(i * 2 + 1);
+        const auto endHandle = "B" + std::to_string(i * 2 + 2);
+        text += "0\nBLOCK\n5\n" + blockHandle + "\n8\n0\n2\n" + refs[i].first +
+            "\n70\n4\n1\n" + refs[i].second +
+            "\n10\n0\n20\n0\n30\n0\n0\nENDBLK\n5\n" + endHandle + "\n8\n0\n";
+    }
+    text += "0\nENDSEC\n0\nSECTION\n2\nENTITIES\n";
+    for (std::size_t i = 0; i < refs.size(); ++i) {
+        text += "0\nINSERT\n5\nC" + std::to_string(i + 1) + "\n8\n0\n2\n" + refs[i].first +
+            "\n10\n0\n20\n0\n30\n0\n";
+    }
+    text += "0\nENDSEC\n0\nEOF\n";
+    f::put(path, text);
 }
 
 LC_OffsetImportSession::Outcome stagedImport(const std::filesystem::path& path, Lane lane, bool acceptPartial = false) {
@@ -1217,6 +1250,139 @@ TEST_CASE("Staged offset import follows XREF clones into the host block",
     REQUIRE(native->getLayer(false)); CHECK(native->getLayer(false)->getName() == "REF|FixtureOffsets");
     auto* insert = outcome.graphic->entityAt(0); REQUIRE(insert); REQUIRE(insert->isContainer());
     CHECK(static_cast<RS_EntityContainer*>(insert)->count() > 0);
+}
+
+TEST_CASE("Staged XREF parsing uses captured bytes and refuses a changed dependency",
+          "[lc-offsetcurve][import-session][xref][snapshot]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-xref-snapshot");
+    const auto external = directory.file("external.dxf"), host = directory.file("host.dxf");
+    writeInput(external, Lane::Ascii, f::raw(3));
+    writeXrefHost(host, {{"REF", "external.dxf"}});
+
+    LC_OffsetImportSession session;
+    LC_OffsetImportSessionTestAccess::afterXrefSnapshot(session, [&] {
+        f::put(external, "0\nEOF\n");
+    });
+    bool parsedCapturedXref = false;
+    LC_OffsetImportSessionTestAccess::afterSnapshotParse(session, [&](RS_Graphic& graphic) {
+        const auto* block = graphic.findBlock("REF");
+        parsedCapturedXref = block && block->count() == 1 &&
+            dynamic_cast<const LC_OffsetImportPlaceholder*>(block->entityAt(0));
+    });
+    std::optional<LC_OffsetImportSession::Outcome> outcome;
+    REQUIRE(session.start(QString::fromStdString(host.string()), RS2::FormatDXFRW2018,
+        RS2::DxfTextEncoding::Declared, false,
+        [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!outcome) {
+        REQUIRE(elapsed.elapsed() < 10000);
+        QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1);
+    }
+    CHECK(parsedCapturedXref);
+    CHECK(outcome->status == LC_OffsetImportSession::Status::SourceChanged);
+    CHECK_FALSE(outcome->graphic);
+}
+
+TEST_CASE("Staged XREF admission fails closed for missing and oversized dependencies",
+          "[lc-offsetcurve][import-session][xref][snapshot][limit]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-xref-admission");
+    const auto host = directory.file("host.dxf");
+    const auto run = [&](const std::filesystem::path& source) {
+        LC_OffsetImportSession session;
+        std::optional<LC_OffsetImportSession::Outcome> outcome;
+        REQUIRE(session.start(QString::fromStdString(source.string()), RS2::FormatDXFRW2018,
+            RS2::DxfTextEncoding::Declared, false,
+            [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+        QElapsedTimer elapsed; elapsed.start();
+        while (!outcome) {
+            REQUIRE(elapsed.elapsed() < 10000);
+            QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1);
+        }
+        return std::move(*outcome);
+    };
+
+    SECTION("missing dependency") {
+        writeXrefHost(host, {{"MISSING", "not-present.dxf"}});
+        const auto outcome = run(host);
+        CHECK(outcome.status == LC_OffsetImportSession::Status::ReadFailed);
+        CHECK_FALSE(outcome.graphic);
+    }
+    SECTION("dependency exceeds the aggregate byte budget") {
+        const auto external = directory.file("oversized.dxf");
+        QFile sparse(QString::fromStdString(external.string()));
+        REQUIRE(sparse.open(QIODevice::WriteOnly));
+        REQUIRE(sparse.resize(qint64{256} * 1024 * 1024));
+        sparse.close();
+        writeXrefHost(host, {{"OVERSIZED", "oversized.dxf"}});
+        const auto outcome = run(host);
+        CHECK(outcome.status == LC_OffsetImportSession::Status::ResourceLimit);
+        CHECK_FALSE(outcome.graphic);
+    }
+}
+
+TEST_CASE("Staged XREF snapshots parse DWG dependencies from captured bytes",
+          "[lc-offsetcurve][import-session][xref][dwg]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-dwg-xref-snapshot");
+    const auto external = directory.file("external.dwg"), host = directory.file("host.dxf");
+    writeInput(external, Lane::Eed18, f::raw(3));
+    writeXrefHost(host, {{"DWG_REF", "external.dwg"}});
+    const auto outcome = stagedImport(host, Lane::Ascii);
+    REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+    REQUIRE(outcome.graphic);
+    const auto* block = outcome.graphic->findBlock("DWG_REF");
+    REQUIRE(block);
+    REQUIRE(block->count() == 1);
+    CHECK(dynamic_cast<const LC_OffsetCurve*>(block->entityAt(0)) != nullptr);
+}
+
+TEST_CASE("Staged XREF snapshots deduplicate paths and cap distinct dependencies",
+          "[lc-offsetcurve][import-session][xref][snapshot][limit]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-xref-bounds");
+    SECTION("repeated references share one captured byte buffer") {
+        const auto external = directory.file("external.dxf"), host = directory.file("host.dxf");
+        writeInput(external, Lane::Ascii, f::raw(3));
+        writeXrefHost(host, {{"REF1", "external.dxf"}, {"REF2", "external.dxf"}});
+        LC_OffsetImportSession session; std::size_t captures = 0;
+        LC_OffsetImportSessionTestAccess::afterXrefSnapshot(session, [&] { ++captures; });
+        std::optional<LC_OffsetImportSession::Outcome> outcome;
+        REQUIRE(session.start(QString::fromStdString(host.string()), RS2::FormatDXFRW2018,
+            RS2::DxfTextEncoding::Declared, false,
+            [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+        QElapsedTimer elapsed; elapsed.start();
+        while (!outcome) {
+            REQUIRE(elapsed.elapsed() < 35000);
+            QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1);
+        }
+        REQUIRE(outcome->status == LC_OffsetImportSession::Status::Complete); REQUIRE(outcome->graphic);
+        CHECK(captures == 1);
+        for (const auto* name : {"REF1", "REF2"}) {
+            const auto* block = outcome->graphic->findBlock(name); REQUIRE(block); REQUIRE(block->count() == 1);
+            CHECK(dynamic_cast<const LC_OffsetCurve*>(block->entityAt(0)) != nullptr);
+        }
+    }
+    SECTION("the sixty-fifth distinct dependency is rejected before publication") {
+        std::vector<std::pair<std::string, std::string>> refs;
+        refs.reserve(65);
+        for (std::size_t i = 0; i < 65; ++i) {
+            const auto name = "external-" + std::to_string(i) + ".dxf";
+            writeInput(directory.file(name), Lane::Ascii, f::raw(3));
+            refs.emplace_back("REF" + std::to_string(i), name);
+        }
+        const auto host = directory.file("host.dxf"); writeXrefHost(host, refs);
+        LC_OffsetImportSession session; std::size_t captures = 0;
+        LC_OffsetImportSessionTestAccess::afterXrefSnapshot(session, [&] { ++captures; });
+        std::optional<LC_OffsetImportSession::Outcome> outcome;
+        REQUIRE(session.start(QString::fromStdString(host.string()), RS2::FormatDXFRW2018,
+            RS2::DxfTextEncoding::Declared, false,
+            [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+        QElapsedTimer elapsed; elapsed.start();
+        while (!outcome) {
+            REQUIRE(elapsed.elapsed() < 15000);
+            QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1);
+        }
+        CHECK(outcome->status == LC_OffsetImportSession::Status::ResourceLimit);
+        CHECK_FALSE(outcome->graphic); CHECK(captures == 64);
+    }
 }
 
 TEST_CASE("Offset filter imports DXF and DWG streams using a logical source path",

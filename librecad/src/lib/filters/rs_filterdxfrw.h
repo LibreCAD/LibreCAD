@@ -31,6 +31,7 @@
 #include <algorithm>
 #include <array>
 #include <cstdint>
+#include <functional>
 #include <limits>
 #include <map>
 #include <memory>
@@ -39,13 +40,14 @@
 #include <string>
 #include <vector>
 
+#include <QByteArray>
+
 #include "drw_interface.h"
 #include "lc_extentitydata.h"
 #include "lc_offsetcurvexdata.h"
 #include "libdxfrw.h"
 #ifdef DWGSUPPORT
 #include "libdwgr.h"
-#include <functional>
 #endif
 #include "rs_color.h"
 #include "rs_dimension.h"
@@ -2040,6 +2042,9 @@ public:
   /// the original logical filename. The stream must be seekable and binary.
   bool fileImportStream(RS_Graphic &g, const QString &logicalFile,
                         RS2::FormatType type, std::istream &input);
+  /// Parse caller-owned bytes while retaining the logical filename for XREFs.
+  bool fileImportBytes(RS_Graphic &g, const QString &logicalFile,
+                       RS2::FormatType type, const QByteArray &bytes);
 
   // Methods from DRW_CreationInterface:
   void addHeader(const DRW_Header *data) override;
@@ -2430,6 +2435,7 @@ protected:
 private:
   bool fileImportImpl(RS_Graphic &g, const QString &logicalFile,
                       RS2::FormatType type, std::istream *input);
+  std::function<bool(const QString &, QByteArray &)> m_xrefSnapshotProvider;
   void prepareBlocks();
   void prepareDxfEntityHandleMap();
   /** The application names of the XDATA a DXF export writes: on its table

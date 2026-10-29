@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QDateTime>
+#include <QByteArray>
 #include <functional>
 #include <memory>
 #include <vector>
@@ -114,6 +115,7 @@ private:
     void parse(const std::shared_ptr<Work>&);
     void captureSource(const std::shared_ptr<Work>&);
     void parseSnapshot(const std::shared_ptr<Work>&);
+    bool snapshotXref(const std::shared_ptr<Work>&, const QString&, QByteArray&);
     void resolvePartial(const std::shared_ptr<Work>&, bool accepted);
     void beginValidation(const std::shared_ptr<Work>&);
     void advance(const std::shared_ptr<Work>&);
@@ -126,6 +128,8 @@ private:
     // Private deterministic read-boundary seam; never set by product inputs.
     std::function<void()> m_testAfterRead;
     std::function<void()> m_testAfterSnapshotChunk;
+    std::function<void()> m_testAfterXrefSnapshot;
+    std::function<void(RS_Graphic&)> m_testAfterSnapshotParse;
     std::function<void()> m_testBeforeSourceOpen;
 };
 #endif

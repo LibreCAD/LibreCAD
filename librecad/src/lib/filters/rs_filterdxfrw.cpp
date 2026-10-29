@@ -45,6 +45,7 @@
 #include <optional>
 #include <set>
 #include <sstream>
+#include <streambuf>
 #include <stack>
 #include <type_traits>
 #include <utility>
@@ -4340,6 +4341,43 @@ void updateImportedInserts(RS_Graphic &graphic) {
 
 } // namespace
 
+namespace {
+class ByteArrayInputBuffer final : public std::streambuf {
+public:
+  explicit ByteArrayInputBuffer(const QByteArray &bytes)
+      : empty('\0'), begin(const_cast<char *>(bytes.constData())), size(bytes.size()) {
+    // streambuf requires mutable get pointers; this buffer has no output area.
+    if (!begin)
+      begin = &empty;
+    setg(begin, begin, begin + size);
+  }
+
+protected:
+  pos_type seekoff(off_type offset, std::ios_base::seekdir direction,
+                   std::ios_base::openmode mode) override {
+    if (!(mode & std::ios_base::in) || (mode & std::ios_base::out))
+      return pos_type(off_type(-1));
+    const off_type origin = direction == std::ios_base::beg ? 0 :
+        direction == std::ios_base::cur ? gptr() - eback() :
+        direction == std::ios_base::end ? size : -1;
+    if (origin < 0 || offset < -origin || offset > size - origin)
+      return pos_type(off_type(-1));
+    const auto position = origin + offset;
+    setg(begin, begin + position, begin + size);
+    return pos_type(position);
+  }
+
+  pos_type seekpos(pos_type position, std::ios_base::openmode mode) override {
+    return seekoff(off_type(position), std::ios_base::beg, mode);
+  }
+
+private:
+  char empty;
+  char *begin;
+  off_type size;
+};
+} // namespace
+
 void RS_FilterDXFRW::refreshDeferredOffsetInserts(RS_Graphic &graphic) {
   updateImportedInserts(graphic);
 }
@@ -4360,6 +4398,13 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
 bool RS_FilterDXFRW::fileImportStream(RS_Graphic &g, const QString &logicalFile,
                                       RS2::FormatType type, std::istream &input) {
   return fileImportImpl(g, logicalFile, type, &input);
+}
+
+bool RS_FilterDXFRW::fileImportBytes(RS_Graphic &g, const QString &logicalFile,
+                                     RS2::FormatType type, const QByteArray &bytes) {
+  ByteArrayInputBuffer buffer(bytes);
+  std::istream input(&buffer);
+  return fileImportStream(g, logicalFile, type, input);
 }
 
 bool RS_FilterDXFRW::fileImportImpl(RS_Graphic &g, const QString &file,
@@ -5126,6 +5171,10 @@ bool RS_FilterDXFRW::embedXref(RS_Block *block, const QString &xrefPath,
 
   const QString resolved = resolveXrefPath(xrefPath);
   if (resolved.isEmpty()) {
+    if (m_xrefSnapshotProvider) {
+      QByteArray ignored;
+      m_xrefSnapshotProvider(QString{}, ignored);
+    }
     RS_DIALOGFACTORY->commandMessage(
         QObject::tr("XREF not resolved for block \"%1\": %2 (file not found in "
                     "host directory). The block will render as empty.")
@@ -5148,11 +5197,16 @@ bool RS_FilterDXFRW::embedXref(RS_Block *block, const QString &xrefPath,
   RS_FilterDXFRW xrefFilter;
   xrefFilter.m_deferOffsetAdmission = m_deferOffsetAdmission;
   xrefFilter.m_offsetImportBudget = m_offsetImportBudget;
+  xrefFilter.m_xrefSnapshotProvider = m_xrefSnapshotProvider;
   xrefFilter.m_xrefStack = m_xrefStack; // propagate cycle guard
   const bool isDwg =
       resolved.endsWith(QStringLiteral(".dwg"), Qt::CaseInsensitive);
   const RS2::FormatType fmt = isDwg ? RS2::FormatDWG : RS2::FormatDXFRW;
-  const bool ok = xrefFilter.fileImport(ext, resolved, fmt);
+  QByteArray xrefSnapshot;
+  const bool ok = m_xrefSnapshotProvider
+      ? m_xrefSnapshotProvider(resolved, xrefSnapshot) &&
+            xrefFilter.fileImportBytes(ext, resolved, fmt, xrefSnapshot)
+      : xrefFilter.fileImport(ext, resolved, fmt);
 
   m_xrefStack.erase(resolved);
 

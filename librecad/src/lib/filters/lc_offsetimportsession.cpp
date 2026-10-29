@@ -11,10 +11,9 @@
 #include <QPointer>
 #include <QThread>
 #include <algorithm>
-#include <istream>
 #include <limits>
+#include <map>
 #include <set>
-#include <streambuf>
 #include <stdexcept>
 #include <utility>
 #include <vector>
@@ -170,6 +169,11 @@ struct ImportCandidate { RS_EntityContainer* parent; LC_OffsetImportPlaceholder*
 }
 
 struct LC_OffsetImportSession::Work {
+    struct XrefSnapshot {
+        QString path;
+        LC_OffsetImportSourceStamp stamp;
+        QByteArray bytes;
+    };
     QString file, error;
     RS2::FormatType type = RS2::FormatUnknown;
     RS2::DxfTextEncoding encoding = RS2::DxfTextEncoding::Declared;
@@ -185,6 +189,10 @@ struct LC_OffsetImportSession::Work {
     QFile source;
     QByteArray snapshot;
     qint64 expectedSize = -1;
+    qint64 xrefBytes = 0;
+    std::map<QString, XrefSnapshot> xrefSnapshots;
+    std::optional<Status> xrefFailure;
+    QString xrefError;
     std::vector<ImportCandidate> candidates;
 };
 
@@ -192,31 +200,7 @@ namespace {
 constexpr std::size_t ImportGraphLimit = std::size_t{1} << 20;
 constexpr qint64 ImportSnapshotLimit = qint64{256} * 1024 * 1024;
 constexpr qint64 ImportSnapshotChunk = qint64{256} * 1024;
-
-class SnapshotStreamBuffer final : public std::streambuf {
-public:
-    explicit SnapshotStreamBuffer(QByteArray& bytes) : begin(bytes.data()), size(bytes.size()) {
-        setg(begin, begin, begin + size);
-    }
-protected:
-    pos_type seekoff(off_type offset, std::ios_base::seekdir direction,
-                     std::ios_base::openmode mode) override {
-        if (!(mode & std::ios_base::in) || (mode & std::ios_base::out)) return pos_type(off_type(-1));
-        const off_type origin = direction == std::ios_base::beg ? 0 :
-            direction == std::ios_base::cur ? gptr() - eback() :
-            direction == std::ios_base::end ? size : -1;
-        if (origin < 0 || offset < -origin || offset > size - origin) return pos_type(off_type(-1));
-        const auto position = origin + offset;
-        setg(begin, begin + position, begin + size);
-        return pos_type(position);
-    }
-    pos_type seekpos(pos_type position, std::ios_base::openmode mode) override {
-        return seekoff(off_type(position), std::ios_base::beg, mode);
-    }
-private:
-    char* begin;
-    off_type size;
-};
+constexpr std::size_t ImportXrefCountLimit = 64;
 
 bool supportedImportType(RS2::FormatType type) {
     switch (type) {
@@ -411,14 +395,22 @@ void LC_OffsetImportSession::parseSnapshot(const std::shared_ptr<Work>& work) {
     try {
         RS_FilterDXFRW filter; filter.m_deferOffsetAdmission = true; filter.m_offsetImportBudget = work->budget;
         filter.setDxfTextEncoding(work->encoding);
+        filter.m_xrefSnapshotProvider = [alive, work](const QString& path, QByteArray& bytes) {
+            return alive && alive->snapshotXref(work, path, bytes);
+        };
         work->graphic->setFormatType(work->type);
-        SnapshotStreamBuffer buffer(work->snapshot);
-        std::istream input(&buffer);
-        const bool read = filter.fileImportStream(*work->graphic, work->file, work->type, input);
-        work->snapshot.clear();
+        const bool read = filter.fileImportBytes(*work->graphic, work->file, work->type, work->snapshot);
+        work->snapshot = QByteArray{};
+        for (auto& entry : work->xrefSnapshots)
+            entry.second.bytes = QByteArray{};
         if (!alive || m_work != work) return;
         if (m_testAfterRead) {
             auto hook = std::move(m_testAfterRead); m_testAfterRead = {}; hook();
+            if (!alive || m_work != work) return;
+        }
+        if (m_testAfterSnapshotParse) {
+            auto hook = std::move(m_testAfterSnapshotParse); m_testAfterSnapshotParse = {};
+            hook(*work->graphic);
             if (!alive || m_work != work) return;
         }
         if ((work->sourceStamp.valid && !work->sourceStamp.matches(work->file))
@@ -428,6 +420,16 @@ void LC_OffsetImportSession::parseSnapshot(const std::shared_ptr<Work>& work) {
         ) {
             work->error = tr("The source file changed while it was being read; the drawing was not opened.");
             finish(work, Status::SourceChanged); return;
+        }
+        for (const auto& entry : work->xrefSnapshots) {
+            if (!entry.second.stamp.matches(entry.second.path)) {
+                work->error = tr("An external reference changed while it was being read; the drawing was not opened.");
+                finish(work, Status::SourceChanged); return;
+            }
+        }
+        if (work->xrefFailure) {
+            work->error = work->xrefError;
+            finish(work, *work->xrefFailure); return;
         }
         work->source.close();
         if (!read) { work->error = filter.lastError(); work->partial = true; }
@@ -447,6 +449,109 @@ void LC_OffsetImportSession::parseSnapshot(const std::shared_ptr<Work>& work) {
         }
         beginValidation(work);
     } catch (...) { if (alive && m_work == work) finish(work, Status::ResourceLimit); }
+}
+
+bool LC_OffsetImportSession::snapshotXref(const std::shared_ptr<Work>& work, const QString& path, QByteArray& bytes) {
+    if (m_work != work)
+        return false;
+    const QPointer<LC_OffsetImportSession> alive(this);
+    const auto refuse = [&](Status status, const QString& error) {
+        if (!work->xrefFailure) {
+            work->xrefFailure = status;
+            work->xrefError = error;
+        }
+        return false;
+    };
+    try {
+        if (path.isEmpty())
+            return refuse(Status::ReadFailed,
+                          tr("An external reference could not be resolved for a bounded import; the drawing was not opened."));
+
+        const auto stamp = LC_OffsetImportSourceStamp::capture(path);
+        if (!stamp.valid || stamp.canonicalPath.isEmpty())
+            return refuse(Status::ReadFailed,
+                          tr("An external reference could not be identified for a bounded import; the drawing was not opened."));
+#if defined(Q_OS_UNIX) || defined(Q_OS_WIN)
+        if (!stamp.native.valid)
+            return refuse(Status::ReadFailed,
+                          tr("An external reference file identity could not be verified; the drawing was not opened."));
+#endif
+
+        QString key = stamp.canonicalPath;
+#ifdef Q_OS_WIN
+        key = key.toCaseFolded();
+#endif
+        const auto cached = work->xrefSnapshots.find(key);
+        if (cached != work->xrefSnapshots.end()) {
+            bytes = cached->second.bytes;
+            return true;
+        }
+        if (work->xrefSnapshots.size() >= ImportXrefCountLimit)
+            return refuse(Status::ResourceLimit, tr("The drawing exceeds the 64-file staged XREF limit."));
+
+        const qint64 used = qint64(work->snapshot.size()) + work->xrefBytes;
+        if (used < 0 || used > ImportSnapshotLimit)
+            return refuse(Status::ResourceLimit, tr("The host and referenced drawings exceed the 256 MiB staged import limit."));
+        const qint64 remaining = ImportSnapshotLimit - used;
+
+        QFile source(path);
+        if (!source.open(QIODevice::ReadOnly) || source.isSequential())
+            return refuse(Status::ReadFailed,
+                          tr("An external reference could not be opened for a bounded import; the drawing was not opened."));
+        const qint64 expectedSize = source.size();
+        if (expectedSize < 0)
+            return refuse(Status::ReadFailed, tr("An external reference size could not be verified; the drawing was not opened."));
+        if (expectedSize > remaining)
+            return refuse(Status::ResourceLimit, tr("The host and referenced drawings exceed the 256 MiB staged import limit."));
+#if defined(Q_OS_UNIX) || defined(Q_OS_WIN)
+        if (!stamp.matchesDescriptor(source.handle()))
+            return refuse(Status::SourceChanged,
+                          tr("An external reference changed while it was being opened; the drawing was not opened."));
+#endif
+
+        QByteArray snapshot;
+        snapshot.reserve(int(expectedSize));
+        while (!source.atEnd()) {
+            const QByteArray chunk = source.read(ImportSnapshotChunk);
+            if (source.error() != QFileDevice::NoError || chunk.isEmpty())
+                return refuse(Status::ReadFailed,
+                              tr("An external reference could not be read completely; the drawing was not opened."));
+            if (chunk.size() > remaining - snapshot.size())
+                return refuse(Status::ResourceLimit, tr("The host and referenced drawings exceed the 256 MiB staged import limit."));
+            snapshot.append(chunk);
+        }
+        if (snapshot.size() != expectedSize || !stamp.matches(path))
+            return refuse(Status::SourceChanged,
+                          tr("An external reference changed while it was being captured; the drawing was not opened."));
+#if defined(Q_OS_UNIX) || defined(Q_OS_WIN)
+        if (!stamp.matchesDescriptor(source.handle()))
+            return refuse(Status::SourceChanged,
+                          tr("An external reference changed while it was being captured; the drawing was not opened."));
+#endif
+        source.close();
+
+        work->xrefBytes += snapshot.size();
+        auto [stored, inserted] = work->xrefSnapshots.emplace(
+            key, Work::XrefSnapshot{path, stamp, std::move(snapshot)});
+        if (!inserted)
+            return refuse(Status::ResourceLimit,
+                          tr("An external reference snapshot could not be retained safely; the drawing was not opened."));
+        bytes = stored->second.bytes;
+
+        if (m_testAfterXrefSnapshot) {
+            auto hook = m_testAfterXrefSnapshot;
+            hook();
+            if (!alive || alive->m_work != work)
+                return false;
+        }
+        return true;
+    }
+    catch (...) {
+        if (!alive || alive->m_work != work)
+            return false;
+        return refuse(Status::ResourceLimit,
+                      tr("An external reference could not be captured within the staged import limits; the drawing was not opened."));
+    }
 }
 
 void LC_OffsetImportSession::resolvePartial(const std::shared_ptr<Work>& work, bool accepted) {
