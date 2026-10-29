@@ -3938,3 +3938,41 @@ head macOS offscreen requalification, not Windows runtime, visible-GUI,
 installed-helper, or final acceptance. No product gap was found, so W73 changes
 the evidence checkpoint only; W16-W19 remain implemented and the broader W0-W2
 and platform gates remain open.
+
+## 35. W74 Console DXF/DWG Import Routing
+
+Implemented in product commit `ce507b4a9464576e9cca2352f7d96e78d2c6ce90`.
+Console conversion, DWG admission reporting, PDF import, and raster/vector
+image-export import now obtain drawings through the staged import session for
+DXF/DWG. The helper waits in a local Qt event loop, rejects source-identity
+changes and failed imports, and accepts partial input only when at least one
+entity was recovered. It reports partial recovery, downgraded offset carriers,
+and suppressed diagnostics. Other file formats retain the existing importer.
+Ownership is returned as `unique_ptr<RS_Graphic>` so callers do not publish a
+partially loaded document after failure.
+
+Added console regressions for ordinary DXF, native-offset binary R2018 DXF,
+ODA R2018 native-offset DWG, malformed input, and missing files. The focused
+console import and SVG/raster export suites pass in CMake Release and ASan; the
+full top-level qmake6 build also completes and links the application plus
+adjacent worker. ASan used `detect_leaks=0`, so this is not leak validation.
+The import/session and rendering work still executes on the Qt thread; this
+routes supported console callers through bounded worker validation but does
+not make parsing or rendering itself nonblocking.
+
+| W74 lane | JUnit cases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Console import Release | 4 / 20 | PASS | `fc18893572de761276d2109236825aa05da66ed7484cb50edb5d18619789c7b8` |
+| Console import ASan | 4 / 20 | PASS | `0c32c7630b50cde7691d72fad8dc698167785a3dbd5318ec5e04af97a8747ec3` |
+| Console SVG/raster Release | 306 assertions | PASS | `82ca5921191aa30645053f1de70b1d4e4f0333953036ab6e4bfcf1acccf783d9` |
+| Console SVG/raster ASan | 306 assertions | PASS | `6d67e4199eda41a31cd12730f568d8ed3c06184372e49ba60935113a99c4d2bb` |
+| Top-level qmake6 build | application + helper | PASS | n/a |
+
+Reports are `/private/tmp/offset-W74-console-{import,svg}-{release,asan}.xml`.
+Remaining direct import sites were classified: the console helper's ordinary
+format fallback, document-storage open/template loading, recursive XREF
+fallback, hatch-pattern loading, and the bundled dimension-style preview. Audit
+these individually before changing them; user-facing DXF/DWG open/template and
+recursive-XREF paths are the next likely staged-import candidates. Visible
+desktop acceptance, installed-helper deployment, Windows runtime, and final
+acceptance remain open.
