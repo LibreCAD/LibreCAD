@@ -96,7 +96,8 @@ jobs:
         run: |
           cmake --build format-tests \
             --target librecad_dwg_fast_tests librecad_dxf_fast_tests librecad_console_command_utils_tests \
-              librecad_offset_hostilefile_tests librecad_lc_consolesvgexporttests librecad_painter_tests \
+              librecad_offset_hostilefile_tests librecad_offset_adapter_tests \
+              librecad_lc_consolesvgexporttests librecad_painter_tests \
               libdxfrw_dxf_embedded_scope_tests libdxfrw_verified_write_tests librecad_text_native_tests \
               librecad_offset_worker librecad_offset_worker_wire_tests librecad_offset_worker_request_tests \
               librecad_offset_worker_result_tests librecad_offset_worker_kernel_tests \
@@ -109,6 +110,7 @@ jobs:
       - name: Run bounded DWG/DXF test lanes
         run: |
           ctest --test-dir format-tests --output-on-failure
+          QT_QPA_PLATFORM=offscreen format-tests/librecad_offset_adapter_tests "[sync-api]"
           QT_QPA_PLATFORM=offscreen format-tests/librecad_offset_creation_action_tests "[lc-offsetcurve][creation-worker]"
           format-tests/librecad_offset_cache_trim_failure_tests
           format-tests/librecad_offset_cache_check_failure_tests
@@ -195,13 +197,15 @@ jobs:
           set "PATH=%VSPATH%\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja;%PATH%"
           ninja --version || exit /b 1
           cmake.exe -S . -B generated-tests -G Ninja -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT="%CD%\boost" -DCMAKE_CXX_FLAGS="/EHsc" -DBUILD_TESTS=ON -DLIBRECAD_ENABLE_OPENTYPE=OFF -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON -DLIBRECAD_REGISTER_OFFSET_WORKER_TESTS=ON -DLIBRECAD_REGISTER_FULL_TESTS=OFF -DLIBRECAD_REGISTER_FORMAT_TESTS=OFF -DLIBRECAD_REGISTER_CROSS_READ_SMOKE=OFF || exit /b 1
-          cmake --build generated-tests --parallel --target librecad_dwg_fast_tests librecad_dxf_fast_tests librecad_console_command_utils_tests librecad_offset_hostilefile_tests librecad_lc_consolesvgexporttests librecad_painter_tests libdxfrw_dxf_embedded_scope_tests libdxfrw_verified_write_tests librecad_text_native_tests librecad_offset_worker librecad_offset_worker_wire_tests librecad_offset_worker_request_tests librecad_offset_worker_result_tests librecad_offset_worker_kernel_tests librecad_offset_worker_process_tests librecad_offset_worker_client_tests librecad_offset_worker_fault_tests librecad_offset_worker_geometry_timeout_tests librecad_offset_creation_action_tests librecad_offset_cache_trim_failure_tests librecad_offset_cache_check_failure_tests || exit /b 1
+          cmake --build generated-tests --parallel --target librecad_dwg_fast_tests librecad_dxf_fast_tests librecad_console_command_utils_tests librecad_offset_hostilefile_tests librecad_offset_adapter_tests librecad_lc_consolesvgexporttests librecad_painter_tests libdxfrw_dxf_embedded_scope_tests libdxfrw_verified_write_tests librecad_text_native_tests librecad_offset_worker librecad_offset_worker_wire_tests librecad_offset_worker_request_tests librecad_offset_worker_result_tests librecad_offset_worker_kernel_tests librecad_offset_worker_process_tests librecad_offset_worker_client_tests librecad_offset_worker_fault_tests librecad_offset_worker_geometry_timeout_tests librecad_offset_creation_action_tests librecad_offset_cache_trim_failure_tests librecad_offset_cache_check_failure_tests || exit /b 1
         shell: cmd
 
       - name: Run bounded DWG/DXF test lanes
         run: |
           ctest --test-dir generated-tests --output-on-failure || exit /b 1
           set QT_QPA_PLATFORM=offscreen
+          generated-tests\librecad_offset_adapter_tests.exe "[sync-api]"
+          if errorlevel 1 exit /b 1
           generated-tests\librecad_offset_creation_action_tests.exe "[lc-offsetcurve][creation-worker]"
           if errorlevel 1 exit /b 1
           generated-tests\librecad_offset_cache_trim_failure_tests.exe
