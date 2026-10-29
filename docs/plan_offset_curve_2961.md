@@ -2733,10 +2733,10 @@ This is a prerequisite for, not an implementation of, an immutable snapshot:
 the staged import still reads the source path, concurrent in-place writes can
 change its bytes, and source metadata checks do not prove content identity.
 XREF resolution still uses the original host path and nested references have
-their own read/ownership questions. DWG has a buffer reader but its filter
-separately probes the pathname for version metadata; audit and unify that path
-before claiming a consistent snapshot. Bound snapshot memory/I/O, cancellation,
-source-change detection, external references and save policy remain open.
+their own read/ownership questions. At W39 the DWG filter separately probed
+the pathname for version metadata; W40 below removes that separate version
+probe. Bound snapshot memory/I/O, cancellation, source-change detection,
+external references and save policy remain open.
 
 Fresh Release application, full-test executable, helper and qmake6 libdxfrw
 archive builds pass; this is not a full qmake application link. Release and
@@ -2759,6 +2759,50 @@ unchanged:
 | `offset-W39-final-hostile-asan.xml` | `b8bf8859753bc9d86d88f940df69585ad34ef971a9f20f1d6561906b40224d43` |
 | `offset-W39-reader-discovery.xml` | `ca26a168cb2a4cb64d0d4b7050b210c8223be43a85f8f292902c7620b2cc94ab` |
 | `offset-W39-dxf-discovery.xml` | `b44f9015385b91af16058352d76cefa6bb6e60bf6585316166c8eeae3a7e55cb` |
+
+Opened DWG version W40 (`85d90dd95`):
+The DWG reader can synchronously report the version of the file or buffer it
+actually opened, after its file header is accepted and before model callbacks.
+The filter uses that version for offset XDATA context and its numeric import
+guards, instead of separately reading the pathname's magic. For a recognized
+DWG version, a conflicting header variable no longer overrides the physical
+version; DXF header behavior remains unchanged. An observer exception fails
+the read before model callbacks, and reentrant top-level reads, writes and
+preview/test operations from the observer are refused without disturbing the
+outer read. The observer/context are caller-owned and must not otherwise mutate
+the reader.
+
+The regression swaps an R2000 and R2018 fixture after the former filter probe;
+both directions formerly supplied the wrong offset and numeric versions. The
+new path supplies the version of the file actually opened. File/buffer callback
+ordering, conflicting headers, observer failure/clearing/reentry and short input
+are also covered. The swap case is POSIX-only. It does not prove that a swapped
+source is rejected, or that bytes cannot change in place during parsing; stable
+snapshot, XREF, source-save and atomic destination work remain open.
+
+Fresh Release application, full-test, helper and DWG-fast builds pass. The
+qmake6 libdxfrw archive and changed filter object compile, not a full qmake app
+link. Release and ASan (`detect_leaks=0`) version tests cover three declarations /
+three entries, 188 assertions and no skips; the complete hostile-file suite
+covers 51 declarations / 56 entries, no skips (53667 / 54542 assertions,
+including polling). Release `[dwg]` covers 706 declarations / 944 entries with
+56 skips, and DWG fast covers 1066 / 1152 with 37 skips; both have zero errors
+and failures. All discovered identities were checked, and overlapping suites
+are not summed. Skipped fixtures/conditions, including pre-R13 external cases,
+remain unqualified. Windows, visible UI, full ASan and leak checks are not
+claimed. Evidence root is unchanged:
+
+| W40 artifact | SHA256 |
+| --- | --- |
+| `offset-W40-version-release.xml` | `f13a126905d8af8c25c9fa164e9ccb3aef548fdc583087fca2f8a634c071e1d4` |
+| `offset-W40-version-asan.xml` | `b4af384e417eac44520ff83a1fa106cf149c45bc7841d0870fe87c996caa1255` |
+| `offset-W40-version-discovery.xml` | `83a7e684adb9a4c0faff613e06dce7585f18ff6bade8421c20a7ec8be2c2d638` |
+| `offset-W40-hostile-release.xml` | `aa8c2e4d995f4db5531412d80e29ee9bb62bff184c79894f14706adbefd8b60d` |
+| `offset-W40-hostile-asan.xml` | `a03d3bd6e8203184c5b058b82c0fcf88c813cf3d9d4834642d1be097085c8997` |
+| `offset-W40-hostile-discovery.xml` | `843f76ab73e100d7b172e2a5533cb12131c62e6aca38082cae1716319e19a2f4` |
+| `offset-W40-dwg-fast-release.xml` | `b609d0cad95cccba40c7ce9f549dd48561021b00dd39c1cf93bb29ec0cd21bc7` |
+| `offset-W40-dwg-release.xml` | `d98c37c0b6f0c33fe887de0cca81dfe936be5e1c45ecc70c8a4da214d533012f` |
+| `offset-W40-dwg-discovery.xml` | `704a1ca51c12003f7a15cb545b07ec6a06c34815fd13e3235ac71cb4416f52c4` |
 
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
