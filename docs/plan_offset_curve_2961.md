@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-10-28. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim and GUI drawing-open/template routing are qualified; other import callers, cross-platform and final acceptance remain open**.
+Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, and an additive staged plugin block-import API are qualified in focused Release/ASan lanes; other import callers, cross-platform and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -105,7 +105,7 @@ This inventory compares the older attached tree with the later candidate.
 | Type/UI/source actions | Entity enum/coverage, property queue/dialog, default drag, Update/Restore actions | Candidate present. Property queue defers publication with a timer, but prepares geometry synchronously in `apply`; a deferred commit is not background computation. |
 | Stored-cache Trim | `lc_offsetcachetrim`, contacts/matching helpers, Modify Trim action and file tests | Candidate present: pure preparation, exact fragments, two-operand publication and plain-fragment persistence. Recheck precision/ownership/undo guarantees. |
 | Validation workers | `scripts/offset-curve-validation/`, X-H1 through X-H7 | Candidate has Node developer/test workers and recorded timeout fixes. These tools are not a shipped isolated geometry worker. Do not confuse their deadlines with GUI computation limits. |
-| Native geometry-worker path | Real seven-operation protocol4 helper/client, cached source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip, Update, Modify Offset, native Trim and GUI drawing-open/template routing committed/qualified locally | W16-W19 qualify cache portability and creation/repeat; W24-W26 qualify local Trim routing and scoped action faults; W31/W32 cover GUI drawing open/templates. Other import callers, cross-platform and packaged/final acceptance remain mandatory W0-W2 work. |
+| Native geometry-worker path | Real seven-operation protocol4 helper/client, cached source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip, Update, Modify Offset, native Trim and GUI drawing-open/template routing committed/qualified locally | W16-W19 qualify cache portability and creation/repeat; W24-W26 qualify local Trim routing and scoped action faults; W31/W32 cover GUI drawing open/templates. W72 adds an asynchronous staged DXF/DWG plugin block-import API, but no in-tree production caller uses it yet; legacy synchronous callers remain blocking. Other import callers, cross-platform and packaged/final acceptance remain mandatory W0-W2 work. |
 | Tests/build targets | Main Catch target, filter micro targets and two standalone offset allocation-failure targets | Candidate present; source registration is not discovery/execution. Use the actual targets in section5.3, not just the old grouped fast lanes. |
 | Surviving test defect | `spline_offset_representation_tests.cpp` lines205 and668 in candidate still use DWG enum ranges | `FormatDWG2007` is outside the range; those ordinary representation loops also omit it. Fix classification and add an executed R2007 regression in S0. The separate candidate matrix already lists all six DWG versions. |
 
@@ -3875,3 +3875,36 @@ Reports are `/private/tmp/offset-W71-creation-{release,asan}.xml`. ASan used
 creation/repeat routing at the W70 source; no product gap was found. Visible GUI,
 Windows runtime, installed-helper, remaining import callers, and final acceptance
 remain open.
+
+## 33. W72 Staged Plugin Block-Import API
+
+Committed as `5f754c29d`. Added `Document_Interface::addBlockFromDiskAsync`
+as an additive callback API with a synchronous compatibility adapter. The
+LibreCAD implementation stages supported DXF/DWG imports through
+`LC_OffsetImportSession`, checks the source stamp and active view/document
+identity before publication, and allows at most one active staged import per
+view. Non-DXF/DWG formats and existing callers of the legacy synchronous
+`addBlockfromFromdisk` retain their prior blocking behavior. No in-tree
+production call site currently invokes the new API, so this is an available
+route for plugins, not a claim that every plugin caller has migrated.
+
+Focused `[plugins][offsetcurve][block-import]` tests pass in Release and ASan
+(5 cases / 33 assertions in each report), covering legacy behavior, async
+native-offset preservation, stale-document refusal, per-view worker limit and
+view teardown. The broader `[plugins][offsetcurve]` selector passes in both
+configurations (9 cases / 19,120 assertions). Full `LibreCAD` targets link in
+CMake Release and ASan. ASan used `detect_leaks=0`, so these runs are not leak
+validation. The top-level qmake6 clean build was attempted in
+`/private/tmp/offset-W72-qmake6-full`; its helper target linked, but the full
+GUI target was still compiling when the optional long rebuild was interrupted.
+Do not count qmake6 as passed. Visible UI, installed-helper, Windows runtime,
+remaining import callers, and final acceptance remain open.
+
+| W72 lane | Testcases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Plugin block import Release | 5 / 33 | PASS | `0cdae7f4e7148cc13de11ee8f7c88d5db0a55e588d2b57c40ca20ce414fdd9ef` |
+| Plugin block import ASan | 5 / 33 | PASS | `3aad4fc80c506478419bd74bbaeafbbb48de3b4ea5a43dc353cba101e98c5d82` |
+| Plugin offset selector Release | 9 / 19,120 | PASS | `53d8f8bb6d0a66bef1df8a2b2376bb060f1f423cc9d3471877b71f160318f77b` |
+| Plugin offset selector ASan | 9 / 19,120 | PASS | `d361bb543333245c89fd240dc42d300e7530090f3d665435012be89f0775c66b` |
+
+Reports are `/private/tmp/offset-W72-plugin-{import,offset}-{release,asan}.xml`.
