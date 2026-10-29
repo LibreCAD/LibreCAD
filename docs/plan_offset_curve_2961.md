@@ -2838,6 +2838,47 @@ integration. In-place mutation, nested XREF consistency, source/save identity,
 atomic publication, cross-platform qualification and remaining import callers
 remain open. Parsing and nested XREF work are not made asynchronous by W41.
 
+W42 staged host capture `664ed5e73` uses W41 for GUI staged imports. It reads
+the opened host in 256 KiB event-loop chunks into an owned seekable buffer and
+parses those captured bytes with the original logical path. Cancellation between
+chunks suppresses delivery, and metadata changes observed during capture or
+parsing refuse publication. The explicit per-host capture limit is 256 MiB; a
+larger or growing input is refused with a diagnostic. Up to four active staged
+imports can each hold a buffer, in addition to other parser and document memory.
+Format selection for an unknown type uses the logical extension, avoiding a
+separate content read before capture. An existing saved-layer GUI test now waits
+for staged completion instead of assuming a single event-loop turn.
+
+Release and ASan hostile-file runs pass all 56 declarations / 61 JUnit entries,
+without failures or skips. They exercise all existing DXF/DWG staged lanes plus
+yielding, cancellation and retry, in-place modification, pathname replacement,
+and a sparse oversized file. Release offscreen `[dock-window]` passes 49
+declarations / 64 entries; the ASan offset-import/saved-layer subset passes 20 /
+34. All discovered identities are accounted for, without failures or skips.
+The original GUI run exposed the saved-layer test's one-turn assumption; it was
+updated without removing its assertions. ASan uses `detect_leaks=0`. The qmake6
+session object compiles; neither a full qmake link nor visible UI was qualified.
+The following reports are local temporary evidence in `/private/tmp`:
+
+| W42 report | SHA256 |
+| --- | --- |
+| `offset-W42-hostile-release-qualified.xml` | `afc0f6bc4c5d8d553011602a936d979062804bc8a60b8963926762949788bf38` |
+| `offset-W42-hostile-asan-qualified.xml` | `d9e2e556ae6fd210a0f78e5cbe76d025530f8e88bae2c1ed0a5217b8f2360625` |
+| `offset-W42-hostile-discovery.xml` | `4750155c57b7b29536b30304cf2edf06f409b44afdc38d3b56354cb3e4c13d74` |
+| `offset-W42-dock-release-qualified.xml` | `7561bbef7963e1c11e78e0e22add8d0eead6c82e8af51a0d711f0172cc9b0a4f` |
+| `offset-W42-dock-asan-qualified.xml` | `60c4cc32f93fee79a12a811a8ad49795714fd0591588f8dd132c77a921a368d9` |
+| `offset-W42-dock-discovery.xml` | `802ad74b8618dc8326a0b9257fc43f013cac7e1c5289ead95837f7c86e345458` |
+| `offset-W42-dock-asan-discovery.xml` | `ebe000c59b0e71231f170c6fe39d9a5548a38fadc3a8304e3bd5d59043361678` |
+
+The captured bytes are stable after capture, not necessarily an atomic version
+of a concurrently modified file. Metadata-only comparisons can miss changes and
+do not bind the opened descriptor to the pathname. Nested XREFs still read their
+own mutable paths. Parsing, each individual file read and XREF loading can block
+the owning thread; capture cancellation is between reads. Source-save identity,
+atomic publication, non-GUI callers, large-file policy and cross-platform
+qualification remain open. Do not describe this as a complete immutable import
+transaction or restart W42 as absent.
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -2897,10 +2938,10 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** use W41's seekable stream
-interfaces to implement bounded, owned source snapshots for staged imports,
-including lifetime/cancellation and logical-path handling; do not treat nested
-XREFs as snapshotted without separate admission. Strengthen W34's metadata-only
+**Next concrete action on implementation resume:** build on W42's bounded host
+capture to bind the opened source identity and detect mutation during capture;
+design nested-XREF admission and large-file policy without treating mutable XREFs
+as snapshotted. Strengthen W34's metadata-only
 source and non-atomic autosave alias checks, and exercise a genuine partial DWG
 through the GUI dialog. W35 fixes the observed W33 teardown assertion; retain its
 forced-destruction regression while auditing other close/dialog reentrancy.
