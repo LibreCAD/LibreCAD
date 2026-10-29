@@ -1453,7 +1453,16 @@ void dxfRW::resetDxfWriteSession() {
 }
 
 bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
-    return writeImpl(interface_, ver, bin, nullptr, nullptr);
+    return writeImpl(interface_, ver, bin, nullptr, nullptr, nullptr, nullptr);
+}
+
+bool dxfRW::writeGuarded(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                         DRW_OutputPublishGuard guard, void* guardContext) {
+    if (!guard) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    return writeImpl(interface_, ver, bin, nullptr, nullptr, guard, guardContext);
 }
 
 bool dxfRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
@@ -1462,11 +1471,22 @@ bool dxfRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
         error = DRW::BAD_OPEN;
         return false;
     }
-    return writeImpl(interface_, ver, bin, verifier, context);
+    return writeVerified(interface_, ver, bin, verifier, context, nullptr, nullptr);
+}
+
+bool dxfRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                         DRW_StagedFileVerifier verifier, void* context,
+                         DRW_OutputPublishGuard guard, void* guardContext) {
+    if (!verifier) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    return writeImpl(interface_, ver, bin, verifier, context, guard, guardContext);
 }
 
 bool dxfRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
-                     DRW_StagedFileVerifier verifier, void* context) try {
+                     DRW_StagedFileVerifier verifier, void* context,
+                     DRW_OutputPublishGuard guard, void* guardContext) try {
     if (!isSupportedDxfWriteVersion(ver)) {
         error = DRW::BAD_VERSION;
         return false;
@@ -1638,7 +1658,9 @@ bool dxfRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
     // exactly as it was.
     if (!iface->finalizeDxfWrite())
         return failWrite();
-    if (!(verifier ? output.commitVerified(verifier, context) : output.commit()))
+    if (!(verifier
+              ? output.commitVerified(verifier, context, guard, guardContext)
+              : output.commit(guard, guardContext)))
         return failWrite();
     return true;
 }

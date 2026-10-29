@@ -122,10 +122,18 @@ public:
     bool isBinary() const noexcept { return binFile; }
 
     [[nodiscard]] bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+    /** Revalidate caller-owned destination policy immediately before publish. */
+    [[nodiscard]] bool writeGuarded(DRW_Interface *interface_, DRW::Version ver,
+                                    bool bin, DRW_OutputPublishGuard guard,
+                                    void* guardContext);
     /// Requires a nonnull per-call verifier; ordinary write remains unchecked.
     [[nodiscard]] bool writeVerified(DRW_Interface *interface_, DRW::Version ver,
                                     bool bin, DRW_StagedFileVerifier verifier,
                                     void* context);
+    [[nodiscard]] bool writeVerified(DRW_Interface *interface_, DRW::Version ver,
+                                    bool bin, DRW_StagedFileVerifier verifier,
+                                    void* context, DRW_OutputPublishGuard guard,
+                                    void* guardContext);
     bool writeLineType(DRW_LType *ent);
     bool writeLayer(DRW_Layer *ent);
     bool writeDimstyle(DRW_Dimstyle *ent);
@@ -393,7 +401,8 @@ private:
     friend struct LC_DxfReadProbeTestAccess;
     void resetReadSession(DRW_Interface *interface_, bool ext);
     bool writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
-                   DRW_StagedFileVerifier verifier, void* context);
+                   DRW_StagedFileVerifier verifier, void* context,
+                   DRW_OutputPublishGuard guard, void* guardContext);
     enum class DxfEntityBoundary {
         NextEntity,
         EndSection,

@@ -266,10 +266,18 @@ public:
     /// kept for API symmetry with `dxfRW::write`.  Returns true on
     /// success, false on error; error code accessible via `getError()`.
     [[nodiscard]] bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+    /** Revalidate caller-owned destination policy immediately before publish. */
+    [[nodiscard]] bool writeGuarded(DRW_Interface *interface_, DRW::Version ver,
+                                    bool bin, DRW_OutputPublishGuard guard,
+                                    void* guardContext);
     /// Requires a nonnull per-call verifier; ordinary write remains unchecked.
     [[nodiscard]] bool writeVerified(DRW_Interface *interface_, DRW::Version ver,
                                     bool bin, DRW_StagedFileVerifier verifier,
                                     void* context);
+    [[nodiscard]] bool writeVerified(DRW_Interface *interface_, DRW::Version ver,
+                                    bool bin, DRW_StagedFileVerifier verifier,
+                                    void* context, DRW_OutputPublishGuard guard,
+                                    void* guardContext);
 
     struct WriteSkipCounters {
         std::size_t entityWrites { 0 };
@@ -711,7 +719,8 @@ bool testReader();
 
 private:
     bool writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
-                   DRW_StagedFileVerifier verifier, void* context);
+                   DRW_StagedFileVerifier verifier, void* context,
+                   DRW_OutputPublishGuard guard, void* guardContext);
     friend class DwgCompoundWriteTestAccess;
     friend class DwgWriteFailureTestAccess;
 

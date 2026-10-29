@@ -1249,7 +1249,16 @@ bool dwgRW::encodeEntityForWrite(DRW_Entity *ent,
 
 bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
     if (m_invokingReadVersionObserver) return false;
-    return writeImpl(interface_, ver, bin, nullptr, nullptr);
+    return writeImpl(interface_, ver, bin, nullptr, nullptr, nullptr, nullptr);
+}
+
+bool dwgRW::writeGuarded(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                         DRW_OutputPublishGuard guard, void* guardContext) {
+    if (m_invokingReadVersionObserver || !guard) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    return writeImpl(interface_, ver, bin, nullptr, nullptr, guard, guardContext);
 }
 
 bool dwgRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
@@ -1259,11 +1268,23 @@ bool dwgRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
         error = DRW::BAD_OPEN;
         return false;
     }
-    return writeImpl(interface_, ver, bin, verifier, context);
+    return writeVerified(interface_, ver, bin, verifier, context, nullptr, nullptr);
+}
+
+bool dwgRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                         DRW_StagedFileVerifier verifier, void* context,
+                         DRW_OutputPublishGuard guard, void* guardContext) {
+    if (m_invokingReadVersionObserver) return false;
+    if (!verifier) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    return writeImpl(interface_, ver, bin, verifier, context, guard, guardContext);
 }
 
 bool dwgRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
-                     DRW_StagedFileVerifier verifier, void* context) try {
+                     DRW_StagedFileVerifier verifier, void* context,
+                     DRW_OutputPublishGuard guard, void* guardContext) try {
     // The 'bin' parameter is accepted only for signature symmetry with
     // dxfRW::write — DWG is always binary on disk.
     (void)bin;
@@ -1419,7 +1440,9 @@ bool dwgRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
     m_leftOut = writer->leftOut();
     writer.reset();
     if (ok && !filestr.fail())
-        ok = verifier ? output.commitVerified(verifier, context) : output.commit();
+        ok = verifier
+            ? output.commitVerified(verifier, context, guard, guardContext)
+            : output.commit(guard, guardContext);
     else
         output.abort();
     if (!ok)
