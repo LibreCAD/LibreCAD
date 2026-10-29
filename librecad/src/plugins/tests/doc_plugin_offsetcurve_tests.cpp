@@ -9,6 +9,7 @@
 #include <cmath>
 #include <cstdint>
 #include <cstring>
+#include <functional>
 #include <limits>
 #include <memory>
 #include <optional>
@@ -16,14 +17,19 @@
 #include <utility>
 #include <vector>
 
+#include <QCoreApplication>
+#include <QElapsedTimer>
+#include <QEventLoop>
 #include <QHash>
 #include <QPointF>
+#include <QThread>
 #include <QVariant>
 
 #include "doc_plugin_interface.h"
 #include "drw_base.h"
 #include "lc_actiontestsupport.h"
 #include "lc_offsetcurve.h"
+#include "lc_offsetimportsession.h"
 #include "rs_block.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
@@ -232,6 +238,24 @@ void splineAlias(Plugin_Entity& plugin) {
     CHECK(data.value(DPI::EID).toULongLong() == plugin.getEnt()->getId());
     CHECK(data.value(DPI::COLOR).toInt() == plugin.getEnt()->getPen(false).getColor().toIntColor());
 }
+
+QString nativeOffsetFixture() {
+#ifdef LIBRECAD_TEST_DIR
+    return QStringLiteral(LIBRECAD_TEST_DIR "/offsetcurve_independent/dxf-binary-R2018-native-degree1.dxf");
+#else
+    return QStringLiteral("librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree1.dxf");
+#endif
+}
+
+bool waitFor(const std::function<bool()>& ready) {
+    QElapsedTimer timer;
+    timer.start();
+    while (!ready() && timer.elapsed() < 10000) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        QThread::msleep(1);
+    }
+    return ready();
+}
 }
 
 TEST_CASE("Plugin native type and data remain spline aliases without changing the source",
@@ -368,4 +392,131 @@ TEST_CASE("Plugin ordinary line transforms retain their existing KEEP DELETE geo
         REQUIRE(drawing.graphic.undo()); CHECK_FALSE(source->isDeleted()); CHECK(changed->isDeleted());
         REQUIRE(drawing.graphic.redo()); CHECK_FALSE(changed->isDeleted());
     }
+}
+
+TEST_CASE("Plugin legacy synchronous block import retains its immediate result contract",
+          "[plugins][offsetcurve][block-import][legacy]") {
+    Drawing drawing;
+    REQUIRE(drawing.qtReady);
+    const QString name = drawing.dpi->addBlockfromFromdisk(nativeOffsetFixture());
+    REQUIRE_FALSE(name.isEmpty());
+    auto* block = drawing.graphic.findBlock(name);
+    REQUIRE(block);
+    bool foundNativeOffset = false;
+    for (int i = 0; i < block->count(); ++i)
+        foundNativeOffset |= dynamic_cast<LC_OffsetCurve*>(block->entityAt(i)) != nullptr;
+    CHECK(foundNativeOffset);
+}
+
+TEST_CASE("Plugin asynchronous block import stages DXF before preserving its native offset curve",
+          "[plugins][offsetcurve][block-import][async]") {
+    Drawing drawing;
+    REQUIRE(drawing.qtReady);
+    const QString file = nativeOffsetFixture();
+    const int blocksBefore = drawing.graphic.getBlockList()->count();
+    bool completed = false;
+    QString name, error;
+    drawing.dpi->addBlockFromDiskAsync(file, [&](const QString& blockName, const QString& failure) {
+        completed = true;
+        name = blockName;
+        error = failure;
+    });
+
+    CHECK_FALSE(completed);
+    CHECK(drawing.graphic.getBlockList()->count() == blocksBefore);
+    REQUIRE(waitFor([&] { return completed; }));
+    CHECK(error.isEmpty());
+    REQUIRE_FALSE(name.isEmpty());
+    auto* block = drawing.graphic.findBlock(name);
+    REQUIRE(block);
+    CHECK(drawing.graphic.getBlockList()->count() == blocksBefore + 1);
+    bool foundNativeOffset = false;
+    for (int i = 0; i < block->count(); ++i) {
+        const auto* native = dynamic_cast<LC_OffsetCurve*>(block->entityAt(i));
+        if (native != nullptr) {
+            foundNativeOffset = true;
+            CHECK(native->getParent() == block);
+            CHECK(native->hasEditableDefinition());
+        }
+    }
+    CHECK(foundNativeOffset);
+}
+
+TEST_CASE("Plugin asynchronous block import refuses publication after the view changes documents",
+          "[plugins][offsetcurve][block-import][async][stale]") {
+    Drawing drawing;
+    REQUIRE(drawing.qtReady);
+    RS_Graphic replacement;
+    replacement.initForNewDocument();
+    replacement.onLoadingCompleted();
+    const int originalBlocks = drawing.graphic.getBlockList()->count();
+    const int replacementBlocks = replacement.getBlockList()->count();
+    bool completed = false;
+    QString name, error;
+    drawing.dpi->addBlockFromDiskAsync(nativeOffsetFixture(), [&](const QString& blockName, const QString& failure) {
+        completed = true;
+        name = blockName;
+        error = failure;
+    });
+    drawing.view.setDocument(&replacement);
+
+    REQUIRE(waitFor([&] { return completed; }));
+    CHECK(name.isEmpty());
+    CHECK_FALSE(error.isEmpty());
+    CHECK(drawing.graphic.getBlockList()->count() == originalBlocks);
+    CHECK(replacement.getBlockList()->count() == replacementBlocks);
+}
+
+TEST_CASE("Plugin asynchronous block imports limit each view to one active worker",
+          "[plugins][offsetcurve][block-import][async][queue]") {
+    Drawing drawing;
+    REQUIRE(drawing.qtReady);
+    bool firstCompleted = false, secondCompleted = false;
+    QString firstName, firstError, secondName, secondError;
+    drawing.dpi->addBlockFromDiskAsync(nativeOffsetFixture(), [&](const QString& name, const QString& error) {
+        firstCompleted = true;
+        firstName = name;
+        firstError = error;
+    });
+    drawing.dpi->addBlockFromDiskAsync(nativeOffsetFixture(), [&](const QString& name, const QString& error) {
+        secondCompleted = true;
+        secondName = name;
+        secondError = error;
+    });
+
+    CHECK_FALSE(firstCompleted);
+    CHECK(secondCompleted);
+    CHECK(secondName.isEmpty());
+    CHECK_FALSE(secondError.isEmpty());
+    REQUIRE(waitFor([&] { return firstCompleted; }));
+    CHECK(firstError.isEmpty());
+    REQUIRE_FALSE(firstName.isEmpty());
+    CHECK(drawing.graphic.findBlock(firstName) != nullptr);
+}
+
+TEST_CASE("Plugin asynchronous block import is cancelled with its owning view",
+          "[plugins][offsetcurve][block-import][async][lifetime]") {
+    int deliveries = 0;
+    {
+        auto drawing = std::make_unique<Drawing>();
+        REQUIRE(drawing->qtReady);
+        drawing->dpi->addBlockFromDiskAsync(nativeOffsetFixture(), [&](const QString&, const QString&) {
+            ++deliveries;
+        });
+        bool workerBusy = false;
+        QElapsedTimer timer;
+        timer.start();
+        while (!workerBusy && timer.elapsed() < 5000) {
+            QCoreApplication::processEvents(QEventLoop::AllEvents);
+            for (QObject* child : drawing->view.children()) {
+                if (auto* session = dynamic_cast<LC_OffsetImportSession*>(child))
+                    workerBusy |= session->busy();
+            }
+            if (!workerBusy) QThread::msleep(1);
+        }
+        REQUIRE(workerBusy);
+        drawing.reset();
+    }
+    QCoreApplication::processEvents(QEventLoop::AllEvents);
+    CHECK(deliveries == 0);
 }
