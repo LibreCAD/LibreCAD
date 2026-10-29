@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W96 requalifies A-core and the full offset selector, W97 requalifies B occurrence/terminal identity, and W98 requalifies C-search without new findings; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, C-check, public low-level storage compatibility, cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W96 requalifies A-core and the full offset selector, W97 requalifies B occurrence/terminal identity, and W98 requalifies C-search without new findings; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, C-check, public low-level storage compatibility, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -4699,3 +4699,29 @@ used `detect_leaks=0`.
 No product edit was needed. C-check, broader source/budget audit,
 cross-platform CI, public low-level storage compatibility, visible-GUI testing,
 and final acceptance remain open.
+
+## 61. W99 Current-Head Preview Cache and Creation/Repeat Qualification
+
+Ran the incremental CMake Release and ASan `librecad_tests` builds and reran the
+portable preview-cache plus creation/repeat worker selectors at the current
+source head. The selected cases exercise fresh owned-source rebinding, refusal
+and budget-sensitive cache reuse, cross-source eviction, stale/malformed
+revision rejection, mixed-source creation ordering and attributes, native
+publication, two-click ellipse creation, preview supersession, process timeout
+recovery, cancellation/context destruction, and repeated native offsets with
+stored-cache zero-sum fallback. No new defect was found in these paths. The
+full qmake6 application/plugin build also completed successfully.
+
+| W99 lane | Result | SHA256 |
+|---|---|---|
+| `[preview-portable],[creation-worker]`, Release; 17 JUnit cases / 385 assertions, zero errors/failures/skips | PASS | `b80613b94c2ab4dbf3e2837572e75d62f1f45a2f92e6d6f96714acae4a5ef83c` |
+| `[preview-portable],[creation-worker]`, ASan; 17 JUnit cases / 385 assertions, zero errors/failures/skips | PASS | `795cea746f1f42c6c5c063837b202689fb57138cedadf7013ba20596521ba22b` |
+| CMake Release and ASan test-target builds | PASS | n/a |
+| qmake6 full application and plugin build (`make -j4`) | PASS, exit 0 | n/a |
+
+Reports: `/private/tmp/offset-W99-preview-release.xml` and
+`/private/tmp/offset-W99-preview-asan.xml`. ASan used
+`detect_leaks=0`; no leak-validation claim is made. This is an offscreen
+macOS regression pass, not visible-GUI or cross-platform runtime acceptance.
+No product change was needed. The remaining W0-W2, import/caller, budget,
+cross-platform and final acceptance work is still open.
