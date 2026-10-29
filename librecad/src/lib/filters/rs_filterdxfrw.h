@@ -3156,6 +3156,7 @@ private:
   enum class OffsetInputKind { None, Dxf, Dwg };
   OffsetInputKind m_offsetInputKind = OffsetInputKind::None;
   DRW::Version m_offsetInputVersion = DRW::UNKNOWNV;
+  bool m_sourceChangedDuringRead = false;
 #ifdef DWGSUPPORT
   std::function<void()> m_testBeforeDwgOpen;
   std::function<void()> m_testBeforeDwgStagedPublish;

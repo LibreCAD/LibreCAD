@@ -4249,6 +4249,9 @@ static QString dwgVersionDisplay(DRW::Version v) {
 // fixme - sand - non informative error message (mixed file format which is
 // known)
 QString RS_FilterDXFRW::lastError() const {
+  if (m_sourceChangedDuringRead)
+    return QObject::tr("The source file changed while it was being read.",
+                       "RS_FilterDXFRW");
   switch (m_errorCode) {
   case DRW::BAD_NONE:
     return (QObject::tr("no DXF/DWG error", "RS_FilterDXFRW"));
@@ -4342,6 +4345,50 @@ void updateImportedInserts(RS_Graphic &graphic) {
 } // namespace
 
 namespace {
+class QFileInputBuffer final : public std::streambuf {
+public:
+  explicit QFileInputBuffer(QFile &file) : m_file(file) {
+    setg(m_buffer.data(), m_buffer.data(), m_buffer.data());
+  }
+
+protected:
+  int_type underflow() override {
+    if (gptr() < egptr())
+      return traits_type::to_int_type(*gptr());
+    const qint64 read = m_file.read(m_buffer.data(), m_buffer.size());
+    if (read <= 0)
+      return traits_type::eof();
+    setg(m_buffer.data(), m_buffer.data(), m_buffer.data() + read);
+    return traits_type::to_int_type(*gptr());
+  }
+
+  pos_type seekoff(off_type offset, std::ios_base::seekdir direction,
+                   std::ios_base::openmode mode) override {
+    if (!(mode & std::ios_base::in) || (mode & std::ios_base::out))
+      return pos_type(off_type(-1));
+    const qint64 size = m_file.size();
+    const qint64 current = m_file.pos() - (egptr() - gptr());
+    const qint64 origin = direction == std::ios_base::beg ? 0 :
+        direction == std::ios_base::cur ? current :
+        direction == std::ios_base::end ? size : -1;
+    if (origin < 0 || offset < -origin || offset > size - origin)
+      return pos_type(off_type(-1));
+    const qint64 position = origin + offset;
+    if (!m_file.seek(position))
+      return pos_type(off_type(-1));
+    setg(m_buffer.data(), m_buffer.data(), m_buffer.data());
+    return pos_type(position);
+  }
+
+  pos_type seekpos(pos_type position, std::ios_base::openmode mode) override {
+    return seekoff(off_type(position), std::ios_base::beg, mode);
+  }
+
+private:
+  QFile &m_file;
+  std::array<char, 64 * 1024> m_buffer{};
+};
+
 class ByteArrayInputBuffer final : public std::streambuf {
 public:
   explicit ByteArrayInputBuffer(const QByteArray &bytes)
@@ -4392,7 +4439,35 @@ void RS_FilterDXFRW::refreshDeferredOffsetInserts(RS_Graphic &graphic) {
  */
 bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
                                 RS2::FormatType type) {
-  return fileImportImpl(g, file, type, nullptr);
+  m_sourceChangedDuringRead = false;
+  if (file.startsWith(QLatin1Char(':')))
+    return fileImportImpl(g, file, type, nullptr);
+
+  const LC_FileIdentity sourceIdentity = LC_FileIdentity::capture(file);
+  QFile inputFile(file);
+  if (!sourceIdentity.valid || !inputFile.open(QIODevice::ReadOnly) ||
+      inputFile.isSequential()) {
+    m_errorCode = DRW::BAD_OPEN;
+    return false;
+  }
+#if defined(Q_OS_UNIX) || defined(Q_OS_WIN)
+  if (sourceIdentity.native.valid &&
+      !sourceIdentity.matchesDescriptor(inputFile.handle())) {
+    m_errorCode = DRW::BAD_OPEN;
+    return false;
+  }
+#endif
+  QFileInputBuffer buffer(inputFile);
+  std::istream stream(&buffer);
+  const bool imported = fileImportImpl(g, file, type, &stream);
+  if (inputFile.error() != QFileDevice::NoError ||
+      (sourceIdentity.native.valid &&
+       !sourceIdentity.matchesDescriptor(inputFile.handle()))) {
+    m_sourceChangedDuringRead = true;
+    m_errorCode = DRW::BAD_READ_FILE_HEADER;
+    return false;
+  }
+  return imported;
 }
 
 bool RS_FilterDXFRW::fileImportStream(RS_Graphic &g, const QString &logicalFile,
@@ -4410,6 +4485,7 @@ bool RS_FilterDXFRW::fileImportBytes(RS_Graphic &g, const QString &logicalFile,
 bool RS_FilterDXFRW::fileImportImpl(RS_Graphic &g, const QString &file,
                                     [[maybe_unused]] RS2::FormatType type, std::istream *input) {
   RS_DEBUG->print("RS_FilterDXFRW::fileImport");
+  m_sourceChangedDuringRead = false;
   RS_DEBUG->print("DXFRW Filter: importing file '%s'...",
                   (const char *)QFile::encodeName(file));
 

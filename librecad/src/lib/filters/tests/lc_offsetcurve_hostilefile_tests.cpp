@@ -376,7 +376,7 @@ void seedHistory(lc::test::EditableDrawing& drawing) {
 }
 
 #if defined(DWGSUPPORT) && defined(Q_OS_UNIX)
-TEST_CASE("DWG offset input version follows the opened drawing after path replacement",
+TEST_CASE("DWG path import reads the already-open drawing after path replacement",
           "[lc-offsetcurve][import-session][dwg-version][source-identity]") {
     Setup setup; lc::test::OutputDirectory directory("offset-dwg-version-source");
     for (const auto original : {Lane::Eed2000, Lane::Eed18}) {
@@ -393,10 +393,11 @@ TEST_CASE("DWG offset input version follows the opened drawing after path replac
             std::filesystem::rename(replacementPath, sourcePath, error); REQUIRE_FALSE(error);
             swapped = true;
         });
-        REQUIRE(filter.fileImport(graphic, QString::fromStdString(sourcePath.string()), RS2::FormatDWG));
+        CHECK_FALSE(filter.fileImport(graphic, QString::fromStdString(sourcePath.string()), RS2::FormatDWG));
         REQUIRE(swapped); REQUIRE(filter.splines > 0);
-        CHECK(filter.observed == (replacement == Lane::Eed2000 ? DRW::AC1015 : DRW::AC1032));
-        CHECK(filter.numeric == (replacement == Lane::Eed2000 ? 1015 : 1032));
+        CHECK(filter.observed == (original == Lane::Eed2000 ? DRW::AC1015 : DRW::AC1032));
+        CHECK(filter.numeric == (original == Lane::Eed2000 ? 1015 : 1032));
+        CHECK(filter.lastError().contains(QStringLiteral("changed while it was being read")));
     }
 }
 #endif
