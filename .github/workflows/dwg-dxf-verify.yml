@@ -113,6 +113,17 @@ jobs:
           format-tests/librecad_offset_cache_trim_failure_tests
           format-tests/librecad_offset_cache_check_failure_tests
 
+      - name: Install and exercise relocated offset worker
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          set -euo pipefail
+          stage="$RUNNER_TEMP/offset worker install"
+          cmake --install format-tests --component OffsetWorker --prefix "$stage"
+          test -x "$stage/bin/LibreCADOffsetWorker"
+          cp format-tests/librecad_offset_worker_client_tests "$stage/bin/"
+          (cd "$stage/bin" && ./librecad_offset_worker_client_tests "[lc-offsetcurve][worker-client]")
+
   VerifyDwgDxfWindows:
     strategy:
       fail-fast: false
@@ -197,4 +208,17 @@ jobs:
           if errorlevel 1 exit /b 1
           generated-tests\librecad_offset_cache_check_failure_tests.exe
           if errorlevel 1 exit /b 1
+        shell: cmd
+
+      - name: Install and exercise relocated offset worker
+        run: |
+          set "STAGE=%RUNNER_TEMP%\offset worker install"
+          cmake --install generated-tests --config Release --component OffsetWorker --prefix "%STAGE%" || exit /b 1
+          if not exist "%STAGE%\bin\LibreCADOffsetWorker.exe" exit /b 1
+          copy /Y generated-tests\librecad_offset_worker_client_tests.exe "%STAGE%\bin" || exit /b 1
+          set QT_QPA_PLATFORM=offscreen
+          pushd "%STAGE%\bin"
+          librecad_offset_worker_client_tests.exe "[lc-offsetcurve][worker-client]"
+          if errorlevel 1 exit /b 1
+          popd
         shell: cmd

@@ -2499,9 +2499,10 @@ set_target_properties(librecad_offset_worker PROPERTIES
 )
 add_dependencies(librecad librecad_offset_worker)
 if(APPLE)
-    install(TARGETS librecad_offset_worker RUNTIME DESTINATION bin/LibreCAD.app/Contents/MacOS)
+    install(TARGETS librecad_offset_worker RUNTIME DESTINATION bin/LibreCAD.app/Contents/MacOS
+        COMPONENT OffsetWorker)
 else()
-    install(TARGETS librecad_offset_worker RUNTIME DESTINATION bin)
+    install(TARGETS librecad_offset_worker RUNTIME DESTINATION bin COMPONENT OffsetWorker)
 endif()
 
 if(APPLE)
