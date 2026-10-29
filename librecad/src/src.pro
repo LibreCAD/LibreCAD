@@ -630,6 +630,7 @@ HEADERS += \
     lib/engine/rs_vector.h \
     lib/fileio/rs_fileio.h \
     lib/fileio/lc_filenameselectionservice.h \
+    lib/fileio/lc_fileidentity.h \
     lib/filters/lc_embeddedtextxdata.h \
     lib/filters/lc_embeddedtextmodel.h \
     lib/filters/lc_hyperbolaspline.h \
@@ -1334,6 +1335,7 @@ SOURCES += \
     lib/engine/rs_vector.cpp \
     lib/fileio/rs_fileio.cpp \
     lib/fileio/lc_filenameselectionservice.cpp \
+    lib/fileio/lc_fileidentity.cpp \
     lib/filters/rs_filtercxf.cpp \
     lib/filters/rs_filterdxfrw.cpp \
     lib/filters/lc_offsetcurvecarrier.cpp \

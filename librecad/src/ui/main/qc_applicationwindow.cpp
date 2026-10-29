@@ -1913,6 +1913,7 @@ bool QC_ApplicationWindow::startStagedImport(const QString& fileName, RS2::Forma
                 if (asTemplate) storage.finalizeTemplateGraphic(*outcome.graphic);
                 else {
                     storage.finalizeLoadedGraphic(*outcome.graphic, fileName);
+                    outcome.graphic->setSourceFileIdentity(outcome.sourceStamp);
                     if (outcome.sourceStamp.valid) outcome.graphic->setLastSaveTime(outcome.sourceStamp.modified);
                     if (sourceUnverified) {
                         outcome.graphic->setFormatType(RS2::FormatUnknown);

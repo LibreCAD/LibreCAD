@@ -145,6 +145,10 @@ bool LC_DocumentsStorage::saveDocument(RS_Document* document, RS_GraphicView * g
                                      recoveryCopyName(fileName), graphic->getFormatType());
         } else if (fileName.isEmpty()) {
             result = doSaveGraphicAs(graphic, graphicView, cancelled);
+        } else if (graphic->sourceFileIdentity().valid && !graphic->sourceFileIdentity().matches(fileName)) {
+            RS_DIALOGFACTORY->commandMessage(
+                tr("The source drawing changed since it was opened. Choose another name to avoid overwriting it."));
+            result = doSaveGraphicAs(graphic, graphicView, cancelled, fileName, graphic->getFormatType());
         } else if (!canSaveInPlace(graphic)) {
             // writing another format under the file's name would destroy it
             RS_DIALOGFACTORY->commandMessage(
@@ -268,6 +272,7 @@ bool LC_DocumentsStorage::loadGraphicFromTemplate(RS_Graphic* graphic, const QSt
 void LC_DocumentsStorage::finalizeTemplateGraphic(RS_Graphic& graphic) const {
     const QString autosaveFilename = createAutoSaveFileName(QFileInfo(QDir::tempPath() + "/" + tr("Unnamed") + ".dxf"));
     graphic.setFilename(QString{});
+    graphic.clearSourceFileIdentity();
     graphic.setFormatType(RS2::FormatDXFRW);
     graphic.markSaved(QFileInfo().lastModified());
     graphic.setAutosaveFileName(autosaveFilename);
@@ -290,6 +295,7 @@ void LC_DocumentsStorage::finalizeLoadedGraphic(RS_Graphic& graphic, const QStri
     const QFileInfo finfo(filename);
     graphic.setAutosaveFileName(createAutoSaveFileName(finfo));
     graphic.setFilename(filename);
+    graphic.setSourceFileIdentity(LC_FileIdentity::capture(filename));
     // Keep repairs and recovery imports dirty after markSaved clears the flag.
     const bool importMutated = graphic.takeImportGeometryMutated();
     graphic.markSaved(finfo.lastModified());
@@ -327,6 +333,16 @@ bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, const bool sameFile) {
             QObject::tr("File on disk modified. Please save to another file to avoid data loss! File modified: %1").arg(filename));
         return false;
     }
+    const auto& sourceIdentity = graphic->sourceFileIdentity();
+    const bool isOriginalSourcePath = sourceIdentity.refersToPath(filename) ||
+        (sourceIdentity.valid && QFileInfo(filename).canonicalFilePath() == sourceIdentity.canonicalPath);
+    const bool isOriginalSourceObject = sourceIdentity.refersToSameObject(filename);
+    if (sourceIdentity.valid && !sourceIdentity.matches(filename) &&
+        (isOriginalSourcePath || isOriginalSourceObject)) {
+        RS_DIALOGFACTORY->commandMessage(
+            QObject::tr("File identity changed on disk. Please save to another file to avoid data loss! File: %1").arg(filename));
+        return false;
+    }
 
     const QString& actualName = filename;
     if (LC_GET_ONE_BOOL("Defaults","AutoBackupDocument", true)) {
@@ -341,6 +357,7 @@ bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, const bool sameFile) {
         if (result) {
             const QFileInfo actualFileInfo(actualName);
             graphic->markSaved(actualFileInfo.lastModified());
+            graphic->setSourceFileIdentity(LC_FileIdentity::capture(actualName));
         }
     }
 
@@ -368,7 +385,8 @@ bool LC_DocumentsStorage::autoSaveGraphic(RS_Graphic* graphic, QString& fileName
         const QString autosaveFileName = graphic->getAutoSaveFileName();
         RS_DEBUG->print("LC_DocumentsStorage::autoSaveGraphic: autosaveFileName='%s'", autosaveFileName.toLatin1().data());
         if (!autosaveFileName.isEmpty()) {
-            if (sameFilePath(autosaveFileName, graphic->getFilename())) {
+            if (sameFilePath(autosaveFileName, graphic->getFilename()) ||
+                graphic->sourceFileIdentity().refersToSameObject(autosaveFileName)) {
                 RS_DIALOGFACTORY->commandMessage(tr("Autosave was skipped because its path points to the source drawing."));
                 fileName = autosaveFileName;
                 return false;

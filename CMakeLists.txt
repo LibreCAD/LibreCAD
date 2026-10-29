@@ -1161,6 +1161,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/utils/rs_utility.h
      librecad/src/lib/fileio/lc_filenameselectionservice.cpp
      librecad/src/lib/fileio/lc_filenameselectionservice.h
+     librecad/src/lib/fileio/lc_fileidentity.cpp
+     librecad/src/lib/fileio/lc_fileidentity.h
      librecad/src/lib/fileio/rs_fileio.cpp
      librecad/src/lib/fileio/rs_fileio.h
      librecad/src/lib/filters/lc_embeddedtextxdata.cpp

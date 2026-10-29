@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "lc_offsetcurvexdata.h"
+#include "../fileio/lc_fileidentity.h"
 #include "rs_graphic.h"
 #include "rs_spline.h"
 #include "../offset_worker/lc_offsetworkerclient.h"
@@ -26,22 +27,7 @@ struct LC_OffsetImportDiagnostic {
     std::size_t item = 0;
 };
 
-struct LC_OffsetImportSourceStamp {
-    struct NativeState {
-        bool valid = false;
-        quint64 device = 0, inode = 0;
-        qint64 size = 0, modifiedSeconds = 0, modifiedNanos = 0, changedSeconds = 0, changedNanos = 0;
-        bool operator==(const NativeState& other) const noexcept;
-    };
-    bool valid = false;
-    QString canonicalPath;
-    qint64 size = -1;
-    QDateTime modified, metadataChanged, birth;
-    NativeState native;
-    static LC_OffsetImportSourceStamp capture(const QString& file);
-    bool matches(const QString& file) const;
-    bool matchesDescriptor(int descriptor) const noexcept;
-};
+using LC_OffsetImportSourceStamp = LC_FileIdentity;
 
 struct LC_OffsetImportBudget {
     static constexpr std::size_t MaximumCarriers = 1024;
@@ -83,7 +69,7 @@ public:
         QString error;
         bool partial = false;
         // A caller publishing this drawing must prevent silent in-place save
-        // when the source no longer matches; the stamp is a metadata check.
+        // when the source no longer matches; the stamp includes native identity.
         bool sourceUnverified = false;
         LC_OffsetImportSourceStamp sourceStamp;
         std::size_t admitted = 0, downgraded = 0;
