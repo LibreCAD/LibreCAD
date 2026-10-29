@@ -5907,3 +5907,22 @@ Logs: `/private/tmp/offset-W149-full-release.log`,
 test investigation is recorded in W150-W151. Remote CI, installed-helper
 deployment, physical visible interaction, public external synchronous API
 callers, and final W0-W2/R acceptance remain open.
+
+## 108. W150 Randomized Command-Alias Isolation
+
+At the same product-source head `d739b5a33`, ran the `[commands]` selector in
+three independently randomized orders (seeds 1, 2 and 3). Each passed all 11
+cases and 69 assertions. This confirms the focused alias suite itself is stable
+across these isolated orders, but does not by itself establish that it is safe
+after arbitrary earlier test mutations in a full process; W151 compares the
+broad-order failures against an exact clean `origin/master` build.
+
+| W150 lane | Result | SHA256 |
+|---|---|---|
+| `[commands]`, seed 1 | PASS; 11 / 69 | `862fe9042c5f1bf6102db673d9727b56a85bed09c70eaf7d525f5d2525e293ee` |
+| `[commands]`, seed 2 | PASS; 11 / 69 | `abbc91641ca9b032f3acd1e28308a5060f65dc1760a14418ba0d40621f72fc74` |
+| `[commands]`, seed 3 | PASS; 11 / 69 | `7299d526fca06cf4d757d866694ec7b7307c89c421aec9979e5e8416895b21a1` |
+
+Logs: `/private/tmp/offset-W150-commands-seed{1,2,3}.log`. This is focused
+Release evidence only; it does not close unrelated command-state behavior in
+the complete randomized suite or any W0-W2 acceptance gate.
