@@ -29,6 +29,7 @@
 #include "rs_undo.h"
 #include "rs_variable.h"
 #include "rs_filterdxfrw.h"
+#include "rs_pattern.h"
 #ifdef DWGSUPPORT
 
 class LC_DwgReadVersionTestAccess {
@@ -1220,6 +1221,34 @@ TEST_CASE("Staged offset import asks for partial-read acceptance without reparsi
     } else {
         CHECK(outcome->status == LC_OffsetImportSession::Status::ReadFailed); CHECK_FALSE(outcome->graphic);
     }
+}
+
+TEST_CASE("Hatch pattern import rejects partial DXF and keeps valid native preview geometry",
+          "[lc-offsetcurve][hatch-pattern][hostile]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-pattern-import");
+    const auto complete = f::ascii(f::raw(3));
+
+    const auto validPath = directory.file("valid.dxf");
+    f::put(validPath, complete);
+    RS_Pattern valid(lc::test::toQString(validPath));
+    REQUIRE(valid.loadPattern());
+    CHECK_FALSE(valid.empty());
+    for (const auto* entity : valid) {
+        REQUIRE(entity);
+        CHECK((entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntityArc ||
+               entity->rtti() == RS2::EntityEllipse));
+    }
+
+    auto partialBytes = complete;
+    const auto end = partialBytes.rfind("0\nENDSEC\n0\nEOF\n");
+    REQUIRE(end != std::string::npos);
+    partialBytes.replace(end, std::string::npos, "0\nLINE\n8\n0\n10\n0.0\n");
+    const auto partialPath = directory.file("partial.dxf");
+    f::put(partialPath, partialBytes);
+    RS_Pattern partial(lc::test::toQString(partialPath));
+    CHECK_FALSE(partial.loadPattern());
+    CHECK(partial.empty());
 }
 
 TEST_CASE("Staged offset import waits for a one-shot asynchronous partial decision",

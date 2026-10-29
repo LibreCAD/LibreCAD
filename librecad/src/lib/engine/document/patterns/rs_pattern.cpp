@@ -243,7 +243,11 @@ bool RS_Pattern::loadPattern() {
     }
 
     RS_Graphic gr;
-    RS_FileIO::instance()->fileImport(gr, path);
+    if (!RS_FileIO::instance()->fileImport(gr, path, RS2::FormatUnknown,
+                                           [](bool, const QString&) { return false; })) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Pattern: Pattern import failed: %s", path.toLatin1().data());
+        return false;
+    }
     if (!boundedNativeCount(gr)) return false;
     for (const auto* e : gr) {
         if (e != nullptr && e->rtti() == RS2::EntityOffsetCurve) {
