@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-28. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim and GUI drawing-open routing are qualified; template and other import callers, cross-platform and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim and GUI drawing-open/template routing are qualified; other import callers, cross-platform and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -105,7 +105,7 @@ This inventory compares the older attached tree with the later candidate.
 | Type/UI/source actions | Entity enum/coverage, property queue/dialog, default drag, Update/Restore actions | Candidate present. Property queue defers publication with a timer, but prepares geometry synchronously in `apply`; a deferred commit is not background computation. |
 | Stored-cache Trim | `lc_offsetcachetrim`, contacts/matching helpers, Modify Trim action and file tests | Candidate present: pure preparation, exact fragments, two-operand publication and plain-fragment persistence. Recheck precision/ownership/undo guarantees. |
 | Validation workers | `scripts/offset-curve-validation/`, X-H1 through X-H7 | Candidate has Node developer/test workers and recorded timeout fixes. These tools are not a shipped isolated geometry worker. Do not confuse their deadlines with GUI computation limits. |
-| Native geometry-worker path | Real seven-operation protocol4 helper/client, cached source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip, Update, Modify Offset, native Trim and GUI drawing-open routing committed/qualified locally | W16-W19 qualify cache portability and creation/repeat; W24-W26 qualify local Trim routing and scoped action faults; W31 covers GUI drawing open. Template/other import callers, cross-platform and packaged/final acceptance remain mandatory W0-W2 work. |
+| Native geometry-worker path | Real seven-operation protocol4 helper/client, cached source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip, Update, Modify Offset, native Trim and GUI drawing-open/template routing committed/qualified locally | W16-W19 qualify cache portability and creation/repeat; W24-W26 qualify local Trim routing and scoped action faults; W31/W32 cover GUI drawing open/templates. Other import callers, cross-platform and packaged/final acceptance remain mandatory W0-W2 work. |
 | Tests/build targets | Main Catch target, filter micro targets and two standalone offset allocation-failure targets | Candidate present; source registration is not discovery/execution. Use the actual targets in section5.3, not just the old grouped fast lanes. |
 | Surviving test defect | `spline_offset_representation_tests.cpp` lines205 and668 in candidate still use DWG enum ranges | `FormatDWG2007` is outside the range; those ordinary representation loops also omit it. Fix classification and add an executed R2007 regression in S0. The separate candidate matrix already lists all six DWG versions. |
 
@@ -2437,6 +2437,46 @@ and `offset-W31-final3-{hostile,storage}-{release,asan}.xml` have SHA256:
 | hostile | `37b54e328b9fb85f0bbc1341445da418b9a17811f742fcf4019655e33313dd40` | `51c1a217d0b5c1b849d8540f2e6d1b23cc0d89e56b0e87185a0c8ce2e79d4c87` |
 | storage | `57f1016995f5522432c84585bd04c87efc4b54aba3240d2fcc0950aab3fbfe1f` | `7ecea1be5dc10c38f387893d0eba3b75c25c3d736dd6ba2d50faa26dfff1d73a` |
 
+W32 staged template creation `087aa2400` routes non-empty GUI templates through
+the unpublished session and creates an owning MDI drawing only after validation.
+Both binary DXF and DWG templates are accepted; their result is an untitled DXF
+drawing with the existing unnamed autosave convention and no template filename
+in the opened-files list. Shared template finalization explicitly clears an old
+filename, including for a reused graphic, so it cannot accidentally save over
+a prior document. Blank new drawings retain the immediate existing path. Errors
+leave the current drawing in place and use the nonblocking session dialog;
+helper downgrade reporting and cancellation reuse the drawing-open path. Parsing
+itself remains synchronous on the Qt thread. Direct synchronous template callers
+still use their existing API and are not worker-routed by this slice.
+
+Fresh Release application/full-test/helper and focused Release/ASan builds pass.
+All discovered test identities execute with zero errors/failures; extra cases
+are named sections:
+
+| Suite | Declarations | Cases | Assertions Release / ASan | Skips |
+| --- | ---: | ---: | ---: | ---: |
+| GUI template | 5 | 6 | 133 / 164 | 0 |
+| dock-window | 38 | 42 | 546 / 614 | 7 |
+| documents storage | 30 | 53 | 1207 / 1207 | 1 |
+| hostile file | 48 | 53 | 53566 / 54348 | 0 |
+
+The GUI cases exercise native binary DXF and ODA DWG templates, the actual
+default-template action, untitled/format/autosave state, unchanged source bytes,
+immediate blank creation, malformed input without publication, and cancellation/
+reap of a stopped helper followed by successful retry. The helper is stopped
+before numerical work. The seven GUI skips require a larger offscreen screen;
+the storage skip is the existing JWW writer case. ASan uses `detect_leaks=0`.
+Three qmake6 objects compile; full qmake linking and visible/deployed and
+cross-platform acceptance are not claimed. Reports in the evidence root are
+`offset-W32-{template,gui,storage,hostile}-{release,asan}.xml`:
+
+| Suite | Release SHA256 | ASan SHA256 |
+| --- | --- | --- |
+| template | `4a77a44c93ac02e39fde8b94fdc295bbe2d37623d866b802c1e34daa3b567d1f` | `aa52e761044fc26a5cb92032cc38620b75036ef7d798260bd3d1ffd0342218dc` |
+| dock-window | `b288bb0c4c70127b7be2b1adb96f83e502c1b5493f73970e0dfaed2dd08302b3` | `5e553ef6f7851bd35198bbbb4c7edc7f9e3ae6b0bc3cca1675d880b922c678b9` |
+| storage | `aa1ab9ed68e10882a5e6ed2b3f719dbe8651e88a9a0a0b8a16202e4845c6da75` | `6958778a4c27f7a9ab042075c72c4385dc4607b0023bce8a1d57fb8293bf806f` |
+| hostile | `4ddaca144384c9cf4647474b5e80a427efc216afd3b3eb84ce4bb2a25c2f3a2b` | `def852f9c101c847694abaa4c82241e184aaa246cca89c3a2a94f6b4300b648b` |
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -2454,7 +2494,7 @@ Creation/repeat status after these review follow-ups:
    during remaining caller integration; this closes local creation/repeat routing,
    not platform/deployed/visible acceptance.
 
-Then continue template/other import callers and cross-platform fault qualification in4.2 order.
+Then continue other import callers and cross-platform fault qualification in4.2 order.
 Full current-source application/deployed builds, complete file/version matrix,
 visible acceptance, source reconciliation/A-C audit and final R remain open.
 
@@ -2476,7 +2516,7 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] A-core through C-check: review/requalify existing code and patch only proven
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
 - [ ] W0-W2: typed/cached Produce, creation/repeat and local native Trim GUI routing and scoped action faults are qualified;
-  finish template/other import ownership, cross-platform failure coverage and remaining caller/final
+  finish other import ownership, cross-platform failure coverage and remaining caller/final
   adoption/failure acceptance. Reuse the qualified geometry-entry timeout/helper/client/
   reply modules; do not redo them as absent. Keep Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
@@ -2484,20 +2524,18 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** integrate template creation
-with the unpublished session, preserving the new-document/autosave and caller
-success/failure contracts. Exercise a genuine partial DWG through the GUI dialog,
-and audit concurrent-open resource limits, source-file changes while validation
-is pending, close/dialog reentrancy and startup selection versus later user action.
-The W31 drawing-open path and ownership transfer are implemented; do not repeat
-them as absent. Design and test direct synchronous, console and nested-XREF
-contracts without silently weakening editable imports. Qualify remaining platform
-faults without weakening the existing worker tests.
+**Next concrete action on implementation resume:** exercise a genuine partial
+DWG through the GUI dialog, and audit concurrent-open resource limits, source-file
+changes while validation is pending, close/dialog reentrancy and startup selection
+versus later user action. W31/W32 drawing-open and template publication are
+implemented; do not repeat them as absent. Design and test direct synchronous,
+console and nested-XREF contracts without silently weakening editable imports.
+Qualify remaining platform faults without weakening the existing worker tests.
 W16-W19 cache portability and local creation/repeat GUI
 routing are qualified; do not restart them as absent. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
-Nothing is automatically copied into the dirty main tree. Template and other
-import callers, remaining lifecycle/packaging gates and final UI/file acceptance
+Nothing is automatically copied into the dirty main tree. Other import callers,
+remaining lifecycle/packaging gates and final UI/file acceptance
 are open.
 
 Completion requires every required deliverable and validation row on the selected
