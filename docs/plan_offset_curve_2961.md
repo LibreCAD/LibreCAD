@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88's current-source preview-cache portability and creation/repeat routing checks are qualified in focused Release/ASan or offscreen lanes; W88 also makes hatch-pattern import reject partial files without a modal dialog; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88's current-source preview-cache portability and creation/repeat routing checks are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports and W89 makes dimension-style preview failures noninteractive and clears partial sample content; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -3978,9 +3978,10 @@ Remaining direct import sites were classified: the console helper's ordinary
 format fallback, document-storage open/template loading, recursive XREF
 fallback, hatch-pattern loading, and the bundled dimension-style preview. W88
 closes hatch-pattern failure propagation and suppresses its inappropriate
-modal import error; user-facing DXF/DWG open/template and recursive-XREF paths
-remain the likely staged-import candidates. The bundled dimension-style preview
-and all other import sites still need explicit caller-policy review. Visible
+modal import error; W89 closes the dimension-style preview's modal-error and
+partial-content path. User-facing DXF/DWG open/template and recursive-XREF paths
+remain the likely staged-import candidates. The document-storage methods and
+all other import sites still need explicit caller-policy review. Visible
 desktop acceptance, installed-helper deployment, Windows runtime, and final
 acceptance remain open.
 
@@ -4358,3 +4359,30 @@ is current-source macOS CMake/offscreen evidence, not visible desktop
 interaction, Windows/Linux runtime qualification, relocated-install retesting
 at this head, or final W0-W2 acceptance. Remaining import callers and the
 broader budget/source audit are still open.
+
+## 51. W89 Dimension-Style Preview Import Failure
+
+Product/test commit `8b2e124bb` routes the bundled dimension-style sample
+through `RS_FileIO`'s noninteractive error callback. On import refusal, the
+preview graphic is reset before view creation and the original drawing's arrow
+blocks are recopied. This prevents an internal resource error from opening a
+modal dialog or displaying entities from a partially parsed sample. A private
+sample-path overload permits the test to inject a truncated DXF without
+changing the production resource path.
+
+The malformed-sample regression watches for `QMessageBox`, uses a timed
+safety-close if one unexpectedly appears, verifies no dialog was shown, checks
+that no sample entities remain, and confirms the copied `ARROW` block survives.
+The existing preview/navigation selector also exercises the normal bundled
+sample and hatch preview paths.
+
+| W89 lane | JUnit cases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Malformed dimension sample, Release, `/private/tmp/offset-W89-dimstyle-release.xml` | 1 / 9 | PASS; errors=0, failures=0, skipped=0 | `2c3ae687dd81a8e428b926dc941e43b1393c5bb739b0504af0b1dfad83ee38b1` |
+| Malformed dimension sample, ASan, `/private/tmp/offset-W89-dimstyle-asan.xml` | 1 / 9 | PASS; errors=0, failures=0, skipped=0 | `f9d827ab1b1dd4986eb5c4a6b07c44d145ea7d84ea169bdbc8cd7eb5afbd5d52` |
+| Normal preview/navigation, Release, `/private/tmp/offset-W89-dimstyle-normal-release.xml` | 38 / 9625 | PASS; errors=0, failures=0, skipped=0 | `97ef7e463a7e3182f45cd1c2f19631e4c1ee3d39392c037c1b1e03fd713b1814` |
+| Normal preview/navigation, ASan, `/private/tmp/offset-W89-dimstyle-normal-asan.xml` | 38 / 9625 | PASS; errors=0, failures=0, skipped=0 | `f679425c5d32c979ffb7748398f7855ad8a3f0b6a6b12f4094ec6022970b9ada` |
+
+ASan used `detect_leaks=0`. This is current-source macOS CMake/offscreen
+coverage, not visible dialog interaction or cross-platform/final acceptance.
+Other storage/import callers and the broader budget/source audit remain open.
