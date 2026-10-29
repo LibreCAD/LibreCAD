@@ -63,18 +63,6 @@ Ok to accept and start alignment.</source>
 स्वीकार करने और संरेखण शुरू करने के लिए ठीक है।.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">यदि &apos;कीप मूल ऑब्जेक्ट&apos; की जांच की जाती है, तो &apos;कीप मूल ऑब्जेक्ट&apos; की जांच की जाती है।
-चयनित वस्तुओं को स्थानांतरित करने के बजाय कॉपी करेगा।
-यदि &apos;सबसे पहले आधार बिंदु निर्दिष्ट करें&apos; की जांच की जाती है तो,
-क्रम में संरेखण बिंदुओं के लिए संरेखित होगा
-पहला आधार, दूसरा आधार, पहला लक्ष्य, दूसरा लक्ष्य।.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
         <translation>पहला आधार बिंदु:</translation>

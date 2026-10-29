@@ -4,16 +4,6 @@
 <context>
     <name>AsciiFile</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="35"/>
-        <source>Read ASCII points</source>
-        <translation>ອ່ານຈຸດ ASCII</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="36"/>
-        <source>Read ASCII test tip...</source>
-        <translation>ຄຳແນະນຳ (ສຳລັບການທົດສອບ)</translation>
-    </message>
-    <message>
         <location filename="../asciifile/asciifile.cpp" line="42"/>
         <source>Read ascii points</source>
         <translation>ອ່ານຈຸດ ascii</translation>
@@ -25,11 +15,6 @@
         <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>
         <source>Export points to csv</source>
         <translation>ສົ່ງອອກຈຸດໄປເປັນ csv</translation>
-    </message>
-    <message>
-        <location filename="../pointstocsv/pointstocsv.cpp" line="41"/>
-        <source>Export to csv test tip...</source>
-        <translation>ຄຳແນະນຳ (ສຳລັບການທົດສອບ)</translation>
     </message>
 </context>
 <context>
@@ -43,11 +28,6 @@
         <location filename="../align/align.cpp" line="31"/>
         <source>Align settings...</source>
         <translation>ການຕັ້ງຄ່າການຈັດວາງ...</translation>
-    </message>
-    <message>
-        <location filename="../align/align.cpp" line="32"/>
-        <source>Align test tip...</source>
-        <translation>ຄຳແນະນຳ (ສຳລັບການທົດສອບ)</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="47"/>
@@ -120,13 +100,6 @@ first base, second base, first target, second target.</source>
         <source>Gear plugin</source>
         <translation>ປລັກອິນເຟືອງ</translation>
     </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="42"/>
-        <source>Select point for center of gear and press left mouse button.
-Then fill in the fields and press &apos;Accept&apos; button.</source>
-        <translation>ເລືອກຈຸດໃຈກາງຂອງເຟືອງ ແລະ ກົດປຸ່ມເມົ້າຊ້າຍ.
-ຈາກນັ້ນ ປ້ອນຂໍ້ມູນໃສ່ຊ່ອງຕ່າງໆ ແລະ ກົດປຸ່ມ &apos;ຍອມຮັບ&apos;.</translation>
-    </message>
 </context>
 <context>
     <name>LC_List</name>
@@ -135,11 +108,6 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="29"/>
         <source>List entities</source>
         <translation>ລາຍການອົງປະກອບ</translation>
-    </message>
-    <message>
-        <location filename="../list/list.cpp" line="30"/>
-        <source>List test tip...</source>
-        <translation>ຄຳແນະນຳ (ສຳລັບການທົດສອບ)</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="44"/>
@@ -438,11 +406,6 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <translation>ຄຸນສົມບັດດຽວກັນ</translation>
     </message>
     <message>
-        <location filename="../sameprop/sameprop.cpp" line="29"/>
-        <source>Same properties test tip...</source>
-        <translation>ຄຳແນະນຳ (ສຳລັບການທົດສອບ)</translation>
-    </message>
-    <message>
         <location filename="../sameprop/sameprop.cpp" line="40"/>
         <source>select original entity:</source>
         <translation>ເລືອກອົງປະກອບຕົ້ນສະບັບ:</translation>
@@ -461,11 +424,6 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <source>Sample plugin</source>
         <translation>ປລັກອິນຕົວຢ່າງ</translation>
     </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="34"/>
-        <source>Sample test tip...</source>
-        <translation>ຄຳແນະນຳ (ສຳລັບການທົດສອບ)</translation>
-    </message>
 </context>
 <context>
     <name>PicFile</name>
@@ -473,11 +431,6 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../picfile/picfile.cpp" line="36"/>
         <source>Read PIC file</source>
         <translation>ອ່ານໄຟລ໌ PIC</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="37"/>
-        <source>PIC test tip...</source>
-        <translation>ຄຳແນະນຳ (ສຳລັບການທົດສອບ)</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="43"/>
@@ -670,11 +623,6 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../divide/divide.cpp" line="41"/>
         <source>Divide</source>
         <translation>ແບ່ງ</translation>
-    </message>
-    <message>
-        <location filename="../divide/divide.cpp" line="42"/>
-        <source>Divide test tip...</source>
-        <translation>ຄຳແນະນຳ (ສຳລັບການທົດສອບ)</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="53"/>
@@ -1205,11 +1153,6 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
         <translation>ປລັກອິນສ້າງເສັ້ນສະແດງ (Plot)</translation>
-    </message>
-    <message>
-        <location filename="../plotequation/plot.cpp" line="38"/>
-        <source>Plot test tip...</source>
-        <translation>ຄຳແນະນຳ (ສຳລັບການທົດສອບ)</translation>
     </message>
 </context>
 <context>

@@ -63,18 +63,6 @@ Ok to accept and start alignment.</source>
 Oké om te accepteren en te beginnen met uitlijnen.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Als &apos;Originele objecten behouden&apos; is aangevinkt,
-Uitlijnen zal eerder kopiëren dan de geselecteerde objecten verplaatsen.
-Als &apos;Selecteer de basispunten eerst&apos; wordt gecontroleerd,
-Uitlijnen zal vragen naar de uitlijnpunten in de volgorde
-Eerste honk, tweede honk, eerste doel, tweede doel.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
         <translation>Eerste basis punt:</translation>

@@ -63,18 +63,6 @@ Ok to accept and start alignment.</source>
 Ados onartu eta lerrokatzen hasteko.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Jatorrizko objektuak gordetzen baditu,
-Lerroak kopiatuko ditu hautatutako objektuak lekuz aldatu ordez.
-&quot;Oinarri-puntuak zehaztu aurretik&quot; egiaztatzen bada,
-Lerrokatze-puntuak ordenan eskatuko ditu
-lehen oinarria, bigarren oinarria, lehen helburua, bigarren helburua.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
         <translation>jatorrizko lehen puntua</translation>

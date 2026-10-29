@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Quadro</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Insira um nome e pressione +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Guardar</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Quadro</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Guardar</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ ou [%2]</translation>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Especificar distância (ângulo %1 graus)
-ou [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Especificar distância (ângulo %1 graus)
 ou [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ ou [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Adicionar ou remover ação</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,21 +2493,6 @@ ou [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">Camada</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">comprimento</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Fechado</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2721,10 +2643,6 @@ ou [%2]</translation>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>Mostrar dica de ferramenta para itens da tabela</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">Ficheiro de pênsis:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2939,24 +2857,6 @@ ou [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Remover pênsis</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Paleta de pênsil</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">A localização do ficheiro de pênsis foi alterada, reinicie a aplicação para utilizar o novo ficheiro.
-Nota: se guardar o pênsil através do editor sem reiniciar, os pênsis actuais da paleta serão guardados no novo ficheiro e o conteúdo existente será substituído.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">O local do ficheiro de estilos de linha foi alterado, reinicie a aplicação para que o novo ficheiro seja utilizado.
-
-Tenha em atenção que, se guardar um estilo de linha através do editor sem reiniciar, os estilos de linha atuais da paleta serão guardados no novo ficheiro, substituindo o conteúdo existente.</translation>
     </message>
 </context>
 <context>
@@ -3775,10 +3675,6 @@ Tenha em atenção que, se guardar um estilo de linha através do editor sem rei
         <translation>Dispôr &amp;Horizontalmente</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">A criar um ficheiro novo...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Bloco  &apos;%1&apos;</translation>
@@ -3792,10 +3688,6 @@ Tenha em atenção que, se guardar um estilo de linha através do editor sem rei
         <location filename="../src/main/qc_applicationwindow.cpp" line="1744"/>
         <source>New Drawing created.</source>
         <translation>Novo desenho criado.</translation>
-    </message>
-    <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">A abrir o ficheiro recente...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1806"/>
@@ -3812,21 +3704,9 @@ por favor verifique as permissões.</translation>
         <translation>Documento carregado:</translation>
     </message>
     <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">Abertura cancelada</translation>
-    </message>
-    <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">A gravar o desenho...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>Desenho gravado: %1</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">A gravar automaticamente o desenho...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -3845,21 +3725,9 @@ Por favor verificar as permissões.
 Gravação automática desligada.</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">A exportar desenho...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
         <source>Exported: %1</source>
         <translation>Exportado: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">A exportar...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Exportação concluída</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
@@ -3867,21 +3735,9 @@ Gravação automática desligada.</translation>
         <translation>Exportação falhou!</translation>
     </message>
     <message>
-        <source>Printing...</source>
-        <translation type="vanished">A imprimir...</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">Impressão concluída</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2768"/>
         <source>Print preview for %1</source>
         <translation>Visualização prévia de impressão para %1</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">Saindo da aplicação...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="688"/>
@@ -4192,10 +4048,6 @@ Verifique se existe e as permissões.</translation>
         <translation>&amp;Desenhos</translation>
     </message>
     <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">A guardar desenho: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>Guardado cancelado</translation>
@@ -4387,11 +4239,6 @@ Verifique se existe e as permissões.</translation>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">escape</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4731,11 +4578,6 @@ numa janela separada</translation>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>Histórico e saída de comandos</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">escape</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7342,41 +7184,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Variáveis de desenho</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Variável</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Código</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Valor</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -8432,10 +8239,6 @@ so default step value required for baking</source>
         <translation>Novamente, nenhum texto foi fornecido.</translation>
     </message>
     <message>
-        <source>Close</source>
-        <translation type="vanished">Fecha</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
         <translation>Descartar tudo</translation>
@@ -9242,18 +9045,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_WidthBox</name>
     <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Não modificado -</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Padrão</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Pelo Carimbo</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="247"/>
         <source>By Layer</source>
         <translation>Pela Camada</translation>
@@ -9411,12 +9202,6 @@ Please specify a different value.</source>
         <translation>Remover camadas vazias</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Camada(s) sem entidades encontradas, mas estão filtradas e não são visíveis.
-Limpe a máscara de filtro e repita.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>Não foram encontradas camadas sem entidades, nada para remover.</translation>
@@ -9461,14 +9246,6 @@ Please specify a different name.</source>
         <translation>Duplicar seleção</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Substituir o valor &quot;Por Camada&quot; pelos valores das camadas de origem?
-Se sim, as entidades com canetas &quot;Por Camada&quot; aparecerão na nova camada exatamente como nas camadas anteriores, e o valor &quot;Por Camada&quot; será substituído pelas canetas resolvidas.
-Se não, os valores &quot;Por Camada&quot; permanecerão, e a caneta da camada de destino definirá a caneta para essas entidades.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9479,14 +9256,6 @@ Se não, os valores &quot;Por Camada&quot; permanecerão, e a caneta da camada d
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>Valor inválido fornecido para a cor %1.
-Por favor, especifique um valor diferente.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">Caminho inválido para o ficheiro de canetas.
-%1
 Por favor, especifique um valor diferente.</translation>
     </message>
     <message>
@@ -9561,14 +9330,6 @@ Por favor, especifique um valor diferente.</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Por favor, selecione apenas uma entidade para definir as configurações da caneta.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">A guardar dados das canetas</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Não foi possível guardar os dados das canetas no ficheiro especificado. Gostaria de especificar o caminho correto para o ficheiro?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11313,10 +11074,6 @@ Deseja substituí-lo?</translation>
         <translation>Primeiro, deve introduzir uma distância.</translation>
     </message>
     <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>Modo calculadora: Ativado</translation>
@@ -12594,11 +12351,6 @@ Deseja substituí-lo?</translation>
         <translation type="unfinished">Tamanho do papel (Largura x Altura) em mm.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Tamanho do papel (Largura x Altura) em mm.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13285,16 +13037,6 @@ Deseja substituí-lo?</translation>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>Cor do Utilizador</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">calcular</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -17406,54 +17148,6 @@ Este bloco não pode ser inserido.</translation>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>Actualizar</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Separação</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">Camada</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">comprimento</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Fechado</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Escala:</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Polyline</source>
-        <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="vanished">Multilinha</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Camada:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Altura:</translation>
     </message>
 </context>
 </TS>

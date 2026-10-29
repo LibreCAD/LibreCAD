@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Ramme</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Indtast et navn og tryk +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Gem</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Ramme</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Gem</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ eller [%2]</translation>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Angiv afstand (vinkel %1 grader)
-eller [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Angiv afstand (vinkel %1 grader)
 eller [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ eller [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Tilføj eller fjern handling</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,21 +2493,6 @@ eller [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>n</source>
-        <translation type="vanished">n</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">længde</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">radius</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2721,10 +2643,6 @@ eller [%2]</translation>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>Vis værktøjstip for tabellens elementer</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">Pen-fil:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2939,24 +2857,6 @@ eller [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Fjern penne</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Pen-palæ</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Placering af pen-fil er ændret. Genstart venligst programmet for at bruge den nye pen-fil.
-Bemærk: Hvis du gemmer pen via editoren uden genstart, gemmes nuværende penne fra palæet i den nye fil og eksisterende indhold overskrives.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Placeringen af pennefilen er ændret. Genstart programmet, så den nye pennefil kan bruges.
-
-Bemærk, at hvis du gemmer en pen via editoren uden at genstarte, vil de aktuelle penne fra paletten blive gemt i den nye fil, og det eksisterende indhold vil blive overskrevet.</translation>
     </message>
 </context>
 <context>
@@ -3770,34 +3670,14 @@ Bemærk, at hvis du gemmer en pen via editoren uden at genstarte, vil de aktuell
         <translation>Arranger &amp;Horisontalt</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">Laver ny fil...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>Unavngivet dokument %1</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">Genåbner sidste fil...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>Hentet dokument:</translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">Åbning mislykket</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">Printer...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">Lukker programmet...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2768"/>
@@ -3810,17 +3690,9 @@ Bemærk, at hvis du gemmer en pen via editoren uden at genstarte, vil de aktuell
         <translation>Ny Tegning er lavet.</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">Gemmer tegnning...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>Gemt tegning: %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Eksportere tegning...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3828,21 +3700,9 @@ Bemærk, at hvis du gemmer en pen via editoren uden at genstarte, vil de aktuell
         <translation>Eksporterede: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Eksportere...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Eksport fuldført</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>Eksport mislykket!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">Print er fuldført</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3867,10 +3727,6 @@ Check venligst filretighederne.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>&amp;Polylinje</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">Tegning gemmes automatisk...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4192,10 +4048,6 @@ Kontroller venligst dens eksistens og tilladelser.</translation>
         <translation>&amp;Tegninger</translation>
     </message>
     <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">Gemmer tegning: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>Gemning annulleret</translation>
@@ -4387,11 +4239,6 @@ Kontroller venligst dens eksistens og tilladelser.</translation>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">escape</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4731,11 +4578,6 @@ i et nyt vindue</translation>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>Kommandohistorik og output</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">Esc</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7339,41 +7181,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Tegnevariable</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Variabel</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Kode</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Værdi</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Annuller</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -8429,10 +8236,6 @@ so default step value required for baking</source>
         <translation>igen Ingen tekst angivet.</translation>
     </message>
     <message>
-        <source>Close</source>
-        <translation type="vanished">Luk</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
         <translation>Slet alle</translation>
@@ -9246,117 +9049,9 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_WidthBox</name>
     <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Uforandret -</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="247"/>
         <source>By Layer</source>
         <translation>Som lag</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Som blok</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Standard</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0.05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0.09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0,13 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0.15mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0,18 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0,25 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0,35 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0,50 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0,70 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1,40 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11mm</translation>
     </message>
 </context>
 <context>
@@ -9514,12 +9209,6 @@ Vælg venligst en anden værdi.</translation>
         <translation>Fjern tomme lag</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Lag uden enheder blev fundet, men de er filtreret og ikke synlige.
-Ryd filtermasken og gentag.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>Ingen lag uden enheder fundet, intet at fjerne.</translation>
@@ -9565,14 +9254,6 @@ Vælg venligst et andet navn.</translation>
         <translation>Dupliker udvalg</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Er du sikker på, at du vil erstatte værdien &quot;By Layer&quot; med værdierne fra kildelagene?
-Hvis Ja - vil enheder med &quot;By Layer&quot; penne se ud på det nye lag præcis som på de tidligere lag, og værdien &quot;By Layer&quot; vil blive erstattet af de afklarede penne.
-Hvis Nej - forbliver &quot;By Layer&quot; værdierne, og mållagets pen vil definere pennen for sådanne enheder.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9583,14 +9264,6 @@ Hvis Nej - forbliver &quot;By Layer&quot; værdierne, og mållagets pen vil defi
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>Der blev angivet en ugyldig værdi for %1 farve.
-Angiv venligst en anden værdi.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">Ugyldig sti til pennefil.
-%1 
 Angiv venligst en anden værdi.</translation>
     </message>
     <message>
@@ -9665,14 +9338,6 @@ Angiv venligst en anden værdi.</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Vælg venligst kun ét objekt for at vælge penindstillingen.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">Gemmer pennedata</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Kan ikke gemme pennedata til det specificerede pennefil. Vil du specificere den korrekte sti til filen?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11417,10 +11082,6 @@ Vil du overskrive den?</translation>
         <translation>Du skal indtaste en afstand først.</translation>
     </message>
     <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>Regnemode: Til</translation>
@@ -12698,11 +12359,6 @@ Vil du overskrive den?</translation>
         <translation type="unfinished">Papirstørrelse (Bredde x Højde) i mm.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Papirstørrelse (Bredde x Højde) i mm.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13389,16 +13045,6 @@ Vil du overskrive den?</translation>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>Brugerfarve</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">beregn</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -17510,54 +17156,6 @@ Denne blok kan ikke indsættes.</translation>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>Opdater</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Del</translation>
-    </message>
-    <message>
-        <source>n</source>
-        <translation type="vanished">n</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">længde</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">radius</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Skaler:</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Polyline</source>
-        <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="vanished">Polylinie</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Lag:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Højde:</translation>
     </message>
 </context>
 </TS>

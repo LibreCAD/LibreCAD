@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Kadrs</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Ievadiet nosaukumu un nospiediet +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Saglabāt</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Kadrs</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Saglabāt</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ vai [%2]</translation>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Norādiet attālumu (leņķis %1 grādi)
-vai [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Norādiet attālumu (leņķis %1 grādi)
 vai [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ vai [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Pievienot vai izņemt darbību</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,33 +2493,6 @@ vai [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>n</source>
-        <translation type="vanished">s</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">Līnijas tips</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">garums</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">rādiuss</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2733,10 +2643,6 @@ vai [%2]</translation>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>Rādīt rīka padomu tabulas elementiem</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">Pildspalvu fails:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2951,24 +2857,6 @@ vai [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Noņemt pildspalvas</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Pildspalvu palete</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Pildspalvu faila atrašanās vieta ir mainīta, lūdzu, restartējiet lietotni, lai izmantotu jauno pildspalvu failu.
-Lūdzu, ņemiet vērā, ka ja jūs saglabāsiet pildspalvu caur redaktoru bez restartēšanas, pašreizējās pildspalvas no paletes tiks saglabātas jaunajā failā un tāpēc esošais saturs tiks pārrakstīts.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Pildspaletes faila atrašanās vieta ir mainīta, lūdzu, restartējiet lietojumprogrammu, lai tiktu izmantots jaunais pildspaletes fails.
-
-Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, neizdarot restartu, pašreizējās pildspaletes no paletes tiks saglabātas jaunajā failā, un tādējādi tiks pārrakstīts tā esošais saturs.</translation>
     </message>
 </context>
 <context>
@@ -3747,34 +3635,14 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
         <translation>Flīzēt &amp;horizontāli</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">Izveido jaunu datni...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>nenosaukts dokuments %1</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">Atver nesenu datni...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>Ielādēts dokuments:</translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">Atver apturētu</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">Drukā...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">Iziet no lietotnes...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
@@ -3797,17 +3665,9 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
         <translation>Izveidots jauns zīmējums.</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">Saglabā zīmējumu...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>Saglabātais zīmējums: %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Eksportē zīmējumu...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3815,21 +3675,9 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspaleti, izmantojot redaktoru, n
         <translation>Eksportēts: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Eksportē...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Eksportēšana pabeigta</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>Eksportēšana neizdevās!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">Drukāšana pabeigta</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3854,10 +3702,6 @@ Pārbaudiet tiesības.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>&amp;Lauzta līnija</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">Automātiski saglabā zīmējumu...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4204,10 +4048,6 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
         <translation>&amp;Zīmējumi</translation>
     </message>
     <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">Saglabājot zīmējumu: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>Saglabāšana atcelta</translation>
@@ -4399,11 +4239,6 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">atsolis</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4743,11 +4578,6 @@ atsevišķā logā</translation>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>Komandu vēsture un izvade</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">atsolis</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7355,41 +7185,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Zīmēšanas mainīgie</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Mainīgais</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Kods</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Vērtība</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -8445,10 +8240,6 @@ so default step value required for baking</source>
         <translation>atkal nav piegādāts teksts.</translation>
     </message>
     <message>
-        <source>Close</source>
-        <translation type="vanished">Noslēgt</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
         <translation>Atmest visu</translation>
@@ -9271,114 +9062,6 @@ p, li { white-space: pre-wrap; }
         <source>By Layer</source>
         <translation>Pēc slāņa</translation>
     </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Pēc bloka</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Noklusējuma</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0,00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0,05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0,09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0,13mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0,15mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0,18mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0,20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0,25mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0,30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0,35mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0,40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0,50mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0,53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0,60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0,70mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0,80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0,90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1,00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1,06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1,20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1,40mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1,58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2,00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2,11mm</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Nemainīta -</translation>
-    </message>
 </context>
 <context>
     <name>QMessageBox</name>
@@ -9536,12 +9219,6 @@ Lūdzu, norādiet citu vērtību.</translation>
         <translation>Noņemt tukšus slāņus</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Atraukti slāņi bez vienībām, taču tie ir filtrēti un nav redzami.
-Atjaunojiet filtrēšanas masku un atkārtojiet.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>Nav atrastu neviena slāņa bez objektiem, nav ko dzēst.</translation>
@@ -9584,14 +9261,6 @@ Please specify a different name.</source>
         <translation>Dublēt atlasi</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Aizvietot vērtību &quot;Pēc slāņa&quot; ar avota slāņu vērtībām?
-Ja Jā, objektiem, kuriem ir &quot;Pēc slāņa&quot; pildspalvas, jaunajā slānī izskatīsies tieši tāpat kā iepriekšējos slāņos, un vērtība &quot;Pēc slāņa&quot; tiks aizvietota ar atrisinātajām pildspalvām.
-Ja Nē, vērtības &quot;Pēc slāņa&quot; paliks nemainīgas, un tā mērķa slāņa pildspalva noteiks pildspalvu šiem objektiem.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9602,13 +9271,6 @@ Ja Nē, vērtības &quot;Pēc slāņa&quot; paliks nemainīgas, un tā mērķa s
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>Objektam %1 norādīta nederīga krāsas vērtība. Lūdzu, norādiet citu vērtību.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">Nepareiza ceļa vērtība uz zīmuļu failu.
-%1 Lūdzu, norādiet citu vērtību.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
@@ -9682,14 +9344,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Lūdzu, atlasiet tikai vienu objektu, lai iestatītu pildspalvas iestatījumus.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">Pildspalvu datu saglabāšana.</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Nevar saglabāt pildspalvu datus norādītajā pildspalvu failā. Vai vēlaties norādīt pareizu ceļu uz failu?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11434,10 +11088,6 @@ Vai vēlaties to aizvietot?</translation>
         <translation>Vispirms ievadiet attālumu.</translation>
     </message>
     <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>Kalkulatora režīms: Ieslēgts</translation>
@@ -12715,11 +12365,6 @@ Vai vēlaties to aizvietot?</translation>
         <translation type="unfinished">Papīra izmērs (platums x augstums) mm.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Papīra izmērs (platums x augstums) mm.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13406,16 +13051,6 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>Lietotāja krāsa</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">apskaitīt</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -15008,14 +14643,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="291"/>
         <source>Back</source>
         <translation>Back</translation>
-    </message>
-    <message>
-        <source>Select first circle or ellipse</source>
-        <translation type="vanished">Izvēlēties pirmo riņķi vai elipsi</translation>
-    </message>
-    <message>
-        <source>Select second circle or ellipse</source>
-        <translation type="vanished">Izvēlēties otro riņķi vai elipsi</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
@@ -17533,111 +17160,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>Atjaunināt</translation>
-    </message>
-</context>
-<context>
-    <name>dibPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Dalīts</translation>
-    </message>
-    <message>
-        <source>n</source>
-        <translation type="vanished">s</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">Līnijas tips</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">garums</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">rādiuss</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Slāņi</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Geardlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Mērogs:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="vanished">Lauzta līnija</translation>
-    </message>
-    <message>
-        <source>SplinePoints</source>
-        <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="vanished">Splaina punkti</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Slānis:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Augstums:</translation>
     </message>
 </context>
 </TS>

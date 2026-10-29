@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Kornizë</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Shtypni një emër dhe pastaj shtypni +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Ruaj</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Kornizë</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Ruaj</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ ose [%2]</translation>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Specifiko distancën (kënd %1 gradë)
-ose [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Specifiko distancën (kënd %1 gradë)
 ose [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ ose [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Shtoni ose largoni veprim</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2708,10 +2645,6 @@ ose [%2]</translation>
         <translation>Shfaq këshillë për artikujt e tabelës</translation>
     </message>
     <message>
-        <source>Pens file:</source>
-        <translation type="vanished">Skedari i stileve:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
         <source>Show colorn name as</source>
         <translation>Shfaq emrin e ngjyrës si</translation>
@@ -2924,24 +2857,6 @@ ose [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Hiq stilet</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Paleta e stileve</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Lokacioni e skedarit të stilove është ndryshuar, ju lutemi të rinisni aplikacionin që skedari i ri i stileve të përdoret.
-
-Ju lutemi të vini re se nëse ruani stilin përmes redaktorit pa e rinisur aplikacionin, stilet aktuale nga paleta do të ruhen në skedarin e ri dhe, për rrjedhojë, përmbajtja e tij ekzistuese do të zëvendësohet.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Vendndodhja e skedarit të stileve është ndryshuar, ju lutemi rinisni aplikacionin që të përdoret skedari i ri i stileve.
-Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stilet aktuale nga paleta do të ruhen në skedarin e ri dhe prandaj përmbajtja ekzistuese e tij do të mbishkruhet.</translation>
     </message>
 </context>
 <context>
@@ -3935,10 +3850,6 @@ Ju lutemi vini re se nëse do të ruani stilin përmes editorit pa rinisje, stil
         <translation>Pllaka &amp;horizontale</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">Duke krijuar skedar të ri...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Blloku &apos;%1&apos;</translation>
@@ -3966,14 +3877,6 @@ Ju lutemi kontrolloni lejet.</translation>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>Dokumenti i ngarkuar: </translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">Hapja u ndërpre</translation>
-    </message>
-    <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">Duke ruajtur vizatimin...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
@@ -4062,10 +3965,6 @@ Ju lutemi kontrolloni ekzistencën dhe lejet e tij.</translation>
         <location filename="../src/main/qc_applicationwindow.cpp" line="545"/>
         <source>Cannot save the file </source>
         <translation>Nuk mund të ruaj skedarin </translation>
-    </message>
-    <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">Duke ruajtur vizatimin: %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
@@ -4165,10 +4064,6 @@ Ju lutemi kontrolloni ekzistencën dhe lejet e tij.</translation>
         <translation>Ruaj të gjitha u anulua</translation>
     </message>
     <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">Duke ruajtur automatikisht vizatimin...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
         <source>Auto-saved drawing</source>
         <translation>Vizatimi i ruajtur automatikisht</translation>
@@ -4190,10 +4085,6 @@ Ruajtja automatike është çaktivizuar.</translation>
         <translation>Ruajtja automatike dështoi</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Duke eksportuar vizatimin...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2164"/>
         <source>Export as</source>
         <translation>Eksporto si</translation>
@@ -4202,15 +4093,6 @@ Ruajtja automatike është çaktivizuar.</translation>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
         <source>Exported: %1</source>
         <translation>Eksportuar: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Duke eksportuar...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Eksporti përfundoi
-</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
@@ -4228,26 +4110,14 @@ Ruajtja automatike është çaktivizuar.</translation>
         <translation>Ju lutemi rregulloni shkallëzimin dhe pozicionimin në parashikimin e shtypjes fillimisht.</translation>
     </message>
     <message>
-        <source>Printing...</source>
-        <translation type="vanished">Në printim...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2500"/>
         <source>Export as PDF</source>
         <translation>Eksporto si PDF</translation>
     </message>
     <message>
-        <source>Printing complete</source>
-        <translation type="vanished">Printimi përfundoi</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2768"/>
         <source>Print preview for %1</source>
         <translation>Parashikim i shtypjes për %1</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">Duke mbyllur programin...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3069"/>
@@ -4341,10 +4211,6 @@ Ruajtja automatike është çaktivizuar.</translation>
         <translation>Widgetet e dokimit</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">Duke hapur skedarin e fundit...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
@@ -4382,11 +4248,6 @@ Ruajtja automatike është çaktivizuar.</translation>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation>Spacebar: vendos përkohësisht modalitetin e lidhjes në lidhje të lirë</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">escape</translation>
     </message>
 </context>
 <context>
@@ -4727,11 +4588,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="210"/>
         <source>Unknown command: %1</source>
         <translation>Komandë e panjohur: %1</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">dilni</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
@@ -7327,41 +7183,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Variabla e Figurës</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Variabël</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Kodi</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Vlera</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Anulo</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -9290,12 +9111,6 @@ Ky veprim nuk mund të anulohet.</translation>
         <translation>Hiqni shtresat e zbrazëta</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">U gjetën shtresa pa entitete, por ato janë të fshehura dhe nuk janë të dukshme.
-Qartësoni maskën e filtrimit dhe përsëritni.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -9361,14 +9176,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 Nëse &quot;Po&quot; - objektet me stilolaps &quot;Sipas Shtresës&quot; do të duken në shtresën e re, pikërisht si në shtresat e mëparshme, dhe vlera &quot;Sipas Shtresës&quot; do të zëvendësohet me stilolapsin e zgjidhur.
 
 Nëse &quot;Jo&quot; - vlerat &quot;Sipas Shtresës&quot; mbeten dhe, për rrjedhojë, stilolapsi i shtresës së synuar do të përcaktojë stilolapsin për këto objekte.</translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Zëvendëso vlerën &quot;Për Shtresë&quot; me vlerat e shtresave burimore?
-Nëse Po - entitetet me stilolaps &quot;Për Shtresë&quot; do të duken në shtresën e re pikërisht si në shtresat e mëparshme dhe vlera &quot;Për Shtresë&quot; do të zëvendësohet me stilolapsin e zgjidhur.
-Nëse Jo - vlerat &quot;Për Shtresë&quot; mbeten dhe, për rrjedhojë, stilolapsi i shtresës së synuar do të përcaktojë stilolapsin për këto entitete.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
@@ -9473,14 +9280,6 @@ Please specify a different value.</source>
         <translation>Vlerë e pavlefshme e dhënë për ngjyrën %1. Ju lutemi, specifikoni një vlerë tjetër.</translation>
     </message>
     <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">Rruga e paligjshme për skedarin e stilove.
-%1
-Ju lutemi, specifikoni një vlerë tjetër.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
         <source>Remove pen</source>
         <translation>Hiq stilin</translation>
@@ -9552,14 +9351,6 @@ Ju lutemi, specifikoni një vlerë tjetër.</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Ju lutemi, zgjidhni vetëm një objekt për të zgjedhur cilësimet e lapsit.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">Ruajtja e të dhënave të lapsave.</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Nuk mund të ruhen të dhënat e lapsave në skedarin e specifikuar. A dëshironi të specifikoni rrugën e saktë drejt skedarit?</translation>
     </message>
 </context>
 <context>
@@ -12908,20 +12699,6 @@ A doni ta zëvendësoni?</translation>
         <translation>Gabim kalkulatori për hyrjen:</translation>
     </message>
     <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">llogarit</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>Modaliteti i kalkulatorit: Aktiv</translation>
@@ -13146,11 +12923,6 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="101"/>
         <source>Paper size (Width x Height) in mm.</source>
         <translation type="unfinished">Madhësia e letrës (Gjerësi x Lartësi) në mm.</translation>
-    </message>
-    <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Madhësia e letrës (Gjerësi x Lartësi) në mm.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>

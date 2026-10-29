@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Cadru</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Introduceți un nume și apăsați +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Salvare</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Cadru</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Salvare</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ sau [%2]</translation>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Specificați distanța (unghi %1 grade)
-sau [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Specificați distanța (unghi %1 grade)
 sau [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ sau [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Adăugați sau eliminați acțiunea</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,33 +2493,6 @@ sau [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>n</source>
-        <translation type="vanished">n</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">Tip linie</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">lungime</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">raza</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2733,10 +2643,6 @@ sau [%2]</translation>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>Afișați info-balon pentru elementele tabelului</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">Fișier stilouri:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2951,24 +2857,6 @@ sau [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Eliminați stilourile</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Paletă stilou</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Locația fișierului de stilouri a fost schimbată, reporniți aplicația pentru a utiliza noul fișier.
-Notă: dacă salvați stiloul prin editor fără repornire, stilourile curente din paletă vor fi salvate în noul fișier și conținutul existent va fi suprascris.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Locația fișierului de stilouri a fost modificată, vă rugăm să reporniți aplicația pentru a utiliza noul fișier de stilouri.
-
-Vă rugăm să rețineți că, dacă salvați un stilou prin editor fără a reporni aplicația, stilourile curente din paletă vor fi salvate în noul fișier, iar conținutul existent al acestuia va fi suprascris.</translation>
     </message>
 </context>
 <context>
@@ -3747,34 +3635,14 @@ Vă rugăm să rețineți că, dacă salvați un stilou prin editor fără a rep
         <translation>Tigla &amp; Orizontal</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">Creare fisier nou...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>document fara nume %1</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">Deschiderea unui fisier recent...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>Document incarcat:</translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">Renuntare deschidere</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">Listare...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">Inchiderea aplicatiei...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="424"/>
@@ -3822,17 +3690,9 @@ Vă rugăm să rețineți că, dacă salvați un stilou prin editor fără a rep
         <translation>A fost creat un nou desen.</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">Salvare desen...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>Desen salvat: %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Exportare desen...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3840,21 +3700,9 @@ Vă rugăm să rețineți că, dacă salvați un stilou prin editor fără a rep
         <translation>Exportat: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Exportare...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Export complet</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>Eroare export!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">Listare completa</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3879,10 +3727,6 @@ Va rog verificati permisiunile.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>&amp;Polilinie</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">Salvare automata a desenului...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4204,10 +4048,6 @@ Verificați existența și permisiunile.</translation>
         <translation>&amp;Desene</translation>
     </message>
     <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">Salvare desen: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>Salvare anulată</translation>
@@ -4399,11 +4239,6 @@ Verificați existența și permisiunile.</translation>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">evadare</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4743,11 +4578,6 @@ intr-o fereastra noua</translation>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>Istoric comenzi si valori iesire</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">evită</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7354,41 +7184,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Variabile de desen</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Variabilă</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Cod</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Valoare</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Anulează</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -8444,10 +8239,6 @@ so default step value required for baking</source>
         <translation>Nu ati specificat niciun text.</translation>
     </message>
     <message>
-        <source>Close</source>
-        <translation type="vanished">Inchidere</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
         <translation>Renunță la toate</translation>
@@ -9266,114 +9057,6 @@ p, li { white-space: pre-wrap; }
         <source>By Layer</source>
         <translation>Dupa strat</translation>
     </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Dupa Bloc</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Implicit</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0.05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0.09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0,13 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0.15mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0,18 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0,25 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0,35 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0,50 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0,70 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1,40 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11mm</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Nemodificat -</translation>
-    </message>
 </context>
 <context>
     <name>QMessageBox</name>
@@ -9531,12 +9214,6 @@ Vă rugăm să specificați o altă valoare.</translation>
         <translation>Eliminați straturile goale</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">S-au găsit straturi fără entități, dar acestea sunt filtrate și nu sunt vizibile.
-Ștergeți masca de filtrare și repetați.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>Nu s-au găsit straturi fără entități, nu este nimic de eliminat.</translation>
@@ -9580,14 +9257,6 @@ Vă rugăm să specificați un alt nume.</translation>
         <translation>Selecție duplicată</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Înlocuiți valoarea „În funcție de strat” cu valorile straturilor sursă?
-Dacă da, entitățile cu penițe „În funcție de strat” vor arăta pe noul strat exact ca pe straturile anterioare, iar valoarea „În funcție de strat” va fi înlocuită cu penițele rezolvate.
-Dacă nu, valorile „În funcție de strat” vor rămâne, iar penița stratului țintă va defini penița pentru aceste entități.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9599,13 +9268,6 @@ Dacă nu, valorile „În funcție de strat” vor rămâne, iar penița stratul
 Please specify a different value.</source>
         <translation>Valoare invalidă furnizată pentru culoarea %1.
 Vă rugăm să specificați o altă valoare.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">Cale invalidă către fișierul cu penițe.
-%1 Vă rugăm să specificați o altă valoare.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
@@ -9679,14 +9341,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Vă rugăm să selectați o singură entitate pentru a prelua setările penului.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">Salvarea datelor penului</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Nu se pot salva datele despre pen-uri în fișierul specificat. Doriți să specificați calea corectă către fișier?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11431,10 +11085,6 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <translation>Trebuie să introduceți mai întâi o distanță.</translation>
     </message>
     <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>Modul calculator: Activat</translation>
@@ -12712,11 +12362,6 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <translation type="unfinished">Dimensiunea hârtiei (lățime x înălțime) în mm.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Dimensiunea hârtiei (lățime x înălțime) în mm.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13403,16 +13048,6 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>Culoare utilizator</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">calculează</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -17522,71 +17157,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>Actualizați</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Divizata</translation>
-    </message>
-    <message>
-        <source>n</source>
-        <translation type="vanished">n</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">Tip linie</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">lungime</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">raza</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Scara de marire:</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Polyline</source>
-        <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="vanished">Polilinie</translation>
-    </message>
-    <message>
-        <source>SplinePoints</source>
-        <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="vanished">Puncte Spline</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Strat:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Inaltime:</translation>
     </message>
 </context>
 </TS>

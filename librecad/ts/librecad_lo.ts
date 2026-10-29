@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">ກອບ</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">ປ້ອນຊື່ ແລ້ວກົດ +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">ບັນທຶກ</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">ກອບ</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">ບັນທຶກ</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -140,17 +90,9 @@
         <translation>ປິດ</translation>
     </message>
     <message>
-        <source>If selected, spline points are used</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະໃຊ້ຈຸດສະປຼາຍ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="110"/>
         <source>Spline Points</source>
         <translation>ຈຸດສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະໃຊ້ຈຸດຄວບຄຸມ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="120"/>
@@ -162,116 +104,6 @@
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="138"/>
         <source>Points on Spline</source>
         <translation>ຈຸດເທິງເສັ້ນສະປຼາຍ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawLine</name>
-    <message>
-        <source>Start point may set in distance or point state only</source>
-        <translation type="vanished">ຈຸດເລີ່ມຕົ້ນອາດຈະກຳນົດໃນໄລຍະຫ່າງ ຫຼື ສະຖານະຈຸດເທົ່ານັ້ນ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">ຈະຖືກສ້າງຂຶ້ນ:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">ຮູບສີ່ແຈສາກ</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">ຄວາມກວ້າງ:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">ຄວາມສູງ:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">ສູນກາງ:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">ມູມບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">ລັດສະໝີບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">ຄ່າບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">ລະບຸຈຸດແຊກ</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">ລະບຸມູມ</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">ລະບຸຂະໜາດ (ຄວາມກວ້າງ, ຄວາມສູງ)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">ລະບຸປະເພດມູມ [str|round|bevels]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">ລະບຸຄວາມຍາວມູມຕັດ (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">ລະບຸລັດສະໝີມູມ</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">ລະບຸໂໝດຂອບ [ທັງສອງ|ແນວນອນ|ແນວຕັ້ງ]</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionWithPreview</name>
-    <message>
-        <source> is not divided as it is locked.</source>
-        <translation type="vanished"> ບໍ່ໄດ້ຖືກແບ່ງຍ້ອນວ່າມັນຖືກລັອກຢູ່.</translation>
-    </message>
-    <message>
-        <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation type="vanished"> ບໍ່ໄດ້ຖືກແບ່ງຍ້ອນວ່າມັນເປັນສ່ວນໜຶ່ງຂອງເສັ້ນຕໍ່ເນື່ອງ. ໃຫ້ຂະຫຍາຍເສັ້ນຕໍ່ເນື່ອງກ່ອນ.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionCircleDimBase</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">ບໍ່ແມ່ນວົງມົນ ຫຼື ເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ນິພົດບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">ເລືອກເສັ້ນໂຄ້ງ ຫຼື ວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Free angle</source>
-        <translation type="vanished">ມູມອິດສະຫຼະ</translation>
-    </message>
-    <message>
-        <source>Specify dimension line position or enter angle:</source>
-        <translation type="vanished">ລະບຸຕໍາແໜ່ງເສັ້ນມິຕິ ຫຼື ປ້ອນມູມ:</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">ປ້ອນຂໍ້ຄວາມມິຕິ:</translation>
     </message>
 </context>
 <context>
@@ -291,231 +123,6 @@
         <location filename="../src/actions/lc_actiondimarc.cpp" line="272"/>
         <source>Specify dimension arc location</source>
         <translation>ລະບຸຕໍາແໜ່ງເສັ້ນໂຄ້ງມິຕິ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDimLinearBase</name>
-    <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">ລະບຸຈຸດກໍາເນີດເສັ້ນຂະຫຍາຍທໍາອິດ</translation>
-    </message>
-    <message>
-        <source>Specify second extension line origin</source>
-        <translation type="vanished">ລະບຸຈຸດກໍາເນີດເສັ້ນຂະຫຍາຍທີສອງ</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">ລະບຸຕໍາແໜ່ງເສັ້ນມິຕິ</translation>
-    </message>
-    <message>
-        <source>Snap to Adjacent Dim</source>
-        <translation type="vanished">ເກາະຈັບໃສ່ມິຕິຂ້າງຄຽງ</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">ປ້ອນຂໍ້ຄວາມມິຕິ:</translation>
-    </message>
-    <message>
-        <source>Enter dimension line angle:</source>
-        <translation type="vanished">ປ້ອນມູມເສັ້ນມິຕິ:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDimOrdinate</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">ລະບຸຈຸດທໍາອິດ</translation>
-    </message>
-    <message>
-        <source>Specify leader end point</source>
-        <translation type="vanished">ລະບຸຈຸດປາຍເສັ້ນຊີ້</translation>
-    </message>
-    <message>
-        <source>Change Ordinate</source>
-        <translation type="vanished">ປ່ຽນຄ່າພິກັດ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDimOrdinateRebase</name>
-    <message>
-        <source>Select and rebase</source>
-        <translation type="vanished">ເລືອກ ແລະ ກຳນົດຖານໃໝ່</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDimStyleApply</name>
-    <message>
-        <source>Specify dimension to pick the style</source>
-        <translation type="vanished">ລະບຸມິຕິເພື່ອເລືອກຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Specify dimension to apply style</source>
-        <translation type="vanished">ລະບຸມິຕິເພື່ອໃຊ້ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Do not apply style override</source>
-        <translation type="vanished">ບໍ່ຕ້ອງໃຊ້ການຂຽນທັບຮູບແບບ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">ຄວາມສູງຂອງເສັ້ນໂຄ້ງ (ໄລຍະຫ່າງລະຫວ່າງຄອດ ແລະ ຈຸດສູງສຸດຂອງເສັ້ນໂຄ້ງ)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">ຄວາມສູງ:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">ທວນເຂັມໂມງ</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">ເລືອກມູມຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">ລັດສະໝີຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ລັດສະໝີ:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">ຕາມເຂັມໂມງ</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">ມູມໃຈກາງຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມູມ:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">ຄວາມຍາວຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">ຄວາມຍາວ:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">ເລືອກລັດສະໝີຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">ເລືອກຄວາມສູງຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມູມຈາກຮູບແຕ້ມ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawArc2PointsAngle</name>
-    <message>
-        <source>Enter value of central angle</source>
-        <translation type="vanished">ປ້ອນຄ່າມູມໃຈກາງ</translation>
-    </message>
-    <message>
-        <source>Alternate angle to outer arc</source>
-        <translation type="vanished">ມູມສະລັບສໍາລັບເສັ້ນໂຄ້ງນອກ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawArc2PointsBase</name>
-    <message>
-        <source>The end point is too close to the start point</source>
-        <translation type="vanished">ຈຸດປາຍຢູ່ໃກ້ຈຸດເລີ່ມຕົ້ນເກີນໄປ</translation>
-    </message>
-    <message>
-        <source>Positive value is expected</source>
-        <translation type="vanished">ຕ້ອງການຄ່າບວກ</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ນິພົດບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-    <message>
-        <source>Specify first point of arc</source>
-        <translation type="vanished">ລະບຸຈຸດທໍາອິດຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Specify second point of arc</source>
-        <translation type="vanished">ລະບຸຈຸດທີສອງຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Opposite Arc direction</source>
-        <translation type="vanished">ທິດທາງເສັ້ນໂຄ້ງກົງກັນຂ້າມ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawArc2PointsHeight</name>
-    <message>
-        <source>Enter height of arc</source>
-        <translation type="vanished">ປ້ອນຄວາມສູງຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Alternative arc where diameter is reduced by height</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງທາງເລືອກທີ່ເສັ້ນຜ່າກາງຖືກຫຼຸດລົງຕາມຄວາມສູງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawArc2PointsLength</name>
-    <message>
-        <source>The distance between the two points must be less than the arc length</source>
-        <translation type="vanished">ໄລຍະຫ່າງລະຫວ່າງສອງຈຸດຕ້ອງໜ້ອຍກວ່າຄວາມຍາວຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Enter length of arc</source>
-        <translation type="vanished">ປ້ອນຄວາມຍາວຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Alternate solutions</source>
-        <translation type="vanished">ທາງເລືອກອື່ນ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawArc2PointsRadius</name>
-    <message>
-        <source>Enter radius of arc</source>
-        <translation type="vanished">ປ້ອນລັດສະໝີຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Create outer arc</source>
-        <translation type="vanished">ສ້າງເສັ້ນໂຄ້ງດ້ານນອກ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawBoundingBox</name>
-    <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">ເລືອກອົງປະກອບສໍາລັບກອບຂອບເຂດ (ກົດ Enter ເພື່ອສໍາເລັດ)</translation>
-    </message>
-    <message>
-        <source>Select and draw</source>
-        <translation type="vanished">ເລືອກ ແລະ ແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກເສັ້ນຂອບ</translation>
-    </message>
-    <message>
-        <source>Note: Bounding box was created for world coordinate system.</source>
-        <translation type="vanished">ໝາຍເຫດ: ກອບຂອບເຂດຖືກສ້າງຂຶ້ນສໍາລັບລະບົບພິກັດໂລກ.</translation>
     </message>
 </context>
 <context>
@@ -560,105 +167,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCircleByArc</name>
-    <message>
-        <source>Select arc or ellipse arc</source>
-        <translation type="vanished">ເລືອກເສັ້ນໂຄ້ງ ຫຼື ເສັ້ນໂຄ້ງວົງຮີ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">ເລືອກວົງມົນ, ເສັ້ນໂຄ້ງ ຫຼື ວົງຮີ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawDimBaseline</name>
-    <message>
-        <source>Select base linear/aligned dimension</source>
-        <translation type="vanished">ເລືອກມິຕິເສັ້ນຊື່/ຂະໜານທີ່ເປັນຖານ</translation>
-    </message>
-    <message>
-        <source>Select distant extension point</source>
-        <translation type="vanished">ເລືອກຈຸດຂະຫຍາຍທີ່ຫ່າງອອກໄປ</translation>
-    </message>
-    <message>
-        <source>Specify second extension line origin</source>
-        <translation type="vanished">ລະບຸຈຸດກໍາເນີດເສັ້ນຂະຫຍາຍທີສອງ</translation>
-    </message>
-    <message>
-        <source>Mirror offset direction</source>
-        <translation type="vanished">ປີ້ນທິດທາງໄລຍະຫ່າງ</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">ລະບຸຕໍາແໜ່ງເສັ້ນມິຕິ</translation>
-    </message>
-    <message>
-        <source>Snap to Adjacent Dim</source>
-        <translation type="vanished">ເກາະຈັບໃສ່ມິຕິຂ້າງຄຽງ</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">ປ້ອນຂໍ້ຄວາມມິຕິ:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawDual</name>
-    <message>
-        <source>Select Center</source>
-        <translation type="vanished">ເລືອກສູນກາງ</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">ບໍ່ໄດ້ລະບຸສູນກາງ.</translation>
-    </message>
-    <message>
-        <source>No entities selected. Dual creation cancelled.</source>
-        <translation type="vanished">ບໍ່ໄດ້ເລືອກອົງປະກອບ. ການສ້າງຄູ່ຖືກຍົກເລີກ.</translation>
-    </message>
-    <message>
-        <source>No supported entities could be dualized.</source>
-        <translation type="vanished">ບໍ່ມີອົງປະກອບທີ່ຮອງຮັບໃນການເຮັດເປັນຄູ່.</translation>
-    </message>
-    <message>
-        <source>Dual created around center (%1 entities)</source>
-        <translation type="vanished">ສ້າງຄູ່ຮອບສູນກາງແລ້ວ (%1 ອົງປະກອບ)</translation>
-    </message>
-    <message>
-        <source>Select to create dual (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອສ້າງຄູ່ (ກົດ Enter ເພື່ອສໍາເລັດ)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກເສັ້ນຂອບ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawEllipse1Point</name>
-    <message>
-        <source>Specify ellipse center</source>
-        <translation type="vanished">ລະບຸສູນກາງວົງຮີ</translation>
-    </message>
-    <message>
-        <source>Specify angle for major axis</source>
-        <translation type="vanished">ລະບຸມູມສໍາລັບແກນເອກ</translation>
-    </message>
-    <message>
-        <source>Set start angle of arc</source>
-        <translation type="vanished">ກຳນົດມູມເລີ່ມຕົ້ນຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Set end angle of arc</source>
-        <translation type="vanished">ກຳນົດມູມສິ້ນສຸດຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ນິພົດບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawHyperbolaFP</name>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
@@ -669,30 +177,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
         <source>Start and end points cannot be the same</source>
         <translation>ຈຸດເລີ່ມຕົ້ນ ແລະ ຈຸດສິ້ນສຸດບໍ່ສາມາດເປັນຈຸດດຽວກັນໄດ້</translation>
-    </message>
-    <message>
-        <source>Invalid foci or point</source>
-        <translation type="vanished">ຈຸດໂຟກັດ ຫຼື ຈຸດບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-    <message>
-        <source>Points not on hyperbola</source>
-        <translation type="vanished">ຈຸດບໍ່ໄດ້ຢູ່ເທິງໄຮເປີໂບລາ</translation>
-    </message>
-    <message>
-        <source>Specify first focus</source>
-        <translation type="vanished">ລະບຸໂຟກັດທໍາອິດ</translation>
-    </message>
-    <message>
-        <source>Specify second focus</source>
-        <translation type="vanished">ລະບຸໂຟກັດທີສອງ</translation>
-    </message>
-    <message>
-        <source>Specify start point on branch</source>
-        <translation type="vanished">ລະບຸຈຸດເລີ່ມຕົ້ນເທິງງ່າ</translation>
-    </message>
-    <message>
-        <source>Specify end point on branch</source>
-        <translation type="vanished">ລະບຸຈຸດສິ້ນສຸດເທິງງ່າ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
@@ -743,63 +227,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLineAngleRel</name>
-    <message>
-        <source>Select base line</source>
-        <translation type="vanished">ເລືອກເສັ້ນຖານ</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">ລະບຸຄວາມຍາວ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLineFromPointToLine</name>
-    <message>
-        <source>Select Initial Point</source>
-        <translation type="vanished">ເລືອກຈຸດເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
-        <source>Select Line</source>
-        <translation type="vanished">ເລືອກເສັ້ນ</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">ລະບຸຈຸດທໍາອິດ</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">ລະບຸຈຸດທີສອງ ຫຼື [number|x|y|angle|p|edges|distance]</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">ລະບຸຈຸດທີສອງ ຫຼື [number]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">ລະບຸທິດທາງເສັ້ນ [x|y|angle|p|distance]</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">ລະບຸມູມທິດທາງເສັ້ນ ຫຼື [x|y|p|number|edges|distance]</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">ລະບຸໂໝດຈຸດຂອບ [none|start|end|both|distance]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">ລະບຸໄລຍະຫ່າງຄົງທີ່ລະຫວ່າງຈຸດ ຫຼື [x|y|p|number|edges]</translation>
-    </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="513"/>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
@@ -829,85 +257,6 @@ or [%2]</source>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>ລະບຸໄລຍະຫ່າງ (ມູມ %1 ອົງສາ) ຫຼື [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">ລະບຸໄລຍະຫ່າງ (ມູມ %1 ອົງສາ) ຫຼື [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">ລະບຸຈໍານວນຈຸດ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">ລະບຸມູມທີສອງ</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">ລະບຸເສັ້ນສໍາຜັດທີສອງ</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">ລະບຸມູມທໍາອິດ</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">ລະບຸເສັ້ນສໍາຜັດທໍາອິດ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">ບໍ່ແມ່ນຕົວເລກທີ່ຖືກຕ້ອງ. ລອງ 1..9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">ຄ່າລັດສະໝີມູມມົນບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ນິພົດບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">ປ້ອນຕົວເລກ:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">ປ້ອນລັດສະໝີມູມມົນ:</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">ລະບຸສູນກາງ</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">ຈະຖືກສ້າງຂຶ້ນ:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">ສູນກາງ:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">ມູມເລີ່ມຕົ້ນ:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ລັດສະໝີ:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">ລັດສະໝີພາຍໃນ:</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">ຮູບຫຼາຍແຈ</translation>
     </message>
 </context>
 <context>
@@ -941,10 +290,6 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLineSnake</name>
     <message>
-        <source>Specify first point</source>
-        <translation type="vanished">ລະບຸຈຸດທໍາອິດ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="434"/>
         <source>Specify direction (x or y) or [%1]</source>
         <translation>ລະບຸທິດທາງ (x ຫຼື y) ຫຼື [%1]</translation>
@@ -976,21 +321,9 @@ or [%2]</source>
         <translation type="unfinished">ລະບຸມູມ ຫຼື [%1] {2]?}</translation>
     </message>
     <message>
-        <source>Point</source>
-        <translation type="vanished">ຈຸດ</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">ມຸມ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="453"/>
         <source>Y</source>
         <translation>Y</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">ທິດທາງ:</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="459"/>
@@ -998,44 +331,9 @@ or [%2]</source>
         <translation>ລະບຸໄລຍະຫ່າງ (%1 ອົງສາ) ຫຼື [%2]</translation>
     </message>
     <message>
-        <source>Specify angle or [%1]</source>
-        <translation type="vanished">ລະບຸມູມ ຫຼື [%1]</translation>
-    </message>
-    <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="486"/>
         <source>Specify point or [%1]</source>
         <translation>ລະບຸຈຸດ ຫຼື [%1]</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">ບໍ່ສາມາດເລີກທຳໄດ້: ຮອດຈຸດເລີ່ມຕົ້ນຂອງປະຫວັດແລ້ວ</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">ບໍ່ສາມາດເຮັດຄືນໄດ້: ຮອດຈຸດສິ້ນສຸດຂອງປະຫວັດແລ້ວ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ນິພົດບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">ເລືອກອົງປະກອບທໍາອິດ</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">ເລືອກອົງປະກອບທີສອງ</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">ຈຸດປາຍສະລັບ</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">ປ້ອນຄ່າໄລຍະຫ່າງ</translation>
     </message>
 </context>
 <context>
@@ -1087,10 +385,6 @@ or [%2]</source>
         <translation>ລະບຸໂຟກັດຂອງພາຣາໂບລາ</translation>
     </message>
     <message>
-        <source>Select line that is parallel to directrix of parabola or set vertex point</source>
-        <translation type="vanished">ເລືອກເສັ້ນທີ່ຂະໜານກັບໄດເຣັກທຣິກຊ໌ຂອງພາຣາໂບລາ ຫຼື ກຳນົດຈຸດຍອດ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="291"/>
         <source>Cancel</source>
         <translation type="unfinished">ຍົກເລີກ</translation>
@@ -1119,142 +413,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawPointsLattice</name>
-    <message>
-        <source>Second point is too close to the first one</source>
-        <translation type="vanished">ຈຸດທີສອງຢູ່ໃກ້ຈຸດທໍາອິດເກີນໄປ</translation>
-    </message>
-    <message>
-        <source>Third point is too close to the second one</source>
-        <translation type="vanished">ຈຸດທີສາມຢູ່ໃກ້ຈຸດທີສອງເກີນໄປ</translation>
-    </message>
-    <message>
-        <source>Invalid value provided</source>
-        <translation type="vanished">ຄ່າທີ່ລະບຸບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">ລະບຸຈຸດທໍາອິດ</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">ລະບຸຈຸດທີສອງ</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">ລະບຸຈຸດທີສາມ</translation>
-    </message>
-    <message>
-        <source>Specify fourth point</source>
-        <translation type="vanished">ລະບຸຈຸດທີສີ່</translation>
-    </message>
-    <message>
-        <source>Last point position is un-adjusted</source>
-        <translation type="vanished">ຕໍາແໜ່ງຈຸດສຸດທ້າຍບໍ່ໄດ້ຖືກປັບ</translation>
-    </message>
-    <message>
-        <source>Last point position is adjusted to first</source>
-        <translation type="vanished">ຕໍາແໜ່ງຈຸດສຸດທ້າຍຖືກປັບໃຫ້ເຂົ້າກັບຈຸດທໍາອິດ</translation>
-    </message>
-    <message>
-        <source>Enter number of points by X</source>
-        <translation type="vanished">ປ້ອນຈໍານວນຈຸດຕາມແກນ X</translation>
-    </message>
-    <message>
-        <source>Enter number of points by Y</source>
-        <translation type="vanished">ປ້ອນຈໍານວນຈຸດຕາມແກນ Y</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawRectangle1Point</name>
-    <message>
-        <source>Specify height</source>
-        <translation type="vanished">ລະບຸຄວາມສູງ</translation>
-    </message>
-    <message>
-        <source>Specify width</source>
-        <translation type="vanished">ລະບຸຄວາມກວ້າງ</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height))</source>
-        <translation type="vanished">ລະບຸຂະໜາດ (ຄວາມກວ້າງ, ຄວາມສູງ)</translation>
-    </message>
-    <message>
-        <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
-        <translation type="vanished">ລະບຸຈຸດອ້າງອີງ [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</translation>
-    </message>
-    <message>
-        <source>Specify point that defines base angle for rectangle</source>
-        <translation type="vanished">ລະບຸຈຸດທີ່ກຳນົດມູມຖານສໍາລັບຮູບສີ່ແຈສາກ</translation>
-    </message>
-    <message>
-        <source>Don&apos;t keep insertion point</source>
-        <translation type="vanished">ບໍ່ຕ້ອງເກັບຈຸດແຊກໄວ້</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawRectangle2Points</name>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">ລະບຸຈຸດທີສອງ</translation>
-    </message>
-    <message>
-        <source>Draw Square</source>
-        <translation type="vanished">ແຕ້ມຮູບຈະຕຸລັດ</translation>
-    </message>
-    <message>
-        <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation type="vanished">ລະບຸການເກາະຈັບຈຸດ 1 [corner|mid-vert|mid-hor|middle]</translation>
-    </message>
-    <message>
-        <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation type="vanished">ລະບຸການເກາະຈັບຈຸດ 2 [corner|mid-vert|mid-hor|middle]</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">ລະບຸຂະໜາດ (ຄວາມກວ້າງ, ຄວາມສູງ)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawRectangle3Points</name>
-    <message>
-        <source>Specify first point first</source>
-        <translation type="vanished">ລະບຸຈຸດທໍາອິດກ່ອນ</translation>
-    </message>
-    <message>
-        <source>Specify width or second point first</source>
-        <translation type="vanished">ລະບຸຄວາມກວ້າງ ຫຼື ຈຸດທີສອງກ່ອນ</translation>
-    </message>
-    <message>
-        <source>Specify width</source>
-        <translation type="vanished">ລະບຸຄວາມກວ້າງ</translation>
-    </message>
-    <message>
-        <source>Specify height</source>
-        <translation type="vanished">ລະບຸຄວາມສູງ</translation>
-    </message>
-    <message>
-        <source>Specify start point)</source>
-        <translation type="vanished">ລະບຸຈຸດເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">ລະບຸຈຸດທີສອງ</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">ລະບຸຈຸດທີສາມ</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">ລະບຸມູມ</translation>
-    </message>
-    <message>
-        <source>Specify inner angle</source>
-        <translation type="vanished">ລະບຸມູມພາຍໃນ</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawSliceDivide</name>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
@@ -1270,14 +428,6 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
         <source>Circle</source>
         <translation>ວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Select line</source>
-        <translation type="vanished">ເລືອກເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Select circle or arc</source>
-        <translation type="vanished">ເລືອກວົງມົນ ຫຼື ເສັ້ນໂຄ້ງ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="858"/>
@@ -1328,52 +478,6 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="380"/>
         <source>Cannot undo: Nothing could be redone.</source>
         <translation>ບໍ່ສາມາດເລີກທຳໄດ້: ບໍ່ມີຫຍັງໃຫ້ເຮັດຄືນ.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawStar</name>
-    <message>
-        <source>Invalid rays number, should be in range [3..99]</source>
-        <translation type="vanished">ຈໍານວນແສງບໍ່ຖືກຕ້ອງ, ຄວນຢູ່ໃນຊ່ວງ [3..99]</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">ຄ່າບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-    <message>
-        <source>Set center point</source>
-        <translation type="vanished">ກຳນົດຈຸດສູນກາງ</translation>
-    </message>
-    <message>
-        <source>Set outer point</source>
-        <translation type="vanished">ກຳນົດຈຸດດ້ານນອກ</translation>
-    </message>
-    <message>
-        <source>Set inner point</source>
-        <translation type="vanished">ກຳນົດຈຸດດ້ານໃນ</translation>
-    </message>
-    <message>
-        <source>Set rounding radiuses (outer, inner)</source>
-        <translation type="vanished">ກຳນົດລັດສະໝີມູມມົນ (ນອກ, ໃນ)</translation>
-    </message>
-    <message>
-        <source>Set rays number</source>
-        <translation type="vanished">ກຳນົດຈໍານວນແສງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionEditPasteTransform</name>
-    <message>
-        <source>Clipboard is empty</source>
-        <translation type="vanished">ຄລິບບອດວ່າງປົ່າ</translation>
-    </message>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="vanished">ກຳນົດຈຸດອ້າງອີງການວາງ</translation>
-    </message>
-    <message>
-        <source>Paste Multiple</source>
-        <translation type="vanished">ວາງຫຼາຍອັນ</translation>
     </message>
 </context>
 <context>
@@ -1652,25 +756,9 @@ or [%2]</source>
         <translation>3 ຈຸດ (&amp;3)</translation>
     </message>
     <message>
-        <source>&amp;2 Points, Length</source>
-        <translation type="vanished">2 ຈຸດ, ຄວາມຍາວ (&amp;2)</translation>
-    </message>
-    <message>
-        <source>&amp;2 Points, Height</source>
-        <translation type="vanished">2 ຈຸດ, ຄວາມສູງ (&amp;2)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="458"/>
         <source>Arc &amp;Tangential</source>
         <translation>ເສັ້ນໂຄ້ງສໍາຜັດ (&amp;T)</translation>
-    </message>
-    <message>
-        <source>&amp;Append spline point</source>
-        <translation type="vanished">ເພີ່ມຈຸດສະປຼາຍ (&amp;A)</translation>
-    </message>
-    <message>
-        <source>&amp;Insert spline points</source>
-        <translation type="vanished">ແຊກຈຸດສະປຼາຍ (&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="468"/>
@@ -1746,10 +834,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="598"/>
         <source>Create &amp;Equidistant Polylines</source>
         <translation>ສ້າງເສັ້ນຕໍ່ເນື່ອງໄລຍະຫ່າງເທົ່າກັນ (&amp;E)</translation>
-    </message>
-    <message>
-        <source>Polyline Arcs to Chords</source>
-        <translation type="vanished">ປ່ຽນເສັ້ນໂຄ້ງໃນເສັ້ນຕໍ່ເນື່ອງເປັນຄອດ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="614"/>
@@ -1832,26 +916,6 @@ or [%2]</source>
         <translation>ກັບຄືນທິດທາງ (&amp;v)</translation>
     </message>
     <message>
-        <source>Caught Entity</source>
-        <translation type="vanished">ອົງປະກອບທີ່ຈັບໄດ້</translation>
-    </message>
-    <message>
-        <source>Move to Bottom</source>
-        <translation type="vanished">ຍ້າຍໄປລຸ່ມສຸດ</translation>
-    </message>
-    <message>
-        <source>Lower After Entity</source>
-        <translation type="vanished">ຍ້າຍລົງຫຼັງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Raise Over Entity</source>
-        <translation type="vanished">ຍ້າຍຂຶ້ນໜ້າອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Move to Top</source>
-        <translation type="vanished">ຍ້າຍໄປເທິງສຸດ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1178"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>ການຕັ້ງຄ່າຮູບແຕ້ມປັດຈຸບັນ (&amp;D)</translation>
@@ -1860,42 +924,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1620"/>
         <source>Print Pre&amp;view</source>
         <translation>ຕົວຢ່າງກ່ອນພິມ (&amp;v)</translation>
-    </message>
-    <message>
-        <source>Custom Menu Creator</source>
-        <translation type="vanished">ຕົວສ້າງເມນູເອງ</translation>
-    </message>
-    <message>
-        <source>Custom Toolbar Creator</source>
-        <translation type="vanished">ຕົວສ້າງແຖບເຄື່ອງມືເອງ</translation>
-    </message>
-    <message>
-        <source>&amp;Save View</source>
-        <translation type="vanished">ບັນທຶກມູມມອງ (&amp;S)</translation>
-    </message>
-    <message>
-        <source>Restore Current View</source>
-        <translation type="vanished">ຄືນຄ່າມູມມອງປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>Restore View 1</source>
-        <translation type="vanished">ຄືນຄ່າມູມມອງ 1</translation>
-    </message>
-    <message>
-        <source>Restore View 2</source>
-        <translation type="vanished">ຄືນຄ່າມູມມອງ 2</translation>
-    </message>
-    <message>
-        <source>Restore View 3</source>
-        <translation type="vanished">ຄືນຄ່າມູມມອງ 3</translation>
-    </message>
-    <message>
-        <source>Restore View 4</source>
-        <translation type="vanished">ຄືນຄ່າມູມມອງ 4</translation>
-    </message>
-    <message>
-        <source>Restore View 5</source>
-        <translation type="vanished">ຄືນຄ່າມູມມອງ 5</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="746"/>
@@ -2038,26 +1066,6 @@ or [%2]</source>
         <translation>&amp;ເຮັດຄືນ</translation>
     </message>
     <message>
-        <source>Regenerate Dimensions</source>
-        <translation type="vanished">ສ້າງມິຕິໃໝ່ຄືນ</translation>
-    </message>
-    <message>
-        <source>&amp;Dimension Styles</source>
-        <translation type="vanished">&amp;ຮູບແບບມິຕິ</translation>
-    </message>
-    <message>
-        <source>Pick Point</source>
-        <translation type="vanished">ເລືອກຈຸດ</translation>
-    </message>
-    <message>
-        <source>Pick Distance</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງ</translation>
-    </message>
-    <message>
-        <source>Pick Angle</source>
-        <translation type="vanished">ເລືອກມຸມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1450"/>
         <source>Cu&amp;t</source>
         <translation>ຕັ&amp;ດ</translation>
@@ -2073,42 +1081,6 @@ or [%2]</source>
         <translation>&amp;ວາງ</translation>
     </message>
     <message>
-        <source>Polygo&amp;n (Tan,Tan)</source>
-        <translation type="vanished">ຮູບຫຼາຍແ&amp;ຈ (ສຳຜັດ, ສຳຜັດ)</translation>
-    </message>
-    <message>
-        <source>Middle Points</source>
-        <translation type="vanished">ຈຸດກຶ່ງກາງ</translation>
-    </message>
-    <message>
-        <source>Lattice of Points</source>
-        <translation type="vanished">ຕາໜ່າງຈຸດ</translation>
-    </message>
-    <message>
-        <source>Select Points</source>
-        <translation type="vanished">ເລືອກຈຸດ</translation>
-    </message>
-    <message>
-        <source>Paste to Points</source>
-        <translation type="vanished">ວາງໃສ່ຈຸດ</translation>
-    </message>
-    <message>
-        <source>&amp;Center, Point, Chord</source>
-        <translation type="vanished">&amp;ສູນກາງ, ຈຸດ, ເສັ້ນເນັ່ງ</translation>
-    </message>
-    <message>
-        <source>&amp;Center, Point, Arc Angle</source>
-        <translation type="vanished">&amp;ສູນກາງ, ຈຸດ, ມຸມເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>&amp;2 Points, Angle</source>
-        <translation type="vanished">&amp;2 ຈຸດ, ມຸມ</translation>
-    </message>
-    <message>
-        <source>&amp;2 Points, Radius</source>
-        <translation type="vanished">&amp;2 ຈຸດ, ລັດສະໝີ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="519"/>
         <source>Para&amp;bola 4 points</source>
         <translation>ປາຣາ&amp;ໂບນ 4 ຈຸດ</translation>
@@ -2117,50 +1089,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="526"/>
         <source>Parabola &amp;Focus Directrix</source>
         <translation>ປາຣາໂບນ &amp;ຈຸດສຸມ ແລະ ເສັ້ນຊື່ຄົງທີ່</translation>
-    </message>
-    <message>
-        <source>&amp;Remove spline points</source>
-        <translation type="vanished">&amp;ລຶບຈຸດເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>&amp;Explode spline to lines</source>
-        <translation type="vanished">&amp;ແຍກເສັ້ນໂຄ້ງສະປຼາຍເປັນເສັ້ນຊື່</translation>
-    </message>
-    <message>
-        <source>&amp;Spline from polyline</source>
-        <translation type="vanished">&amp;ເສັ້ນໂຄ້ງສະປຼາຍຈາກເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>&amp;Remove between two points</source>
-        <translation type="vanished">&amp;ລຶບລະຫວ່າງສອງຈຸດ</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse (1 Point)</source>
-        <translation type="vanished">&amp;ຮູບວົງລີ (1 ຈຸດ)</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse Arc (1 Point)</source>
-        <translation type="vanished">&amp;ເສັ້ນໂຄ້ງວົງລີ (1 ຈຸດ)</translation>
-    </message>
-    <message>
-        <source>Polyline from Existing &amp;Segments</source>
-        <translation type="vanished">ເສັ້ນຕໍ່ເນື່ອງຈາກ&amp;ສ່ວນເສັ້ນທີ່ມີຢູ່</translation>
-    </message>
-    <message>
-        <source>Polyline Change Segment Type</source>
-        <translation type="vanished">ປ່ຽນປະເພດສ່ວນເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>Bounding &amp;Box</source>
-        <translation type="vanished">ຂອບເຂດ&amp;ຮູບຮ່າງ</translation>
-    </message>
-    <message>
-        <source>&amp;Baseline</source>
-        <translation type="vanished">&amp;ເສັ້ນພື້ນຖານ</translation>
-    </message>
-    <message>
-        <source>&amp;Continue</source>
-        <translation type="vanished">&amp;ຕໍ່ເນື່ອງ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
@@ -2181,18 +1109,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="913"/>
         <source>Duplicate</source>
         <translation>ສຳເນົາຊ້ຳ</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">ຈັດວາງ</translation>
-    </message>
-    <message>
-        <source>Align One</source>
-        <translation type="vanished">ຈັດລຽງອັນດຽວ</translation>
-    </message>
-    <message>
-        <source>Align Reference Points</source>
-        <translation type="vanished">ຈັດລຽງຈຸດອ້າງອີງ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1642"/>
@@ -2218,486 +1134,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="898"/>
         <source>Copy Pen</source>
         <translation>ສຳເນົາປາກກາ</translation>
-    </message>
-    <message>
-        <source>Show Entity Description</source>
-        <translation type="vanished">ສະແດງລາຍລະອຽດອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Enable Info Cursor</source>
-        <translation type="vanished">ເປີດໃຊ້ຕົວຊີ້ຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>Absolute Pos</source>
-        <translation type="vanished">ຕຳແໜ່ງແທ້ຈິງ</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">ເກາະຈັບ</translation>
-    </message>
-    <message>
-        <source>Block</source>
-        <translation type="vanished">ບລັອກ</translation>
-    </message>
-    <message>
-        <source>Block related operations</source>
-        <translation type="vanished">ການຈັດການທີ່ກ່ຽວກັບບລັອກ</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">ວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Circle drawing commands</source>
-        <translation type="vanished">ຄຳສັ່ງແຕ້ມວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Arc drawing commands</source>
-        <translation type="vanished">ຄຳສັ່ງແຕ້ມເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Spline drawing commands</source>
-        <translation type="vanished">ຄຳສັ່ງແຕ້ມເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">ແກ້ໄຂ</translation>
-    </message>
-    <message>
-        <source>Editing operations</source>
-        <translation type="vanished">ການຈັດການແກ້ໄຂ</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">ວົງລີ</translation>
-    </message>
-    <message>
-        <source>Ellipse drawing commands</source>
-        <translation type="vanished">ຄຳສັ່ງແຕ້ມວົງລີ</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">ໄຟລ໌</translation>
-    </message>
-    <message>
-        <source>File Operations</source>
-        <translation type="vanished">ການຈັດການໄຟລ໌</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">ມິຕິ</translation>
-    </message>
-    <message>
-        <source>Dimensions creation commands</source>
-        <translation type="vanished">ຄຳສັ່ງສ້າງມິຕິ</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">ຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>Informational commands</source>
-        <translation type="vanished">ຄຳສັ່ງຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">ເລເຢີ</translation>
-    </message>
-    <message>
-        <source>Layers operations</source>
-        <translation type="vanished">ການຈັດການເລເຢີ</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Line drawing commands</source>
-        <translation type="vanished">ຄຳສັ່ງແຕ້ມເສັ້ນຊື່</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">ຈຸດ</translation>
-    </message>
-    <message>
-        <source>Point drawing commands</source>
-        <translation type="vanished">ຄຳສັ່ງແຕ້ມຈຸດ</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">ຮູບຫຼາຍແຈ</translation>
-    </message>
-    <message>
-        <source>Polygon drawing commands</source>
-        <translation type="vanished">ຄຳສັ່ງແຕ້ມຮູບຫຼາຍແຈ</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">ປັບປ່ຽນ</translation>
-    </message>
-    <message>
-        <source>Modification operations</source>
-        <translation type="vanished">ການຈັດການປັບປ່ຽນ</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">ຕົວເລືອກ</translation>
-    </message>
-    <message>
-        <source>Options management</source>
-        <translation type="vanished">ການຈັດການຕົວເລືອກ</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">ອື່ນໆ</translation>
-    </message>
-    <message>
-        <source>Other operations</source>
-        <translation type="vanished">ການຈັດການອື່ນໆ</translation>
-    </message>
-    <message>
-        <source>Relative Zero</source>
-        <translation type="vanished">ສູນສຳພັນ</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">ເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>Polyline drawing commands</source>
-        <translation type="vanished">ຄຳສັ່ງແຕ້ມເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>PenTB</source>
-        <translation type="vanished">ແຖບເຄື່ອງມືປາກກາ</translation>
-    </message>
-    <message>
-        <source>Pen related operations</source>
-        <translation type="vanished">ການຈັດການກ່ຽວກັບປາກກາ</translation>
-    </message>
-    <message>
-        <source>Restriction</source>
-        <translation type="vanished">ການຈຳກັດ</translation>
-    </message>
-    <message>
-        <source>Snap restrictions</source>
-        <translation type="vanished">ການຈຳກັດການເກາະຈັບ</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">ເລືອກ</translation>
-    </message>
-    <message>
-        <source>Entity selection operations</source>
-        <translation type="vanished">ການຈັດການເລືອກອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Snapping operations</source>
-        <translation type="vanished">ການຈັດການເກາະຈັບ</translation>
-    </message>
-    <message>
-        <source>Snap Extras</source>
-        <translation type="vanished">ສ່ວນເສີມການເກາະຈັບ</translation>
-    </message>
-    <message>
-        <source>Additional Snaps</source>
-        <translation type="vanished">ການເກາະຈັບເພີ່ມເຕີມ</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">ມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>View related operations</source>
-        <translation type="vanished">ການຈັດການກ່ຽວກັບມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>Named Views</source>
-        <translation type="vanished">ມຸມມອງທີ່ຕັ້ງຊື່ໄວ້</translation>
-    </message>
-    <message>
-        <source>Persistent Views operations</source>
-        <translation type="vanished">ການຈັດການມຸມມອງຄົງທີ່</translation>
-    </message>
-    <message>
-        <source>Workspaces</source>
-        <translation type="vanished">ພື້ນທີ່ເຮັດວຽກ</translation>
-    </message>
-    <message>
-        <source>Workspaces operations</source>
-        <translation type="vanished">ການຈັດການພື້ນທີ່ເຮັດວຽກ</translation>
-    </message>
-    <message>
-        <source>UCS</source>
-        <translation type="vanished">UCS</translation>
-    </message>
-    <message>
-        <source>UCS operations</source>
-        <translation type="vanished">ການຈັດການ UCS</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">ວິດເຈັດ</translation>
-    </message>
-    <message>
-        <source>Widgets management</source>
-        <translation type="vanished">ການຈັດການວິດເຈັດ</translation>
-    </message>
-    <message>
-        <source>InfoCursor</source>
-        <translation type="vanished">ຕົວຊີ້ຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>Informational Cursor</source>
-        <translation type="vanished">ຕົວຊີ້ໃຫ້ຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>Entity Layer</source>
-        <translation type="vanished">ເລເຢີຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Entity&apos;s Layer</source>
-        <translation type="vanished">ເລເຢີຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Interactive</source>
-        <translation type="vanished">ໂຕ້ຕອບ</translation>
-    </message>
-    <message>
-        <source>Interactive Pick</source>
-        <translation type="vanished">ເລືອກແບບໂຕ້ຕອບ</translation>
-    </message>
-    <message>
-        <source>Activate Entity&apos;s Layer</source>
-        <translation type="vanished">ເປີດໃຊ້ເລເຢີຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Hide Entity&apos;s Layer</source>
-        <translation type="vanished">ເຊື່ອງເລເຢີຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Hide Other Layers than Entity&apos;s</source>
-        <translation type="vanished">ເຊື່ອງເລເຢີອື່ນທີ່ບໍ່ແມ່ນຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Lock Entity&apos;s Layer</source>
-        <translation type="vanished">ລັອກເລເຢີຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation type="vanished">ສະຫຼັບເລເຢີໂຄງສ້າງຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation type="vanished">ສະຫຼັບການພິມເລເຢີຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Centerline</source>
-        <translation type="vanished">ເສັ້ນໃຈກາງ</translation>
-    </message>
-    <message>
-        <source>Center Mark</source>
-        <translation type="vanished">ເຄື່ອງໝາຍຈຸດສູນກາງ</translation>
-    </message>
-    <message>
-        <source>Tangential 2 Entities, Radius</source>
-        <translation type="vanished">ສຳຜັດ 2 ອົງປະກອບ, ລັດສະໝີ</translation>
-    </message>
-    <message>
-        <source>Tangential 2 Entities, 1 Point</source>
-        <translation type="vanished">ສຳຜັດ 2 ອົງປະກອບ, 1 ຈຸດ</translation>
-    </message>
-    <message>
-        <source>Tangential &amp;3 Entities</source>
-        <translation type="vanished">ສຳຜັດ &amp;3 ອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>&amp;Dual Curve</source>
-        <translation type="vanished">&amp;ເສັ້ນໂຄ້ງຄູ່</translation>
-    </message>
-    <message>
-        <source>&amp;Hyperbola &amp;Foci Point</source>
-        <translation type="vanished">&amp;ໄຮເປີໂບລາ ແລະ &amp;ຈຸດສຸມ</translation>
-    </message>
-    <message>
-        <source>&amp;Ordinate</source>
-        <translation type="vanished">&amp;ພິກັດແກນຕັ້ງ</translation>
-    </message>
-    <message>
-        <source>Select Ordinates by base</source>
-        <translation type="vanished">ເລືອກພິກັດແກນຕັ້ງຕາມພື້ນຖານ</translation>
-    </message>
-    <message>
-        <source>Ordinates Re-base</source>
-        <translation type="vanished">ຕັ້ງຖານພິກັດແກນຕັ້ງໃໝ່</translation>
-    </message>
-    <message>
-        <source>Feature Control Frame</source>
-        <translation type="vanished">ຂອບຄວບຄຸມຄຸນລັກສະນະ</translation>
-    </message>
-    <message>
-        <source>Copy Style</source>
-        <translation type="vanished">ສຳເນົາຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Modify Style</source>
-        <translation type="vanished">ປັບປ່ຽນຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Relative</source>
-        <translation type="vanished">ສຳພັນ</translation>
-    </message>
-    <message>
-        <source>Prompt</source>
-        <translation type="vanished">ແຈ້ງເຕືອນ</translation>
-    </message>
-    <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">ເກາະຈັບເທິງຕາໜ່າງ</translation>
-    </message>
-    <message>
-        <source>Snap Middle Manual</source>
-        <translation type="vanished">ເກາະຈັບຈຸດກາງດ້ວຍຕົນເອງ</translation>
-    </message>
-    <message>
-        <source>Snap on Endpoints</source>
-        <translation type="vanished">ເກາະຈັບທີ່ຈຸດປາຍ</translation>
-    </message>
-    <message>
-        <source>Snap on Entity</source>
-        <translation type="vanished">ເກາະຈັບທີ່ອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Snap Center</source>
-        <translation type="vanished">ເກາະຈັບຈຸດສູນກາງ</translation>
-    </message>
-    <message>
-        <source>Snap Middle</source>
-        <translation type="vanished">ເກາະຈັບຈຸດກາງ</translation>
-    </message>
-    <message>
-        <source>Snap Distance</source>
-        <translation type="vanished">ເກາະຈັບຕາມໄລຍະຫ່າງ</translation>
-    </message>
-    <message>
-        <source>Snap Intersection</source>
-        <translation type="vanished">ເກາະຈັບຈຸດຕັດ</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontal</source>
-        <translation type="vanished">ຈຳກັດແນວນອນ</translation>
-    </message>
-    <message>
-        <source>Restrict Vertical</source>
-        <translation type="vanished">ຈຳກັດແນວຕັ້ງ</translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonal</source>
-        <translation type="vanished">ຈຳກັດແນວຕັ້ງສາກ</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="vanished">ບໍ່ຈຳກັດ</translation>
-    </message>
-    <message>
-        <source>To WCS</source>
-        <translation type="vanished">ໄປຍັງ WCS</translation>
-    </message>
-    <message>
-        <source>Create UCS</source>
-        <translation type="vanished">ສ້າງ UCS</translation>
-    </message>
-    <message>
-        <source>Set UCS By Ordinate Dimension</source>
-        <translation type="vanished">ຕັ້ງ UCS ຕາມມິຕິພິກັດແກນຕັ້ງ</translation>
-    </message>
-    <message>
-        <source>Save Workspace</source>
-        <translation type="vanished">ບັນທຶກພື້ນທີ່ເຮັດວຽກ</translation>
-    </message>
-    <message>
-        <source>Remove Workspace</source>
-        <translation type="vanished">ລຶບພື້ນທີ່ເຮັດວຽກ</translation>
-    </message>
-    <message>
-        <source>Restore Workspace</source>
-        <translation type="vanished">ຄືນຄ່າພື້ນທີ່ເຮັດວຽກ</translation>
-    </message>
-    <message>
-        <source>Set relative zero position</source>
-        <translation type="vanished">ຕັ້ງຕຳແໜ່ງສູນສຳພັນ</translation>
-    </message>
-    <message>
-        <source>Lock relative zero position</source>
-        <translation type="vanished">ລັອກຕຳແໜ່ງສູນສຳພັນ</translation>
-    </message>
-    <message>
-        <source>Exclusive Snap Mode</source>
-        <translation type="vanished">ໂໝດເກາະຈັບພິເສດ</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="vanished">ເກາະຈັບອິດສະຫຼະ</translation>
-    </message>
-    <message>
-        <source>&amp;Point Coordinates</source>
-        <translation type="vanished">&amp;ພິກັດຈຸດ</translation>
-    </message>
-    <message>
-        <source>Distance &amp;Entity to Point</source>
-        <translation type="vanished">ໄລຍະຫ່າງຈາກ&amp;ອົງປະກອບຫາຈຸດ</translation>
-    </message>
-    <message>
-        <source>Distance &amp;Point to Entity</source>
-        <translation type="vanished">ໄລຍະຫ່າງຈາກ&amp;ຈຸດຫາອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Total &amp;length of selected entities</source>
-        <translation type="vanished">&amp;ຄວາມຍາວທັງໝົດຂອງອົງປະກອບທີ່ເລືອກ</translation>
-    </message>
-    <message>
-        <source>Entity Pro&amp;perties</source>
-        <translation type="vanished">ຄຸນ&amp;ລັກສະນະອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Collect &amp;Coordinates</source>
-        <translation type="vanished">ເກັບກຳ&amp;ພິກັດ</translation>
-    </message>
-    <message>
-        <source>Ang&amp;le between 3 points</source>
-        <translation type="vanished">ມຸ&amp;ມລະຫວ່າງ 3 ຈຸດ</translation>
-    </message>
-    <message>
-        <source>&amp;Draft Lines</source>
-        <translation type="vanished">ເສັ້ນ&amp;ຮ່າງ</translation>
-    </message>
-    <message>
-        <source>&amp;Antialiasing</source>
-        <translation type="vanished">&amp;ການລົດຮອຍຢັກ</translation>
-    </message>
-    <message>
-        <source>&amp;Orthogonal Grid</source>
-        <translation type="vanished">ຕາໜ່າງ&amp;ແນວຕັ້ງສາກ</translation>
-    </message>
-    <message>
-        <source>&amp;Isometric Left Grid</source>
-        <translation type="vanished">ຕາໜ່າງ&amp;ໄອໂຊເມທຣິກເບື້ອງຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>&amp;Isometric Top Grid</source>
-        <translation type="vanished">ຕາໜ່າງ&amp;ໄອໂຊເມທຣິກເບື້ອງເທິງ</translation>
-    </message>
-    <message>
-        <source>&amp;Isometric Right Grid</source>
-        <translation type="vanished">ຕາໜ່າງ&amp;ໄອໂຊເມທຣິກເບື້ອງຂວາ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1037"/>
@@ -2803,10 +1239,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1228"/>
         <source>Invert Selection</source>
         <translation>ປີ້ນການເລືອກ</translation>
-    </message>
-    <message>
-        <source>Focus on &amp;Options Widget</source>
-        <translation type="vanished">ໂຟກັສໄປທີ່ວິດເຈັດ&amp;ຕົວເລືອກ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1485"/>
@@ -2981,26 +1413,6 @@ or [%2]</source>
         <translation>ໄລຍະຫ່າງ&amp;ຂະໜານ</translation>
     </message>
     <message>
-        <source>Cut Quic&amp;k</source>
-        <translation type="vanished">ຕັດແ&amp;ບບດ່ວນ</translation>
-    </message>
-    <message>
-        <source>Copy &amp;Quick</source>
-        <translation type="vanished">ສຳເນົາແບ&amp;ບດ່ວນ</translation>
-    </message>
-    <message>
-        <source>Paste &amp;Transform</source>
-        <translation type="vanished">ວາງ ແລະ ແ&amp;ປງຮູບຮ່າງ</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Selected</source>
-        <translation type="vanished">&amp;ລຶບສິ່ງທີ່ເລືອກ</translation>
-    </message>
-    <message>
-        <source>&amp;Selection Pointer</source>
-        <translation type="vanished">&amp;ຕົວຊີ້ການເລືອກ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1312"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
@@ -3067,10 +1479,6 @@ or [%2]</source>
         <translation>&amp;ເຊື່ອງທຸກບລັອກ</translation>
     </message>
     <message>
-        <source>Keyboard Shortcuts</source>
-        <translation type="vanished">ປຸ່ມລັດຄີບອດ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1237"/>
         <source>Export as CA&amp;M/plain SVG...</source>
         <translation>ສົ່ງອອກເປັນ CA&amp;M/SVG ທຳມະດາ...</translation>
@@ -3105,704 +1513,11 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionInfo3PointsAngle</name>
-    <message>
-        <source>Select first edge point of angle</source>
-        <translation type="vanished">ເລືອກຈຸດຂອບທຳອິດຂອງມຸມ</translation>
-    </message>
-    <message>
-        <source>Select second (intersection) point of angle</source>
-        <translation type="vanished">ເລືອກຈຸດທີສອງ (ຈຸດຕັດ) ຂອງມຸມ</translation>
-    </message>
-    <message>
-        <source>Select second edge point of angle</source>
-        <translation type="vanished">ເລືອກຈຸດຂອບທີສອງຂອງມຸມ</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">ຈາກ:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">ເຖິງ:</translation>
-    </message>
-    <message>
-        <source>Angle: %1
-Complementary: %2
-Supplementary: %3
-Alternative: %4
-Start Edge Point: (%5 , %6)
-Intersection Point :(%7, %8)
-End Edge Point: (%9 , %10)</source>
-        <translation type="vanished">ມຸມ: %1
-ມຸມພາກສ່ວນເຕັມ: %2
-ມຸມຄົບສ່ວນ: %3
-ມຸມທາງເລືອກ: %4
-ຈຸດເລີ່ມຂອບ: (%5 , %6)
-ຈຸດຕັດ: (%7, %8)
-ຈຸດສິ້ນສຸດຂອບ: (%9 , %10)</translation>
-    </message>
-    <message>
-        <source>Restart with first edge point selection</source>
-        <translation type="vanished">ເລີ່ມໃໝ່ດ້ວຍການເລືອກຈຸດຂອບທຳອິດ</translation>
-    </message>
-    <message>
-        <source>Angle Info</source>
-        <translation type="vanished">ຂໍ້ມູນມຸມ</translation>
-    </message>
-    <message>
-        <source>Complementary:</source>
-        <translation type="vanished">ມຸມພາກສ່ວນເຕັມ:</translation>
-    </message>
-    <message>
-        <source>Supplementary:</source>
-        <translation type="vanished">ມຸມຄົບສ່ວນ:</translation>
-    </message>
-    <message>
-        <source>Alternative: </source>
-        <translation type="vanished">ທາງເລືອກ: </translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">ຈຸດຕັດ:</translation>
-    </message>
-    <message>
-        <source>Distance1:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ 1:</translation>
-    </message>
-    <message>
-        <source>Distance2:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ 2:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">ມຸມ 1:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">ມຸມ 2:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionInfoPickCoordinates</name>
-    <message>
-        <source>Select point</source>
-        <translation type="vanished">ເລືອກຈຸດ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionInfoPoint</name>
-    <message>
-        <source>Absolute: (%1)</source>
-        <translation type="vanished">ແທ້ຈິງ: (%1)</translation>
-    </message>
-    <message>
-        <source>Relative: (%1)</source>
-        <translation type="vanished">ສຳພັນ: (%1)</translation>
-    </message>
-    <message>
-        <source>Polar: (%1)</source>
-        <translation type="vanished">ພິກັດມຸມ: (%1)</translation>
-    </message>
-    <message>
-        <source>Polar Relative: (%1)</source>
-        <translation type="vanished">ພິກັດມຸມສຳພັນ: (%1)</translation>
-    </message>
-    <message>
-        <source>Absolute WCS: (%1)</source>
-        <translation type="vanished">WCS ແທ້ຈິງ: (%1)</translation>
-    </message>
-    <message>
-        <source>Point Coordinates</source>
-        <translation type="vanished">ພິກັດຈຸດ</translation>
-    </message>
-    <message>
-        <source>Absolute:</source>
-        <translation type="vanished">ແທ້ຈິງ:</translation>
-    </message>
-    <message>
-        <source>Polar:</source>
-        <translation type="vanished">ພິກັດມຸມ:</translation>
-    </message>
-    <message>
-        <source>Relative:</source>
-        <translation type="vanished">ສຳພັນ:</translation>
-    </message>
-    <message>
-        <source>Relative Polar:</source>
-        <translation type="vanished">ພິກັດມຸມສຳພັນ:</translation>
-    </message>
-    <message>
-        <source>Relative Zero:</source>
-        <translation type="vanished">ສູນສຳພັນ:</translation>
-    </message>
-    <message>
-        <source>Select position for coordinates</source>
-        <translation type="vanished">ເລືອກຕຳແໜ່ງສຳລັບພິກັດ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionInfoProperties</name>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">ເລືອກອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">ເລືອກອົງປະກອບຍ່ອຍ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionInteractivePickAngle</name>
-    <message>
-        <source>Lines are parallel</source>
-        <translation type="vanished">ເສັ້ນຂະໜານກັນ</translation>
-    </message>
-    <message>
-        <source>Angle Info</source>
-        <translation type="vanished">ຂໍ້ມູນມຸມ</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Complementary:</source>
-        <translation type="vanished">ມຸມພາກສ່ວນເຕັມ:</translation>
-    </message>
-    <message>
-        <source>Supplementary:</source>
-        <translation type="vanished">ມຸມຄົບສ່ວນ:</translation>
-    </message>
-    <message>
-        <source>Alternative: </source>
-        <translation type="vanished">ທາງເລືອກ: </translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">ຈຸດຕັດ:</translation>
-    </message>
-    <message>
-        <source>Line 1 Angle:</source>
-        <translation type="vanished">ມຸມຂອງເສັ້ນ 1:</translation>
-    </message>
-    <message>
-        <source>Line 2 Angle:</source>
-        <translation type="vanished">ມຸມຂອງເສັ້ນ 2:</translation>
-    </message>
-    <message>
-        <source>Select first edge point of angle</source>
-        <translation type="vanished">ເລືອກຈຸດຂອບທຳອິດຂອງມຸມ</translation>
-    </message>
-    <message>
-        <source>Select first line/Pick Supplementary</source>
-        <translation type="vanished">ເລືອກເສັ້ນທຳອິດ/ເລືອກມຸມຄົບສ່ວນ</translation>
-    </message>
-    <message>
-        <source>Pick from line</source>
-        <translation type="vanished">ເລືອກຈາກເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Select second (intersection) point of angle</source>
-        <translation type="vanished">ເລືອກຈຸດທີສອງ (ຈຸດຕັດ) ຂອງມຸມ</translation>
-    </message>
-    <message>
-        <source>Pick angle</source>
-        <translation type="vanished">ເລືອກມຸມ</translation>
-    </message>
-    <message>
-        <source>Select second edge point of angle</source>
-        <translation type="vanished">ເລືອກຈຸດຂອບທີສອງຂອງມຸມ</translation>
-    </message>
-    <message>
-        <source>Pick Supplementary</source>
-        <translation type="vanished">ເລືອກມຸມຄົບສ່ວນ</translation>
-    </message>
-    <message>
-        <source>Specify second line</source>
-        <translation type="vanished">ລະບຸເສັ້ນທີສອງ</translation>
-    </message>
-    <message>
-        <source>Pick Complementary</source>
-        <translation type="vanished">ເລືອກມຸມພາກສ່ວນເຕັມ</translation>
-    </message>
-    <message>
-        <source>Pick Angle</source>
-        <translation type="vanished">ເລືອກມຸມ</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">ຈາກ:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">ເຖິງ:</translation>
-    </message>
-    <message>
-        <source>Distance1:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ 1:</translation>
-    </message>
-    <message>
-        <source>Distance2:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ 2:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">ມຸມ 1:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">ມຸມ 2:</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionInteractivePickDistance</name>
-    <message>
-        <source>Pick Distance</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງ</translation>
-    </message>
-    <message>
-        <source>Absolute:</source>
-        <translation type="vanished">ແທ້ຈິງ:</translation>
-    </message>
-    <message>
-        <source>Polar:</source>
-        <translation type="vanished">ພິກັດມຸມ:</translation>
-    </message>
-    <message>
-        <source>Relative:</source>
-        <translation type="vanished">ສຳພັນ:</translation>
-    </message>
-    <message>
-        <source>Relative Polar:</source>
-        <translation type="vanished">ພິກັດມຸມສຳພັນ:</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">ຈາກ:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">ເຖິງ:</translation>
-    </message>
-    <message>
-        <source>Start and end points are too close to each other to calculate the distance.</source>
-        <translation type="vanished">ຈຸດເລີ່ມຕົ້ນ ແລະ ຈຸດສິ້ນສຸດຢູ່ໃກ້ກັນເກີນໄປທີ່ຈະຄຳນວນໄລຍະຫ່າງ.</translation>
-    </message>
-    <message>
-        <source>Specify first point of distance</source>
-        <translation type="vanished">ລະບຸຈຸດທຳອິດຂອງໄລຍະຫ່າງ</translation>
-    </message>
-    <message>
-        <source>Entity geometry length</source>
-        <translation type="vanished">ຄວາມຍາວທາງເລຂາຄະນິດຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Segment length/Diameter</source>
-        <translation type="vanished">ຄວາມຍາວສ່ວນເສັ້ນ/ເສັ້ນຜ່ານສູນກາງ</translation>
-    </message>
-    <message>
-        <source>Specify second point of distance</source>
-        <translation type="vanished">ລະບຸຈຸດທີສອງຂອງໄລຍະຫ່າງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionInteractivePickPosition</name>
-    <message>
-        <source>Pick Coordinates</source>
-        <translation type="vanished">ເລືອກພິກັດ</translation>
-    </message>
-    <message>
-        <source>Absolute:</source>
-        <translation type="vanished">ແທ້ຈິງ:</translation>
-    </message>
-    <message>
-        <source>Polar:</source>
-        <translation type="vanished">ພິກັດມຸມ:</translation>
-    </message>
-    <message>
-        <source>Relative:</source>
-        <translation type="vanished">ສຳພັນ:</translation>
-    </message>
-    <message>
-        <source>Relative Polar:</source>
-        <translation type="vanished">ພິກັດມຸມສຳພັນ:</translation>
-    </message>
-    <message>
-        <source>Relative Zero:</source>
-        <translation type="vanished">ສູນສຳພັນ:</translation>
-    </message>
-    <message>
-        <source>Pick coordinates from the drawing</source>
-        <translation type="vanished">ເລືອກພິກັດຈາກແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick relative zero coordinates</source>
-        <translation type="vanished">ເລືອກພິກັດສູນສຳພັນ</translation>
-    </message>
-    <message>
-        <source>Pick relative coordinates</source>
-        <translation type="vanished">ເລືອກພິກັດສຳພັນ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionLayersCmd</name>
-    <message>
-        <source>Enter layer name to %1</source>
-        <translation type="vanished">ປ້ອນຊື່ເລເຢີເພື່ອ %1</translation>
-    </message>
-    <message>
-        <source>activate</source>
-        <translation type="vanished">activate</translation>
-    </message>
-    <message>
-        <source>create</source>
-        <translation type="vanished">create</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionLayersExport</name>
-    <message>
-        <source>selected</source>
-        <comment>Layers to export</comment>
-        <translation type="vanished">selected</translation>
-    </message>
-    <message>
-        <source>visible</source>
-        <comment>Layers to export</comment>
-        <translation type="vanished">visible</translation>
-    </message>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="281"/>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifyAlign</name>
-    <message>
-        <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation type="vanished">ການຈັດລຽງໃນຕອນນີ້ຮອງຮັບສະເພາະລະບົບພິກັດໂລກ (WCS), ແລະ ອາດຈະບໍ່ເຮັດວຽກຖ້າລະບົບພິກັດຜູ້ໃຊ້ (UCS) ກຳລັງເປີດຢູ່.</translation>
-    </message>
-    <message>
-        <source>Align to </source>
-        <translation type="vanished">ຈັດລຽງໃສ່ </translation>
-    </message>
-    <message>
-        <source>Entity</source>
-        <translation type="vanished">ອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Position</source>
-        <translation type="vanished">ຕຳແໜ່ງ</translation>
-    </message>
-    <message>
-        <source>Drawing</source>
-        <translation type="vanished">ແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Reference: </source>
-        <translation type="vanished">ອ້າງອີງ: </translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ໄລຍະຫ່າງຂະໜານ:</translation>
-    </message>
-    <message>
-        <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
-        <translation type="vanished">ພິກັດຈະຖືກຍອມຮັບສະເພາະການຈັດລຽງໃສ່ &quot;ຕຳແໜ່ງ&quot; ເທົ່ານັ້ນ</translation>
-    </message>
-    <message>
-        <source>Select base alignment entity</source>
-        <translation type="vanished">ເລືອກອົງປະກອບພື້ນຖານສຳລັບການຈັດລຽງ</translation>
-    </message>
-    <message>
-        <source>Select child entities of containers</source>
-        <translation type="vanished">ເລືອກອົງປະກອບຍ່ອຍໃນກຸ່ມ</translation>
-    </message>
-    <message>
-        <source>Specify base alignment point</source>
-        <translation type="vanished">ລະບຸຈຸດພື້ນຖານສຳລັບການຈັດລຽງ</translation>
-    </message>
-    <message>
-        <source>Click or Enter to finish align</source>
-        <translation type="vanished">ຄລິກ ຫຼື ກົດ Enter ເພື່ອສຳເລັດການຈັດລຽງ</translation>
-    </message>
-    <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">ເລືອກອົງປະກອບທີ່ຈະຈັດລຽງ (Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Select and align</source>
-        <translation type="vanished">ເລືອກ ແລະ ຈັດລຽງ</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກຂອບເຂດ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifyAlignRef</name>
-    <message>
-        <source>Align References</source>
-        <translation type="vanished">ຈັດລຽງຈຸດອ້າງອີງ</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ໄລຍະຫ່າງຂະໜານ:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">ມາດຕາສ່ວນ:</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອຈັດລຽງ (Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Align immediately after selection</source>
-        <translation type="vanished">ຈັດລຽງທັນທີຫຼັງຈາກເລືອກ</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກຂອບເຂດ</translation>
-    </message>
-    <message>
-        <source>Select first reference point</source>
-        <translation type="vanished">ເລືອກຈຸດອ້າງອີງທຳອິດ</translation>
-    </message>
-    <message>
-        <source>Select first target point</source>
-        <translation type="vanished">ເລືອກຈຸດເປົ້າໝາຍທຳອິດ</translation>
-    </message>
-    <message>
-        <source>Select second reference point</source>
-        <translation type="vanished">ເລືອກຈຸດອ້າງອີງທີສອງ</translation>
-    </message>
-    <message>
-        <source>Select second target point</source>
-        <translation type="vanished">ເລືອກຈຸດເປົ້າໝາຍທີສອງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifyAlignSingle</name>
-    <message>
-        <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation type="vanished">ການຈັດລຽງໃນຕອນນີ້ຮອງຮັບສະເພາະລະບົບພິກັດໂລກ (WCS), ແລະ ອາດຈະບໍ່ເຮັດວຽກຖ້າລະບົບພິກັດຜູ້ໃຊ້ (UCS) ກຳລັງເປີດຢູ່.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ໄລຍະຫ່າງຂະໜານ:</translation>
-    </message>
-    <message>
-        <source>Align to </source>
-        <translation type="vanished">ຈັດລຽງໃສ່ </translation>
-    </message>
-    <message>
-        <source>Entity</source>
-        <translation type="vanished">ອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Position</source>
-        <translation type="vanished">ຕຳແໜ່ງ</translation>
-    </message>
-    <message>
-        <source>Drawing</source>
-        <translation type="vanished">ແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Reference: </source>
-        <translation type="vanished">ອ້າງອີງ: </translation>
-    </message>
-    <message>
-        <source>Select base alignment entity</source>
-        <translation type="vanished">ເລືອກອົງປະກອບພື້ນຖານສຳລັບການຈັດລຽງ</translation>
-    </message>
-    <message>
-        <source>Specify base alignment point</source>
-        <translation type="vanished">ລະບຸຈຸດພື້ນຖານສຳລັບການຈັດລຽງ</translation>
-    </message>
-    <message>
-        <source>Select entity to align</source>
-        <translation type="vanished">ເລືອກອົງປະກອບທີ່ຈະຈັດລຽງ</translation>
-    </message>
-    <message>
-        <source>Finish alignment after selection</source>
-        <translation type="vanished">ສຳເລັດການຈັດລຽງຫຼັງຈາກເລືອກ</translation>
-    </message>
-    <message>
-        <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
-        <translation type="vanished">ພິກັດຈະຖືກຍອມຮັບສະເພາະການຈັດລຽງໃສ່ &quot;ຕຳແໜ່ງ&quot; ເທົ່ານັ້ນ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifyBreakDivide</name>
-    <message>
-        <source>Invalid entity selected - no segments between intersections to break/divide.</source>
-        <translation type="vanished">ອົງປະກອບທີ່ເລືອກບໍ່ຖືກຕ້ອງ - ບໍ່ມີສ່ວນເສັ້ນລະຫວ່າງຈຸດຕັດທີ່ຈະແຍກ ຫຼື ແບ່ງ.</translation>
-    </message>
-    <message>
-        <source>Break/Divide Line</source>
-        <translation type="vanished">ແຍກ/ແບ່ງ ເສັ້ນຊື່</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">ຈຸດ 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">ຈຸດ 2:</translation>
-    </message>
-    <message>
-        <source>Break/Divide Circle</source>
-        <translation type="vanished">ແຍກ/ແບ່ງ ວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">ມຸມ 1:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">ມຸມ 2:</translation>
-    </message>
-    <message>
-        <source>Break/Divide Arc</source>
-        <translation type="vanished">ແຍກ/ແບ່ງ ເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Select line, arc or circle</source>
-        <translation type="vanished">ເລືອກເສັ້ນຊື່, ເສັ້ນໂຄ້ງ ຫຼື ວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Proceed even if no intersections</source>
-        <translation type="vanished">ດຳເນີນການຕໍ່ເຖິງແມ່ນວ່າຈະບໍ່ມີຈຸດຕັດ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifyDuplicate</name>
-    <message>
-        <source>Duplicate Offset</source>
-        <translation type="vanished">ສຳເນົາໄລຍະຫ່າງຂະໜານ</translation>
-    </message>
-    <message>
-        <source>Select entity to duplicate</source>
-        <translation type="vanished">ເລືອກອົງປະກອບທີ່ຈະສຳເນົາຊ້ຳ</translation>
-    </message>
-    <message>
-        <source>Interactive Offset</source>
-        <translation type="vanished">ອັອບເຊັດແບບໂຕ້ຕອບ:</translation>
-    </message>
-    <message>
-        <source>Select direction of offset</source>
-        <translation type="vanished">ເລືອກທິດທາງຂອງອັອບເຊັດ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifyLineGap</name>
-    <message>
-        <source>Line Gap</source>
-        <translation type="vanished">ໄລຍະຫ່າງເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Start:</source>
-        <translation type="vanished">ເລີ່ມ:</translation>
-    </message>
-    <message>
-        <source>End:</source>
-        <translation type="vanished">ສິ້ນສຸດ:</translation>
-    </message>
-    <message>
-        <source>Select line</source>
-        <translation type="vanished">ເລືອກເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Use Alternative Line Endpoint</source>
-        <translation type="vanished">ໃຊ້ຈຸດປາຍເສັ້ນທາງເລືອກ</translation>
-    </message>
-    <message>
-        <source>Select endpoint of gap</source>
-        <translation type="vanished">ເລືອກຈຸດປາຍຂອງໄລຍະຫ່າງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifyLineJoin</name>
-    <message>
-        <source>Lines Join</source>
-        <translation type="vanished">ເຊື່ອມຕໍ່ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Lines are parallel</source>
-        <translation type="vanished">ເສັ້ນຂະໜານກັນ</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">ຈຸດຕັດ:</translation>
-    </message>
-    <message>
-        <source>No line selected</source>
-        <translation type="vanished">ບໍ່ມີເສັ້ນທີ່ຖືກເລືອກ</translation>
-    </message>
-    <message>
-        <source>Lines are parallel, can&apos;t merge</source>
-        <translation type="vanished">ເສັ້ນຂະໜານກັນ, ບໍ່ສາມາດຮວມໄດ້</translation>
-    </message>
-    <message>
-        <source>Lines already intersects, can&apos;t merge</source>
-        <translation type="vanished">ເສັ້ນຕັດກັນແລ້ວ, ບໍ່ສາມາດຮວມໄດ້</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">ເລືອກເສັ້ນທຳອິດ</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">ເລືອກເສັ້ນທີສອງ</translation>
-    </message>
-    <message>
-        <source>Select part of first line that should remain after trim</source>
-        <translation type="vanished">ເລືອກສ່ວນຂອງເສັ້ນທຳອິດທີ່ຕ້ອງການໃຫ້ເຫຼືອໄວ້ຫຼັງຈາກຕັດ (trim)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">ບໍ່ມີອົງປະກອບທີ່ຖືກເລືອກ!</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionPasteToPoints</name>
-    <message>
-        <source>Clipboard is empty</source>
-        <translation type="vanished">ຄລິບບອດວ່າງເປົ່າ</translation>
-    </message>
-    <message>
-        <source>Select and paste</source>
-        <translation type="vanished">ເລືອກ ແລະ ວາງ</translation>
     </message>
 </context>
 <context>
@@ -3823,10 +1538,6 @@ End Edge Point: (%9 , %10)</source>
         <source>Specify entity to apply pen</source>
         <translation>ລະບຸອົງປະກອບເພື່ອໃຊ້ປາກກາ</translation>
     </message>
-    <message>
-        <source>Apply Resolved Pen</source>
-        <translation type="vanished">ນຳໃຊ້ປາກກາທີ່ກຳນົດ</translation>
-    </message>
 </context>
 <context>
     <name>LC_ActionPenPick</name>
@@ -3839,89 +1550,6 @@ End Edge Point: (%9 , %10)</source>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="109"/>
         <source>Cancel</source>
         <translation type="unfinished">ຍົກເລີກ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionPolylineArcsToLines</name>
-    <message>
-        <source>Specify polyline with arc segments</source>
-        <translation type="vanished">ລະບຸເສັ້ນຕໍ່ເນື່ອງ (polyline) ທີ່ມີສ່ວນໂຄ້ງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionPolylineChangeSegmentType</name>
-    <message>
-        <source>Invalid arc point to create arc, select another one</source>
-        <translation type="vanished">ຈຸດສ່ວນໂຄ້ງບໍ່ຖືກຕ້ອງໃນການສ້າງສ່ວນໂຄ້ງ, ກະລຸນາເລືອກຈຸດໃໝ່</translation>
-    </message>
-    <message>
-        <source>Select polyline to modify</source>
-        <translation type="vanished">ເລືອກເສັ້ນຕໍ່ເນື່ອງເພື່ອແກ້ໄຂ</translation>
-    </message>
-    <message>
-        <source>Select segment of polyline to modify</source>
-        <translation type="vanished">ເລືອກສ່ວນຂອງເສັ້ນຕໍ່ເນື່ອງເພື່ອແກ້ໄຂ</translation>
-    </message>
-    <message>
-        <source>Specify position on arc to create</source>
-        <translation type="vanished">ລະບຸຕຳແໜ່ງເທິງສ່ວນໂຄ້ງທີ່ຈະສ້າງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionPreSelectionAwareBase</name>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">ກຳລັງເລືອກ</translation>
-    </message>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">ຍົກເລີກການເລືອກ</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">ອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">ທີ່ຕັດກັບກ່ອງ</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">ທີ່ຢູ່ພາຍໃນກ່ອງ</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">ເລືອກຂອບທີສອງ</translation>
-    </message>
-    <message>
-        <source>Select/Deselect entities</source>
-        <translation type="vanished">ເລືອກ/ຍົກເລີກການເລືອກ ອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">ເລືອກສ່ວນທີ່ຕັດກັນ</translation>
-    </message>
-    <message>
-        <source>No valid entities selected, select them first</source>
-        <translation type="vanished">ບໍ່ມີອົງປະກອບທີ່ຖືກຕ້ອງຖືກເລືອກ, ກະລຸນາເລືອກກ່ອນ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionRemoveSplinePoints</name>
-    <message>
-        <source>Select spline or spline points entity</source>
-        <translation type="vanished">ເລືອກເສັ້ນໂຄ້ງ ຫຼື ອົງປະກອບຈຸດເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Select control point of entity</source>
-        <translation type="vanished">ເລືອກຈຸດຄວບຄຸມຂອງອົງປະກອບ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionSelectDimOrdinateSameOrigin</name>
-    <message>
-        <source>Select reference ordinate dimension</source>
-        <translation type="vanished">ເລືອກມິຕິອໍດິເນດອ້າງອີງ</translation>
     </message>
 </context>
 <context>
@@ -3954,462 +1582,6 @@ End Edge Point: (%9 , %10)</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionSplineAddPoint</name>
-    <message>
-        <source>Select spline or spline points entity</source>
-        <translation type="vanished">ເລືອກເສັ້ນໂຄ້ງ ຫຼື ອົງປະກອບຈຸດເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Select control point to insert before</source>
-        <translation type="vanished">ເລືອກຈຸດຄວບຄຸມເພື່ອແຊກກ່ອນໜ້າ</translation>
-    </message>
-    <message>
-        <source>Specify control point</source>
-        <translation type="vanished">ລະບຸຈຸດຄວບຄຸມ</translation>
-    </message>
-    <message>
-        <source>Insert AFTER selected point</source>
-        <translation type="vanished">ແຊກ ຫຼັງຈາກ ຈຸດທີ່ເລືອກ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionSplineAppendPoint</name>
-    <message>
-        <source>Select spline or spline points entity</source>
-        <translation type="vanished">ເລືອກເສັ້ນໂຄ້ງ ຫຼື ອົງປະກອບຈຸດເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">ລະບຸຈຸດຄວບຄຸມທຳອິດ</translation>
-    </message>
-    <message>
-        <source>Specify control point</source>
-        <translation type="vanished">ລະບຸຈຸດຄວບຄຸມ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionSplineExplode</name>
-    <message>
-        <source>Select spline or spline points entity</source>
-        <translation type="vanished">ເລືອກເສັ້ນໂຄ້ງ ຫຼື ອົງປະກອບຈຸດເສັ້ນໂຄ້ງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionSplineFromPolyline</name>
-    <message>
-        <source>Select polyline to create spline or spline points</source>
-        <translation type="vanished">ເລືອກເສັ້ນຕໍ່ເນື່ອງເພື່ອສ້າງເສັ້ນໂຄ້ງ ຫຼື ຈຸດເສັ້ນໂຄ້ງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionSplineRemoveBetween</name>
-    <message>
-        <source>Not enough points remains for the spline</source>
-        <translation type="vanished">ຈຸດທີ່ເຫຼືອບໍ່ພໍສຳລັບເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Select spline or spline points entity</source>
-        <translation type="vanished">ເລືອກເສັ້ນໂຄ້ງ ຫຼື ອົງປະກອບຈຸດເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Select first point for deletion</source>
-        <translation type="vanished">ເລືອກຈຸດທຳອິດທີ່ຈະລຶບ</translation>
-    </message>
-    <message>
-        <source>Select second point for deletion</source>
-        <translation type="vanished">ເລືອກຈຸດທີສອງທີ່ຈະລຶບ</translation>
-    </message>
-    <message>
-        <source>Delete from endpoints TO selected points</source>
-        <translation type="vanished">ລຶບຈາກຈຸດປາຍ ໄປຫາ ຈຸດທີ່ເລືອກ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionUCSByDimOrdinate</name>
-    <message>
-        <source>Select ordinate dimension to set UCS</source>
-        <translation type="vanished">ເລືອກມິຕິອໍດິເນດເພື່ອຕັ້ງຄ່າ UCS</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionsShortcutsDialog</name>
-    <message>
-        <source>Action Shortcuts Mappings</source>
-        <translation type="vanished">ການກຳນົດປຸ່ມລັດຂອງຄຳສັ່ງ</translation>
-    </message>
-    <message>
-        <source>Shortcut</source>
-        <translation type="vanished">ປຸ່ມລັດ</translation>
-    </message>
-    <message>
-        <source>Key Sequence:</source>
-        <translation type="vanished">ລຳດັບປຸ່ມ:</translation>
-    </message>
-    <message>
-        <source>Reset shortcut for current action to it&apos;s default value</source>
-        <translation type="vanished">ຕັ້ງຄ່າປຸ່ມລັດສຳລັບຄຳສັ່ງປັດຈຸບັນຄືນເປັນຄ່າເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation type="vanished">ຕັ້ງຄ່າໃໝ່</translation>
-    </message>
-    <message>
-        <source>Shortcut key sequence recording</source>
-        <translation type="vanished">ການບັນທຶກລຳດັບປຸ່ມລັດ</translation>
-    </message>
-    <message>
-        <source>Start Recording</source>
-        <translation type="vanished">ເລີ່ມບັນທຶກ</translation>
-    </message>
-    <message>
-        <source>Keyboard shortcut value</source>
-        <translation type="vanished">ຄ່າປຸ່ມລັດຄີບອດ</translation>
-    </message>
-    <message>
-        <source>Removes shortcut for the action</source>
-        <translation type="vanished">ລຶບປຸ່ມລັດສຳລັບຄຳສັ່ງນີ້</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="vanished">ລ້າງອອກ</translation>
-    </message>
-    <message>
-        <source>For</source>
-        <translation type="vanished">ສຳລັບ</translation>
-    </message>
-    <message>
-        <source>group</source>
-        <translation type="vanished">group</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">ປ້າຍຊື່ຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>name</source>
-        <translation type="vanished">name</translation>
-    </message>
-    <message>
-        <source>Action Shortcuts</source>
-        <translation type="vanished">ປຸ່ມລັດຄຳສັ່ງ</translation>
-    </message>
-    <message>
-        <source>Click on action for details. Double click on action to edit. </source>
-        <translation type="vanished">ຄລິກທີ່ຄຳສັ່ງເພື່ອເບິ່ງລາຍລະອຽດ. ຄລິກສອງບາດເພື່ອແກ້ໄຂ. </translation>
-    </message>
-    <message>
-        <source>Loads shortcuts mapping from external file.</source>
-        <translation type="vanished">ໂຫຼດການກຳນົດປຸ່ມລັດຈາກໄຟລ໌ພາຍນອກ.</translation>
-    </message>
-    <message>
-        <source>Import...</source>
-        <translation type="vanished">ນຳເຂົ້າ...</translation>
-    </message>
-    <message>
-        <source>Export shortcuts mappings to external file</source>
-        <translation type="vanished">ສົ່ງອອກການກຳນົດປຸ່ມລັດໄປຍັງໄຟລ໌ພາຍນອກ</translation>
-    </message>
-    <message>
-        <source>Export...</source>
-        <translation type="vanished">ສົ່ງອອກ...</translation>
-    </message>
-    <message>
-        <source>All changes made during editing sessions are discarded to initial values</source>
-        <translation type="vanished">ການປ່ຽນແປງທັງໝົດໃນລະຫວ່າງການແກ້ໄຂຈະຖືກຍົກເລີກ ແລະ ກັບໄປໃຊ້ຄ່າເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
-        <source>Reset All</source>
-        <translation type="vanished">ຕັ້ງຄ່າໃໝ່ທັງໝົດ</translation>
-    </message>
-    <message>
-        <source>Filter:</source>
-        <translation type="vanished">ຕົວກັ່ນຕອງ:</translation>
-    </message>
-    <message>
-        <source>Filtering actions by name</source>
-        <translation type="vanished">ກັ່ນຕອງຄຳສັ່ງຕາມຊື່</translation>
-    </message>
-    <message>
-        <source>If checked, matched actions will be highlighted onlye, otherwide - non-matched actions are hidden</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຄຳສັ່ງທີ່ກົງກັນຈະຖືກເນັ້ນ, ຖ້າບໍ່ດັ່ງນັ້ນ - ຄຳສັ່ງທີ່ບໍ່ກົງກັນຈະຖືກເຊື່ອງໄວ້</translation>
-    </message>
-    <message>
-        <source>Highlight</source>
-        <translation type="vanished">ເນັ້ນ</translation>
-    </message>
-    <message>
-        <source>Import shortcuts mapping</source>
-        <translation type="vanished">ນຳເຂົ້າການກຳນົດປຸ່ມລັດ</translation>
-    </message>
-    <message>
-        <source>Export shortcuts mapping</source>
-        <translation type="vanished">ສົ່ງອອກການກຳນົດປຸ່ມລັດ</translation>
-    </message>
-    <message>
-        <source>LibreCAD Shortcuts file (*.%1)</source>
-        <translation type="vanished">ໄຟລ໌ປຸ່ມລັດ LibreCAD (*.%1)</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were loaded successfully.</source>
-        <translation type="vanished">ໂຫຼດການກຳນົດປຸ່ມລັດສຳເລັດແລ້ວ.</translation>
-    </message>
-    <message>
-        <source>Can&apos;t read provided file - please check that it is exists and it is allowed to read from it.</source>
-        <translation type="vanished">ບໍ່ສາມາດອ່ານໄຟລ໌ທີ່ລະບຸໄດ້ - ກະລຸນາກວດສອບວ່າໄຟລ໌ມີຢູ່ແທ້ ແລະ ໄດ້ຮັບອະນຸຍາດໃຫ້ອ່ານ.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were saved successfully.</source>
-        <translation type="vanished">ບັນທຶກການກຳນົດປຸ່ມລັດສຳເລັດແລ້ວ.</translation>
-    </message>
-    <message>
-        <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
-        <translation type="vanished">ບໍ່ສາມາດຂຽນລົງໄຟລ໌ທີ່ລະບຸໄດ້ - ກະລຸນາກວດສອບວ່າໄດ້ຮັບອະນຸຍາດໃຫ້ຂຽນ.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported.
-
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">ບໍ່ໄດ້ນຳເຂົ້າການກຳນົດປຸ່ມລັດ.
-
-ໄຟລ໌ທີ່ລະບຸມີຢູ່ແທ້, ແຕ່ມັນບໍ່ມີຂໍ້ມູນການກຳນົດປຸ່ມລັດຂອງ LibreCAD.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">ບໍ່ໄດ້ນຳເຂົ້າການກຳນົດປຸ່ມລັດ.
-
-ເກີດຂໍ້ຜິດພາດໃນການແຍກ XML ໃນລະຫວ່າງການປະມວນຜົນໄຟລ໌.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-
-Some error occurred during XML generation.</source>
-        <translation type="vanished">ບໍ່ໄດ້ນຳເຂົ້າການກຳນົດປຸ່ມລັດ.
-
-ເກີດຂໍ້ຜິດພາດບາງຢ່າງໃນລະຫວ່າງການສ້າງ XML.</translation>
-    </message>
-    <message>
-        <source>Import Shortcuts Mapping</source>
-        <translation type="vanished">ນຳເຂົ້າການກຳນົດປຸ່ມລັດ</translation>
-    </message>
-    <message>
-        <source>Export Shortcuts Mapping</source>
-        <translation type="vanished">ສົ່ງອອກການກຳນົດປຸ່ມລັດ</translation>
-    </message>
-    <message>
-        <source>Invalid key sequence.</source>
-        <translation type="vanished">ລຳດັບປຸ່ມບໍ່ຖືກຕ້ອງ.</translation>
-    </message>
-    <message>
-        <source>Resolve conflicts before saving.</source>
-        <translation type="vanished">ແກ້ໄຂຂໍ້ຂັດແຍ່ງກ່ອນການບັນທຶກ.</translation>
-    </message>
-    <message>
-        <source>Key sequence has potential conflicts. &lt;a href=&quot;show&quot;&gt;Show.&lt;/a&gt;</source>
-        <translation type="vanished">ລຳດັບປຸ່ມມີຂໍ້ຂັດແຍ່ງທີ່ອາດເກີດຂຶ້ນ. &lt;a href=&quot;show&quot;&gt;ສະແດງ.&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>Some mappings are modified.
-Are you sure you are going to discard changes?</source>
-        <translation type="vanished">ການກຳນົດຄ່າບາງຢ່າງຖືກແກ້ໄຂ.
-ທ່ານແນ່ໃຈບໍ່ວ່າຈະຍົກເລີກການປ່ຽນແປງ?</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AnglesBasisWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຟອມ</translation>
-    </message>
-    <message>
-        <source>Angles basis information. Click to change.</source>
-        <translation type="vanished">ຂໍ້ມູນພື້ນຖານຂອງມຸມ. ຄລິກເພື່ອປ່ຽນ.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">ມຸມພື້ນຖານ:</translation>
-    </message>
-    <message>
-        <source>Zero base angle relative to the current user coordinate system. 0.0 is 3pm.</source>
-        <translation type="vanished">ມຸມພື້ນຖານສູນທຽບກັບລະບົບພິກັດຜູ້ໃຊ້ປັດຈຸບັນ. 0.0 ແມ່ນເວລາ 3 ໂມງ (ທິດທາງຕາເວັນອອກ).</translation>
-    </message>
-    <message>
-        <source>0.000</source>
-        <translation type="vanished">0.000</translation>
-    </message>
-    <message>
-        <source>Positive angles direction is counterclockwise.</source>
-        <translation type="vanished">ທິດທາງມຸມບວກແມ່ນທວນເຂັມໂມງ.</translation>
-    </message>
-    <message>
-        <source>Positive angles direction is clockwise.</source>
-        <translation type="vanished">ທິດທາງມຸມບວກແມ່ນຕາມເຂັມໂມງ.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AppWindowDialogsInvoker</name>
-    <message>
-        <source>License</source>
-        <translation type="vanished">ໃບອະນຸຍາດ</translation>
-    </message>
-    <message>
-        <source>The following files could not be loaded:
-</source>
-        <translation type="vanished">ບໍ່ສາມາດໂຫຼດໄຟລ໌ຕໍ່ໄປນີ້ໄດ້:
-</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">ຂໍ້ຜິດພາດ</translation>
-    </message>
-    <message>
-        <source>Device Options</source>
-        <translation type="vanished">ຕົວເລືອກອຸປະກອນ</translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="vanished">ອຸປະກອນ</translation>
-    </message>
-    <message>
-        <source>Closing Drawing</source>
-        <translation type="vanished">ກຳລັງປິດແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Draft Mode</source>
-        <translation type="vanished">ໂໝດຮ່າງ</translation>
-    </message>
-    <message>
-        <source>Save changes to the following item?
-%1</source>
-        <translation type="vanished">ບັນທຶກການປ່ຽນແປງໃນລາຍການຕໍ່ໄປນີ້ບໍ່?
-%1</translation>
-    </message>
-    <message>
-        <source>Export as</source>
-        <translation type="vanished">ສົ່ງອອກເປັນ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ArcPropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຟອມ</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">ຈຸດສູນກາງ (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="vanished">ພິກັດ X ຂອງຈຸດສູນກາງສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Pick center coordinate from the drawing</source>
-        <translation type="vanished">ເລືອກພິກັດຈຸດສູນກາງຈາກແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">ຈຸດສູນກາງ (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">ພິກັດ Y ຂອງຈຸດສູນກາງສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ລັດສະໝີ:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">ລັດສະໝີຂອງສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Pick radius value from the drawing</source>
-        <translation type="vanished">ເລືອກຄ່າລັດສະໝີຈາກແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Diameter:</source>
-        <translation type="vanished">ເສັ້ນຜ່ານກາງ:</translation>
-    </message>
-    <message>
-        <source>Diameter of arc</source>
-        <translation type="vanished">ເສັ້ນຜ່ານກາງຂອງສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Pick diameter value from the drawing</source>
-        <translation type="vanished">ເລືອກຄ່າເສັ້ນຜ່ານກາງຈາກແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Arc Length:</source>
-        <translation type="vanished">ຄວາມຍາວສ່ວນໂຄ້ງ:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">ຄວາມຍາວຂອງສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Pick arc length value from the drawing</source>
-        <translation type="vanished">ເລືອກຄ່າຄວາມຍາວສ່ວນໂຄ້ງຈາກແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Sweep Angle:</source>
-        <translation type="vanished">ມຸມກວາດ:</translation>
-    </message>
-    <message>
-        <source>Sweep angle of the arc (degrees)</source>
-        <translation type="vanished">ມຸມກວາດຂອງສ່ວນໂຄ້ງ (ອົງສາ)</translation>
-    </message>
-    <message>
-        <source>Pick sweep angle from the drawing</source>
-        <translation type="vanished">ເລືອກມຸມກວາດຈາກແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Bulge:</source>
-        <translation type="vanished">ສ່ວນໂນນ (Bulge):</translation>
-    </message>
-    <message>
-        <source>Bulge (sagitta) of the arc</source>
-        <translation type="vanished">ສ່ວນໂນນຂອງສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Pick bulge value from the drawing</source>
-        <translation type="vanished">ເລືອກຄ່າສ່ວນໂນນຈາກແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">ມຸມເລີ່ມຕົ້ນ:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="vanished">ມຸມເລີ່ມຕົ້ນຂອງສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Pick angle value from the drawing</source>
-        <translation type="vanished">ເລືອກຄ່າມຸມຈາກແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">ມຸມສິ້ນສຸດ:</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="vanished">ມຸມສິ້ນສຸດຂອງສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="vanished">ກຳນົດວ່າສ່ວນໂຄ້ງຈະປີ້ນກັບ (ຕາມເຂັມໂມງ) ຫຼື ບໍ່</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">ປີ້ນກັບ</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="14"/>
@@ -4434,46 +1606,9 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ສ່ວນໂຄ້ງຕົ້ນສະບັບຈະຖືກລຶບອອກ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="102"/>
         <source>Replace arc</source>
         <translation>ປ່ຽນແທນສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">ເລເຢີທີ່ຈະວາງວົງມົນທີ່ສ້າງຂຶ້ນ</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">ໃຊ້ງານຢູ່</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">ຕົ້ນສະບັບ</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">ໃຊ້ງານຢູ່</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">ຕົ້ນສະບັບ</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">ຕົ້ນສະບັບທີ່ຖືກແກ້ໄຂ</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">ເລືອກຄ່າອັອບເຊັດຈາກແບບແຕ້ມ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="109"/>
@@ -4481,84 +1616,14 @@ Are you sure you are going to discard changes?</source>
         <translation>ປາກກາ:</translation>
     </message>
     <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">ປາກກາທີ່ຈະໃຊ້ກັບວົງມົນທີ່ສ້າງຂຶ້ນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="65"/>
         <source>Layer:</source>
         <translation>ເລເຢີ:</translation>
     </message>
     <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">ສ່ວນຕ່າງ (Delta) ຂອງລັດສະໝີວົງມົນທຽບກັບລັດສະໝີສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="45"/>
         <source>Radius Shift:</source>
         <translation>ການຍັບຍ້າຍລັດສະໝີ:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CirclePropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຟອມ</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">ຈຸດສູນກາງ (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="vanished">ພິກັດ X ຂອງຈຸດສູນກາງວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Pick center coordinate from drawing</source>
-        <translation type="vanished">ເລືອກພິກັດຈຸດສູນກາງຈາກແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">ຈຸດສູນກາງ (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="vanished">ພິກັດ Y ຂອງຈຸດສູນກາງວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ລັດສະໝີ:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">ລັດສະໝີຂອງວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Diameter:</source>
-        <translation type="vanished">ເສັ້ນຜ່ານກາງ:</translation>
-    </message>
-    <message>
-        <source>Diameter of circle</source>
-        <translation type="vanished">ເສັ້ນຜ່ານກາງຂອງວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Pick diameter value from drawing</source>
-        <translation type="vanished">ເລືອກຄ່າເສັ້ນຜ່ານກາງຈາກແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick radius value from drawing</source>
-        <translation type="vanished">ເລືອກຄ່າລັດສະໝີຈາກແບບແຕ້ມ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CreatorInvoker</name>
-    <message>
-        <source>Toolbar: %1 (Custom)</source>
-        <translation type="vanished">ແຖບເຄື່ອງມື: %1 (ກຳນົດເອງ)</translation>
     </message>
 </context>
 <context>
@@ -4584,18 +1649,6 @@ Are you sure you are going to discard changes?</source>
         <translation>ປະເພດ</translation>
     </message>
     <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">ມິຕິແນວນອນຂອງເຄື່ອງໝາຍກາກະບາດ</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">ເລືອກຄ່າ X ຈາກແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">ກຳນົດວິທີການນຳໃຊ້ມິຕິຂອງກາກະບາດ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="63"/>
         <source>Extension</source>
         <translation>ສ່ວນຂະຫຍາຍ</translation>
@@ -4611,32 +1664,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ເປີເຊັນ</translation>
     </message>
     <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">ເລືອກຄ່າ Y ຈາກແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກແບບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">ມິຕິແນວຕັ້ງຂອງກາກະບາດ</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">ມຸມການໝູນຂອງກາກະບາດອ້ອມຈຸດສູນກາງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="132"/>
         <source>Y:</source>
         <translation>Y:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">ເພີ່ມ ຫຼື ລຶບຄຳສັ່ງ</translation>
     </message>
 </context>
 <context>
@@ -4652,2918 +1682,17 @@ Are you sure you are going to discard changes?</source>
         <translation>ອຸປະກອນ</translation>
     </message>
     <message>
-        <source>Selection of pointing device</source>
-        <translation type="vanished">ການເລືອກອຸປະກອນຊີ້ (ເມົາສ໌)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="53"/>
         <source>Save</source>
         <translation>ບັນທຶກ</translation>
     </message>
 </context>
 <context>
-    <name>LC_DimArrowRegistry</name>
-    <message>
-        <source>Closed Filled</source>
-        <translation type="vanished">ປິດ ແລະ ຖອກສີ</translation>
-    </message>
-    <message>
-        <source>Dot</source>
-        <translation type="vanished">ຈຸດ</translation>
-    </message>
-    <message>
-        <source>Dot Small</source>
-        <translation type="vanished">ຈຸດນ້ອຍ</translation>
-    </message>
-    <message>
-        <source>Dot Blank</source>
-        <translation type="vanished">ຈຸດວ່າງ</translation>
-    </message>
-    <message>
-        <source>Origin Indicator</source>
-        <translation type="vanished">ຕົວບົ່ງຊີ້ຈຸດກຳເນີດ</translation>
-    </message>
-    <message>
-        <source>Origin Indicator 2</source>
-        <translation type="vanished">ຕົວບົ່ງຊີ້ຈຸດກຳເນີດ 2</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="vanished">ເປີດ</translation>
-    </message>
-    <message>
-        <source>Right Angle</source>
-        <translation type="vanished">ມຸມສາກ</translation>
-    </message>
-    <message>
-        <source>Open 30</source>
-        <translation type="vanished">ເປີດ 30</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">ປິດ</translation>
-    </message>
-    <message>
-        <source>Dot Small Blank</source>
-        <translation type="vanished">ຈຸດນ້ອຍວ່າງ</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">ບໍ່ມີ</translation>
-    </message>
-    <message>
-        <source>Oblique</source>
-        <translation type="vanished">ເສັ້ນອຽງ</translation>
-    </message>
-    <message>
-        <source>Box Filled</source>
-        <translation type="vanished">ກ່ອງຖອກສີ</translation>
-    </message>
-    <message>
-        <source>Box Blank</source>
-        <translation type="vanished">ກ່ອງວ່າງ</translation>
-    </message>
-    <message>
-        <source>Closed Blank</source>
-        <translation type="vanished">ປິດແບບວ່າງ</translation>
-    </message>
-    <message>
-        <source>Datum Filled</source>
-        <translation type="vanished">ເດຕຳຖອກສີ</translation>
-    </message>
-    <message>
-        <source>Datum Blank</source>
-        <translation type="vanished">ເດຕຳວ່າງ</translation>
-    </message>
-    <message>
-        <source>Integral</source>
-        <translation type="vanished">ອິນທິເກຣລ</translation>
-    </message>
-    <message>
-        <source>Architecture Tick</source>
-        <translation type="vanished">ເຄື່ອງໝາຍຂີດແບບສະຖາປັດ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DimStyleItem</name>
-    <message>
-        <source>Linear</source>
-        <translation type="vanished">ເສັ້ນຊື່</translation>
-    </message>
-    <message>
-        <source>Angular</source>
-        <translation type="vanished">ມຸມ</translation>
-    </message>
-    <message>
-        <source>Diametric</source>
-        <translation type="vanished">ເສັ້ນຜ່ານກາງ</translation>
-    </message>
-    <message>
-        <source>Radial</source>
-        <translation type="vanished">ລັດສະໝີ</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="vanished">ອໍດິເນດ</translation>
-    </message>
-    <message>
-        <source>Leader and Tolerance</source>
-        <translation type="vanished">ເສັ້ນຊີ້ ແລະ ຄ່າຜິດດ່ຽງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DimStylePreviewPanel</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຟອມ</translation>
-    </message>
-    <message>
-        <source>Zoom Auto</source>
-        <translation type="vanished">ຊູມອັດຕະໂນມັດ</translation>
-    </message>
-    <message>
-        <source>Zoom In</source>
-        <translation type="vanished">ຊູມເຂົ້າ</translation>
-    </message>
-    <message>
-        <source>Zoom Out</source>
-        <translation type="vanished">ຊູມອອກ</translation>
-    </message>
-    <message>
-        <source>Zoom Pan</source>
-        <translation type="vanished">ຊູມແພນ (Pan)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DimStylesExporter</name>
-    <message>
-        <source>Dimension Styles Export Error</source>
-        <translation type="vanished">ຂໍ້ຜິດພາດໃນການສົ່ງອອກຮູບແບບມິຕິ</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open provided file for writing - check that provided location is writable. Dimension styles were not exported.</source>
-        <translation type="vanished">ບໍ່ສາມາດເປີດໄຟລ໌ເພື່ອຂຽນໄດ້ - ກະລຸນາກວດສອບວ່າຕຳແໜ່ງທີ່ລະບຸສາມາດຂຽນລົງໄດ້ຫຼືບໍ່. ບໍ່ໄດ້ສົ່ງອອກຮູບແບບມິຕິ.</translation>
-    </message>
-    <message>
-        <source>Dimension Styles Export</source>
-        <translation type="vanished">ສົ່ງອອກຮູບແບບມິຕິ</translation>
-    </message>
-    <message>
-        <source>Dimensions Styles were exported.</source>
-        <translation type="vanished">ສົ່ງອອກຮູບແບບມິຕິສຳເລັດແລ້ວ.</translation>
-    </message>
-    <message>
-        <source>Dimension Styles Import Error</source>
-        <translation type="vanished">ຂໍ້ຜິດພາດໃນການນຳເຂົ້າຮູບແບບມິຕິ</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open provided file for reading. Dimension styles were not imported.</source>
-        <translation type="vanished">ບໍ່ສາມາດເປີດໄຟລ໌ເພື່ອອ່ານໄດ້. ບໍ່ໄດ້ນຳເຂົ້າຮູບແບບມິຕິ.</translation>
-    </message>
-    <message>
-        <source>Unexpected error during dimension styles parsing. Message:</source>
-        <translation type="vanished">ເກີດຂໍ້ຜິດພາດທີ່ບໍ່ຄາດຄິດລະຫວ່າງການແຍກຮູບແບບມິຕິ. ຂໍ້ຄວາມ:</translation>
-    </message>
-    <message>
-        <source>Unexpected format of file, it does not contains LibreCAD dimension styles.</source>
-        <translation type="vanished">ຮູບແບບໄຟລ໌ບໍ່ຖືກຕ້ອງ, ມັນບໍ່ມີຮູບແບບມິຕິຂອງ LibreCAD.</translation>
-    </message>
-    <message>
-        <source>Dimension Styles Import</source>
-        <translation type="vanished">ນຳເຂົ້າຮູບແບບມິຕິ</translation>
-    </message>
-    <message>
-        <source>No dimension styles to import.</source>
-        <translation type="vanished">ບໍ່ມີຮູບແບບມິຕິທີ່ຈະນຳເຂົ້າ.</translation>
-    </message>
-    <message>
-        <source>Dimension styles were imported.</source>
-        <translation type="vanished">ນຳເຂົ້າຮູບແບບມິຕິສຳເລັດແລ້ວ.</translation>
-    </message>
-    <message>
-        <source>Import Dimension Styles</source>
-        <translation type="vanished">ນຳເຂົ້າຮູບແບບມິຕິ</translation>
-    </message>
-    <message>
-        <source>Export Dimension Styles</source>
-        <translation type="vanished">ສົ່ງອອກຮູບແບບມິຕິ</translation>
-    </message>
-    <message>
-        <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation type="vanished">ໄຟລ໌ຮູບແບບມິຕິ LibreCAD (*.%1)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgAbout</name>
-    <message>
-        <source>About LibreCAD</source>
-        <translation type="vanished">ກ່ຽວກັບ LibreCAD</translation>
-    </message>
-    <message>
-        <source>Version Information</source>
-        <translation type="vanished">ຂໍ້ມູນເວີຊັນ</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">ປ້າຍຊື່ຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Copies version information into clipboard</source>
-        <translation type="vanished">ຄັດລອກຂໍ້ມູນເວີຊັນລົງໃນຄລິບບອດ</translation>
-    </message>
-    <message>
-        <source>&amp;Copy Version Info</source>
-        <translation type="vanished">&amp;ຄັດລອກຂໍ້ມູນເວີຊັນ</translation>
-    </message>
-    <message>
-        <source>Force check whether new version is available</source>
-        <translation type="vanished">ບັງຄັບໃຫ້ກວດສອບວ່າມີເວີຊັນໃໝ່ຫຼືບໍ່</translation>
-    </message>
-    <message>
-        <source>Check for New Version</source>
-        <translation type="vanished">ກວດສອບເວີຊັນໃໝ່</translation>
-    </message>
-    <message>
-        <source>Other </source>
-        <translation type="vanished">ອື່ນໆ </translation>
-    </message>
-    <message>
-        <source>Version: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="vanished">ເວີຊັນ: &lt;b&gt;%1&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="vanished">ຄອມໄພເລີ: Clang %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="vanished">ຄອມໄພເລີ: GNU GCC %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Compiler: Microsoft Visual C++</source>
-        <translation type="vanished">ຄອມໄພເລີ: Microsoft Visual C++</translation>
-    </message>
-    <message>
-        <source>Compiled on: %1</source>
-        <translation type="vanished">ສ້າງຂຶ້ນເມື່ອ: %1</translation>
-    </message>
-    <message>
-        <source>Qt Version: %1</source>
-        <translation type="vanished">ເວີຊັນ Qt: %1</translation>
-    </message>
-    <message>
-        <source>Boost Version: %1.%2.%3</source>
-        <translation type="vanished">ເວີຊັນ Boost: %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Contributors</source>
-        <translation type="vanished">ຜູ້ປະກອບສ່ວນ</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation type="vanished">ໃບອະນຸຍາດ</translation>
-    </message>
-    <message>
-        <source>The Code</source>
-        <translation type="vanished">ລະຫັດ (The Code)</translation>
-    </message>
-    <message>
-        <source>System</source>
-        <translation type="vanished">ລະບົບ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="vanished">ມິຕິອໍດິເນດ</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">ເລເຢີ:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">ເລເຢີຂອງມິຕິ</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">ຄຸນລັກສະນະປາກກາ</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="vanished">ອໍດິເນດ</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgDimStyleManager</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">ໄດອະລັອກ</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Dimension Lines</source>
-        <translation type="vanished">ເສັ້ນມິຕິ</translation>
-    </message>
-    <message>
-        <source>Color:</source>
-        <translation type="vanished">ສີ:</translation>
-    </message>
-    <message>
-        <source>Displays and sets the color for the dimension line (DIMCLRD system variable).</source>
-        <translation type="vanished">ສະແດງ ແລະ ຕັ້ງຄ່າສີສຳລັບເສັ້ນມິຕິ (ຕົວປ່ຽນລະບົບ DIMCLRD).</translation>
-    </message>
-    <message>
-        <source>Linetype:</source>
-        <translation type="vanished">ປະເພດເສັ້ນ:</translation>
-    </message>
-    <message>
-        <source>Sets the linetype of the dimension line. (DIMLTYPE system variable)</source>
-        <translation type="vanished">ຕັ້ງຄ່າປະເພດເສັ້ນຂອງເສັ້ນມິຕິ (ຕົວປ່ຽນລະບົບ DIMLTYPE)</translation>
-    </message>
-    <message>
-        <source>Linewidth:</source>
-        <translation type="vanished">ຄວາມໜາເສັ້ນ:</translation>
-    </message>
-    <message>
-        <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation type="vanished">ຕັ້ງຄ່າຄວາມໜາເສັ້ນຂອງເສັ້ນມິຕິ (ຕົວປ່ຽນລະບົບ DIMLWD)</translation>
-    </message>
-    <message>
-        <source>Extend beyond</source>
-        <translation type="vanished">ຂະຫຍາຍອອກໄປ</translation>
-    </message>
-    <message>
-        <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation type="vanished">ລະບຸໄລຍະຫ່າງເພື່ອຂະຫຍາຍເສັ້ນມິຕິໃຫ້ກາຍເສັ້ນຊ່ວຍມິຕິ ເມື່ອໃຊ້ຮູບແບບອຽງ, ສະຖາປັດ, ຂີດ, ອິນທິເກຣລ ຫຼື ບໍ່ມີຫົວລູກສອນ (ຕົວປ່ຽນລະບົບ DIMDLE)</translation>
-    </message>
-    <message>
-        <source>Baseline spacing:</source>
-        <translation type="vanished">ໄລຍະຫ່າງເສັ້ນຖານ:</translation>
-    </message>
-    <message>
-        <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation type="vanished">ລະງັບການສະແດງເສັ້ນມິຕິທຳອິດ (ຕົວປ່ຽນລະບົບ DIMSD1)</translation>
-    </message>
-    <message>
-        <source>Suppress Dim line 1 and arrow</source>
-        <translation type="vanished">ລະງັບເສັ້ນມິຕິ 1 ແລະ ຫົວລູກສອນ</translation>
-    </message>
-    <message>
-        <source>Suppresses display of second dimension line (DIMSD2 system variable)</source>
-        <translation type="vanished">ລະງັບການສະແດງເສັ້ນມິຕິທີສອງ (ຕົວປ່ຽນລະບົບ DIMSD2)</translation>
-    </message>
-    <message>
-        <source>Suppress Dim line 2 and arrow</source>
-        <translation type="vanished">ລະງັບເສັ້ນມິຕິ 2 ແລະ ຫົວລູກສອນ</translation>
-    </message>
-    <message>
-        <source>Extension Lines</source>
-        <translation type="vanished">ເສັ້ນຊ່ວຍຂະໜາດ</translation>
-    </message>
-    <message>
-        <source>Sets the color for the extension line (DIMCLRE system variable.)</source>
-        <translation type="vanished">ຕັ້ງຄ່າສີສຳລັບເສັ້ນຊ່ວຍມິຕິ (ຕົວປ່ຽນລະບົບ DIMCLRE)</translation>
-    </message>
-    <message>
-        <source>Linetype ext line 1:</source>
-        <translation type="vanished">ປະເພດເສັ້ນຊ່ວຍ 1:</translation>
-    </message>
-    <message>
-        <source>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</source>
-        <translation type="vanished">ຕັ້ງຄ່າປະເພດເສັ້ນຂອງເສັ້ນຊ່ວຍມິຕິທຳອິດ (ຕົວປ່ຽນລະບົບ DIMLTEX1)</translation>
-    </message>
-    <message>
-        <source>Linetype ext line 2:</source>
-        <translation type="vanished">ປະເພດເສັ້ນຊ່ວຍ 2:</translation>
-    </message>
-    <message>
-        <source>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</source>
-        <translation type="vanished">ຕັ້ງຄ່າປະເພດເສັ້ນຂອງເສັ້ນຊ່ວຍມິຕິທີສອງ (ຕົວປ່ຽນລະບົບ DIMLTEX2)</translation>
-    </message>
-    <message>
-        <source>Lineweight:</source>
-        <translation type="vanished">ນ້ຳໜັກເສັ້ນ:</translation>
-    </message>
-    <message>
-        <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation type="vanished">ຕັ້ງຄ່ານ້ຳໜັກເສັ້ນຂອງເສັ້ນຊ່ວຍມິຕິ (ຕົວປ່ຽນລະບົບ DIMLWE)</translation>
-    </message>
-    <message>
-        <source>Extend beyond dim lines:</source>
-        <translation type="vanished">ຂະຫຍາຍອອກໄປເກີນເສັ້ນມິຕິ:</translation>
-    </message>
-    <message>
-        <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation type="vanished">ລະບຸໄລຍະຫ່າງເພື່ອຂະຫຍາຍເສັ້ນຊ່ວຍມິຕິໃຫ້ກາຍເສັ້ນມິຕິອອກໄປ (ຕົວປ່ຽນລະບົບ DIMEXE)</translation>
-    </message>
-    <message>
-        <source>Offset from origin:</source>
-        <translation type="vanished">ໄລຍະຫ່າງຈາກຈຸດເລີ່ມຕົ້ນ:</translation>
-    </message>
-    <message>
-        <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation type="vanished">ຕັ້ງຄ່າໄລຍະຫ່າງເພື່ອແຍກເສັ້ນຊ່ວຍມິຕິອອກຈາກຈຸດເທິງແບບແຕ້ມທີ່ກຳນົດມິຕິ (ຕົວປ່ຽນລະບົບ DIMEXO)</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">ຄວາມຍາວ:</translation>
-    </message>
-    <message>
-        <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation type="vanished">ຕັ້ງຄ່າຄວາມຍາວທັງໝົດຂອງເສັ້ນຊ່ວຍມິຕິ ໂດຍເລີ່ມຈາກເສັ້ນມິຕິໄປຫາຈຸດເລີ່ມຕົ້ນຂອງມິຕິ (ຕົວປ່ຽນລະບົບ DIMFXL)</translation>
-    </message>
-    <message>
-        <source>Enables fixed length extension lines. (DIMFXLON system variable)</source>
-        <translation type="vanished">ເປີດໃຊ້ງານເສັ້ນຊ່ວຍມິຕິແບບຄົງທີ່ (ຕົວປ່ຽນລະບົບ DIMFXLON)</translation>
-    </message>
-    <message>
-        <source>Fixed length extension lines</source>
-        <translation type="vanished">ເສັ້ນຊ່ວຍຂະໜາດແບບຄົງທີ່</translation>
-    </message>
-    <message>
-        <source>Suppresses the display of first extension line (DIMSE1 system variable).</source>
-        <translation type="vanished">ລະງັບການສະແດງເສັ້ນຊ່ວຍມິຕິທຳອິດ (ຕົວປ່ຽນລະບົບ DIMSE1).</translation>
-    </message>
-    <message>
-        <source>Suppress Ext line 1</source>
-        <translation type="vanished">ລະງັບເສັ້ນຊ່ວຍ 1</translation>
-    </message>
-    <message>
-        <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation type="vanished">ລະງັບການສະແດງເສັ້ນຊ່ວຍມິຕິທີສອງ (ຕົວປ່ຽນລະບົບ DIMSE2).</translation>
-    </message>
-    <message>
-        <source>Suppress Ext line 2</source>
-        <translation type="vanished">ລະງັບເສັ້ນຊ່ວຍ 2</translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="vanished">ຕົວຢ່າງ</translation>
-    </message>
-    <message>
-        <source>Symbols and Arrows</source>
-        <translation type="vanished">ສັນຍາລັກ ແລະ ຫົວລູກສອນ</translation>
-    </message>
-    <message>
-        <source>Linear jog dimension</source>
-        <translation type="vanished">ມິຕິແບບຫັກ (Jog)</translation>
-    </message>
-    <message>
-        <source>Jog height factor:</source>
-        <translation type="vanished">ຕົວຄູນຄວາມສູງຂອງຮອຍຫັກ:</translation>
-    </message>
-    <message>
-        <source>* Text height</source>
-        <translation type="vanished">* ຄວາມສູງຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Radius jog dimension</source>
-        <translation type="vanished">ມິຕິລັດສະໝີແບບຫັກ (Radius jog)</translation>
-    </message>
-    <message>
-        <source>Jog angle:</source>
-        <translation type="vanished">ມຸມຫັກ:</translation>
-    </message>
-    <message>
-        <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation type="vanished">ກຳນົດມຸມຂອງສ່ວນຫັກຂອງເສັ້ນມິຕິໃນການວັດແທກລັດສະໝີແບບຫັກ (ຕົວປ່ຽນລະບົບ DIMJOGANG)</translation>
-    </message>
-    <message>
-        <source>Arrowheads</source>
-        <translation type="vanished">ຫົວລູກສອນ</translation>
-    </message>
-    <message>
-        <source>Displays and sets the size of arrowheads. (DIMASZ system variable)</source>
-        <translation type="vanished">ສະແດງ ແລະ ຕັ້ງຄ່າຂະໜາດຂອງຫົວລູກສອນ (ຕົວປ່ຽນລະບົບ DIMASZ)</translation>
-    </message>
-    <message>
-        <source>Sets the arrowhead for the leader line. (DIMLDRBLK system variable)</source>
-        <translation type="vanished">ຕັ້ງຄ່າຫົວລູກສອນສຳລັບເສັ້ນຊີ້ (ຕົວປ່ຽນລະບົບ DIMLDRBLK)</translation>
-    </message>
-    <message>
-        <source>Leader:</source>
-        <translation type="vanished">ເສັ້ນຊີ້ (Leader):</translation>
-    </message>
-    <message>
-        <source>Sets the arrowhead for the first dimension line. When you change the first arrowhead type, the second arrowhead automatically changes to match it. (DIMBLK1 system variable)</source>
-        <translation type="vanished">ຕັ້ງຄ່າຫົວລູກສອນສຳລັບເສັ້ນມິຕິທຳອິດ. ເມື່ອທ່ານປ່ຽນປະເພດຫົວລູກສອນທຳອິດ, ຫົວລູກສອນທີສອງຈະປ່ຽນຕາມໂດຍອັດຕະໂນມັດ (ຕົວປ່ຽນລະບົບ DIMBLK1)</translation>
-    </message>
-    <message>
-        <source>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</source>
-        <translation type="vanished">ຕັ້ງຄ່າຫົວລູກສອນສຳລັບເສັ້ນມິຕິທີສອງ (ຕົວປ່ຽນລະບົບ DIMBLK2)</translation>
-    </message>
-    <message>
-        <source>Use the same arrowhead for dimension line</source>
-        <translation type="vanished">ໃຊ້ຫົວລູກສອນແບບດຽວກັນສຳລັບເສັ້ນມິຕິ</translation>
-    </message>
-    <message>
-        <source>Second:</source>
-        <translation type="vanished">ທີສອງ:</translation>
-    </message>
-    <message>
-        <source>First:</source>
-        <translation type="vanished">ທຳອິດ:</translation>
-    </message>
-    <message>
-        <source>Arrow size:</source>
-        <translation type="vanished">ຂະໜາດລູກສອນ:</translation>
-    </message>
-    <message>
-        <source>Tick Size:</source>
-        <translation type="vanished">ຂະໜາດຂີດ (Tick):</translation>
-    </message>
-    <message>
-        <source>Dimension break</source>
-        <translation type="vanished">ຈຸດຕັດເສັ້ນມິຕິ (Break)</translation>
-    </message>
-    <message>
-        <source>Break size:</source>
-        <translation type="vanished">ຂະໜາດຈຸດຕັດ:</translation>
-    </message>
-    <message>
-        <source>Arc length symbol</source>
-        <translation type="vanished">ສັນຍາລັກຄວາມຍາວສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Suppresses the display of arc length symbols. (DIMARCSYM system variable)</source>
-        <translation type="vanished">ລະງັບການສະແດງສັນຍາລັກຄວາມຍາວສ່ວນໂຄ້ງ (ຕົວປ່ຽນລະບົບ DIMARCSYM)</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">ບໍ່ມີ</translation>
-    </message>
-    <message>
-        <source>Places arc length symbols before the dimension text. (DIMARCSYM system variable)</source>
-        <translation type="vanished">ວາງສັນຍາລັກຄວາມຍາວສ່ວນໂຄ້ງໄວ້ກ່ອນຂໍ້ຄວາມມິຕິ (ຕົວປ່ຽນລະບົບ DIMARCSYM)</translation>
-    </message>
-    <message>
-        <source>Preceding dimension text</source>
-        <translation type="vanished">ໄວ້ກ່ອນຂໍ້ຄວາມມິຕິ</translation>
-    </message>
-    <message>
-        <source>Places arc length symbols above the dimension text. (DIMARCSYM system variable)</source>
-        <translation type="vanished">ວາງສັນຍາລັກຄວາມຍາວສ່ວນໂຄ້ງໄວ້ເໜືອຂໍ້ຄວາມມິຕິ (ຕົວປ່ຽນລະບົບ DIMARCSYM)</translation>
-    </message>
-    <message>
-        <source>Above dimension text</source>
-        <translation type="vanished">ໄວ້ເໜືອຂໍ້ຄວາມມິຕິ</translation>
-    </message>
-    <message>
-        <source>Centermarks</source>
-        <translation type="vanished">ເຄື່ອງໝາຍຈຸດສູນກາງ</translation>
-    </message>
-    <message>
-        <source>Creates no center mark or centerline. The value is stored as 0 in the DIMCEN system variable.</source>
-        <translation type="vanished">ບໍ່ສ້າງເຄື່ອງໝາຍຈຸດສູນກາງ ຫຼື ເສັ້ນຜ່ານສູນກາງ. ຄ່າຈະຖືກເກັບເປັນ 0 ໃນຕົວປ່ຽນລະບົບ DIMCEN.</translation>
-    </message>
-    <message>
-        <source>Creates a center mark. The size of the center mark is stored as a positive value in the DIMCEN system variable.</source>
-        <translation type="vanished">ສ້າງເຄື່ອງໝາຍຈຸດສູນກາງ. ຂະໜາດຈະຖືກເກັບເປັນຄ່າບວກໃນຕົວປ່ຽນລະບົບ DIMCEN.</translation>
-    </message>
-    <message>
-        <source>Mark</source>
-        <translation type="vanished">ເຄື່ອງໝາຍ</translation>
-    </message>
-    <message>
-        <source>Creates a centerline. The size of the centerline is stored as a negative value in the DIMCEN system variable.</source>
-        <translation type="vanished">ສ້າງເສັ້ນຜ່ານສູນກາງ. ຂະໜາດຈະຖືກເກັບເປັນຄ່າລົບໃນຕົວປ່ຽນລະບົບ DIMCEN.</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">ຂະໜາດ:</translation>
-    </message>
-    <message>
-        <source>Displays and sets the size of the center mark or centerline. (DIMCEN system variable)</source>
-        <translation type="vanished">ສະແດງ ແລະ ຕັ້ງຄ່າຂະໜາດຂອງເຄື່ອງໝາຍ ຫຼື ເສັ້ນຜ່ານສູນກາງ (ຕົວປ່ຽນລະບົບ DIMCEN)</translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="vanished">ຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Text Appearance</source>
-        <translation type="vanished">ຮູບລັກສະນະຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Lists the available text styles.</source>
-        <translation type="vanished">ລາຍການຮູບແບບຂໍ້ຄວາມທີ່ມີຢູ່.</translation>
-    </message>
-    <message>
-        <source>Fill Color:</source>
-        <translation type="vanished">ສີຖອກ:</translation>
-    </message>
-    <message>
-        <source>Text Style:</source>
-        <translation type="vanished">ຮູບແບບຂໍ້ຄວາມ:</translation>
-    </message>
-    <message>
-        <source>Sets the color for the text background in dimensions (DIMTFILLCLR system variable)</source>
-        <translation type="vanished">ຕັ້ງຄ່າສີສຳລັບພື້ນຫຼັງຂໍ້ຄວາມໃນມິຕິ (ຕົວປ່ຽນລະບົບ DIMTFILLCLR)</translation>
-    </message>
-    <message>
-        <source>Text Color:</source>
-        <translation type="vanished">ສີຂໍ້ຄວາມ:</translation>
-    </message>
-    <message>
-        <source>Text Height</source>
-        <translation type="vanished">ຄວາມສູງຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Sets the scale of fractions relative to dimension text. (DIMTFAC system variable)</source>
-        <translation type="vanished">ຕັ້ງຄ່າຂະໜາດຂອງເສດສ່ວນທຽບກັບຂໍ້ຄວາມມິຕິ (ຕົວປ່ຽນລະບົບ DIMTFAC)</translation>
-    </message>
-    <message>
-        <source>Fraction height scale:</source>
-        <translation type="vanished">ຂະໜາດຄວາມສູງຂອງເສດສ່ວນ:</translation>
-    </message>
-    <message>
-        <source>Sets the height of the current dimension text style. (DIMTXT system variable)</source>
-        <translation type="vanished">ຕັ້ງຄ່າຄວາມສູງຂອງຮູບແບບຂໍ້ຄວາມມິຕິປັດຈຸບັນ (ຕົວປ່ຽນລະບົບ DIMTXT)</translation>
-    </message>
-    <message>
-        <source>Sets the color for the dimension text (DIMCLRT system variable)</source>
-        <translation type="vanished">ຕັ້ງຄ່າສີສຳລັບຂໍ້ຄວາມມິຕິ (ຕົວປ່ຽນລະບົບ DIMCLRT)</translation>
-    </message>
-    <message>
-        <source>Defines whether text background will be filled by color</source>
-        <translation type="vanished">ກຳນົດວ່າຈະຖອກສີພື້ນຫຼັງຂໍ້ຄວາມຫຼືບໍ່</translation>
-    </message>
-    <message>
-        <source>Fill text background by color</source>
-        <translation type="vanished">ຖອກສີພື້ນຫຼັງຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Displays a rectangular frame around the dimension text. This option changes the value stored in the DIMGAP system variable to a negative value.</source>
-        <translation type="vanished">ສະແດງກອບສີ່ແຈອ້ອມຂໍ້ຄວາມມິຕິ. ຕົວເລືອກນີ້ຈະປ່ຽນຄ່າໃນຕົວປ່ຽນລະບົບ DIMGAP ໃຫ້ເປັນຄ່າລົບ.</translation>
-    </message>
-    <message>
-        <source>Draw frame around text</source>
-        <translation type="vanished">ແຕ້ມກອບອ້ອມຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Text Alignment</source>
-        <translation type="vanished">ການຈັດວາງຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Places text in a horizontal position (DIMTIH and DIMTOH system variables).</source>
-        <translation type="vanished">ວາງຂໍ້ຄວາມໃນແນວນອນ (ຕົວປ່ຽນລະບົບ DIMTIH ແລະ DIMTOH).</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">ແນວນອນ</translation>
-    </message>
-    <message>
-        <source>Aligns text with the dimension line (DIMTIH and DIMTOH system variables).</source>
-        <translation type="vanished">ຈັດຂໍ້ຄວາມໃຫ້ລຽງຕາມເສັ້ນມິຕິ (ຕົວປ່ຽນລະບົບ DIMTIH ແລະ DIMTOH).</translation>
-    </message>
-    <message>
-        <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation type="vanished">ຈັດຂໍ້ຄວາມລຽງຕາມເສັ້ນມິຕິເມື່ອຂໍ້ຄວາມຢູ່ພາຍໃນເສັ້ນຊ່ວຍ, ແຕ່ຈະຈັດເປັນແນວນອນເມື່ອຂໍ້ຄວາມຢູ່ນອກເສັ້ນຊ່ວຍ (ຕົວປ່ຽນລະບົບ DIMTIH ແລະ DIMTOH).</translation>
-    </message>
-    <message>
-        <source>Aligned with dimension line</source>
-        <translation type="vanished">ຈັດລຽງຕາມເສັ້ນມິຕິ</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-
-</source>
-        <translation type="vanished">ກຳນົດໄລຍະຫ່າງລະຫວ່າງເສັ້ນມິຕິຂອງການມິຕິແບບອ້າງອີງເສັ້ນຫຼັກ. ປ້ອນໄລຍະຫ່າງ. ສຳລັບຂໍ້ມູນກ່ຽວກັບການມິຕິແບບອ້າງອີງເສັ້ນຫຼັກ, ໃຫ້ເບິ່ງ DIMBASELINE. (ຕົວປ່ຽນລະບົບ DIMDLI)
-</translation>
-    </message>
-    <message>
-        <source>Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If = 0 – draws arrowheads.
-&gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </source>
-        <translation type="vanished">ກຳນົດມິຕິຂອງເສັ້ນຂີດເນີງທີ່ແຕ້ມແທນຫົວລູກສອນ ສຳລັບການມິຕິແບບເສັ້ນຊື່, ລັດສະໝີ, ແລະ ເສັ້ນຜ່ານສູນກາງ. ຖ້າ = 0 – ຈະແຕ້ມຫົວລູກສອນ. &gt;0 – ຈະແຕ້ມເສັ້ນຂີດເນີງແທນຫົວລູກສອນ (ຕົວປ່ຽນ DIMTSZ). </translation>
-    </message>
-    <message>
-        <source>ISO Standard</source>
-        <translation type="vanished">ມາດຕະຖານ ISO</translation>
-    </message>
-    <message>
-        <source>Text Placement</source>
-        <translation type="vanished">ຕຳແໜ່ງຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Controls the dimension text viewing direction. (DIMTXTDIRECTION system variable)</source>
-        <translation type="vanished">ຄວບຄຸມທິດທາງການເບິ່ງຂໍ້ຄວາມມິຕິ. (ຕົວແປລະບົບ DIMTXTDIRECTION)</translation>
-    </message>
-    <message>
-        <source>Left-To-Right</source>
-        <translation type="vanished">ຊ້າຍຫາຂວາ</translation>
-    </message>
-    <message>
-        <source>Right-To-Left</source>
-        <translation type="vanished">ຂວາຫາຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Offset from dim line:</source>
-        <translation type="vanished">ໄລຍະຫ່າງຈາກເສັ້ນມິຕິ:</translation>
-    </message>
-    <message>
-        <source>Horizontal:</source>
-        <translation type="vanished">ແນວນອນ:</translation>
-    </message>
-    <message>
-        <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation type="vanished">ຄວບຄຸມການວາງຕຳແໜ່ງຂໍ້ຄວາມມິຕິໃນແນວນອນຕາມເສັ້ນມິຕິ, ໂດຍສຳພັນກັບເສັ້ນຊ່ວຍມິຕິ. (ຕົວແປລະບົບ DIMJUST)</translation>
-    </message>
-    <message>
-        <source>Centered</source>
-        <translation type="vanished">ຢູ່ກາງ</translation>
-    </message>
-    <message>
-        <source>At Ext Line 1</source>
-        <translation type="vanished">ຢູ່ເສັ້ນຊ່ວຍ 1</translation>
-    </message>
-    <message>
-        <source>At Ext Line 2</source>
-        <translation type="vanished">ຢູ່ເສັ້ນຊ່ວຍ 2</translation>
-    </message>
-    <message>
-        <source>Over Ext Line 1</source>
-        <translation type="vanished">ເທິງເສັ້ນຊ່ວຍ 1</translation>
-    </message>
-    <message>
-        <source>Over Ext Line 2</source>
-        <translation type="vanished">ເທິງເສັ້ນຊ່ວຍ 2</translation>
-    </message>
-    <message>
-        <source>View Direction:</source>
-        <translation type="vanished">ທິດທາງການເບິ່ງ:</translation>
-    </message>
-    <message>
-        <source>Vertical:</source>
-        <translation type="vanished">ແນວຕັ້ງ:</translation>
-    </message>
-    <message>
-        <source>Controls the vertical placement of dimension text in relation to the dimension line. (DIMTAD system variable)</source>
-        <translation type="vanished">ຄວບຄຸມການວາງຕຳແໜ່ງຂໍ້ຄວາມມິຕິໃນແນວຕັ້ງ ໂດຍສຳພັນກັບເສັ້ນມິຕິ. (ຕົວແປລະບົບ DIMTAD)</translation>
-    </message>
-    <message>
-        <source>Above</source>
-        <translation type="vanished">ທາງເທິງ</translation>
-    </message>
-    <message>
-        <source>Outside</source>
-        <translation type="vanished">ທາງນອກ</translation>
-    </message>
-    <message>
-        <source>JIS</source>
-        <translation type="vanished">JIS</translation>
-    </message>
-    <message>
-        <source>Below</source>
-        <translation type="vanished">ທາງລຸ່ມ</translation>
-    </message>
-    <message>
-        <source>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not &quot;Centered&quot; (DIMTVP variable).</source>
-        <translation type="vanished">ຕຳແໜ່ງຂໍ້ຄວາມໃນແນວຕັ້ງ ເທິງ ຫຼື ລຸ່ມເສັ້ນມິຕິ ຫາກການວາງແນວຕັ້ງ (DIMTAD) ບໍ່ແມ່ນ &quot;ຢູ່ກາງ&quot; (ຕົວແປ DIMTVP).</translation>
-    </message>
-    <message>
-        <source>Broken dim line text gap:</source>
-        <translation type="vanished">ໄລຍະຫ່າງຂໍ້ຄວາມເມື່ອເສັ້ນມິຕິຂາດ:</translation>
-    </message>
-    <message>
-        <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation type="vanished">ກຳນົດໄລຍະຫ່າງຂໍ້ຄວາມ, ເຊິ່ງແມ່ນໄລຍະອ້ອມຮອບຂໍ້ຄວາມມິຕິ ເມື່ອເສັ້ນມິຕິຖືກຕັດອອກເພື່ອວາງຂໍ້ຄວາມ (ຕົວແປລະບົບ DIMGAP).</translation>
-    </message>
-    <message>
-        <source>Fit</source>
-        <translation type="vanished">ປັບໃຫ້ພໍດີ</translation>
-    </message>
-    <message>
-        <source>Fine tuning</source>
-        <translation type="vanished">ການປັບແຕ່ງລະອຽດ</translation>
-    </message>
-    <message>
-        <source>Ignores any horizontal justification settings and places the text at the position you specify at the Dimension Line Location prompt. (DIMUPT system variable)</source>
-        <translation type="vanished">ລະເວັ້ນການຕັ້ງຄ່າການຈັດວາງແນວນອນ ແລະ ວາງຂໍ້ຄວາມໃນຕຳແໜ່ງທີ່ທ່ານລະບຸຕອນກຳນົດເສັ້ນມິຕິ. (ຕົວແປລະບົບ DIMUPT)</translation>
-    </message>
-    <message>
-        <source>Place text manually</source>
-        <translation type="vanished">ວາງຂໍ້ຄວາມດ້ວຍຕົນເອງ</translation>
-    </message>
-    <message>
-        <source>Draws dimension lines between the measured points even when the arrowheads are placed outside the measured points. (DIMTOFL system variable)</source>
-        <translation type="vanished">ແຕ້ມເສັ້ນມິຕິລະຫວ່າງຈຸດທີ່ແທກ ເຖິງວ່າຫົວລູກສອນຈະຖືກວາງຢູ່ນອກຈຸດແທກກໍຕາມ. (ຕົວແປລະບົບ DIMTOFL)</translation>
-    </message>
-    <message>
-        <source>Draw dim line betwen ext lines</source>
-        <translation type="vanished">ແຕ້ມເສັ້ນມິຕິລະຫວ່າງເສັ້ນຊ່ວຍ</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">ມາດຕາສ່ວນ</translation>
-    </message>
-    <message>
-        <source>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</source>
-        <translation type="vanished">ກຳນົດມາດຕາສ່ວນໃຫ້ກັບການຕັ້ງຄ່າມິຕິທັງໝົດທີ່ກ່ຽວກັບມິຕິ, ໄລຍະຫ່າງ, ລວມທັງຂະໜາດຂໍ້ຄວາມ ແລະ ຫົວລູກສອນ. ມາດຕາສ່ວນນີ້ຈະບໍ່ປ່ຽນຄ່າການແທກຕົວຈິງ. (ຕົວແປລະບົບ DIMSCALE)</translation>
-    </message>
-    <message>
-        <source>Use overall scale of:</source>
-        <translation type="vanished">ໃຊ້ມາດຕາສ່ວນລວມຂອງ:</translation>
-    </message>
-    <message>
-        <source>Determines a scale factor based on the scaling between the current model space viewport and paper space. (DIMSCALE system variable)</source>
-        <translation type="vanished">ກຳນົດມາດຕາສ່ວນໂດຍອີງຕາມການປັບສ່ວນລະຫວ່າງ Model Space ແລະ Paper Space. (ຕົວແປລະບົບ DIMSCALE)</translation>
-    </message>
-    <message>
-        <source>Scale to layout</source>
-        <translation type="vanished">ປັບມາດຕາສ່ວນຕາມ Layout</translation>
-    </message>
-    <message>
-        <source>If selected, moves the dimension line whenever dimension text is moved. (DIMTMOVE system variable)</source>
-        <translation type="vanished">ຫາກເລືອກ, ເສັ້ນມິຕິຈະຍ້າຍຕາມທຸກຄັ້ງທີ່ຍ້າຍຂໍ້ຄວາມມິຕິ. (ຕົວແປລະບົບ DIMTMOVE)</translation>
-    </message>
-    <message>
-        <source>Beside the dimention line</source>
-        <translation type="vanished">ຂ້າງເສັ້ນມິຕິ</translation>
-    </message>
-    <message>
-        <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation type="vanished">ຫາກເລືອກ, ເສັ້ນມິຕິຈະບໍ່ຍ້າຍຕາມເມື່ອຍ້າຍຂໍ້ຄວາມ. ຫາກຂໍ້ຄວາມຖືກຍ້າຍຫ່າງອອກຈາກເສັ້ນມິຕິ, ຈະມີເສັ້ນຊີ້ (Leader) ເຊື່ອມຕໍ່ຂໍ້ຄວາມຫາເສັ້ນມິຕິ. (ຕົວແປລະບົບ DIMTMOVE)</translation>
-    </message>
-    <message>
-        <source>Over dimension line, with leader</source>
-        <translation type="vanished">ເທິງເສັ້ນມິຕິ, ພ້ອມເສັ້ນຊີ້</translation>
-    </message>
-    <message>
-        <source>When text is not in the default position, place it:</source>
-        <translation type="vanished">ເມື່ອຂໍ້ຄວາມບໍ່ໄດ້ຢູ່ໃນຕຳແໜ່ງເລີ່ມຕົ້ນ, ໃຫ້ວາງມັນ:</translation>
-    </message>
-    <message>
-        <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation type="vanished">ຫາກເລືອກ, ເສັ້ນມິຕິຈະບໍ່ຍ້າຍຕາມເມື່ອຍ້າຍຂໍ້ຄວາມ. ຂໍ້ຄວາມທີ່ຍ້າຍຫ່າງອອກໄປຈະບໍ່ມີເສັ້ນຊີ້ເຊື່ອມຕໍ່ຫາເສັ້ນມິຕິ. (ຕົວແປລະບົບ DIMTMOVE)</translation>
-    </message>
-    <message>
-        <source>Over dimension line, without leader</source>
-        <translation type="vanished">ເທິງເສັ້ນມິຕິ, ບໍ່ມີເສັ້ນຊີ້</translation>
-    </message>
-    <message>
-        <source>Fit Options</source>
-        <translation type="vanished">ຕົວເລືອກການປັບໃຫ້ພໍດີ</translation>
-    </message>
-    <message>
-        <source>If there isn&apos;t enough room to place both text and arrow inside extension lines, the first thing to move outside the extension lines is:</source>
-        <translation type="vanished">ຫາກບໍ່ມີບ່ອນພໍທີ່ຈະວາງທັງຂໍ້ຄວາມ ແລະ ລູກສອນໄວ້ໃນເສັ້ນຊ່ວຍ, ສິ່ງທຳອິດທີ່ຈະຍ້າຍອອກໄປນອກເສັ້ນຊ່ວຍຄື:</translation>
-    </message>
-    <message>
-        <source>Suppresses arrowheads if not enough space is available inside the extension lines. (DIMSOXD system variable)</source>
-        <translation type="vanished">ຕັດຫົວລູກສອນອອກ ຫາກບໍ່ມີບ່ອນພໍພາຍໃນເສັ້ນຊ່ວຍ. (ຕົວແປລະບົບ DIMSOXD)</translation>
-    </message>
-    <message>
-        <source>Suppress arrows if they don&apos;t fit inside extension lines</source>
-        <translation type="vanished">ຕັດລູກສອນອອກ ຫາກບໍ່ພໍດີພາຍໃນເສັ້ນຊ່ວຍ</translation>
-    </message>
-    <message>
-        <source>When not enough space is available for text and arrowheads, moves both outside the extension lines (DIMATFIT system variable).</source>
-        <translation type="vanished">ເມື່ອບໍ່ມີບ່ອນພໍສຳລັບຂໍ້ຄວາມ ແລະ ຫົວລູກສອນ, ໃຫ້ຍ້າຍທັງສອງອອກໄປນອກເສັ້ນຊ່ວຍ. (ຕົວແປລະບົບ DIMATFIT)</translation>
-    </message>
-    <message>
-        <source>Both text and arrows</source>
-        <translation type="vanished">ທັງຂໍ້ຄວາມ ແລະ ລູກສອນ</translation>
-    </message>
-    <message>
-        <source>Moves either the text or the arrowheads outside the extension lines based on the best fit (DIMATFIT system variable).</source>
-        <translation type="vanished">ຍ້າຍຂໍ້ຄວາມ ຫຼື ຫົວລູກສອນອອກໄປນອກເສັ້ນຊ່ວຍ ໂດຍພິຈາລະນາຕາມຄວາມເໝາະສົມທີ່ສຸດ. (ຕົວແປລະບົບ DIMATFIT)</translation>
-    </message>
-    <message>
-        <source>Either text or arrows (best fit)</source>
-        <translation type="vanished">ຂໍ້ຄວາມ ຫຼື ລູກສອນ (ຕາມຄວາມເໝາະສົມ)</translation>
-    </message>
-    <message>
-        <source>Moves arrowheads outside the extension lines first, then text (DIMATFIT system variable).</source>
-        <translation type="vanished">ຍ້າຍຫົວລູກສອນອອກໄປນອກເສັ້ນຊ່ວຍກ່ອນ, ແລ້ວຈຶ່ງຕາມດ້ວຍຂໍ້ຄວາມ. (ຕົວແປລະບົບ DIMATFIT)</translation>
-    </message>
-    <message>
-        <source>Arrows</source>
-        <translation type="vanished">ລູກສອນ</translation>
-    </message>
-    <message>
-        <source>Moves text outside the extension lines first, then arrowheads (DIMATFIT system variable).</source>
-        <translation type="vanished">ຍ້າຍຂໍ້ຄວາມອອກໄປນອກເສັ້ນຊ່ວຍກ່ອນ, ແລ້ວຈຶ່ງຕາມດ້ວຍຫົວລູກສອນ. (ຕົວແປລະບົບ DIMATFIT)</translation>
-    </message>
-    <message>
-        <source>Always places text between extension lines. (DIMTIX system variable)</source>
-        <translation type="vanished">ວາງຂໍ້ຄວາມໄວ້ລະຫວ່າງເສັ້ນຊ່ວຍສະເໝີ. (ຕົວແປລະບົບ DIMTIX)</translation>
-    </message>
-    <message>
-        <source>Always fit text between ext lines</source>
-        <translation type="vanished">ວາງຂໍ້ຄວາມລະຫວ່າງເສັ້ນຊ່ວຍສະເໝີ</translation>
-    </message>
-    <message>
-        <source>Primary Units</source>
-        <translation type="vanished">ຫົວໜ່ວຍຫຼັກ</translation>
-    </message>
-    <message>
-        <source>Angular Dimensions</source>
-        <translation type="vanished">ມິຕິເຊີງມຸມ</translation>
-    </message>
-    <message>
-        <source>Precision:</source>
-        <translation type="vanished">ຄວາມລະອຽດ:</translation>
-    </message>
-    <message>
-        <source>Zero suppression</source>
-        <translation type="vanished">ການຕັດເລກສູນ</translation>
-    </message>
-    <message>
-        <source>Controls the suppression of leading zeros (DIMAZIN system variable)</source>
-        <translation type="vanished">ຄວບຄຸມການຕັດເລກສູນທາງໜ້າ (ຕົວແປລະບົບ DIMAZIN)</translation>
-    </message>
-    <message>
-        <source>Leading</source>
-        <translation type="vanished">ເລກສູນທາງໜ້າ</translation>
-    </message>
-    <message>
-        <source>Controls the suppression of  trailing zeros. (DIMAZIN system variable)</source>
-        <translation type="vanished">ຄວບຄຸມການຕັດເລກສູນທາງຫຼັງ. (ຕົວແປລະບົບ DIMAZIN)</translation>
-    </message>
-    <message>
-        <source>Trailing</source>
-        <translation type="vanished">ເລກສູນທາງຫຼັງ</translation>
-    </message>
-    <message>
-        <source>Unit Format:</source>
-        <translation type="vanished">ຮູບແບບຫົວໜ່ວຍ:</translation>
-    </message>
-    <message>
-        <source>Sets the number of decimal places for angular dimensions. DIMADEC system variable)</source>
-        <translation type="vanished">ກຳນົດຈຳນວນຕຳແໜ່ງທົດສະນິຍົມສຳລັບມິຕິເຊີງມຸມ. (ຕົວແປລະບົບ DIMADEC)</translation>
-    </message>
-    <message>
-        <source>Sets the angular units format. (DIMAUNIT system variable)</source>
-        <translation type="vanished">ກຳນົດຮູບແບບຫົວໜ່ວຍເຊີງມຸມ. (ຕົວແປລະບົບ DIMAUNIT)</translation>
-    </message>
-    <message>
-        <source>Linear Dimensions</source>
-        <translation type="vanished">ມິຕິແນວຊື່</translation>
-    </message>
-    <message>
-        <source>Measurement scale</source>
-        <translation type="vanished">ມາດຕາສ່ວນການແທກ</translation>
-    </message>
-    <message>
-        <source>Scale factor:</source>
-        <translation type="vanished">ຕົວຄູນມາດຕາສ່ວນ:</translation>
-    </message>
-    <message>
-        <source>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</source>
-        <translation type="vanished">ກຳນົດຕົວຄູນມາດຕາສ່ວນສຳລັບການແທກມິຕິແນວຊື່. ແນະນຳໃຫ້ບໍ່ປ່ຽນຄ່ານີ້ຈາກຄ່າເລີ່ມຕົ້ນ 1.00. (ຕົວແປລະບົບ DIMLFAC)</translation>
-    </message>
-    <message>
-        <source>Applies the measurement scale factor only to dimensions created in layout viewports. </source>
-        <translation type="vanished">ນຳໃຊ້ຕົວຄູນມາດຕາສ່ວນການວັດແທກ ສະເພາະກັບມິຕິທີ່ສ້າງຂຶ້ນໃນວິວພອດຂອງໜ້າຈັດວາງ (layout viewports) ເທົ່ານັ້ນ. </translation>
-    </message>
-    <message>
-        <source>Apply to layout dimensions only</source>
-        <translation type="vanished">ນຳໃຊ້ກັບມິຕິໃນ Layout ເທົ່ານັ້ນ</translation>
-    </message>
-    <message>
-        <source>Fraction format:</source>
-        <translation type="vanished">ຮູບແບບເສດສ່ວນ:</translation>
-    </message>
-    <message>
-        <source>Round off:</source>
-        <translation type="vanished">ການປັດເສດ:</translation>
-    </message>
-    <message>
-        <source>Decimal separator:</source>
-        <translation type="vanished">ເຄື່ອງໝາຍແຍກທົດສະນິຍົມ:</translation>
-    </message>
-    <message>
-        <source>Includes a suffix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation type="vanished">ລວມຄຳຕໍ່ທ້າຍທີ່ທ່ານລະບຸໄວ້ໃນຂໍ້ຄວາມມິຕິ. (ຕົວແປລະບົບ DIMPOST)</translation>
-    </message>
-    <message>
-        <source>Sets the current units format for all dimension types except Angular. (DIMLUNIT system variable)</source>
-        <translation type="vanished">ກຳນົດຮູບແບບຫົວໜ່ວຍສຳລັບມິຕິທຸກປະເພດ ຍົກເວັ້ນມິຕິເຊີງມຸມ. (ຕົວແປລະບົບ DIMLUNIT)</translation>
-    </message>
-    <message>
-        <source>Prefix:</source>
-        <translation type="vanished">ຄຳນຳໜ້າ:</translation>
-    </message>
-    <message>
-        <source>Sets the separator for decimal formats. (DIMDSEP system variable)</source>
-        <translation type="vanished">ກຳນົດເຄື່ອງໝາຍແຍກສຳລັບຮູບແບບທົດສະນິຍົມ. (ຕົວແປລະບົບ DIMDSEP)</translation>
-    </message>
-    <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation type="vanished">&apos;.&apos; (ຈຳເມັດ)</translation>
-    </message>
-    <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation type="vanished">&apos;,&apos; (ຈຸດ)</translation>
-    </message>
-    <message>
-        <source>Sets nearest rounding value for dimension measurements for all dimension types except Angular. (DIMRND system variable)</source>
-        <translation type="vanished">ກຳນົດຄ່າການປັດເສດທີ່ໃກ້ຄຽງທີ່ສຸດສຳລັບມິຕິທຸກປະເພດ ຍົກເວັ້ນມິຕິເຊີງມຸມ. (ຕົວແປລະບົບ DIMRND)</translation>
-    </message>
-    <message>
-        <source>Displays and sets the number of decimal places in the dimension text. (DIMDEC system variable)</source>
-        <translation type="vanished">ສະແດງ ແລະ ກຳນົດຈຳນວນຕຳແໜ່ງທົດສະນິຍົມໃນຂໍ້ຄວາມມິຕິ. (ຕົວແປລະບົບ DIMDEC)</translation>
-    </message>
-    <message>
-        <source>Includes a prefix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation type="vanished">ລວມຄຳນຳໜ້າທີ່ທ່ານລະບຸໄວ້ໃນຂໍ້ຄວາມມິຕິ. (ຕົວແປລະບົບ DIMPOST)</translation>
-    </message>
-    <message>
-        <source>Sets the format for fractions. (DIMFRAC system variable)</source>
-        <translation type="vanished">ກຳນົດຮູບແບບສຳລັບເສດສ່ວນ. (ຕົວແປລະບົບ DIMFRAC)</translation>
-    </message>
-    <message>
-        <source>Diagonal Stacked</source>
-        <translation type="vanished">ຊ້ອນກັນແນວທະແຍງ</translation>
-    </message>
-    <message>
-        <source>Not Stacked</source>
-        <translation type="vanished">ບໍ່ຊ້ອນກັນ</translation>
-    </message>
-    <message>
-        <source>Suffix:</source>
-        <translation type="vanished">ຄຳຕໍ່ທ້າຍ:</translation>
-    </message>
-    <message>
-        <source>Sub-units factor:</source>
-        <translation type="vanished">ຕົວຄູນຫົວໜ່ວຍຍ່ອຍ:</translation>
-    </message>
-    <message>
-        <source>Suppresses trailing zeros in all decimal dimensions. (DIMZIN system variable)</source>
-        <translation type="vanished">ຕັດເລກສູນທາງຫຼັງໃນມິຕິທົດສະນິຍົມທັງໝົດ. (ຕົວແປລະບົບ DIMZIN)</translation>
-    </message>
-    <message>
-        <source> Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMZIN system variable)</source>
-        <translation type="vanished"> ບໍ່ສະແດງສ່ວນຂອງນິ້ວ ໃນການມິຕິແບບຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງເປັນຈຳນວນຖ້ວນຂອງຟຸດ (ຕົວປ່ຽນລະບົບ DIMZIN).</translation>
-    </message>
-    <message>
-        <source>0 inches</source>
-        <translation type="vanished">0 ນິ້ວ</translation>
-    </message>
-    <message>
-        <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than one foot.  (DIMZIN system variable)</source>
-        <translation type="vanished">ຕັດສ່ວນຟຸດອອກໃນມິຕິແບບ ຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງນ້ອຍກວ່າໜຶ່ງຟຸດ. (ຕົວແປລະບົບ DIMZIN)</translation>
-    </message>
-    <message>
-        <source>0 feet</source>
-        <translation type="vanished">0 ຟຸດ</translation>
-    </message>
-    <message>
-        <source>Suppresses leading zeros in all decimal dimensions (DIMZIN system variable)</source>
-        <translation type="vanished">ຕັດເລກສູນທາງໜ້າໃນມິຕິທົດສະນິຍົມທັງໝົດ. (ຕົວແປລະບົບ DIMZIN)</translation>
-    </message>
-    <message>
-        <source>Sub-unit suffix:</source>
-        <translation type="vanished">ຄຳຕໍ່ທ້າຍຫົວໜ່ວຍຍ່ອຍ:</translation>
-    </message>
-    <message>
-        <source>Sets the number of sub units to a unit. It is used to calculate the dimension distance in a sub unit when the distance is less than one unit. </source>
-        <translation type="vanished">ກຳນົດຈຳນວນຫົວໜ່ວຍຍ່ອຍຕໍ່ໜຶ່ງຫົວໜ່ວຍ. ໃຊ້ເພື່ອຄຳນວນໄລຍະມິຕິໃນຫົວໜ່ວຍຍ່ອຍ ເມື່ອໄລຍະຫ່າງນ້ອຍກວ່າໜຶ່ງຫົວໜ່ວຍ. </translation>
-    </message>
-    <message>
-        <source>Includes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</source>
-        <translation type="vanished">ລວມຄຳຕໍ່ທ້າຍໃຫ້ກັບຄ່າຫົວໜ່ວຍຍ່ອຍຂອງມິຕິ. ທ່ານສາມາດປ້ອນຂໍ້ຄວາມ ຫຼື ລະຫັດຄວບຄຸມເພື່ອສະແດງສັນຍະລັກພິເສດ.</translation>
-    </message>
-    <message>
-        <source>Alternate Units</source>
-        <translation type="vanished">ຫົວໜ່ວຍສຳຮອງ</translation>
-    </message>
-    <message>
-        <source>Adds alternate measurement units to dimension text. Sets the DIMALT system variable to 1.</source>
-        <translation type="vanished">ເພີ່ມຫົວໜ່ວຍການແທກສຳຮອງໃຫ້ກັບຂໍ້ຄວາມມິຕິ. (ກຳນົດຕົວແປລະບົບ DIMALT ເປັນ 1)</translation>
-    </message>
-    <message>
-        <source>Display alternate units</source>
-        <translation type="vanished">ສະແດງຫົວໜ່ວຍສຳຮອງ</translation>
-    </message>
-    <message>
-        <source>Alternate units</source>
-        <translation type="vanished">ຫົວໜ່ວຍສຳຮອງ</translation>
-    </message>
-    <message>
-        <source>Specifies the multiplier used as the conversion factor between primary and alternate units.For example, to convert inches to millimeters, enter 25.4. The value has no effect on angular dimensions, and it is not applied to the rounding value or the plus or minus tolerance values. (DIMALTF system variable)</source>
-        <translation type="vanished">ລະບຸຕົວຄູນທີ່ໃຊ້ໃນການແປງຫົວໜ່ວຍລະຫວ່າງຫົວໜ່ວຍຫຼັກ ແລະ ສຳຮອງ. ຕົວຢ່າງ: ແປງນິ້ວເປັນມິນລີແມັດ ໃຫ້ປ້ອນ 25.4. (ຕົວແປລະບົບ DIMALTF)</translation>
-    </message>
-    <message>
-        <source>Multiplier for alt units:</source>
-        <translation type="vanished">ຕົວຄູນສຳລັບຫົວໜ່ວຍສຳຮອງ:</translation>
-    </message>
-    <message>
-        <source>Sets rounding rules for alternate units for all dimension types except Angular. If you enter a value of 0.25, all alternate measurements are rounded to the nearest 0.25 unit. If you enter a value of 1.0, all dimension measurements are rounded to the nearest integer. The number of digits displayed after the decimal point depends on the Precision setting. (DIMALTRND system variable)</source>
-        <translation type="vanished">ກຳນົດກົດການປັດເສດສຳລັບຫົວໜ່ວຍສຳຮອງຂອງມິຕິທຸກປະເພດ ຍົກເວັ້ນມິຕິເຊີງມຸມ. (ຕົວແປລະບົບ DIMALTRND)</translation>
-    </message>
-    <message>
-        <source>Sets the unit format for alternate units. (DIMALTU system variable)</source>
-        <translation type="vanished">ກຳນົດຮູບແບບຫົວໜ່ວຍສຳລັບຫົວໜ່ວຍສຳຮອງ. (ຕົວແປລະບົບ DIMALTU)</translation>
-    </message>
-    <message>
-        <source>Placement</source>
-        <translation type="vanished">ການວາງຕຳແໜ່ງ</translation>
-    </message>
-    <message>
-        <source>Places alternate units after the primary units in dimension text.</source>
-        <translation type="vanished">ວາງຫົວໜ່ວຍສຳຮອງຕໍ່ທ້າຍຫົວໜ່ວຍຫຼັກໃນຂໍ້ຄວາມມິຕິ.</translation>
-    </message>
-    <message>
-        <source>After primary value</source>
-        <translation type="vanished">ຕໍ່ທ້າຍຄ່າຫຼັກ</translation>
-    </message>
-    <message>
-        <source>Places alternate units below the primary units in dimension text.</source>
-        <translation type="vanished">ວາງຫົວໜ່ວຍສຳຮອງໄວ້ລຸ່ມຫົວໜ່ວຍຫຼັກໃນຂໍ້ຄວາມມິຕິ.</translation>
-    </message>
-    <message>
-        <source>Below primary value</source>
-        <translation type="vanished">ຢູ່ລຸ່ມຄ່າຫຼັກ</translation>
-    </message>
-    <message>
-        <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation type="vanished">ລວມຄຳນຳໜ້າໃນຂໍ້ຄວາມມິຕິສຳຮອງ. ທ່ານສາມາດປ້ອນຂໍ້ຄວາມ ຫຼື ລະຫັດຄວບຄຸມເພື່ອສະແດງສັນຍະລັກພິເສດ. (ຕົວແປລະບົບ DIMAPOST)</translation>
-    </message>
-    <message>
-        <source>Round distances to:</source>
-        <translation type="vanished">ປັດເສດໄລຍະຫ່າງເປັນ:</translation>
-    </message>
-    <message>
-        <source>Suppresses leading zeros in all decimal dimensions. For example, 0.5000 becomes .5000.</source>
-        <translation type="vanished">ຕັດເລກສູນທາງໜ້າໃນມິຕິທົດສະນິຍົມທັງໝົດ. ຕົວຢ່າງ: 0.5000 ຈະກາຍເປັນ .5000.</translation>
-    </message>
-    <message>
-        <source>Suppresses trailing zeros in all decimal dimensions. For example, 12.5000 becomes 12.5, and 30.0000 becomes 30 (DIMALTZ system variable).</source>
-        <translation type="vanished">ຕັດເລກສູນທາງຫຼັງໃນມິຕິທົດສະນິຍົມທັງໝົດ. ຕົວຢ່າງ: 12.5000 ຈະກາຍເປັນ 12.5. (ຕົວແປລະບົບ DIMALTZ)</translation>
-    </message>
-    <message>
-        <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot. For example, 0&apos;-6 1/2&quot; becomes 6 1/2&quot; (DIMALTZ system variable)</source>
-        <translation type="vanished">ຕັດສ່ວນຟຸດອອກໃນມິຕິແບບ ຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງນ້ອຍກວ່າ 1 ຟຸດ. (ຕົວແປລະບົບ DIMALTZ)</translation>
-    </message>
-    <message>
-        <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet. For example, 1&apos;-0&quot; becomes 1&apos;. (DIMALTZ system variable)</source>
-        <translation type="vanished">ຕັດສ່ວນນິ້ວອອກໃນມິຕິແບບ ຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງເປັນເລກຖ້ວນຂອງຟຸດ. (ຕົວແປລະບົບ DIMALTZ)</translation>
-    </message>
-    <message>
-        <source>Sets the number of decimal places for alternate units. (DIMALTD system variable)</source>
-        <translation type="vanished">ກຳນົດຈຳນວນຕຳແໜ່ງທົດສະນິຍົມສຳລັບຫົວໜ່ວຍສຳຮອງ. (ຕົວແປລະບົບ DIMALTD)</translation>
-    </message>
-    <message>
-        <source>Includes a suffix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the text cm results in dimension text similar to that shown in the illustration. When you enter a suffix, it overrides any default suffixes. (DIMAPOST system variable)</source>
-        <translation type="vanished">ລວມຄຳຕໍ່ທ້າຍໃນຂໍ້ຄວາມມິຕິສຳຮອງ. ທ່ານສາມາດປ້ອນຂໍ້ຄວາມ ຫຼື ລະຫັດຄວບຄຸມເພື່ອສະແດງສັນຍະລັກພິເສດ. (ຕົວແປລະບົບ DIMAPOST)</translation>
-    </message>
-    <message>
-        <source>Tolerances</source>
-        <translation type="vanished">ຄ່າຜິດດ່ຽງທີ່ຍອມຮັບໄດ້</translation>
-    </message>
-    <message>
-        <source>Sets the minimum or lower tolerance value. (DIMTM system variable)</source>
-        <translation type="vanished">ກຳນົດຄ່າຜິດດ່ຽງຕຳ່ສຸດ ຫຼື ຄ່າລຸ່ມ. (ຕົວແປລະບົບ DIMTM)</translation>
-    </message>
-    <message>
-        <source>Suppresses leading zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation type="vanished">ຕັດເລກສູນທາງໜ້າໃນມິຕິທົດສະນິຍົມທັງໝົດ. (ຕົວແປລະບົບ DIMTZIN)</translation>
-    </message>
-    <message>
-        <source>Suppresses trailing zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation type="vanished">ຕັດເລກສູນທາງຫຼັງໃນມິຕິທົດສະນິຍົມທັງໝົດ. (ຕົວແປລະບົບ DIMTZIN)</translation>
-    </message>
-    <message>
-        <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMTZIN system variable). </source>
-        <translation type="vanished">ບໍ່ສະແດງສ່ວນຂອງຟຸດ ໃນການມິຕິແບບຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງນ້ອຍກວ່າ 1 ຟຸດ (ຕົວປ່ຽນລະບົບ DIMTZIN). </translation>
-    </message>
-    <message>
-        <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMTZIN system variable). </source>
-        <translation type="vanished">ບໍ່ສະແດງສ່ວນຂອງນິ້ວ ໃນການມິຕິແບບຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງເປັນຈຳນວນຖ້ວນຂອງຟຸດ (ຕົວປ່ຽນລະບົບ DIMTZIN). </translation>
-    </message>
-    <message>
-        <source>Sets the method for calculating the tolerance. (DIMTOL system variable)</source>
-        <translation type="vanished">ກຳນົດວິທີການຄຳນວນຄ່າຜິດດ່ຽງ. (ຕົວແປລະບົບ DIMTOL)</translation>
-    </message>
-    <message>
-        <source>Symmetrical</source>
-        <translation type="vanished">ແບບສົມມາດ</translation>
-    </message>
-    <message>
-        <source>Deviation</source>
-        <translation type="vanished">ແບບສ່ວນບ່ຽງເບນ</translation>
-    </message>
-    <message>
-        <source>Limits</source>
-        <translation type="vanished">ແບບຂີດຈຳກັດ</translation>
-    </message>
-    <message>
-        <source>Basic</source>
-        <translation type="vanished">ແບບພື້ນຖານ</translation>
-    </message>
-    <message>
-        <source>Controls text justification for symmetrical and deviation tolerances (DIMTOLJ system variable).</source>
-        <translation type="vanished">ຄວບຄຸມການຈັດວາງຂໍ້ຄວາມສຳລັບຄ່າຜິດດ່ຽງແບບສົມມາດ ແລະ ສ່ວນບ່ຽງເບນ. (ຕົວແປລະບົບ DIMTOLJ)</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">ເທິງ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">ຈຸດກາງ</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">ລຸ່ມ</translation>
-    </message>
-    <message>
-        <source>Upper value:</source>
-        <translation type="vanished">ຄ່າສູງສຸດ:</translation>
-    </message>
-    <message>
-        <source>Lower value:</source>
-        <translation type="vanished">ຄ່າຕ່ຳສຸດ:</translation>
-    </message>
-    <message>
-        <source>Sets the number of decimal places. (DIMTDEC system variable)</source>
-        <translation type="vanished">ກຳນົດຈຳນວນຕຳແໜ່ງທົດສະນິຍົມ. (ຕົວແປລະບົບ DIMTDEC)</translation>
-    </message>
-    <message>
-        <source>Sets the maximum or upper tolerance value. When you select Symmetrical in Method, this value is used for the tolerance. (DIMTP system variable)</source>
-        <translation type="vanished">ກຳນົດຄ່າຜິດດ່ຽງສູງສຸດ ຫຼື ຄ່າເທິງ. (ຕົວແປລະບົບ DIMTP)</translation>
-    </message>
-    <message>
-        <source>Method:</source>
-        <translation type="vanished">ວິທີການ:</translation>
-    </message>
-    <message>
-        <source>Vertical position:</source>
-        <translation type="vanished">ຕຳແໜ່ງແນວຕັ້ງ:</translation>
-    </message>
-    <message>
-        <source>Sets the current height for the tolerance text. The ratio of the tolerance height to the main dimension text height is calculated and stored in the DIMTFAC system variable.</source>
-        <translation type="vanished">ກຳນົດຄວາມສູງຂອງຂໍ້ຄວາມຄ່າຜິດດ່ຽງ. (ຕົວແປລະບົບ DIMTFAC)</translation>
-    </message>
-    <message>
-        <source>Scaling for height:</source>
-        <translation type="vanished">ມາດຕາສ່ວນຄວາມສູງ:</translation>
-    </message>
-    <message>
-        <source>Tolerance Adjustment</source>
-        <translation type="vanished">ການປັບແຕ່ງຄ່າຜິດດ່ຽງ</translation>
-    </message>
-    <message>
-        <source>Values are stacked by their decimal separators.</source>
-        <translation type="vanished">ຈັດລຽງຄ່າຊ້ອນກັນຕາມເຄື່ອງໝາຍແຍກທົດສະນິຍົມ.</translation>
-    </message>
-    <message>
-        <source>Align decimal separators</source>
-        <translation type="vanished">ຈັດເຄື່ອງໝາຍແຍກທົດສະນິຍົມໃຫ້ຊື່ກັນ</translation>
-    </message>
-    <message>
-        <source>Values are stacked by their operational symbols.</source>
-        <translation type="vanished">ຈັດລຽງຄ່າຊ້ອນກັນຕາມເຄື່ອງໝາຍການຄຳນວນ.</translation>
-    </message>
-    <message>
-        <source>Align operational symbols</source>
-        <translation type="vanished">ຈັດເຄື່ອງໝາຍການຄຳນວນໃຫ້ຊື່ກັນ</translation>
-    </message>
-    <message>
-        <source>Alternate Unit Tolerance</source>
-        <translation type="vanished">ຄ່າຜິດດ່ຽງຫົວໜ່ວຍສຳຮອງ</translation>
-    </message>
-    <message>
-        <source>Displays and sets the number of decimal places. (DIMALTTD system variable)</source>
-        <translation type="vanished">ສະແດງ ແລະ ກຳນົດຈຳນວນຕຳແໜ່ງທົດສະນິຍົມ. (ຕົວແປລະບົບ DIMALTTD)</translation>
-    </message>
-    <message>
-        <source>Suppresses leading zeros in all decimal dimensions (DIMALTTZ system variable). </source>
-        <translation type="vanished">ບໍ່ສະແດງເລກສູນທາງໜ້າ ໃນທຸກໆມິຕິແບບທົດສະນິຍົມ (ຕົວປ່ຽນລະບົບ DIMALTTZ). </translation>
-    </message>
-    <message>
-        <source>Suppresses trailing zeros in all decimal dimensions (DIMALTTZ system variable).</source>
-        <translation type="vanished">ຕັດເລກສູນທາງຫຼັງໃນມິຕິທົດສະນິຍົມທັງໝົດ. (ຕົວແປລະບົບ DIMALTTZ)</translation>
-    </message>
-    <message>
-        <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMALTTZ system variable).</source>
-        <translation type="vanished">ຕັດສ່ວນຟຸດອອກໃນມິຕິແບບ ຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງນ້ອຍກວ່າ 1 ຟຸດ. (ຕົວແປລະບົບ DIMALTTZ)</translation>
-    </message>
-    <message>
-        <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMALTTZ system variable).</source>
-        <translation type="vanished">ຕັດສ່ວນນິ້ວອອກໃນມິຕິແບບ ຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງເປັນເລກຖ້ວນຂອງຟຸດ. (ຕົວແປລະບົບ DIMALTTZ)</translation>
-    </message>
-    <message>
-        <source>Select Block for arrow</source>
-        <translation type="vanished">ເລືອກ Block ສຳລັບລູກສອນ</translation>
-    </message>
-    <message>
-        <source>User Block...</source>
-        <translation type="vanished">Block ຂອງຜູ້ໃຊ້...</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">ມິຕິ</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">ເລເຢີ</translation>
-    </message>
-    <message>
-        <source>Style</source>
-        <translation type="vanished">ຮູບແບບ (Style)</translation>
-    </message>
-    <message>
-        <source>Apply style to dimension</source>
-        <translation type="vanished">ນຳໃຊ້ຮູບແບບກັບມິຕິ</translation>
-    </message>
-    <message>
-        <source>Select dimension style</source>
-        <translation type="vanished">ເລືອກຮູບແບບມິຕິ</translation>
-    </message>
-    <message>
-        <source>Override entity&apos;s style</source>
-        <translation type="vanished">ຂຽນທັບຮູບແບບຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Remove style override</source>
-        <translation type="vanished">ລຶບການຂຽນທັບຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Edit style override</source>
-        <translation type="vanished">ແກ້ໄຂການຂຽນທັບຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Save style override as independent style.</source>
-        <translation type="vanished">ບັນທຶກການຂຽນທັບຮູບແບບເປັນຮູບແບບອິດສະຫຼະ.</translation>
-    </message>
-    <message>
-        <source>Set style as active one. Active style is applied to newly created dimensions.</source>
-        <translation type="vanished">ກຳນົດຮູບແບບໃຫ້ເປັນອັນທີ່ໃຊ້ງານຢູ່. ຮູບແບບທີ່ໃຊ້ງານຢູ່ຈະຖືກນຳໃຊ້ກັບມິຕິທີ່ສ້າງໃໝ່.</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">ສົ່ງອອກ</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">ນຳເຂົ້າ</translation>
-    </message>
-    <message>
-        <source>Style Info</source>
-        <translation type="vanished">ຂໍ້ມູນຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">ປ້າຍຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Active:</source>
-        <translation type="vanished">ໃຊ້ງານຢູ່:</translation>
-    </message>
-    <message>
-        <source>Active style that is applied when new dimension is created.</source>
-        <translation type="vanished">ຮູບແບບທີ່ໃຊ້ງານຢູ່ ເຊິ່ງຈະຖືກນຳໃຊ້ເມື່ອສ້າງມິຕິໃໝ່.</translation>
-    </message>
-    <message>
-        <source>Overriden:</source>
-        <translation type="vanished">ຖືກຂຽນທັບ:</translation>
-    </message>
-    <message>
-        <source>Indicates whether style is overriden for specific entity (and so is unique for it).</source>
-        <translation type="vanished">ລະບຸວ່າຮູບແບບຖືກຂຽນທັບສຳລັບອົງປະກອບສະເພາະຫຼືບໍ່.</translation>
-    </message>
-    <message>
-        <source>Flip</source>
-        <translation type="vanished">ປີ້ນ</translation>
-    </message>
-    <message>
-        <source>If set, first arrow will be flipped</source>
-        <translation type="vanished">ຫາກກຳນົດ, ລູກສອນທຳອິດຈະຖືກປີ້ນ</translation>
-    </message>
-    <message>
-        <source>Arrow 1</source>
-        <translation type="vanished">ລູກສອນ 1</translation>
-    </message>
-    <message>
-        <source>If set, second arrow will be flipped</source>
-        <translation type="vanished">ຫາກກຳນົດ, ລູກສອນທີສອງຈະຖືກປີ້ນ</translation>
-    </message>
-    <message>
-        <source>Arrow 2</source>
-        <translation type="vanished">ລູກສອນ 2</translation>
-    </message>
-    <message>
-        <source>Name of style for this dimension entity</source>
-        <translation type="vanished">ຊື່ຂອງຮູບແບບສຳລັບອົງປະກອບມິຕິນີ້</translation>
-    </message>
-    <message>
-        <source>Style:</source>
-        <translation type="vanished">ຮູບແບບ:</translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="vanished">ເບິ່ງຕົວຢ່າງ</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="vanished">ມຸມການໝູນຂອງມິຕິ</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="vanished">ອໍດິເນດ (Ordinate)</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="vanished">ມິຕິອໍດິເນດ (Ordinate Dimension)</translation>
-    </message>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">ມິຕິແນວຊື່</translation>
-    </message>
-    <message>
-        <source>Aligned Dimension</source>
-        <translation type="vanished">ມິຕິແນວຂະໜານ</translation>
-    </message>
-    <message>
-        <source>Angular Dimension</source>
-        <translation type="vanished">ມິຕິເຊີງມຸມ</translation>
-    </message>
-    <message>
-        <source>Arc Dimension</source>
-        <translation type="vanished">ມິຕິສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Diametric Dimension</source>
-        <translation type="vanished">ມິຕິເສັ້ນຜ່ານສູນກາງ</translation>
-    </message>
-    <message>
-        <source>Radial Dimension</source>
-        <translation type="vanished">ມິຕິລັດສະໝີ</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
-    </message>
-    <message>
-        <source>Saving Style Override</source>
-        <translation type="vanished">ກຳລັງບັນທຶກການຂຽນທັບຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>New Style Name</source>
-        <translation type="vanished">ຊື່ຮູບແບບໃໝ່</translation>
-    </message>
-    <message>
-        <source>Style with such name already exists, please enter another unique one.</source>
-        <translation type="vanished">ມີຮູບແບບຊື່ນີ້ແລ້ວ, ກະລຸນາປ້ອນຊື່ໃໝ່ທີ່ບໍ່ຊ້ຳກັນ.</translation>
-    </message>
-    <message>
-        <source>New Dimension Style Override - </source>
-        <translation type="vanished">ການຂຽນທັບຮູບແບບມິຕິໃໝ່ - </translation>
-    </message>
-    <message>
-        <source>Edit Dimension Style Override - </source>
-        <translation type="vanished">ແກ້ໄຂການຂຽນທັບຮູບແບບມິຕິ - </translation>
-    </message>
-    <message>
-        <source>View Dimension Style - </source>
-        <translation type="vanished">ເບິ່ງຮູບແບບມິຕິ - </translation>
-    </message>
-    <message>
-        <source>&amp;Apply Style</source>
-        <translation type="vanished">&amp;ນຳໃຊ້ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>&amp;Select Style</source>
-        <translation type="vanished">&amp;ເລືອກຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>&amp;Set as Active</source>
-        <translation type="vanished">&amp;ກຳນົດໃຫ້ໃຊ້ງານຢູ່</translation>
-    </message>
-    <message>
-        <source>&amp;Create override</source>
-        <translation type="vanished">&amp;ສ້າງການຂຽນທັບ</translation>
-    </message>
-    <message>
-        <source>&amp;View Style</source>
-        <translation type="vanished">&amp;ເບິ່ງຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>&amp;Edit override</source>
-        <translation type="vanished">&amp;ແກ້ໄຂການຂຽນທັບ</translation>
-    </message>
-    <message>
-        <source>&amp;Save As Style</source>
-        <translation type="vanished">&amp;ບັນທຶກເປັນຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Override</source>
-        <translation type="vanished">&amp;ລຶບການຂຽນທັບອອກ</translation>
-    </message>
-    <message>
-        <source>E&amp;xport Styles</source>
-        <translation type="vanished">ສ່&amp;ົງອອກຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>&amp;Import Styles</source>
-        <translation type="vanished">&amp;ນຳເຂົ້າຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>YES</source>
-        <translation type="vanished">ແມ່ນ</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation type="vanished">ບໍ່</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgEntityProperties</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">ກ່ອງໂຕ້ຕອບ</translation>
-    </message>
-    <message>
-        <source>Object ID: 121</source>
-        <translation type="vanished">ID ອົງປະກອບ: 121</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">ເລເຢີ</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation type="vanished">ຊື່:</translation>
-    </message>
-    <message>
-        <source>Layer of entity</source>
-        <translation type="vanished">ເລເຢີຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
-    </message>
-    <message>
-        <source>Point Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດຂອງຈຸດ</translation>
-    </message>
-    <message>
-        <source>Line Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດຂອງເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Arc Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດຂອງສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Circle Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດຂອງວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Ellipse Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດຂອງວົງຮີ</translation>
-    </message>
-    <message>
-        <source>Hyperbola Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດຂອງໄຮເປີໂບລາ</translation>
-    </message>
-    <message>
-        <source>Polyline Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດຂອງເສັ້ນຕໍ່ເນື່ອງ (Polyline)</translation>
-    </message>
-    <message>
-        <source>Parabola Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດຂອງພາລາໂບລາ</translation>
-    </message>
-    <message>
-        <source>Spline Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດຂອງເສັ້ນສະປຼາຍ (ເສັ້ນໂຄ້ງສະປຼາຍ)</translation>
-    </message>
-    <message>
-        <source>Spline Points Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດຈຸດຂອງເສັ້ນສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Image Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດຂອງຮູບພາບ</translation>
-    </message>
-    <message>
-        <source>Insert Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດການແຊກ (Insert)</translation>
-    </message>
-    <message>
-        <source>Text Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>MText Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດຂໍ້ຄວາມຫຼາຍແຖວ (MText)</translation>
-    </message>
-    <message>
-        <source>Hatch Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດລວດລາຍ</translation>
-    </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">ຄຸນສົມບັດ?</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgIconsSetup</name>
-    <message>
-        <source>Advanced Icons Styling</source>
-        <translation type="vanished">ການກຳນົດຮູບແບບໄອຄອນຂັ້ນສູງ</translation>
-    </message>
-    <message>
-        <source>Disabled Icon</source>
-        <translation type="vanished">ໄອຄອນທີ່ປິດການໃຊ້ງານ</translation>
-    </message>
-    <message>
-        <source>State ON: </source>
-        <translation type="vanished">ສະຖານະ ເປີດ: </translation>
-    </message>
-    <message>
-        <source>Main color for specfic icon state</source>
-        <translation type="vanished">ສີຫຼັກສຳລັບສະຖານະໄອຄອນສະເພາະ</translation>
-    </message>
-    <message>
-        <source>#00FFFF</source>
-        <translation type="vanished">#00FFFF</translation>
-    </message>
-    <message>
-        <source>Click to select color</source>
-        <translation type="vanished">ຄລິກເພື່ອເລືອກສີ</translation>
-    </message>
-    <message>
-        <source>Accent color for specfic icon state</source>
-        <translation type="vanished">ສີເນັ້ນ (Accent) ສຳລັບສະຖານະໄອຄອນສະເພາະ</translation>
-    </message>
-    <message>
-        <source>State OFF:</source>
-        <translation type="vanished">ສະຖານະ ປິດ:</translation>
-    </message>
-    <message>
-        <source>Background color for specfic icon state</source>
-        <translation type="vanished">ສີພື້ນຫຼັງສຳລັບສະຖານະໄອຄອນສະເພາະ</translation>
-    </message>
-    <message>
-        <source>Generic Colors</source>
-        <translation type="vanished">ສີທົ່ວໄປ</translation>
-    </message>
-    <message>
-        <source>Default Accent color for all states</source>
-        <translation type="vanished">ສີເນັ້ນເລີ່ມຕົ້ນສຳລັບທຸກສະຖານະ</translation>
-    </message>
-    <message>
-        <source>All States</source>
-        <translation type="vanished">ທຸກສະຖານະ</translation>
-    </message>
-    <message>
-        <source>Default Main color all states</source>
-        <translation type="vanished">ສີຫຼັກເລີ່ມຕົ້ນສຳລັບທຸກສະຖານະ</translation>
-    </message>
-    <message>
-        <source>Default Background color for all states</source>
-        <translation type="vanished">ສີພື້ນຫຼັງເລີ່ມຕົ້ນສຳລັບທຸກສະຖານະ</translation>
-    </message>
-    <message>
-        <source>Active Icon</source>
-        <translation type="vanished">ໄອຄອນທີ່ກຳລັງໃຊ້ງານ</translation>
-    </message>
-    <message>
-        <source>Selected Icon</source>
-        <translation type="vanished">ໄອຄອນທີ່ຖືກເລືອກ</translation>
-    </message>
-    <message>
-        <source>Main Color    |  Accent Color   |  Back Color</source>
-        <translation type="vanished">ສີຫຼັກ | ສີເນັ້ນ | ສີພື້ນຫຼັງ</translation>
-    </message>
-    <message>
-        <source>Reset to Defaults</source>
-        <translation type="vanished">ຄືນຄ່າເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
-        <source>Normal Icon</source>
-        <translation type="vanished">ໄອຄອນປົກກະຕີ</translation>
-    </message>
-    <message>
-        <source>Select Color</source>
-        <translation type="vanished">ເລືອກສີ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgMenuAssigner</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">ກ່ອງໂຕ້ຕອບ</translation>
-    </message>
-    <message>
-        <source> Click with desired combination to set invocation shortcut. </source>
-        <translation type="vanished"> ຄລິກຮ່ວມກັບປຸ່ມທີ່ຕ້ອງການເພື່ອຕັ້ງປຸ່ມລັດ. </translation>
-    </message>
-    <message>
-        <source>Invocation Shortcut (click to set components)</source>
-        <translation type="vanished">ປຸ່ມລັດການເອີ້ນໃຊ້ (ຄລິກເພື່ອຕັ້ງຄ່າ)</translation>
-    </message>
-    <message>
-        <source>Resulting invocation shortcut. Click with desired combination to set. </source>
-        <translation type="vanished">ປຸ່ມລັດທີ່ໄດ້. ຄລິກຮ່ວມກັບປຸ່ມທີ່ຕ້ອງການເພື່ອຕັ້ງຄ່າ. </translation>
-    </message>
-    <message>
-        <source>CTRL+ALT+SHIFT+Middle Button Double-Click</source>
-        <translation type="vanished">CTRL+ALT+SHIFT+ດັບເບິນຄລິກປຸ່ມກາງ</translation>
-    </message>
-    <message>
-        <source>Note:</source>
-        <translation type="vanished">ໝາຍເຫດ:</translation>
-    </message>
-    <message>
-        <source>This shortcut is already assigned to &quot;Dimensions My&quot; menu!</source>
-        <translation type="vanished">ປຸ່ມລັດນີ້ຖືກໃຊ້ສຳລັບເມນູ &quot;Dimensions My&quot; ແລ້ວ!</translation>
-    </message>
-    <message>
-        <source>Entity Context</source>
-        <translation type="vanished">ບໍລິບົດຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Applicable if invoked for:</source>
-        <translation type="vanished">ນຳໃຊ້ໄດ້ຫາກເອີ້ນໃຊ້ສຳລັບ:</translation>
-    </message>
-    <message>
-        <source>Defines the context for menu and whether click on specific entity will trigger menu invocation. </source>
-        <translation type="vanished">ກຳນົດບໍລິບົດສຳລັບເມນູ ແລະ ກຳນົດວ່າການຄລິກໃສ່ອົງປະກອບໃດໜຶ່ງຈະເປັນການເອີ້ນໃຊ້ເມນູຫຼືບໍ່. </translation>
-    </message>
-    <message>
-        <source>Defines type of mouse click for invocation</source>
-        <translation type="vanished">ກຳນົດປະເພດການຄລິກເມົ້າສຳລັບການເອີ້ນໃຊ້</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation type="vanished">ເຫດການ</translation>
-    </message>
-    <message>
-        <source>Single Click (Release)</source>
-        <translation type="vanished">ຄລິກບາດດຽວ (ປ່ອຍ)</translation>
-    </message>
-    <message>
-        <source>Double Click</source>
-        <translation type="vanished">ດັບເບິນຄລິກ</translation>
-    </message>
-    <message>
-        <source>Specify pressed key modifier(s)</source>
-        <translation type="vanished">ລະບຸປຸ່ມເສີມທີ່ກົດ (Modifiers)</translation>
-    </message>
-    <message>
-        <source>Key</source>
-        <translation type="vanished">ປຸ່ມ</translation>
-    </message>
-    <message>
-        <source>CTRL</source>
-        <translation type="vanished">CTRL</translation>
-    </message>
-    <message>
-        <source>SHIFT</source>
-        <translation type="vanished">SHIFT</translation>
-    </message>
-    <message>
-        <source>ALT</source>
-        <translation type="vanished">ALT</translation>
-    </message>
-    <message>
-        <source>Defines which mouse button is part of menu invocation</source>
-        <translation type="vanished">ກຳນົດວ່າປຸ່ມເມົ້າໃດເປັນສ່ວນໜຶ່ງຂອງການເອີ້ນໃຊ້ເມນູ</translation>
-    </message>
-    <message>
-        <source>Mouse Button</source>
-        <translation type="vanished">ປຸ່ມເມົ້າ</translation>
-    </message>
-    <message>
-        <source>Left </source>
-        <translation type="vanished">ຊ້າຍ </translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">ຈຸດກາງ</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">ຂວາ</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">ກັບຄືນ</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation type="vanished">ໄປໜ້າ</translation>
-    </message>
-    <message>
-        <source>Task</source>
-        <translation type="vanished">ວຽກ</translation>
-    </message>
-    <message>
-        <source>Menu Assignment - &quot;%1&quot; Menu</source>
-        <translation type="vanished">ການກຳນົດເມນູ - ເມນູ &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Either Absent or Any Entity</source>
-        <translation type="vanished">ບໍ່ມີອົງປະກອບ ຫຼື ອົງປະກອບໃດໆກໍຕາມ</translation>
-    </message>
-    <message>
-        <source>Absent Entity</source>
-        <translation type="vanished">ບໍ່ມີອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Any Entity</source>
-        <translation type="vanished">ອົງປະກອບໃດໆກໍຕາມ</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">ວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">ເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Spline By Points</source>
-        <translation type="vanished">ເສັ້ນສະປຼາຍຕາມຈຸດ</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">ວົງລີ</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">ຈຸດ</translation>
-    </message>
-    <message>
-        <source>Parabola</source>
-        <translation type="vanished">ພາລາໂບລາ</translation>
-    </message>
-    <message>
-        <source>Image</source>
-        <translation type="vanished">ຮູບພາບ</translation>
-    </message>
-    <message>
-        <source>Hatch</source>
-        <translation type="vanished">ລວດລາຍ</translation>
-    </message>
-    <message>
-        <source>Insert</source>
-        <translation type="vanished">ແຊກ</translation>
-    </message>
-    <message>
-        <source>Dimension Linear</source>
-        <translation type="vanished">ມິຕິແນວຊື່</translation>
-    </message>
-    <message>
-        <source>Dimension Aligned</source>
-        <translation type="vanished">ມິຕິແນວຂະໜານ</translation>
-    </message>
-    <message>
-        <source>Dimension Diametric</source>
-        <translation type="vanished">ມິຕິເສັ້ນຜ່ານສູນກາງ</translation>
-    </message>
-    <message>
-        <source>Dimension Radial</source>
-        <translation type="vanished">ມິຕິລັດສະໝີ</translation>
-    </message>
-    <message>
-        <source>Dimension Ordinate</source>
-        <translation type="vanished">ມິຕິອໍດິເນດ</translation>
-    </message>
-    <message>
-        <source>Dimension Arc</source>
-        <translation type="vanished">ມິຕິສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Leader</source>
-        <translation type="vanished">ເສັ້ນຊີ້ (Leader)</translation>
-    </message>
-    <message>
-        <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Properties&apos;.</source>
-        <translation type="vanished">ໝາຍເຫດ: ການກຳນົດເມນູຈະຖືກລະເວັ້ນ ເພາະມັນຖືກສະຫງວນໄວ້ສຳລັບ &apos;ຄຸນສົມບັດອົງປະກອບ&apos;.</translation>
-    </message>
-    <message>
-        <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Select&apos;.</source>
-        <translation type="vanished">ໝາຍເຫດ: ການກຳນົດເມນູຈະຖືກລະເວັ້ນ ເພາະມັນຖືກສະຫງວນໄວ້ສຳລັບ &apos;ການເລືອກອົງປະກອບ&apos;.</translation>
-    </message>
-    <message>
-        <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Pan&apos;.</source>
-        <translation type="vanished">ໝາຍເຫດ: ການກຳນົດເມນູຈະຖືກລະເວັ້ນ ເພາະມັນຖືກສະຫງວນໄວ້ສຳລັບການເລື່ອນ (Pan).</translation>
-    </message>
-    <message>
-        <source>NNOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
-        <translation type="vanished">ໝາຍເຫດ: ການກຳນົດເມນູຈະຖືກລະເວັ້ນ ເພາະມັນຖືກສະຫງວນໄວ້ສຳລັບ &apos;ເລືອກ Contour&apos;.</translation>
-    </message>
-    <message>
-        <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
-        <translation type="vanished">ໝາຍເຫດ: ການລວມປຸ່ມນີ້ຖືກສະຫງວນໄວ້ສຳລັບເມນູຄລິກຂວາເລີ່ມຕົ້ນ ແລະ ອາດຈະຂັດຂວາງການເອີ້ນໃຊ້ມັນ!</translation>
-    </message>
-    <message>
-        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored</source>
-        <translation type="vanished">ໝາຍເຫດ: ການລວມປຸ່ມນີ້ຖືກສະຫງວນໄວ້ສຳລັບການເລື່ອນ (Pan)! ການກຳນົດເມນູຈະຖືກລະເວັ້ນ</translation>
-    </message>
-    <message>
-        <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
-        <translation type="vanished">ໝາຍເຫດ: ປຸ່ມລັດນີ້ຖືກກຳນົດໃຫ້ເມນູ &quot;%1&quot; ແລ້ວ ແລະ ເມນູນັ້ນຈະຖືກຍົກເລີກເມື່ອບັນທຶກ!</translation>
-    </message>
-    <message>
-        <source>Shortcut is valid to use.</source>
-        <translation type="vanished">ປຸ່ມລັດສາມາດໃຊ້ງານໄດ້.</translation>
-    </message>
-    <message>
-        <source>Note: make sure that selected button is supported by your mouse device.</source>
-        <translation type="vanished">ໝາຍເຫດ: ໃຫ້ແນ່ໃຈວ່າປຸ່ມທີ່ເລືອກຖືກຮອງຮັບໂດຍເມົ້າຂອງທ່ານ.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgNamedViewsListOptions</name>
-    <message>
-        <source>Named Views Settings</source>
-        <translation type="vanished">ຕັ້ງຄ່າມຸມມອງທີ່ມີຊື່</translation>
-    </message>
-    <message>
-        <source>Editing</source>
-        <translation type="vanished">ການແກ້ໄຂ</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">ຫາກເລືອກ, ຈະມີກ່ອງຢືນຢັນສະແດງຂຶ້ນເມື່ອລຶບມຸມມອງ. ຖ້າບໍ່ດັ່ງນັ້ນ, ມຸມມອງຈະຖືກລຶບໂດຍບໍ່ມີການແຈ້ງເຕືອນ.</translation>
-    </message>
-    <message>
-        <source>Silently update existing view with same name by created one</source>
-        <translation type="vanished">ອັບເດດມຸມມອງທີ່ມີຢູ່ແລ້ວທີ່ມີຊື່ຄືກັນໂດຍອັດຕະໂນມັດດ້ວຍອັນທີ່ສ້າງໃໝ່</translation>
-    </message>
-    <message>
-        <source>Display</source>
-        <translation type="vanished">ການສະແດງຜົນ</translation>
-    </message>
-    <message>
-        <source>Toolip with view details for table items</source>
-        <translation type="vanished">ຄຳແນະນຳ (Tooltip) ພ້ອມລາຍລະອຽດມຸມມອງສຳລັບລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>UCS Details column</source>
-        <translation type="vanished">ຄໍລຳລາຍລະອຽດ UCS</translation>
-    </message>
-    <message>
-        <source>If checked, type of grid for saved view will be shown</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະສະແດງປະເພດຂອງເສັ້ນຕາຕະລາງ (Grid) ສຳລັບມຸມມອງທີ່ບັນທຶກໄວ້</translation>
-    </message>
-    <message>
-        <source>Grid Type icon column</source>
-        <translation type="vanished">ຄໍລຳໄອຄອນປະເພດ Grid</translation>
-    </message>
-    <message>
-        <source>Type icon column</source>
-        <translation type="vanished">ຄໍລຳໄອຄອນປະເພດ</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະສະແດງຄໍລຳທີ່ມີລາຍລະອຽດຂອງລະບົບພິກັດມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">ຄຳແນະນຳ (Tooltip) ພ້ອມລາຍລະອຽດມຸມມອງສຳລັບລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະສະແດງຄໍລຳທີ່ມີລາຍລະອຽດຂອງລະບົບພິກັດມຸມມອງ.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be shown.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະສະແດງຄໍລຳທີ່ມີລາຍລະອຽດຂອງລະບົບພິກັດມຸມມອງ.</translation>
-    </message>
-    <message>
-        <source>If checked, type of grid for saved view will be shown.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະສະແດງປະເພດຂອງ Grid ສຳລັບມຸມມອງທີ່ບັນທຶກໄວ້.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with view type icon will be shown.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະສະແດງຄໍລຳທີ່ມີໄອຄອນປະເພດມຸມມອງ.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of coordinate system for the view will be shown.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະສະແດງຄໍລຳທີ່ມີໄອຄອນປະເພດລະບົບພິກັດສຳລັບມຸມມອງ.</translation>
-    </message>
-    <message>
-        <source>UCS Type icon column</source>
-        <translation type="vanished">ຄໍລຳໄອຄອນປະເພດ UCS</translation>
-    </message>
-    <message>
-        <source>If checked, the column with view details will be shown in the table.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະສະແດງຄໍລຳທີ່ມີລາຍລະອຽດມຸມມອງໃນຕາຕະລາງ.</translation>
-    </message>
-    <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">ຄໍລຳລາຍລະອຽດມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>Operations</source>
-        <translation type="vanished">ການປະຕິບັດການ</translation>
-    </message>
-    <message>
-        <source>On double-click:</source>
-        <translation type="vanished">ເມື່ອດັບເບິນຄລິກ:</translation>
-    </message>
-    <message>
-        <source>Restore view on single click of table item</source>
-        <translation type="vanished">ຄືນຄ່າມຸມມອງເມື່ອຄລິກບາດດຽວໃສ່ລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">ເມື່ອດັບເບິນຄລິກໃສ່ລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table.</source>
-        <translation type="vanished">ກຳນົດວ່າຈະໃຫ້ປະຕິບັດການໃດເມື່ອດັບເບິນຄລິກໃສ່ລາຍການມຸມມອງໃນຕາຕະລາງ.</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table. </source>
-        <translation type="vanished">ກຳນົດວ່າຈະໃຫ້ປະຕິບັດການໃດເມື່ອດັບເບິນຄລິກໃສ່ລາຍການມຸມມອງໃນຕາຕະລາງ. </translation>
-    </message>
-    <message>
-        <source>Do Nothing</source>
-        <translation type="vanished">ບໍ່ຕ້ອງເຮັດຫຍັງ</translation>
-    </message>
-    <message>
-        <source>Rename View</source>
-        <translation type="vanished">ປ່ຽນຊື່ມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>Update View</source>
-        <translation type="vanished">ອັບເດດມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>Restore View</source>
-        <translation type="vanished">ຄືນຄ່າມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>If enabled, click on the view table item will restore view. Otherwise, view should be restored explicitly.</source>
-        <translation type="vanished">ຫາກເປີດໃຊ້, ການຄລິກໃສ່ລາຍການໃນຕາຕະລາງມຸມມອງຈະເປັນການຄືນຄ່າມຸມມອງ.</translation>
-    </message>
-    <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">ຄືນຄ່າມຸມມອງເມື່ອຄລິກບາດດຽວໃສ່ລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>If show, tooltip with additional information about view will be shown for table item.</source>
-        <translation type="vanished">ຫາກສະແດງ, ຄຳແນະນຳ (Tooltip) ພ້ອມຂໍ້ມູນເພີ່ມເຕີມກ່ຽວກັບມຸມມອງຈະສະແດງຂຶ້ນ.</translation>
-    </message>
-    <message>
-        <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ ແລະ ໃນຂະນະທີ່ສ້າງມີມຸມມອງຊື່ນີ້ຢູ່ແລ້ວ, ມັນຈະຖືກອັບເດດດ້ວຍຕຳແໜ່ງໃໝ່.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">ຫາກເລືອກ, ຈະມີກ່ອງຢືນຢັນສະແດງຂຶ້ນເມື່ອລຶບມຸມມອງ. ຖ້າບໍ່ດັ່ງນັ້ນ, ມຸມມອງຈະຖືກລຶບໂດຍບໍ່ມີການແຈ້ງເຕືອນ. </translation>
-    </message>
-    <message>
-        <source>Ask for confirmation before views removal</source>
-        <translation type="vanished">ຖາມການຢືນຢັນກ່ອນລຶບມຸມມອງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgNewCustomVariable</name>
-    <message>
-        <source>New Custom Property</source>
-        <translation type="vanished">ຄຸນສົມບັດກຳນົດເອງໃໝ່</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation type="vanished">ຊື່:</translation>
-    </message>
-    <message>
-        <source>Value:</source>
-        <translation type="vanished">ຄ່າ:</translation>
-    </message>
-    <message>
-        <source>Property with provided name already exists. Please specify unique name.</source>
-        <translation type="vanished">ມີຄຸນສົມບັດຊື່ນີ້ຢູ່ແລ້ວ. ກະລຸນາລະບຸຊື່ໃໝ່ທີ່ບໍ່ຊ້ຳກັນ.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgNewDimStyle</name>
-    <message>
-        <source>New Dimension Style</source>
-        <translation type="vanished">ຮູບແບບມິຕິໃໝ່</translation>
-    </message>
-    <message>
-        <source>Use For:</source>
-        <translation type="vanished">ໃຊ້ສຳລັບ:</translation>
-    </message>
-    <message>
-        <source>Defines which type of dimensions are controlled by this style.</source>
-        <translation type="vanished">ກຳນົດວ່າປະເພດມິຕິໃດທີ່ຈະຖືກຄວບຄຸມໂດຍຮູບແບບນີ້.</translation>
-    </message>
-    <message>
-        <source>All Dimensions</source>
-        <translation type="vanished">ມິຕິທັງໝົດ</translation>
-    </message>
-    <message>
-        <source>Linear Dimensions</source>
-        <translation type="vanished">ມິຕິແນວຊື່</translation>
-    </message>
-    <message>
-        <source>Angular Dimensions</source>
-        <translation type="vanished">ມິຕິເຊີງມຸມ</translation>
-    </message>
-    <message>
-        <source>Radius Dimensions</source>
-        <translation type="vanished">ມິຕິລັດສະໝີ</translation>
-    </message>
-    <message>
-        <source>Diameter Dimensions</source>
-        <translation type="vanished">ມິຕິເສັ້ນຜ່ານສູນກາງ</translation>
-    </message>
-    <message>
-        <source>Ordinate Dimensions</source>
-        <translation type="vanished">ມິຕິອໍດິເນດ</translation>
-    </message>
-    <message>
-        <source>Leader And Tolerances</source>
-        <translation type="vanished">ເສັ້ນຊີ້ ແລະ ຄ່າຜິດດ່ຽງທີ່ຍອມຮັບໄດ້</translation>
-    </message>
-    <message>
-        <source>Based on Style:</source>
-        <translation type="vanished">ອີງຕາມຮູບແບບ:</translation>
-    </message>
-    <message>
-        <source>Existing dimension style which new style is based on</source>
-        <translation type="vanished">ຮູບແບບມິຕິທີ່ມີຢູ່ແລ້ວທີ່ຮູບແບບໃໝ່ຈະອີງຕາມ</translation>
-    </message>
-    <message>
-        <source>New Style Name:</source>
-        <translation type="vanished">ຊື່ຮູບແບບໃໝ່:</translation>
-    </message>
-    <message>
-        <source>Name of new dimension style</source>
-        <translation type="vanished">ຊື່ຂອງຮູບແບບມິຕິໃໝ່</translation>
-    </message>
-    <message>
-        <source>Empty name of style is not allowed.</source>
-        <translation type="vanished">ບໍ່ອະນຸຍາດໃຫ້ຕັ້ງຊື່ຮູບແບບເປັນຄ່າວ່າງ.</translation>
-    </message>
-    <message>
-        <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation type="vanished">ຊື່ຮູບແບບມິຕິ (%1) ທີ່ລະບຸຊ້ຳກັບອັນອື່ນ! ກະລຸນາປ້ອນຊື່ໃໝ່.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgNewVersionAvailable</name>
-    <message>
-        <source>New Version Available</source>
-        <translation type="vanished">ມີເວີຊັນໃໝ່ໃຫ້ໃຊ້ງານ</translation>
-    </message>
-    <message>
-        <source>Latest Pre-release Version</source>
-        <translation type="vanished">ເວີຊັນທົດລອງ (Pre-release) ລ້າສຸດ</translation>
-    </message>
-    <message>
-        <source>Click to open release page on GitHub</source>
-        <translation type="vanished">ຄລິກເພື່ອເປີດໜ້າການປ່ອຍເວີຊັນໃນ GitHub</translation>
-    </message>
-    <message>
-        <source>2.2.0.3-alpha</source>
-        <translation type="vanished">2.2.0.3-alpha</translation>
-    </message>
-    <message>
-        <source>Version:</source>
-        <translation type="vanished">ເວີຊັນ:</translation>
-    </message>
-    <message>
-        <source>Published:</source>
-        <translation type="vanished">ເຜີຍແຜ່ເມື່ອ:</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">ປ້າຍຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Check if you prefer not to be notified about this update on subsequent version checks</source>
-        <translation type="vanished">ໝາຍເລືອກຫາກທ່ານບໍ່ຕ້ອງການໃຫ້ແຈ້ງເຕືອນກ່ຽວກັບການອັບເດດນີ້ໃນຄັ້ງຕໍ່ໄປ</translation>
-    </message>
-    <message>
-        <source>Ignore this update</source>
-        <translation type="vanished">ລະເວັ້ນການອັບເດດນີ້</translation>
-    </message>
-    <message>
-        <source>Nothing to update</source>
-        <translation type="vanished">ບໍ່ມີຫຍັງໃຫ້ອັບເດດ</translation>
-    </message>
-    <message>
-        <source>There is no newer version, you are using the latest one.</source>
-        <translation type="vanished">ບໍ່ມີເວີຊັນໃໝ່ກວ່າ, ທ່ານກຳລັງໃຊ້ເວີຊັນລ່າສຸດແລ້ວ.</translation>
-    </message>
-    <message>
-        <source>However, if you&apos;d like to check the most recent and fresh features included into pre-release builds, disable &quot;Ignore pre-release updates&quot; checkbox below.</source>
-        <translation type="vanished">ແນວໃດກໍຕາມ, ຖ້າທ່ານຕ້ອງການກວດສອບຄຸນສົມບັດໃໝ່ລ່າສຸດທີ່ລວມຢູ່ໃນລຸ້ນທົດລອງ (pre-release), ໃຫ້ຍົກເລີກການໝາຍທີ່ຫ້ອງ &quot;Ignore pre-release updates&quot; ຢູ່ດ້ານລຸ່ມ.</translation>
-    </message>
-    <message>
-        <source>Updates Check Settings</source>
-        <translation type="vanished">ຕັ້ງຄ່າການກວດສອບການອັບເດດ</translation>
-    </message>
-    <message>
-        <source>If checked, notifications about pre-release updates will not be shown.</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ຈະບໍ່ມີການແຈ້ງເຕືອນກ່ຽວກັບການອັບເດດລຸ້ນທົດລອງ (pre-release).</translation>
-    </message>
-    <message>
-        <source>Ignore pre-release updates</source>
-        <translation type="vanished">ບໍ່ສົນໃຈການອັບເດດລຸ້ນທົດລອງ (pre-release)</translation>
-    </message>
-    <message>
-        <source>Check to disable automatic version check on startup</source>
-        <translation type="vanished">ໝາຍເພື່ອປິດການກວດສອບເວີຊັນອັດຕະໂນມັດເມື່ອເລີ່ມໂປຣແກຣມ</translation>
-    </message>
-    <message>
-        <source>Check for new version on startup</source>
-        <translation type="vanished">ກວດສອບເວີຊັນໃໝ່ເມື່ອເລີ່ມໂປຣແກຣມ</translation>
-    </message>
-    <message>
-        <source>Ignored Pre-Release</source>
-        <translation type="vanished">ລຸ້ນທົດລອງທີ່ຖືກລະເວັ້ນ</translation>
-    </message>
-    <message>
-        <source>Current Version:</source>
-        <translation type="vanished">ເວີຊັນປັດຈຸບັນ:</translation>
-    </message>
-    <message>
-        <source>Ignored Release:</source>
-        <translation type="vanished">ເວີຊັນທີ່ຖືກລະເວັ້ນ:</translation>
-    </message>
-    <message>
-        <source>Lateat Release Version</source>
-        <translation type="vanished">ເວີຊັນລ່າສຸດທີ່ປ່ອຍອອກມາ</translation>
-    </message>
-    <message>
-        <source>&lt;a href=&quot;https://api.github.com/repos/LibreCAD/LibreCAD/releases/176244221&quot;&gt;2.2.0.2-rc-alpha&lt;/a&gt;</source>
-        <translation type="vanished">&lt;a href=&quot;https://api.github.com/repos/LibreCAD/LibreCAD/releases/176244221&quot;&gt;2.2.0.2-rc-alpha&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>Version Check</source>
-        <translation type="vanished">ກວດສອບເວີຊັນ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgNewWidget</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">ປ່ອງໂຕ້ຕອບ</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">ປ້າຍຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Clear Actions List</source>
-        <translation type="vanished">ລຶບລາຍການຄຳສັ່ງທັງໝົດ</translation>
-    </message>
-    <message>
-        <source>Menu Name:</source>
-        <translation type="vanished">ຊື່ເມນູ:</translation>
-    </message>
-    <message>
-        <source>Unique name of menu to create.</source>
-        <translation type="vanished">ຊື່ສະເພາະຂອງເມນູທີ່ຈະສ້າງ.</translation>
-    </message>
-    <message>
-        <source>Toolbar Name:</source>
-        <translation type="vanished">ຊື່ແຖບເຄື່ອງມື:</translation>
-    </message>
-    <message>
-        <source>Unique name of toolbar to create.</source>
-        <translation type="vanished">ຊື່ສະເພາະຂອງແຖບເຄື່ອງມືທີ່ຈະສ້າງ.</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">ຂໍ້ຜິດພາດ</translation>
-    </message>
-    <message>
-        <source>Please enter a name.</source>
-        <translation type="vanished">ກະລຸນາປ້ອນຊື່.</translation>
-    </message>
-    <message>
-        <source>Name is not unique. Please enter unique name.</source>
-        <translation type="vanished">ຊື່ນີ້ມີແລ້ວ. ກະລຸນາປ້ອນຊື່ໃໝ່ທີ່ບໍ່ຊ້ຳກັນ.</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgParabola</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
-    </message>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.cpp" line="112"/>
         <source>Parabola control points cannot be collinear</source>
         <translation>ຈຸດຄວບຄຸມພາຣາໂບລາບໍ່ສາມາດຢູ່ໃນແນວເສັ້ນດຽວກັນໄດ້</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgSplinePoints</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgTolerance</name>
-    <message>
-        <source>Feature Control Frame</source>
-        <translation type="vanished">ກອບຄວບຄຸມຄຸນລັກສະນະ</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">ເລເຢີຂອງມິຕິ</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">ຄຸນລັກສະນະຂອງປາກກາ</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">ເລເຢີ:</translation>
-    </message>
-    <message>
-        <source>Geometric Characteristics</source>
-        <translation type="vanished">ຄຸນລັກສະນະທາງເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Composite</source>
-        <translation type="vanished">ຄອມໂພສິດ (ປະສົມ)</translation>
-    </message>
-    <message>
-        <source>Stated Tolerance</source>
-        <translation type="vanished">ຄ່າຄວາມຄາດເຄື່ອນທີ່ກຳນົດ</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Primary Datum</source>
-        <translation type="vanished">ດາຕຳຫຼັກ (ຈຸດອ້າງອີງຫຼັກ)</translation>
-    </message>
-    <message>
-        <source>Secondary Datum</source>
-        <translation type="vanished">ດາຕຳຮອງ (ຈຸດອ້າງອີງຮອງ)</translation>
-    </message>
-    <message>
-        <source>Tertiary Datum</source>
-        <translation type="vanished">ດາຕຳອັນດັບສາມ</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgUCSListOptions</name>
-    <message>
-        <source>UCS List Options</source>
-        <translation type="vanished">ຕົວເລືອກລາຍການ UCS</translation>
-    </message>
-    <message>
-        <source>Display</source>
-        <translation type="vanished">ການສະແດງຜົນ</translation>
-    </message>
-    <message>
-        <source>If сhecked, the tooltip with additional information about UCS will be shown for table item.</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ຈະສະແດງຄຳອະທິບາຍເພີ່ມເຕີມກ່ຽວກັບ UCS ເມື່ອຊີ້ໃສ່ລາຍການໃນຕາຕະລາງ.</translation>
-    </message>
-    <message>
-        <source>Toolip with UCS details for table items</source>
-        <translation type="vanished">ຄຳອະທິບາຍລາຍລະອຽດ UCS ສຳລັບລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>Type icon column</source>
-        <translation type="vanished">ຖັນໄອຄອນປະເພດ</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ຖັນທີ່ມີລາຍລະອຽດຈຸດກຳເນີດ ແລະ ມຸມຂອງ UCS ຈະຖືກສະແດງໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>UCS Details column</source>
-        <translation type="vanished">ຖັນລາຍລະອຽດ UCS</translation>
-    </message>
-    <message>
-        <source>Grid Type column</source>
-        <translation type="vanished">ຖັນປະເພດຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>Editing</source>
-        <translation type="vanished">ການແກ້ໄຂ</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະມີປ່ອງຢືນຢັນກ່ອນການລຶບມຸມມອງ. ຖ້າບໍ່ດັ່ງນັ້ນ, ມຸມມອງຈະຖືກລຶບອອກທັນທີ. </translation>
-    </message>
-    <message>
-        <source>Tooltip with UCS details for table items</source>
-        <translation type="vanished">ຄຳອະທິບາຍລາຍລະອຽດ UCS ສຳລັບລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table.</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ຖັນທີ່ມີໄອຄອນບອກປະເພດຂອງ UCS ຈະຖືກສະແດງໃນຕາຕະລາງ.</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table.</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ຖັນທີ່ມີລາຍລະອຽດຈຸດກຳເນີດ ແລະ ມຸມຂອງ UCS ຈະຖືກສະແດງໃນຕາຕະລາງ.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown.</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ຈະສະແດງຖັນທີ່ບອກປະເພດຕາຕະລາງຂອງ UCS.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະມີປ່ອງຢືນຢັນກ່ອນການລຶບມຸມມອງ. ຖ້າບໍ່ດັ່ງນັ້ນ, ມຸມມອງຈະຖືກລຶບອອກທັນທີ.</translation>
-    </message>
-    <message>
-        <source>Ask for confirmation before UCS removal</source>
-        <translation type="vanished">ຖາມການຢືນຢັນກ່ອນລຶບ UCS</translation>
-    </message>
-    <message>
-        <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ ແລະ ໃນຂະນະທີ່ສ້າງຫາກມີຊື່ມຸມມອງນັ້ນຢູ່ແລ້ວ, ມັນຈະອັບເດດຕຳແໜ່ງໃໝ່ທັນທີ. ຖ້າບໍ່ດັ່ງນັ້ນ, ທ່ານຕ້ອງຕັ້ງຊື່ໃໝ່ທີ່ບໍ່ຊ້ຳກັນ.</translation>
-    </message>
-    <message>
-        <source>Silently update existing UCS if the same exists</source>
-        <translation type="vanished">ອັບເດດ UCS ທີ່ມີຢູ່ແລ້ວໂດຍບໍ່ແຈ້ງເຕືອນ ຖ້າມີຊື່ຊ້ຳກັນ</translation>
-    </message>
-    <message>
-        <source>Operations</source>
-        <translation type="vanished">ການດຳເນີນການ</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied.</source>
-        <translation type="vanished">ກຳນົດວ່າປ່ອງມຸມມອງຂອງຮູບແຕ້ມຄວນປັບແນວໃດ ຫຼັງຈາກນຳໃຊ້ UCS.</translation>
-    </message>
-    <message>
-        <source>Zoom Auto</source>
-        <translation type="vanished">ຊູມອັດຕະໂນມັດ</translation>
-    </message>
-    <message>
-        <source>Pan, UCS Origin in Center</source>
-        <translation type="vanished">ເລື່ອນ, ໃຫ້ຈຸດກຳເນີດ UCS ຢູ່ກາງ</translation>
-    </message>
-    <message>
-        <source>Pan, UCS Origin in Left-Bottom</source>
-        <translation type="vanished">ເລື່ອນ, ໃຫ້ຈຸດກຳເນີດ UCS ຢູ່ຊ້າຍລຸ່ມ</translation>
-    </message>
-    <message>
-        <source>If enabled, click on the table item will apply coordinates system. Otherwise, coordinates system should be applied explicitly.</source>
-        <translation type="vanished">ຖ້າເປີດໃຊ້, ການຄລິກໃສ່ລາຍການໃນຕາຕະລາງຈະເປັນການນຳໃຊ້ລະບົບພິກັດທັນທີ.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click of table item</source>
-        <translation type="vanished">ກູ້ຄືນ UCS ເມື່ອຄລິກບາດດຽວໃສ່ລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>On double-click:</source>
-        <translation type="vanished">ເມື່ອດັບເບິນຄລິກ:</translation>
-    </message>
-    <message>
-        <source>Defines delay between UCS marker blinks.</source>
-        <translation type="vanished">ກຳນົດໄລຍະເວລາຫ່າງລະຫວ່າງການກະພິບຂອງເຄື່ອງໝາຍ UCS.</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting.</source>
-        <translation type="vanished">ກຳນົດຈຳນວນຄັ້ງການກະພິບຂອງເຄື່ອງໝາຍ UCS ເພື່ອເນັ້ນໃຫ້ເຫັນ.</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation type="vanished">ກຳນົດວ່າຈະໃຫ້ເຮັດຫຍັງ ເມື່ອດັບເບິນຄລິກໃສ່ລາຍການໃນຕາຕະລາງ. </translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">ກູ້ຄືນ UCS ເມື່ອຄລິກບາດດຽວໂດຍລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ຖັນທີ່ມີໄອຄອນບອກປະເພດຂອງ UCS ຈະຖືກສະແດງໃນຕາຕະລາງ. </translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ຈະສະແດງຖັນທີ່ບອກປະເພດເສັ້ນຕາຕະລາງຂອງ UCS</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied</source>
-        <translation type="vanished">ກຳນົດວ່າປ່ອງມຸມມອງຂອງຮູບແຕ້ມຄວນປັບແນວໃດ ຫຼັງຈາກນຳໃຊ້ UCS ແລ້ວ</translation>
-    </message>
-    <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">ເມື່ອດັບເບິນຄລິກໃສ່ລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on the item of the table.</source>
-        <translation type="vanished">ກຳນົດວ່າຈະໃຫ້ເຮັດຫຍັງ ເມື່ອດັບເບິນຄລິກໃສ່ລາຍການໃນຕາຕະລາງ.</translation>
-    </message>
-    <message>
-        <source>Do Nothing</source>
-        <translation type="vanished">ບໍ່ຕ້ອງເຮັດຫຍັງ</translation>
-    </message>
-    <message>
-        <source>Edit UCS</source>
-        <translation type="vanished">ແກ້ໄຂ UCS</translation>
-    </message>
-    <message>
-        <source>Apply UCS</source>
-        <translation type="vanished">ນຳໃຊ້ UCS</translation>
-    </message>
-    <message>
-        <source>Highlight UCS</source>
-        <translation type="vanished">ເນັ້ນ UCS</translation>
-    </message>
-    <message>
-        <source>As UCS is applied, perform</source>
-        <translation type="vanished">ເມື່ອນຳໃຊ້ UCS, ໃຫ້ດຳເນີນການ</translation>
-    </message>
-    <message>
-        <source>UCS Highlight</source>
-        <translation type="vanished">ການເນັ້ນ UCS</translation>
-    </message>
-    <message>
-        <source>Defines delay between UCS marker blinks</source>
-        <translation type="vanished">ກຳນົດໄລຍະເວລາຫ່າງລະຫວ່າງການກະພິບຂອງເຄື່ອງໝາຍ UCS</translation>
-    </message>
-    <message>
-        <source> ms</source>
-        <translation type="vanished">ms</translation>
-    </message>
-    <message>
-        <source>Blink:</source>
-        <translation type="vanished">ກະພິບ:</translation>
-    </message>
-    <message>
-        <source>Blink Delay:</source>
-        <translation type="vanished">ໄລຍະຫ່າງການກະພິບ:</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation type="vanished">ກຳນົດຈຳນວນຄັ້ງການກະພິບຂອງເຄື່ອງໝາຍ UCS ເພື່ອເນັ້ນໃຫ້ເຫັນ</translation>
-    </message>
-    <message>
-        <source> times</source>
-        <translation type="vanished">times</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgUCSProperties</name>
-    <message>
-        <source>UCS Edit</source>
-        <translation type="vanished">ແກ້ໄຂ UCS</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">ຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>X-Axis Angle:</source>
-        <translation type="vanished">ມຸມແກນ X:</translation>
-    </message>
-    <message>
-        <source>X-Axis Direction:</source>
-        <translation type="vanished">ທິດທາງແກນ X:</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">ປ້າຍຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Origin:</source>
-        <translation type="vanished">ຈຸດກຳເນີດ:</translation>
-    </message>
-    <message>
-        <source>Grid Type:</source>
-        <translation type="vanished">ປະເພດຕາຕະລາງ:</translation>
-    </message>
-    <message>
-        <source>UCS Name:</source>
-        <translation type="vanished">ຊື່ UCS:</translation>
-    </message>
-    <message>
-        <source>Please specify name of UCS</source>
-        <translation type="vanished">ກະລຸນາກຳນົດຊື່ຂອງ UCS</translation>
-    </message>
-    <message>
-        <source>Name contains not allowed characters</source>
-        <translation type="vanished">ຊື່ມີຕົວອັກສອນທີ່ບໍ່ອະນຸຍາດໃຫ້ໃຊ້</translation>
-    </message>
-    <message>
-        <source>Ortho</source>
-        <translation type="vanished">Ortho (ຕັ້ງສາກ)</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">ຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">ຂວາ</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">ເທິງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgWidgetCreator</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">ປ່ອງໂຕ້ຕອບ</translation>
-    </message>
-    <message>
-        <source>Available Actions:</source>
-        <translation type="vanished">ຄຳສັ່ງທີ່ມີຢູ່:</translation>
-    </message>
-    <message>
-        <source>Action Group:</source>
-        <translation type="vanished">ກຸ່ມຄຳສັ່ງ:</translation>
-    </message>
-    <message>
-        <source>Select action group with actions</source>
-        <translation type="vanished">ເລືອກກຸ່ມຄຳສັ່ງພ້ອມກັບຄຳສັ່ງຕ່າງໆ</translation>
-    </message>
-    <message>
-        <source>Actions that are included. Use drag-n-drop to reorder, double-click for remove item from the list.</source>
-        <translation type="vanished">ຄຳສັ່ງທີ່ລວມຢູ່. ໃຊ້ການລາກແລ້ວວາງເພື່ອຈັດລຳດັບໃໝ່, ດັບເບິນຄລິກເພື່ອລຶບອອກຈາກລາຍການ.</translation>
-    </message>
-    <message>
-        <source>Define a custom menu by specifing the set of included actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
-        <translation type="vanished">ກຳນົດເມນູເອງໂດຍການເລືອກກຸ່ມຄຳສັ່ງ. ເມນູຈະສະແດງເປັນປ່ອງປັອບອັບໃນພື້ນທີ່ແຕ້ມຮູບ ເມື່ອໃຊ້ປຸ່ມລັດ. </translation>
-    </message>
-    <message>
-        <source>Save Used Actions List</source>
-        <translation type="vanished">ບັນທຶກລາຍການຄຳສັ່ງທີ່ໃຊ້</translation>
-    </message>
-    <message>
-        <source>Widget Name: </source>
-        <translation type="vanished">ຊື່ວິດເຈັດ: </translation>
-    </message>
-    <message>
-        <source>Destroy</source>
-        <translation type="vanished">ທຳລາຍ/ລຶບຖິ້ມ</translation>
-    </message>
-    <message>
-        <source>Remove selected item from the list of used actions</source>
-        <translation type="vanished">ລຶບລາຍການທີ່ເລືອກອອກຈາກລາຍການຄຳສັ່ງທີ່ໃຊ້</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>Used Actions:</source>
-        <translation type="vanished">ຄຳສັ່ງທີ່ໃຊ້:</translation>
-    </message>
-    <message>
-        <source>Available actions. Double click on item to add it to the list of used actions.</source>
-        <translation type="vanished">ຄຳສັ່ງທີ່ມີຢູ່. ດັບເບິນຄລິກເພື່ອເພີ່ມເຂົ້າໃນລາຍການຄຳສັ່ງທີ່ໃຊ້.</translation>
-    </message>
-    <message>
-        <source>Menu Assignment</source>
-        <translation type="vanished">ການກຳນົດເມນູ</translation>
-    </message>
-    <message>
-        <source>NONE</source>
-        <translation type="vanished">ບໍ່ມີ</translation>
-    </message>
-    <message>
-        <source>Removes menu assignment. Menu itself is not deleted.</source>
-        <translation type="vanished">ຍົກເລີກການກຳນົດເມນູ. ຕົວເມນູເອງຈະບໍ່ຖືກລຶບ.</translation>
-    </message>
-    <message>
-        <source>Unassign</source>
-        <translation type="vanished">ຍົກເລີກການກຳນົດ</translation>
-    </message>
-    <message>
-        <source>Note: for single-action menus, popup invocation directly triggers the action instead of menu.</source>
-        <translation type="vanished">ໝາຍເຫດ: ສຳລັບເມນູທີ່ມີຄຳສັ່ງດຽວ, ການເອີ້ນໃຊ້ຈະເປີດຄຳສັ່ງນັ້ນໂດຍກົງແທນທີ່ຈະເປັນເມນູ.</translation>
-    </message>
-    <message>
-        <source>Assign menu activation shortcut.</source>
-        <translation type="vanished">ກຳນົດປຸ່ມລັດເພື່ອເປີດເມນູ.</translation>
-    </message>
-    <message>
-        <source>Assign</source>
-        <translation type="vanished">ກຳນົດ</translation>
-    </message>
-    <message>
-        <source>Add selected item to the list of used actions</source>
-        <translation type="vanished">ເພີ່ມລາຍການທີ່ເລືອກເຂົ້າໃນລາຍການຄຳສັ່ງທີ່ໃຊ້</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>Remove ALL items from the list of used actions</source>
-        <translation type="vanished">ລຶບລາຍການທັງໝົດອອກຈາກລາຍການຄຳສັ່ງທີ່ໃຊ້</translation>
-    </message>
-    <message>
-        <source>&lt;&lt;</source>
-        <translation type="vanished">&lt;&lt;</translation>
-    </message>
-    <message>
-        <source>Toolbar Placement</source>
-        <translation type="vanished">ການຈັດວາງແຖບເຄື່ອງມື</translation>
-    </message>
-    <message>
-        <source>Put new toolbars to </source>
-        <translation type="vanished">ວາງແຖບເຄື່ອງມືໃໝ່ໄວ້ທີ່ </translation>
-    </message>
-    <message>
-        <source>Specifies docking area that is used to initial placement of created toolbar. Make sure that this area is enabled.</source>
-        <translation type="vanished">ກຳນົດພື້ນທີ່ທີ່ຈະວາງແຖບເຄື່ອງມືທີ່ສ້າງໃໝ່. ໃຫ້ແນ່ໃຈວ່າພື້ນທີ່ນັ້ນຖືກເປີດໃຊ້ງານຢູ່.</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">ລຸ່ມ</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">ຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">ຂວາ</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">ເທິງ</translation>
-    </message>
-    <message>
-        <source>Destroy Menu</source>
-        <translation type="vanished">ລຶບເມນູ</translation>
-    </message>
-    <message>
-        <source>New Menu</source>
-        <translation type="vanished">ເມນູໃໝ່</translation>
-    </message>
-    <message>
-        <source>Define a custom menu by specifying the set of used actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
-        <translation type="vanished">ກຳນົດເມນູເອງໂດຍການເລືອກກຸ່ມຄຳສັ່ງ. ເມນູຈະສະແດງເປັນປ່ອງປັອບອັບໃນພື້ນທີ່ແຕ້ມຮູບ ເມື່ອໃຊ້ປຸ່ມລັດ. </translation>
-    </message>
-    <message>
-        <source>Custom Menu Creator</source>
-        <translation type="vanished">ເຄື່ອງມືສ້າງເມນູເອງ</translation>
-    </message>
-    <message>
-        <source>Menu Name:</source>
-        <translation type="vanished">ຊື່ເມນູ:</translation>
-    </message>
-    <message>
-        <source>Name of Custom Nenu</source>
-        <translation type="vanished">ຊື່ຂອງເມນູທີ່ສ້າງເອງ</translation>
-    </message>
-    <message>
-        <source>Custom Toolbar Creator</source>
-        <translation type="vanished">ເຄື່ອງມືສ້າງແຖບເຄື່ອງມືເອງ</translation>
-    </message>
-    <message>
-        <source>Toolbar Name:</source>
-        <translation type="vanished">ຊື່ແຖບເຄື່ອງມື:</translation>
-    </message>
-    <message>
-        <source>Destroy toolbar</source>
-        <translation type="vanished">ລຶບແຖບເຄື່ອງມື</translation>
-    </message>
-    <message>
-        <source>New Toolbar</source>
-        <translation type="vanished">ແຖບເຄື່ອງມືໃໝ່</translation>
-    </message>
-    <message>
-        <source>Name of Custom Toolbar</source>
-        <translation type="vanished">ຊື່ຂອງແຖບເຄື່ອງມືທີ່ສ້າງເອງ</translation>
-    </message>
-    <message>
-        <source>Define a custom toolbar by specifying the set of used actions. Once created, the custom toolbar will behave exactly as built-in ones.</source>
-        <translation type="vanished">ກຳນົດແຖບເຄື່ອງມືເອງໂດຍການເລືອກຄຳສັ່ງທີ່ໃຊ້. ເມື່ອສ້າງແລ້ວ, ມັນຈະເຮັດວຽກຄືກັບແຖບເຄື່ອງມືທີ່ມີມາກັບໂປຣແກຣມ.</translation>
-    </message>
-    <message>
-        <source>Unassign menu</source>
-        <translation type="vanished">ຍົກເລີກການກຳນົດເມນູ</translation>
-    </message>
-    <message>
-        <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation type="vanished">ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການຍົກເລີກການກຳນົດເມນູ &quot;%1&quot;? ໝາຍເຫດ: ພຽງແຕ່ປຸ່ມລັດຈະຖືກລຶບອອກ ແຕ່ຕົວເມນູຈະບໍ່ຖືກລຶບ.</translation>
-    </message>
-    <message>
-        <source>NOT ASSIGNED</source>
-        <translation type="vanished">ບໍ່ໄດ້ກຳນົດ</translation>
-    </message>
-    <message>
-        <source>menu</source>
-        <translation type="vanished">menu</translation>
-    </message>
-    <message>
-        <source>toolbar</source>
-        <translation type="vanished">toolbar</translation>
-    </message>
-    <message>
-        <source>Remove %1</source>
-        <translation type="vanished">ລຶບ %1</translation>
-    </message>
-    <message>
-        <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation type="vanished">ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບ %2&quot;%1&quot;?</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DocumentsStorage</name>
-    <message>
-        <source>Unnamed</source>
-        <translation type="vanished">ບໍ່ມີຊື່</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ (Offset):</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ຈະສ້າງກອບອ້ອມຮອບສິ່ງທີ່ເລືອກທັງໝົດ. ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະສ້າງແຍກແຕ່ລະອັນ. </translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">ເລືອກເປັນກຸ່ມ</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະແຕ້ມສະເພາະຈຸດມຸມຂອງກອບ. ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະແຕ້ມເປັນເສັ້ນຂອບ.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">ສະເພາະຈຸດມຸມ</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">ຖ້າເລືອກ, ກອບຈະຖືກແຕ້ມເປັນເສັ້ນຕໍ່ເນື່ອງ (polyline)</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">ເສັ້ນຕໍ່ເນື່ອງ</translation>
     </message>
 </context>
 <context>
@@ -7591,25 +1720,9 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">ໄລຍະຫ່າງແນວຕັ້ງຂອງອັນທີ່ສຳເນົາຈາກຕົ້ນສະບັບ</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">ໄລຍະຫ່າງແນວນອນຂອງອັນທີ່ສຳເນົາຈາກຕົ້ນສະບັບ</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງແກນ X ຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="103"/>
         <source>Pen:</source>
         <translation>ປາກກາ:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ອັນທີ່ສຳເນົາຈະຖືກວາງໄວ້ໃນພິກັດດຽວກັນກັບຕົ້ນສະບັບ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="33"/>
@@ -7617,46 +1730,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ຢູ່ບ່ອນເກົ່າ</translation>
     </message>
     <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງແກນ Y ຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="26"/>
         <source>Layer:</source>
         <translation>ເລເຢີ:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">ປາກກາທີ່ຈະໃຊ້ກັບອັນທີ່ສຳເນົາ</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">ກຳລັງໃຊ້ງານ</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">ຕົ້ນສະບັບ</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">ຕົ້ນສະບັບທີ່ແປງແລ້ວ</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">ເລເຢີທີ່ຈະວາງອັນທີ່ສຳເນົາໄວ້</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">ກຳລັງໃຊ້ງານ</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">ຕົ້ນສະບັບ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="80"/>
@@ -7670,732 +1746,11 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">ລັດສະໝີຮອງ:</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">ຄ່າມຸມສຳລັບລັດສະໝີຫຼັກ</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ສາມາດກຳນົດມຸມສຳລັບລັດສະໝີຫຼັກໄດ້</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">ມຸມພື້ນຖານ:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">ທວນເຂັມນາລິກາ</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">ເລືອກການດຳເນີນການຫຼັກຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ມຸມລັດສະໝີຫຼັກຈະຖືກກຳນົດດ້ວຍເມາສ໌</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ອິດສະຫຼະ</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">ຄວາມຍາວລັດສະໝີຫຼັກຂອງຮູບວົງມົນຮີ</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">ເລືອກລັດສະໝີຮອງຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">ລັດສະໝີຫຼັກ:</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">ຄວາມຍາວລັດສະໝີຮອງຂອງຮູບວົງມົນຮີ</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">ຕາມເຂັມນາລິກາ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">ຕົວເລືອກສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">ຕາມເຂັມນາລິກາ</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">ທວນເຂັມນາລິກາ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipsePropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">ຈຸດໃຈກາງ (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="vanished">ພິກັດ X ຂອງຈຸດໃຈກາງຮູບວົງມົນຮີ</translation>
-    </message>
-    <message>
-        <source>Pick center coordinate from drawing</source>
-        <translation type="vanished">ເລືອກພິກັດຈຸດໃຈກາງຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">ຈຸດໃຈກາງ (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">ພິກັດ Y ຂອງຈຸດໃຈກາງສ່ວນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="vanished">ຫຼັກ:</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="vanished">ລັດສະໝີຂອງແກນຫຼັກຂອງຮູບວົງມົນຮີ</translation>
-    </message>
-    <message>
-        <source>Pick length of major axis radius from drawing</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວລັດສະໝີແກນຫຼັກຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="vanished">ຮອງ:</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="vanished">ລັດສະໝີຂອງແກນຮອງຂອງຮູບວົງມົນຮີ</translation>
-    </message>
-    <message>
-        <source>Pick length of minor axis radius from drawing</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວລັດສະໝີແກນຮອງຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="vanished">ເປັນອົງສາ</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="vanished">ການໝູນ (°):</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="vanished">ມຸມໝູນສຳລັບແກນຫຼັກຂອງຮູບວົງມົນຮີ, ເປັນອົງສາ</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມໝູນຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="vanished">ມຸມເລີ່ມຕົ້ນ (°):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="vanished">ມຸມເລີ່ມຕົ້ນຂອງສ່ວນໂຄ້ງວົງຮີ, ເປັນອົງສາ</translation>
-    </message>
-    <message>
-        <source>Pick start angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມເລີ່ມຕົ້ນຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="vanished">ມຸມສິ້ນສຸດ (°):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="vanished">ມຸມສິ້ນສຸດຂອງສ່ວນໂຄ້ງວົງຮີ, ເປັນອົງສາ</translation>
-    </message>
-    <message>
-        <source>Pick end angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມສິ້ນສຸດຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="vanished">ກຳນົດວ່າຈະໃຫ້ສ່ວນໂຄ້ງປີ້ນກັບຄືນບໍ່</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">ປີ້ນກັບ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ExportLayersService</name>
-    <message>
-        <source>Export Layers</source>
-        <translation type="vanished">ສົ່ງອອກເລເຢີ</translation>
-    </message>
-    <message>
-        <source>Exported Layers</source>
-        <translation type="vanished">ເລເຢີທີ່ສົ່ງອອກແລ້ວ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ExportToImageService</name>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">ກຳລັງສົ່ງອອກຮູບແຕ້ມ...</translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="vanished">ສົ່ງອອກແລ້ວ: %1</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="vanished">ການສົ່ງອອກລົ້ມເຫຼວ!</translation>
-    </message>
-</context>
-<context>
-    <name>LC_HatchPropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Pattern</source>
-        <translation type="vanished">ລວດລາຍ</translation>
-    </message>
-    <message>
-        <source>Solid Fill:</source>
-        <translation type="vanished">ລະບາຍສີພື້ນ:</translation>
-    </message>
-    <message>
-        <source>Toggle solid fill (no pattern)</source>
-        <translation type="vanished">ເປີດ/ປິດ ການລະບາຍສີພື້ນ (ບໍ່ມີລວດລາຍ)</translation>
-    </message>
-    <message>
-        <source>Pattern:</source>
-        <translation type="vanished">ລວດລາຍ:</translation>
-    </message>
-    <message>
-        <source>Hatch pattern name</source>
-        <translation type="vanished">ຊື່ລວດລາຍການແຮັດ (Hatch)</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">ຂະໜາດ:</translation>
-    </message>
-    <message>
-        <source>Hatch pattern scale factor</source>
-        <translation type="vanished">ຕົວຄູນຂະໜາດລວດລາຍການແຮັດ</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="vanished">ເປັນອົງສາ</translation>
-    </message>
-    <message>
-        <source>Angle (°):</source>
-        <translation type="vanished">ມຸມ (°):</translation>
-    </message>
-    <message>
-        <source>Hatch pattern rotation angle, degrees</source>
-        <translation type="vanished">ມຸມໝູນລວດລາຍການແຮັດ, ເປັນອົງສາ</translation>
-    </message>
-    <message>
-        <source>Area &amp; Centroid</source>
-        <translation type="vanished">ເນື້ອທີ່ ແລະ ຈຸດໃຈກາງ</translation>
-    </message>
-    <message>
-        <source>Area:</source>
-        <translation type="vanished">ເນື້ອທີ່:</translation>
-    </message>
-    <message>
-        <source>Total enclosed area of the hatch region</source>
-        <translation type="vanished">ເນື້ອທີ່ທັງໝົດພາຍໃນຂອບເຂດການແຮັດ</translation>
-    </message>
-    <message>
-        <source>Centroid (x):</source>
-        <translation type="vanished">ຈຸດໃຈກາງ (x):</translation>
-    </message>
-    <message>
-        <source>X coordinate of centroid</source>
-        <translation type="vanished">ພິກັດ X ຂອງຈຸດໃຈກາງ</translation>
-    </message>
-    <message>
-        <source>Centroid (y):</source>
-        <translation type="vanished">ຈຸດໃຈກາງ (y):</translation>
-    </message>
-    <message>
-        <source>Y coordinate of centroid</source>
-        <translation type="vanished">ພິກັດ Y ຂອງຈຸດໃຈກາງ</translation>
-    </message>
-    <message>
-        <source>Moment of Inertia</source>
-        <translation type="vanished">ໂມມັງອີນາຊີ (Inertia)</translation>
-    </message>
-    <message>
-        <source>Second moment about x-axis (central): ∬(x−cx)² dA</source>
-        <translation type="vanished">ໂມມັງທີສອງອ້ອມແກນ x (ສູນກາງ): ∬(x−cx)² dA</translation>
-    </message>
-    <message>
-        <source>Ixx:</source>
-        <translation type="vanished">Ixx:</translation>
-    </message>
-    <message>
-        <source>Second central moment about x-axis: ∬(x−cx)² dA</source>
-        <translation type="vanished">ໂມມັງສູນກາງທີສອງອ້ອມແກນ x: ∬(x−cx)² dA</translation>
-    </message>
-    <message>
-        <source>Second moment about y-axis (central): ∬(y−cy)² dA</source>
-        <translation type="vanished">ໂມມັງທີສອງອ້ອມແກນ y (ສູນກາງ): ∬(y−cy)² dA</translation>
-    </message>
-    <message>
-        <source>Iyy:</source>
-        <translation type="vanished">Iyy:</translation>
-    </message>
-    <message>
-        <source>Second central moment about y-axis: ∬(y−cy)² dA</source>
-        <translation type="vanished">ໂມມັງສູນກາງທີສອງອ້ອມແກນ y: ∬(y−cy)² dA</translation>
-    </message>
-    <message>
-        <source>Product moment of area (central): ∬(x−cx)(y−cy) dA</source>
-        <translation type="vanished">ຜົນຄູນໂມມັງຂອງເນື້ອທີ່ (ສູນກາງ): ∬(x−cx)(y−cy) dA</translation>
-    </message>
-    <message>
-        <source>Ixy:</source>
-        <translation type="vanished">Ixy:</translation>
-    </message>
-    <message>
-        <source>Product of area central moment: ∬(x−cx)(y−cy) dA</source>
-        <translation type="vanished">ຜົນຄູນໂມມັງສູນກາງຂອງເນື້ອທີ່: ∬(x−cx)(y−cy) dA</translation>
-    </message>
-    <message>
-        <source>Principal Axes</source>
-        <translation type="vanished">ແກນຫຼັກ</translation>
-    </message>
-    <message>
-        <source>Maximum principal second moment of area</source>
-        <translation type="vanished">ໂມມັງຫຼັກທີສອງສູງສຸດຂອງເນື້ອທີ່</translation>
-    </message>
-    <message>
-        <source>I₁ (max):</source>
-        <translation type="vanished">I₁ (ສູງສຸດ):</translation>
-    </message>
-    <message>
-        <source>Minimum principal second moment of area</source>
-        <translation type="vanished">ໂມມັງຫຼັກທີສອງຕ່ຳສຸດຂອງເນື້ອທີ່</translation>
-    </message>
-    <message>
-        <source>I₂ (min):</source>
-        <translation type="vanished">I₂ (ຕ່ຳສຸດ):</translation>
-    </message>
-    <message>
-        <source>Axis Angle (°):</source>
-        <translation type="vanished">ມຸມແກນ (°):</translation>
-    </message>
-    <message>
-        <source>Angle of the minimum principal axis from the x-axis, degrees</source>
-        <translation type="vanished">ມຸມຂອງແກນຫຼັກຕ່ຳສຸດຈາກແກນ x, ເປັນອົງສາ</translation>
-    </message>
-    <message>
-        <source>Indicates if the moment of inertia matrix is degenerate (I₁ ≈ I₂)</source>
-        <translation type="vanished">ບົ່ງບອກວ່າເມທຣິກຊ໌ໂມມັງອີນາຊີເປັນແບບຫຼຸດຮູບ (I₁ ≈ I₂) ບໍ່</translation>
-    </message>
-    <message>
-        <source>Degenerate:</source>
-        <translation type="vanished">ຫຼຸດຮູບ (Degenerate):</translation>
-    </message>
-    <message>
-        <source>Shows whether the shape has rotational symmetry (any axis is principal)</source>
-        <translation type="vanished">ສະແດງວ່າຮູບຊົງມີຄວາມສົມມາດໃນການໝູນບໍ່ (ທຸກແກນເປັນແກນຫຼັກ)</translation>
-    </message>
-    <message>
-        <source>N/A</source>
-        <translation type="vanished">ບໍ່ມີຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation type="vanished">ແມ່ນ</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation type="vanished">ບໍ່</translation>
-    </message>
-</context>
-<context>
-    <name>LC_HyperbolaPropertiesEditingWidget</name>
-    <message>
-        <source>Hyperbola Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດໄຮເປີໂບລາ</translation>
-    </message>
-    <message>
-        <source>Standard Parameters</source>
-        <translation type="vanished">ພະລາມິເຕີມາດຕະຖານ</translation>
-    </message>
-    <message>
-        <source>Center X:</source>
-        <translation type="vanished">ຈຸດໃຈກາງ X:</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>Major Radius (a):</source>
-        <translation type="vanished">ລັດສະໝີຫຼັກ (a):</translation>
-    </message>
-    <message>
-        <source>Minor Radius (b):</source>
-        <translation type="vanished">ລັດສະໝີຮອງ (b):</translation>
-    </message>
-    <message>
-        <source>Ratio (b/a):</source>
-        <translation type="vanished">ອັດຕາສ່ວນ (b/a):</translation>
-    </message>
-    <message>
-        <source>Rotation (deg):</source>
-        <translation type="vanished">ການໝູນ (ອົງສາ):</translation>
-    </message>
-    <message>
-        <source>Vertex X:</source>
-        <translation type="vanished">ຈຸດຍອດ X:</translation>
-    </message>
-    <message>
-        <source>Start φ:</source>
-        <translation type="vanished">ເລີ່ມຕົ້ນ φ:</translation>
-    </message>
-    <message>
-        <source>End φ:</source>
-        <translation type="vanished">ສິ້ນສຸດ φ:</translation>
-    </message>
-    <message>
-        <source>(0,0 = full branch)</source>
-        <translation type="vanished">(0,0 = ກິ່ງເຕັມ)</translation>
-    </message>
-    <message>
-        <source>Left Branch</source>
-        <translation type="vanished">ກິ່ງຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Foci &amp; Point on Curve (Alternative Editing)</source>
-        <translation type="vanished">ຈຸດໂຟກັດ ແລະ ຈຸດເທິງເສັ້ນໂຄ້ງ (ການແກ້ໄຂທາງເລືອກ)</translation>
-    </message>
-    <message>
-        <source>Focus 1 X:</source>
-        <translation type="vanished">ຈຸດໂຟກັດ 1 X:</translation>
-    </message>
-    <message>
-        <source>Focus 2 X:</source>
-        <translation type="vanished">ຈຸດໂຟກັດ 2 X:</translation>
-    </message>
-    <message>
-        <source>Point on Curve X:</source>
-        <translation type="vanished">ຈຸດເທິງເສັ້ນໂຄ້ງ X:</translation>
-    </message>
-    <message>
-        <source>Derived Properties (Read-only)</source>
-        <translation type="vanished">ຄຸນສົມບັດທີ່ຄຳນວນໄດ້ (ອ່ານຢ່າງດຽວ)</translation>
-    </message>
-    <message>
-        <source>Eccentricity:</source>
-        <translation type="vanished">ຄວາມເຢື້ອງສູນ (Eccentricity):</translation>
-    </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">ການກຳນົດໄຮເປີໂບລາບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">ຈຸດໂຟກັດຕ້ອງບໍ່ແມ່ນຈຸດດຽວກັນ</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">ພິກັດຈຸດໃຈກາງບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">ລັດສະໝີຫຼັກຕ້ອງເປັນຄ່າບວກ</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">ມຸມໝູນບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">ອັດຕາສ່ວນ ຫຼື ລັດສະໝີຮອງຕ້ອງເປັນຄ່າບວກ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ImagePropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Insert Point(x):</source>
-        <translation type="vanished">ຈຸດແຊກ (x):</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">ພິກັດ X ຂອງຈຸດແຊກ</translation>
-    </message>
-    <message>
-        <source>Pick insertion point coordinates from drawing</source>
-        <translation type="vanished">ເລືອກພິກັດຈຸດແຊກຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Insert Point (y):</source>
-        <translation type="vanished">ຈຸດແຊກ (y):</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">ພິກັດ Y ຂອງຈຸດແຊກ</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">ຄວາມກວ້າງ:</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="vanished">ຄວາມກວ້າງຂອງຮູບພາບ</translation>
-    </message>
-    <message>
-        <source>Pick width value from drawing</source>
-        <translation type="vanished">ເລືອກຄ່າຄວາມກວ້າງຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">ຄວາມສູງ:</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="vanished">ຄວາມສູງຂອງຮູບພາບ</translation>
-    </message>
-    <message>
-        <source>Pick height value from the drawing</source>
-        <translation type="vanished">ເລືອກຄ່າຄວາມສູງຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">ຂະໜາດ:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">ຕົວຄູນຂະໜາດ</translation>
-    </message>
-    <message>
-        <source>Pick scale from drawing</source>
-        <translation type="vanished">ເລືອກຂະໜາດຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">ມຸມໝູນ</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>File Path:</source>
-        <translation type="vanished">ທີ່ຢູ່ໄຟລ໌ (File Path):</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="vanished">ທີ່ຢູ່ຂອງໄຟລ໌ຮູບພາບ</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="vanished">ເລືອກໄຟລ໌ຮູບພາບ</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">ຂະໜາດ (px):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">ຂະໜາດຂອງຮູບພາບເປັນພິກເຊວ</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI (ຈຸດຕໍ່ນິ້ວ)</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">ຄວາມລະອຽດ (ຈຸດຕໍ່ນິ້ວ)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ຈຸດຈະຢູ່ພາຍໃນສິ່ງທີ່ເລືອກສະເໝີ</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">ເກາະຈັບທີ່ອົງປະກອບ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InputTextDialog</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">ປ່ອງໂຕ້ຕອບ</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">ປ້າຍຂໍ້ຄວາມ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InsertPropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="vanished">ຈຸດແຊກ (x):</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">ພິກັດ X ຂອງຈຸດແຊກ</translation>
-    </message>
-    <message>
-        <source>Pick insertion point coordinates from drawing</source>
-        <translation type="vanished">ເລືອກພິກັດຈຸດແຊກຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="vanished">ຈຸດແຊກ (y):</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">ພິກັດ Y ຂອງຈຸດແຊກ</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="vanished">ຂະໜາດ X:</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="vanished">ຕົວຄູນຂະໜາດຕາມແກນ X</translation>
-    </message>
-    <message>
-        <source>Pick scale by X value from drawing</source>
-        <translation type="vanished">ເລືອກຂະໜາດແກນ X ຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="vanished">ຂະໜາດ Y:</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="vanished">ຕົວຄູນຂະໜາດຕາມແກນ Y</translation>
-    </message>
-    <message>
-        <source>Pick scale Y value from drawing</source>
-        <translation type="vanished">ເລືອກຂະໜາດແກນ Y ຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">ມຸມໝູນ</translation>
-    </message>
-    <message>
-        <source>Pick Angle value from drawing</source>
-        <translation type="vanished">ເລືອກຄ່າມຸມຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="vanished">ແຖວ:</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="vanished">ຈຳນວນແຖວສຳລັບການສຳເນົາ</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="vanished">ຖັນ:</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="vanished">ຈຳນວນຖັນສຳລັບການສຳເນົາ</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="vanished">ໄລຍະຫ່າງແຖວ:</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="vanished">ໄລຍະຫ່າງລະຫວ່າງແຖວ</translation>
-    </message>
-    <message>
-        <source>Pick row spacing value from drawing</source>
-        <translation type="vanished">ເລືອກຄ່າໄລຍະຫ່າງແຖວຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="vanished">ໄລຍະຫ່າງຖັນ:</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="vanished">ໄລຍະຫ່າງລະຫວ່າງຖັນ</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງຖັນຈາກຮູບແຕ້ມ</translation>
-    </message>
-</context>
-<context>
     <name>LC_LayerDialogEx</name>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
         <translation>ຕັ້ງຄ່າເລເຢີ</translation>
-    </message>
-    <message>
-        <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation type="vanished">ຊື່ຂອງເລເຢີໃໝ່. ເພື່ອສ້າງເລເຢີແບບຈັດລຳດັບເລເຢີ, ໃຫ້ລວມເອົາຊື່ຂອງເລເຢີສະເໝືອນ ແລະ ຕົວແຍກຊື່ເລເຢີ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="61"/>
@@ -8408,17 +1763,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ປະເພດເລເຢີ</translation>
     </message>
     <message>
-        <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation type="vanished">ເລເຢີສຳລັບຂໍ້ມູນຕ່າງໆ, ບັນທຶກ, ຮ່າງ ແລະ ອື່ນໆ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="90"/>
         <source>Informational</source>
         <translation>ຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>Normal layer with drawing eleements</source>
-        <translation type="vanished">ເລເຢີປົກກະຕິພ້ອມກັບອົງປະກອບການແຕ້ມ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="100"/>
@@ -8426,17 +1773,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ປົກກະຕິ</translation>
     </message>
     <message>
-        <source>Layer that holds dimensions</source>
-        <translation type="vanished">ເລເຢີທີ່ໃຊ້ເກັບມິຕິ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="110"/>
         <source>Dimensions</source>
         <translation>ມິຕິ</translation>
-    </message>
-    <message>
-        <source>Layer with alternate position of entities located on normal layers</source>
-        <translation type="vanished">ເລເຢີທີ່ມີຕຳແໜ່ງສຳຮອງຂອງອົງປະກອບທີ່ຢູ່ໃນເລເຢີປົກກະຕິ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="120"/>
@@ -8454,10 +1793,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
         <source>Construction Layer</source>
         <translation>ເລເຢີການກໍ່ສ້າງ</translation>
-    </message>
-    <message>
-        <source>Path for parent layer</source>
-        <translation type="vanished">ທີ່ຢູ່ສຳລັບເລເຢີແມ່</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="179"/>
@@ -8498,49 +1833,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_LayerExportOptionsWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Layers Export Options</source>
-        <translation type="vanished">ຕົວເລືອກການສົ່ງອອກເລເຢີ</translation>
-    </message>
-    <message>
-        <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ມຸມມອງທີ່ຕັ້ງຊື່ໄວ້ໃນເອກະສານຈະຖືກສົ່ງອອກໄປນຳ. ຖ້າບໍ່ດັ່ງນັ້ນ, ມຸມມອງຈະບໍ່ຖືກລວມເຂົ້າ.</translation>
-    </message>
-    <message>
-        <source>Export Named Views too</source>
-        <translation type="vanished">ສົ່ງອອກມຸມມອງທີ່ຕັ້ງຊື່ນຳ</translation>
-    </message>
-    <message>
-        <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ແຕ່ລະເລເຢີທີ່ສົ່ງອອກຈະຖືກແຍກເປັນໄຟລ໌ຮູບແຕ້ມຕ່າງຫາກ. ຖ້າບໍ່ດັ່ງນັ້ນ, ທຸກເລເຢີຈະຖືກລວມຢູ່ໃນຮູບແຕ້ມດຽວ.</translation>
-    </message>
-    <message>
-        <source>Export each layer to own drawing file</source>
-        <translation type="vanished">ສົ່ງອອກແຕ່ລະເລເຢີເປັນໄຟລ໌ຮູບແຕ້ມຂອງໃຜລາວ</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ອົງປະກອບຈະຖືກເກັບໄວ້ໃນເລເຢີເດີມ. ຖ້າບໍ່ດັ່ງນັ້ນ, ພວກມັນຈະຖືກຍ້າຍໄປຢູ່ເລເຢີ &quot;0&quot;.</translation>
-    </message>
-    <message>
-        <source>Retain original layer for entities</source>
-        <translation type="vanished">ຮັກສາເລເຢີເດີມສຳລັບອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, UCS ຈາກເອກະສານຈະຖືກສົ່ງອອກໄປນຳ. ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະບໍ່ລວມ UCS ເຂົ້າໄປ.</translation>
-    </message>
-    <message>
-        <source>Export UCSs too</source>
-        <translation type="vanished">ສົ່ງອອກ UCS ນຳ</translation>
-    </message>
-</context>
-<context>
     <name>LC_LayerTreeOptionsDialog</name>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="20"/>
@@ -8548,17 +1840,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ຕົວເລືອກໂໂຄງສ້າງເລເຢີ</translation>
     </message>
     <message>
-        <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation type="vanished">ຕັ້ງຄ່າຮູບແບບການຕັ້ງຊື່ທີ່ໃຊ້ເພື່ອສ້າງລຳດັບເລເຢີໂດຍອີງໃສ່ລາຍການເລເຢີແບບຮາບພຽງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="33"/>
         <source>Naming Convention</source>
         <translation>ຮູບແບບການຕັ້ງຊື່</translation>
-    </message>
-    <message>
-        <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation type="vanished">ຕົວຂັ້ນທີ່ໃຊ້ສຳລັບແຍກຊື່ພາຍໃນຂອງເລເຢີໃຫ້ເປັນຊື່ແບບລຳດັບເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="68"/>
@@ -8576,26 +1860,14 @@ Are you sure you are going to discard changes?</source>
         <translation>ກ່ຽວກັບມິຕິ</translation>
     </message>
     <message>
-        <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation type="vanished">ຄຳລົງທ້າຍຂອງຊື່ເລເຢີທີ່ກຳນົດວ່າເລເຢີນັ້ນແມ່ນກ່ຽວກັບມິຕິ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="114"/>
         <source>Informational</source>
         <translation>ກ່ຽວກັບຂໍ້ມູນ</translation>
     </message>
     <message>
-        <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation type="vanished">ຄຳລົງທ້າຍຂອງຊື່ເລເຢີທີ່ກຳນົດວ່າເລເຢີນັ້ນແມ່ນກ່ຽວກັບຂໍ້ມູນ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="134"/>
         <source>Alternative Position </source>
         <translation>ຕຳແໜ່ງທາງເລືອກ </translation>
-    </message>
-    <message>
-        <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation type="vanished">ຄຳລົງທ້າຍຂອງຊື່ເລເຢີທີ່ກຳນົດວ່າເລເຢີນັ້ນແມ່ນສຳລັບຕຳແໜ່ງທາງເລືອກ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="157"/>
@@ -8608,21 +1880,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ຄຳນຳໜ້າ</translation>
     </message>
     <message>
-        <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation type="vanished">ຄຳນຳໜ້າຂອງຊື່ເລເຢີທີ່ຈະຖືກໃຊ້ຫາກມີຊື່ດັ່ງກ່າວຢູ່ແລ້ວ (ເຊັ່ນ: ເມື່ອມີການສ້າງສຳເນົາ)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="183"/>
         <source>Suffix</source>
         <translation>ຄຳລົງທ້າຍ</translation>
-    </message>
-    <message>
-        <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation type="vanished">ຄຳລົງທ້າຍຂອງຊື່ເລເຢີທີ່ຈະຖືກໃຊ້ຫາກມີຊື່ດັ່ງກ່າວຢູ່ແລ້ວ (ເຊັ່ນ: ເມື່ອມີການສ້າງສຳເນົາ)</translation>
-    </message>
-    <message>
-        <source>Display and operations settings</source>
-        <translation type="vanished">ຕັ້ງຄ່າການສະແດງຜົນ ແລະ ການປະຕິບັດການ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="207"/>
@@ -8630,17 +1890,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ການສະແດງຜົນ ແລະ ການປະຕິບັດການ</translation>
     </message>
     <message>
-        <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຄຳແນະນຳ (tooltip) ຈະລວມເອົາຊື່ເຕັມຂອງເລເຢີ (ພ້ອມກັບລະດັບເລເຢີທີ່ຢູ່ເທິງທັງໝົດ)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="213"/>
         <source>Show full name as ToolTip</source>
         <translation>ສະແດງຊື່ເຕັມເປັນຄຳແນະນຳ (ToolTip)</translation>
-    </message>
-    <message>
-        <source>If checked, icons for layer types will be shown</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະສະແດງໄອຄອນສຳລັບປະເພດຂອງເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="220"/>
@@ -8648,21 +1900,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ສະແດງໄອຄອນປະເພດເລເຢີ</translation>
     </message>
     <message>
-        <source>Indentation for child layers</source>
-        <translation type="vanished">ການຍໍ້ໜ້າສຳລັບເລເຢີຍ່ອຍ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="233"/>
         <source>Show indented layer names. Ident size:</source>
         <translation>ສະແດງຊື່ເລເຢີແບບຍໍ້ໜ້າ. ຂະໜາດການຍໍ້:</translation>
-    </message>
-    <message>
-        <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation type="vanished">ຂະໜາດຂອງການຍໍ້ໜ້າເປັນຕົວອັກສອນ ເພື່ອຍໍ້ຊື່ຂອງເລເຢີຍ່ອຍຈາກເລເຢີຫຼັກ</translation>
-    </message>
-    <message>
-        <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະສາມາດໃຊ້ການລາກ ແລະ ວາງໃນລາຍການເລເຢີໄດ້ ແລະ ອາດຈະປັບປ່ຽນໂຄງສ້າງລຳດັບເລເຢີໃໝ່ໄດ້</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="266"/>
@@ -8670,17 +1910,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ອະນຸຍາດໃຫ້ປັບປ່ຽນໂຄງສ້າງຜ່ານການລາກ ແລະ ວາງ</translation>
     </message>
     <message>
-        <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation type="vanished">ຫາກເລເຢີຫຼັກຖືກປ່ຽນຊື່, ເລເຢີສຳຮອງກໍຈະຖືກປ່ຽນຊື່ນຳເຊັ່ນກັນ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="273"/>
         <source>Rename secondary layers on primary rename</source>
         <translation>ປ່ຽນຊື່ເລເຢີສຳຮອງເມື່ອປ່ຽນຊື່ເລເຢີຫຼັກ</translation>
-    </message>
-    <message>
-        <source>Various colors settings</source>
-        <translation type="vanished">ຕັ້ງຄ່າສີຕ່າງໆ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="281"/>
@@ -8688,29 +1920,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ສີ</translation>
     </message>
     <message>
-        <source>Background color for selected items in layers tree.</source>
-        <translation type="vanished">ສີພື້ນຫຼັງສຳລັບລາຍການທີ່ຖືກເລືອກໃນລຳດັບເລເຢີ.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">ສີສຳລັບເສັ້ນຂັ້ນໃນມຸມມອງລຳດັບເລເຢີ</translation>
-    </message>
-    <message>
-        <source>Background color for virtual layers items in layers list</source>
-        <translation type="vanished">ສີພື້ນຫຼັງສຳລັບລາຍການເລເຢີສະເໝືອນໃນລາຍການເລເຢີ</translation>
-    </message>
-    <message>
-        <source>Click to select color</source>
-        <translation type="vanished">ຄລິກເພື່ອເລືອກສີ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="384"/>
         <source>Matched item in highlight filter mode</source>
         <translation>ລາຍການທີ່ກົງກັນໃນໂໝດການກອງແບບເນັ້ນ (highlight)</translation>
-    </message>
-    <message>
-        <source>Color for items that matches filter conditions</source>
-        <translation type="vanished">ສີສຳລັບລາຍການທີ່ກົງກັບເງື່ອນໄຂການກອງ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="416"/>
@@ -8733,17 +1945,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ສີພື້ນຫຼັງຂອງລາຍການທີ່ຖືກເລືອກ</translation>
     </message>
     <message>
-        <source>Background color for active layer item in layers tree</source>
-        <translation type="vanished">ສີພື້ນຫຼັງສຳລັບເລເຢີທີ່ກຳລັງໃຊ້ງານໃນລຳດັບເລເຢີ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="504"/>
         <source>Active layer background color</source>
         <translation>ສີພື້ນຫຼັງຂອງເລເຢີທີ່ກຳລັງໃຊ້ງານ</translation>
-    </message>
-    <message>
-        <source>Pens that will be set for newly created layers of different types.</source>
-        <translation type="vanished">ປາກກາທີ່ຈະຖືກຕັ້ງຄ່າສຳລັບເລເຢີທີ່ສ້າງໃໝ່ໃນແຕ່ລະປະເພດ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="525"/>
@@ -8769,36 +1973,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="74"/>
         <source>Alternative Position Layer</source>
         <translation>ເລເຢີຕຳແໜ່ງທາງເລືອກ</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">ຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>highlighted item</source>
-        <translation type="vanished">ລາຍການທີ່ເນັ້ນ</translation>
-    </message>
-    <message>
-        <source>virtual layer background</source>
-        <translation type="vanished">ພື້ນຫຼັງເລເຢີສະເໝືອນ</translation>
-    </message>
-    <message>
-        <source>selected item background</source>
-        <translation type="vanished">ພື້ນຫຼັງລາຍການທີ່ເລືອກ</translation>
-    </message>
-    <message>
-        <source>active layer background</source>
-        <translation type="vanished">ພື້ນຫຼັງເລເຢີທີ່ໃຊ້ງານ</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">ຜິດພາດ</translation>
-    </message>
-    <message>
-        <source>Invalid value provide for %1 color.
-Please specify a different value.</source>
-        <translation type="vanished">ຄ່າທີ່ລະບຸໃຫ້ກັບສີ %1 ບໍ່ຖືກຕ້ອງ.
-ກະລຸນາລະບຸຄ່າອື່ນ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="239"/>
@@ -9052,18 +2226,6 @@ Please specify a different value.</source>
         <translation>&amp;ປິດການພິມທຸກເລເຢີ</translation>
     </message>
     <message>
-        <source>&amp;Export Single Layer</source>
-        <translation type="vanished">&amp;ສົ່ງອອກເລເຢີດຽວ</translation>
-    </message>
-    <message>
-        <source>&amp;Export Layer Sub-Tree</source>
-        <translation type="vanished">&amp;ສົ່ງອອກໂຄງສ້າງເລເຢີຍ່ອຍ</translation>
-    </message>
-    <message>
-        <source>Export &amp;Visible Layer(s)</source>
-        <translation type="vanished">ສົ່ງອອກເລເຢີທີ່&amp;ເບິ່ງເຫັນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="769"/>
         <source>&amp;Find And Remove Empty Layers</source>
         <translation>&amp;ຊອກຫາ ແລະ ລຶບເລເຢີທີ່ວ່າງເປົ່າ</translation>
@@ -9077,38 +2239,10 @@ Please specify a different value.</source>
         <translation>ຮູບແບບ</translation>
     </message>
     <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຄວາມຍາວຂອງເສັ້ນຈະຖືກກຳນົດໂດຍຕຳແໜ່ງເມົາສ໌ ແທນທີ່ຈະເປັນການຕັ້ງຄ່າ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
         <source>Free</source>
         <translation>ອິດສະຫຼະ</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະການຈັບຈຸດ (snap) ຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">ໄລຍະຫ່າງ (offset) ຂອງຈຸດຈັບຂີດໝາຍຈາກຈຸດຕັດ</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງ (offset) ຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ອົງປະກອບດັ້ງເດີມຈະຖືກແຍກອອກດ້ວຍຈຸດຕັດ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="144"/>
@@ -9119,14 +2253,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="42"/>
         <source>Offset:</source>
         <translation>ໄລຍະຫ່າງ:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">ໄລຍະຫ່າງຂອງຈຸດຕັດຈາກຈຸດຈັບເສັ້ນທີ່ລະບຸ</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">ກຳນົດວ່າສ່ວນໃດຂອງເສັ້ນທີ່ສ້າງຂຶ້ນຈະຖືກຈັບເຂົ້າກັບຈຸດຕັດ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
@@ -9157,14 +2283,6 @@ Please specify a different value.</source>
         <translation>ຈັບຈຸດເສັ້ນ:</translation>
     </message>
     <message>
-        <source>Length of line</source>
-        <translation type="vanished">ຄວາມຍາວເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ມຸມຈະທຽບກັບມຸມຂອງອົງປະກອບທີ່ຖືກເລືອກ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
         <source>Rel</source>
         <translation>ທຽບມຸມ</translation>
@@ -9175,15 +2293,6 @@ Please specify a different value.</source>
         <translation>ຄວາມຍາວ:</translation>
     </message>
     <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">ຈຸດຈັບສຳລັບຕຳແໜ່ງຂອງຈຸດຕັດລະຫວ່າງເສັ້ນທີ່ສ້າງຂຶ້ນ ແລະ ອົງປະກອບຕົ້ນສະບັບ (ພາຍໃນເສັ້ນດັ້ງເດີມ)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">ອິດສະຫຼະ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="201"/>
         <source>Angle:</source>
         <translation>ມຸມ:</translation>
@@ -9192,10 +2301,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="208"/>
         <source>Snap Distance:</source>
         <translation>ໄລຍະການຈັບຈຸດ:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">ມຸມຂອງເສັ້ນ</translation>
     </message>
 </context>
 <context>
@@ -9221,18 +2326,6 @@ Please specify a different value.</source>
         <translation>ໄລຍະຫ່າງສ່ວນທ້າຍ:</translation>
     </message>
     <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">ໄລຍະຫ່າງສຳລັບເສັ້ນທີ່ສ້າງຂຶ້ນຈາກຈຸດຕັດ</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">ຈຸດຈັບສຳລັບເສັ້ນທີ່ສ້າງຂຶ້ນ</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="217"/>
         <source>Start</source>
         <translation>ເລີ່ມຕົ້ນ</translation>
@@ -9253,25 +2346,9 @@ Please specify a different value.</source>
         <translation>ຄວາມຍາວ:</translation>
     </message>
     <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">ຄວາມຍາວຄົງທີ່ຂອງເສັ້ນທີ່ສ້າງຂຶ້ນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="270"/>
         <source>Snap:</source>
         <translation>ເກາະຈັບ:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">ກຳນົດວ່າເສັ້ນທີ່ສ້າງຂຶ້ນຄວນຈະສ້າງໄປຫາຈຸດຕັດ ຫຼື ຄວນຈະມີຄວາມຍາວຄົງທີ່</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="105"/>
@@ -9284,17 +2361,9 @@ Please specify a different value.</source>
         <translation>ຄວາມຍາວຄົງທີ່</translation>
     </message>
     <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ເສັ້ນທີ່ສ້າງຂຶ້ນຈະຕັ້ງສາກກັບເສັ້ນທີ່ຖືກເລືອກ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="62"/>
         <source>Orthogonal</source>
         <translation>ຕັ້ງສາກ</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">ມຸມລະຫວ່າງເສັ້ນດັ້ງເດີມ ແລະ ເສັ້ນທີ່ສ້າງຂຶ້ນ</translation>
     </message>
 </context>
 <context>
@@ -9305,17 +2374,9 @@ Please specify a different value.</source>
         <translation>ຮູບແບບ</translation>
     </message>
     <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະສ້າງເປັນເສັ້ນຕໍ່ເນື່ອງ (polyline) ແທນທີ່ຈະເປັນເສັ້ນແຍກກັນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="69"/>
         <source>Create Polyline</source>
         <translation>ສ້າງເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">ນະໂຍບາຍສຳລັບເສັ້ນທີ່ຖືກເລືອກເປັນອັນດັບສອງ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
@@ -9346,14 +2407,6 @@ Please specify a different value.</source>
         <translation>ເສັ້ນທີ 2:</translation>
     </message>
     <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">ນະໂຍບາຍສຳລັບການຕໍ່ເສັ້ນທີ່ຖືກເລືອກເປັນອັນດັບທຳອິດ</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">ກຳນົດວິທີການໃຊ້ປາກກາກັບອົງປະກອບທີ່ສ້າງຂຶ້ນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="102"/>
         <source>Active Pen</source>
         <translation>ປາກກາທີ່ກຳລັງໃຊ້ງານ</translation>
@@ -9379,10 +2432,6 @@ Please specify a different value.</source>
         <translation>ຄຸນລັກສະນະ:</translation>
     </message>
     <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ເສັ້ນດັ້ງເດີມຈະຖືກລຶບອອກ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="162"/>
         <source>Remove originals</source>
         <translation>ລຶບອົງປະກອບດັ້ງເດີມອອກ</translation>
@@ -9394,10 +2443,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="20"/>
         <source>Form</source>
         <translation>ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">ຄວບຄຸມວິທີການສ້າງຈຸດຢູ່ທີ່ຂອບ (ຈຸດເລີ່ມຕົ້ນ/ຈຸດສິ້ນສຸດ).</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="128"/>
@@ -9420,38 +2465,14 @@ Please specify a different value.</source>
         <translation>ສິ້ນສຸດ</translation>
     </message>
     <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">ຈຳນວນຈຸດທີ່ຈະສ້າງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="183"/>
         <source>Edge Points:</source>
         <translation>ຈຸດທີ່ຂອບ:</translation>
     </message>
     <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">ລະບຸວ່າຈຸດທັງໝົດຄວນຈະຢູ່ລະຫວ່າງຈຸດເລີ່ມຕົ້ນ/ສິ້ນສຸດຂອງເສັ້ນ ຫຼື ຄວາມຍາວຂອງເສັ້ນຈະຖືກຄຳນວນໂດຍອີງໃສ່ຈຳນວນຈຸດ ແລະ ໄລຍະຫ່າງລະຫວ່າງຈຸດ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="73"/>
         <source>Fit Line</source>
         <translation>ປັບໃຫ້ພໍດີກັບເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">ໄລຍະຫ່າງລະຫວ່າງຈຸດ.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ເສັ້ນຂອງຈຸດຈະຖືກແຕ້ມດ້ວຍມຸມທີ່ລະບຸ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="32"/>
@@ -9464,703 +2485,9 @@ Please specify a different value.</source>
         <translation>ຈຳນວນຈຸດ:</translation>
     </message>
     <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະໃຊ້ໄລຍະຫ່າງຄົງທີ່ລະຫວ່າງຈຸດທີ່ລະບຸໄວ້. ບໍ່ດັ່ງນັ້ນ, ໄລຍະຫ່າງຈະຖືກຄຳນວນໃໝ່.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="209"/>
         <source>Fixed Distance</source>
         <translation>ໄລຍະຫ່າງຄົງທີ່</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">ມຸມຂອງເສັ້ນ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Pick endpoint from the drawing</source>
-        <translation type="vanished">ເລືອກຈຸດປາຍຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="vanished">ຈຸດເລີ່ມຕົ້ນ (y):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="vanished">ພິກັດ Y ຂອງຈຸດເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="vanished">ຈຸດສິ້ນສຸດ (y):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="vanished">ພິກັດ X ຂອງຈຸດເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="vanished">ຈຸດເລີ່ມຕົ້ນ (x):</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="vanished">ພິກັດ Y ຂອງຈຸດສິ້ນສຸດ</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="vanished">ພິກັດ X ຂອງຈຸດສິ້ນສຸດ</translation>
-    </message>
-    <message>
-        <source>Pick start point from the drawing</source>
-        <translation type="vanished">ເລືອກຈຸດເລີ່ມຕົ້ນຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="vanished">ຈຸດສິ້ນສຸດ (x):</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MTextPropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Content</source>
-        <translation type="vanished">ເນື້ອຫາ</translation>
-    </message>
-    <message>
-        <source>MText content. Format codes (\F, \P, \S) are accepted as-is.</source>
-        <translation type="vanished">ເນື້ອຫາ MText. ລະຫັດຮູບແບບ (\F, \P, \S) ຈະຖືກຍອມຮັບຕາມນັ້ນ.</translation>
-    </message>
-    <message>
-        <source>Direction</source>
-        <translation type="vanished">ທິດທາງ</translation>
-    </message>
-    <message>
-        <source>Left-to-right paragraph base direction (UAX#9)</source>
-        <translation type="vanished">ທິດທາງພື້ນຖານຂອງຫຍໍ້ໜ້າຈາກຊ້າຍຫາຂວາ (UAX#9)</translation>
-    </message>
-    <message>
-        <source>LTR</source>
-        <translation type="vanished">ຊ້າຍໄປຂວາ</translation>
-    </message>
-    <message>
-        <source>Right-to-left paragraph base direction (UAX#9)</source>
-        <translation type="vanished">ທິດທາງພື້ນຖານຂອງຫຍໍ້ໜ້າຈາກຂວາຫາຊ້າຍ (UAX#9)</translation>
-    </message>
-    <message>
-        <source>RTL</source>
-        <translation type="vanished">ຂວາໄປຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">ຄວາມສູງ:</translation>
-    </message>
-    <message>
-        <source>Nominal text height</source>
-        <translation type="vanished">ຄວາມສູງຕົວໜັງສືປົກກະຕິ</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">ຄວາມກວ້າງ:</translation>
-    </message>
-    <message>
-        <source>Reference rectangle width</source>
-        <translation type="vanished">ຄວາມກວ້າງຂອງກອບສີ່ຫຼ່ຽມອ້າງອີງ</translation>
-    </message>
-    <message>
-        <source>Angle (°):</source>
-        <translation type="vanished">ມຸມ (°):</translation>
-    </message>
-    <message>
-        <source>Rotation angle in degrees (UCS)</source>
-        <translation type="vanished">ມຸມໝຸນເປັນອົງສາ (UCS)</translation>
-    </message>
-    <message>
-        <source>Line spacing:</source>
-        <translation type="vanished">ໄລຍະຫ່າງແຖວ:</translation>
-    </message>
-    <message>
-        <source>Line spacing factor</source>
-        <translation type="vanished">ຕົວຄູນໄລຍະຫ່າງແຖວ</translation>
-    </message>
-    <message>
-        <source>Style:</source>
-        <translation type="vanished">ຮູບແບບ:</translation>
-    </message>
-    <message>
-        <source>Text style / font name</source>
-        <translation type="vanished">ຮູບແບບຕົວໜັງສື / ຊື່ຟອນ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;ຊ່ວຍເຫຼືອ</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">ເອກະສານອອນ&amp;ລາຍ</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;Wiki</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">ຄູ່ມື&amp;ຜູ້ໃຊ້</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp;ຄຳສັ່ງ</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">&amp;ສະໄຕລ໌ຊີດ</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">ວິດ&amp;ເຈັດ</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">ກ່ຽວກັບ</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp;ຟໍຣຳ</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">&amp;ແຊັດ Zulip</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">&amp;ສົ່ງລາຍງານຂໍ້ຜິດພາດ</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">&amp;ຮ້ອງຂໍຟີເຈີໃໝ່</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">&amp;ໜ້າເວີຊັນຕ່າງໆ</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp;ບໍລິຈາກ</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">&amp;ຈຸດ</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;ວົງມົນ</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">&amp;ເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">ຮູບຫຼາຍ&amp;ຫຼ່ຽມ</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">ເສັ້ນ&amp;ສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">ວົງ&amp;ຣີ</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;ເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">&amp;ອື່ນໆ</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">&amp;ແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;ວົງລີ</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">&amp;ອື່ນໆ</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;ປັບປ່ຽນ</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp;ລຳດັບ</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">&amp;ມິຕິ</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;ຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp;ເຄື່ອງມື</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;ເລືອກ</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">ຂະ&amp;ໜາດ</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;ໄຟລ໌</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">ໄຟລ໌ທີ່ໃຊ້ລ້າສຸດ</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">ນຳເຂົ້າ</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">ສົ່ງອອກ</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;ຕົວເລືອກ</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp;ແກ້ໄຂ</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;ມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">&amp;ຄືນຄ່າມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">ປລັກ&amp;ອິນ</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">&amp;ພື້ນທີ່ເຮັດວຽກ</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">ພື້ນທີ່ວາງວິດເຈັດ</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">ວິດ&amp;ເຈັດ CAD</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">&amp;ການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">ບໍລິບົດ</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">ແຖບເຄື່ອງມື</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">ວິດເຈັດ</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">ວິດເຈັດ CAD</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">ແຖບເຄື່ອງມື CAD</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">ເລືອກ</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">ລ້າສຸດ</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">ປັບປ່ຽນ</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">ແກ້ໄຂເພີ່ມເຕີມ</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">ແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">ເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">ຈຸດ</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">ວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">ຮູບຫຼາຍຫຼ່ຽມ</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">ເສັ້ນຕໍ່ເນື່ອງ/ເສັ້ນສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">ວົງລີ</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">ອື່ນໆ</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">ເພີ່ມມິຕິ</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">ຈັດວາງ</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">ລຳດັບການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">ເລເຢີ</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">ຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">ແກ້ໄຂ</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">ຕົວເລືອກ</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">&amp;ມຸມມອງທີ່ຕັ້ງຊື່ໄວ້</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">ແກ້ໄຂຄຸນສົມບັດ</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">ແກ້ໄຂທົ່ວໄປ</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">ແກ້ໄຂເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">ແຕ້ມເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">ແຕ້ມວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">ແຕ້ມອື່ນໆ</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">ແກ້ໄຂວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">ແກ້ໄຂເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">ແກ້ໄຂເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">ແກ້ໄຂເສັ້ນສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">ແກ້ໄຂຈຸດເສັ້ນສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">ແກ້ໄຂຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">ແກ້ໄຂຂໍ້ຄວາມຫຼາຍແຖວ (MText)</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">ແກ້ໄຂບລັອກ</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">ລຳດັບ</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;ແຖບເຄື່ອງມື</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">&amp;ແຖບເຄື່ອງມື CAD</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">&amp;ພື້ນທີ່ເຮັດວຽກ</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">ໂໝດແທັບ (Ta&amp;b)</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">ໂໝດ&amp;ໜ້າຕ່າງ</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp;ການຈັດວາງ</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">ມົນ</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">ສາມຫຼ່ຽມ</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">ເໜືອ</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">ໃຕ້</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">ຕາເວັນອອກ</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">ຕາເວັນຕົກ</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp;ຈັດລຽງ</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp;ຂະຫຍາຍໃຫຍ່ສຸດ</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;ຊ້ອນກັນ</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;ລຽງຕໍ່ກັນ</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">ລຽງຕໍ່ກັນໃນ&amp;ແນວຕັ້ງ</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">ລຽງຕໍ່ກັນໃນ&amp;ແນວນອນ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງຈາກການແຕ້ມ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyAlignOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>No change of horizontal position</source>
-        <translation type="vanished">ບໍ່ມີການປ່ຽນແປງຕຳແໜ່ງແນວນອນ</translation>
-    </message>
-    <message>
-        <source>Align left edges</source>
-        <translation type="vanished">ຈັດລຽງຂອບຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Center entities horizontally</source>
-        <translation type="vanished">ຈັດລຽງອົງປະກອບໄວ້ກາງໃນແນວນອນ</translation>
-    </message>
-    <message>
-        <source>Align right edges</source>
-        <translation type="vanished">ຈັດລຽງຂອບຂວາ</translation>
-    </message>
-    <message>
-        <source>Horizontal Align:</source>
-        <translation type="vanished">ຈັດລຽງແນວນອນ:</translation>
-    </message>
-    <message>
-        <source>Vertical Align:</source>
-        <translation type="vanished">ຈັດລຽງແນວຕັ້ງ:</translation>
-    </message>
-    <message>
-        <source>Defines the way of selected entities alignment.</source>
-        <translation type="vanished">ກຳນົດວິທີການຈັດລຽງອົງປະກອບທີ່ຖືກເລືອກ.</translation>
-    </message>
-    <message>
-        <source>Entity</source>
-        <translation type="vanished">ອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Position</source>
-        <translation type="vanished">ຕຳແໜ່ງ</translation>
-    </message>
-    <message>
-        <source>Drawing</source>
-        <translation type="vanished">ການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If selected, relative positions of entities within selection will be unchanged. Otherwise, each entity will be positioned individually.</source>
-        <translation type="vanished">ຫາກເລືອກ, ຕຳແໜ່ງສຳພັນຂອງອົງປະກອບພາຍໃນສ່ວນທີ່ເລືອກຈະບໍ່ປ່ຽນແປງ. ບໍ່ດັ່ງນັ້ນ, ແຕ່ລະອົງປະກອບຈະຖືກຈັດວາງຕຳແໜ່ງແຍກກັນ.</translation>
-    </message>
-    <message>
-        <source>As Group</source>
-        <translation type="vanished">ເປັນກຸ່ມ</translation>
-    </message>
-    <message>
-        <source>Align to:</source>
-        <translation type="vanished">ຈັດລຽງໄປຫາ:</translation>
-    </message>
-    <message>
-        <source>Align top edges</source>
-        <translation type="vanished">ຈັດລຽງຂອບດ້ານເທິງ</translation>
-    </message>
-    <message>
-        <source>Center entities vertically</source>
-        <translation type="vanished">ຈັດລຽງອົງປະກອບໄວ້ກາງໃນແນວຕັ້ງ</translation>
-    </message>
-    <message>
-        <source>Align bottom edges</source>
-        <translation type="vanished">ຈັດລຽງຂອບດ້ານລຸ່ມ</translation>
-    </message>
-    <message>
-        <source>No vertical alignment</source>
-        <translation type="vanished">ບໍ່ມີການຈັດລຽງແນວຕັ້ງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະໃຊ້ຄຸນລັກສະນະປັດຈຸບັນສຳລັບອົງປະກອບທີ່ສະທ້ອນເງົາ, ບໍ່ດັ່ງນັ້ນ - ຈະໃຊ້ຄຸນລັກສະນະດັ້ງເດີມ. </translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ໃຊ້ຄຸນລັກສະນະປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">ຫາກບໍ່ໝາຍເລືອກ, ອົງປະກອບດັ້ງເດີມຈະຖືກລຶບອອກ, ບໍ່ດັ່ງນັ້ນອົງປະກອບເຫຼົ່ານັ້ນຈະຍັງຄົງຢູ່.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ຮັກສາອົງປະກອບດັ້ງເດີມ</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ອົງປະກອບທີ່ສະທ້ອນເງົາຈະຖືກວາງໄວ້ໃນເລເຢີປັດຈຸບັນ, ບໍ່ດັ່ງນັ້ນພວກມັນຈະຖືກວາງໄວ້ໃນເລເຢີດັ້ງເດີມ.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">ໃຊ້ເລເຢີປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ອົງປະກອບຈະຖືກປັບຂະໜາດຫາກຈຳເປັນ. ບໍ່ດັ່ງນັ້ນ, ພວກມັນຈະຖືກຈັດວາງຕຳແໜ່ງ ແລະ ໝຸນເທົ່ານັ້ນ.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">ມາດຕາສ່ວນ</translation>
     </message>
 </context>
 <context>
@@ -10171,17 +2498,9 @@ Please specify a different value.</source>
         <translation>ຮູບແບບ</translation>
     </message>
     <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ສ່ວນເສັ້ນລະຫວ່າງຈຸດຕັດຈະຖືກລຶບອອກ. ຫາກບໍ່ໝາຍເລືອກ - ອົງປະກອບຈະຖືກແຍກອອກທີ່ຈຸດຕັດ. </translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="39"/>
         <source>Remove Segments</source>
         <translation>ລຶບສ່ວນເສັ້ນອອກ</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ສ່ວນເສັ້ນທີ່ເລືອກຈະຖືກລຶບອອກ. ບໍ່ດັ່ງນັ້ນ, ສ່ວນເສັ້ນທີ່ເລືອກຈະຍັງຄົງຢູ່ ແລະ ສ່ວນທີ່ເຫຼືອຈະຖືກລຶບອອກ. </translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="46"/>
@@ -10220,10 +2539,6 @@ Please specify a different value.</source>
         <translation type="unfinished">ສິ້ນສຸດ</translation>
     </message>
     <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">ຈັບຈຸດຂອງຊ່ອງວ່າງເຂົ້າກັບຈຸດຈັບເສັ້ນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
         <source>Line Snap:</source>
         <translation>ຈັບຈຸດເສັ້ນ:</translation>
@@ -10232,10 +2547,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
         <source>Gap Size:</source>
         <translation>ຂະໜາດຊ່ອງວ່າງ:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">ຈຸດຈັບສຳລັບຊ່ອງວ່າງເທິງເສັ້ນ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
@@ -10247,1012 +2558,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42"/>
         <source>Gap Snap:</source>
         <translation>ຈັບຈຸດຊ່ອງວ່າງ:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">ເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">ຈຸດກາງ</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">ສິ້ນສຸດ</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">ອິດສະຫຼະ</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">ເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">ຈຸດກາງ</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">ສິ້ນສຸດ</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">ເລືອກຂະໜາດຊ່ອງວ່າງຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">ໄລຍະຫ່າງຈາກຈຸດຈັບ</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະການຈັບຈຸດຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">ຂະໜາດຂອງຊ່ອງວ່າງ, ຫາກບໍ່ແມ່ນແບບອິດສະຫຼະ</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຂະໜາດຂອງຊ່ອງວ່າງຈະຖືກກຳນົດໂດຍເມົາສ໌</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ການສະທ້ອນເງົາຈະເຮັດໂດຍໃຊ້ອົງປະກອບເສັ້ນທີ່ຖືກເລືອກ.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">ສະທ້ອນເງົາໄປຫາເສັ້ນທີ່ເລືອກ</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">ຫາກບໍ່ໝາຍເລືອກ, ອົງປະກອບດັ້ງເດີມຈະຖືກລຶບອອກ, ບໍ່ດັ່ງນັ້ນພວກມັນຈະຍັງຄົງຢູ່.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ຮັກສາອົງປະກອບດັ້ງເດີມ</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະໃຊ້ຄຸນລັກສະນະປັດຈຸບັນສຳລັບອົງປະກອບທີ່ສະທ້ອນ (mirror), ຖ້າບໍ່ດັ່ງນັ້ນ ຈະໃຊ້ຄຸນລັກສະນະເດີມ. </translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ໃຊ້ຄຸນລັກສະນະປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ອົງປະກອບທີ່ສະທ້ອນເງົາຈະຖືກວາງໄວ້ໃນເລເຢີປັດຈຸບັນ, ບໍ່ດັ່ງນັ້ນພວກມັນຈະຖືກວາງໄວ້ໃນເລເຢີດັ້ງເດີມ.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">ໃຊ້ເລເຢີປັດຈຸບັນ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">ຕົວເລືອກການຍ້າຍ ແລະ ໝຸນ</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ການເລືອກຕົວຄູນຈະເຮັດໄດ້ຢ່າງອິດສະຫຼະດ້ວຍເມົາສ໌.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ອິດສະຫຼະ</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ອົງປະກອບໃໝ່ຈະຖືກວາງໄວ້ໃນເລເຢີປັດຈຸບັນ, ບໍ່ດັ່ງນັ້ນພວກມັນຈະຢູ່ໃນເລເຢີດັ້ງເດີມ.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">ໃຊ້ເລເຢີປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">ຫາກເລືອກແບບສົມບູນ, ຈຸດອ້າງອີງຈະຖືກໝຸນ ແຕ່ອົງປະກອບຈະໝຸນຕາມມຸມທີສອງເທົ່ານັ້ນ, ບໍ່ດັ່ງນັ້ນມຸມທັງໝົດຈະຖືກລວມເຂົ້າກັນ</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">ແທ້ຈິງ</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">ມຸມທີ່ຈະໝຸນອົງປະກອບອ້ອມຈຸດສູນກາງການໝຸນ</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະນຳໃຊ້ຄຸນລັກສະນະປັດຈຸບັນກັບອົງປະກອບທີ່ສ້າງຂຶ້ນ, ຖ້າບໍ່ດັ່ງນັ້ນ ຈະໃຊ້ຄຸນລັກສະນະເດີມ. </translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ໃຊ້ຄຸນລັກສະນະປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ການໝຸນຄັ້ງທີສອງຈະໝຸນອ້ອມຈຸດອ້າງອີງ</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">ໝຸນສອງຄັ້ງ</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">ມຸມສຳລັບການໝຸນເພີ່ມເຕີມອ້ອມຈຸດອ້າງອີງ</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມການໝຸນຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ອົງປະກອບດັ້ງເດີມຈະຍັງຄົງຢູ່, ບໍ່ດັ່ງນັ້ນພວກມັນຈະຖືກລຶບອອກ.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ຮັກສາອົງປະກອບດັ້ງເດີມ</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະມີການສ້າງສຳເນົາຫຼາຍອັນ.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">ຫຼາຍສຳເນົາ</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">ມຸມໝຸນ:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">ລະບຸວ່າຈະກຳນົດມຸມດ້ວຍຄ່າທີ່ປ້ອນເຂົ້າ ຫຼື ດ້ວຍຕຳແໜ່ງເມົາສ໌</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມໝຸນທີສອງຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">ຈຳນວນສຳເນົາ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">ຕົວເລືອກການຍ້າຍ ແລະ ໝຸນ</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະມີການສ້າງສຳເນົາຫຼາຍອັນ.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">ຫຼາຍສຳເນົາ</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະໃຊ້ຕົວຄູນປັບຂະໜາດດຽວກັນສຳລັບທັງແກນ X ແລະ Y.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">ແບບຄົງທີ່ (Isotropic)</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ອົງປະກອບດັ້ງເດີມຈະຍັງຄົງຢູ່, ບໍ່ດັ່ງນັ້ນພວກມັນຈະຖືກລຶບອອກ.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ຮັກສາອົງປະກອບດັ້ງເດີມ</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">ຈຳນວນສຳເນົາ</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະນຳໃຊ້ຄຸນລັກສະນະປັດຈຸບັນກັບອົງປະກອບທີ່ສ້າງຂຶ້ນ, ຖ້າບໍ່ດັ່ງນັ້ນ ຈະໃຊ້ຄຸນລັກສະນະເດີມ. </translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ໃຊ້ຄຸນລັກສະນະປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">ຕົວຄູນປັບຂະໜາດສຳລັບແກນ Y</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">ຕົວຄູນປັບຂະໜາດ:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ອົງປະກອບທີ່ສ້າງຂຶ້ນຈະຖືກຈັດວາງໄວ້ໃນເລເຢີປັດຈຸບັນ. ຖ້າບໍ່ດັ່ງນັ້ນ, ພວກມັນຈະຖືກຈັດວາງໄວ້ໃນເລເຢີເດີມ. </translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">ໃຊ້ເລເຢີປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຕົວຄູນຈະຖືກເລືອກໄດ້ຢ່າງອິດສະຫຼະດ້ວຍເມົາສ໌. ບໍ່ດັ່ງນັ້ນ, ຈະໃຊ້ຄ່າຕົວຄູນທີ່ລະບຸໄວ້.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ອິດສະຫຼະ</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">ຕົວຄູນປັບຂະໜາດສຳລັບແກນ X</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ອົງປະກອບດັ້ງເດີມຈະຍັງຄົງຢູ່, ບໍ່ດັ່ງນັ້ນພວກມັນຈະຖືກລຶບອອກ.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">ຮັກສາອົງປະກອບດັ້ງເດີມ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ອົງປະກອບທີ່ສ້າງຂຶ້ນຈະຖືກວາງໄວ້ໃນເລເຢີປັດຈຸບັນ. ບໍ່ດັ່ງນັ້ນ, ພວກມັນຈະຖືກວາງໄວ້ໃນເລເຢີດັ້ງເດີມ. </translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">ໃຊ້ເລເຢີປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">ຈຳນວນສຳເນົາ</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະນຳໃຊ້ຄຸນລັກສະນະປັດຈຸບັນກັບອົງປະກອບທີ່ສ້າງຂຶ້ນ, ຖ້າບໍ່ດັ່ງນັ້ນ ຈະໃຊ້ຄຸນລັກສະນະເດີມ. </translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ໃຊ້ຄຸນລັກສະນະປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ອົງປະກອບດັ້ງເດີມຈະຍັງຄົງຢູ່, ບໍ່ດັ່ງນັ້ນພວກມັນຈະຖືກລຶບອອກ.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ຮັກສາອົງປະກອບດັ້ງເດີມ</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະມີການສ້າງສຳເນົາຫຼາຍອັນ. </translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">ຫຼາຍສຳເນົາ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_NamedViewsListWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Create view for current zoom and offset of drawing</source>
-        <translation type="vanished">ສ້າງມຸມມອງສຳລັບການຍໍ້-ຂະຫຍາຍ ແລະ ໄລຍະຫ່າງຂອງການແຕ້ມປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>Restores selected view</source>
-        <translation type="vanished">ຄືນຄ່າມຸມມອງທີ່ເລືອກ</translation>
-    </message>
-    <message>
-        <source>Update selected view by current zoom/position</source>
-        <translation type="vanished">ອັບເດດມຸມມອງທີ່ເລືອກດ້ວຍການຍໍ້-ຂະຫຍາຍ/ຕຳແໜ່ງປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>Edit selected view name</source>
-        <translation type="vanished">ແກ້ໄຂຊື່ມຸມມອງທີ່ເລືອກ</translation>
-    </message>
-    <message>
-        <source>Removes selected view</source>
-        <translation type="vanished">ລຶບມຸມມອງທີ່ເລືອກອອກ</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">ກອງມຸມມອງດ້ວຍຊື່</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">ກອງ...</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">ຕັ້ງຄ່າ</translation>
-    </message>
-    <message>
-        <source>Delete View</source>
-        <translation type="vanished">ລຶບມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>Are you sure to delete ALL views?
- Warning: this action can NOT be undone!</source>
-        <translation type="vanished">ທ່ານແນ່ໃຈບໍ່ວ່າຈະລຶບມຸມມອງທັງໝົດ?
- ຄຳເຕືອນ: ການກະທຳນີ້ບໍ່ສາມາດເລີກທຳໄດ້!</translation>
-    </message>
-    <message>
-        <source>Are you sure to delete view
- &quot;%1&quot;?
- Warning: this action can NOT be undone!</source>
-        <translation type="vanished">ທ່ານແນ່ໃຈບໍ່ວ່າຈະລຶບມຸມມອງ
- &quot;%1&quot;?
- ຄຳເຕືອນ: ການກະທຳນີ້ບໍ່ສາມາດເລີກທຳໄດ້!</translation>
-    </message>
-    <message>
-        <source>Delete Views</source>
-        <translation type="vanished">ລຶບມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>Are you sure to delete views %1?
-Warning: this action can NOT be undone!</source>
-        <translation type="vanished">ທ່ານແນ່ໃຈບໍ່ວ່າຈະລຶບມຸມມອງ %1?
-ຄຳເຕືອນ: ການກະທຳນີ້ບໍ່ສາມາດເລີກທຳໄດ້!</translation>
-    </message>
-    <message>
-        <source>New View</source>
-        <translation type="vanished">ມຸມມອງໃໝ່</translation>
-    </message>
-    <message>
-        <source>View name:</source>
-        <translation type="vanished">ຊື່ມຸມມອງ:</translation>
-    </message>
-    <message>
-        <source>View Creation</source>
-        <translation type="vanished">ການສ້າງມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>Empty name of View is not allowed</source>
-        <translation type="vanished">ບໍ່ອະນຸຍາດໃຫ້ຕັ້ງຊື່ມຸມມອງເປັນຄ່າວ່າງ</translation>
-    </message>
-    <message>
-        <source>View with provided name already exists</source>
-        <translation type="vanished">ມີມຸມມອງທີ່ໃຊ້ຊື່ນີ້ຢູ່ແລ້ວ</translation>
-    </message>
-    <message>
-        <source>Rename View</source>
-        <translation type="vanished">ປ່ຽນຊື່ມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>View Rename</source>
-        <translation type="vanished">ການປ່ຽນຊື່ມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>View with provided name already exists, select another one</source>
-        <translation type="vanished">ມີມຸມມອງທີ່ໃຊ້ຊື່ນີ້ຢູ່ແລ້ວ, ກະລຸນາເລືອກຊື່ອື່ນ</translation>
-    </message>
-    <message>
-        <source>&amp;Add View</source>
-        <translation type="vanished">&amp;ເພີ່ມມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>R&amp;emove Selected Views</source>
-        <translation type="vanished">ລຶ&amp;ບມຸມມອງທີ່ເລືອກ</translation>
-    </message>
-    <message>
-        <source>&amp;Restore View</source>
-        <translation type="vanished">&amp;ຄືນຄ່າມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>Re&amp;name View</source>
-        <translation type="vanished">ປ່ຽ&amp;ນຊື່ມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>&amp;Update View</source>
-        <translation type="vanished">&amp;ອັບເດດມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>R&amp;emove View</source>
-        <translation type="vanished">ລຶ&amp;ບມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>Remove A&amp;ll Views</source>
-        <translation type="vanished">ລຶບມຸມມອງທັງໝົ&amp;ດ</translation>
-    </message>
-    <message>
-        <source>Restore View</source>
-        <translation type="vanished">ຄືນຄ່າມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>Paper space view is not fully supported yet.</source>
-        <translation type="vanished">ຍັງບໍ່ຮອງຮັບມຸມມອງພື້ນທີ່ເຈ້ຍຢ່າງສົມບູນເທື່ອ.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_NamedViewsModel</name>
-    <message>
-        <source>Name: </source>
-        <translation type="vanished">ຊື່: </translation>
-    </message>
-    <message>
-        <source>&lt;No name&gt;</source>
-        <translation type="vanished">&lt;ບໍ່ມີຊື່&gt;</translation>
-    </message>
-    <message>
-        <source>Ortho</source>
-        <translation type="vanished">Ortho</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">ຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">ຂວາ</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">ເທິງ</translation>
-    </message>
-    <message>
-        <source>WCS</source>
-        <translation type="vanished">WCS</translation>
-    </message>
-    <message>
-        <source>UCS</source>
-        <translation type="vanished">UCS</translation>
-    </message>
-    <message>
-        <source>Center X: </source>
-        <translation type="vanished">ຈຸດໃຈກາງ X: </translation>
-    </message>
-    <message>
-        <source>Center Y: </source>
-        <translation type="vanished">ຈຸດໃຈກາງ Y: </translation>
-    </message>
-    <message>
-        <source>Width: </source>
-        <translation type="vanished">ຄວາມກວ້າງ: </translation>
-    </message>
-    <message>
-        <source>Height: </source>
-        <translation type="vanished">ຄວາມສູງ: </translation>
-    </message>
-    <message>
-        <source>UCS: </source>
-        <translation type="vanished">UCS: </translation>
-    </message>
-    <message>
-        <source>UCS Name: </source>
-        <translation type="vanished">ຊື່ UCS: </translation>
-    </message>
-    <message>
-        <source>Grid View: </source>
-        <translation type="vanished">ມຸມມອງຕາຕະລາງ: </translation>
-    </message>
-    <message>
-        <source>UCS Origin X: </source>
-        <translation type="vanished">ຈຸດກຳເນີດ UCS X: </translation>
-    </message>
-    <message>
-        <source>UCS Origin Y: </source>
-        <translation type="vanished">ຈຸດກຳເນີດ UCS Y: </translation>
-    </message>
-    <message>
-        <source>UCS Angle: </source>
-        <translation type="vanished">ມຸມ UCS: </translation>
-    </message>
-    <message>
-        <source>In Paperspace: </source>
-        <translation type="vanished">ໃນພື້ນທີ່ເຈ້ຍ: </translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation type="vanished">ແມ່ນ</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation type="vanished">ບໍ່</translation>
-    </message>
-</context>
-<context>
-    <name>LC_OptionsWidgetsHolder</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ແບບຟອມ</translation>
-    </message>
-    <message>
-        <source>Current Action:</source>
-        <translation type="vanished">ການກະທຳປັດຈຸບັນ:</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">ຄ່າເລີ່ມຕົ້ນ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ParabolaPropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ແບບຟອມ</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">ຈຸດເທິງເສັ້ນ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">ຈຸດຄວບຄຸມ</translation>
-    </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">ຈຸດຄວບຄຸມພາຣາໂບລາບໍ່ສາມາດຢູ່ໃນເສັ້ນຊື່ດຽວກັນໄດ້</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ແບບຟອມ</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈຸດທີ່ໃຊ້ເປັນຈຸດວາງຈະຖືກລຶບອອກຫຼັງຈາກວາງແລ້ວ. ຖ້າບໍ່ດັ່ງນັ້ນ, ມັນຈະຍັງຢູ່ຄືເກົ່າ.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">ລຶບຈຸດ</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">ອັດຕາສ່ວນຂະຫຍາຍ</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">ອັດຕາສ່ວນຂະຫຍາຍສຳລັບອົງປະກອບທີ່ວາງ</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">ມຸມໝຸນສຳລັບອົງປະກອບທີ່ວາງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ແບບຟອມ</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">ມຸມໝຸນສຳລັບອົງປະກອບທີ່ວາງ</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">ໄລຍະຫ່າງລະຫວ່າງຈຸດວາງໃນແຖວ. </translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງແນວນອນ X ຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">ອັດຕາສ່ວນຂະຫຍາຍ</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມອາເຣຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">ມຸມໝຸນສຳລັບອາເຣ.</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">ຈຳນວນແຖວອາເຣ.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງແນວຕັ້ງ Y ຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະໃຊ້ມຸມໝຸນດຽວກັນກັບທຸກອັນທີ່ວາງ. ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະໃຊ້ສີທີ່ຕ່າງກັນ. </translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">ມຸມດຽວກັນ</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">ຈຳນວນຖັນອາເຣ.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະສ້າງເປັນອາເຣຂອງສຳເນົາໃນເວລາວາງ.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">ອາເຣ</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">ມຸມອາເຣ:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">ອັດຕາສ່ວນຂະຫຍາຍສຳລັບອົງປະກອບທີ່ວາງ</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">ໄລຍະຫ່າງລະຫວ່າງຈຸດວາງໃນຖັນ.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PenInfoRegistry</name>
-    <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- ບໍ່ປ່ຽນແປງ -</translation>
-    </message>
-    <message>
-        <source>By Layer</source>
-        <translation type="vanished">ຕາມເລເຢີ</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">ຕາມບລັອກ</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">ຄ່າເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00ມມ</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0.05ມມ</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0.09ມມ</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0.13ມມ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0.15ມມ</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0.18ມມ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20ມມ</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0.25ມມ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30ມມ</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0.35ມມ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40ມມ</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0.50ມມ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53ມມ</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60ມມ</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0.70ມມ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80ມມ</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90ມມ</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1.00ມມ (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06ມມ</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20ມມ</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1.40ມມ (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58ມມ</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2.00ມມ (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11ມມ</translation>
-    </message>
-    <message>
-        <source>No Pen</source>
-        <translation type="vanished">ບໍ່ມີປາກກາ</translation>
-    </message>
-    <message>
-        <source>Continuous</source>
-        <translation type="vanished">ຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>Dot</source>
-        <translation type="vanished">ຈຸດ</translation>
-    </message>
-    <message>
-        <source>Dot (tiny)</source>
-        <translation type="vanished">ຈຸດ (ນ້ອຍທີ່ສຸດ)</translation>
-    </message>
-    <message>
-        <source>Dot (small)</source>
-        <translation type="vanished">ຈຸດ (ນ້ອຍ)</translation>
-    </message>
-    <message>
-        <source>Dot (large)</source>
-        <translation type="vanished">ຈຸດ (ໃຫຍ່)</translation>
-    </message>
-    <message>
-        <source>Dash</source>
-        <translation type="vanished">ເສັ້ນຂີດ</translation>
-    </message>
-    <message>
-        <source>Dash (tiny)</source>
-        <translation type="vanished">ເສັ້ນຂີດ (ນ້ອຍທີ່ສຸດ)</translation>
-    </message>
-    <message>
-        <source>Dash (small)</source>
-        <translation type="vanished">ເສັ້ນຂີດ (ນ້ອຍ)</translation>
-    </message>
-    <message>
-        <source>Dash (large)</source>
-        <translation type="vanished">ເສັ້ນຂີດ (ໃຫຍ່)</translation>
-    </message>
-    <message>
-        <source>Dash Dot</source>
-        <translation type="vanished">ເສັ້ນຂີດຈຸດ</translation>
-    </message>
-    <message>
-        <source>Dash Dot (tiny)</source>
-        <translation type="vanished">ເສັ້ນຂີດຈຸດ (ນ້ອຍທີ່ສຸດ)</translation>
-    </message>
-    <message>
-        <source>Dash Dot (small)</source>
-        <translation type="vanished">ເສັ້ນຂີດຈຸດ (ນ້ອຍ)</translation>
-    </message>
-    <message>
-        <source>Dash Dot (large)</source>
-        <translation type="vanished">ເສັ້ນຂີດຈຸດ (ໃຫຍ່)</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">ເສັ້ນແບ່ງ</translation>
-    </message>
-    <message>
-        <source>Divide (tiny)</source>
-        <translation type="vanished">ເສັ້ນແບ່ງ (ນ້ອຍທີ່ສຸດ)</translation>
-    </message>
-    <message>
-        <source>Divide (small)</source>
-        <translation type="vanished">ເສັ້ນແບ່ງ (ນ້ອຍ)</translation>
-    </message>
-    <message>
-        <source>Divide (large)</source>
-        <translation type="vanished">ເສັ້ນແບ່ງ (ໃຫຍ່)</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation type="vanished">ໃຈກາງ</translation>
-    </message>
-    <message>
-        <source>Center (tiny)</source>
-        <translation type="vanished">ໃຈກາງ (ນ້ອຍທີ່ສຸດ)</translation>
-    </message>
-    <message>
-        <source>Center (small)</source>
-        <translation type="vanished">ເສັ້ນໃຈກາງ (ນ້ອຍ)</translation>
-    </message>
-    <message>
-        <source>Center (large)</source>
-        <translation type="vanished">ເສັ້ນໃຈກາງ (ໃຫຍ່)</translation>
-    </message>
-    <message>
-        <source>Border</source>
-        <translation type="vanished">ເສັ້ນຂອບ</translation>
-    </message>
-    <message>
-        <source>Border (tiny)</source>
-        <translation type="vanished">ເສັ້ນຂອບ (ນ້ອຍທີ່ສຸດ)</translation>
-    </message>
-    <message>
-        <source>Border (small)</source>
-        <translation type="vanished">ເສັ້ນຂອບ (ນ້ອຍ)</translation>
-    </message>
-    <message>
-        <source>Border (large)</source>
-        <translation type="vanished">ເສັ້ນຂອບ (ໃຫຍ່)</translation>
-    </message>
-    <message>
-        <source>Red</source>
-        <translation type="vanished">ແດງ</translation>
-    </message>
-    <message>
-        <source>Dark Red</source>
-        <translation type="vanished">ແດງເຂັ້ມ</translation>
-    </message>
-    <message>
-        <source>Yellow</source>
-        <translation type="vanished">ເຫຼືອງ</translation>
-    </message>
-    <message>
-        <source>Dark Yellow</source>
-        <translation type="vanished">ເຫຼືອງເຂັ້ມ</translation>
-    </message>
-    <message>
-        <source>Green</source>
-        <translation type="vanished">ຂຽວ</translation>
-    </message>
-    <message>
-        <source>Dark Green</source>
-        <translation type="vanished">ຂຽວເຂັ້ມ</translation>
-    </message>
-    <message>
-        <source>Cyan</source>
-        <translation type="vanished">ສີຟ້າອ່ອນ</translation>
-    </message>
-    <message>
-        <source>Dark Cyan</source>
-        <translation type="vanished">ສີຟ້າເຂັ້ມ</translation>
-    </message>
-    <message>
-        <source>Blue</source>
-        <translation type="vanished">ສີຟ້າ</translation>
-    </message>
-    <message>
-        <source>Dark Blue</source>
-        <translation type="vanished">ສີນ້ຳເງິນເຂັ້ມ</translation>
-    </message>
-    <message>
-        <source>Magenta</source>
-        <translation type="vanished">ສີບົວເຂັ້ມ</translation>
-    </message>
-    <message>
-        <source>Dark Magenta</source>
-        <translation type="vanished">ສີມ່ວງແດງເຂັ້ມ</translation>
-    </message>
-    <message>
-        <source>Black / White</source>
-        <translation type="vanished">ດຳ / ຂາວ</translation>
-    </message>
-    <message>
-        <source>Gray</source>
-        <translation type="vanished">ເທົາ</translation>
-    </message>
-    <message>
-        <source>Dark Gray</source>
-        <translation type="vanished">ເທົາເຂັ້ມ</translation>
-    </message>
-    <message>
-        <source>Light Gray</source>
-        <translation type="vanished">ເທົາອ່ອນ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PenPaletteModel</name>
-    <message>
-        <source>Name:</source>
-        <translation type="vanished">ຊື່:</translation>
-    </message>
-    <message>
-        <source>Line Type:</source>
-        <translation type="vanished">ຊະນິດເສັ້ນ:</translation>
-    </message>
-    <message>
-        <source>Line Width:</source>
-        <translation type="vanished">ຄວາມກວ້າງເສັ້ນ:</translation>
-    </message>
-    <message>
-        <source>Color:</source>
-        <translation type="vanished">ສີ:</translation>
     </message>
 </context>
 <context>
@@ -11303,25 +2608,9 @@ Warning: this action can NOT be undone!</source>
         <translation>ສີ</translation>
     </message>
     <message>
-        <source>Background color for pen element currently edited in pen&apos;s table</source>
-        <translation type="vanished">ສີພື້ນຫຼັງສຳລັບປາກກາທີ່ກຳລັງແກ້ໄຂໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">ສີຂອງຕາຕະລາງສຳລັບລາຍການປາກກາ</translation>
-    </message>
-    <message>
-        <source>Click to select color</source>
-        <translation type="vanished">ຄລິກເພື່ອເລືອກສີ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="132"/>
         <source>Active Pen Background:</source>
         <translation>ພື້ນຫຼັງປາກກາທີ່ໃຊ້ງານ:</translation>
-    </message>
-    <message>
-        <source>If set, bold font is used for all elements of active pen item (otherwise, only for name)</source>
-        <translation type="vanished">ຖ້າຕັ້ງໄວ້, ຈະໃຊ້ຕົວໜາສຳລັບທຸກຂໍ້ມູນຂອງປາກກາທີ່ໃຊ້ງານ (ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະໃຊ້ສະເພາະຊື່)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="150"/>
@@ -11337,22 +2626,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="164"/>
         <source>Matched Item Color:</source>
         <translation>ສີລາຍການທີ່ກົງກັນ:</translation>
-    </message>
-    <message>
-        <source>Color of pen item that is matched by filter</source>
-        <translation type="vanished">ສີຂອງລາຍການປາກກາທີ່ກົງກັບຕົວແຍກ</translation>
-    </message>
-    <message>
-        <source>On double-click:</source>
-        <translation type="vanished">ເມື່ອດັບເບິນຄລິກ:</translation>
-    </message>
-    <message>
-        <source>If selected, additional messages will be shown as part of pen related operations</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະສະແດງຂໍ້ຄວາມເພີ່ມເຕີມໃນການເຮັດວຽກທີ່ກ່ຽວກັບປາກກາ</translation>
-    </message>
-    <message>
-        <source>If set, filter will igore the case of pen&apos;s name</source>
-        <translation type="vanished">ຖ້າຕັ້ງໄວ້, ຕົວແຍກຈະບໍ່ສົນໃຈຕົວພິມໃຫຍ່-ນ້ອຍຂອງຊື່ປາກກາ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="192"/>
@@ -11375,17 +2648,9 @@ Warning: this action can NOT be undone!</source>
         <translation>ສະແດງຊື່ສີເປັນ</translation>
     </message>
     <message>
-        <source>Hexadecimal value of color</source>
-        <translation type="vanished">ຄ່າສີແບບເລກຖານສິບຫົກ (Hex)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="225"/>
         <source>HEX</source>
         <translation>HEX</translation>
-    </message>
-    <message>
-        <source>Red, Green, Blue components of color</source>
-        <translation type="vanished">ສ່ວນປະກອບສີ ແດງ, ຂຽວ, ຟ້າ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="232"/>
@@ -11393,17 +2658,9 @@ Warning: this action can NOT be undone!</source>
         <translation>RGB</translation>
     </message>
     <message>
-        <source>Natural name of color or HEX value of it</source>
-        <translation type="vanished">ຊື່ສີທົ່ວໄປ ຫຼື ຄ່າ HEX ຂອງມັນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="239"/>
         <source>Natural name where possible</source>
         <translation>ຊື່ສີທົ່ວໄປຖ້າເປັນໄປໄດ້</translation>
-    </message>
-    <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະສະແດງຂໍ້ຄວາມເພີ່ມເຕີມໃນການເຮັດວຽກທີ່ກ່ຽວກັບປາກກາ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
@@ -11414,10 +2671,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
         <source>On double click on table item</source>
         <translation>ເມື່ອດັບເບິນຄລິກທີ່ລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>Defines how the program to react on double click on pen item in table</source>
-        <translation type="vanished">ກຳນົດວ່າໂປຣແກຣມຈະຕອບສະໜອງແນວໃດເມື່ອດັບເບິນຄລິກໃສ່ລາຍການປາກກາໃນຕາຕະລາງ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="46"/>
@@ -11529,26 +2782,14 @@ Warning: this action can NOT be undone!</source>
         <translation>ຊະນິດ:</translation>
     </message>
     <message>
-        <source>Line type</source>
-        <translation type="vanished">ຊະນິດເສັ້ນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="246"/>
         <source>Width:</source>
         <translation>ຄວາມກວ້າງ:</translation>
     </message>
     <message>
-        <source>Width of line</source>
-        <translation type="vanished">ຄວາມກວ້າງຂອງເສັ້ນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="44"/>
         <source>Pen Name:</source>
         <translation>ຊື່ປາກກາ:</translation>
-    </message>
-    <message>
-        <source>Name of pen</source>
-        <translation type="vanished">ຊື່ຂອງປາກກາ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="94"/>
@@ -11561,17 +2802,9 @@ Warning: this action can NOT be undone!</source>
         <translation>ຕັ້ງຄ່າ</translation>
     </message>
     <message>
-        <source>Filtering pens by name</source>
-        <translation type="vanished">ກຳລັງແຍກປາກກາຕາມຊື່</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="191"/>
         <source>Filter...</source>
         <translation>ຕົວແຍກ...</translation>
-    </message>
-    <message>
-        <source>If checked, matched pens are highlighted, otherwise non-matching pens are hidden.</source>
-        <translation type="vanished">ຖ້າເລືອກ, ປາກກາທີ່ກົງກັນຈະຖືກເນັ້ນ, ຖ້າບໍ່ດັ່ງນັ້ນປາກກາທີ່ບໍ່ກົງກັນຈະຖືກເຊື່ອງ.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="201"/>
@@ -11623,909 +2856,6 @@ Warning: this action can NOT be undone!</source>
         <source>&amp;Remove Pens</source>
         <translation>&amp;ລຶບປາກກາ</translation>
     </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">ຈານສີປາກກາ</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">ຕຳແໜ່ງໄຟລ໌ປາກກາຖືກປ່ຽນແປງ, ກະລຸນາເລີ່ມໂປຣແກຣມໃໝ່ເພື່ອໃຊ້ໄຟລ໌ໃໝ່.
-
-ໝາຍເຫດ: ຖ້າທ່ານບັນທຶກປາກກາຜ່ານຕົວແກ້ໄຂໂດຍບໍ່ເລີ່ມໂປຣແກຣມໃໝ່, ປາກກາປັດຈຸບັນຈະຖືກບັນທຶກທັບລົງໃນໄຟລ໌ໃໝ່ ແລະ ຂໍ້ມູນເກົ່າຈະຖືກຂຽນທັບ.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">ຕຳແໜ່ງໄຟລ໌ປາກກາຖືກປ່ຽນແປງ, ກະລຸນາເລີ່ມໂປຣແກຣມໃໝ່ເພື່ອໃຊ້ໄຟລ໌ໃໝ່.
-ໝາຍເຫດ: ຖ້າທ່ານບັນທຶກປາກກາຜ່ານຕົວແກ້ໄຂໂດຍບໍ່ເລີ່ມໂປຣແກຣມໃໝ່, ປາກກາປັດຈຸບັນຈະຖືກບັນທຶກທັບລົງໃນໄຟລ໌ໃໝ່ ແລະ ຂໍ້ມູນເກົ່າຈະຖືກຂຽນທັບ.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointPickButton</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ແບບຟອມ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointPropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ແບບຟອມ</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="vanished">ຕຳແໜ່ງຂອງຈຸດຕາມພິກັດ Y</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="vanished">ຕຳແໜ່ງ (x):</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="vanished">ຕຳແໜ່ງ (y):</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="vanished">ຕຳແໜ່ງຂອງຈຸດຕາມພິກັດ X</translation>
-    </message>
-    <message>
-        <source>Pick position from the drawing</source>
-        <translation type="vanished">ເລືອກຕຳແໜ່ງຈາກຮູບແຕ້ມ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ແບບຟອມ</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">ຈຳນວນຈຸດໃນແນວຕັ້ງ Y (ຈຳນວນແຖວ)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">ຈຳນວນແຖວ:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">ຈຳນວນຖັນ:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">ຈຳນວນຈຸດໃນແນວນອນ X (ຈຳນວນຖັນ)</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈຸດສຸດທ້າຍຈະຖືກປັບໃຫ້ກົງກັບຈຸດທຳອິດ ເພື່ອໃຫ້ເປັນຮູບສີ່ແຈສາກ</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">ປັບຈຸດສຸດທ້າຍໃຫ້ກົງກັບຈຸດທຳອິດ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PolylinePropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ແບບຟອມ</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="vanished">ກຳນົດວ່າເສັ້ນ Polyline ເປັນເສັ້ນປິດຫຼືບໍ່</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">ປິດ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_QTStatusbarManager</name>
-    <message>
-        <source> SHIFT Key: </source>
-        <translation type="vanished"> ປຸ່ມ SHIFT: </translation>
-    </message>
-    <message>
-        <source> CTRL Key: </source>
-        <translation type="vanished"> ປຸ່ມ CTRL: </translation>
-    </message>
-</context>
-<context>
-    <name>LC_QuickInfoEntityData</name>
-    <message>
-        <source>SOLID</source>
-        <translation type="vanished">SOLID</translation>
-    </message>
-    <message>
-        <source>CONSTRUCTION</source>
-        <translation type="vanished">CONSTRUCTION</translation>
-    </message>
-    <message>
-        <source>UNKNOWN</source>
-        <translation type="vanished">UNKNOWN</translation>
-    </message>
-    <message>
-        <source>LINE</source>
-        <translation type="vanished">ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>CIRCLE</source>
-        <translation type="vanished">ວົງມົນ</translation>
-    </message>
-    <message>
-        <source>ARC</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>ELLIPSE ARC</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງວົງຮີ</translation>
-    </message>
-    <message>
-        <source>ELLIPSE</source>
-        <translation type="vanished">ວົງລີ</translation>
-    </message>
-    <message>
-        <source>POINT</source>
-        <translation type="vanished">ຈຸດ</translation>
-    </message>
-    <message>
-        <source>POLYLINE</source>
-        <translation type="vanished">ເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation type="vanished">ແມ່ນ</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation type="vanished">ບໍ່</translation>
-    </message>
-    <message>
-        <source>INSERT</source>
-        <translation type="vanished">ແຊກ</translation>
-    </message>
-    <message>
-        <source>TEXT</source>
-        <translation type="vanished">ຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">ຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Centered</source>
-        <translation type="vanished">ໃຈກາງ</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">ຂວາ</translation>
-    </message>
-    <message>
-        <source>Aligned</source>
-        <translation type="vanished">ຈັດລຽງ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">ຈຸດກາງ</translation>
-    </message>
-    <message>
-        <source>Set Relative Zero</source>
-        <translation type="vanished">ຕັ້ງຄ່າສູນສຳພັນ</translation>
-    </message>
-    <message>
-        <source>To Cmd</source>
-        <translation type="vanished">ໄປທີ່ Cmd</translation>
-    </message>
-    <message>
-        <source>ID</source>
-        <translation type="vanished">ລະຫັດ (ID)</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">ເລເຢີ</translation>
-    </message>
-    <message>
-        <source>Color</source>
-        <translation type="vanished">ສີ</translation>
-    </message>
-    <message>
-        <source>Line Type</source>
-        <translation type="vanished">ຊະນິດເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Line Width</source>
-        <translation type="vanished">ຄວາມກວ້າງເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Min</source>
-        <translation type="vanished">ຄ່ານ້ອຍສຸດ</translation>
-    </message>
-    <message>
-        <source>Max</source>
-        <translation type="vanished">ຄ່າຫຼາຍສຸດ</translation>
-    </message>
-    <message>
-        <source>From</source>
-        <translation type="vanished">ຈາກ</translation>
-    </message>
-    <message>
-        <source>To</source>
-        <translation type="vanished">ເຖິງ</translation>
-    </message>
-    <message>
-        <source>Delta</source>
-        <translation type="vanished">Delta</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">ມຸມ</translation>
-    </message>
-    <message>
-        <source>Length</source>
-        <translation type="vanished">ຄວາມຍາວ</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation type="vanished">ໃຈກາງ</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">ລັດສະໝີ</translation>
-    </message>
-    <message>
-        <source>Diameter</source>
-        <translation type="vanished">ເສັ້ນຜ່ານສູນກາງ</translation>
-    </message>
-    <message>
-        <source>Circumference</source>
-        <translation type="vanished">ເສັ້ນຮອບວົງ</translation>
-    </message>
-    <message>
-        <source>Area</source>
-        <translation type="vanished">ເນື້ອທີ່</translation>
-    </message>
-    <message>
-        <source>Chord Length</source>
-        <translation type="vanished">ຄວາມຍາວເສັ້ນຂອດ</translation>
-    </message>
-    <message>
-        <source>Angle Length</source>
-        <translation type="vanished">ຄວາມຍາວມຸມ</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">ເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
-        <source>Start Angle</source>
-        <translation type="vanished">ມຸມເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">ສິ້ນສຸດ</translation>
-    </message>
-    <message>
-        <source>End Angle</source>
-        <translation type="vanished">ມຸມສິ້ນສຸດ</translation>
-    </message>
-    <message>
-        <source>Bulge</source>
-        <translation type="vanished">Bulge</translation>
-    </message>
-    <message>
-        <source>Minor Radius</source>
-        <translation type="vanished">ລັດສະໝີນ້ອຍ</translation>
-    </message>
-    <message>
-        <source>Major Radius</source>
-        <translation type="vanished">ລັດສະໝີໃຫຍ່</translation>
-    </message>
-    <message>
-        <source>Ratio</source>
-        <translation type="vanished">ອັດຕາສ່ວນ</translation>
-    </message>
-    <message>
-        <source>Position</source>
-        <translation type="vanished">ຕຳແໜ່ງ</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">ປິດ</translation>
-    </message>
-    <message>
-        <source>Segments</source>
-        <translation type="vanished">ສ່ວນຂອງເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Vertex - 0:</source>
-        <translation type="vanished">ຈຸດຍອດ - 0:</translation>
-    </message>
-    <message>
-        <source>Vertex - </source>
-        <translation type="vanished">ຈຸດຍອດ - </translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">ຄວາມຍາວທັງໝົດ</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">ຊື່</translation>
-    </message>
-    <message>
-        <source>Insertion Point</source>
-        <translation type="vanished">ຈຸດວາງ</translation>
-    </message>
-    <message>
-        <source>Scale X</source>
-        <translation type="vanished">ອັດຕາສ່ວນ X</translation>
-    </message>
-    <message>
-        <source>Scale Y</source>
-        <translation type="vanished">ອັດຕາສ່ວນ Y</translation>
-    </message>
-    <message>
-        <source>Cols</source>
-        <translation type="vanished">ຖັນ</translation>
-    </message>
-    <message>
-        <source>Spacing X</source>
-        <translation type="vanished">ໄລຍະຫ່າງ X</translation>
-    </message>
-    <message>
-        <source>Rows</source>
-        <translation type="vanished">ແຖວ</translation>
-    </message>
-    <message>
-        <source>Spacing Y</source>
-        <translation type="vanished">ໄລຍະຫ່າງ Y</translation>
-    </message>
-    <message>
-        <source>Second Point</source>
-        <translation type="vanished">ຈຸດທີສອງ</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">ຄວາມສູງ</translation>
-    </message>
-    <message>
-        <source>Width/Height</source>
-        <translation type="vanished">ກວ້າງ/ສູງ</translation>
-    </message>
-    <message>
-        <source>To be created: </source>
-        <translation type="vanished">ທີ່ຈະຖືກສ້າງ: </translation>
-    </message>
-    <message>
-        <source>Captured: </source>
-        <translation type="vanished">ທີ່ຈັບໄດ້: </translation>
-    </message>
-    <message>
-        <source>
-Layer: </source>
-        <translation type="vanished">
-ເລເຢີ: </translation>
-    </message>
-    <message>
-        <source>Angle 2</source>
-        <translation type="vanished">ມຸມ 2</translation>
-    </message>
-    <message>
-        <source>Angle2</source>
-        <translation type="vanished">ມຸມ 2</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">ກັບດ້ານ</translation>
-    </message>
-    <message>
-        <source>Style</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>HAlign</source>
-        <translation type="vanished">ຈັດລຽງແນວນອນ</translation>
-    </message>
-    <message>
-        <source>VAlign</source>
-        <translation type="vanished">ຈັດລຽງແນວຕັ້ງ</translation>
-    </message>
-    <message>
-        <source>Generation</source>
-        <translation type="vanished">ລຸ້ນ (Generation)</translation>
-    </message>
-    <message>
-        <source>Fit</source>
-        <translation type="vanished">ພໍດີ</translation>
-    </message>
-    <message>
-        <source>Baseline</source>
-        <translation type="vanished">ເສັ້ນພື້ນຖານ</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">ລຸ່ມ</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">ເທິງ</translation>
-    </message>
-    <message>
-        <source>Normal text</source>
-        <translation type="vanished">ຂໍ້ຄວາມປົກກະຕິ</translation>
-    </message>
-    <message>
-        <source>Mirrored in X</source>
-        <translation type="vanished">ກັບດ້ານໃນແນວ X</translation>
-    </message>
-    <message>
-        <source>Mirrored in Y</source>
-        <translation type="vanished">ກັບດ້ານໃນແນວ Y</translation>
-    </message>
-    <message>
-        <source>MTEXT</source>
-        <translation type="vanished">ຂໍ້ຄວາມຫຼາຍບັນທັດ</translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="vanished">ຄວາມກວ້າງ</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Direction</source>
-        <translation type="vanished">ທິດທາງ</translation>
-    </message>
-    <message>
-        <source>Line Spacing Factor</source>
-        <translation type="vanished">ໄລຍະຫ່າງບັນທັດ</translation>
-    </message>
-    <message>
-        <source>Line Spacing</source>
-        <translation type="vanished">ໄລຍະຫ່າງບັນທັດ</translation>
-    </message>
-    <message>
-        <source>By Style</source>
-        <translation type="vanished">ຕາມຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Left To Right</source>
-        <translation type="vanished">ຈາກຊ້າຍໄປຂວາ</translation>
-    </message>
-    <message>
-        <source>Right To Left</source>
-        <translation type="vanished">ຈາກຂວາໄປຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Top To Bottom</source>
-        <translation type="vanished">ຈາກເທິງລົງລຸ່ມ</translation>
-    </message>
-    <message>
-        <source>At Least</source>
-        <translation type="vanished">ຢ່າງໜ້ອຍ</translation>
-    </message>
-    <message>
-        <source>Exact</source>
-        <translation type="vanished">ຄົງທີ່</translation>
-    </message>
-    <message>
-        <source>IMAGE</source>
-        <translation type="vanished">ຮູບພາບ</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">ໄຟລ໌</translation>
-    </message>
-    <message>
-        <source>Size (X) px</source>
-        <translation type="vanished">ຂະໜາດ (X) px</translation>
-    </message>
-    <message>
-        <source>Size (Y) px</source>
-        <translation type="vanished">ຂະໜາດ (Y) px</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>SPLINE</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Degree</source>
-        <translation type="vanished">ອົງສາ (Degree)</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">ຈຸດຄວບຄຸມ</translation>
-    </message>
-    <message>
-        <source>SPLINEPOINTS</source>
-        <translation type="vanished">ຈຸດເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Use Control Points</source>
-        <translation type="vanished">ໃຊ້ຈຸດຄວບຄຸມ</translation>
-    </message>
-    <message>
-        <source>[Override]</source>
-        <translation type="vanished">[ປ່ຽນແທນ]</translation>
-    </message>
-    <message>
-        <source>Feature Point</source>
-        <translation type="vanished">ຈຸດເດັ່ນ</translation>
-    </message>
-    <message>
-        <source>Control Point </source>
-        <translation type="vanished">ຈຸດຄວບຄຸມ </translation>
-    </message>
-    <message>
-        <source>Spline Point </source>
-        <translation type="vanished">ຈຸດ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>PARABOLA</source>
-        <translation type="vanished">ພາຣາໂບລາ</translation>
-    </message>
-    <message>
-        <source>Focus</source>
-        <translation type="vanished">ຈຸດໂຟກັດ</translation>
-    </message>
-    <message>
-        <source>Vertex</source>
-        <translation type="vanished">ຈຸດຍອດ</translation>
-    </message>
-    <message>
-        <source>Axis Angle</source>
-        <translation type="vanished">ມຸມແກນ</translation>
-    </message>
-    <message>
-        <source>Control Point</source>
-        <translation type="vanished">ຈຸດຄວບຄຸມ</translation>
-    </message>
-    <message>
-        <source>HATCH</source>
-        <translation type="vanished">ລວດລາຍ</translation>
-    </message>
-    <message>
-        <source>Solid</source>
-        <translation type="vanished">ທຶບ</translation>
-    </message>
-    <message>
-        <source>Pattern</source>
-        <translation type="vanished">ຮູບແບບລວດລາຍ</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">ມາດຕາສ່ວນ</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="vanished">ຈຸດ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Total Area</source>
-        <translation type="vanished">ພື້ນທີ່ທັງໝົດ</translation>
-    </message>
-    <message>
-        <source>DIMLEADER</source>
-        <translation type="vanished">DIMLEADER</translation>
-    </message>
-    <message>
-        <source>Arrow Head</source>
-        <translation type="vanished">ຫົວລູກສອນ</translation>
-    </message>
-    <message>
-        <source>DIMARC</source>
-        <translation type="vanished">ບອກຂະໜາດເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Arc Length</source>
-        <translation type="vanished">ຄວາມຍາວເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>DIMANGULAR</source>
-        <translation type="vanished">ບອກຂະໜາດມຸມ</translation>
-    </message>
-    <message>
-        <source>DIMDIAMETRIC</source>
-        <translation type="vanished">ບອກຂະໜາດເສັ້ນຜ່ານສູນກາງ</translation>
-    </message>
-    <message>
-        <source>Definition Point</source>
-        <translation type="vanished">ຈຸດກຳນົດຂະໜາດ</translation>
-    </message>
-    <message>
-        <source>DIMRADIAL</source>
-        <translation type="vanished">ບອກຂະໜາດລັດສະໝີ</translation>
-    </message>
-    <message>
-        <source>DIMLINEAR</source>
-        <translation type="vanished">ບອກຂະໜາດຕາມເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Extension Point 1</source>
-        <translation type="vanished">ຈຸດເສັ້ນຊ່ວຍບອກຂະໜາດ 1</translation>
-    </message>
-    <message>
-        <source>Extension Point 2</source>
-        <translation type="vanished">ຈຸດເສັ້ນຊ່ວຍບອກຂະໜາດ 2</translation>
-    </message>
-    <message>
-        <source>Text Middle Point </source>
-        <translation type="vanished">ຈຸດກາງຂໍ້ຄວາມ </translation>
-    </message>
-    <message>
-        <source>Oblique</source>
-        <translation type="vanished">Oblique (ມຸມອຽງ)</translation>
-    </message>
-    <message>
-        <source>DIMORDINATE</source>
-        <translation type="vanished">ບອກຂະໜາດພິກັດ (Ordinate)</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="vanished">ພິກັດ Ordinate</translation>
-    </message>
-    <message>
-        <source>Origin Point</source>
-        <translation type="vanished">ຈຸດກຳເນີດ</translation>
-    </message>
-    <message>
-        <source>Horizontal Direction</source>
-        <translation type="vanished">ທິດທາງແນວນອນ</translation>
-    </message>
-    <message>
-        <source>Leader End Point</source>
-        <translation type="vanished">ຈຸດສຸດທ້າຍຂອງເສັ້ນຊີ້ນຳ</translation>
-    </message>
-    <message>
-        <source>Text Middle Point</source>
-        <translation type="vanished">ຈຸດກາງຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>DIMALIGNED</source>
-        <translation type="vanished">ບອກຂະໜາດແນວຂະໜານ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_QuickInfoPointsData</name>
-    <message>
-        <source>Zero</source>
-        <translation type="vanished">ສູນ</translation>
-    </message>
-    <message>
-        <source>Relative Zero</source>
-        <translation type="vanished">ສູນສຳພັນ</translation>
-    </message>
-    <message>
-        <source>First point</source>
-        <translation type="vanished">ຈຸດທຳອິດ</translation>
-    </message>
-    <message>
-        <source>Set Relative Zero</source>
-        <translation type="vanished">ຕັ້ງຄ່າສູນສຳພັນ</translation>
-    </message>
-    <message>
-        <source>To Cmd</source>
-        <translation type="vanished">ໄປທີ່ Cmd</translation>
-    </message>
-    <message>
-        <source>Points Path Distance:</source>
-        <translation type="vanished">ໄລຍະທາງຕາມເສັ້ນທາງຈຸດ:</translation>
-    </message>
-    <message>
-        <source>No data - select coordinates first...</source>
-        <translation type="vanished">ບໍ່ມີຂໍ້ມູນ - ກະລຸນາເລືອກພິກັດກ່ອນ...</translation>
-    </message>
-</context>
-<context>
-    <name>LC_QuickInfoWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ແບບຟອມ</translation>
-    </message>
-    <message>
-        <source>Select entity for properties</source>
-        <translation type="vanished">ເລືອກອົງປະກອບເພື່ອເບິ່ງຄຸນສົມບັດ</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Select current entity in drawing</source>
-        <translation type="vanished">ເລືອກອົງປະກອບປັດຈຸບັນໃນຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Properties Edit</source>
-        <translation type="vanished">ແກ້ໄຂຄຸນສົມບັດ</translation>
-    </message>
-    <message>
-        <source>Copy to Clipboard</source>
-        <translation type="vanished">ຄັດລອກໄປຍັງຄລິບບອດ</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="vanished">ລ້າງອອກ</translation>
-    </message>
-    <message>
-        <source>Collect Coordinates</source>
-        <translation type="vanished">ເກັບກຳພິກັດ</translation>
-    </message>
-    <message>
-        <source>Coordinates:</source>
-        <translation type="vanished">ພິກັດ:</translation>
-    </message>
-    <message>
-        <source>Mode to display collected coordinates</source>
-        <translation type="vanished">ໂໝດສະແດງພິກັດທີ່ເກັບກຳໄດ້</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">ແທ້ຈິງ</translation>
-    </message>
-    <message>
-        <source>Relative</source>
-        <translation type="vanished">ສຳພັນ</translation>
-    </message>
-    <message>
-        <source>Delta to First</source>
-        <translation type="vanished">Delta ທຽບກັບຈຸດທຳອິດ</translation>
-    </message>
-    <message>
-        <source>Delta to Previous</source>
-        <translation type="vanished">Delta ທຽບກັບຈຸດກ່ອນໜ້າ</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">ຕັ້ງຄ່າ</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Copy All</source>
-        <translation type="vanished">&amp;ຄັດລອກທັງໝົດ</translation>
-    </message>
-    <message>
-        <source>&amp;To Cmd</source>
-        <translation type="vanished">&amp;ໄປທີ່ Cmd</translation>
-    </message>
-    <message>
-        <source>&amp;Set Relative Zero</source>
-        <translation type="vanished">&amp;ຕັ້ງຄ່າສູນສຳພັນ</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Coordinate</source>
-        <translation type="vanished">&amp;ລຶບພິກັດ</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Coordinates</source>
-        <translation type="vanished">&amp;ແຊກພິກັດ</translation>
-    </message>
-    <message>
-        <source>&amp;Clear</source>
-        <translation type="vanished">&amp;ລ້າງອອກ</translation>
-    </message>
-    <message>
-        <source>&amp;Select Entity</source>
-        <translation type="vanished">&amp;ເລືອກອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>&amp;Select in Drawing</source>
-        <translation type="vanished">&amp;ເລືອກໃນຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Properties</source>
-        <translation type="vanished">&amp;ແກ້ໄຂຄຸນສົມບັດ</translation>
-    </message>
-    <message>
-        <source>&amp;Collect Coordinates</source>
-        <translation type="vanished">&amp;ເກັບກຳພິກັດ</translation>
-    </message>
-    <message>
-        <source>No data - select entity of coordinates first...</source>
-        <translation type="vanished">ບໍ່ມີຂໍ້ມູນ - ກະລຸນາເລືອກອົງປະກອບ ຫຼື ພິກັດກ່ອນ...</translation>
-    </message>
-</context>
-<context>
-    <name>LC_QuickInfoWidgetOptionsDialog</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">ກ່ອງຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Collected Coordinates</source>
-        <translation type="vanished">ພິກັດທີ່ເກັບກຳໄດ້</translation>
-    </message>
-    <message>
-        <source>If selected, the distance and angle between adjacent points will be shown together with coordinates.</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະສະແດງໄລຍະຫ່າງ ແລະ ມຸມລະຫວ່າງຈຸດທີ່ຢູ່ຕິດກັນພ້ອມກັບພິກັດ.</translation>
-    </message>
-    <message>
-        <source>Display distance and angle to point in addition to coordinates</source>
-        <translation type="vanished">ສະແດງໄລຍະຫ່າງ ແລະ ມຸມໄປຍັງຈຸດນອກຈາກພິກັດ</translation>
-    </message>
-    <message>
-        <source>If selected, all points collected will be connected by path that shows how they will be selected during point preview</source>
-        <translation type="vanished">ຖ້າເລືອກ, ທຸກຈຸດທີ່ເກັບກຳຈະຖືກເຊື່ອມຕໍ່ດ້ວຍເສັ້ນທາງເພື່ອສະແດງໃຫ້ເຫັນລຳດັບການເລືອກ</translation>
-    </message>
-    <message>
-        <source>Draw points path on preview</source>
-        <translation type="vanished">ແຕ້ມເສັ້ນທາງຈຸດໃນຕົວຢ່າງ</translation>
-    </message>
-    <message>
-        <source>Entity Info</source>
-        <translation type="vanished">ຂໍ້ມູນອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ຖ້າເລືອກ, ຈະສະແດງຂໍ້ມູນລະອຽດເພີ່ມເຕີມກ່ຽວກັບເສັ້ນຊື່ ແລະ ເສັ້ນໂຄ້ງທີ່ເປັນສ່ວນໜຶ່ງຂອງ polyline ໃນວິດເຈັດຂໍ້ມູນວັດຖຸ.&lt;br/&gt;ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະສະແດງສະເພາະຂໍ້ມູນຈຸດຍອດເທົ່ານັ້ນ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ຖ້າເລືອກ, ຂໍ້ມູນລະອຽດເພີ່ມເຕີມກ່ຽວກັບເສັ້ນຊື່ ແລະ ເສັ້ນໂຄ້ງ ທີ່ເປັນສ່ວນໜຶ່ງຂອງເສັ້ນຕໍ່ເນື່ອງ ຈະຖືກສະແດງໃນວິດເຈັດ ຂໍ້ມູນອົງປະກອບ.&lt;br/&gt;ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະສະແດງພຽງແຕ່ຂໍ້ມູນກ່ຽວກັບ ຈຸດຈອມ/ສ່ວນໂຄ້ງ ເທົ່ານັ້ນ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Include polyline child entities information to vertexes</source>
-        <translation type="vanished">ລວມຂໍ້ມູນສ່ວນປະກອບຍ່ອຍຂອງ polyline ໃນຈຸດຍອດ</translation>
-    </message>
-    <message>
-        <source>If selected, coordinates of boundary box area for the entity will be also shown</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະສະແດງພິກັດຂອບເຂດ (Boundary box) ຂອງອົງປະກອບພ້ອມ</translation>
-    </message>
-    <message>
-        <source>Display entity boundaries (Min, Max) coordinates</source>
-        <translation type="vanished">ສະແດງພິກັດຂອບເຂດອົງປະກອບ (ຄ່ານ້ອຍສຸດ, ຄ່າຫຼາຍສຸດ)</translation>
-    </message>
-    <message>
-        <source>Entity Selection</source>
-        <translation type="vanished">ການເລືອກອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Entity under cursor will be examined only if CTRL is pressed and no active action</source>
-        <translation type="vanished">ອົງປະກອບທີ່ຢູ່ກ້ອງເຄີເຊີຈະຖືກກວດສອບກໍຕໍ່ເມື່ອກົດ CTRL ຄ້າງໄວ້ ແລະ ບໍ່ມີການກະທຳອື່ນທີ່ໃຊ້ງານຢູ່</translation>
-    </message>
-    <message>
-        <source>Select entity under cursor if not active action and CTRL is pressed</source>
-        <translation type="vanished">ເລືອກອົງປະກອບທີ່ຢູ່ກ້ອງເຄີເຊີຖ້າບໍ່ມີການກະທຳອື່ນ ແລະ ກົດ CTRL</translation>
-    </message>
-    <message>
-        <source>If selected, entities under mouse cursor will be examined for theif settings, if there is no active action</source>
-        <translation type="vanished">ຖ້າເລືອກ, ອົງປະກອບທີ່ຢູ່ກ້ອງເຄີເຊີຈະຖືກກວດສອບຫາຄ່າຕັ້ງຄ່າຕ່າງໆ ຖ້າບໍ່ມີການກະທຳອື່ນ</translation>
-    </message>
-    <message>
-        <source>Always select entity under cursor if no active action</source>
-        <translation type="vanished">ເລືອກອົງປະກອບທີ່ຢູ່ກ້ອງເຄີເຊີສະເໝີຖ້າບໍ່ມີການກະທຳອື່ນ</translation>
-    </message>
-    <message>
-        <source>Points highlight pen</source>
-        <translation type="vanished">ປາກກາເນັ້ນຈຸດ</translation>
-    </message>
 </context>
 <context>
     <name>LC_Rectangle1PointOptions</name>
@@ -12540,21 +2870,9 @@ p, li { white-space: pre-wrap; }
         <translation>ຂອບ:</translation>
     </message>
     <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະກຳນົດໃຫ້ຈຸດເກາະຈັບ (Snap) ເລື່ອນໄປຕາມລັດສະໝີຂອງມຸມ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
         <source>Snap shift</source>
         <translation>ເລື່ອນເກາະຈັບ</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">ຄວາມຍາວຂອງມຸມຕັດ (Bevel) ສຳລັບທິດທາງ Y. </translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">ກຳນົດຂອບຂອງຮູບສີ່ແຈສາກທີ່ຈະແຕ້ມ (ເພື່ອໃຫ້ສາມາດສ້າງພຽງແຕ່ເສັ້ນຂະໜານສອງເສັ້ນແທນຮູບສີ່ແຈສາກໄດ້)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
@@ -12572,14 +2890,6 @@ p, li { white-space: pre-wrap; }
         <translation>ແນວນອນ</translation>
     </message>
     <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">ຄວາມກວ້າງຂອງຮູບສີ່ແຈສາກ</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">ຄວບຄຸມຮູບແບບການແຕ້ມມຸມຂອງຮູບສີ່ແຈສາກ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="219"/>
         <source>Straight</source>
         <translation>ຊື່</translation>
@@ -12595,17 +2905,9 @@ p, li { white-space: pre-wrap; }
         <translation>ມຸມຕັດ (Bevel)</translation>
     </message>
     <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຮູບສີ່ແຈສາກຈະຖືກໝູນຕາມມຸມທີ່ກຳນົດ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="286"/>
         <source>Base Angle:</source>
         <translation>ມຸມພື້ນຖານ:</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຄວາມສູງ ແລະ ຄວາມກວ້າງຂອງຮູບສີ່ແຈສາກຈະກຳນົດໄລຍະຫ່າງລະຫວ່າງຈຸດໃຈກາງຂອງເສັ້ນໂຄ້ງສຳລັບມຸມມົນ. ຖ້າບໍ່ດັ່ງນັ້ນ, ຄ່າເຫຼົ່ານີ້ຈະກຳນົດຂະໜາດພາຍນອກຂອງຮູບສີ່ແຈສາກ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="86"/>
@@ -12616,10 +2918,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="162"/>
         <source>Length Y:</source>
         <translation>ຄວາມຍາວ Y:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຮູບສີ່ແຈສາກຈະຖືກສ້າງເປັນເສັ້ນຕໍ່ເນື່ອງ (Polyline) ແທນທີ່ຈະເປັນເສັ້ນແຍກສ່ວນ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
@@ -12642,25 +2940,9 @@ p, li { white-space: pre-wrap; }
         <translation>ລັດສະໝີ:</translation>
     </message>
     <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">ຄວາມຍາວຂອງມຸມຕັດ (Bevel) ສຳລັບທິດທາງ X. </translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="93"/>
         <source>Length X:</source>
         <translation>ຄວາມຍາວ X:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">ຄວາມສູງຂອງຮູບສີ່ແຈສາກ</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">ລັດສະໝີຂອງມຸມມົນ.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">ຈຸດຂອງຮູບສີ່ແຈສາກທີ່ຈະຖືກວາງໃສ່ຈຸດແຊກ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="170"/>
@@ -12708,26 +2990,6 @@ p, li { white-space: pre-wrap; }
         <translation>ລຸ່ມ-ຂວາ</translation>
     </message>
     <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມໝູນຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">ເລືອກລັດສະໝີຂອງມຸມມົນຈາກການແຕ້ມ.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">ມຸມໝູນ</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">ເລືອກຄວາມສູງຂອງຮູບສີ່ແຈສາກຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">ເລືອກຄວາມກວ້າງຂອງຮູບສີ່ແຈສາກຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="279"/>
         <source>Width:</source>
         <translation>ຄວາມກວ້າງ:</translation>
@@ -12737,22 +2999,6 @@ p, li { white-space: pre-wrap; }
         <source>Corners:</source>
         <translation>ມຸມ:</translation>
     </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວຂອງມຸມຕັດສຳລັບທິດທາງ X ຈາກການແຕ້ມ.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວຂອງມຸມຕັດສຳລັບທິດທາງ Y ຈາກການແຕ້ມ.</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ມຸມຈະຖືກກຳນົດໂດຍຕຳແໜ່ງຂອງເມົ້າ. ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະໃຊ້ຄ່າທີ່ລະບຸໄວ້.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ອິດສະຫຼະ</translation>
-    </message>
 </context>
 <context>
     <name>LC_Rectangle2PointsOptions</name>
@@ -12760,10 +3006,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="14"/>
         <source>Form</source>
         <translation>ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">ກຳນົດຂອບຂອງຮູບສີ່ແຈສາກທີ່ຈະແຕ້ມ (ເພື່ອໃຫ້ສາມາດສ້າງພຽງແຕ່ເສັ້ນຂະໜານສອງເສັ້ນແທນຮູບສີ່ແຈສາກໄດ້)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="228"/>
@@ -12779,10 +3021,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="238"/>
         <source>Horizontal</source>
         <translation>ແນວນອນ</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">ກຳນົດຈຸດຂອງຮູບສີ່ແຈສາກທີ່ຈະວາງໄວ້ໃນຕຳແໜ່ງຈຸດເລີ່ມຕົ້ນ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="131"/>
@@ -12809,25 +3047,9 @@ p, li { white-space: pre-wrap; }
         <translation>ຈຸດກາງ</translation>
     </message>
     <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມໝູນຮູບສີ່ແຈສາກຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">ເລືອກລັດສະໝີຂອງມຸມມົນຈາກການແຕ້ມ. </translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="77"/>
         <source>Corners:</source>
         <translation>ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">ກຳນົດວ່າຈຸດໃດຂອງຮູບສີ່ແຈສາກ ຄວນຈະຖືກວາງໄວ້ໃນຕຳແໜ່ງຈຸດປາຍ. </translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວຂອງມຸມຕັດໃນທິດທາງ X ຈາກການແຕ້ມ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="56"/>
@@ -12835,21 +3057,9 @@ p, li { white-space: pre-wrap; }
         <translation>ຂອບ:</translation>
     </message>
     <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">ເລືອກຄວາມຍາວຂອງມຸມຕັດໃນທິດທາງ Y ຈາກການແຕ້ມ. </translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="107"/>
         <source>Start Snap:</source>
         <translation>ເກາະຈັບເລີ່ມຕົ້ນ:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">ຄວາມຍາວຂອງມຸມຕັດໃນທິດທາງ Y. </translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະກຳນົດໃຫ້ຈຸດເກາະຈັບເລື່ອນໄປຕາມລັດສະໝີຂອງມຸມ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="26"/>
@@ -12867,26 +3077,14 @@ p, li { white-space: pre-wrap; }
         <translation>ລັດສະໝີ:</translation>
     </message>
     <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະອະນຸຍາດໃຫ້ກຳນົດມຸມໝູນຂອງຮູບສີ່ແຈສາກ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="170"/>
         <source>Base Angle:</source>
         <translation>ມຸມພື້ນຖານ:</translation>
     </message>
     <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">ມຸມໝູນຮູບສີ່ແຈສາກ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
         <source>End Snap:</source>
         <translation>ເກາະຈັບສິ້ນສຸດ:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">ກຳນົດຮູບແບບການແຕ້ມມຸມຂອງຮູບສີ່ແຈສາກ. </translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="202"/>
@@ -12904,26 +3102,14 @@ p, li { white-space: pre-wrap; }
         <translation>ມຸມຕັດ (Bevel)</translation>
     </message>
     <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">ລັດສະໝີຂອງມຸມມົນ. </translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="220"/>
         <source>Length Y:</source>
         <translation>ຄວາມຍາວ Y:</translation>
     </message>
     <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຮູບສີ່ແຈສາກທັງໝົດຈະຖືກສ້າງເປັນເສັ້ນຕໍ່ເນື່ອງ (Polyline).</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="63"/>
         <source>Polyline</source>
         <translation>ເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">ຄວາມຍາວຂອງມຸມຕັດໃນທິດທາງ X.</translation>
     </message>
 </context>
 <context>
@@ -12934,34 +3120,14 @@ p, li { white-space: pre-wrap; }
         <translation>ຮູບແບບ</translation>
     </message>
     <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">ມຸມພາຍໃນຂອງຮູບສີ່ແຈ.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ມຸມພາຍໃນຂອງຮູບສີ່ແຈຈະຖືກກຳນົດຕາມຄ່າທີ່ລະບຸ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="312"/>
         <source>Fixed Inner Angle:</source>
         <translation>ມຸມພາຍໃນຄົງທີ່:</translation>
     </message>
     <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">ມຸມພື້ນຖານຂອງຮູບສີ່ແຈສາກ. </translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="130"/>
         <source>Length X:</source>
         <translation>ຄວາມຍາວ X:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">ຄວາມຍາວຂອງມຸມຕັດໃນທິດທາງ X.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">ກຳນົດຮູບແບບການແຕ້ມມຸມສຳລັບຮູບສີ່ແຈສາກ. </translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="160"/>
@@ -12984,10 +3150,6 @@ p, li { white-space: pre-wrap; }
         <translation>ມຸມ:</translation>
     </message>
     <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະກຳນົດໃຫ້ຈຸດເກາະຈັບເລື່ອນໄປຕາມລັດສະໝີຂອງມຸມ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="185"/>
         <source>Snap shift</source>
         <translation>ເລື່ອນເກາະຈັບ</translation>
@@ -12998,21 +3160,9 @@ p, li { white-space: pre-wrap; }
         <translation>ຄວາມຍາວ Y:</translation>
     </message>
     <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">ຄວາມຍາວຂອງມຸມຕັດໃນທິດທາງ Y. </translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">ລັດສະໝີຂອງມຸມມົນ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="243"/>
         <source>Radius:</source>
         <translation>ລັດສະໝີ:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຮູບຮ່າງຈະຖືກສ້າງເປັນເສັ້ນຕໍ່ເນື່ອງ (Polyline). </translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
@@ -13020,29 +3170,9 @@ p, li { white-space: pre-wrap; }
         <translation>ເສັ້ນຕໍ່ເນື່ອງ</translation>
     </message>
     <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">ເລືອກມຸມພາຍໃນຂອງຮູບສີ່ແຈຈາກການແຕ້ມ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="81"/>
         <source>Edges:</source>
         <translation>ຂອບ:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">ເລືອກລັດສະໝີຂອງມຸມມົນຈາກການແຕ້ມ.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວຂອງມຸມຕັດໃນທິດທາງ X ຈາກການແຕ້ມ.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວຂອງມຸມຕັດໃນທິດທາງ Y ຈາກການແຕ້ມ.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">ກຳນົດຂອບຂອງຮູບສີ່ແຈສາກທີ່ຈະແຕ້ມ (ເພື່ອໃຫ້ສາມາດສ້າງພຽງແຕ່ເສັ້ນຂະໜານສອງເສັ້ນແທນຮູບສີ່ແຈສາກໄດ້)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
@@ -13060,276 +3190,14 @@ p, li { white-space: pre-wrap; }
         <translation>ແນວນອນ</translation>
     </message>
     <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມພື້ນຖານຂອງຮູບສີ່ແຈສາກຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຮູບສີ່ແຈສາກຈະຖືກໝູນຕາມມຸມພື້ນຖານທີ່ລະບຸ. ຖ້າບໍ່ດັ່ງນັ້ນ, ມຸມພື້ນຖານຈະຖືກກຳນົດໂດຍມຸມລະຫວ່າງຈຸດທຳອິດ ແລະ ຈຸດທີສອງຂອງຮູບສີ່ແຈສາກ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="95"/>
         <source>Fixed Base Angle:</source>
         <translation>ມຸມພື້ນຖານຄົງທີ່:</translation>
     </message>
     <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະສ້າງຮູບສີ່ແຈທົ່ວໄປແທນຮູບສີ່ແຈສາກ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="88"/>
         <source>Quadrangle</source>
         <translation>ຮູບສີ່ແຈ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_RelZeroCoordinatesWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Relative Zero (Cartesian)</source>
-        <translation type="vanished">ຈຸດສູນສຳພັນ (Cartesian)</translation>
-    </message>
-    <message>
-        <source>Relative Zero (Polar)</source>
-        <translation type="vanished">ຈຸດສູນສຳພັນ (Polar)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">ຂໍອະໄພ, ເກີດຂໍ້ຜິດພາດທາງເຄືອຂ່າຍໃນລະຫວ່າງການກວດສອບເວີຊັນໃໝ່.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">ບໍ່ສາມາດວິເຄາະການຕອບກັບຈາກເຊີເວີໄດ້</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">ຕົວເລືອກການຍ້າຍ ແລະ ໝູນ</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">ກຳນົດວ່າຈະແຊກສຳເນົາລົງໃນເລເຢີປັດຈຸບັນ ຫຼື ເລເຢີຕົ້ນສະບັບ</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">ໃຊ້ເລເຢີປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">ປັບມຸມສຳຮອງເພື່ອໃຫ້ຜົນລວມຂອງມຸມ (ມຸມໝູນສຳພັນ) ເປັນ 0. ດ້ວຍການຕັ້ງຄ່ານີ້ ອົງປະກອບຈະຖືກຍ້າຍແຕ່ບໍ່ຖືກໝູນ.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">ມຸມແບບສະທ້ອນ (Mirror)</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຫຼັກຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">ກຳນົດວ່າຈະໃຊ້ຄຸນລັກສະນະການແຕ້ມປັດຈຸບັນ ຫຼື ຕົ້ນສະບັບ</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ໃຊ້ຄຸນລັກສະນະປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມສຳຮອງຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">ມຸມສຳລັບການໝູນອ້ອມຈຸດອ້າງອີງແທ້ຈິງ</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະສ້າງສຳເນົາຫຼາຍອັນ. </translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">ຫຼາຍສຳເນົາ</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">ຈຳນວນສຳເນົາທີ່ຈະສ້າງ</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">ມຸມສຳຮອງ:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະໃຊ້ມູມດຽວກັນສຳລັບທຸກໆການສຳເນົາ. ຖ້າບໍ່ດັ່ງນັ້ນ, ມູມຈະເພີ່ມຂຶ້ນຕາມສັດສ່ວນຂອງຈຳນວນການສຳເນົາ. </translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">ໃຊ້ມຸມສຳຮອງດຽວກັນສຳລັບທຸກສຳເນົາ</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ອົງປະກອບເດີມຈະຍັງຄົງຢູ່, ຖ້າບໍ່ດັ່ງນັ້ນ ພວກມັນຈະຖືກລຶບອອກ. </translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ຮັກສາຕົ້ນສະບັບ</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">ມຸມຫຼັກ:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">ມຸມທີ່ຈະໝູນອ້ອມຈຸດອ້າງອີງສຳຮອງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SelectWindowOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">ວົງລີ</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">ມິຕິ</translation>
-    </message>
-    <message>
-        <source>Insert</source>
-        <translation type="vanished">ແຊກ</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">ຈຸດ</translation>
-    </message>
-    <message>
-        <source>All</source>
-        <translation type="vanished">ທັງໝົດ</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">ເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>Image</source>
-        <translation type="vanished">ຮູບພາບ</translation>
-    </message>
-    <message>
-        <source>MText</source>
-        <translation type="vanished">ຂໍ້ຄວາມຫຼາຍບັນທັດ (MText)</translation>
-    </message>
-    <message>
-        <source>Entity type</source>
-        <translation type="vanished">ປະເພດອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="vanished">ຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Hatch</source>
-        <translation type="vanished">ລວດລາຍ</translation>
-    </message>
-    <message>
-        <source>Wipeout</source>
-        <translation type="vanished">ປົກປິດ (Wipeout)</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">ວົງມົນ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SettingsExporter</name>
-    <message>
-        <source>Import settings</source>
-        <translation type="vanished">ນຳເຂົ້າການຕັ້ງຄ່າ</translation>
-    </message>
-    <message>
-        <source>Export Settings</source>
-        <translation type="vanished">ສົ່ງອອກການຕັ້ງຄ່າ</translation>
-    </message>
-    <message>
-        <source>Settings Export</source>
-        <translation type="vanished">ການສົ່ງອອກການຕັ້ງຄ່າ</translation>
-    </message>
-    <message>
-        <source>Application preferences were exported.</source>
-        <translation type="vanished">ສົ່ງອອກການຕັ້ງຄ່າແອັບພລິເຄຊັນສຳເລັດແລ້ວ.</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open provided file for writing - check that provided location is writable. Preferences were not exported.</source>
-        <translation type="vanished">ບໍ່ສາມາດເປີດໄຟລ໌ເພື່ອຂຽນໄດ້ - ກະລຸນາກວດສອບວ່າຕຳແໜ່ງທີ່ລະບຸສາມາດຂຽນໄດ້ຫຼືບໍ່. ຍັງບໍ່ໄດ້ສົ່ງອອກການຕັ້ງຄ່າ.</translation>
-    </message>
-    <message>
-        <source>LibreCAD settings file (*.%1)</source>
-        <translation type="vanished">ໄຟລ໌ການຕັ້ງຄ່າ LibreCAD (*.%1)</translation>
-    </message>
-    <message>
-        <source>Settings Import Error</source>
-        <translation type="vanished">ຂໍ້ຜິດພາດໃນການນຳເຂົ້າການຕັ້ງຄ່າ</translation>
-    </message>
-    <message>
-        <source>Unexpected error during preferences parsing. Message:</source>
-        <translation type="vanished">ເກີດຂໍ້ຜິດພາດທີ່ບໍ່ຄາດຄິດໃນລະຫວ່າງການວິເຄາະການຕັ້ງຄ່າ. ຂໍ້ຄວາມ:</translation>
-    </message>
-    <message>
-        <source>Settings Import</source>
-        <translation type="vanished">ການນຳເຂົ້າການຕັ້ງຄ່າ</translation>
-    </message>
-    <message>
-        <source>Application preferences were imported.</source>
-        <translation type="vanished">ນຳເຂົ້າການຕັ້ງຄ່າແອັບພລິເຄຊັນສຳເລັດແລ້ວ.</translation>
-    </message>
-    <message>
-        <source>No settings groups to import.</source>
-        <translation type="vanished">ບໍ່ມີກຸ່ມການຕັ້ງຄ່າທີ່ຈະນຳເຂົ້າ.</translation>
-    </message>
-    <message>
-        <source>Unexpected format of file, it does not contains LibreCAD preferences.</source>
-        <translation type="vanished">ຮູບແບບໄຟລ໌ບໍ່ຖືກຕ້ອງ, ມັນບໍ່ມີຂໍ້ມູນການຕັ້ງຄ່າຂອງ LibreCAD.</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open provided file for reading. Preferences were not imported.</source>
-        <translation type="vanished">ບໍ່ສາມາດເປີດໄຟລ໌ເພື່ອອ່ານໄດ້. ຍັງບໍ່ໄດ້ນຳເຂົ້າການຕັ້ງຄ່າ.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ShortcutButton</name>
-    <message>
-        <source>Click and type the new key sequence.</source>
-        <translation type="vanished">ຄລິກແລ້ວກົດປຸ່ມຄີບອດເພື່ອຕັ້ງຄ່າປຸ່ມລັດໃໝ່.</translation>
-    </message>
-    <message>
-        <source>Stop Recording</source>
-        <translation type="vanished">ຢຸດການບັນທຶກ</translation>
-    </message>
-    <message>
-        <source>Record Shortcut</source>
-        <translation type="vanished">ບັນທຶກປຸ່ມລັດ</translation>
     </message>
 </context>
 <context>
@@ -13358,17 +3226,9 @@ p, li { white-space: pre-wrap; }
         <translation>ມຸມເລີ່ມຕົ້ນຂອງວົງມົນ:</translation>
     </message>
     <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">ມຸມເລີ່ມຕົ້ນຂອງວົງມົນທີ່ຈະເລີ່ມຂີດໝາຍ (Ticks). </translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="120"/>
         <source>Offset:</source>
         <translation>ໄລຍະຫ່າງ (Offset):</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">ໄລຍະຫ່າງຂອງຈຸດເກາະຈັບຂີດໝາຍໄປຫາຈຸດຕັດ. </translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="235"/>
@@ -13376,21 +3236,9 @@ p, li { white-space: pre-wrap; }
         <translation>ມຸມ:</translation>
     </message>
     <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="318"/>
         <source>Distance:</source>
         <translation>ໄລຍະຫ່າງ:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">ໄລຍະຫ່າງລະຫວ່າງຂີດໝາຍ (Ticks).</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ອົງປະກອບທີ່ເລືອກຈະຖືກແບ່ງດ້ວຍຈຸດຕັດຂອງເຄື່ອງໝາຍ </translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="242"/>
@@ -13398,37 +3246,9 @@ p, li { white-space: pre-wrap; }
         <translation>ແບ່ງ</translation>
     </message>
     <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງຂີດໝາຍຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">ຄວາມຍາວຂອງຂີດໝາຍ (Tick).</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຂີດໝາຍຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
         <source>Tick snap:</source>
         <translation>ເກາະຈັບຂີດໝາຍ:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວຂີດໝາຍຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມເລີ່ມຕົ້ນຂອງວົງມົນຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">ມຸມລະຫວ່າງຂີດໝາຍ ແລະ ອົງປະກອບທີ່ເລືອກ.</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ມຸມຂີດໝາຍຈະອ້າງອີງຕາມອົງປະກອບທີ່ເລືອກ, ຖ້າບໍ່ດັ່ງນັ້ນມັນຈະເປັນມຸມແທ້ຈິງ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="113"/>
@@ -13439,10 +3259,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="221"/>
         <source>Tick Length:</source>
         <translation>ຄວາມຍາວຂີດໝາຍ:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">ກຳນົດຈຸດຂອງຂີດໝາຍທີ່ຈະວາງລົງໃນຈຸດຕັດກັບອົງປະກອບທີ່ເລືອກ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="58"/>
@@ -13462,26 +3278,14 @@ p, li { white-space: pre-wrap; }
         <translation>ສິ້ນສຸດ</translation>
     </message>
     <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະໃຊ້ໄລຍະຫ່າງຄົງທີ່ທີ່ກຳນົດໄວ້ລະຫວ່າງເຄື່ອງໝາຍ. ຖ້າບໍ່ດັ່ງນັ້ນ, ໄລຍະຫ່າງຈະຖືກຄຳນວນໂດຍອີງຕາມຄວາມຍາວຂອງອົງປະກອບ ແລະ ຈຳນວນເຄື່ອງໝາຍ. </translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="284"/>
         <source>Fixed </source>
         <translation>ຄົງທີ່ </translation>
     </message>
     <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">ຈຳນວນຂີດໝາຍລະຫວ່າງຂອບຂອງອົງປະກອບທີ່ເລືອກ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="158"/>
         <source>Count:</source>
         <translation>ຈຳນວນ:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">ກຳນົດຮູບແບບການວາງຂີດໝາຍຢູ່ເທິງຂອບຂອງອົງປະກອບ. </translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="48"/>
@@ -13500,273 +3304,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SnapOptionsWidgetsHolder</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">ກຳນົດຈຳນວນສ່ວນຂອງເສັ້ນທີ່ຈະສ້າງຂຶ້ນສຳລັບແຕ່ລະເສັ້ນຕໍ່ເນື່ອງ (Polyline) ທີ່ເປັນແບບ ເສັ້ນໂຄ້ງສະປຼາຍ-fit</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">ຖ້າບໍ່ໝາຍເລືອກ, ເສັ້ນໂຄ້ງ (ເສັ້ນໂຄ້ງສະປຼາຍ) ຕົ້ນສະບັບຈະຖືກລຶບອອກ, ຖ້າບໍ່ດັ່ງນັ້ນມັນຈະຍັງຄົງຢູ່.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ຮັກສາຕົ້ນສະບັບ</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະໃຊ້ຄຸນລັກສະນະປັດຈຸບັນສຳລັບອົງປະກອບທີ່ສ້າງຂຶ້ນ, ຖ້າບໍ່ດັ່ງນັ້ນ ຈະໃຊ້ຄຸນລັກສະນະເດີມ. </translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ໃຊ້ຄຸນລັກສະນະປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ອົງປະກອບທີ່ສ້າງຂຶ້ນຈະຖືກວາງໄວ້ໃນເລເຢີປັດຈຸບັນ, ຖ້າບໍ່ດັ່ງນັ້ນຈະວາງໄວ້ໃນເລເຢີຕົ້ນສະບັບ.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">ໃຊ້ເລເຢີປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ສາມາດກຳນົດຈຳນວນສ່ວນຂອງເສັ້ນເອງໄດ້. ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະໃຊ້ຄ່າຈາກການຕັ້ງຄ່າຂອງການແຕ້ມປັດຈຸບັນ.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">ກຳນົດຈຳນວນສ່ວນຂອງເສັ້ນເອງ</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ສ່ວນຂອງເສັ້ນຈະເປັນສ່ວນໜຶ່ງຂອງເສັ້ນຕໍ່ເນື່ອງ (Polyline). ຖ້າບໍ່ດັ່ງນັ້ນພວກມັນຈະເປັນເສັ້ນແຍກສ່ວນ.</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">ເປັນເສັ້ນຕໍ່ເນື່ອງ (Polyline)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ອົງປະກອບທີ່ສ້າງຂຶ້ນຈະຖືກວາງໄວ້ໃນເລເຢີປັດຈຸບັນ, ຖ້າບໍ່ດັ່ງນັ້ນຈະວາງໄວ້ໃນເລເຢີຕົ້ນສະບັບ.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">ໃຊ້ເລເຢີປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">ຈຳນວນຈຸດເຄິ່ງກາງຂອງສ່ວນເສັ້ນ Polyline ທີ່ຈະຖືກເພີ່ມເຂົ້າໃນເສັ້ນໂຄ້ງ ເສັ້ນໂຄ້ງສະປຼາຍ.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">ກຳນົດລະດັບ (Degree) ຂອງເສັ້ນໂຄ້ງ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">ຖ້າບໍ່ໝາຍເລືອກ, ເສັ້ນຕໍ່ເນື່ອງ (Polyline) ຕົ້ນສະບັບຈະຖືກລຶບອອກ, ຖ້າບໍ່ດັ່ງນັ້ນມັນຈະຍັງຄົງຢູ່.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">ລະດັບ (Degree):</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and ordinary spline will be created.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະຖືວ່າຈຸດຍອດຂອງເສັ້ນຕໍ່ເນື່ອງເປັນຈຸດຂອງ ເສັ້ນໂຄ້ງສະປຼາຍ ແລະ ຈະສ້າງ ເສັ້ນໂຄ້ງສະປຼາຍ ຕາມຈຸດເຫຼົ່ານັ້ນ. ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະຖືວ່າພວກມັນເປັນຈຸດຄວບຄຸມ ແລະ ຈະສ້າງ ເສັ້ນໂຄ້ງສະປຼາຍ ແບບປົກກະຕິ.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ຮັກສາຕົ້ນສະບັບ</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">ຈຸດເຄິ່ງກາງ:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະໃຊ້ຄຸນລັກສະນະປັດຈຸບັນສຳລັບອົງປະກອບທີ່ສ້າງຂຶ້ນ, ຖ້າບໍ່ດັ່ງນັ້ນ ຈະໃຊ້ຄຸນລັກສະນະເດີມ. </translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ໃຊ້ຄຸນລັກສະນະປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">ຈຸດຍອດແມ່ນຈຸດຂອງ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplinePointsPropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">ປິດ</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະໃຊ້ຈຸດຂອງ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="vanished">ຈຸດຂອງ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະໃຊ້ຈຸດຄວບຄຸມ</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">ຈຸດຄວບຄຸມ</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">ຈຸດເທິງເສັ້ນໂຄ້ງ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplinePropertiesEditingWidget</name>
-    <message>
-        <source>Spline Properties Editor</source>
-        <translation type="vanished">ເຄື່ອງມືແກ້ໄຂຄຸນສົມບັດຂອງ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Edit properties of a spline entity, including degree, closed state, control points, and knot vector</source>
-        <translation type="vanished">ແກ້ໄຂຄຸນສົມບັດຂອງອົງປະກອບ ເສັ້ນໂຄ້ງສະປຼາຍ ລວມມີ ລະດັບ (Degree), ສະຖານະການປິດ, ຈຸດຄວບຄຸມ ແລະ Knot vector</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">ລະດັບ (Degree):</translation>
-    </message>
-    <message>
-        <source>Spline Degree ComboBox</source>
-        <translation type="vanished">ກ່ອງເລືອກລະດັບ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Select the degree of the spline curve</source>
-        <translation type="vanished">ເລືອກລະດັບ (Degree) ຂອງເສັ້ນໂຄ້ງ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="vanished">ກຳນົດວ່າ ເສັ້ນໂຄ້ງສະປຼາຍ ຈະເປັນແບບເສັ້ນຮອບຮູບປິດຫຼືບໍ່</translation>
-    </message>
-    <message>
-        <source>Closed Spline CheckBox</source>
-        <translation type="vanished">ກ່ອງໝາຍ ເສັ້ນໂຄ້ງສະປຼາຍ ແບບປິດ</translation>
-    </message>
-    <message>
-        <source>Toggle whether the spline forms a closed contour</source>
-        <translation type="vanished">ເປີດ/ປິດ ໃຫ້ ເສັ້ນໂຄ້ງສະປຼາຍ ເປັນຮູບຊົງປິດ</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">ປິດ</translation>
-    </message>
-    <message>
-        <source>Control Points:</source>
-        <translation type="vanished">ຈຸດຄວບຄຸມ:</translation>
-    </message>
-    <message>
-        <source>Control points with coordinates and weights</source>
-        <translation type="vanished">ຈຸດຄວບຄຸມພ້ອມກັບພິກັດ ແລະ ນ້ຳໜັກ</translation>
-    </message>
-    <message>
-        <source>Control Points Table</source>
-        <translation type="vanished">ຕາຕະລາງຈຸດຄວບຄຸມ</translation>
-    </message>
-    <message>
-        <source>Edit control points coordinates and weights for the spline</source>
-        <translation type="vanished">ແກ້ໄຂພິກັດ ແລະ ນ້ຳໜັກຂອງຈຸດຄວບຄຸມສຳລັບ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>#</source>
-        <translation type="vanished">#</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Weight</source>
-        <translation type="vanished">ນ້ຳໜັກ</translation>
-    </message>
-    <message>
-        <source>Knot values control the spline’s curve shape (non-decreasing sequence)</source>
-        <translation type="vanished">ຄ່າ Knot ຄວບຄຸມຮູບຊົງເສັ້ນໂຄ້ງຂອງ ເສັ້ນໂຄ້ງສະປຼາຍ (ລຳດັບທີ່ບໍ່ຫຼຸດລົງ)</translation>
-    </message>
-    <message>
-        <source>Knot Vector Table</source>
-        <translation type="vanished">ຕາຕະລາງ Knot Vector</translation>
-    </message>
-    <message>
-        <source>Edit knot values for the spline (must be non-decreasing)</source>
-        <translation type="vanished">ແກ້ໄຂຄ່າ Knot ສຳລັບ ເສັ້ນໂຄ້ງສະປຼາຍ (ຕ້ອງເປັນລຳດັບທີ່ບໍ່ຫຼຸດລົງ)</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">ຄ່າ</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation type="vanished">ເພີ່ມ</translation>
-    </message>
-    <message>
-        <source>Add a new control point to the spline</source>
-        <translation type="vanished">ເພີ່ມຈຸດຄວບຄຸມໃໝ່ໃສ່ໃນ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Add Control Point Button</source>
-        <translation type="vanished">ປຸ່ມເພີ່ມຈຸດຄວບຄຸມ</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">ລຶບ</translation>
-    </message>
-    <message>
-        <source>Remove the selected control point from the spline</source>
-        <translation type="vanished">ລຶບຈຸດຄວບຄຸມທີ່ເລືອກອອກຈາກ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Remove Control Point Button</source>
-        <translation type="vanished">ປຸ່ມລຶບຈຸດຄວບຄຸມ</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="vanished">ລະດັບ (Degree) ທີ່ໃຊ້ໃນການຄຳນວນເສັ້ນໂຄ້ງ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-</context>
-<context>
     <name>LC_StarOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="14"/>
@@ -13774,17 +3311,9 @@ p, li { white-space: pre-wrap; }
         <translation>ຮູບແບບ</translation>
     </message>
     <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະສ້າງຮູບດາວແບບສົມມາດ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="86"/>
         <source>Symmetric</source>
         <translation>ສົມມາດ</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">ລັດສະໝີສຳລັບຂອບພາຍໃນ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="93"/>
@@ -13792,29 +3321,9 @@ p, li { white-space: pre-wrap; }
         <translation>ຈຳນວນ:</translation>
     </message>
     <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">ເລືອກລັດສະໝີພາຍນອກຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">ເລືອກລັດສະໝີພາຍໃນຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">ຈຳນວນແຊກດາວ.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຂອບພາຍນອກຈະເປັນມຸມມົນ. </translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="56"/>
         <source>Radius Outer</source>
         <translation>ລັດສະໝີພາຍນອກ</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຂອບພາຍໃນຈະເປັນມຸມມົນ. </translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="26"/>
@@ -13822,563 +3331,9 @@ p, li { white-space: pre-wrap; }
         <translation>ລັດສະໝີພາຍໃນ</translation>
     </message>
     <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຮູບດາວຈະຖືກແຕ້ມເປັນເສັ້ນຕໍ່ເນື່ອງ (Polyline). </translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="49"/>
         <source>Polyline</source>
         <translation>ເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">ລັດສະໝີສຳລັບແຊກດາວພາຍນອກ (ຂອບ).</translation>
-    </message>
-</context>
-<context>
-    <name>LC_TextPropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Content</source>
-        <translation type="vanished">ເນື້ອຫາ</translation>
-    </message>
-    <message>
-        <source>Single-line text content</source>
-        <translation type="vanished">ເນື້ອຫາຂໍ້ຄວາມບັນທັດດຽວ</translation>
-    </message>
-    <message>
-        <source>Direction</source>
-        <translation type="vanished">ທິດທາງ</translation>
-    </message>
-    <message>
-        <source>Detect base direction from first strong character (UAX#9 P-rules)</source>
-        <translation type="vanished">ກວດຫາທິດທາງເລີ່ມຕົ້ນຈາກຕົວອັກສອນທຳອິດ (UAX#9 P-rules)</translation>
-    </message>
-    <message>
-        <source>Auto</source>
-        <translation type="vanished">ອັດຕະໂນມັດ</translation>
-    </message>
-    <message>
-        <source>Force left-to-right base direction</source>
-        <translation type="vanished">ບັງຄັບທິດທາງຈາກຊ້າຍຫາຂວາ</translation>
-    </message>
-    <message>
-        <source>LTR</source>
-        <translation type="vanished">ຈາກຊ້າຍຫາຂວາ (LTR)</translation>
-    </message>
-    <message>
-        <source>Force right-to-left base direction</source>
-        <translation type="vanished">ບັງຄັບທິດທາງຈາກຂວາຫາຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>RTL</source>
-        <translation type="vanished">ຈາກຂວາຫາຊ້າຍ (RTL)</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">ຄວາມສູງ:</translation>
-    </message>
-    <message>
-        <source>Nominal text height</source>
-        <translation type="vanished">ຄວາມສູງຂອງຂໍ້ຄວາມຕາມມາດຕະຖານ</translation>
-    </message>
-    <message>
-        <source>Width factor:</source>
-        <translation type="vanished">ຕົວຄູນຄວາມກວ້າງ:</translation>
-    </message>
-    <message>
-        <source>Relative width factor (1.0 = nominal)</source>
-        <translation type="vanished">ຕົວຄູນຄວາມກວ້າງສຳພັນ (1.0 = ປົກກະຕິ)</translation>
-    </message>
-    <message>
-        <source>Angle (°):</source>
-        <translation type="vanished">ມຸມ (°):</translation>
-    </message>
-    <message>
-        <source>Rotation angle in degrees (UCS)</source>
-        <translation type="vanished">ມຸມໝູນເປັນອົງສາ (UCS)</translation>
-    </message>
-    <message>
-        <source>Alignment:</source>
-        <translation type="vanished">ການຈັດວາງ:</translation>
-    </message>
-    <message>
-        <source>Justification / anchor point for the text</source>
-        <translation type="vanished">ການຈັດຊ່ອງໄຟ / ຈຸດອ້າງອີງສຳລັບຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Style:</source>
-        <translation type="vanished">ຮູບແບບ (Style):</translation>
-    </message>
-    <message>
-        <source>Text style / font name</source>
-        <translation type="vanished">ຮູບແບບຂໍ້ຄວາມ / ຊື່ຟອນ</translation>
-    </message>
-    <message>
-        <source>Top Left</source>
-        <translation type="vanished">ເທິງ ຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Top Center</source>
-        <translation type="vanished">ເທິງ ກາງ</translation>
-    </message>
-    <message>
-        <source>Top Right</source>
-        <translation type="vanished">ເທິງ ຂວາ</translation>
-    </message>
-    <message>
-        <source>Middle Left</source>
-        <translation type="vanished">ກາງ ຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Middle Center</source>
-        <translation type="vanished">ກາງ ສູນກາງ</translation>
-    </message>
-    <message>
-        <source>Middle Right</source>
-        <translation type="vanished">ກາງ ຂວາ</translation>
-    </message>
-    <message>
-        <source>Baseline Left</source>
-        <translation type="vanished">ເສັ້ນພື້ນຖານ ຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Baseline Center</source>
-        <translation type="vanished">ເສັ້ນພື້ນຖານ ກາງ</translation>
-    </message>
-    <message>
-        <source>Baseline Right</source>
-        <translation type="vanished">ເສັ້ນພື້ນຖານ ຂວາ</translation>
-    </message>
-    <message>
-        <source>Bottom Left</source>
-        <translation type="vanished">ລຸ່ມ ຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Bottom Center</source>
-        <translation type="vanished">ລຸ່ມ ກາງ</translation>
-    </message>
-    <message>
-        <source>Bottom Right</source>
-        <translation type="vanished">ລຸ່ມ ຂວາ</translation>
-    </message>
-    <message>
-        <source>Fit</source>
-        <translation type="vanished">ພໍດີ (Fit)</translation>
-    </message>
-    <message>
-        <source>Aligned</source>
-        <translation type="vanished">ຈັດລຽງ (Aligned)</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">ຈຸດກາງ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ToolbarFactory</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
-    </message>
-    <message>
-        <source>Toolbar: %1</source>
-        <translation type="vanished">ແຖບເຄື່ອງມື: %1</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="vanished">ການເລືອກເກາະຈັບ</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">ໄຟລ໌</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">ແກ້ໄຂ</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">ລຳດັບ</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">ມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">ພື້ນທີ່ວາງວິດເຈັດ (Dock)</translation>
-    </message>
-    <message>
-        <source>Creators</source>
-        <translation type="vanished">ຜູ້ສ້າງ</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="vanished">ການຕັ້ງຄ່າ</translation>
-    </message>
-    <message>
-        <source>Entity&apos;s Layer</source>
-        <translation type="vanished">ເລເຢີຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="vanished">ຕົວເລືອກເຄື່ອງມື</translation>
-    </message>
-    <message>
-        <source>Info Cursor</source>
-        <translation type="vanished">ເຄີເຊີຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">ຈຸດ</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">ຮູບຫຼາຍແຈ</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">ວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">ວົງລີ</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">ເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">ເລືອກ</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">ມິຕິ</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">ອື່ນໆ</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">ປັບປ່ຽນ</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">ຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>Categories</source>
-        <translation type="vanished">ໝວດໝູ່</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Points</source>
-        <translation type="vanished">ຈຸດ</translation>
-    </message>
-    <message>
-        <source>Circles</source>
-        <translation type="vanished">ວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Polygons</source>
-        <translation type="vanished">ຮູບຫຼາຍແຈ</translation>
-    </message>
-    <message>
-        <source>Arcs</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງ (Arcs)</translation>
-    </message>
-    <message>
-        <source>Splines</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງ (Splines)</translation>
-    </message>
-    <message>
-        <source>Ellipses</source>
-        <translation type="vanished">ວົງລີ</translation>
-    </message>
-    <message>
-        <source>PolyLines</source>
-        <translation type="vanished">ເສັ້ນຕໍ່ເນື່ອງ (PolyLines)</translation>
-    </message>
-    <message>
-        <source>Dimensions</source>
-        <translation type="vanished">ມິຕິ</translation>
-    </message>
-    <message>
-        <source>Measure</source>
-        <translation type="vanished">ການວັດແທກ</translation>
-    </message>
-    <message>
-        <source>Named Views</source>
-        <translation type="vanished">ມຸມມອງທີ່ຕັ້ງຊື່ໄວ້</translation>
-    </message>
-    <message>
-        <source>UCS</source>
-        <translation type="vanished">UCS</translation>
-    </message>
-    <message>
-        <source>Workspaces</source>
-        <translation type="vanished">ພື້ນທີ່ເຮັດວຽກ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSListModel</name>
-    <message>
-        <source>Ortho</source>
-        <translation type="vanished">ອໍໂທ (Ortho)</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">ຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">ຂວາ</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">ເທິງ</translation>
-    </message>
-    <message>
-        <source>&lt;No name&gt;</source>
-        <translation type="vanished">&lt;ບໍ່ມີຊື່&gt;</translation>
-    </message>
-    <message>
-        <source>Name: </source>
-        <translation type="vanished">ຊື່: </translation>
-    </message>
-    <message>
-        <source>Origin X: </source>
-        <translation type="vanished">ຈຸດເລີ່ມຕົ້ນ X: </translation>
-    </message>
-    <message>
-        <source>Origin Y: </source>
-        <translation type="vanished">ຈຸດເລີ່ມຕົ້ນ Y: </translation>
-    </message>
-    <message>
-        <source>Angle: </source>
-        <translation type="vanished">ມຸມ: </translation>
-    </message>
-    <message>
-        <source>Grid: </source>
-        <translation type="vanished">ຕາຕະລາງ (Grid): </translation>
-    </message>
-    <message>
-        <source>UCS: </source>
-        <translation type="vanished">UCS: </translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation type="vanished">ແມ່ນ</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation type="vanished">ບໍ່</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSListWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Create new user coordinates system.</source>
-        <translation type="vanished">ສ້າງລະບົບພິກັດຜູ້ໃຊ້ໃໝ່.</translation>
-    </message>
-    <message>
-        <source>Restores selected user coordinates system.</source>
-        <translation type="vanished">ຄືນຄ່າລະບົບພິກັດຜູ້ໃຊ້ທີ່ເລືອກ.</translation>
-    </message>
-    <message>
-        <source>Preview of coordinate system origin and angle.</source>
-        <translation type="vanished">ເບິ່ງຕົວຢ່າງຈຸດເລີ່ມຕົ້ນ ແລະ ມຸມຂອງລະບົບພິກັດ.</translation>
-    </message>
-    <message>
-        <source>Saves currently used coordinate system (it is usefull if UCS comes from saved view)</source>
-        <translation type="vanished">ບັນທຶກລະບົບພິກັດທີ່ໃຊ້ໃນປັດຈຸບັນ (ມີປະໂຫຍດຖ້າ UCS ມາຈາກມຸມມອງທີ່ບັນທຶກໄວ້)</translation>
-    </message>
-    <message>
-        <source>Set UCS by ordinate dimension</source>
-        <translation type="vanished">ຕັ້ງຄ່າ UCS ຕາມມິຕິພິກັດ</translation>
-    </message>
-    <message>
-        <source>Edit selected user coordinates name. No-name UCS are temporary and are not saved.</source>
-        <translation type="vanished">ແກ້ໄຂຊື່ພິກັດຜູ້ໃຊ້ທີ່ເລືອກ. UCS ທີ່ບໍ່ມີຊື່ແມ່ນຊົ່ວຄາວ ແລະ ຈະບໍ່ຖືກບັນທຶກ.</translation>
-    </message>
-    <message>
-        <source>Removes selected user coordinates system.</source>
-        <translation type="vanished">ລຶບລະບົບພິກັດຜູ້ໃຊ້ທີ່ເລືອກ.</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">ການຕັ້ງຄ່າ</translation>
-    </message>
-    <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">ກັ່ນຕອງພິກັດຜູ້ໃຊ້ຕາມຊື່</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">ຕົວຊ່ວຍກັ່ນຕອງ...</translation>
-    </message>
-    <message>
-        <source>&lt;No name&gt;</source>
-        <translation type="vanished">&lt;ບໍ່ມີຊື່&gt;</translation>
-    </message>
-    <message>
-        <source>Delete All UCS</source>
-        <translation type="vanished">ລຶບ UCS ທັງໝົດ</translation>
-    </message>
-    <message>
-        <source>Are you sure to delete ALL UCS?
- Warning: this action can NOT be undone!</source>
-        <translation type="vanished">ທ່ານແນ່ໃຈຫຼືບໍ່ທີ່ຈະລຶບ UCS ທັງໝົດ?
- ຄຳເຕືອນ: ການກະທຳນີ້ບໍ່ສາມາດເລີກທຳໄດ້!</translation>
-    </message>
-    <message>
-        <source>Delete UCS</source>
-        <translation type="vanished">ລຶບ UCS</translation>
-    </message>
-    <message>
-        <source>Are you sure to delete UCS
- &quot;%1&quot;?
- Warning: this action can NOT be undone!</source>
-        <translation type="vanished">ທ່ານແນ່ໃຈຫຼືບໍ່ທີ່ຈະລຶບ UCS
- &quot;%1&quot;?
- ຄຳເຕືອນ: ການກະທຳນີ້ບໍ່ສາມາດເລີກທຳໄດ້!</translation>
-    </message>
-    <message>
-        <source>Delete UCSs</source>
-        <translation type="vanished">ລຶບ UCS ຫຼາຍອັນ</translation>
-    </message>
-    <message>
-        <source>Are you sure to delete UCS %1?
-Warning: this action can NOT be undone!</source>
-        <translation type="vanished">ທ່ານແນ່ໃຈຫຼືບໍ່ທີ່ຈະລຶບ UCS %1?
-ຄຳເຕືອນ: ການກະທຳນີ້ບໍ່ສາມາດເລີກທຳໄດ້!</translation>
-    </message>
-    <message>
-        <source>Rename UCS</source>
-        <translation type="vanished">ປ່ຽນຊື່ UCS</translation>
-    </message>
-    <message>
-        <source>UCS name:</source>
-        <translation type="vanished">ຊື່ UCS:</translation>
-    </message>
-    <message>
-        <source>UCS with provided name already exists, select another one</source>
-        <translation type="vanished">ມີຊື່ UCS ນີ້ໃນລະບົບແລ້ວ, ກະລຸນາເລືອກຊື່ອື່ນ</translation>
-    </message>
-    <message>
-        <source>&amp;Save UCS</source>
-        <translation type="vanished">&amp;ບັນທຶກ UCS</translation>
-    </message>
-    <message>
-        <source>&amp;Update UCS</source>
-        <translation type="vanished">&amp;ອັບເດດ UCS</translation>
-    </message>
-    <message>
-        <source>R&amp;emove Selected UCSs</source>
-        <translation type="vanished">ລຶບ UCS ທີ່ເລືອກ (&amp;e)</translation>
-    </message>
-    <message>
-        <source>&amp;Apply UCS</source>
-        <translation type="vanished">&amp;ນຳໃຊ້ UCS</translation>
-    </message>
-    <message>
-        <source>&amp;Preview UCS</source>
-        <translation type="vanished">&amp;ເບິ່ງຕົວຢ່າງ UCS</translation>
-    </message>
-    <message>
-        <source>&amp;Rename UCS</source>
-        <translation type="vanished">&amp;ປ່ຽນຊື່ UCS</translation>
-    </message>
-    <message>
-        <source>R&amp;emove UCS</source>
-        <translation type="vanished">ລຶບ UCS (&amp;e)</translation>
-    </message>
-    <message>
-        <source>Remove A&amp;ll UCSs</source>
-        <translation type="vanished">ລຶບ UCS ທັງໝົ&amp;ດ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">ມຸມແກນ X ຂອງລະບົບພິກັດໃໝ່</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">ກຳນົດວ່າຈະໃຫ້ມຸມແກນ X ຖືກກຳນົດດ້ວຍຄ່າທີ່ປ້ອນເຂົ້າ ຫຼື ດ້ວຍຕຳແໜ່ງຂອງເມົ້າ</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ອິດສະຫຼະ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSStateWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Type of current coordinate system</source>
-        <translation type="vanished">ປະເພດຂອງລະບົບພິກັດປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>Name of selected coordinate system</source>
-        <translation type="vanished">ຊື່ຂອງລະບົບພິກັດທີ່ເລືອກ</translation>
-    </message>
-    <message>
-        <source>Coordinates</source>
-        <translation type="vanished">ພິກັດ</translation>
-    </message>
-    <message>
-        <source>Position of origin and angle of current UCS&apos;s in world coordinates.</source>
-        <translation type="vanished">ຕຳແໜ່ງຈຸດເລີ່ມຕົ້ນ ແລະ ມຸມຂອງ UCS ປັດຈຸບັນໃນພິກັດໂລກ.</translation>
     </message>
 </context>
 <context>
@@ -14444,159 +3399,6 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished">ການວັດແທກ</translation>
     </message>
     <message>
-        <source>Line</source>
-        <translation type="vanished">ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">ຮູບຫຼາຍແຈ</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">ວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">ວົງລີ</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">ເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">ມິຕິ</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">ອື່ນໆ</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">ຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">ລຳດັບ</translation>
-    </message>
-    <message>
-        <source>Entity Info</source>
-        <translation type="vanished">ຂໍ້ມູນອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Named Views</source>
-        <translation type="vanished">ມຸມມອງທີ່ຕັ້ງຊື່ໄວ້</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">ຈຸດ</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Pens Palette</source>
-        <translation type="vanished">ຈານສີປາກກາ</translation>
-    </message>
-    <message>
-        <source>Pens</source>
-        <translation type="vanished">ປາກກາ</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">ເລເຢີ</translation>
-    </message>
-    <message>
-        <source>Views</source>
-        <translation type="vanished">ມຸມມອງ</translation>
-    </message>
-    <message>
-        <source>User Coordinate Systems</source>
-        <translation type="vanished">ລະບົບພິກັດຜູ້ໃຊ້</translation>
-    </message>
-    <message>
-        <source>UCSs</source>
-        <translation type="vanished">UCS</translation>
-    </message>
-    <message>
-        <source>Layers Tree</source>
-        <translation type="vanished">ລາຍການເລເຢີ</translation>
-    </message>
-    <message>
-        <source>Blocks</source>
-        <translation type="vanished">ບລັອກ</translation>
-    </message>
-    <message>
-        <source>Library</source>
-        <translation type="vanished">ຄັງສະໝຸດ</translation>
-    </message>
-    <message>
-        <source>Cmd</source>
-        <translation type="vanished">ຄຳສັ່ງ</translation>
-    </message>
-    <message>
-        <source>Command Line</source>
-        <translation type="vanished">ບັນທັດຄຳສັ່ງ (Command Line)</translation>
-    </message>
-    <message>
-        <source>Dock</source>
-        <comment>Dock the command widget to the main window</comment>
-        <translation type="vanished">ຈັດວາງ (Dock)</translation>
-    </message>
-    <message>
-        <source>Pen Wizard</source>
-        <translation type="vanished">ຕົວຊ່ວຍຕັ້ງຄ່າປາກກາ</translation>
-    </message>
-    <message>
-        <source>PenWiz</source>
-        <translation type="vanished">ປາກກາ</translation>
-    </message>
-    <message>
-        <source>Toolbar: %1</source>
-        <translation type="vanished">ແຖບເຄື່ອງມື: %1</translation>
-    </message>
-    <message>
-        <source>Grid Status</source>
-        <translation type="vanished">ສະຖານະຕາຕະລາງ (Grid)</translation>
-    </message>
-    <message>
-        <source>Coordinates</source>
-        <translation type="vanished">ພິກັດ</translation>
-    </message>
-    <message>
-        <source>Relative Zero</source>
-        <translation type="vanished">ຈຸດສູນສຳພັນ</translation>
-    </message>
-    <message>
-        <source>Mouse</source>
-        <translation type="vanished">ເມົ້າ</translation>
-    </message>
-    <message>
-        <source>Selection Info</source>
-        <translation type="vanished">ຂໍ້ມູນການເລືອກ</translation>
-    </message>
-    <message>
-        <source>Active Layer</source>
-        <translation type="vanished">ເລເຢີທີ່ໃຊ້ງານຢູ່</translation>
-    </message>
-    <message>
-        <source>UCS Status</source>
-        <translation type="vanished">ສະຖານະ UCS</translation>
-    </message>
-    <message>
-        <source>Angles Basis</source>
-        <translation type="vanished">ພື້ນຖານມຸມ</translation>
-    </message>
-    <message>
-        <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
-        <translation type="vanished">ຂະໜາດປັດຈຸບັນຂອງ Grid/MetaGrid. ຄລິກເພື່ອປ່ຽນຂະໜາດຕາຕະລາງ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="650"/>
         <source>Modify</source>
         <translation>ປັບປ່ຽນ</translation>
@@ -14640,85 +3442,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished">ທົ່ວໄປ</translation>
     </message>
     <message>
-        <source>Flat Buttons</source>
-        <translation type="vanished">ປຸ່ມແບບແບນ</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">ຈຳນວນຄໍລຳ:</translation>
-    </message>
-    <message>
-        <source>Dock Widgets</source>
-        <translation type="vanished">ວິດເຈັດແບບຈັດວາງ (Dock)</translation>
-    </message>
-    <message>
-        <source>For &quot;classic&quot; statusbar only. </source>
-        <translation type="vanished">ສຳລັບແຖບສະຖານະແບບ &quot;Classic&quot; ເທົ່ານັ້ນ. </translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="121"/>
         <source>Style</source>
         <translation>ຮູບແບບ (Style)</translation>
-    </message>
-    <message>
-        <source>Icons Styling</source>
-        <translation type="vanished">ຮູບແບບໄອຄອນ</translation>
-    </message>
-    <message>
-        <source>Click to select color</source>
-        <translation type="vanished">ຄລິກເພື່ອເລືອກສີ</translation>
-    </message>
-    <message>
-        <source>Back Color</source>
-        <translation type="vanished">ສີພື້ນຫຼັງ</translation>
-    </message>
-    <message>
-        <source>External Icons Directory:</source>
-        <translation type="vanished">ໄດເຣັກທໍຣີໄອຄອນພາຍນອກ:</translation>
-    </message>
-    <message>
-        <source>Accent Color:</source>
-        <translation type="vanished">ສີເນັ້ນ:</translation>
-    </message>
-    <message>
-        <source>Main Color:</source>
-        <translation type="vanished">ສີຫຼັກ:</translation>
-    </message>
-    <message>
-        <source>General Styling</source>
-        <translation type="vanished">ການກຳນົດຮູບແບບທົ່ວໄປ</translation>
-    </message>
-    <message>
-        <source>Color for accent elements (originally green)</source>
-        <translation type="vanished">ສີສຳລັບອົງປະກອບເນັ້ນ (ແຕ່ເດີມແມ່ນສີຂຽວ)</translation>
-    </message>
-    <message>
-        <source>Color for main elements (originally black)</source>
-        <translation type="vanished">ສີສຳລັບອົງປະກອບຫຼັກ (ແຕ່ເດີມແມ່ນສີດຳ)</translation>
-    </message>
-    <message>
-        <source>Color for filled background (originally white)</source>
-        <translation type="vanished">ສີສຳລັບພື້ນຫຼັງ (ແຕ່ເດີມແມ່ນສີຂາວ)</translation>
-    </message>
-    <message>
-        <source>Defines location of custom user-provided icons.</source>
-        <translation type="vanished">ກຳນົດບ່ອນເກັບໄອຄອນທີ່ຜູ້ໃຊ້ກຳນົດເອງ.</translation>
-    </message>
-    <message>
-        <source>Saved Icons Style:</source>
-        <translation type="vanished">ຮູບແບບໄອຄອນທີ່ບັນທຶກໄວ້:</translation>
-    </message>
-    <message>
-        <source>Save Style</source>
-        <translation type="vanished">ບັນທຶກຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Remove Style</source>
-        <translation type="vanished">ລຶບຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Advanced Setup ...</source>
-        <translation type="vanished">ການຕັ້ງຄ່າຂັ້ນສູງ ...</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="147"/>
@@ -14741,131 +3467,9 @@ Warning: this action can NOT be undone!</source>
         <translation>ຂະໜາດໂຕອັກສອນ</translation>
     </message>
     <message>
-        <source>lClassicStatusBarOnly</source>
-        <translation type="vanished">ສະເພາະແຖບສະຖານະແບບຄລາສສິກ</translation>
-    </message>
-    <message>
-        <source>If enabled, specific style of UI may be applied</source>
-        <translation type="vanished">ຫາກເປີດໃຊ້, ຈະນຳໃຊ້ຮູບແບບ UI ທີ່ສະເພາະເຈາະຈົງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="160"/>
         <source>Input the path of a Qt style sheet.</source>
         <translation>ປ້ອນທີ່ຢູ່ (Path) ຂອງ Qt style sheet.</translation>
-    </message>
-    <message>
-        <source>If checked, buttons for picking values from drawing will be flat</source>
-        <translation type="vanished">ຫາກເລືອກ, ປຸ່ມສຳລັບເລືອກຄ່າຈາກການແຕ້ມຈະເປັນແບບແປນ</translation>
-    </message>
-    <message>
-        <source>Flat pick values buttons</source>
-        <translation type="vanished">ປຸ່ມເລືອກຄ່າແບບແປນ</translation>
-    </message>
-    <message>
-        <source>Side length in pixels</source>
-        <translation type="vanished">ຄວາມຍາວດ້ານຂ້າງເປັນພິກເຊວ</translation>
-    </message>
-    <message>
-        <source>General Docking</source>
-        <translation type="vanished">ການຈັດວາງແຖບເຄື່ອງມືທົ່ວໄປ</translation>
-    </message>
-    <message>
-        <source>If selected, title bar for docked dock widgets will be vertical. Otherwise, it will be horizontal.</source>
-        <translation type="vanished">ຫາກເລືອກ, ແຖບຫົວຂໍ້ສຳລັບວິດເຈັດທີ່ຕິດຢູ່ຈະເປັນແນວຕັ້ງ. ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະເປັນແນວນອນ.</translation>
-    </message>
-    <message>
-        <source>Tile bar is vertical (except CAD widgets)</source>
-        <translation type="vanished">ແຖບຫົວຂໍ້ເປັນແນວຕັ້ງ (ຍົກເວັ້ນວິດເຈັດ CAD)</translation>
-    </message>
-    <message>
-        <source>If not checked, dock areas can only contain a single row (horizontal or vertical) of dock widgets. If checked, the area occupied by a dock widget can be split in either direction to contain more dock widgets.</source>
-        <translation type="vanished">ຫາກບໍ່ໄດ້ເລືອກ, ພື້ນທີ່ຈັດວາງຈະມີໄດ້ພຽງແຖວດຽວ. ຫາກເລືອກ, ພື້ນທີ່ຈັດວາງວິດເຈັດສາມາດແບ່ງອອກເພື່ອໃສ່ວິດເຈັດໄດ້ຫຼາຍຂຶ້ນ.</translation>
-    </message>
-    <message>
-        <source>Allow nested docking</source>
-        <translation type="vanished">ອະນຸຍາດໃຫ້ວາງຊ້ອນກັນໄດ້</translation>
-    </message>
-    <message>
-        <source>If checked, the two vertical dock areas on the sides of the main window show their tabs vertically. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ພື້ນທີ່ແຖບເຄື່ອງມືແນວຕັ້ງທັງສອງຂ້າງຂອງໜ້າຕ່າງຫຼັກ ຈະສະແດງແຖບ (tab) ເປັນແນວຕັ້ງ. </translation>
-    </message>
-    <message>
-        <source>Vertical tabs</source>
-        <translation type="vanished">ແທັບແນວຕັ້ງ</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">ວິດເຈັດ CAD</translation>
-    </message>
-    <message>
-        <source>Number of columns for actions in left toolbar.</source>
-        <translation type="vanished">ຈຳນວນຄໍລຳສຳລັບເຄື່ອງມືໃນແຖບເຄື່ອງມືດ້ານຊ້າຍ.</translation>
-    </message>
-    <message>
-        <source>Save Icons Style</source>
-        <translation type="vanished">ບັນທຶກຮູບແບບໄອຄອນ</translation>
-    </message>
-    <message>
-        <source>Enter name of icons style:</source>
-        <translation type="vanished">ປ້ອນຊື່ຮູບແບບໄອຄອນ:</translation>
-    </message>
-    <message>
-        <source>Remove Icons Style</source>
-        <translation type="vanished">ລຶບຮູບແບບໄອຄອນ</translation>
-    </message>
-    <message>
-        <source>Select style to remove:</source>
-        <translation type="vanished">ເລືອກຮູບແບບທີ່ຈະລຶບ:</translation>
-    </message>
-    <message>
-        <source>Select External Icons Folder</source>
-        <translation type="vanished">ເລືອກໂຟນເດີໄອຄອນພາຍນອກ</translation>
-    </message>
-    <message>
-        <source>Select Color</source>
-        <translation type="vanished">ເລືອກສີ</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="vanished">ການຕັ້ງຄ່າ</translation>
-    </message>
-    <message>
-        <source>Icons overrides directory changed. Please restart the application to apply.</source>
-        <translation type="vanished">ມີການປ່ຽນແປງໄດເຣັກທໍຣີໄອຄອນ. ກະລຸນາເລີ່ມລະບົບໃໝ່ເພື່ອໃຫ້ມີຜົນນຳໃຊ້.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_WorkspacesInvoker</name>
-    <message>
-        <source>New Workspace</source>
-        <translation type="vanished">ພື້ນທີ່ເຮັດວຽກໃໝ່</translation>
-    </message>
-    <message>
-        <source>Name of workspace to save:</source>
-        <translation type="vanished">ຊື່ພື້ນທີ່ເຮັດວຽກທີ່ຈະບັນທຶກ:</translation>
-    </message>
-    <message>
-        <source>Remove Workspace</source>
-        <translation type="vanished">ລຶບພື້ນທີ່ເຮັດວຽກ</translation>
-    </message>
-    <message>
-        <source>Select workspace to remove:</source>
-        <translation type="vanished">ເລືອກພື້ນທີ່ເຮັດວຽກທີ່ຈະລຶບ:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_WorkspacesManager</name>
-    <message>
-        <source>Saving Workspaces</source>
-        <translation type="vanished">ກຳລັງບັນທຶກພື້ນທີ່ເຮັດວຽກ</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open workspaces file for writing. Workspaces were not exported. File: </source>
-        <translation type="vanished">ບໍ່ສາມາດເປີດໄຟລ໌ພື້ນທີ່ເຮັດວຽກເພື່ອຂຽນໄດ້. ຂໍ້ມູນບໍ່ໄດ້ຖືກສົ່ງອອກ. ໄຟລ໌: </translation>
-    </message>
-    <message>
-        <source>Workspaces file does not exists.</source>
-        <translation type="vanished">ບໍ່ມີໄຟລ໌ພື້ນທີ່ເຮັດວຽກນີ້ຢູ່.</translation>
     </message>
 </context>
 <context>
@@ -14919,14 +3523,6 @@ Warning: this action can NOT be undone!</source>
         <source>Copies:</source>
         <translation>ຈຳນວນສຳເນົາ:</translation>
     </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">ຈຳນວນສຳເນົາ</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງຈາກການແຕ້ມ</translation>
-    </message>
 </context>
 <context>
     <name>QC_ActionGetEnt</name>
@@ -14966,10 +3562,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">ກຳລັງສ້າງໄຟລ໌ໃໝ່...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>ເອກະສານບໍ່ມີຊື່ %1</translation>
@@ -14978,18 +3570,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>ໂຫຼດເອກະສານແລ້ວ: </translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">ຍົກເລີກການເປີດ</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">ກຳລັງພິມ...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">ກຳລັງອອກຈາກໂປຣແກຣມ...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2768"/>
@@ -15002,17 +3582,9 @@ Warning: this action can NOT be undone!</source>
         <translation>ສ້າງການແຕ້ມໃໝ່ແລ້ວ.</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">ກຳລັງບັນທຶກການແຕ້ມ...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>ບັນທຶກການແຕ້ມແລ້ວ: %1</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">ການພິມສຳເລັດແລ້ວ</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
@@ -15027,10 +3599,6 @@ Please check the permissions.</source>
         <translation>ບໍ່ສາມາດເປີດໄຟລ໌
 %1
 ກະລຸນາກວດສອບສິດການເຂົ້າເຖິງ.</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">ກຳລັງບັນທຶກອັດຕະໂນມັດ...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -15335,14 +3903,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2034"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>ບໍ່ມີໄຟລ໌ &apos;%1&apos; ຢູ່. ຍົກເລີກການເປີດ</translation>
-    </message>
-    <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">ກຳລັງເປີດໄຟລ໌ຫຼ້າສຸດ...</translation>
-    </message>
-    <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">ກຳລັງບັນທຶກການແຕ້ມ: %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
@@ -15678,11 +4238,6 @@ Please check its existence and permissions.</source>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">escape</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
         <translation type="unfinished"></translation>
@@ -15715,10 +4270,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Name of Current Active Layer</source>
-        <translation type="vanished">ຊື່ຂອງເລເຢີທີ່ໃຊ້ງານຢູ່</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
         <translation>ເລເຢີປັດຈຸບັນ</translation>
@@ -15735,10 +4286,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_blockdialog.ui" line="43"/>
         <source>Block Name:</source>
         <translation>ຊື່ບລັອກ:</translation>
-    </message>
-    <message>
-        <source>Name of the block</source>
-        <translation type="vanished">ຊື່ຂອງບລັອກ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_blockdialog.cpp" line="78"/>
@@ -15904,14 +4451,6 @@ in a separate window</source>
         <translation>ສີບົວເຂັ້ມ (Magenta)</translation>
     </message>
     <message>
-        <source>Orange</source>
-        <translation type="vanished">ສີສົ້ມ</translation>
-    </message>
-    <message>
-        <source>Dark Orange</source>
-        <translation type="vanished">ສີສົ້ມເຂັ້ມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="133"/>
         <source>Black / White</source>
         <translation>ສີດຳ / ສີຂາວ</translation>
@@ -16018,14 +4557,6 @@ in a separate window</source>
         <translation>ແຖບຄຳສັ່ງ</translation>
     </message>
     <message>
-        <source>Enter your command here</source>
-        <translation type="vanished">ປ້ອນຄຳສັ່ງຂອງທ່ານທີ່ນີ້</translation>
-    </message>
-    <message>
-        <source>Click to see more options</source>
-        <translation type="vanished">ຄລິກເພື່ອເບິ່ງຕົວເລືອກເພີ່ມເຕີມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="82"/>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="188"/>
         <source>Command:</source>
@@ -16042,11 +4573,6 @@ in a separate window</source>
         <translation>ປະຫວັດ ແລະ ຜົນຂອງຄຳສັ່ງ</translation>
     </message>
     <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">escape</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
         <source>...</source>
         <translation>...</translation>
@@ -16056,14 +4582,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
         <source>Dock</source>
         <translation>ຕິດແຖບ</translation>
-    </message>
-    <message>
-        <source>Enter Command:</source>
-        <translation type="vanished">ປ້ອນຄຳສັ່ງ:</translation>
-    </message>
-    <message>
-        <source>Command Alias File: %1</source>
-        <translation type="vanished">ໄຟລ໌ຊື່ຫຍໍ້ຄຳສັ່ງ: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
@@ -16091,22 +4609,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="141"/>
         <source>Coordinates</source>
         <translation>ພິກັດ</translation>
-    </message>
-    <message>
-        <source>Absolute Coordinates (Cartesian)</source>
-        <translation type="vanished">ພິກັດແທ້ຈິງ (ຄາທີຊຽນ)</translation>
-    </message>
-    <message>
-        <source>Absolute Cordinates (Polar)</source>
-        <translation type="vanished">ພິກັດແທ້ຈິງ (ໂພລາ)</translation>
-    </message>
-    <message>
-        <source>Relative Coordinates (Cartesian)</source>
-        <translation type="vanished">ພິກັດສຳພັນ (ຄາທີຊຽນ)</translation>
-    </message>
-    <message>
-        <source>Relative Coordinates (Polar)</source>
-        <translation type="vanished">ພິກັດສຳພັນ (ໂພລາ)</translation>
     </message>
 </context>
 <context>
@@ -16136,37 +4638,9 @@ in a separate window</source>
         <translation>ປ້າຍ:</translation>
     </message>
     <message>
-        <source>Symbol before dimensional text</source>
-        <translation type="vanished">ສັນຍະລັກກ່ອນຂໍ້ຄວາມມິຕິ</translation>
-    </message>
-    <message>
-        <source>Superscript</source>
-        <translation type="vanished">ໂຕຍົກ</translation>
-    </message>
-    <message>
-        <source>Subscript</source>
-        <translation type="vanished">ໂຕຫ້ອຍ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="133"/>
         <source>Insert:</source>
         <translation>ແຊກ:</translation>
-    </message>
-    <message>
-        <source>Raw text:</source>
-        <translation type="vanished">ຂໍ້ຄວາມດິບ:</translation>
-    </message>
-    <message>
-        <source>Format of the dimension text, &lt;&gt; can be used as a placeholder for the dimension measurement value</source>
-        <translation type="vanished">ຮູບແບບຂໍ້ຄວາມມິຕິ, ສາມາດໃຊ້ &lt;&gt; ເພື່ອແທນຄ່າທີ່ວັດແທກໄດ້</translation>
-    </message>
-    <message>
-        <source>Symbol to insert</source>
-        <translation type="vanished">ສັນຍະລັກທີ່ຈະແຊກ</translation>
-    </message>
-    <message>
-        <source>R (Radial)</source>
-        <translation type="vanished">R (ລັດສະໝີ)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="155"/>
@@ -16230,29 +4704,9 @@ in a separate window</source>
         <translation>ເລເຢີ:</translation>
     </message>
     <message>
-        <source>Layer of arc</source>
-        <translation type="vanished">ເລເຢີຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">ຄຸນສົມບັດປາກກາ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="78"/>
         <source>Geometry</source>
         <translation>ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="vanished">ພິກັດ X ຂອງຈຸດໃຈກາງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">ພິກັດ Y ຂອງຈຸດໃຈກາງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="vanished">ກຳນົດວ່າຈະໃຫ້ເສັ້ນໂຄ້ງປີ້ນກັບ (ຕາມເຂັມໂມງ)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="216"/>
@@ -16265,10 +4719,6 @@ in a separate window</source>
         <translation>ໃຈກາງ (y):</translation>
     </message>
     <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">ລັດສະໝີຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="144"/>
         <source>Start Angle:</source>
         <translation>ມຸມເລີ່ມຕົ້ນ:</translation>
@@ -16279,14 +4729,6 @@ in a separate window</source>
         <translation>ລັດສະໝີ:</translation>
     </message>
     <message>
-        <source>Starting angle of arc</source>
-        <translation type="vanished">ມຸມເລີ່ມຕົ້ນຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="vanished">ມຸມສິ້ນສຸດຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="174"/>
         <source>End Angle:</source>
         <translation>ມຸມສິ້ນສຸດ:</translation>
@@ -16295,10 +4737,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="124"/>
         <source>Center (x):</source>
         <translation>ໃຈກາງ (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
     </message>
 </context>
 <context>
@@ -16314,14 +4752,6 @@ in a separate window</source>
         <translation>ເລເຢີ:</translation>
     </message>
     <message>
-        <source>Layer to apply</source>
-        <translation type="vanished">ເລເຢີທີ່ຈະນຳໃຊ້</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">ຄຸນສົມບັດປາກກາ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
@@ -16332,10 +4762,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
         <source>Apply attributes Block-deep</source>
         <translation>ນຳໃຊ້ຄຸນລັກສະນະທຸກລະດັບໃນບລັອກ</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
     </message>
 </context>
 <context>
@@ -16361,30 +4787,14 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>ລັດສະໝີ:</translation>
     </message>
     <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">ລັດສະໝີຂອງວົງມົນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="97"/>
         <source>Center (y):</source>
         <translation>ໃຈກາງ (y):</translation>
     </message>
     <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="vanished">ພິກັດ Y ຂອງຈຸດໃຈກາງວົງມົນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="117"/>
         <source>Center (x):</source>
         <translation>ໃຈກາງ (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="vanished">ພິກັດ X ຂອງຈຸດໃຈກາງວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
     </message>
 </context>
 <context>
@@ -16400,14 +4810,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>ເລເຢີ:</translation>
     </message>
     <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">ເລເຢີຂອງມິຕິ</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">ຄຸນສົມບັດປາກກາ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="79"/>
         <source>Geometry</source>
         <translation>ເລຂາຄະນິດ</translation>
@@ -16416,14 +4818,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="103"/>
         <source>Angle:</source>
         <translation>ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="vanished">ມຸມໝຸນຂອງການບອກມິຕິ</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
     </message>
 </context>
 <context>
@@ -16434,21 +4828,9 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>ມິຕິ</translation>
     </message>
     <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">ເລເຢີຂອງມິຕິ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="47"/>
         <source>Layer:</source>
         <translation>ເລເຢີ:</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">ຄຸນສົມບັດປາກກາ</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
     </message>
 </context>
 <context>
@@ -16479,21 +4861,9 @@ This recursively modifies all entities of the Block itself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer of ellipse</source>
-        <translation type="vanished">ເລເຢີຂອງວົງລີ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="78"/>
         <source>Geometry</source>
         <translation>ເລຂາຄະນິດ</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="vanished">ມຸມໝຸນສຳລັບແກນຫຼັກຂອງວົງລີ, ເປັນອົງສາ</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="vanished">ກຳນົດວ່າຈະໃຫ້ເສັ້ນໂຄ້ງປີ້ນກັບຫຼືບໍ່</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="256"/>
@@ -16506,42 +4876,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>ໃຈກາງ (y):</translation>
     </message>
     <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="vanished">ມຸມສິ້ນສຸດຂອງເສັ້ນໂຄ້ງວົງລີ, ເປັນອົງສາ</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">ພິກັດ Y ຂອງຈຸດໃຈກາງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="vanished">ລັດສະໝີຂອງແກນຫຼັກວົງລີ</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="vanished">ເປັນອົງສາ</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="vanished">ມຸມເລີ່ມຕົ້ນ (°):</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="vanished">ການໝຸນ (°):</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="vanished">ລັດສະໝີຂອງແກນຮອງວົງລີ</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="vanished">ມຸມສິ້ນສຸດ (°):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="vanished">ມຸມເລີ່ມຕົ້ນຂອງເສັ້ນໂຄ້ງວົງລີ, ເປັນອົງສາ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="236"/>
         <source>Major:</source>
         <translation>ແກນຫຼັກ:</translation>
@@ -16552,17 +4886,9 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>ແກນຮອງ:</translation>
     </message>
     <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="vanished">ພິກັດ X ຂອງຈຸດໃຈກາງວົງລີ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="104"/>
         <source>Center (x):</source>
         <translation>ໃຈກາງ (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
     </message>
 </context>
 <context>
@@ -16578,10 +4904,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>ລວດລາຍ</translation>
     </message>
     <message>
-        <source>Scale factor for hatch pattern</source>
-        <translation type="vanished">ຕົວຄູນຂະໜາດສຳລັບລວດລາຍ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="34"/>
         <source>Angle:</source>
         <translation>ມຸມ:</translation>
@@ -16592,30 +4914,14 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>ຂະໜາດ:</translation>
     </message>
     <message>
-        <source>Rotation angle for the hatch</source>
-        <translation type="vanished">ມຸມໝຸນສຳລັບການລະບາຍລວດລາຍ</translation>
-    </message>
-    <message>
-        <source>If checked, solid will will be used instead of pattern hatch</source>
-        <translation type="vanished">ຫາກເລືອກ, ຈະໃຊ້ການລະບາຍສີແບບທຶບແທນລວດລາຍ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="57"/>
         <source>Solid Fill</source>
         <translation>ລະບາຍສີທຶບ</translation>
     </message>
     <message>
-        <source>Pattern of hatch</source>
-        <translation type="vanished">ລວດລາຍຂອງການລະບາຍ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="67"/>
         <source>Preview</source>
         <translation>ຕົວຢ່າງ</translation>
-    </message>
-    <message>
-        <source>If enabled, preview of hatch pattern will be shown below</source>
-        <translation type="vanished">ຫາກເປີດໃຊ້, ຕົວຢ່າງລວດລາຍຈະສະແດງຢູ່ດ້ານລຸ່ມ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="73"/>
@@ -16626,10 +4932,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="86"/>
         <source>Area</source>
         <translation>ເນື້ອທີ່</translation>
-    </message>
-    <message>
-        <source>Hatched area</source>
-        <translation type="vanished">ເນື້ອທີ່ທີ່ລະບາຍລວດລາຍ</translation>
     </message>
 </context>
 <context>
@@ -16643,10 +4945,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="44"/>
         <source>Layer:</source>
         <translation>ເລເຢີ:</translation>
-    </message>
-    <message>
-        <source>Layer of image</source>
-        <translation type="vanished">ເລເຢີຂອງຮູບພາບ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="80"/>
@@ -16664,42 +4962,14 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>ຄວາມສູງ:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">ຄວາມກວ້າງຂອງຮູບພາບ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="110"/>
         <source>insert (y):</source>
         <translation>ຈຸດແຊກ (y):</translation>
     </message>
     <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">ພິກັດ X ຂອງຈຸດແຊກ</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">ຄວາມລະອຽດ (DPI)</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="vanished">ທີ່ຢູ່ໄຟລ໌ຮູບພາບ</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">ຕົວຄູນຂະໜາດ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="153"/>
         <source>Size (px):</source>
         <translation>ຂະໜາດ (px):</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">ມຸມໝຸນ</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">ພິກັດ Y ຂອງຈຸດແຊກ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="196"/>
@@ -16717,10 +4987,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>ຂະໜາດ:</translation>
     </message>
     <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">ຂະໜາດຮູບພາບເປັນພິກເຊວ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="246"/>
         <source>DPI</source>
         <translation>DPI</translation>
@@ -16731,17 +4997,9 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>ຄວາມກວ້າງ:</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">ຄວາມສູງຂອງຮູບພາບ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="270"/>
         <source>Select an image file</source>
         <translation>ເລືອກໄຟລ໌ຮູບພາບ</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
     </message>
 </context>
 <context>
@@ -16750,10 +5008,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="14"/>
         <source>Welcome</source>
         <translation>ຍິນດີຕ້ອນຮັບ</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can change these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;ຍິນດີຕ້ອນຮັບສູ່ LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;ກະລຸນາເລືອກຫົວໜ່ວຍທີ່ທ່ານຕ້ອງການໃຊ້ສຳລັບການແຕ້ມໃໝ່ ແລະ ພາສາທີ່ທ່ານຕ້ອງການສຳລັບໜ້າຈໍ ແລະ ຄຳສັ່ງ.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;ທ່ານສາມາດປ່ຽນແປງການຕັ້ງຄ່ານີ້ໄດ້ໃນພາຍຫຼັງ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="64"/>
@@ -16793,10 +5047,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ເລເຢີ:</translation>
     </message>
     <message>
-        <source>Layer of insert</source>
-        <translation type="vanished">ເລເຢີຂອງສິ່ງທີ່ແຊກ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="71"/>
         <source>Geometry</source>
         <translation>ເລຂາຄະນິດ</translation>
@@ -16812,38 +5062,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ຈຸດແຊກ (x):</translation>
     </message>
     <message>
-        <source>Amount of rows for copies</source>
-        <translation type="vanished">ຈຳນວນແຖວສຳລັບການສຳເນົາ</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">ມຸມໝຸນ</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="vanished">ໄລຍະຫ່າງລະຫວ່າງຄໍລຳ</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="vanished">ຕົວຄູນຂະໜາດຕາມແກນ X</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">ພິກັດ X ຂອງຈຸດແຊກ</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="vanished">ໄລຍະຫ່າງລະຫວ່າງແຖວ</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="vanished">ຈຳນວນຄໍລຳສຳລັບການສຳເນົາ</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="vanished">ຕົວຄູນຂະໜາດຕາມແກນ Y</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="179"/>
         <source>Scale Y:</source>
         <translation>ຂະໜາດ Y:</translation>
@@ -16857,10 +5075,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="189"/>
         <source>Angle:</source>
         <translation>ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">ພິກັດ Y ຂອງຈຸດແຊກ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="249"/>
@@ -16882,10 +5096,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Column Spacing:</source>
         <translation>ໄລຍະຫ່າງຄໍລຳ:</translation>
     </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgLine</name>
@@ -16905,10 +5115,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ເລເຢີ:</translation>
     </message>
     <message>
-        <source>Layer of line</source>
-        <translation type="vanished">ເລເຢີຂອງເສັ້ນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="87"/>
         <source>Geometry</source>
         <translation>ເລຂາຄະນິດ</translation>
@@ -16917,14 +5123,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgline.ui" line="93"/>
         <source>End point (x):</source>
         <translation>ຈຸດສິ້ນສຸດ (x):</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="vanished">ພິກັດ X ຂອງຈຸດສິ້ນສຸດ</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="vanished">ພິກັດ Y ຂອງຈຸດສິ້ນສຸດ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="123"/>
@@ -16937,21 +5135,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ຈຸດເລີ່ມຕົ້ນ (y):</translation>
     </message>
     <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="vanished">ພິກັດ Y ຂອງຈຸດເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="153"/>
         <source>Start point (x):</source>
         <translation>ຈຸດເລີ່ມຕົ້ນ (x):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="vanished">ພິກັດ X ຂອງຈຸດເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
     </message>
 </context>
 <context>
@@ -17032,41 +5218,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ເທິງໃຈກາງ</translation>
     </message>
     <message>
-        <source>Layer of MText</source>
-        <translation type="vanished">ເລເຢີຂອງ MText</translation>
-    </message>
-    <message>
-        <source>If checked, default line spacing will be used</source>
-        <translation type="vanished">ຫາກເລືອກ, ຈະໃຊ້ໄລຍະຫ່າງບັນທັດເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
-        <source>Height of line</source>
-        <translation type="vanished">ຄວາມສູງຂອງບັນທັດ</translation>
-    </message>
-    <message>
-        <source>Specific line spacing factor is used</source>
-        <translation type="vanished">ໃຊ້ຕົວຄູນໄລຍະຫ່າງບັນທັດທີ່ກຳນົດເອງ</translation>
-    </message>
-    <message>
-        <source>Font to use</source>
-        <translation type="vanished">ຟອນທີ່ຈະໃຊ້</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="607"/>
         <source>Angle</source>
         <translation>ມຸມ</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">ມຸມໝຸນ</translation>
-    </message>
-    <message>
-        <source>Left to right text direction</source>
-        <translation type="vanished">ທິດທາງຂໍ້ຄວາມຈາກຊ້າຍໄປຂວາ</translation>
-    </message>
-    <message>
-        <source>Right to left text direction</source>
-        <translation type="vanished">ທິດທາງຂໍ້ຄວາມຈາກຂວາໄປຊ້າຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="691"/>
@@ -17102,10 +5256,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="787"/>
         <source>Paste</source>
         <translation>ວາງ</translation>
-    </message>
-    <message>
-        <source>Text lines to insert</source>
-        <translation type="vanished">ບັນທັດຂໍ້ຄວາມທີ່ຈະແຊກ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="834"/>
@@ -17163,18 +5313,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ປອນ (£)</translation>
     </message>
     <message>
-        <source>Symbol to insert</source>
-        <translation type="vanished">ສັນຍະລັກທີ່ຈະແຊກ</translation>
-    </message>
-    <message>
-        <source>Yen / Yuan (¥)</source>
-        <translation type="vanished">ເຢນ / ຢວນ (¥)</translation>
-    </message>
-    <message>
-        <source>Euro (€)</source>
-        <translation type="vanished">ເອີໂຣ (€)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="907"/>
         <source>Times (×)</source>
         <translation>ຄູນ (×)</translation>
@@ -17198,10 +5336,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="939"/>
         <source>Char:</source>
         <translation>ໂຕອັກສອນ:</translation>
-    </message>
-    <message>
-        <source>Codepage to use for characted selection</source>
-        <translation type="vanished">ລະຫັດໜ້າ (Codepage) ທີ່ຈະໃຊ້ສຳລັບເລືອກໂຕອັກສອນ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="902"/>
@@ -17749,14 +5883,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>[100000-10FFFD] ພື້ນທີ່ໃຊ້ສອຍສ່ວນຕົວສ່ວນເສີມ-B</translation>
     </message>
     <message>
-        <source>Selection of character to insert</source>
-        <translation type="vanished">ການເລືອກອັກສອນທີ່ຈະແຊກ</translation>
-    </message>
-    <message>
-        <source>Selected character preview. Click to insert to text.</source>
-        <translation type="vanished">ຕົວຢ່າງອັກສອນທີ່ເລືອກ. ຄລິກເພື່ອແຊກໃສ່ຂໍ້ຄວາມ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="847"/>
         <source>Diameter (⌀)</source>
         <translation>ເສັ້ນຜ່ານສູນກາງ (⌀)</translation>
@@ -17790,10 +5916,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="670"/>
         <source>Right to left</source>
         <translation>ຂວາຫາຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
     </message>
 </context>
 <context>
@@ -17925,10 +6047,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">ຫຼາຍສຳເນົາ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="41"/>
         <source>...</source>
         <translation>...</translation>
@@ -18038,114 +6156,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="132"/>
         <source>Surveyor&apos;s units</source>
         <translation>ຫົວໜ່ວຍການສຳຫຼວດ</translation>
-    </message>
-    <message>
-        <source>ON</source>
-        <translation type="vanished">ເປີດ</translation>
-    </message>
-    <message>
-        <source>Delete Custom Property</source>
-        <translation type="vanished">ລຶບຄຸນສົມບັດທີ່ກຳນົດເອງ</translation>
-    </message>
-    <message>
-        <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation type="vanished">ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບຄຸນສົມບັດ [%1]?</translation>
-    </message>
-    <message>
-        <source>Drawing Options</source>
-        <translation type="vanished">ຕົວເລືອກການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Settings were changed. Are you sure you&apos;d like to skip saving changes (so they will not be saved)?</source>
-        <translation type="vanished">ການຕັ້ງຄ່າຖືກປ່ຽນແປງ. ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການຂ້າມການບັນທຶກ (ການປ່ຽນແປງຈະບໍ່ຖືກບັນທຶກ)?</translation>
-    </message>
-    <message>
-        <source>&amp;Set as Active</source>
-        <translation type="vanished">&amp;ຕັ້ງເປັນກຳລັງໃຊ້ງານ</translation>
-    </message>
-    <message>
-        <source>&amp;Create Style</source>
-        <translation type="vanished">&amp;ສ້າງຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Style</source>
-        <translation type="vanished">&amp;ແກ້ໄຂຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Style</source>
-        <translation type="vanished">&amp;ປ່ຽນຊື່ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Style</source>
-        <translation type="vanished">&amp;ລຶບຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>E&amp;xport Styles</source>
-        <translation type="vanished">ສົ່ງ&amp;ອອກຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>&amp;Import Styles</source>
-        <translation type="vanished">&amp;ນຳເຂົ້າຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Style to Create - </source>
-        <translation type="vanished">ຮູບແບບທີ່ຈະສ້າງ - </translation>
-    </message>
-    <message>
-        <source>Dimension style editing - </source>
-        <translation type="vanished">ແກ້ໄຂຮູບແບບການບອກມິຕິ - </translation>
-    </message>
-    <message>
-        <source>Rename Dimension Style</source>
-        <translation type="vanished">ປ່ຽນຊື່ຮູບແບບການບອກມິຕິ</translation>
-    </message>
-    <message>
-        <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation type="vanished">ປ້ອນຊື່ໃໝ່ຂອງຮູບແບບການບອກມິຕິ (ຊື່ເກົ່າແມ່ນ &quot;%1&quot;):</translation>
-    </message>
-    <message>
-        <source>Removing Dimension Style</source>
-        <translation type="vanished">ກຳລັງລຶບຮູບແບບການບອກມິຕິ</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete last dimension style. At least one should be present! </source>
-        <translation type="vanished">ບໍ່ສາມາດລຶບຮູບແບບການບອກມິຕິອັນສຸດທ້າຍໄດ້. ຕ້ອງມີຢ່າງໜ້ອຍໜຶ່ງຮູບແບບ! </translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete dimension style as it&apos;s children is used in drawing. Only unused style may be deleted.</source>
-        <translation type="vanished">ບໍ່ສາມາດລຶບຮູບແບບມິຕິໄດ້ ເພາະມີຮູບແບບລູກຖືກໃຊ້ງານຢູ່ໃນການແຕ້ມ. ສາມາດລຶບໄດ້ສະເພາະຮູບແບບທີ່ບໍ່ໄດ້ໃຊ້ເທົ່ານັ້ນ.</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation type="vanished">ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບຮູບແບບມິຕິ &quot;%1&quot; ພ້ອມກັບຮູບແບບລູກ?</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation type="vanished">ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບຮູບແບບການບອກມິຕິ &quot;%1&quot;?</translation>
-    </message>
-    <message>
-        <source>OFF</source>
-        <translation type="vanished">ປິດ</translation>
-    </message>
-    <message>
-        <source>VOID</source>
-        <translation type="vanished">VOID</translation>
-    </message>
-    <message>
-        <source>INT</source>
-        <translation type="vanished">INT</translation>
-    </message>
-    <message>
-        <source>DOUBLE</source>
-        <translation type="vanished">DOUBLE</translation>
-    </message>
-    <message>
-        <source>STRING</source>
-        <translation type="vanished">STRING</translation>
-    </message>
-    <message>
-        <source>VECTOR</source>
-        <translation type="vanished">VECTOR</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="494"/>
@@ -18259,14 +6269,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&amp;ຕາຕະລາງ</translation>
     </message>
     <message>
-        <source>&amp;Splines and Lines</source>
-        <translation type="vanished">ເສັ້ນ&amp;ໂຄ້ງ ແລະ ເສັ້ນຊື່</translation>
-    </message>
-    <message>
-        <source>Splines</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງ ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
         <source>Number of line segments per spline patch:</source>
         <translation>ຈຳນວນສ່ວນຂອງເສັ້ນຕໍ່ໜຶ່ງຊ່ວງ ເສັ້ນໂຄ້ງສະປຼາຍ:</translation>
@@ -18336,138 +6338,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
         <source>Text style:</source>
         <translation>ຮູບແບບຂໍ້ຄວາມ:</translation>
-    </message>
-    <message>
-        <source>Paper format</source>
-        <translation type="vanished">ຮູບແບບເຈ້ຍ</translation>
-    </message>
-    <message>
-        <source>Width of paper</source>
-        <translation type="vanished">ຄວາມກວ້າງຂອງເຈ້ຍ</translation>
-    </message>
-    <message>
-        <source>Height of paper</source>
-        <translation type="vanished">ຄວາມສູງຂອງເຈ້ຍ</translation>
-    </message>
-    <message>
-        <source>Landscape paper orientation</source>
-        <translation type="vanished">ການຈັດວາງເຈ້ຍແນວນອນ</translation>
-    </message>
-    <message>
-        <source>Portrait paper orientation</source>
-        <translation type="vanished">ການຈັດວາງເຈ້ຍແນວຕັ້ງ</translation>
-    </message>
-    <message>
-        <source>Number of pages by horizontal</source>
-        <translation type="vanished">ຈຳນວນໜ້າຕາມແນວນອນ</translation>
-    </message>
-    <message>
-        <source>Number of pages by vertical</source>
-        <translation type="vanished">ຈຳນວນໜ້າຕາມແນວຕັ້ງ</translation>
-    </message>
-    <message>
-        <source>Preview of page and margins</source>
-        <translation type="vanished">ເບິ່ງຕົວຢ່າງໜ້າ ແລະ ຂອບເຈ້ຍ</translation>
-    </message>
-    <message>
-        <source>Units of measurements to use in drawing </source>
-        <translation type="vanished">ຫົວໜ່ວຍການວັດແທກທີ່ຈະໃຊ້ໃນການແຕ້ມ </translation>
-    </message>
-    <message>
-        <source>Angles Basis</source>
-        <translation type="vanished">ພື້ນຖານມຸມ</translation>
-    </message>
-    <message>
-        <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation type="vanished">ມຸມສູນຖານ ທຽບກັບລະບົບພິກັດຜູ້ໃຊ້ປັດຈຸບັນ. ມີຜົນຕໍ່ການປ້ອນພິກັດຂົ້ວໂລກ, ການຈັບມຸມ. 0.0 ແມ່ນຕຳແໜ່ງ 3 ໂມງ.</translation>
-    </message>
-    <message>
-        <source>Zero base angle:</source>
-        <translation type="vanished">ມຸມສູນຖານ:</translation>
-    </message>
-    <message>
-        <source>degrees.</source>
-        <translation type="vanished">ອົງສາ.</translation>
-    </message>
-    <message>
-        <source>Positive direction:</source>
-        <translation type="vanished">ທິດທາງບວກ:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise, 90 degrees is north.</source>
-        <translation type="vanished">ທວນເຂັມໂມງ, 90 ອົງສາແມ່ນທິດເໜືອ.</translation>
-    </message>
-    <message>
-        <source>Clockwise, 90 degrees is sourth.</source>
-        <translation type="vanished">ຕາມເຂັມໂມງ, 90 ອົງສາແມ່ນທິດໃຕ້.</translation>
-    </message>
-    <message>
-        <source>Right isometric grid</source>
-        <translation type="vanished">ຕາຕະລາງ Isometric ດ້ານຂວາ</translation>
-    </message>
-    <message>
-        <source>Isometric Right</source>
-        <translation type="vanished">Isometric ຂວາ</translation>
-    </message>
-    <message>
-        <source>Left isometric grid</source>
-        <translation type="vanished">ຕາຕະລາງ Isometric ດ້ານຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>Isometric Left</source>
-        <translation type="vanished">Isometric ຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>If checked, grid will be shown for this drawing</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະສະແດງຕາຕະລາງສຳລັບການແຕ້ມນີ້</translation>
-    </message>
-    <message>
-        <source>Top isometric grid</source>
-        <translation type="vanished">ຕາຕະລາງ Isometric ດ້ານເທິງ</translation>
-    </message>
-    <message>
-        <source>Isometric Top</source>
-        <translation type="vanished">Isometric ເທິງ</translation>
-    </message>
-    <message>
-        <source>Application Settings</source>
-        <translation type="vanished">ການຕັ້ງຄ່າໂປຣແກຣມ</translation>
-    </message>
-    <message>
-        <source>Draw Grid:</source>
-        <translation type="vanished">ແຕ້ມຕາຕະລາງ:</translation>
-    </message>
-    <message>
-        <source>Unitless Grid:</source>
-        <translation type="vanished">ຕາຕະລາງແບບບໍ່ມີຫົວໜ່ວຍ:</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">ປ້າຍຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Automatically Scale Grid:</source>
-        <translation type="vanished">ປັບຂະໜາດຕາຕະລາງອັດຕະໂນມັດ:</translation>
-    </message>
-    <message>
-        <source>Draw Meta Grid:</source>
-        <translation type="vanished">ແຕ້ມ Meta Grid:</translation>
-    </message>
-    <message>
-        <source>Grid Spacing</source>
-        <translation type="vanished">ໄລຍະຫ່າງຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>Select or enter grid spacing value by X axis</source>
-        <translation type="vanished">ເລືອກ ຫຼື ປ້ອນຄ່າໄລຍະຫ່າງຕາຕະລາງຕາມແກນ X</translation>
-    </message>
-    <message>
-        <source>Select or input grid spacing value by Y axis</source>
-        <translation type="vanished">ເລືອກ ຫຼື ປ້ອນຄ່າໄລຍະຫ່າງຕາຕະລາງຕາມແກນ Y</translation>
-    </message>
-    <message>
-        <source>Select or enter values for grid spacing (they will affect Grid drawing and Snap to Grid):</source>
-        <translation type="vanished">ເລືອກ ຫຼື ປ້ອນຄ່າສຳລັບໄລຍະຫ່າງຕາຕະລາງ (ຈະມີຜົນຕໍ່ການແຕ້ມ ແລະ ການຈັບຕາຕະລາງ):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="893"/>
@@ -18603,234 +6473,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ຄວາມຍາວຄົງທີ່:</translation>
     </message>
     <message>
-        <source>Dimensions</source>
-        <translation type="vanished">ມິຕິ</translation>
-    </message>
-    <message>
-        <source>Styles</source>
-        <translation type="vanished">ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>New style creation</source>
-        <translation type="vanished">ການສ້າງຮູບແບບໃໝ່</translation>
-    </message>
-    <message>
-        <source>Remove Style</source>
-        <translation type="vanished">ລຶບຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Edit Style</source>
-        <translation type="vanished">ແກ້ໄຂຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Rename Style</source>
-        <translation type="vanished">ປ່ຽນຊື່ຮູບແບບ</translation>
-    </message>
-    <message>
-        <source>Marks style as active one. Active style will be used during creation of dimensions.</source>
-        <translation type="vanished">ໝາຍຮູບແບບໃຫ້ເປັນອັນທີ່ໃຊ້ງານຢູ່. ຮູບແບບທີ່ເປີດໃຊ້ຈະຖືກນຳໃຊ້ໃນການສ້າງມິຕິ.</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">ສົ່ງອອກ</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">ນຳເຂົ້າ</translation>
-    </message>
-    <message>
-        <source>Active Style</source>
-        <translation type="vanished">ຮູບແບບທີ່ໃຊ້ງານຢູ່</translation>
-    </message>
-    <message>
-        <source>Style Name:</source>
-        <translation type="vanished">ຊື່ຮູບແບບ:</translation>
-    </message>
-    <message>
-        <source>If checked, used non-default arrow blocks will be added during drawing&apos;s saving. Embedding arrow blocks is needed for drawings that are later opened in AutoCAD.  This check may be unset if all editing is performed in LibreCAD. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະມີການເພີ່ມບລັອກຫົວລູກສອນທີ່ບໍ່ແມ່ນຄ່າເລີ່ມຕົ້ນ ໃນລະຫວ່າງການບັນທຶກແບບແຕ້ມ. ການຝັງບລັອກຫົວລູກສອນແມ່ນຈຳເປັນສຳລັບແບບແຕ້ມທີ່ຈະນຳໄປເປີດໃນ AutoCAD. ສາມາດຍົກເລີກການເລືອກນີ້ໄດ້ ຫາກການແກ້ໄຂທັງໝົດເຮັດໃນ LibreCAD ເທົ່ານັ້ນ. </translation>
-    </message>
-    <message>
-        <source>Embed arrows blocks on save</source>
-        <translation type="vanished">ຝັງບລັອກລູກສອນເມື່ອບັນທຶກ</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Line Cap:</source>
-        <translation type="vanished">ຫົວເສັ້ນ:</translation>
-    </message>
-    <message>
-        <source>End cap for lines</source>
-        <translation type="vanished">ຮູບແບບປາຍເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">ບໍ່ມີ</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">ມົນ</translation>
-    </message>
-    <message>
-        <source>Square</source>
-        <translation type="vanished">ສີ່ຫຼ່ຽມ</translation>
-    </message>
-    <message>
-        <source>Line Join:</source>
-        <translation type="vanished">ການຕໍ່ເສັ້ນ:</translation>
-    </message>
-    <message>
-        <source>Mode of lines joining in polylines or paths</source>
-        <translation type="vanished">ໂໝດການຕໍ່ເສັ້ນໃນ Polyline ຫຼື Path</translation>
-    </message>
-    <message>
-        <source>Flat</source>
-        <translation type="vanished">ແປ</translation>
-    </message>
-    <message>
-        <source>Enter value for points size</source>
-        <translation type="vanished">ປ້ອນຄ່າສຳລັບຂະໜາດຈຸດ</translation>
-    </message>
-    <message>
-        <source>Metadata</source>
-        <translation type="vanished">ຂໍ້ມູນກຳກັບ (Metadata)</translation>
-    </message>
-    <message>
-        <source>Specifies the title of the drawing.</source>
-        <translation type="vanished">ກຳນົດຊື່ເລື່ອງຂອງການແຕ້ມ.</translation>
-    </message>
-    <message>
-        <source>Keywords:</source>
-        <translation type="vanished">ຄຳຄົ້ນ (Keywords):</translation>
-    </message>
-    <message>
-        <source>Comments:</source>
-        <translation type="vanished">ຄຳເຫັນ:</translation>
-    </message>
-    <message>
-        <source>Title:</source>
-        <translation type="vanished">ຊື່ເລື່ອງ:</translation>
-    </message>
-    <message>
-        <source>Specifies the subject of the drawing.</source>
-        <translation type="vanished">ກຳນົດຫົວຂໍ້ຂອງການແຕ້ມ.</translation>
-    </message>
-    <message>
-        <source>Specifies the author of the drawing.</source>
-        <translation type="vanished">ກຳນົດຜູ້ຂຽນການແຕ້ມ.</translation>
-    </message>
-    <message>
-        <source>Specifies drawing-specific keywords.</source>
-        <translation type="vanished">ກຳນົດຄຳຄົ້ນສະເພາະຂອງການແຕ້ມ.</translation>
-    </message>
-    <message>
-        <source>Subject:</source>
-        <translation type="vanished">ຫົວຂໍ້:</translation>
-    </message>
-    <message>
-        <source>Author:</source>
-        <translation type="vanished">ຜູ້ຂຽນ:</translation>
-    </message>
-    <message>
-        <source>Provides a space to add comments to the drawing.</source>
-        <translation type="vanished">ໃຫ້ພື້ນທີ່ສຳລັບເພີ່ມຄຳເຫັນເຂົ້າໃນການແຕ້ມ.</translation>
-    </message>
-    <message>
-        <source>User Data</source>
-        <translation type="vanished">ຂໍ້ມູນຜູ້ໃຊ້</translation>
-    </message>
-    <message>
-        <source>Custom Properties</source>
-        <translation type="vanished">ຄຸນສົມບັດທີ່ກຳນົດເອງ</translation>
-    </message>
-    <message>
-        <source>Add New</source>
-        <translation type="vanished">ເພີ່ມໃໝ່</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">ລຶບ</translation>
-    </message>
-    <message>
-        <source>Floating point variables</source>
-        <translation type="vanished">ຕົວປ່ຽນເລກທົດສະນິຍົມ</translation>
-    </message>
-    <message>
-        <source>$USERR2</source>
-        <translation type="vanished">$USERR2</translation>
-    </message>
-    <message>
-        <source>$USERR5</source>
-        <translation type="vanished">$USERR5</translation>
-    </message>
-    <message>
-        <source>$USERR3</source>
-        <translation type="vanished">$USERR3</translation>
-    </message>
-    <message>
-        <source>$USERR4</source>
-        <translation type="vanished">$USERR4</translation>
-    </message>
-    <message>
-        <source>$USERR1</source>
-        <translation type="vanished">$USERR1</translation>
-    </message>
-    <message>
-        <source> Integer variables</source>
-        <translation type="vanished"> ຕົວປ່ຽນເລກຖ້ວນ</translation>
-    </message>
-    <message>
-        <source>$USERI4</source>
-        <translation type="vanished">$USERI4</translation>
-    </message>
-    <message>
-        <source>$USERI2</source>
-        <translation type="vanished">$USERI2</translation>
-    </message>
-    <message>
-        <source>$USERI1</source>
-        <translation type="vanished">$USERI1</translation>
-    </message>
-    <message>
-        <source>$USERI3</source>
-        <translation type="vanished">$USERI3</translation>
-    </message>
-    <message>
-        <source>$USERI5</source>
-        <translation type="vanished">$USERI5</translation>
-    </message>
-    <message>
-        <source>Variables</source>
-        <translation type="vanished">ຕົວປ່ຽນ</translation>
-    </message>
-    <message>
-        <source>Drawing&apos;s Variables</source>
-        <translation type="vanished">ຕົວປ່ຽນຂອງການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Note:&lt;/b&gt; changes of settings made during this invocation of the dialog may be not reflected.</source>
-        <translation type="vanished">&lt;b&gt;ໝາຍເຫດ:&lt;/b&gt; ການປ່ຽນແປງການຕັ້ງຄ່າທີ່ເຮັດໃນຂະນະເປີດກ່ອງໂຕ້ຕອບນີ້ອາດຈະບໍ່ສະແດງຜົນທັນທີ.</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">ຊື່</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">ລະຫັດ</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">ປະເພດ</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">ຄ່າ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="44"/>
         <source>Format</source>
         <translation>ຮູບແບບ</translation>
@@ -18962,17 +6604,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ຫົວໜ່ວຍການແຕ້ມ (Dwg Units)</translation>
     </message>
     <message>
-        <source>If selected, size will be calculated as percentage of current screen size</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຂະໜາດຈະຖືກຄິດໄລ່ເປັນເປີເຊັນຂອງຂະໜາດໜ້າຈໍປັດຈຸບັນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2629"/>
         <source>Size relative to screen</source>
         <translation>ຂະໜາດທຽບກັບໜ້າຈໍ</translation>
-    </message>
-    <message>
-        <source>Size will be defined in drawing units of current drawing</source>
-        <translation type="vanished">ຂະໜາດຈະຖືກກຳນົດເປັນຫົວໜ່ວຍການແຕ້ມຂອງຟາຍປັດຈຸບັນ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2642"/>
@@ -19228,174 +6862,14 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ການລົບຮອຍຢັກ (Anti-aliasing)</translation>
     </message>
     <message>
-        <source> px</source>
-        <translation type="vanished">px</translation>
-    </message>
-    <message>
-        <source>Line length:</source>
-        <translation type="vanished">ຄວາມຍາວເສັ້ນ:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ສະຫຼັບການຈັບແບບອິດສະຫຼະຊົ່ວຄາວເມື່ອກົດ Spacebar ໃນຂະນະທີ່ປ່ອງຄຳສັ່ງຖືກເປີດໃຊ້&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>Left  Isometric Grid</source>
-        <translation type="vanished">ຕາຕະລາງ Isometric ຊ້າຍ</translation>
-    </message>
-    <message>
-        <source>RIght Isometric Grid</source>
-        <translation type="vanished">ຕາຕະລາງ Isometric ຂວາ</translation>
-    </message>
-    <message>
-        <source>Orthogonal Grid</source>
-        <translation type="vanished">ຕາຕະລາງແບບຕັ້ງສາກ</translation>
-    </message>
-    <message>
-        <source>Top Isometric Grid</source>
-        <translation type="vanished">ຕາຕະລາງ Isometric ເທິງ</translation>
-    </message>
-    <message>
-        <source>Meta-grid</source>
-        <translation type="vanished">Meta-grid</translation>
-    </message>
-    <message>
-        <source>Marker Color:</source>
-        <translation type="vanished">ສີເຄື່ອງໝາຍ:</translation>
-    </message>
-    <message>
-        <source>Marker Radius:</source>
-        <translation type="vanished">ລັດສະໝີເຄື່ອງໝາຍ:</translation>
-    </message>
-    <message>
-        <source>Hide marker</source>
-        <translation type="vanished">ຊ່ອນເຄື່ອງໝາຍ</translation>
-    </message>
-    <message>
-        <source>Draw meta-grid</source>
-        <translation type="vanished">ແຕ້ມ meta-grid</translation>
-    </message>
-    <message>
-        <source>Draw grid</source>
-        <translation type="vanished">ແຕ້ມຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>Simple grid rendering</source>
-        <translation type="vanished">ການສະແດງຜົນຕາຕະລາງແບບງ່າຍ</translation>
-    </message>
-    <message>
-        <source>Active preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation type="vanished">ສີຂອງອົງປະກອບອະທິບາຍໃນການເບິ່ງຕົວຢ່າງທີ່ໃຊ້ງານຢູ່:</translation>
-    </message>
-    <message>
-        <source>Preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation type="vanished">ສີຂອງອົງປະກອບອະທິບາຍໃນການເບິ່ງຕົວຢ່າງ:</translation>
-    </message>
-    <message>
-        <source>&amp;Highlighted entity Color:</source>
-        <translation type="vanished">ສີຂອງອົງປະກອບທີ່&amp;ເນັ້ນ:</translation>
-    </message>
-    <message>
-        <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
-        <translation type="vanished">ເນັ້ນດ້ວຍຄວາມກວ້າງເສັ້ນໜ້າຈໍໃນໂໝດ &quot;ຮ່າງ (Draft)&quot;</translation>
-    </message>
-    <message>
-        <source>Explanatory Reference Point Size</source>
-        <translation type="vanished">ຂະໜາດຈຸດອ້າງອີງອະທິບາຍ</translation>
-    </message>
-    <message>
-        <source>Explanatory Reference Point Style</source>
-        <translation type="vanished">ຮູບແບບຈຸດອ້າງອີງອະທິບາຍ</translation>
-    </message>
-    <message>
-        <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
-        <translation type="vanished">ຖ້າເລືອກ, ມຸມຂອງສ່ວນເສັ້ນຈະຖືກຄິດໄລ່ເພື່ອໃຫ້ແນ່ໃຈວ່າ sagitta (ຄວາມສູງຂອງສ່ວນໂຄ້ງ) ມີຄ່ານ້ອຍກວ່າທີ່ກຳນົດ.</translation>
-    </message>
-    <message>
-        <source>If selected, the same rendering settings will be applied also to circles.</source>
-        <translation type="vanished">ຖ້າເລືອກ, ການຕັ້ງຄ່າການສະແດງຜົນແບບດຽວກັນຈະຖືກນຳໃຊ້ກັບວົງມົນດ້ວຍ.</translation>
-    </message>
-    <message>
-        <source>If checked, the icon for current action will be shown in options toolbar before action&apos;s options</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ໄອຄອນຂອງຄຳສັ່ງປັດຈຸບັນຈະສະແດງໃນແຖບເຄື່ອງມືຕົວເລືອກກ່ອນຕົວເລືອກຂອງຄຳສັ່ງນັ້ນ</translation>
-    </message>
-    <message>
-        <source>Show current command icon in options toolbar</source>
-        <translation type="vanished">ສະແດງໄອຄອນຄຳສັ່ງປັດຈຸບັນໃນແຖບເຄື່ອງມືຕົວເລືອກ</translation>
-    </message>
-    <message>
-        <source>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</source>
-        <translation type="vanished">ຖ້າເປີດໃຊ້, ລະຫັດ ID ພາຍໃນຂອງອົງປະກອບຈະສະແດງໃນກ່ອງຄຸນສົມບັດ ແລະ ວິດເຈັດຂໍ້ມູນອົງປະກອບ.</translation>
-    </message>
-    <message>
-        <source>Show internal IDs of entities</source>
-        <translation type="vanished">ສະແດງ ID ພາຍໃນຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ອົງປະກອບຈະຍັງຄົງຖືກເລືອກໄວ້ ຫຼັງຈາກສຳເລັດການດຳເນີນການແກ້ໄຂ (Modify). ຖ້າບໍ່ດັ່ງນັ້ນ, ພວກມັນຈະບໍ່ຖືກເລືອກ. </translation>
-    </message>
-    <message>
-        <source>Keep modified entities selected</source>
-        <translation type="vanished">ໃຫ້ອົງປະກອບທີ່ຖືກແກ້ໄຂຍັງຄົງຖືກເລືອກຢູ່</translation>
-    </message>
-    <message>
-        <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຂໍ້ຄວາມແນະນຳຄຳສັ່ງຈະສະແດງຢູ່ໃນແຖບສະຖານະດ້ານລຸ່ມນຳ</translation>
-    </message>
-    <message>
-        <source>Duplicate prompt messages of actions in statusbar</source>
-        <translation type="vanished">ສະແດງຂໍ້ຄວາມແນະນຳຄຳສັ່ງໃນແຖບສະຖານະ</translation>
-    </message>
-    <message>
-        <source>If checked, new drawing will be created with grid disabled</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ການແຕ້ມໃໝ່ຈະຖືກສ້າງໂດຍປິດຕາຕະລາງໄວ້</translation>
-    </message>
-    <message>
-        <source>Grid is Off </source>
-        <translation type="vanished">ປິດຕາຕະລາງ </translation>
-    </message>
-    <message>
-        <source>New Versions</source>
-        <translation type="vanished">ເວີຊັນໃໝ່</translation>
-    </message>
-    <message>
-        <source>Check GitHub for new releases of LibreCAD on program startup</source>
-        <translation type="vanished">ກວດສອບເວີຊັນໃໝ່ຂອງ LibreCAD ຈາກ GitHub ເມື່ອເລີ່ມໂປຣແກຣມ</translation>
-    </message>
-    <message>
-        <source>Check for new versions on startup</source>
-        <translation type="vanished">ກວດສອບເວີຊັນໃໝ່ເມື່ອເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
-        <source>If checked, pre-release versions will be ignored</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະບໍ່ສົນໃຈເວີຊັນທົດລອງ (pre-release)</translation>
-    </message>
-    <message>
-        <source>Ignore pre-release versions</source>
-        <translation type="vanished">ບໍ່ສົນໃຈເວີຊັນທົດລອງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1157"/>
         <source>Open last opened files</source>
         <translation>ເປີດຟາຍທີ່ໃຊ້ລ່າສຸດ</translation>
-    </message>
-    <message>
-        <source>If enabled, drop-down menus may become floating</source>
-        <translation type="vanished">ຖ້າເປີດໃຊ້, ເມນູລົງມາ (drop-down) ອາດຈະສາມາດລອຍໄດ້</translation>
-    </message>
-    <message>
-        <source>Allow menus detaching</source>
-        <translation type="vanished">ອະນຸຍາດໃຫ້ແຍກເມນູອອກໄດ້</translation>
-    </message>
-    <message>
-        <source>If unchecked, individual widgets of statusbar are toolbars</source>
-        <translation type="vanished">ຖ້າບໍ່ໝາຍເລືອກ, ແຕ່ລະວິດເຈັດໃນແຖບສະຖານະຈະເປັນແຖບເຄື່ອງມື</translation>
-    </message>
-    <message>
-        <source>Use &quot;classic&quot; statusbar</source>
-        <translation type="vanished">ໃຊ້ແຖບສະຖານະແບບ &quot;ຄລາສສິກ&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
@@ -19458,10 +6932,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>#1E90FF</translation>
     </message>
     <message>
-        <source>Select Color</source>
-        <translation type="vanished">ເລືອກສີ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="409"/>
         <source>Clear settings</source>
         <translation>ລ້າງການຕັ້ງຄ່າ</translation>
@@ -19470,26 +6940,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="410"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
         <translation>ອັນນີ້ຈະລວມເຖິງເມນູ ແລະ ແຖບເຄື່ອງມືທີ່ກຳນົດເອງນຳ. ຕ້ອງການດຳເນີນການຕໍ່ບໍ່?</translation>
-    </message>
-    <message>
-        <source>You must restart LibreCAD to see the changes.</source>
-        <translation type="vanished">ທ່ານຕ້ອງເລີ່ມ LibreCAD ໃໝ່ເພື່ອໃຫ້ເຫັນການປ່ຽນແປງ.</translation>
-    </message>
-    <message>
-        <source>Select Fonts Folder</source>
-        <translation type="vanished">ເລືອກໂຟນເດີຟອນ</translation>
-    </message>
-    <message>
-        <source>Select Translations Folder</source>
-        <translation type="vanished">ເລືອກໂຟນເດີການແປພາສາ</translation>
-    </message>
-    <message>
-        <source>Select Hatch Patterns Folder</source>
-        <translation type="vanished">ເລືອກໂຟນເດີຮູບແບບການແຮັດເງົາ (Hatch Patterns)</translation>
-    </message>
-    <message>
-        <source>Select Other Settings Folder</source>
-        <translation type="vanished">ເລືອກໂຟນເດີການຕັ້ງຄ່າອື່ນໆ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
@@ -19542,249 +6992,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ກັບທິດທາງການເລື່ອນເມື່ອໃຊ້ລໍ້ເມົາສ໌ຮ່ວມກັບປຸ່ມ Ctrl.</translation>
     </message>
     <message>
-        <source>&amp;Graphic View</source>
-        <translation type="vanished">ມຸມມອງ&amp;ກຣາຟິກ</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">ເກາະຈັບ</translation>
-    </message>
-    <message>
-        <source>If checked, snap indicator will be shown</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະສະແດງຕົວຊີ້ບອກການຈັບ (Snap indicator)</translation>
-    </message>
-    <message>
-        <source>Type of snap lines indicator</source>
-        <translation type="vanished">ປະເພດຂອງເສັ້ນຕົວຊີ້ບອກການຈັບ</translation>
-    </message>
-    <message>
-        <source>Adaptive</source>
-        <translation type="vanished">ປັບຕາມສະພາບ (Adaptive)</translation>
-    </message>
-    <message>
-        <source>Crosshair</source>
-        <translation type="vanished">ເສັ້ນເປົ້າເລັງ (Crosshair)</translation>
-    </message>
-    <message>
-        <source>Spiderweb</source>
-        <translation type="vanished">ໃຍແມງມຸມ (Spiderweb)</translation>
-    </message>
-    <message>
-        <source>Snap Indicator lines</source>
-        <translation type="vanished">ເສັ້ນຕົວຊີ້ບອກການຈັບ</translation>
-    </message>
-    <message>
-        <source>Color for snap lines indicator</source>
-        <translation type="vanished">ສີສຳລັບເສັ້ນຕົວຊີ້ບອກການຈັບ</translation>
-    </message>
-    <message>
-        <source>Click to select color</source>
-        <translation type="vanished">ຄລິກເພື່ອເລືອກສີ</translation>
-    </message>
-    <message>
-        <source>Line Type:</source>
-        <translation type="vanished">ປະເພດເສັ້ນ:</translation>
-    </message>
-    <message>
-        <source>Type of line to draw snap indicator</source>
-        <translation type="vanished">ປະເພດຂອງເສັ້ນທີ່ໃຊ້ແຕ້ມຕົວຊີ້ບອກການຈັບ</translation>
-    </message>
-    <message>
-        <source>Line Width</source>
-        <translation type="vanished">ຄວາມກວ້າງເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Width of line for snap indicator</source>
-        <translation type="vanished">ຄວາມກວ້າງຂອງເສັ້ນສຳລັບຕົວຊີ້ບອກການຈັບ</translation>
-    </message>
-    <message>
-        <source>If checked, a shap for snap will be drawn</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະແຕ້ມຮູບຮ່າງສຳລັບການຈັບ</translation>
-    </message>
-    <message>
-        <source>Snap Indicator shape</source>
-        <translation type="vanished">ຮູບຮ່າງຕົວຊີ້ບອກການຈັບ</translation>
-    </message>
-    <message>
-        <source>Type of snap indicator shape</source>
-        <translation type="vanished">ປະເພດຂອງຮູບຮ່າງຕົວຊີ້ບອກການຈັບ</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">ວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">ຈຸດ</translation>
-    </message>
-    <message>
-        <source>Square</source>
-        <translation type="vanished">ສີ່ຫຼ່ຽມ</translation>
-    </message>
-    <message>
-        <source>Gap</source>
-        <translation type="vanished">ຊ່ອງວ່າງ (Gap)</translation>
-    </message>
-    <message>
-        <source>Snap Indicator Color:</source>
-        <translation type="vanished">ສີຕົວຊີ້ບອກການຈັບ:</translation>
-    </message>
-    <message>
-        <source>Color for snap indicator shape</source>
-        <translation type="vanished">ສີສຳລັບຮູບຮ່າງຕົວຊີ້ບອກການຈັບ</translation>
-    </message>
-    <message>
-        <source>Angle snap single step</source>
-        <translation type="vanished">ການຈັບມຸມເທື່ອລະຂັ້ນ</translation>
-    </message>
-    <message>
-        <source>Angle between steps for Angle Snap (which is usually by corresponding actions if SHIFT is pressed)</source>
-        <translation type="vanished">ມຸມລະຫວ່າງຂັ້ນສຳລັບການຈັບມຸມ (ມັກຈະໃຊ້ເມື່ອກົດ Shift)</translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="vanished">1</translation>
-    </message>
-    <message>
-        <source>3</source>
-        <translation type="vanished">3</translation>
-    </message>
-    <message>
-        <source>5</source>
-        <translation type="vanished">5</translation>
-    </message>
-    <message>
-        <source>15</source>
-        <translation type="vanished">15</translation>
-    </message>
-    <message>
-        <source>30</source>
-        <translation type="vanished">30</translation>
-    </message>
-    <message>
-        <source>45</source>
-        <translation type="vanished">45</translation>
-    </message>
-    <message>
-        <source>90</source>
-        <translation type="vanished">90</translation>
-    </message>
-    <message>
-        <source>deg</source>
-        <translation type="vanished">deg</translation>
-    </message>
-    <message>
-        <source>If checked, cursor will be hidden during snapping</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ເຄີເຊີຈະຖືກຊ່ອນໃນຂະນະທຳການຈັບ</translation>
-    </message>
-    <message>
-        <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຕົວເລືອກການຈັບ (ຈຸດເຄິ່ງກາງ, ໄລຍະຫ່າງ) ຈະສະແດງໃນແຖບເຄື່ອງມືການຈັບ ແທນທີ່ແຖບເຄື່ອງມືຄຸນສົມບັດ</translation>
-    </message>
-    <message>
-        <source>Show snap options in Snap Selection Toolbar</source>
-        <translation type="vanished">ສະແດງຕົວເລືອກການຈັບໃນແຖບເຄື່ອງມືການເລືອກການຈັບ</translation>
-    </message>
-    <message>
-        <source>Entity Handle</source>
-        <translation type="vanished">ຈຸດຈັບອົງປະກອບ (Entity Handle)</translation>
-    </message>
-    <message>
-        <source>Size of square that is highlights entities reference points (endpoints etc.)</source>
-        <translation type="vanished">ຂະໜາດຂອງສີ່ຫຼ່ຽມທີ່ເນັ້ນຈຸດອ້າງອີງຂອງອົງປະກອບ (ຈຸດປາຍ ແລະ ອື່ນໆ)</translation>
-    </message>
-    <message>
-        <source>Color of end handle for entity</source>
-        <translation type="vanished">ສີຂອງຈຸດຈັບປາຍສຳລັບອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Color for start handle of entity</source>
-        <translation type="vanished">ສີສຳລັບຈຸດຈັບເລີ່ມຕົ້ນຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Color of non-endpoint handle of entity</source>
-        <translation type="vanished">ສີຂອງຈຸດຈັບທີ່ບໍ່ແມ່ນຈຸດປາຍຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Handle Size:</source>
-        <translation type="vanished">ຂະໜາດຈຸດຈັບ:</translation>
-    </message>
-    <message>
-        <source>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</source>
-        <translation type="vanished">ຖ້າເປີດໃຊ້, ຈຸດຈັບອົງປະກອບຈະຖືກເນັ້ນເມື່ອເອົາເມົາສ໌ໄປຈໍ່ (ຕ້ອງເປີດໃຊ້ &quot;ເນັ້ນອົງປະກອບເມື່ອເອົາເມົາສ໌ໄປຈໍ່&quot; ນຳ)</translation>
-    </message>
-    <message>
-        <source>Show entity handles on mouse hover</source>
-        <translation type="vanished">ສະແດງຈຸດຈັບອົງປະກອບເມື່ອເອົາເມົາສ໌ໄປຈໍ່</translation>
-    </message>
-    <message>
-        <source>Overlay Selection Box</source>
-        <translation type="vanished">ກ່ອງການເລືອກແບບທັບຊ້ອນ (Overlay Selection Box)</translation>
-    </message>
-    <message>
-        <source>Inverted Line Color:</source>
-        <translation type="vanished">ສີເສັ້ນແບບປີ້ນກັບ:</translation>
-    </message>
-    <message>
-        <source>Color of line for overlay selection box if box is inverted (from right to left)</source>
-        <translation type="vanished">ສີຂອງເສັ້ນກ່ອງເລືອກແບບທັບຊ້ອນ ຖ້າກ່ອງຖືກປີ້ນ (ຈາກຂວາຫາຊ້າຍ)</translation>
-    </message>
-    <message>
-        <source>Inverted Fill Color:</source>
-        <translation type="vanished">ສີເຕັມແບບປີ້ນກັບ:</translation>
-    </message>
-    <message>
-        <source>Color for filling inverted overlay selection box</source>
-        <translation type="vanished">ສີສຳລັບເຕີມໃນກ່ອງເລືອກແບບທັບຊ້ອນທີ່ຖືກປີ້ນ</translation>
-    </message>
-    <message>
-        <source>Fill Color:</source>
-        <translation type="vanished">ສີເຕີມ:</translation>
-    </message>
-    <message>
-        <source>Fill color for overlay selection box</source>
-        <translation type="vanished">ສີເຕີມສຳລັບກ່ອງເລືອກແບບທັບຊ້ອນ</translation>
-    </message>
-    <message>
-        <source>Line Color:</source>
-        <translation type="vanished">ສີເສັ້ນ:</translation>
-    </message>
-    <message>
-        <source>Color for line for overlay box</source>
-        <translation type="vanished">ສີສຳລັບເສັ້ນຂອງກ່ອງທັບຊ້ອນ</translation>
-    </message>
-    <message>
-        <source>Smaller value - higher transparency of overlay</source>
-        <translation type="vanished">ຄ່ານ້ອຍ - ຄວາມໂປ່ງໃສຂອງການທັບຊ້ອນຈະສູງ</translation>
-    </message>
-    <message>
-        <source>Transparency:</source>
-        <translation type="vanished">ຄວາມໂປ່ງໃສ:</translation>
-    </message>
-    <message>
-        <source>Transparency for overlay selection box. Smaller value - more transparent.</source>
-        <translation type="vanished">ຄວາມໂປ່ງໃສສຳລັບກ່ອງເລືອກແບບທັບຊ້ອນ. ຄ່ານ້ອຍ - ຍິ່ງໂປ່ງໃສ.</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="vanished">ທົ່ວໄປ</translation>
-    </message>
-    <message>
-        <source>If checked,  objects will be painted smoother due to anti-aliasing</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ອົງປະກອບຈະຖືກສະແດງຜົນໃຫ້ລຽບນຽນຂຶ້ນຍ້ອນການລົບຮອຍຢັກ (Anti-aliasing)</translation>
-    </message>
-    <message>
-        <source>If selected, drawing will be panned automatically if mouse is near drawing view boundaries</source>
-        <translation type="vanished">ຖ້າເລືອກ, ມຸມມອງການແຕ້ມຈະເລື່ອນອັດຕະໂນມັດຖ້າເມົາສ໌ຢູ່ໃກ້ຂອບເຂດມຸມມອງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1056"/>
         <source>Invert vertical scrolling direction</source>
         <translation>ກັບທິດທາງການເລື່ອນແນວຕັ້ງ</translation>
-    </message>
-    <message>
-        <source>Backgr&amp;ound Color:</source>
-        <translation type="vanished">ສີ&amp;ພື້ນຫຼັງ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1063"/>
@@ -19797,602 +7007,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ກັບທິດທາງການຊູມ</translation>
     </message>
     <message>
-        <source>Color for drawing background</source>
-        <translation type="vanished">ສີສຳລັບພື້ນຫຼັງການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If disabled, more sequental painting algorithm is used that may deliver better antialising results</source>
-        <translation type="vanished">ຖ້າປິດໃຊ້ງານ, ຈະໃຊ້ອັນກໍຣິທຶມການສະແດງຜົນແບບຕໍ່ເນື່ອງເຊິ່ງອາດຈະໃຫ້ຜົນການລົບຮອຍຢັກທີ່ດີກວ່າ</translation>
-    </message>
-    <message>
-        <source>Use Buffered (classic) rendering</source>
-        <translation type="vanished">ໃຊ້ການສະແດງຜົນແບບບັບເຟີ (ຄລາສສິກ)</translation>
-    </message>
-    <message>
-        <source>S&amp;elected Entity Color:</source>
-        <translation type="vanished">ສີຂອງອົງປະກອບທີ່&amp;ຖືກເລືອກ:</translation>
-    </message>
-    <message>
-        <source>Defines whether scrollbar should be shown in graphic view</source>
-        <translation type="vanished">ກຳນົດວ່າຄວນສະແດງແຖບເລື່ອນໃນມຸມມອງກຣາຟິກຫຼືບໍ່</translation>
-    </message>
-    <message>
-        <source>Color for selected entities</source>
-        <translation type="vanished">ສີສຳລັບອົງປະກອບທີ່ຖືກເລືອກ</translation>
-    </message>
-    <message>
-        <source>Default zoom factor:</source>
-        <translation type="vanished">ອັດຕາການຊູມເລີ່ມຕົ້ນ:</translation>
-    </message>
-    <message>
-        <source>Controls how quickly the scroll wheel will zoom in &amp; out. Higher values - faster zoom.</source>
-        <translation type="vanished">ຄວບຄຸມຄວາມໄວຂອງລໍ້ເມົາສ໌ໃນການຊູມເຂົ້າ-ອອກ. ຄ່າຍິ່ງສູງ - ຍິ່ງຊູມໄວ.</translation>
-    </message>
-    <message>
-        <source>On mouse wheel zoom, pan to the middle of the window.</source>
-        <translation type="vanished">ເມື່ອຊູມດ້ວຍລໍ້ເມົາສ໌, ໃຫ້ເລື່ອນມຸມມອງໄປທີ່ຈຸດໃຈກາງຂອງໜ້າຕ່າງ.</translation>
-    </message>
-    <message>
-        <source>Pan on wheel zoom</source>
-        <translation type="vanished">ເລື່ອນມຸມມອງເມື່ອຊູມດ້ວຍລໍ້ເມົາສ໌</translation>
-    </message>
-    <message>
-        <source>First time only pan</source>
-        <translation type="vanished">ເລື່ອນມຸມມອງສະເພາະຄັ້ງທຳອິດ</translation>
-    </message>
-    <message>
-        <source>Grid</source>
-        <translation type="vanished">ຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>Points Grid</source>
-        <translation type="vanished">ຕາຕະລາງແບບຈຸດ</translation>
-    </message>
-    <message>
-        <source>Color for grid points</source>
-        <translation type="vanished">ສີສຳລັບຈຸດຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>Type of Meta Grid line if grid is drawn as points</source>
-        <translation type="vanished">ປະເພດຂອງເສັ້ນ Meta Grid ຖ້າຕາຕະລາງຖືກແຕ້ມເປັນຈຸດ</translation>
-    </message>
-    <message>
-        <source>Width of Meta Grid line if grid is drawn by points</source>
-        <translation type="vanished">ຄວາມກວ້າງຂອງເສັ້ນ Meta Grid ຖ້າຕາຕະລາງຖືກແຕ້ມເປັນຈຸດ</translation>
-    </message>
-    <message>
-        <source>Line Type: </source>
-        <translation type="vanished">ປະເພດເສັ້ນ: </translation>
-    </message>
-    <message>
-        <source>Line Width:</source>
-        <translation type="vanished">ຄວາມກວ້າງເສັ້ນ:</translation>
-    </message>
-    <message>
-        <source>Color for Meta Grid lines if grid drawn by points</source>
-        <translation type="vanished">ສີສຳລັບເສັ້ນ Meta Grid ຖ້າຕາຕະລາງຖືກແຕ້ມເປັນຈຸດ</translation>
-    </message>
-    <message>
-        <source>&amp;Meta-grid Color:</source>
-        <translation type="vanished">ສີ &amp;Meta-grid:</translation>
-    </message>
-    <message>
-        <source>Lines Grid</source>
-        <translation type="vanished">ຕາຕະລາງແບບເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Width of grid lines</source>
-        <translation type="vanished">ຄວາມກວ້າງຂອງຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>Line type for grid lines</source>
-        <translation type="vanished">ປະເພດເສັ້ນສຳລັບຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>Color for grid lines</source>
-        <translation type="vanished">ສີສຳລັບຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>Type of Meta Grid lines if grid is drawn by lines</source>
-        <translation type="vanished">ປະເພດຂອງເສັ້ນ Meta Grid ຖ້າຕາຕະລາງຖືກແຕ້ມເປັນເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation type="vanished">ຄວາມກວ້າງຂອງເສັ້ນ Meta Grid ຖ້າຕາຕະລາງຖືກແຕ້ມເປັນເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation type="vanished">ສີຂອງ Meta Grid ຖ້າຕາຕະລາງຖືກແຕ້ມເປັນເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Axis Lines</source>
-        <translation type="vanished">ເສັ້ນແກນ (Axis Lines)</translation>
-    </message>
-    <message>
-        <source>Y-Axis Extension</source>
-        <translation type="vanished">ສ່ວນຂະຫຍາຍແກນ Y</translation>
-    </message>
-    <message>
-        <source>Short Axis Size</source>
-        <translation type="vanished">ຂະໜາດແກນແບບສັ້ນ</translation>
-    </message>
-    <message>
-        <source>X-Axis Extension</source>
-        <translation type="vanished">ສ່ວນຂະຫຍາຍແກນ X</translation>
-    </message>
-    <message>
-        <source>Color for X axis</source>
-        <translation type="vanished">ສີສຳລັບແກນ X</translation>
-    </message>
-    <message>
-        <source>If checked, axises will be inifinite lines</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ເສັ້ນແກນຈະເປັນເສັ້ນທີ່ຍາວບໍ່ມີທີ່ສິ້ນສຸດ</translation>
-    </message>
-    <message>
-        <source>Extend axis lines</source>
-        <translation type="vanished">ຂະຫຍາຍເສັ້ນແກນ</translation>
-    </message>
-    <message>
-        <source>Color for Y axis</source>
-        <translation type="vanished">ສີສຳລັບແກນ Y</translation>
-    </message>
-    <message>
-        <source>Y-Axis Color:</source>
-        <translation type="vanished">ສີແກນ Y:</translation>
-    </message>
-    <message>
-        <source>Defines how to draw extended Y axis</source>
-        <translation type="vanished">ກຳນົດວິທີການແຕ້ມສ່ວນຂະຫຍາຍແກນ Y</translation>
-    </message>
-    <message>
-        <source>Whole Area</source>
-        <translation type="vanished">ພື້ນທີ່ທັງໝົດ</translation>
-    </message>
-    <message>
-        <source>Positive Values Area</source>
-        <translation type="vanished">ພື້ນທີ່ຄ່າບວກ</translation>
-    </message>
-    <message>
-        <source>Negative Values Area</source>
-        <translation type="vanished">ພື້ນທີ່ຄ່າລົບ</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">ບໍ່ມີ</translation>
-    </message>
-    <message>
-        <source>Size of Axis Lines drawn in absolute zero point</source>
-        <translation type="vanished">ຂະໜາດຂອງເສັ້ນແກນທີ່ແຕ້ມໃນຈຸດສູນແທ້ຈິງ</translation>
-    </message>
-    <message>
-        <source>X-Axis Color:</source>
-        <translation type="vanished">ສີແກນ X:</translation>
-    </message>
-    <message>
-        <source>Defines how to draw extended X axis</source>
-        <translation type="vanished">ກຳນົດວິທີການແຕ້ມສ່ວນຂະຫຍາຍແກນ X</translation>
-    </message>
-    <message>
-        <source>Color of relative zero marker</source>
-        <translation type="vanished">ສີຂອງເຄື່ອງໝາຍສູນສຳພັນ (Relative zero marker)</translation>
-    </message>
-    <message>
-        <source>If checked, relative zero marker will not be drawn</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະບໍ່ແຕ້ມເຄື່ອງໝາຍສູນສຳພັນ</translation>
-    </message>
-    <message>
-        <source>Radius of relative zero marker</source>
-        <translation type="vanished">ລັດສະໝີຂອງເຄື່ອງໝາຍສູນສຳພັນ</translation>
-    </message>
-    <message>
-        <source>Grid General</source>
-        <translation type="vanished">ຕາຂ່າຍທົ່ວໄປ</translation>
-    </message>
-    <message>
-        <source>If checked, grid wil be drawn</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຕາຂ່າຍຈະຖືກແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If checked, grid will not be adjusted to current units of drawing</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຕາຂ່າຍຈະບໍ່ຖືກປັບໃຫ້ເຂົ້າກັບຫົວໜ່ວຍທີ່ໃຊ້ແຕ້ມໃນປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>Unitless grid</source>
-        <translation type="vanished">ຕາຂ່າຍບໍ່ມີຫົວໜ່ວຍ</translation>
-    </message>
-    <message>
-        <source>If checked, grid will not be drawn within view pan by mouse operation</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຕາຂ່າຍຈະບໍ່ຖືກແຕ້ມໃນຂະນະທີ່ເລື່ອນມຸມເບິ່ງ (pan) ດ້ວຍເມົາສ໌</translation>
-    </message>
-    <message>
-        <source>Don&apos;t draw grid on panning</source>
-        <translation type="vanished">ບໍ່ແຕ້ມຕາຂ່າຍໃນຂະນະເລື່ອນມຸມເບິ່ງ</translation>
-    </message>
-    <message>
-        <source>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ເສັ້ນເມຕາຕາຂ່າຍ (Meta Grid) ຈະຖືກແຕ້ມທັບເທິງຕາຂ່າຍ. ຕາຂ່າຍແບບທຳມະດາຈະໄວກວ່າ ແຕ່ການເບິ່ງເຫັນອາດຈະບໍ່ຊັດເຈນປານໃດ.</translation>
-    </message>
-    <message>
-        <source>Minimal spacing between grid until grid rescale</source>
-        <translation type="vanished">ໄລຍະຫ່າງຕ່ຳສຸດລະຫວ່າງຕາຂ່າຍ ກ່ອນທີ່ຈະມີການປັບຂະໜາດຕາຂ່າຍໃໝ່</translation>
-    </message>
-    <message>
-        <source>Points</source>
-        <translation type="vanished">ຈຸດ</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>If checked, the grid will be scalled automatically</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຕາຂ່າຍຈະຖືກປັບຂະໜາດໂດຍອັດຕະໂນມັດ</translation>
-    </message>
-    <message>
-        <source>&amp;Grid type:</source>
-        <translation type="vanished">&amp;ຊະນິດຕາຂ່າຍ:</translation>
-    </message>
-    <message>
-        <source>If checked, metagrid will be drawn as part of grid drawing.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ເມຕາຕາຂ່າຍຈະຖືກແຕ້ມເປັນສ່ວນໜຶ່ງຂອງການແຕ້ມຕາຂ່າຍ.</translation>
-    </message>
-    <message>
-        <source>If unchecked, vertical line will not be drawn for &quot;Top&quot; isometric view</source>
-        <translation type="vanished">ຖ້າບໍ່ໝາຍເລືອກ, ເສັ້ນຕັ້ງຈະບໍ່ຖືກແຕ້ມສຳລັບມຸມເບິ່ງໄອໂຊເມຕຣິກ &quot;ເທິງ&quot;</translation>
-    </message>
-    <message>
-        <source>Draw vertical lines for &quot;Top&quot; isometric grid</source>
-        <translation type="vanished">ແຕ້ມເສັ້ນຕັ້ງສຳລັບຕາຂ່າຍໄອໂຊເມຕຣິກ &quot;ເທິງ&quot;</translation>
-    </message>
-    <message>
-        <source>&amp;Preview</source>
-        <translation type="vanished">&amp;ເບິ່ງຕົວຢ່າງ</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="vanished">ເບິ່ງຕົວຢ່າງ</translation>
-    </message>
-    <message>
-        <source>If checked, more informative and explaining preview will be drawn for operations</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະມີການແຕ້ມຕົວຢ່າງທີ່ໃຫ້ຂໍ້ມູນ ແລະ ຄຳອະທິບາຍເພີ່ມເຕີມສຳລັບການປະຕິບັດງານຕ່າງໆ</translation>
-    </message>
-    <message>
-        <source>If more entities in preview than specified, rect will be drawn instead of entities.</source>
-        <translation type="vanished">ຖ້າມີອົງປະກອບ (entities) ໃນການເບິ່ງຕົວຢ່າງຫຼາຍກວ່າທີ່ກຳນົດ, ຈະມີການແຕ້ມຮູບສີ່ແຈສາກແທນທີ່ອົງປະກອບ.</translation>
-    </message>
-    <message>
-        <source>Color for selected preview reference entiites</source>
-        <translation type="vanished">ສີສຳລັບອົງປະກອບອ້າງອີງໃນການເບິ່ງຕົວຢ່າງທີ່ຖືກເລືອກ</translation>
-    </message>
-    <message>
-        <source>Color for preview reference entities</source>
-        <translation type="vanished">ສີສຳລັບອົງປະກອບອ້າງອີງໃນການເບິ່ງຕົວຢ່າງ</translation>
-    </message>
-    <message>
-        <source>Highlight</source>
-        <translation type="vanished">ເນັ້ນ</translation>
-    </message>
-    <message>
-        <source>Visualize the entity under the mouse cursor</source>
-        <translation type="vanished">ສະແດງໃຫ້ເຫັນອົງປະກອບທີ່ຢູ່ໃຕ້ເຄີເຊີເມົາສ໌</translation>
-    </message>
-    <message>
-        <source>Highlight entities on mouse hover</source>
-        <translation type="vanished">ເນັ້ນອົງປະກອບເມື່ອເມົາສ໌ຊີໃສ່</translation>
-    </message>
-    <message>
-        <source>Color for highlighted entities</source>
-        <translation type="vanished">ສີສຳລັບອົງປະກອບທີ່ຖືກເນັ້ນ</translation>
-    </message>
-    <message>
-        <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
-        <translation type="vanished">ຖ້າເລືອກ, ອົງປະກອບຈະຖືກເນັ້ນໃນໂໝດ &quot;ຮ່າງ&quot; (Draft) ໂດຍໃຊ້ຄວາມໜາເສັ້ນຂອງອົງປະກອບນັ້ນເອງ ແທນທີ່ຈະເປັນ 1px</translation>
-    </message>
-    <message>
-        <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation type="vanished">(0 =&gt; 5% ທຽບກັບຂະໜາດໜ້າຈໍ)</translation>
-    </message>
-    <message>
-        <source>Size of reference points</source>
-        <translation type="vanished">ຂະໜາດຂອງຈຸດອ້າງອີງ</translation>
-    </message>
-    <message>
-        <source>Show operation&apos;s preview explanatory entities </source>
-        <translation type="vanished">ສະແດງອົງປະກອບອະທິບາຍໃນການເບິ່ງຕົວຢ່າງການປະຕິບັດງານ </translation>
-    </message>
-    <message>
-        <source>Dwg Units</source>
-        <translation type="vanished">ຫົວໜ່ວຍການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Size relative to screen</source>
-        <translation type="vanished">ຂະໜາດທຽບກັບໜ້າຈໍ</translation>
-    </message>
-    <message>
-        <source>Size in drawing units</source>
-        <translation type="vanished">ຂະໜາດໃນຫົວໜ່ວຍການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Rendering Minimums</source>
-        <translation type="vanished">ຄ່າຕ່ຳສຸດຂອງການສະແດງຜົນ</translation>
-    </message>
-    <message>
-        <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
-        <translation type="vanished">ຖ້າຄວາມສູງຂອງແຖວຂໍ້ຄວາມເທິງໜ້າຈໍໜ້ອຍກວ່າພິກເຊລທີ່ກຳນົດ, ຈະມີການແຕ້ມຕົວຍຶດຕຳແໜ່ງ (placeholder) ແທນຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Height of text line:</source>
-        <translation type="vanished">ຄວາມສູງຂອງແຖວຂໍ້ຄວາມ:</translation>
-    </message>
-    <message>
-        <source>Ellipse Major Axis:</source>
-        <translation type="vanished">ແກນເອກຂອງຮູບວົງມົນຮີ:</translation>
-    </message>
-    <message>
-        <source>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</source>
-        <translation type="vanished">ຖ້າຂະໜາດໜ້າຈໍຂອງແກນໂທຮູບວົງມົນຮີໜ້ອຍກວ່າຄ່ານີ້, ຮູບວົງມົນຮີຈະຖືກແຕ້ມເປັນເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>If screen length of line is less than value, the line is drawn as point</source>
-        <translation type="vanished">ຖ້າຄວາມຍາວໜ້າຈໍຂອງເສັ້ນໜ້ອຍກວ່າຄ່ານີ້, ເເສັ້ນຈະຖືກແຕ້ມເປັນຈຸດ</translation>
-    </message>
-    <message>
-        <source>If screen radius of circle is less than value, circle is drawn as point</source>
-        <translation type="vanished">ຖ້າລັດສະໝີໜ້າຈໍຂອງວົງມົນໜ້ອຍກວ່າຄ່ານີ້, ວົງມົນຈະຖືກແຕ້ມເປັນຈຸດ</translation>
-    </message>
-    <message>
-        <source>Circle Radius:</source>
-        <translation type="vanished">ລັດສະໝີວົງມົນ:</translation>
-    </message>
-    <message>
-        <source>Arc Radius:</source>
-        <translation type="vanished">ລັດສະໝີເສັ້ນໂຄ້ງ:</translation>
-    </message>
-    <message>
-        <source>If screen radius of arc is less than value, arc is drawn as point</source>
-        <translation type="vanished">ຖ້າລັດສະໝີໜ້າຈໍຂອງເສັ້ນໂຄ້ງໜ້ອຍກວ່າຄ່ານີ້, ເສັ້ນໂຄ້ງຈະຖືກແຕ້ມເປັນຈຸດ</translation>
-    </message>
-    <message>
-        <source>Ellipse Minor Axis:</source>
-        <translation type="vanished">ແກນໂທຂອງຮູບວົງມົນຮີ:</translation>
-    </message>
-    <message>
-        <source>If screen size for major ellipse axis is less than value, ellipse is drawn as point</source>
-        <translation type="vanished">ຖ້າຂະໜາດໜ້າຈໍສຳລັບແກນເອກຮູບວົງມົນຮີໜ້ອຍກວ່າຄ່ານີ້, ຮູບວົງມົນຮີຈະຖືກແຕ້ມເປັນຈຸດ</translation>
-    </message>
-    <message>
-        <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະມີການແຕ້ມເສັ້ນຖານຂອງຂໍ້ຄວາມ ແທນທີ່ຈະເປັນຕົວອັກສອນ (ຄ້າຍຄືກັບໂໝດຮ່າງ) ໃນລະຫວ່າງການເລື່ອນມຸມມອງ. </translation>
-    </message>
-    <message>
-        <source>Draw text as draft within paning operations</source>
-        <translation type="vanished">ແຕ້ມຂໍ້ຄວາມເປັນແບບຮ່າງໃນຂະນະເລື່ອນມຸມເບິ່ງ</translation>
-    </message>
-    <message>
-        <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະມີການແຕ້ມເສັ້ນຖານຂອງຂໍ້ຄວາມ ແທນທີ່ຈະເປັນຕົວອັກສອນ (ຄ້າຍຄືກັບໂໝດຮ່າງ) ໃນການສະແດງຕົວຢ່າງ. </translation>
-    </message>
-    <message>
-        <source>Draw text as draft in preview</source>
-        <translation type="vanished">ແຕ້ມຂໍ້ຄວາມເປັນແບບຮ່າງໃນການເບິ່ງຕົວຢ່າງ</translation>
-    </message>
-    <message>
-        <source>Info Cursor</source>
-        <translation type="vanished">ເຄີເຊີຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>Informational Cursor Overlay </source>
-        <translation type="vanished">ການສະແດງຂໍ້ມູນເທິງເຄີເຊີ </translation>
-    </message>
-    <message>
-        <source>Appearance</source>
-        <translation type="vanished">ຮູບລັກສະນະ</translation>
-    </message>
-    <message>
-        <source>Font that should be used for drawing elements of informational cursor.</source>
-        <translation type="vanished">ຟອນທີ່ຄວນໃຊ້ສຳລັບການແຕ້ມອົງປະກອບຂອງເຄີເຊີຂໍ້ມູນ.</translation>
-    </message>
-    <message>
-        <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ສ່ວນປະກອບຂອງພິກັດຈະຖືກແຕ້ມຢູ່ໃນເສັ້ນດຽວກັນ. ຖ້າບໍ່ດັ່ງນັ້ນ, ແຕ່ລະສ່ວນປະກອບຈະຢູ່ຄົນລະເສັ້ນ. </translation>
-    </message>
-    <message>
-        <source>Draw coordinates in one line</source>
-        <translation type="vanished">ແຕ້ມພິກັດໃນແຖວດຽວ</translation>
-    </message>
-    <message>
-        <source>Font:</source>
-        <translation type="vanished">ຟອນ:</translation>
-    </message>
-    <message>
-        <source>If checked, labels for coordinate components will be shown. Otherwise, standard form of coordinates will be displayed.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະສະແດງປ້າຍຊື່ສຳລັບສ່ວນປະກອບຂອງພິກັດ. ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະສະແດງໃນຮູບແບບພິກັດມາດຕະຖານ.</translation>
-    </message>
-    <message>
-        <source>Show labels for coordinates</source>
-        <translation type="vanished">ສະແດງປ້າຍຊື່ສຳລັບພິກັດ</translation>
-    </message>
-    <message>
-        <source>Font size, in points</source>
-        <translation type="vanished">ຂະໜາດຟອນ, ເປັນພອຍ (pt)</translation>
-    </message>
-    <message>
-        <source> pt</source>
-        <translation type="vanished">pt</translation>
-    </message>
-    <message>
-        <source>Font size:</source>
-        <translation type="vanished">ຂະໜາດຟອນ:</translation>
-    </message>
-    <message>
-        <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, &quot;Snap To Grid&quot; (ເກາະຈັບຕາຂ່າຍ) ຈະຖືກລະເລີຍ ຖ້າຕາຂ່າຍບໍ່ໄດ້ຖືກແຕ້ມ.</translation>
-    </message>
-    <message>
-        <source>Ignore &quot;Snap to Grid&quot; if grid is not drawn</source>
-        <translation type="vanished">ລະເລີຍ &quot;Snap to Grid&quot; ຖ້າບໍ່ໄດ້ແຕ້ມຕາຂ່າຍ</translation>
-    </message>
-    <message>
-        <source>Offset of labels from the cursor point.</source>
-        <translation type="vanished">ໄລຍະຫ່າງ (offset) ຂອງປ້າຍຊື່ຈາກຈຸດເຄີເຊີ.</translation>
-    </message>
-    <message>
-        <source>Cursor position offset:</source>
-        <translation type="vanished">ໄລຍະຫ່າງຕຳແໜ່ງເຄີເຊີ:</translation>
-    </message>
-    <message>
-        <source>If checked, informational cursor will be enabled and shown where applicable.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະເປີດໃຊ້ເຄີເຊີຂໍ້ມູນ ແລະ ສະແດງໃນບ່ອນທີ່ສາມາດໃຊ້ໄດ້.</translation>
-    </message>
-    <message>
-        <source>Enable Informational Cursor</source>
-        <translation type="vanished">ເປີດໃຊ້ເຄີເຊີຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>Operations Preview</source>
-        <translation type="vanished">ເບິ່ງຕົວຢ່າງການປະຕິບັດງານ</translation>
-    </message>
-    <message>
-        <source>Show properties for entity that will be created</source>
-        <translation type="vanished">ສະແດງຄຸນສົມບັດສຳລັບອົງປະກອບທີ່ຈະຖືກສ້າງຂຶ້ນ</translation>
-    </message>
-    <message>
-        <source>Show properties for entity that is edited by handles</source>
-        <translation type="vanished">ສະແດງຄຸນສົມບັດສຳລັບອົງປະກອບທີ່ກຳລັງຖືກແກ້ໄຂດ້ວຍຈຸດຈັບ (handles)</translation>
-    </message>
-    <message>
-        <source>Content</source>
-        <translation type="vanished">ເນື້ອໃນ</translation>
-    </message>
-    <message>
-        <source>Color for absolute snap coordinates.</source>
-        <translation type="vanished">ສີສຳລັບພິກັດເກາະຈັບ ແບບແທ້ຈິງ.</translation>
-    </message>
-    <message>
-        <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະສະແດງໄລຍະຫ່າງ ແລະ ມຸມທຽບຈາກຈຸດສູນທຽບ ໄປຫາຈຸດເກາະຈັບ (snap point).</translation>
-    </message>
-    <message>
-        <source>Show relative distance and angle</source>
-        <translation type="vanished">ສະແດງໄລຍະຫ່າງ ແລະ ມຸມທຽບ</translation>
-    </message>
-    <message>
-        <source>Color for snap type/restriction</source>
-        <translation type="vanished">ສີສຳລັບຊະນິດ/ຂໍ້ຈຳກັດເກາະຈັບ</translation>
-    </message>
-    <message>
-        <source>If checked, the prompt of the active command will be shown.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະສະແດງຄຳແນະນຳ (prompt) ຂອງຄຳສັ່ງທີ່ກຳລັງໃຊ້ງານຢູ່.</translation>
-    </message>
-    <message>
-        <source>Show active command prompt</source>
-        <translation type="vanished">ສະແດງຄຳແນະນຳຄຳສັ່ງທີ່ໃຊ້ງານຢູ່</translation>
-    </message>
-    <message>
-        <source>If checked, show relative coordinate</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະສະແດງພິກັດທຽບ</translation>
-    </message>
-    <message>
-        <source>Show relative coordinate</source>
-        <translation type="vanished">ສະແດງພິກັດສຳພັນ</translation>
-    </message>
-    <message>
-        <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະສະແດງຂໍ້ມູນກ່ຽວກັບຊະນິດຂອງເກາະຈັບ ແລະ ຂໍ້ຈຳກັດສຳລັບຈຸດເກາະຈັບ (ຖ້າມີ)</translation>
-    </message>
-    <message>
-        <source>Show snap info /restriction</source>
-        <translation type="vanished">ສະແດງຂໍ້ມູນ/ຂໍ້ຈຳກັດເກາະຈັບ</translation>
-    </message>
-    <message>
-        <source>Color for the command prompt</source>
-        <translation type="vanished">ສີສຳລັບຄຳແນະນຳຄຳສັ່ງ</translation>
-    </message>
-    <message>
-        <source>Color for relative distance and angle</source>
-        <translation type="vanished">ສີສຳລັບໄລຍະຫ່າງ ແລະ ມຸມທຽບ</translation>
-    </message>
-    <message>
-        <source>If checked, absolute position of snap point will be shown.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຈະສະແດງຕຳແໜ່ງແທ້ຈິງຂອງຈຸດເກາະຈັບ.</translation>
-    </message>
-    <message>
-        <source>Show absolute coordinate</source>
-        <translation type="vanished">ສະແດງພິກັດແທ້ຈິງ</translation>
-    </message>
-    <message>
-        <source>If checked, name of active command will be shown before command prompt</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຊື່ຂອງຄຳສັ່ງທີ່ໃຊ້ງານຢູ່ຈະຖືກສະແດງກ່ອນຄຳແນະນຳຄຳສັ່ງ</translation>
-    </message>
-    <message>
-        <source>Show active command name</source>
-        <translation type="vanished">ສະແດງຊື່ຄຳສັ່ງທີ່ໃຊ້ງານຢູ່</translation>
-    </message>
-    <message>
-        <source>If checked, short overview properties of the entity&apos;s that is catched for selection will be shown. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະສະແດງຄຸນສົມບັດແບບຫຍໍ້ຂອງອົງປະກອບທີ່ຖືກຈັບ (catch) ເພື່ອເລືອກ. </translation>
-    </message>
-    <message>
-        <source>Show properties of catched entity</source>
-        <translation type="vanished">ສະແດງຄຸນສົມບັດຂອງອົງປະກອບທີ່ຖືກຈັບ</translation>
-    </message>
-    <message>
-        <source>Modify layer of selected entities, at layer activation</source>
-        <translation type="vanished">ແກ້ໄຂເລເຢີຂອງອົງປະກອບທີ່ເລືອກ ເມື່ອມີການເປີດໃຊ້ເລເຢີ</translation>
-    </message>
-    <message>
-        <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ປຸ່ມກາກະບາດປິດຈະຖືກສະແດງໃນແທັບຂອງການແຕ້ມ ຖ້າການແຕ້ມຢູ່ໃນໂໝດແທັບ (Tab mode)</translation>
-    </message>
-    <message>
-        <source>Show Close button on drawings tabs</source>
-        <translation type="vanished">ສະແດງປຸ່ມປິດໃນແທັບການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Always</source>
-        <translation type="vanished">ສະເໝີ</translation>
-    </message>
-    <message>
-        <source>Active Tab</source>
-        <translation type="vanished">ແທັບທີ່ໃຊ້ງານຢູ່</translation>
-    </message>
-    <message>
-        <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຄີລັດຄີບອດຈະຖືກສະແດງໃນ Tooltip ຂອງການກະທຳ</translation>
-    </message>
-    <message>
-        <source>Show keyboard shortcuts in actions tooltips</source>
-        <translation type="vanished">ສະແດງຄີລັດຄີບອດໃນ Tooltip ຂອງການກະທຳ</translation>
-    </message>
-    <message>
-        <source>Auto save backup each</source>
-        <translation type="vanished">ບັນທຶກສຳຮອງອັດຕະໂນມັດທຸກໆ</translation>
-    </message>
-    <message>
-        <source>If checked, location of dialog will not be saved, but size will</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຕຳແໜ່ງຂອງກ່ອງໂຕ້ຕອບຈະບໍ່ຖືກບັນທຶກ ແຕ່ຂະໜາດຈະຖືກບັນທຶກ</translation>
-    </message>
-    <message>
-        <source>Persist dialog size only</source>
-        <translation type="vanished">ຄົງຄ່າສະເພາະຂະໜາດກ່ອງໂຕ້ຕອບ</translation>
-    </message>
-    <message>
-        <source> minutes</source>
-        <translation type="vanished">minutes</translation>
-    </message>
-    <message>
-        <source>If checked, dialogs will be positioned and resized to position/size of last invocation.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ກ່ອງໂຕ້ຕອບຈະຖືກຈັດຕຳແໜ່ງ ແລະ ປັບຂະໜາດຕາມຕຳແໜ່ງ/ຂະໜາດຂອງການໃຊ້ງານຄັ້ງລ່າສຸດ.</translation>
-    </message>
-    <message>
-        <source>Persistent dialogs location and size</source>
-        <translation type="vanished">ຄົງຄ່າຕຳແໜ່ງ ແລະ ຂະໜາດກ່ອງໂຕ້ຕອບ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1228"/>
         <source>Keyboard Settings</source>
         <translation>ການຕັ້ງຄ່າຄີບອດ</translation>
@@ -20403,521 +7017,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ປະມວນຜົນຄຳສັ່ງເມື່ອກົດ SPACE BAR</translation>
     </message>
     <message>
-        <source>Drawing units</source>
-        <translation type="vanished">ຫົວໜ່ວຍການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Languages for commands in Cmd Widget</source>
-        <translation type="vanished">ພາສາສຳລັບຄຳສັ່ງໃນ Cmd Widget</translation>
-    </message>
-    <message>
-        <source>Language to use for GUI and messages</source>
-        <translation type="vanished">ພາສາທີ່ຈະໃຊ້ສຳລັບ GUI ແລະ ຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Defines whether splash screen will be shown on startup</source>
-        <translation type="vanished">ກຳນົດວ່າຈະສະແດງໜ້າຈໍເລີ່ມຕົ້ນ (splash screen) ເມື່ອເປີດໂປຣແກຣມຫຼືບໍ່</translation>
-    </message>
-    <message>
-        <source>Controls default mode for drawings</source>
-        <translation type="vanished">ຄວບຄຸມໂໝດເລີ່ມຕົ້ນສຳລັບການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If checked, after start the main window will be maximized</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ຫຼັງຈາກເລີ່ມຕົ້ນ ໜ້າຕ່າງຫຼັກຈະຖືກຂະຫຍາຍໃຫ້ເຕັມຈໍ</translation>
-    </message>
-    <message>
-        <source>Angle Snap</source>
-        <translation type="vanished">ເກາະຈັບມຸມ</translation>
-    </message>
-    <message>
-        <source>10</source>
-        <translation type="vanished">10</translation>
-    </message>
-    <message>
-        <source>18</source>
-        <translation type="vanished">18</translation>
-    </message>
-    <message>
-        <source>22.5</source>
-        <translation type="vanished">22.5</translation>
-    </message>
-    <message>
-        <source>Mark Radius:</source>
-        <translation type="vanished">ລັດສະໝີເຄື່ອງໝາຍ:</translation>
-    </message>
-    <message>
-        <source>Background and Selection</source>
-        <translation type="vanished">ພື້ນຫຼັງ ແລະ ການເລືອກ</translation>
-    </message>
-    <message>
-        <source>Draft Mode Marker</source>
-        <translation type="vanished">ເຄື່ອງໝາຍໂໝດຮ່າງ</translation>
-    </message>
-    <message>
-        <source>Font that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation type="vanished">ຟອນທີ່ຄວນໃຊ້ສຳລັບການແຕ້ມຊື່ແກນໃນລະບົບພິກັດຈຸດສູນ.</translation>
-    </message>
-    <message>
-        <source>Font size that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation type="vanished">ຂະໜາດຟອນທີ່ຄວນໃຊ້ສຳລັບການແຕ້ມຊື່ແກນໃນລະບົບພິກັດຈຸດສູນ.</translation>
-    </message>
-    <message>
-        <source>If selected, marker for coodinate system will be shown in zero point of current user coordinates system. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະສະແດງເຄື່ອງໝາຍລະບົບພິກັດຢູ່ທີ່ຈຸດສູນຂອງລະບົບພິກັດຜູ້ໃຊ້ປັດຈຸບັນ. </translation>
-    </message>
-    <message>
-        <source>Show Draft mode marker</source>
-        <translation type="vanished">ສະແດງເຄື່ອງໝາຍໂໝດຮ່າງ</translation>
-    </message>
-    <message>
-        <source>Font that should be used for draft mode marker</source>
-        <translation type="vanished">ຟອນທີ່ຄວນໃຊ້ສຳລັບເຄື່ອງໝາຍໂໝດຮ່າງ</translation>
-    </message>
-    <message>
-        <source>If selected, in draft mode text label will be drawin in view corners</source>
-        <translation type="vanished">ຖ້າເລືອກ, ໃນໂໝດຮ່າງ ປ້າຍຂໍ້ຄວາມຈະຖືກແຕ້ມຢູ່ມຸມຂອງມຸມເບິ່ງ</translation>
-    </message>
-    <message>
-        <source>Coordinates Zero Marker</source>
-        <translation type="vanished">ເຄື່ອງໝາຍຈຸດສູນຂອງພິກັດ</translation>
-    </message>
-    <message>
-        <source>Marker Size</source>
-        <translation type="vanished">ຂະໜາດເຄື່ອງໝາຍ</translation>
-    </message>
-    <message>
-        <source>Size of axis of coordinate system&apos;s zero marker</source>
-        <translation type="vanished">ຂະໜາດແກນຂອງເຄື່ອງໝາຍຈຸດສູນໃນລະບົບພິກັດ</translation>
-    </message>
-    <message>
-        <source>If selected and view is in user coordinate system, the marker for coodinate system will be shown in zero point of world coordinates system. </source>
-        <translation type="vanished">ຖ້າເລືອກ ແລະ ມຸມມອງຢູ່ໃນລະບົບພິກັດຜູ້ໃຊ້, ເຄື່ອງໝາຍລະບົບພິກັດຈະຖືກສະແດງຢູ່ທີ່ຈຸດສູນຂອງລະບົບພິກັດໂລກ (world coordinates system). </translation>
-    </message>
-    <message>
-        <source>Show WCS zero marker</source>
-        <translation type="vanished">ສະແດງເຄື່ອງໝາຍຈຸດສູນ WCS</translation>
-    </message>
-    <message>
-        <source>Show UCS zero marker</source>
-        <translation type="vanished">ສະແດງເຄື່ອງໝາຍຈຸດສູນ UCS</translation>
-    </message>
-    <message>
-        <source>Angles Basis Marker</source>
-        <translation type="vanished">ເຄື່ອງໝາຍພື້ນຖານມຸມ</translation>
-    </message>
-    <message>
-        <source>Coordinate System</source>
-        <translation type="vanished">ລະບົບພິກັດ</translation>
-    </message>
-    <message>
-        <source>Only for non-defaults</source>
-        <translation type="vanished">ສະເພາະທີ່ບໍ່ແມ່ນຄ່າເລີ່ມຕົ້ນເທົ່ານັ້ນ</translation>
-    </message>
-    <message>
-        <source>Show angles basis marker</source>
-        <translation type="vanished">ສະແດງເຄື່ອງໝາຍພື້ນຖານມຸມ</translation>
-    </message>
-    <message>
-        <source>Base Angle Ray Color:</source>
-        <translation type="vanished">ສີລັດສະໝີມຸມພື້ນຖານ:</translation>
-    </message>
-    <message>
-        <source>#017CFF</source>
-        <translation type="vanished">#017CFF</translation>
-    </message>
-    <message>
-        <source>#00FFFF</source>
-        <translation type="vanished">#00FFFF</translation>
-    </message>
-    <message>
-        <source>Relative Zero Marker</source>
-        <translation type="vanished">ເຄື່ອງໝາຍຈຸດສູນທຽບ</translation>
-    </message>
-    <message>
-        <source>Behavior</source>
-        <translation type="vanished">ພຶດຕິກຳ</translation>
-    </message>
-    <message>
-        <source>Type of grid to be drawn</source>
-        <translation type="vanished">ຊະນິດຕາຂ່າຍທີ່ຈະຖືກແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Decimal meta-grid every:</source>
-        <translation type="vanished">ເມຕາຕາຂ່າຍທົດສະນິຍົມທຸກໆ:</translation>
-    </message>
-    <message>
-        <source>Controls the frequency of major grid lines compared to minor grid lines.</source>
-        <translation type="vanished">ຄວບຄຸມຄວາມຖີ່ຂອງເສັ້ນຕາຂ່າຍຫຼັກ ເມື່ອທຽບກັບເສັ້ນຕາຂ່າຍຍ່ອຍ.</translation>
-    </message>
-    <message>
-        <source>Radius of arc within angle snap mark.</source>
-        <translation type="vanished">ລັດສະໝີຂອງເສັ້ນໂຄ້ງພາຍໃນເຄື່ອງໝາຍເກາະຈັບມຸມ.</translation>
-    </message>
-    <message>
-        <source>Snap Marker</source>
-        <translation type="vanished">ເຄື່ອງໝາຍເກາະຈັບ (Snap)</translation>
-    </message>
-    <message>
-        <source>Advanced Snap Fine-tuning settings</source>
-        <translation type="vanished">ການຕັ້ງຄ່າການປັບແຕ່ງລະອຽດສຳລັບເກາະຈັບ</translation>
-    </message>
-    <message>
-        <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
-        <translation type="vanished">ສະວິດໄລຍະຫ່າງ &quot;Free snap&quot; ເມື່ອເກາະຈັບອົງປະກອບ:</translation>
-    </message>
-    <message>
-        <source>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</source>
-        <translation type="vanished">ເກາະຈັບອົງປະກອບຈະຖືກໃຊ້ງານ ຖ້າມັນຖືກເປີດໃຊ້ ແລະ ໄລຍະຫ່າງລະຫວ່າງເມົາສ໌ກັບຈຸດທີ່ຈະເກາະຈັບນັ້ນ ໃຫຍ່ກວ່າຄ່າທີ່ກຳນົດ.</translation>
-    </message>
-    <message>
-        <source> drawing units</source>
-        <translation type="vanished"> ຫົວໜ່ວຍການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Distance in screen coordinates that is used for catching entities </source>
-        <translation type="vanished">ໄລຍະຫ່າງໃນພິກັດໜ້າຈໍທີ່ໃຊ້ສຳລັບການຈັບອົງປະກອບ </translation>
-    </message>
-    <message>
-        <source>Min grid cell snap factor:</source>
-        <translation type="vanished">ປັດໄຈເກາະຈັບຫ້ອງຕາຂ່າຍຕ່ຳສຸດ:</translation>
-    </message>
-    <message>
-        <source>Snap distance (in pixels) for catching entities.</source>
-        <translation type="vanished">ໄລຍະຫ່າງເກາະຈັບ (ເປັນພິກເຊລ) ສຳລັບການຈັບອົງປະກອບ.</translation>
-    </message>
-    <message>
-        <source>Catch entities Snap Distance:</source>
-        <translation type="vanished">ໄລຍະຫ່າງເກາະຈັບເພື່ອຈັບອົງປະກອບ:</translation>
-    </message>
-    <message>
-        <source>Grid cell factor used for snap to grid.</source>
-        <translation type="vanished">ປັດໄຈຫ້ອງຕາຂ່າຍທີ່ໃຊ້ສຳລັບເກາະຈັບຕາຂ່າຍ.</translation>
-    </message>
-    <message>
-        <source>Color of the marker</source>
-        <translation type="vanished">ສີຂອງເຄື່ອງໝາຍ</translation>
-    </message>
-    <message>
-        <source>Defines where to draw angle basis marker</source>
-        <translation type="vanished">ກຳນົດບ່ອນທີ່ຈະແຕ້ມເຄື່ອງໝາຍພື້ນຖານມຸມ</translation>
-    </message>
-    <message>
-        <source>If enabled, angles basis marker will be shown in the orign of coordinates system</source>
-        <translation type="vanished">ຖ້າເປີດໃຊ້, ເຄື່ອງໝາຍພື້ນຖານມຸມຈະຖືກສະແດງຢູ່ທີ່ຈຸດເລີ່ມຕົ້ນຂອງລະບົບພິກັດ</translation>
-    </message>
-    <message>
-        <source>Color of the ray that displays zero angle position</source>
-        <translation type="vanished">ສີຂອງລັດສະໝີທີ່ສະແດງຕຳແໜ່ງມຸມສູນ</translation>
-    </message>
-    <message>
-        <source>If checked, it will be possible to enter value of angle in decimal degrees only. Otherwise, angles in surveyor, radiant, imperial degrees and bearing formats are allowed for input.  </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະສາມາດປ້ອນຄ່າມູມເປັນອົງສາທົດສະນິຍົມໄດ້ເທົ່ານັ້ນ. ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະສາມາດປ້ອນມູມໃນຮູບແບບ ເຊີເວເຢີ (surveyor), ເຣເດຍ (radiant), ອິມພີຣຽວ (imperial) ແລະ ແບບບີຣິງ (bearing) ໄດ້. </translation>
-    </message>
-    <message>
-        <source>Allow angles input in decimal degrees only</source>
-        <translation type="vanished">ອະນຸຍາດໃຫ້ປ້ອນມຸມເປັນອົງສາທົດສະນິຍົມເທົ່ານັ້ນ</translation>
-    </message>
-    <message>
-        <source>If selected, menu will include top-level items for drawing tools. Otherwise, they will under the same menu item. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ເມນູຈະລວມເອົາລາຍການລະດັບສູງສຸດສຳລັບເຄື່ອງມືການແຕ້ມ. ຖ້າບໍ່ດັ່ງນັ້ນ, ພວກມັນຈະຢູ່ພາຍໃຕ້ລາຍການເມນູດຽວກັນ. </translation>
-    </message>
-    <message>
-        <source>Expand &quot;Tools&quot; commands in menu</source>
-        <translation type="vanished">ຂະຫຍາຍຄຳສັ່ງ &quot;ເຄື່ອງມື&quot; ໃນເມນູ</translation>
-    </message>
-    <message>
-        <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະມີການສ້າງເມນູແຍກຕ່າງຫາກສຳລັບແຕ່ລະກຸ່ມຄຳສັ່ງທີ່ກ່ຽວຂ້ອງກັບອົງປະກອບ. ຖ້າບໍ່ດັ່ງນັ້ນ, ຄຳສັ່ງເຫຼົ່ານີ້ຈະຢູ່ພາຍໃຕ້ເມນູດຽວກັນ. </translation>
-    </message>
-    <message>
-        <source>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</source>
-        <translation type="vanished">ຖ້າເປີດໃຊ້, ຈະສາມາດໃຊ້ຄີບອດເພື່ອ - ຊູມຜ່ານ +/-, ເລື່ອນຜ່ານປຸ່ມລູກສອນ, ຍ້າຍຕຳແໜ່ງອົງປະກອບທີ່ເລືອກຜ່ານປຸ່ມລູກສອນ ແລະ ການໃຊ້ປຸ່ມ SHIFT/CTRL ຮ່ວມນຳ.</translation>
-    </message>
-    <message>
-        <source>Enable scroll and position adjustment via keyboard</source>
-        <translation type="vanished">ເປີດໃຊ້ການເລື່ອນ ແລະ ປັບຕຳແໜ່ງຜ່ານຄີບອດ</translation>
-    </message>
-    <message>
-        <source>If selected, controls for picking values from drawing are available in Tool Options toolbar, allowing to pick length and angle values from drawing. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະມີປຸ່ມຄວບຄຸມສຳລັບການເລືອກຄ່າຈາກແບບແຕ້ມໃນແຖບເຄື່ອງມື Tool Options, ເຊິ່ງຊ່ວຍໃຫ້ສາມາດເລືອກຄ່າຄວາມຍາວ ແລະ ມູມຈາກແບບແຕ້ມໄດ້. </translation>
-    </message>
-    <message>
-        <source>Tool options toolbar includes pick values controls</source>
-        <translation type="vanished">ແຖບເຄື່ອງມື Tool options ລວມເອົາຕົວຄວບຄຸມການເລືອກຄ່າ</translation>
-    </message>
-    <message>
-        <source>Separate menu per entity</source>
-        <translation type="vanished">ແຍກເມນູຕາມອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Auto-Save Drawings</source>
-        <translation type="vanished">ບັນທຶກການແຕ້ມອັດຕະໂນມັດ</translation>
-    </message>
-    <message>
-        <source>#</source>
-        <translation type="vanished">#</translation>
-    </message>
-    <message>
-        <source>~</source>
-        <translation type="vanished">~</translation>
-    </message>
-    <message>
-        <source>_</source>
-        <translation type="vanished">_</translation>
-    </message>
-    <message>
-        <source>__</source>
-        <translation type="vanished">__</translation>
-    </message>
-    <message>
-        <source>lcauto_</source>
-        <translation type="vanished">lcauto_</translation>
-    </message>
-    <message>
-        <source>autosaved_</source>
-        <translation type="vanished">autosaved_</translation>
-    </message>
-    <message>
-        <source>Auto-save file name prefix:</source>
-        <translation type="vanished">ຄຳນຳໜ້າຊື່ໄຟລ໌ບັນທຶກອັດຕະໂນມັດ:</translation>
-    </message>
-    <message>
-        <source>Backup file name suffix:</source>
-        <translation type="vanished">ຄຳຕໍ່ທ້າຍຊື່ໄຟລ໌ສຳຮອງ:</translation>
-    </message>
-    <message>
-        <source>$$</source>
-        <translation type="vanished">$$</translation>
-    </message>
-    <message>
-        <source>_backup</source>
-        <translation type="vanished">_backup</translation>
-    </message>
-    <message>
-        <source>_bak</source>
-        <translation type="vanished">_bak</translation>
-    </message>
-    <message>
-        <source>.bak</source>
-        <translation type="vanished">.bak</translation>
-    </message>
-    <message>
-        <source>.backup</source>
-        <translation type="vanished">.backup</translation>
-    </message>
-    <message>
-        <source>.lcb</source>
-        <translation type="vanished">.lcb</translation>
-    </message>
-    <message>
-        <source>If checked, toolbars with commands will be enabled. </source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ແຖບເຄື່ອງມືພ້ອມຄຳສັ່ງຕ່າງໆຈະຖືກເປີດໃຊ້ງານ. </translation>
-    </message>
-    <message>
-        <source>If enabled, tooltips toolbar&apos;s name will be shown</source>
-        <translation type="vanished">ຖ້າເປີດໃຊ້, ຈະສະແດງຊື່ຂອງແຖບເຄື່ອງມືໃນ Tooltips</translation>
-    </message>
-    <message>
-        <source>Show tooltips for toolbars</source>
-        <translation type="vanished">ສະແດງ Tooltips ສຳລັບແຖບເຄື່ອງມື</translation>
-    </message>
-    <message>
-        <source>Exchange</source>
-        <translation type="vanished">ແລກປ່ຽນ</translation>
-    </message>
-    <message>
-        <source>Exports settings to the file.</source>
-        <translation type="vanished">ສົ່ງອອກການຕັ້ງຄ່າໄປຍັງໄຟລ໌.</translation>
-    </message>
-    <message>
-        <source>Export settings to file</source>
-        <translation type="vanished">ສົ່ງອອກການຕັ້ງຄ່າໄປຍັງໄຟລ໌</translation>
-    </message>
-    <message>
-        <source>Imports application&apos;s preferences from external file</source>
-        <translation type="vanished">ນຳເຂົ້າການຕັ້ງຄ່າຂອງແອັບພລິເຄຊັນຈາກໄຟລ໌ພາຍນອກ</translation>
-    </message>
-    <message>
-        <source>Import settings from file</source>
-        <translation type="vanished">ນຳເຂົ້າການຕັ້ງຄ່າຈາກໄຟລ໌</translation>
-    </message>
-    <message>
-        <source>Paths</source>
-        <translation type="vanished">ເສັ້ນທາງ (Paths)</translation>
-    </message>
-    <message>
-        <source>Other settings locations</source>
-        <translation type="vanished">ຕຳແໜ່ງການຕັ້ງຄ່າອື່ນໆ</translation>
-    </message>
-    <message>
-        <source>Directory where various settings are located (shortcuts, workspaces, pens etc.)</source>
-        <translation type="vanished">ໄດເຣັກທໍຣີທີ່ເກັບການຕັ້ງຄ່າຕ່າງໆ (ຄີລັດ, ພື້ນທີ່ເຮັດວຽກ, ປາກກາ ແລະ ອື່ນໆ)</translation>
-    </message>
-    <message>
-        <source>Renderer</source>
-        <translation type="vanished">ຕົວສະແດງຜົນ (Renderer)</translation>
-    </message>
-    <message>
-        <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ເສັ້ນໂຄ້ງຈະຖືກແຕ້ມໂດຍໃຊ້ການແຊກສ່ວນຂອງເສັ້ນ. ສິ່ງນີ້ຈະຊ່ວຍກຳຈັດສິ່ງແປກປອມໃນການແຕ້ມໃກ້ກັບຈຸດສິ້ນສຸດ ແຕ່ອາດຈະເຮັດໃຫ້ເສັ້ນໂຄ້ງບໍ່ລຽບປານໃດ. ຈະບໍ່ມີຂໍ້ຜິດພາດໃນການແຕ້ມໃກ້ຈຸດສິ້ນສຸດເມື່ອຊູມຂະໜາດໃຫຍ່.</translation>
-    </message>
-    <message>
-        <source>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</source>
-        <translation type="vanished">ຖ້າເລືອກວິທີນີ້, ເສັ້ນໂຄ້ງຈະຖືກແຕ້ມໂດຍໃຊ້ວິທີການຂອງໄລບຣາຣີ QT. ເມື່ອຊູມຂະໜາດໃຫຍ່, ເສັ້ນໂຄ້ງອາດຈະຖືກສະແດງຜົນຜິດພາດໃກ້ກັບຈຸດສິ້ນສຸດ.</translation>
-    </message>
-    <message>
-        <source>Qt-native drawing method (unexact near endpoints)</source>
-        <translation type="vanished">ວິທີການແຕ້ມແບບ Qt-native (ບໍ່ຊັດເຈນໃກ້ຈຸດສິ້ນສຸດ)</translation>
-    </message>
-    <message>
-        <source>Fonts Files</source>
-        <translation type="vanished">ໄຟລ໌ຟອນ</translation>
-    </message>
-    <message>
-        <source>Amount of letters columns:</source>
-        <translation type="vanished">ຈຳນວນຄໍລຳຂອງຕົວອັກສອນ:</translation>
-    </message>
-    <message>
-        <source>Contains the number of columns in one row for rendering font letter blocks. If 0 - all letters in one row. </source>
-        <translation type="vanished">ລະບຸຈຳນວນຖັນໃນໜຶ່ງແຖວ ສຳລັບການສະແດງບລັອກຕົວອັກສອນຟອນ. ຖ້າເປັນ 0 - ຕົວອັກສອນທັງໝົດຈະຢູ່ໃນແຖວດຽວກັນ. </translation>
-    </message>
-    <message>
-        <source>Operations</source>
-        <translation type="vanished">ການປະຕິບັດງານ</translation>
-    </message>
-    <message>
-        <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
-        <translation type="vanished">ຖ້າເປີດໃຊ້, ໃນຂະນະທີ່ເລື່ອນມຸມເບິ່ງ (pan) ອົງປະກອບ TEXT ແລະ MTEXT ຈະຖືກແຕ້ມເປັນແບບໂຄງຮ່າງ</translation>
-    </message>
-    <message>
-        <source>Defines how arcs are rendered in UI. </source>
-        <translation type="vanished">ກຳນົດວ່າເສັ້ນໂຄ້ງຈະຖືກສະແດງຜົນແນວໃດໃນ UI. </translation>
-    </message>
-    <message>
-        <source>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </source>
-        <translation type="vanished">ຖ້າໝາຍເລືອກ, ວິດເຈັດ Dock ພ້ອມຄຳສັ່ງສຳລັບແຖບຂ້າງຊ້າຍຈະຖືກເປີດໃຊ້ງານ. ຖ້າບໍ່ດັ່ງນັ້ນ, ພວກມັນຈະຖືກປິດໃຊ້ງານ. </translation>
-    </message>
-    <message>
-        <source>Arcs Rendering Method</source>
-        <translation type="vanished">ວິທີການສະແດງຜົນເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Interpolate by line segments</source>
-        <translation type="vanished">ແຊກດ້ວຍສ່ວນຂອງເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Single segment angle</source>
-        <translation type="vanished">ມຸມຂອງແຕ່ລະສ່ວນ</translation>
-    </message>
-    <message>
-        <source>Determine segments by max sagitta</source>
-        <translation type="vanished">ກຳນົດສ່ວນຕ່າງໆດ້ວຍຄ່າ sagitta ສູງສຸດ</translation>
-    </message>
-    <message>
-        <source>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະໃຊ້ມຸມຄົງທີ່ຂອງສ່ວນເສັ້ນທີ່ແຊກເຂົ້າ. ມຸມທີ່ນ້ອຍກວ່າຈະເຮັດໃຫ້ເສັ້ນໂຄ້ງລຽບກວ່າ ແຕ່ຈະຊ້າກວ່າ.</translation>
-    </message>
-    <message>
-        <source>Use fixed segment angle value</source>
-        <translation type="vanished">ໃຊ້ຄ່າມຸມຂອງສ່ວນທີ່ຄົງທີ່</translation>
-    </message>
-    <message>
-        <source>Value of fixed segment&apos;s angle</source>
-        <translation type="vanished">ຄ່າຂອງມຸມຂອງສ່ວນທີ່ຄົງທີ່</translation>
-    </message>
-    <message>
-        <source> degrees</source>
-        <translation type="vanished">degrees</translation>
-    </message>
-    <message>
-        <source>Maximal distance betwen arc and segment interpolation line</source>
-        <translation type="vanished">ໄລຍະຫ່າງສູງສຸດລະຫວ່າງເສັ້ນໂຄ້ງ ແລະ ເສັ້ນແຊກສ່ວນຂອງເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Render circles in the same way as arcs.</source>
-        <translation type="vanished">ສະແດງຜົນວົງມົນໃນຮູບແບບດຽວກັນກັບເສັ້ນໂຄ້ງ.</translation>
-    </message>
-    <message>
-        <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
-        <translation type="vanished">ຖ້າກຳນົດໄວ້ ແລະ ລະບົບພິກັດຜູ້ໃຊ້ (UCS) ກຳລັງເຮັດວຽກ, ພິກັດແທ້ຈິງໃນລະບົບພິກັດໂລກ (WCS) ຈະຖືກສະແດງນຳເຊັ່ນກັນ.</translation>
-    </message>
-    <message>
-        <source>Show world coordinates if in user coordinate system</source>
-        <translation type="vanished">ສະແດງພິກັດໂລກ ຖ້າຢູ່ໃນລະບົບພິກັດຜູ້ໃຊ້</translation>
-    </message>
-    <message>
-        <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ການປ່ຽນແປງການຊູມ ຫຼື ການເລື່ອນມຸມມອງໃດໆ ຈະຖືວ່າແບບແຕ້ມມີການແກ້ໄຂ. ຖ້າບໍ່ດັ່ງນັ້ນ, ການປ່ຽນແປງພຽງແຕ່ມຸມມອງ ຈະບໍ່ມີຜົນຕໍ່ສະຖານະການແກ້ໄຂຂອງແບບແຕ້ມ. </translation>
-    </message>
-    <message>
-        <source>Changing view only modifies drawing</source>
-        <translation type="vanished">ການປ່ຽນມຸມເບິ່ງຖືວ່າເປັນການແກ້ໄຂການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If set, previously opened files during previous closing of the application will be re-opened.</source>
-        <translation type="vanished">ຖ້າກຳນົດໄວ້, ໄຟລ໌ທີ່ເປີດຄ້າງໄວ້ກ່ອນປິດໂປຣແກຣມຄັ້ງກ່ອນຈະຖືກເປີດຄືນໃໝ່.</translation>
-    </message>
-    <message>
-        <source>Angles Positive Direction:</source>
-        <translation type="vanished">ທິດທາງບວກຂອງມຸມ:</translation>
-    </message>
-    <message>
-        <source>Zero base angle:</source>
-        <translation type="vanished">ມຸມພື້ນຖານສູນ:</translation>
-    </message>
-    <message>
-        <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation type="vanished">ມຸມພື້ນຖານສູນທຽບກັບລະບົບພິກັດຜູ້ໃຊ້ປັດຈຸບັນ. ມີຜົນຕໍ່ການປ້ອນພິກັດຂົ້ວໂລກ, ເກາະຈັບມຸມ. 0.0 ແມ່ນຕຳແໜ່ງ 3 ໂມງ.</translation>
-    </message>
-    <message>
-        <source>degrees.</source>
-        <translation type="vanished">ອົງສາ.</translation>
-    </message>
-    <message>
-        <source>Counterclockwise, 90 degrees is north.</source>
-        <translation type="vanished">ທວນເຂັມໂມງ, 90 ອົງສາແມ່ນທິດເໜືອ.</translation>
-    </message>
-    <message>
-        <source>Clockwise, 90 degrees is sourth.</source>
-        <translation type="vanished">ຕາມເຂັມໂມງ, 90 ອົງສາແມ່ນທິດໃຕ້.</translation>
-    </message>
-    <message>
-        <source>Click to select directory</source>
-        <translation type="vanished">ຄລິກເພື່ອເລືອກໄດເຣັກທໍຣີ</translation>
-    </message>
-    <message>
-        <source>Path to folder with fonts</source>
-        <translation type="vanished">ເສັ້ນທາງໄປຫາໂຟນເດີທີ່ເກັບຟອນ</translation>
-    </message>
-    <message>
-        <source>Restores program geometry/layout to original state</source>
-        <translation type="vanished">ຄືນຄ່າຮູບຮ່າງ/ໂຄງຮ່າງຂອງໂປຣແກຣມກັບສູ່ສະຖານະເດີມ</translation>
-    </message>
-    <message>
-        <source>Restores the program settings to its original state</source>
-        <translation type="vanished">ຄືນຄ່າການຕັ້ງຄ່າໂປຣແກຣມກັບສູ່ສະຖານະເດີມ</translation>
-    </message>
-    <message>
-        <source>Click to select file</source>
-        <translation type="vanished">ຄລິກເພື່ອເລືອກໄຟລ໌</translation>
-    </message>
-    <message>
-        <source>Path to folder with hatch patterns</source>
-        <translation type="vanished">ເສັ້ນທາງໄປຫາໂຟນເດີທີ່ເກັບລວດລາຍການແຕ້ມແຖບ (hatch patterns)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="880"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;ໂຟນເດີຄັງຊິ້ນສ່ວນ. ໄຟລ໌ dxf ຂອງຄັງສັນຍະລັກຈະຕ້ອງຢູ່ໃນໂຟນເດີຍ່ອຍຂອງໂຟນເດີນີ້. ຊື່ໂຟນເດີຍ່ອຍຈະຖືກສະແດງໃນ Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( ເມນູ: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Path to file with variables</source>
-        <translation type="vanished">ເສັ້ນທາງໄປຫາໄຟລ໌ທີ່ເກັບຕົວປ່ຽນ (variables)</translation>
-    </message>
-    <message>
-        <source>Path to folder with translation files</source>
-        <translation type="vanished">ເສັ້ນທາງໄປຫາໂຟນເດີທີ່ເກັບໄຟລ໌ການແປພາສາ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1244"/>
@@ -21080,41 +7182,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">ຕົວປ່ຽນການແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">ຕົວປ່ຽນ</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">ລະຫັດ</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">ຄ່າ</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;ຕົກລົງ</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ຍົກເລີກ</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -21127,10 +7194,6 @@ so default step value required for baking</source>
         <translation>ເລເຢີ:</translation>
     </message>
     <message>
-        <source>Layer of point</source>
-        <translation type="vanished">ເລເຢີຂອງຈຸດ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="71"/>
         <source>Geometry</source>
         <translation>ເລຂາຄະນິດ</translation>
@@ -21141,21 +7204,9 @@ so default step value required for baking</source>
         <translation>ຕຳແໜ່ງ (y):</translation>
     </message>
     <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="vanished">ຕຳແໜ່ງຂອງຈຸດຕາມພິກັດ Y</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="97"/>
         <source>Position (x):</source>
         <translation>ຕຳແໜ່ງ (x):</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="vanished">ຕຳແໜ່ງຂອງຈຸດຕາມພິກັດ X</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
     </message>
 </context>
 <context>
@@ -21171,26 +7222,14 @@ so default step value required for baking</source>
         <translation>ເລເຢີ:</translation>
     </message>
     <message>
-        <source>Layer of polyline</source>
-        <translation type="vanished">ເລເຢີຂອງເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="77"/>
         <source>Geometry</source>
         <translation>ເລຂາຄະນິດ</translation>
     </message>
     <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="vanished">ກຳນົດວ່າເສັ້ນຕໍ່ເນື່ອງເປັນເສັ້ນຮອບຮູບແບບປິດຫຼືບໍ່</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="115"/>
         <source>Closed</source>
         <translation>ປິດ</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
     </message>
 </context>
 <context>
@@ -21375,10 +7414,6 @@ so default step value required for baking</source>
         <translation>ເລເຢີ:</translation>
     </message>
     <message>
-        <source>Layer of spline</source>
-        <translation type="vanished">ເລເຢີຂອງເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="84"/>
         <source>Geometry</source>
         <translation>ເລຂາຄະນິດ</translation>
@@ -21389,21 +7424,9 @@ so default step value required for baking</source>
         <translation>ດີກຣີ:</translation>
     </message>
     <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="vanished">ກຳນົດວ່າເສັ້ນໂຄ້ງສະປຼາຍເປັນເສັ້ນຮອບຮູບແບບປິດຫຼືບໍ່</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="132"/>
         <source>Closed</source>
         <translation>ປິດ</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="vanished">ດີກຣີທີ່ໃຊ້ເພື່ອປະມານຄ່າເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
     </message>
 </context>
 <context>
@@ -21579,10 +7602,6 @@ so default step value required for baking</source>
         <translation>ໜ້າ:</translation>
     </message>
     <message>
-        <source>Selected character preview. Click to insert to text.</source>
-        <translation type="vanished">ຕົວຢ່າງອັກຂະລະທີ່ເລືອກ. ຄລິກເພື່ອແຊກເຂົ້າໃນຂໍ້ຄວາມ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="930"/>
         <source>Char:</source>
         <translation>ອັກຂະລະ:</translation>
@@ -21591,54 +7610,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="953"/>
         <source>[0000-007F] Basic Latin</source>
         <translation>[0000-007F] ລາແຕັງພື້ນຖານ</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">ຂໍ້ຄວາມທີ່ຈະແຊກ</translation>
-    </message>
-    <message>
-        <source>Layer of text</source>
-        <translation type="vanished">ເລເຢີຂອງຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">ຄວາມອຽງຂອງຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">ມຸມການໝຸນ</translation>
-    </message>
-    <message>
-        <source>Width factor</source>
-        <translation type="vanished">ປັດໄຈຄວາມກວ້າງ</translation>
-    </message>
-    <message>
-        <source>Height of text</source>
-        <translation type="vanished">ຄວາມສູງຂອງຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Aligned</source>
-        <translation type="vanished">ຈັດວາງແລ້ວ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">ຈຸດກາງ</translation>
-    </message>
-    <message>
-        <source>Symbol to insert</source>
-        <translation type="vanished">ສັນຍະລັກທີ່ຈະແຊກ</translation>
-    </message>
-    <message>
-        <source>Yen / Yuan (¥)</source>
-        <translation type="vanished">ເຢນ / ຢວນ (¥)</translation>
-    </message>
-    <message>
-        <source>Euro (€)</source>
-        <translation type="vanished">ເອີໂຣ (€)</translation>
-    </message>
-    <message>
-        <source>Codepage selection for selecting character</source>
-        <translation type="vanished">ການເລືອກ Codepage ສຳລັບການເລືອກອັກຂະລະ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="958"/>
@@ -22176,10 +8147,6 @@ so default step value required for baking</source>
         <translation>[100000-10FFFD] ພື້ນທີ່ໃຊ້ງານສ່ວນຕົວສ່ວນເພີ່ມ-B</translation>
     </message>
     <message>
-        <source>Selection of character to insert</source>
-        <translation type="vanished">ການເລືອກອັກຂະລະທີ່ຈະແຊກ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="256"/>
         <source>&amp;Height:</source>
         <translation>&amp;ຄວາມສູງ:</translation>
@@ -22255,10 +8222,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="794"/>
         <source>&amp;Middle</source>
         <translation>&amp;ຈຸດກາງ</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ປາກກາ</translation>
     </message>
 </context>
 <context>
@@ -22823,14 +8786,6 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;ຄຳແນະນຳກ່ຽວກັບການເຮັດວຽກຂອງປຸ່ມເມົາສ໌ ຊ້າຍ/ຂວາ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ຍົກເລີກ</translation>
-    </message>
-    <message>
-        <source>Current Action:</source>
-        <translation type="vanished">ການດຳເນີນການປັດຈຸບັນ:</translation>
-    </message>
 </context>
 <context>
     <name>QG_PenToolBar</name>
@@ -22856,21 +8811,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_polylineoptions.cpp" line="103"/>
         <source>wrong action type</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">ມາດຕາສ່ວນທີ່ລະບຸບໍ່ຖືກຕ້ອງ</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">ມາດຕາສ່ວນເຈ້ຍໃຫຍ່ກວ່າອັດຕາສ່ວນການພິມສູງສຸດ</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">ມາດຕາສ່ວນເຈ້ຍນ້ອຍກວ່າອັດຕາສ່ວນການພິມຕ່ຳສຸດ</translation>
     </message>
 </context>
 <context>
@@ -22915,14 +8855,6 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of selected entities</source>
-        <translation type="vanished">ຈຳນວນອົງປະກອບທີ່ຖືກເລືອກ</translation>
-    </message>
-    <message>
-        <source>Total length of selected entities</source>
-        <translation type="vanished">ຄວາມຍາວທັງໝົດຂອງອົງປະກອບທີ່ເລືອກ</translation>
     </message>
 </context>
 <context>
@@ -23023,18 +8955,6 @@ p, li { white-space: pre-wrap; }
         <translation>unlocked</translation>
     </message>
     <message>
-        <source>Coordinate system: %1</source>
-        <translation type="vanished">ລະບົບພິກັດ: %1</translation>
-    </message>
-    <message>
-        <source>User</source>
-        <translation type="vanished">ຜູ້ໃຊ້</translation>
-    </message>
-    <message>
-        <source>World</source>
-        <translation type="vanished">ໂລກ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
         <translation>ເກາະຈັບ</translation>
@@ -23112,18 +9032,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
         <source>Line type:</source>
         <translation>ຊະນິດເສັ້ນ:</translation>
-    </message>
-    <message>
-        <source>Color of line</source>
-        <translation type="vanished">ສີຂອງເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Width of line</source>
-        <translation type="vanished">ຄວາມກວ້າງຂອງເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Type of line</source>
-        <translation type="vanished">ຊະນິດຂອງເສັ້ນ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="75"/>
@@ -23299,12 +9207,6 @@ Please specify a different value.</source>
         <translation>ລຶບເລເຢີທີ່ວ່າງເປົ່າ</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">ພົບເລເຢີທີ່ບໍ່ມີອົງປະກອບ, ແຕ່ພວກມັນຖືກກອງໄວ້ ແລະ ບໍ່ສະແດງໃຫ້ເຫັນ.
-ລ້າງຕົວຕອງແລ້ວລອງໃໝ່.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -23370,14 +9272,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 
 ຖ້າ ແມ່ນ - ອົງປະກອບທີ່ໃຊ້ປາກກາແບບ &quot;ຕາມເລເຢີ&quot; ຈະສະແດງໃນເລເຢີໃໝ່ຄືກັນກັບເລເຢີກ່ອນໜ້າ ແລະ ຄ່າ &quot;ຕາມເລເຢີ&quot; ຈະຖືກແທນທີ່ດ້ວຍຄ່າປາກກາທີ່ກຳນົດໄວ້.
 
-ຖ້າ ບໍ່ - ຄ່າ &quot;ຕາມເລເຢີ&quot; ຈະຍັງຄືເກົ່າ ແລະ ປາກກາຂອງເລເຢີປາຍທາງຈະເປັນຕົວກຳນົດຮູບແບບໃຫ້ກັບອົງປະກອບເຫຼົ່ານັ້ນ.</translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">ແທນທີ່ຄ່າ &quot;ຕາມເລເຢີ&quot; ດ້ວຍຄ່າຂອງເລເຢີຕົ້ນທາງບໍ່?
-ຖ້າ ແມ່ນ - ອົງປະກອບທີ່ໃຊ້ປາກກາແບບ &quot;ຕາມເລເຢີ&quot; ຈະສະແດງໃນເລເຢີໃໝ່ຄືກັນກັບເລເຢີກ່ອນໜ້າ ແລະ ຄ່າ &quot;ຕາມເລເຢີ&quot; ຈະຖືກແທນທີ່ດ້ວຍຄ່າປາກກາທີ່ກຳນົດໄວ້.
 ຖ້າ ບໍ່ - ຄ່າ &quot;ຕາມເລເຢີ&quot; ຈະຍັງຄືເກົ່າ ແລະ ປາກກາຂອງເລເຢີປາຍທາງຈະເປັນຕົວກຳນົດຮູບແບບໃຫ້ກັບອົງປະກອບເຫຼົ່ານັ້ນ.</translation>
     </message>
     <message>
@@ -23467,14 +9361,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>ກະລຸນາເລືອກອົງປະກອບພຽງອັນດຽວເພື່ອດຶງຄ່າການຕັ້ງຄ່າປາກກາ.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">ກຳລັງບັນທຶກຂໍ້ມູນປາກກາ</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">ບໍ່ສາມາດບັນທຶກຂໍ້ມູນປາກກາລົງໃນໄຟລ໌ທີ່ລະບຸໄດ້. ທ່ານຕ້ອງການລະບຸເສັ້ນທາງໄຟລ໌ທີ່ຖືກຕ້ອງບໍ່?</translation>
     </message>
 </context>
 <context>
@@ -23586,18 +9472,6 @@ Do you want to replace it?</source>
         <location filename="../src/main/main.cpp" line="325"/>
         <source>Loading...</source>
         <translation>ກຳລັງໂຫຼດ...</translation>
-    </message>
-    <message>
-        <source>Release Candidate</source>
-        <translation type="vanished">Release Candidate (RC)</translation>
-    </message>
-    <message>
-        <source>BETA</source>
-        <translation type="vanished">BETA</translation>
-    </message>
-    <message>
-        <source>ALPHA</source>
-        <translation type="vanished">ALPHA</translation>
     </message>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1354"/>
@@ -24438,27 +10312,6 @@ Do you want to replace it?</source>
         <translation>prop</translation>
     </message>
     <message>
-        <source>cnlayer</source>
-        <translation type="vanished">cnlayer</translation>
-    </message>
-    <message>
-        <source>cnly</source>
-        <translation type="vanished">cnly</translation>
-    </message>
-    <message>
-        <source>cslayer</source>
-        <translation type="vanished">cslayer</translation>
-    </message>
-    <message>
-        <source>csly</source>
-        <translation type="vanished">csly</translation>
-    </message>
-    <message>
-        <source>circlebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">circlebyarc</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="830"/>
         <source>dist</source>
         <comment>distance point to point</comment>
@@ -24827,29 +10680,9 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation type="vanished">ບໍ່ສາມາດປ່ຽນຄວາມໝາຍຂອງຄຳສັ່ງໄດ້. ປະຕິເສດທີ່ຈະໃຊ້ຄຳສັ່ງ %1 ຊ້ຳເພື່ອໝາຍເຖິງ %2</translation>
-    </message>
-    <message>
-        <source>requesting alias(%1) for unknown command(%2): ignored</source>
-        <translation type="vanished">ກຳລັງຮ້ອງຂໍນາມແຝງ (%1) ສຳລັບຄຳສັ່ງທີ່ບໍ່ຮູ້ຈັກ (%2): ຖືກລະເລີຍ</translation>
-    </message>
-    <message>
-        <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
-        <translation type="vanished">ການໃຊ້ງານນາມແຝງທີ່ມີຢູ່: ເຄີຍເປັນ %1=%2, ປ່ຽນເປັນ %1=%3</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1399"/>
         <source>RS_Commands:: command not found: %1</source>
         <translation>RS_Commands:: ບໍ່ພົບຄຳສັ່ງ: %1</translation>
-    </message>
-    <message>
-        <source>keycode: %1 (%2)</source>
-        <translation type="vanished">ລະຫັດປຸ່ມ: %1 (%2)</translation>
-    </message>
-    <message>
-        <source>invalid keycode: %1</source>
-        <translation type="vanished">ລະຫັດປຸ່ມບໍ່ຖືກຕ້ອງ: %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1453"/>
@@ -24932,27 +10765,9 @@ Do you want to replace it?</source>
         <translation>ລຶບ</translation>
     </message>
     <message>
-        <source>Calculator: </source>
-        <translation type="vanished">ເຄື່ອງຄິດເລກ: </translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="138"/>
         <source>You must input a distance first.</source>
         <translation>ທ່ານຕ້ອງປ້ອນໄລຍະຫ່າງກ່ອນ.</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">calculate</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
@@ -25168,26 +10983,6 @@ Do you want to replace it?</source>
         <translation>cx</translation>
     </message>
     <message>
-        <source>bbox</source>
-        <comment>draw bound box</comment>
-        <translation type="vanished">bbox</translation>
-    </message>
-    <message>
-        <source>bb</source>
-        <comment>draw bound box</comment>
-        <translation type="vanished">bb</translation>
-    </message>
-    <message>
-        <source>midline</source>
-        <comment>draw middle line</comment>
-        <translation type="vanished">midline</translation>
-    </message>
-    <message>
-        <source>ml</source>
-        <comment>draw mid line</comment>
-        <translation type="vanished">ml</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="276"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
@@ -25198,16 +10993,6 @@ Do you want to replace it?</source>
         <source>lpoints</source>
         <comment>draw line of points</comment>
         <translation>lpoints</translation>
-    </message>
-    <message>
-        <source>midpoint</source>
-        <comment>draw middle points</comment>
-        <translation type="vanished">midpoint</translation>
-    </message>
-    <message>
-        <source>mpoint</source>
-        <comment>draw middle of points</comment>
-        <translation type="vanished">mpoint</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="282"/>
@@ -25232,36 +11017,6 @@ Do you want to replace it?</source>
         <source>dup</source>
         <comment>duplicate entity</comment>
         <translation>dup</translation>
-    </message>
-    <message>
-        <source>align</source>
-        <comment>align entities</comment>
-        <translation type="vanished">ຈັດວາງ</translation>
-    </message>
-    <message>
-        <source>al</source>
-        <comment>align entities</comment>
-        <translation type="vanished">al</translation>
-    </message>
-    <message>
-        <source>align1</source>
-        <comment>align entities</comment>
-        <translation type="vanished">align1</translation>
-    </message>
-    <message>
-        <source>al1</source>
-        <comment>align entities</comment>
-        <translation type="vanished">al1</translation>
-    </message>
-    <message>
-        <source>alignref</source>
-        <comment>align references</comment>
-        <translation type="vanished">alignref</translation>
-    </message>
-    <message>
-        <source>alr</source>
-        <comment>align references</comment>
-        <translation type="vanished">alr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="294"/>
@@ -25304,11 +11059,6 @@ Do you want to replace it?</source>
         <source>linepar</source>
         <comment>create parallel</comment>
         <translation>linepar</translation>
-    </message>
-    <message>
-        <source>parallel</source>
-        <comment>create parallel</comment>
-        <translation type="vanished">parallel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="313"/>
@@ -25447,16 +11197,6 @@ Do you want to replace it?</source>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
         <translation>polyct</translation>
-    </message>
-    <message>
-        <source>polygonvv</source>
-        <comment>polygon vertex vertex</comment>
-        <translation type="vanished">polygonvv</translation>
-    </message>
-    <message>
-        <source>pvv</source>
-        <comment>polygon vertex vertex</comment>
-        <translation type="vanished">pvv</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="382"/>
@@ -25615,46 +11355,6 @@ Do you want to replace it?</source>
         <translation>at</translation>
     </message>
     <message>
-        <source>arc2p3</source>
-        <comment>draw 2pt arc radius</comment>
-        <translation type="vanished">arc2p3</translation>
-    </message>
-    <message>
-        <source>a2r</source>
-        <comment>draw 2pt arc radius</comment>
-        <translation type="vanished">a2r</translation>
-    </message>
-    <message>
-        <source>arc2pl</source>
-        <comment>draw 2pt arc length</comment>
-        <translation type="vanished">arc2pl</translation>
-    </message>
-    <message>
-        <source>a2l</source>
-        <comment>draw 2pt arc length</comment>
-        <translation type="vanished">a2l</translation>
-    </message>
-    <message>
-        <source>arc2ph</source>
-        <comment>draw 2pt arc height</comment>
-        <translation type="vanished">arc2ph</translation>
-    </message>
-    <message>
-        <source>a2h</source>
-        <comment>draw 2pt arc height</comment>
-        <translation type="vanished">a2h</translation>
-    </message>
-    <message>
-        <source>arc2pa</source>
-        <comment>draw 2pt arc angle</comment>
-        <translation type="vanished">arc2pa</translation>
-    </message>
-    <message>
-        <source>a2a</source>
-        <comment>draw 2pt arc angle</comment>
-        <translation type="vanished">a2a</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="474"/>
         <source>sf</source>
         <comment>draw spline</comment>
@@ -25677,16 +11377,6 @@ Do you want to replace it?</source>
         <source>ae</source>
         <comment>arc ellipse</comment>
         <translation>ae</translation>
-    </message>
-    <message>
-        <source>arcellc1ax</source>
-        <comment>arc ellipse 1 point</comment>
-        <translation type="vanished">arcellc1ax</translation>
-    </message>
-    <message>
-        <source>ae1</source>
-        <comment>arc ellipse 1 point</comment>
-        <translation type="vanished">ae1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="493"/>
@@ -25731,16 +11421,6 @@ Do you want to replace it?</source>
         <translation>ea</translation>
     </message>
     <message>
-        <source>ellipsec1p</source>
-        <comment>ellipse 1 point</comment>
-        <translation type="vanished">ellipsec1p</translation>
-    </message>
-    <message>
-        <source>ea1</source>
-        <comment>ellipse 1 point</comment>
-        <translation type="vanished">ea1</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="520"/>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
@@ -25782,11 +11462,6 @@ Do you want to replace it?</source>
         <source>angleline</source>
         <comment>draw angle from line</comment>
         <translation>angleline</translation>
-    </message>
-    <message>
-        <source>aline</source>
-        <comment>draw angle from line</comment>
-        <translation type="vanished">aline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="559"/>
@@ -25897,16 +11572,6 @@ Do you want to replace it?</source>
         <translation>pj</translation>
     </message>
     <message>
-        <source>dual</source>
-        <comment>create dual geometries</comment>
-        <translation type="vanished">dual</translation>
-    </message>
-    <message>
-        <source>du</source>
-        <comment>create dual geometries</comment>
-        <translation type="vanished">du</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="623"/>
         <source>sx</source>
         <comment>deselect all entities</comment>
@@ -25929,26 +11594,6 @@ Do you want to replace it?</source>
         <source>ds</source>
         <comment>dimension - aligned</comment>
         <translation>ds</translation>
-    </message>
-    <message>
-        <source>dimord</source>
-        <comment>dimension - ordinate</comment>
-        <translation type="vanished">dimord</translation>
-    </message>
-    <message>
-        <source>do</source>
-        <comment>dimension - ordinate</comment>
-        <translation type="vanished">do</translation>
-    </message>
-    <message>
-        <source>dimordrebase</source>
-        <comment>dimension - ordinate</comment>
-        <translation type="vanished">dimordrebase</translation>
-    </message>
-    <message>
-        <source>dor</source>
-        <comment>dimension - ordinate</comment>
-        <translation type="vanished">dor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="662"/>
@@ -26059,11 +11704,6 @@ Do you want to replace it?</source>
         <translation>modoffset</translation>
     </message>
     <message>
-        <source>offset</source>
-        <comment>modify - offset</comment>
-        <translation type="vanished">ອອບເຊັດ</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="760"/>
         <source>mo</source>
         <comment>modify - offset</comment>
@@ -26086,16 +11726,6 @@ Do you want to replace it?</source>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
         <translation>modfillet</translation>
-    </message>
-    <message>
-        <source>fillet</source>
-        <comment>modify - fillet</comment>
-        <translation type="vanished">fillet</translation>
-    </message>
-    <message>
-        <source>bevel</source>
-        <comment>modify - fillet</comment>
-        <translation type="vanished">bevel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="779"/>
@@ -26264,38 +11894,6 @@ Do you want to replace it?</source>
         <source>dp</source>
         <comment>drawing preferences</comment>
         <translation>dp</translation>
-    </message>
-    <message>
-        <source>zoomin</source>
-        <comment>zoom - in</comment>
-        <translation type="vanished">zoomin</translation>
-    </message>
-    <message>
-        <source>zi</source>
-        <comment>zoom - in</comment>
-        <translation type="vanished">zi</translation>
-    </message>
-    <message>
-        <source>zoomout</source>
-        <comment>zoom - out</comment>
-        <translation type="vanished">zoomout</translation>
-    </message>
-    <message>
-        <source>zo</source>
-        <comment>zoom - out</comment>
-        <translation type="vanished">zo</translation>
-    </message>
-    <message>
-        <source>angle1</source>
-        <translation type="vanished">angle1</translation>
-    </message>
-    <message>
-        <source>angle2</source>
-        <translation type="vanished">angle2</translation>
-    </message>
-    <message>
-        <source>chordlen</source>
-        <translation type="vanished">chordlen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1102"/>
@@ -26597,11 +12195,6 @@ Do you want to replace it?</source>
         <translation>nosym</translation>
     </message>
     <message>
-        <source>cl</source>
-        <comment>chordlen</comment>
-        <translation type="vanished">cl</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1217"/>
         <source>eqn</source>
         <comment>equation</comment>
@@ -26612,11 +12205,6 @@ Do you want to replace it?</source>
         <source>eq</source>
         <comment>equation</comment>
         <translation>eq</translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>redo redo cycle</comment>
-        <translation type="vanished">r</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterinterface.h" line="92"/>
@@ -26678,11 +12266,6 @@ Do you want to replace it?</source>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="101"/>
         <source>Paper size (Width x Height) in mm.</source>
         <translation type="unfinished">ຂະໜາດເຈ້ຍ (ກວ້າງ x ສູງ) ເປັນ ມມ.</translation>
-    </message>
-    <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">ຂະໜາດເຈ້ຍ (ກວ້າງ x ສູງ) ເປັນ ມມ.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
@@ -26777,22 +12360,6 @@ Do you want to replace it?</source>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
         <translation>ອາຣ໌</translation>
-    </message>
-    <message>
-        <source>Angle Snap</source>
-        <translation type="vanished">ຈັບວາງມຸມ</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="vanished">ເກາະຈັບອິດສະຫຼະ</translation>
-    </message>
-    <message>
-        <source>Use Mirrored Angle</source>
-        <translation type="vanished">ໃຊ້ສາຍແວ່ນມຸມ</translation>
-    </message>
-    <message>
-        <source>Snap to Relative Zero</source>
-        <translation type="vanished">ແນບກັບສູນ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="204"/>
@@ -27185,10 +12752,6 @@ Do you want to replace it?</source>
         <translation>ຂໍ້ມູນ</translation>
     </message>
     <message>
-        <source>DWG support is not complete; if this file fails to open try an older DWG format or convert it to DXF.</source>
-        <translation type="vanished">ການຮອງຮັບ DWG ຍັງບໍ່ສົມບູນ; ຫາກເປີດແຟ້ມບໍ່ໄດ້ ກະລຸນາລອງໃຊ້ DWG ລຸ້ນເກົ່າ ຫຼື ແປງເປັນ DXF.</translation>
-    </message>
-    <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="93"/>
         <source>Error</source>
         <comment>fileImport</comment>
@@ -27234,11 +12797,6 @@ Do you want to replace it?</source>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>ເກີດຂໍ້ຜິດພາດໃນການເປີດແຟ້ມ DXF/DWG</translation>
-    </message>
-    <message>
-        <source>Cannot open DWG: file is %1; LibreCAD supports %2 and newer. Convert with GNU LibreDWG (dwgread / dwg2dxf) or re-save from a recent CAD tool.</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">ບໍ່ສາມາດເປີດ DWG: ແຟ້ມແມ່ນ %1; LibreCAD ຮອງຮັບ %2 ແລະ ໃໝ່ກວ່າ. ແປງດ້ວຍ GNU LibreDWG ຫຼື ບັນທຶກໃໝ່ຈາກເຄື່ອງມື CAD ລຸ້ນຫຼ້າສຸດ.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="109"/>
@@ -27318,43 +12876,6 @@ Do you want to replace it?</source>
         <translation>ເປີດໃຊ້ງານແຟ້ມ dwg ລຸ້ນ %1 ແລ້ວ.</translation>
     </message>
     <message>
-        <source>error reading DXF/DWG header data</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">ເກີດຂໍ້ຜິດພາດໃນການອ່ານຂໍ້ມູນຫົວແຟ້ມ DXF/DWG</translation>
-    </message>
-    <message>
-        <source>Opened DWG file version %1.</source>
-        <translation type="vanished">ເປີດແຟ້ມ DWG ລຸ້ນ %1.</translation>
-    </message>
-    <message>
-        <source>DWG load: %1 %2 had parse errors and were skipped. Drawing loaded with the rest.</source>
-        <translation type="vanished">ການໂຫຼດ DWG: %1 %2 ເກີດຂໍ້ຜິດພາດໃນການອ່ານ ແລະ ຖືກຂ້າມໄປ. ການແຕ້ມຖືກໂຫຼດດ້ວຍສ່ວນທີ່ເຫຼືອ.</translation>
-    </message>
-    <message>
-        <source>entity</source>
-        <translation type="vanished">ອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>entities</source>
-        <translation type="vanished">ອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>DWG load: %1 vendor-extension entities not rendered (%2). These are typically AutoCAD Mechanical or other vertical-product custom classes that libdxfrw cannot decode.</source>
-        <translation type="vanished">ການໂຫຼດ DWG: %1 ພາກສ່ວນເສີມບໍ່ໄດ້ຖືກສະແດງຜົນ (%2). ສ່ວນຫຼາຍແມ່ນຄລາສຈາກ AutoCAD Mechanical ທີ່ libdxfrw ບໍ່ສາມາດຖອດລະຫັດໄດ້.</translation>
-    </message>
-    <message>
-        <source>DWG/DXF load: %1 XREF block(s) (%2) loaded but not INSERTed into modelspace. Their externally-referenced geometry won&apos;t be visible — AutoCAD typically renders these through a paper-space layout viewport, which LibreCAD doesn&apos;t render.</source>
-        <translation type="vanished">ການໂຫຼດ DWG/DXF: %1 ບລັອກ XREF (%2) ຖືກໂຫຼດແຕ່ບໍ່ໄດ້ຖືກແຊກເຂົ້າໃນ Modelspace. ຮູບຮ່າງທີ່ອ້າງອີງຈາກພາຍນອກຈະບໍ່ປາກົດ.</translation>
-    </message>
-    <message>
-        <source>XREF not resolved for block &quot;%1&quot;: %2 (file not found in host directory). The block will render as empty.</source>
-        <translation type="vanished">XREF ບໍ່ສາມາດແກ້ໄຂສຳລັບບລັອກ &quot;%1&quot;: %2 (ບໍ່ພົບແຟ້ມໃນໄດເຣັກທໍຣີ). ບລັອກຈະສະແດງຜົນເປັນບ່ອນວ່າງ.</translation>
-    </message>
-    <message>
-        <source>XREF load failed for block &quot;%1&quot;: %2</source>
-        <translation type="vanished">ການໂຫຼດ XREF ລົ້ມເຫຼວສຳລັບບລັອກ &quot;%1&quot;: %2</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4146"/>
         <source>unknown error opening dwg file</source>
         <translation>ບໍ່ຮູ້ຂໍ້ຜິດພາດໃນການເປີດແຟ້ມ dwg</translation>
@@ -27363,10 +12884,6 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4150"/>
         <source>can&apos;t open this dwg file</source>
         <translation>ບໍ່ສາມາດເປີດແຟ້ມ dwg ນີ້ໄດ້</translation>
-    </message>
-    <message>
-        <source>Cannot open DWG: file is %1; LibreCAD supports %2 and newer. Convert with GNU LibreDWG (dwgread / dwg2dxf) or re-save from a recent CAD tool.</source>
-        <translation type="vanished">ບໍ່ສາມາດເປີດ DWG: ແຟ້ມແມ່ນ %1; LibreCAD ຮອງຮັບ %2 ແລະ ໃໝ່ກວ່າ. ກະລຸນາແປງດ້ວຍ GNU LibreDWG ຫຼື ບັນທຶກໃໝ່ຈາກເຄື່ອງມື CAD ອື່ນ.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4154"/>
@@ -27559,62 +13076,6 @@ Do you want to replace it?</source>
         <translation>2.11 ມມ</translation>
     </message>
     <message>
-        <source>WCS</source>
-        <translation type="vanished">WCS</translation>
-    </message>
-    <message>
-        <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation type="vanished">ອັດຕາສ່ວນການພິມ %1 ບໍ່ຖືກຕ້ອງ. ບໍ່ສາມາດປັບຕົວຢ່າງການພິມໃຫ້ພໍດີກັບໜ້າເຈ້ຍໄດ້</translation>
-    </message>
-    <message>
-        <source>Export to PDF</source>
-        <translation type="vanished">ສົ່ງອອກເປັນ PDF</translation>
-    </message>
-    <message>
-        <source>PDF files (*.pdf);;All files (*.*)</source>
-        <translation type="vanished">ໄຟລ໌ PDF (*.pdf);;ທຸກໄຟລ໌ (*.*)</translation>
-    </message>
-    <message>
-        <source>Left-</source>
-        <translation type="vanished">ຊ້າຍ-</translation>
-    </message>
-    <message>
-        <source>Middle-</source>
-        <translation type="vanished">ກາງ-</translation>
-    </message>
-    <message>
-        <source>Right-</source>
-        <translation type="vanished">ຂວາ-</translation>
-    </message>
-    <message>
-        <source>Forward-</source>
-        <translation type="vanished">ໄປໜ້າ-</translation>
-    </message>
-    <message>
-        <source>Back-</source>
-        <translation type="vanished">ກັບຄືນ-</translation>
-    </message>
-    <message>
-        <source>Task-</source>
-        <translation type="vanished">ໜ້າວຽກ-</translation>
-    </message>
-    <message>
-        <source>Click</source>
-        <translation type="vanished">ຄລິກ</translation>
-    </message>
-    <message>
-        <source>Double-Click</source>
-        <translation type="vanished">ດັບເບິນຄລິກ</translation>
-    </message>
-    <message>
-        <source>Any</source>
-        <translation type="vanished">ອັນໃດກໍໄດ້</translation>
-    </message>
-    <message>
-        <source>Either</source>
-        <translation type="vanished">ຢ່າງໃດຢ່າງໜຶ່ງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="64"/>
         <source>Block</source>
         <translation type="unfinished">ບລັອກ</translation>
@@ -27712,86 +13173,14 @@ Do you want to replace it?</source>
         <translation>ວົງມົນ</translation>
     </message>
     <message>
-        <source>Arc</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="77"/>
         <source>Polyline</source>
         <translation>ເສັ້ນຕໍ່ເນື່ອງ</translation>
     </message>
     <message>
-        <source>Spline</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
-    </message>
-    <message>
-        <source>Spline by Points</source>
-        <translation type="vanished">ເສັ້ນສະປລາຍຕາມຈຸດ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="68"/>
         <source>Ellipse</source>
         <translation>ວົງລີ</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">ຈຸດ</translation>
-    </message>
-    <message>
-        <source>Parabola</source>
-        <translation type="vanished">ພາຣາໂບລາ</translation>
-    </message>
-    <message>
-        <source>Image</source>
-        <translation type="vanished">ຮູບພາບ</translation>
-    </message>
-    <message>
-        <source>Hatch</source>
-        <translation type="vanished">ລວດລາຍ</translation>
-    </message>
-    <message>
-        <source>Insert</source>
-        <translation type="vanished">ແຊກ</translation>
-    </message>
-    <message>
-        <source>Dim. Linear</source>
-        <translation type="vanished">ເສັ້ນມິຕິແບບເສັ້ນຊື່</translation>
-    </message>
-    <message>
-        <source>Dim. Aligned</source>
-        <translation type="vanished">ເສັ້ນມິຕິແບບຂະໜານອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Dim. Diametric</source>
-        <translation type="vanished">ເສັ້ນມິຕິເສັ້ນຜ່ານສູນກາງ</translation>
-    </message>
-    <message>
-        <source>Dim. Radial</source>
-        <translation type="vanished">ເສັ້ນມິຕິລັດສະໝີ</translation>
-    </message>
-    <message>
-        <source>Dim. Arc</source>
-        <translation type="vanished">ເສັ້ນມິຕິເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Dim. Ordinate</source>
-        <translation type="vanished">ເສັ້ນມິຕິແບບພິກັດ</translation>
-    </message>
-    <message>
-        <source>Leader</source>
-        <translation type="vanished">ເສັ້ນຊີ້ບອກ</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">ບໍ່ມີ</translation>
-    </message>
-    <message>
-        <source>[Override]</source>
-        <translation type="vanished">[ແທນທີ່]</translation>
-    </message>
-    <message>
-        <source>Draft</source>
-        <translation type="vanished">ສະບັບຮ່າງ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="498"/>
@@ -27802,14 +13191,6 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອສ້າງບລັອກ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກເສັ້ນຂອບ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionblockscreate.cpp" line="149"/>
         <source>Specify reference point</source>
         <translation>ກຳນົດຈຸດອ້າງອີງ</translation>
@@ -27818,17 +13199,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/rs_actionblockscreate.cpp" line="150"/>
         <source>Cancel</source>
         <translation type="unfinished">ຍົກເລີກ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອແຍກອົງປະກອບ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">ເລືອກແລະແຍກອົງປະກອບ</translation>
     </message>
 </context>
 <context>
@@ -27913,134 +13283,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDefault</name>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">ກຳລັງເລືອກ</translation>
-    </message>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">ກຳລັງຍົກເລີກການເລືອກ</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">ອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">ທີ່ຕັດກັບຂອບເຂດ</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">ທີ່ຢູ່ໃນຂອບເຂດ</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">ເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Length: </source>
-        <translation type="vanished">ຄວາມຍາວ: </translation>
-    </message>
-    <message>
-        <source>Angle: </source>
-        <translation type="vanished">ມຸມ: </translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">ອອບເຊັດ</translation>
-    </message>
-    <message>
-        <source>New Position</source>
-        <translation type="vanished">ຕຳແໜ່ງໃໝ່</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">ຄັດລອກອັອບເຊັດ</translation>
-    </message>
-    <message>
-        <source>Move Offset</source>
-        <translation type="vanished">ຍ້າຍອັອບເຊັດ</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ລັດສະໝີ:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">ສູນກາງ:</translation>
-    </message>
-    <message>
-        <source>Angle Length:</source>
-        <translation type="vanished">ຄວາມຍາວມຸມ:</translation>
-    </message>
-    <message>
-        <source>Chord Length:</source>
-        <translation type="vanished">ຄວາມຍາວຄອດ:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">ຄວາມສູງ:</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">ວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Set new position</source>
-        <translation type="vanished">ຕັ້ງຕຳແໜ່ງໃໝ່</translation>
-    </message>
-    <message>
-        <source>Create a copy</source>
-        <translation type="vanished">ສ້າງສຳເນາະ</translation>
-    </message>
-    <message>
-        <source>Lengthen Line</source>
-        <translation type="vanished">ຢືດເສັ້ນຊື່</translation>
-    </message>
-    <message>
-        <source>Lengthen/Scale</source>
-        <translation type="vanished">ຢືດ/ປ່ຽນມາດຕາສ່ວນ</translation>
-    </message>
-    <message>
-        <source>Lengthen Chord</source>
-        <translation type="vanished">ຢືດຄອດ</translation>
-    </message>
-    <message>
-        <source>Move in Previous segment direction</source>
-        <translation type="vanished">ຍ້າຍໄປຕາມທິດທາງສ່ວນກ່ອນໜ້າ</translation>
-    </message>
-    <message>
-        <source>Move in Next segment direction</source>
-        <translation type="vanished">ຍ້າຍໄປຕາມທິດທາງສ່ວນຖັດໄປ</translation>
-    </message>
-    <message>
-        <source>Set new ref position</source>
-        <translation type="vanished">ຕັ້ງຕຳແໜ່ງອ້າງອີງໃໝ່</translation>
-    </message>
-    <message>
-        <source>Zoom, pan or select entity</source>
-        <translation type="vanished">ຊູມ, ເລື່ອນ ຫຼື ເລືອກອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Scroll Horizontally / Select Contour</source>
-        <translation type="vanished">ເລື່ອນທາງນອນ / ເລືອກເສັ້ນຂອບ</translation>
-    </message>
-    <message>
-        <source>Pan / Scroll Vertically / Select Child entities</source>
-        <translation type="vanished">ເລື່ອນ / ເລື່ອນທາງຕັ້ງ / ເລືອກອົງປະກອບຍ່ອຍ</translation>
-    </message>
-    <message>
-        <source>Select/Deselect entities</source>
-        <translation type="vanished">ເລືອກ/ຍົກເລີກການເລືອກອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">ເລືອກສ່ວນທີ່ຕັດກັນ</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actiondefault.cpp" line="500"/>
         <source>Choose second edge</source>
@@ -28212,17 +13454,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">ປ້ອນມູມເສັ້ນມິຕິ:</translation>
     </message>
     <message>
-        <source>Switch Direction</source>
-        <translation type="vanished">ສະຫຼັບທິດທາງ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="293"/>
         <source>Specify dimension line location</source>
         <translation>ກຳນົດຕຳແໜ່ງເສັ້ນມິຕິ</translation>
-    </message>
-    <message>
-        <source>Snap to Adjacent Dim</source>
-        <translation type="vanished">ເກາະຈັບໃສ່ມິຕິຂ້າງຄຽງ</translation>
     </message>
 </context>
 <context>
@@ -28261,10 +13495,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">ຄວາມຍາວຄອດຕ້ອງບໍ່ເປັນສູນ</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="261"/>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="273"/>
@@ -28314,34 +13544,14 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify start point</source>
-        <translation type="vanished">ກຳນົດຈຸດເລີ່ມຕົ້ນ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="343"/>
         <source>Specify start angle:</source>
         <translation>ກຳນົດມຸມເລີ່ມຕົ້ນ:</translation>
     </message>
     <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">ກຳນົດມຸມສິ້ນສຸດ ຫຼື [ມຸມ/ຄວາມຍາວຄອດ]</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງທາງເລືອກ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="351"/>
         <source>Specify included angle:</source>
         <translation>ກຳນົດມຸມລວມ:</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">ກຳນົດຄວາມຍາວຄອດ (ຄ່າລົບສຳລັບຈຸດທາງເລືອກ):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">ໃຊ້ຈຸດເສັ້ນໂຄ້ງທາງເລືອກ</translation>
     </message>
 </context>
 <context>
@@ -28373,10 +13583,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify third point</source>
-        <translation type="vanished">ກຳນົດຈຸດທີສາມ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify startpoint or [center]</source>
         <translation>ກຳນົດຈຸດເລີ່ມຕົ້ນ ຫຼື [ສູນກາງ]</translation>
@@ -28406,17 +13612,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງທາງເລືອກ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="235"/>
         <source>Specify end point</source>
         <translation>ກຳນົດຈຸດສິ້ນສຸດ</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງທາງເລືອກ</translation>
     </message>
 </context>
 <context>
@@ -28688,10 +13886,6 @@ This block cannot be inserted.</source>
         <translation>ກຳນົດ ເສັ້ນຊື່/ເສັ້ນໂຄ້ງ/ວົງມົນ</translation>
     </message>
     <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">ກຳນົດ ເສັ້ນຊື່/ເສັ້ນໂຄ້ງ/ວົງມົນ ອື່ນ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="334"/>
         <source>Cancel</source>
         <translation type="unfinished">ຍົກເລີກ</translation>
@@ -28730,10 +13924,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="463"/>
         <source>Specify the first line/arc/circle</source>
         <translation>ກຳນົດ ເສັ້ນຊື່/ເສັ້ນໂຄ້ງ/ວົງມົນ ທຳອິດ</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">ບໍ່ມີວົງມົນສຳຜັດຮ່ວມກັນສຳລັບອົງປະກອບທີ່ເລືອກ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="464"/>
@@ -29007,14 +14197,6 @@ This block cannot be inserted.</source>
         <source>Total hatch area = %1</source>
         <translation>ພື້ນທີ່ລາຍຕັດທັງໝົດ = %1</translation>
     </message>
-    <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອສ້າງລາຍຕັດ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Hatch immediately after selection</source>
-        <translation type="vanished">ສ້າງລາຍຕັດທັນທີຫຼັງການເລືອກ</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>
@@ -29114,10 +14296,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished">ຍົກເລີກ</translation>
     </message>
     <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">ທິດທາງທາງເລືອກ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="305"/>
         <source>Enter angle:</source>
         <translation>ປ້ອນມຸມ:</translation>
@@ -29136,10 +14314,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished"> ອົງປະກອບຈະຖືກສ້າງຂຶ້ນ</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="236"/>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="253"/>
@@ -29239,10 +14413,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Alternate Point</source>
-        <translation type="vanished">ຈຸດທາງເລືອກ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="189"/>
         <source>Select circle, arc or ellipse</source>
         <translation>ເລືອກວົງມົນ, ເສັ້ນໂຄ້ງ ຫຼື ວົງລີ</translation>
@@ -29250,10 +14420,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished"> ອົງປະກອບຈະຖືກສ້າງຂຶ້ນ</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallel.cpp" line="125"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
@@ -29283,10 +14449,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished"> ອົງປະກອບຈະຖືກສ້າງຂຶ້ນ</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
         <source>Select entity</source>
@@ -29394,26 +14556,6 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineRectangle</name>
     <message>
-        <source>To be created:</source>
-        <translation type="vanished">ທີ່ຈະສ້າງ:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">ຮູບສີ່ແຈສາກ</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">ຄວາມກວ້າງ:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">ຄວາມສູງ:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">ສູນກາງ:</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawlinerectangle.cpp" line="155"/>
         <source>Specify first corner</source>
         <translation>ກຳນົດມຸມທຳອິດ</translation>
@@ -29462,14 +14604,6 @@ This block cannot be inserted.</source>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">ກຳນົດມຸມ</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">ກຳນົດຄວາມຍາວ</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
@@ -29487,10 +14621,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="187"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alternate Point</source>
-        <translation type="vanished">ຈຸດທາງເລືອກ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
@@ -29569,10 +14699,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="678"/>
         <source>Specify first point</source>
         <translation>ກຳນົດຈຸດທຳອິດ</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງທາງເລືອກ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="694"/>
@@ -29695,10 +14821,6 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawText</name>
     <message>
-        <source>Text: </source>
-        <translation type="vanished">ຂໍ້ຄວາມ: </translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="281"/>
         <source>Specify insertion point</source>
         <translation>ກຳນົດຈຸດແຊກ</translation>
@@ -29739,54 +14861,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອຕັດ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກເສັ້ນຂອບ</translation>
-    </message>
-    <message>
-        <source>Set point after selection</source>
-        <translation type="vanished">ຕັ້ງຈຸດຫຼັງການເລືອກ</translation>
-    </message>
-    <message>
-        <source>Cut right after selection</source>
-        <translation type="vanished">ຕັດທັນທີຫຼັງການເລືອກ</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອຄັດລອກ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Copy right after selection</source>
-        <translation type="vanished">ຄັດລອກທັນທີຫຼັງການເລືອກ</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">ກຳນົດຈຸດອ້າງອີງ</translation>
-    </message>
-    <message>
-        <source>Paste Immediately</source>
-        <translation type="vanished">ວາງທັນທີ</translation>
-    </message>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="vanished">ຕັ້ງຈຸດອ້າງອີງໃນການວາງ</translation>
-    </message>
-    <message>
-        <source>Paste Multiple</source>
-        <translation type="vanished">ວາງຫຼາຍອັນ</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="vanished">ຕັ້ງຈຸດອ້າງອີງໃນການວາງ</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actioneditpaste.cpp" line="120"/>
         <source>Set reference point</source>
@@ -29814,32 +14889,6 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionInfoAngle</name>
     <message>
-        <source>Angle: %1
-Complementary: %2
-Supplementary: %3
-Alternative: %4
-</source>
-        <translation type="vanished">ມຸມ: %1
-ມຸມປະກອບໜຶ່ງສາກ: %2
-ມຸມປະກອບສອງສາກ: %3
-ມຸມທາງເລືອກ: %4
-</translation>
-    </message>
-    <message>
-        <source>Angle: %1
-Complementary: %2
-Supplementary: %3
-Alternative: %4
-Intersection: (%5 , %6)
-Intersection :@(%7, %8)</source>
-        <translation type="vanished">ມຸມ: %1
-ມຸມປະກອບໜຶ່ງສາກ: %2
-ມຸມປະກອບສອງສາກ: %3
-ມຸມທາງເລືອກ: %4
-ຈຸດຕັດ: (%5 , %6)
-ຈຸດຕັດ ສຳພັນ: @(%7, %8)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="94"/>
         <source>Angle: %1</source>
         <translation type="unfinished"></translation>
@@ -29865,65 +14914,9 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Single Line Mode</source>
-        <translation type="vanished">ໂໝດເສັ້ນດ່ຽວ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="144"/>
         <source>Specify second line</source>
         <translation>ກຳນົດເສັ້ນທີສອງ</translation>
-    </message>
-    <message>
-        <source>Restart with first line selection</source>
-        <translation type="vanished">ເລີ່ມໃໝ່ດ້ວຍການເລືອກເສັ້ນທຳອິດ</translation>
-    </message>
-    <message>
-        <source>Angle Info</source>
-        <translation type="vanished">ຂໍ້ມູນມຸມ</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Complementary:</source>
-        <translation type="vanished">ມຸມປະກອບໜຶ່ງສາກ:</translation>
-    </message>
-    <message>
-        <source>Supplementary:</source>
-        <translation type="vanished">ມຸມປະກອບສອງສາກ:</translation>
-    </message>
-    <message>
-        <source>Alternative: </source>
-        <translation type="vanished">ມຸມທາງເລືອກ: </translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">ເສັ້ນຈາກ:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">ເສັ້ນໄປຫາ:</translation>
-    </message>
-    <message>
-        <source>Line Angle 1:</source>
-        <translation type="vanished">ມຸມເສັ້ນ 1:</translation>
-    </message>
-    <message>
-        <source>Line Angle 2:</source>
-        <translation type="vanished">ມຸມເສັ້ນ 2:</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">ຈຸດຕັດ:</translation>
-    </message>
-    <message>
-        <source>Line 1 Angle:</source>
-        <translation type="vanished">ມຸມເສັ້ນ 1:</translation>
-    </message>
-    <message>
-        <source>Line 2 Angle:</source>
-        <translation type="vanished">ມຸມເສັ້ນ 2:</translation>
     </message>
 </context>
 <context>
@@ -29932,14 +14925,6 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="92"/>
         <source>Circumference: %1</source>
         <translation>ເສັ້ນຮອບຮູບ: %1</translation>
-    </message>
-    <message>
-        <source>Closing Point: %1</source>
-        <translation type="vanished">ຈຸດປິດ: %1</translation>
-    </message>
-    <message>
-        <source>Point: %1</source>
-        <translation type="vanished">ຈຸດ: %1</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="137"/>
@@ -29968,10 +14953,6 @@ Intersection :@(%7, %8)</source>
         <translation>ກຳນົດຈຸດຖັດໄປຂອງຮູບຫຼາຍແຈ</translation>
     </message>
     <message>
-        <source>Specify point and complete</source>
-        <translation type="vanished">ກຳນົດຈຸດແລະເຮັດໃຫ້ສຳເລັດ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="93"/>
         <source>Area: %1 %2^2</source>
         <translation>ເນື້ອທີ່: %1 %2^2</translation>
@@ -29979,38 +14960,6 @@ Intersection :@(%7, %8)</source>
 </context>
 <context>
     <name>RS_ActionInfoDist</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Start: (%6 , %7)
-End: (%8 , %9)</source>
-        <translation type="vanished">ໄລຍະຫ່າງ: %1
-ພິກັດສາກ: (%2 , %3)
-ພິກັດຂົ້ວ: (%4 &lt; %5)
-ເລີ່ມຕົ້ນ: (%6 , %7)
-ສິ້ນສຸດ: (%8 , %9)</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">ຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">ຈາກ:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">ໄປຫາ:</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="80"/>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
@@ -30032,10 +14981,6 @@ End: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Don&apos;t move relative zero</source>
-        <translation type="vanished">ບໍ່ຍ້າຍຈຸດສູນສຳພັນ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="174"/>
         <source>Specify second point of distance</source>
         <translation>ກຳນົດຈຸດທີສອງຂອງໄລຍະຫ່າງ</translation>
@@ -30043,18 +14988,6 @@ End: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">ໄລຍະຫ່າງ: %1
-ພິກັດສາກ: (%2 , %3)
-ພິກັດຂົ້ວ: (%4 &lt; %5)
-ຈຸດເທິງອົງປະກອບ: (%6 , %7)
-ຈຸດ: (%8 , %9)</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="73"/>
         <source>Distance: %1</source>
@@ -30076,37 +15009,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">ບໍ່ເກາະຈັບອົງປະກອບຍ່ອຍໃນກຸ່ມ</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">ຈຸດສຳພັນຢູ່ເທິງອົງປະກອບ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="160"/>
         <source>Specify point</source>
         <translation>ກຳນົດຈຸດ</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">ຂໍ້ມູນ</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">ຈາກ:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">ໄປຫາ:</translation>
     </message>
 </context>
 <context>
@@ -30143,45 +15048,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/rs_actioninfototallength.cpp" line="61"/>
         <source>At least one of the selected entities cannot be measured.</source>
         <translation>ມີຢ່າງໜ້ອຍໜຶ່ງອົງປະກອບທີ່ເລືອກບໍ່ສາມາດວັດແທກໄດ້.</translation>
-    </message>
-    <message>
-        <source>Selected:</source>
-        <translation type="vanished">ເລືອກແລ້ວ:</translation>
-    </message>
-    <message>
-        <source>Total Length:</source>
-        <translation type="vanished">ຄວາມຍາວທັງໝົດ:</translation>
-    </message>
-    <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອວັດແທກຄວາມຍາວທັງໝົດ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກເສັ້ນຂອບ</translation>
-    </message>
-    <message>
-        <source>Select and finish</source>
-        <translation type="vanished">ເລືອກແລະສຳເລັດ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionInterface</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">ກັບຄືນ</translation>
-    </message>
-    <message>
-        <source>SHIFT:</source>
-        <translation type="vanished">SHIFT:</translation>
-    </message>
-    <message>
-        <source>CTRL:</source>
-        <translation type="vanished">CTRL:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ຍົກເລີກ</translation>
     </message>
 </context>
 <context>
@@ -30232,58 +15098,7 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອແກ້ໄຂຄຸນລັກສະນະ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">ແກ້ໄຂຄຸນລັກສະນະທັນທີຫຼັງການເລືອກ</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກເສັ້ນຂອບ</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">ເສັ້ນທີ່ເລືອກຂະໜານກັນ</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">ເສັ້ນທີ່ເລືອກບໍ່ໄດ້ຢູ່ໃນເສັ້ນຕໍ່ເນື່ອງດຽວກັນ</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">ຕັດຂອບ</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">ຈຸດຕັດ:</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">ຈຸດ 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">ຈຸດ 2:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">ເລືອກອົງປະກອບບໍ່ຖືກຕ້ອງ (ບໍ່ສາມາດຕັດຂອບໄດ້).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">ເລືອກອົງປະກອບບໍ່ຖືກຕ້ອງ (ບໍ່ແມ່ນອົງປະກອບດ່ຽວ).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">ເລືອກອົງປະກອບບໍ່ຖືກຕ້ອງ (ບໍ່ສາມາດຕັດຮ່ວມກັບອົງປະກອບທຳອິດໄດ້).</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="193"/>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="206"/>
@@ -30326,22 +15141,10 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyCut</name>
     <message>
-        <source>Divide</source>
-        <translation type="vanished">ແບ່ງ</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">ທີ່:</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="103"/>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="116"/>
         <source>No Entity found.</source>
         <translation>ບໍ່ພົບອົງປະກອບ.</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">ຈຸດຕັດຕ້ອງບໍ່ແມ່ນຈຸດປາຍຂອງອົງປະກອບ.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="118"/>
@@ -30377,21 +15180,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
         <translation>ອົງປະກອບຕ້ອງເປັນ ເສັ້ນຊື່, ເສັ້ນໂຄ້ງ, ວົງມົນ, ວົງລີ ຫຼື ເສັ້ນສະປລາຍ.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອລຶບ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">ລຶບທັນທີຫຼັງການເລືອກ</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກເສັ້ນຂອບ</translation>
     </message>
 </context>
 <context>
@@ -30484,58 +15272,7 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອແຍກອົງປະກອບຂໍ້ຄວາມ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">ແຍກອົງປະກອບທັນທີຫຼັງການເລືອກ</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">ສະທ້ອນ</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">ມຸມ (ທາງເລືອກ):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">ເສັ້ນຈາກ:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">ເສັ້ນໄປຫາ:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອກັບດ້ານ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກເສັ້ນຂອບ</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">ກຳນົດເສັ້ນແກນກັບດ້ານ</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">ພິກທາງຕັ້ງ</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">ພິກທາງນອນ</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="161"/>
         <source>Specify first point of mirror line</source>
@@ -30560,14 +15297,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyMove</name>
     <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">ກຳລັງຍ້າຍອັອບເຊັດ</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">ຄັດລອກອັອບເຊັດ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="150"/>
         <source>Invalid number of copies, use %1 </source>
         <translation type="unfinished"></translation>
@@ -30586,22 +15315,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="175"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">ສ້າງສຳເນາະ</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອຍ້າຍ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">ຍ້າຍທັນທີຫຼັງຈາກເລືອກແລ້ວ</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກຂອບເຂດ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="174"/>
@@ -30633,41 +15346,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອຍ້າຍ ແລະ ໝູນ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">ຍ້າຍ ແລະ ໝູນທັນທີຫຼັງຈາກເລືອກແລ້ວ</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກຂອບເຂດ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="239"/>
         <source>Specify target point</source>
         <translation>ກຳນົດຈຸດເປົ້າໝາຍ</translation>
-    </message>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">ກຳລັງຍ້າຍພ້ອມກັບການໝູນ</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">ຕົ້ນທາງ:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">ເປົ້າໝາຍ:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ (Offset):</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="243"/>
@@ -30678,14 +15359,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyOffset</name>
     <message>
-        <source>Offset</source>
-        <translation type="vanished">ອອບເຊັດ</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ:</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Specify direction of offset</source>
         <translation>ກຳນົດທິດທາງຂອງການອັອບເຊັດ</translation>
@@ -30695,41 +15368,6 @@ Point: (%8 , %9)</source>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">ກຳນົດຈຸດອ້າງອີງສໍາລັບທິດທາງຂອງການອັອບເຊັດ</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle, arc or ellipse to create offset (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເສັ້ນ, ເສັ້ນຕໍ່ເນື່ອງ, ວົງມົນ, ເສັ້ນໂຄ້ງ ຫຼື ວົງມົນຮີ ເພື່ອສ້າງອັອບເຊັດ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເສັ້ນ, ເສັ້ນຕໍ່ເນື່ອງ, ວົງມົນ ຫຼື ເສັ້ນໂຄ້ງ ເພື່ອສ້າງອັອບເຊັດ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">ອັອບເຊັດທັນທີຫຼັງຈາກເລືອກແລ້ວ</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກຂອບເຂດ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອປີ້ນທິດທາງ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">ປີ້ນທິດທາງທັນທີຫຼັງຈາກເລືອກແລ້ວ</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກຂອບເຂດ</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate</name>
@@ -30737,54 +15375,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="149"/>
         <source>Specify reference point</source>
         <translation>ກຳນົດຈຸດອ້າງອີງ</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອໝູນ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">ການໝູນ</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">ຈຸດຕົ້ນທາງ:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">ຈຸດເປົ້າໝາຍ:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ (Offset):</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">ຈຸດອ້າງອີງ:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">ຈຸດໃຈກາງ:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">ມຸມທີສອງ:</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">ໝູນທັນທີຫຼັງຈາກເລືອກແລ້ວ</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກຂອບເຂດ</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">ຈັບຈຸດໃຈກາງຂອງສິ່ງທີ່ເລືອກ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="144"/>
@@ -30803,45 +15393,9 @@ Point: (%8 , %9)</source>
         <source>Specify target point to rotate to</source>
         <translation>ກຳນົດຈຸດເປົ້າໝາຍທີ່ຈະໝູນໄປ</translation>
     </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">ກຳນົດຈຸດເປົ້າໝາຍສໍາລັບການໝູນຮອບຈຸດອ້າງອີງ</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">ການໝູນສອງຄັ້ງ</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">ຈຸດໃຈກາງ 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">ມຸມ 1:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">ຈຸດໃຈກາງ 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">ມຸມ 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">ເລືອກສໍາລັບການໝູນສອງແກນ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">ໝູນ 2 ແກນທັນທີຫຼັງຈາກເລືອກແລ້ວ</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກຂອບເຂດ</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate2.cpp" line="148"/>
         <source>Specify absolute reference point</source>
@@ -30865,18 +15419,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">ເຮັດມຸມມົນ</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">ຈຸດທີ 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">ຈຸດທີ 2:</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="328"/>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="341"/>
@@ -30913,34 +15455,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyScale</name>
     <message>
-        <source>Scale</source>
-        <translation type="vanished">ມາດຕາສ່ວນ</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">ຈຸດໃຈກາງ:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">ຈຸດຕົ້ນທາງ:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">ຈຸດເປົ້າໝາຍ:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ (Offset):</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">ປັບຂະໜາດຕາມແກນ X:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">ປັບຂະໜາດຕາມແກນ Y:</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="238"/>
         <source>Specify scale center</source>
         <translation>ກຳນົດຈຸດໃຈກາງການປັບຂະໜາດ</translation>
@@ -30958,61 +15472,13 @@ Point: (%8 , %9)</source>
         <translation type="unfinished">ກຳນົດຈຸດອ້າງອີງ</translation>
     </message>
     <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">ຈັບຈຸດໃຈກາງຂອງສິ່ງທີ່ເລືອກ</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">ກຳນົດຈຸດຕົ້ນທາງ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="247"/>
         <source>Specify target point</source>
         <translation>ກຳນົດຈຸດເປົ້າໝາຍ</translation>
     </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">ເກາະຈັບອິດສະຫຼະ</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເພື່ອປັບຂະໜາດ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">ປັບຂະໜາດທັນທີຫຼັງຈາກເລືອກແລ້ວ</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກຂອບເຂດ</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">ຢືດ (Stretch)</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">ມຸມເລີ່ມຕົ້ນ:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">ມຸມສິ້ນສຸດ:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">ຈຸດອ້າງອີງ:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">ຈຸດເປົ້າໝາຍ:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ (Offset):</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="175"/>
         <source>Specify first corner</source>
@@ -31049,22 +15515,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrim</name>
     <message>
-        <source>Trim</source>
-        <translation type="vanished">ຕັດຂອບ</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">ຕັດສອງສ່ວນ</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">ຈຸດຕັດ:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">ຈຸດຕັດ 2:</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="177"/>
         <source>Select first trim entity</source>
         <translation>ເລືອກອົງປະກອບທໍາອິດທີ່ຈະຕັດ</translation>
@@ -31100,10 +15550,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
-        <source>No entity found.</source>
-        <translation type="vanished">ບໍ່ພົບອົງປະກອບ.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="101"/>
         <source>No entity found. </source>
         <translation type="unfinished"></translation>
@@ -31133,10 +15579,6 @@ Point: (%8 , %9)</source>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">ເລືອກເສັ້ນ/ເສັ້ນໂຄ້ງທີ່ຈະຕັດ ຫຼື ປ້ອນຄ່າຄວາມຍາວ:</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionOrder</name>
@@ -31149,18 +15591,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/rs_actionorder.cpp" line="151"/>
         <source>Cancel</source>
         <translation type="unfinished">ຍົກເລີກ</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">ເລືອກອົງປະກອບ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">ຈັດລໍາດັບທັນທີຫຼັງຈາກເລືອກແລ້ວ</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກຂອບເຂດ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="150"/>
@@ -31228,10 +15658,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="119"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
         <translation>ຄລິກໃສ່ບ່ອນໃດໜຶ່ງໃກ້ກັບຈຸດເລີ່ມຕົ້ນ ຫຼື ຈຸດສິ້ນສຸດຂອງເສັ້ນຕໍ່ເນື່ອງທີ່ມີຢູ່.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">ປ້ອນຈຳນວນເສັ້ນຕໍ່ເນື່ອງ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="191"/>
@@ -31335,14 +15761,6 @@ Point: (%8 , %9)</source>
         <translation>ຈຸດທີ່ຈະລຶບບໍ່ໄດ້ຢູ່ເທິງອົງປະກອບ.</translation>
     </message>
     <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">ບໍ່ພົບເສັ້ນຕໍ່ເນື່ອງ.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">ຄວນມີຢ່າງໜ້ອຍສອງສ່ວນຂອງເສັ້ນຕໍ່ເນື່ອງຢູ່ລະຫວ່າງຈຸດທີ່ເລືອກ.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
         <source>Specify polyline to delete between two nodes</source>
         <translation>ກຳນົດເສັ້ນຕໍ່ເນື່ອງເພື່ອລຶບລະຫວ່າງສອງໂນດ</translation>
@@ -31442,14 +15860,6 @@ Point: (%8 , %9)</source>
         <translation>ອົງປະກອບຕ້ອງເປັນເສັ້ນຕໍ່ເນື່ອງ (Polyline).</translation>
     </message>
     <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">ສ່ວນທໍາອິດຄວນຢູ່ເທິງເສັ້ນຕໍ່ເນື່ອງທີ່ເລືອກ.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">ສ່ວນທີສອງຄວນຢູ່ເທິງເສັ້ນຕໍ່ເນື່ອງທີ່ເລືອກ ແລະ ບໍ່ແມ່ນສ່ວນດຽວກັບສ່ວນທໍາອິດ.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="145"/>
         <source>Specifying point is invalid.</source>
@@ -31529,22 +15939,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="365"/>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Limit of pages has been exceeded.</source>
-        <translation type="vanished">ເກີນຂີດຈຳກັດຂອງໜ້າແລ້ວ.</translation>
-    </message>
-    <message>
-        <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
-        <translation type="vanished">ລາກດ້ວຍປຸ່ມຊ້າຍເພື່ອວາງຕຳແໜ່ງເຈ້ຍ ຫຼື ດ້ວຍປຸ່ມກາງເພື່ອເລື່ອນ (Pan)</translation>
-    </message>
-    <message>
-        <source>Move Horizontally</source>
-        <translation type="vanished">ຍ້າຍຕາມແນວນອນ</translation>
-    </message>
-    <message>
-        <source>Move Vertically</source>
-        <translation type="vanished">ຍ້າຍຕາມແນວຕັ້ງ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="193"/>
@@ -31683,10 +16077,6 @@ Point: (%8 , %9)</source>
         <source>Entity must be an Atomic Entity.</source>
         <translation>ອົງປະກອບຕ້ອງເປັນອົງປະກອບດ່ຽວ.</translation>
     </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">ກຳນົດອົງປະກອບທີ່ຈະເລືອກ</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionSelectIntersected</name>
@@ -31706,59 +16096,13 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">ເລືອກອົງປະກອບທີ່ຕັດກັນ</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">ເລືອກອົງປະກອບຍ່ອຍ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="143"/>
         <source>Choose second point of intersection line</source>
         <translation>ເລືອກຈຸດທີສອງຂອງເສັ້ນຕັດ</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">ກຳນົດອົງປະກອບທີ່ມີເລເຢີ ທີ່ຕ້ອງການ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">ກຳນົດອົງປະກອບທີ່ຈະເລືອກ</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">ເລືອກຂອບເຂດ</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">ກຳລັງຍົກເລີກການເລືອກ</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">ກຳລັງເລືອກ</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">ອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">ທີ່ຕັດກັບກ່ອງ</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">ທີ່ຢູ່ພາຍໃນກ່ອງ</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="181"/>
         <source>Cancel</source>
@@ -31773,22 +16117,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="184"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">ເລືອກສ່ວນທີ່ຕັດກັນ</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">ຍົກເລີກການເລືອກອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">ເລືອກອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">ຍົກເລີກການເລືອກສ່ວນທີ່ຕັດກັນ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="181"/>
@@ -31902,77 +16230,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_Snapper</name>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">ແນວຕັ້ງ</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">ແນວນອນ</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">ຕັ້ງສາກ (Orthogonal)</translation>
-    </message>
-    <message>
-        <source>Grid</source>
-        <translation type="vanished">ຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>Entity</source>
-        <translation type="vanished">ອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Endpoint</source>
-        <translation type="vanished">ຈຸດປາຍ</translation>
-    </message>
-    <message>
-        <source>Intersection</source>
-        <translation type="vanished">ຈຸດຕັດ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">ຈຸດກາງ</translation>
-    </message>
-    <message>
-        <source>Distance</source>
-        <translation type="vanished">ໄລຍະຫ່າງ</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation type="vanished">ໃຈກາງ</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">ມຸມ</translation>
-    </message>
-    <message>
-        <source>Angle Relative</source>
-        <translation type="vanished">ມຸມສຳພັນ</translation>
-    </message>
-    <message>
-        <source>Angle (on Entity)</source>
-        <translation type="vanished">ມຸມ (ເທິງອົງປະກອບ)</translation>
-    </message>
-    <message>
-        <source>Dist: </source>
-        <translation type="vanished">ໄລຍະ: </translation>
-    </message>
-    <message>
-        <source>Angle: </source>
-        <translation type="vanished">ມຸມ: </translation>
-    </message>
-    <message>
-        <source>dX: </source>
-        <translation type="vanished">dX: </translation>
-    </message>
-    <message>
-        <source>dY: </source>
-        <translation type="vanished">dY: </translation>
-    </message>
-</context>
-<context>
     <name>TextFileViewer</name>
     <message>
         <location filename="../src/ui/generic/textfileviewer.ui" line="14"/>
@@ -32006,26 +16263,14 @@ Point: (%8 , %9)</source>
         <translation>ຕົວເລືອກເສັ້ນໂຄ້ງສຳຜັດ</translation>
     </message>
     <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະສ້າງເສັ້ນໂຄ້ງສຳຜັດຕາມລັດສະໝີທີ່ກຳນົດ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="66"/>
         <source>Radius of the tangential arc</source>
         <translation>ລັດສະໝີຂອງເສັ້ນໂຄ້ງສຳຜັດ</translation>
     </message>
     <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະສ້າງເສັ້ນໂຄ້ງຕາມມຸມທີ່ກຳນົດ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="85"/>
         <source>Total subtending angle of the tangential arc</source>
         <translation>ມຸມລວມຂອງເສັ້ນໂຄ້ງສຳຜັດ</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">ເລືອກລັດສະໝີຈາກຮູບແຕ້ມ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
@@ -32038,10 +16283,6 @@ Point: (%8 , %9)</source>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
         <translation>ມຸມ</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກຮູບແຕ້ມ</translation>
     </message>
 </context>
 <context>
@@ -32067,25 +16308,9 @@ Point: (%8 , %9)</source>
         <translation>ຄວາມຍາວ 1:</translation>
     </message>
     <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">ຄວາມຍາວຂອງມຸມຕັດໃນແນວແກນ X.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວທໍາອິດຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="92"/>
         <source>Length 2:</source>
         <translation>ຄວາມຍາວ 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">ຄວາມຍາວຂອງມຸມຕັດໃນແນວແກນ Y. </translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວທີສອງຈາກຮູບແຕ້ມ</translation>
     </message>
 </context>
 <context>
@@ -32099,14 +16324,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="50"/>
         <source>Radius:</source>
         <translation>ລັດສະໝີ:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">ລັດສະໝີຂອງວົງມົນ</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">ເລືອກລັດສະໝີຈາກຮູບແຕ້ມ</translation>
     </message>
 </context>
 <context>
@@ -32131,10 +16348,6 @@ Point: (%8 , %9)</source>
         <source>Radius of tangential circle</source>
         <translation>ລັດສະໝີຂອງວົງມົນສຳຜັດ</translation>
     </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">ເລືອກລັດສະໝີຈາກຮູບແຕ້ມ</translation>
-    </message>
 </context>
 <context>
     <name>Ui_DimLinearOptions</name>
@@ -32148,10 +16361,6 @@ Point: (%8 , %9)</source>
         <source>Angle:</source>
         <translation>ມຸມ:</translation>
     </message>
-    <message>
-        <source>Angle of dimension</source>
-        <translation type="vanished">ມຸມຂອງມິຕິ</translation>
-    </message>
 </context>
 <context>
     <name>Ui_DimOptions</name>
@@ -32161,29 +16370,9 @@ Point: (%8 , %9)</source>
         <translation>ຕົວເລືອກມິຕິ</translation>
     </message>
     <message>
-        <source>Style:</source>
-        <translation type="vanished">ຮູບແບບ:</translation>
-    </message>
-    <message>
-        <source>Dimension style</source>
-        <translation type="vanished">ຮູບແບບມິຕິ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="62"/>
         <source>Label:</source>
         <translation>ປ້າຍກຳກັບ:</translation>
-    </message>
-    <message>
-        <source>Prefix character</source>
-        <translation type="vanished">ຕົວອັກສອນນຳໜ້າ</translation>
-    </message>
-    <message>
-        <source>User-specified dimension&apos;s label. Enter value or either &quot;&lt;&gt;&quot; or just leave empty for automatic measurement.</source>
-        <translation type="vanished">ປ້າຍມິຕິທີ່ຜູ້ໃຊ້ກຳນົດເອງ. ປ້ອນຄ່າ ຫຼື &quot;&lt;&gt;&quot; ຫຼື ປະຫວ່າງໄວ້ເພື່ອໃຫ້ວັດແທກອັດຕະໂນມັດ.</translation>
-    </message>
-    <message>
-        <source>Suffix symbol</source>
-        <translation type="vanished">ສັນຍະລັກຕໍ່ທ້າຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="109"/>
@@ -32221,54 +16410,6 @@ Point: (%8 , %9)</source>
         <source>...</source>
         <translation>...</translation>
     </message>
-    <message>
-        <source>Tolerance - Upper Limit</source>
-        <translation type="vanished">ຄ່າຄາດເຄື່ອນ - ຂີດຈຳກັດເທິງ</translation>
-    </message>
-    <message>
-        <source>Tolerance - Lower Limit</source>
-        <translation type="vanished">ຄ່າຄາດເຄື່ອນ - ຂີດຈຳກັດລຸ່ມ</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Dimension angle</source>
-        <translation type="vanished">ມຸມມິຕິ</translation>
-    </message>
-    <message>
-        <source>Horizontal Dimension</source>
-        <translation type="vanished">ມິຕິແນວນອນ</translation>
-    </message>
-    <message>
-        <source>Vertical Dimension</source>
-        <translation type="vanished">ມິຕິແນວຕັ້ງ</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">ໄລຍະຫ່າງ:</translation>
-    </message>
-    <message>
-        <source>Distance between dimensions in baseline</source>
-        <translation type="vanished">ໄລຍະຫ່າງລະຫວ່າງມິຕິໃນເສັ້ນພື້ນຖານ</translation>
-    </message>
-    <message>
-        <source>If checked, distance between dimenions is defined by mouse</source>
-        <translation type="vanished">ຖ້າເລືອກ, ໄລຍະຫ່າງລະຫວ່າງມິຕິຈະຖືກກຳນົດດ້ວຍເມົ້າ</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ອິດສະຫຼະ</translation>
-    </message>
-    <message>
-        <source>Angle for dimension</source>
-        <translation type="vanished">ມຸມສຳລັບມິຕິ</translation>
-    </message>
-    <message>
-        <source>If checked, angle for dimension is defined by mouse</source>
-        <translation type="vanished">ຖ້າເລືອກ, ມຸມສຳລັບມິຕິຈະຖືກກຳນົດດ້ວຍເມົ້າ</translation>
-    </message>
 </context>
 <context>
     <name>Ui_ImageOptions</name>
@@ -32291,18 +16432,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="70"/>
         <source>Factor:</source>
         <translation type="unfinished">ອັດຕາສ່ວນ:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">ອັດຕາສ່ວນຂະໜາດ:</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">DPI:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="86"/>
@@ -32363,18 +16492,6 @@ Point: (%8 , %9)</source>
         <translation>ຈຳນວນແຖວ</translation>
     </message>
     <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງແຖວຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງຄໍລຳຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="235"/>
         <source>Spacing:</source>
         <translation>ໄລຍະຫ່າງ:</translation>
@@ -32408,10 +16525,6 @@ Point: (%8 , %9)</source>
         <translation>ມຸມການໝູນ</translation>
     </message>
     <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="70"/>
         <source>Factor:</source>
         <translation>ອັດຕາສ່ວນ:</translation>
@@ -32435,10 +16548,6 @@ Point: (%8 , %9)</source>
         <translation>ມຸມ:</translation>
     </message>
     <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">ຈຸດເທິງເສັ້ນທີ່ສ້າງຂຶ້ນທີ່ຈະຖືກວາງລົງໃນຈຸດແຊກ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="90"/>
         <source>Line angle</source>
         <translation>ມຸມເສັ້ນ</translation>
@@ -32459,10 +16568,6 @@ Point: (%8 , %9)</source>
         <translation>ຈຸດຈັບ (Snap Point):</translation>
     </message>
     <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມເສັ້ນຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
         <source>Start</source>
         <translation>ເລີ່ມຕົ້ນ</translation>
@@ -32476,18 +16581,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="180"/>
         <source>End</source>
         <translation>ສິ້ນສຸດ</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວເສັ້ນຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">ຖ້າເລືອກ, ເສັ້ນຈະຕັ້ງສາກກັບແກນມຸມພື້ນຖານ. ຖ້າບໍ່ດັ່ງນັ້ນ ຈະຕັ້ງສາກກັບແກນໜ້າຈໍ</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">ຕາມແກນມຸມພື້ນຖານ</translation>
     </message>
 </context>
 <context>
@@ -32506,10 +16599,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="66"/>
         <source>Length of bisector</source>
         <translation>ຄວາມຍາວຂອງເສັ້ນແບ່ງເຄິ່ງ</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວເສັ້ນຈາກຮູບແຕ້ມ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="73"/>
@@ -32573,21 +16662,9 @@ Point: (%8 , %9)</source>
         <translation>ທິດທາງ:</translation>
     </message>
     <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">ສ້າງເສັ້ນຕໍ່ເນື່ອງຈາກສ່ວນຂອງເສັ້ນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="103"/>
         <source>Polyline</source>
         <translation>ເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">ເສັ້ນແນວຕັ້ງ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="122"/>
@@ -32595,27 +16672,14 @@ Point: (%8 , %9)</source>
         <translation>Y</translation>
     </message>
     <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">ເສັ້ນຕາມມຸມທີ່ກຳນົດ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="141"/>
         <source>Angle</source>
         <translation>ມຸມ</translation>
     </message>
     <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">ເສັ້ນແນວນອນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="160"/>
         <source>X</source>
         <translation>X</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">ຖ້າເລືອກ, ມຸມຈະສຳພັນກັບສ່ວນກ່ອນໜ້າ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="195"/>
@@ -32653,14 +16717,6 @@ Point: (%8 , %9)</source>
         <translation>ເຮັດຄືນ</translation>
     </message>
     <message>
-        <source>Angle of line</source>
-        <translation type="vanished">ມຸມຂອງເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">ເສັ້ນໄປຫາຈຸດໃດໜຶ່ງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="297"/>
         <source>Point</source>
         <translation>ຈຸດ</translation>
@@ -32684,10 +16740,6 @@ Point: (%8 , %9)</source>
         <translation>ໄລຍະຫ່າງຈາກອົງປະກອບຕົ້ນສະບັບ</translation>
     </message>
     <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="85"/>
         <source>Number:</source>
         <translation>ຈຳນວນ:</translation>
@@ -32704,14 +16756,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="32"/>
         <source>Line Parallel Through Options</source>
         <translation>ຕົວເລືອກເສັ້ນຂະໜານຜ່ານຈຸດ</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະສ້າງເສັ້ນຂະໜານທັງສອງເບື້ອງຂອງອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">ສົມມາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="56"/>
@@ -32755,41 +16799,9 @@ Point: (%8 , %9)</source>
         <translation>ຈຳນວນ:</translation>
     </message>
     <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ມຸມຂອງຮູບຫຼາຍຫຼ່ຽມຈະຖືກເຮັດໃຫ້ມົນ. </translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">ລັດສະໝີ</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຮູບຫຼາຍຫຼ່ຽມຈະຖືກແຕ້ມເປັນເສັ້ນຕໍ່ເນື່ອງ. ຖ້າບໍ່ດັ່ງນັ້ນ ຈະສ້າງເປັນອົງປະກອບແຍກກັນ. </translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">ເສັ້ນຕໍ່ເນື່ອງ</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">ເລືອກລັດສະໝີຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="66"/>
         <source>Number of edges</source>
         <translation>ຈຳນວນຂອບ</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">ລັດສະໝີຄວາມມົນສຳລັບມຸມຂອງຮູບຫຼາຍຫຼ່ຽມ.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈຸດອ້າງອີງຈະເປັນສຳລັບມຸມຂອງຮູບຫຼາຍຫຼ່ຽມ. ຖ້າບໍ່ດັ່ງນັ້ນ ຈະເປັນສຳລັບຈຸດເຄິ່ງກາງຂອງຂອບ. </translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">ມຸມຫາໝຸມ</translation>
     </message>
 </context>
 <context>
@@ -32810,10 +16822,6 @@ Point: (%8 , %9)</source>
         <translation>ມຸມເສັ້ນ</translation>
     </message>
     <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="85"/>
         <source>Length:</source>
         <translation>ຄວາມຍາວ:</translation>
@@ -32822,10 +16830,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="101"/>
         <source>Length of line</source>
         <translation>ຄວາມຍາວເສັ້ນ</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວຈາກຮູບແຕ້ມ</translation>
     </message>
 </context>
 <context>
@@ -32841,21 +16845,9 @@ Point: (%8 , %9)</source>
         <translation>ຂໍ້ຄວາມ:</translation>
     </message>
     <message>
-        <source>Text to insert</source>
-        <translation type="vanished">ຂໍ້ຄວາມທີ່ຈະແຊກ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_mtextoptions.ui" line="91"/>
         <source>Angle:</source>
         <translation>ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">ມຸມການໝູນ</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກຮູບແຕ້ມ</translation>
     </message>
 </context>
 <context>
@@ -32875,58 +16867,6 @@ Point: (%8 , %9)</source>
         <source>Offset from original entity</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">ໄລຍະຫ່າງສຳລັບອັອບເຊັດຈາກອົງປະກອບຕົ້ນສະບັບ</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">ຖ້າເລືອກ, ອົງປະກອບທີ່ສ້າງຂຶ້ນຈະຖືກວາງໄວ້ໃນເລເຢີປັດຈຸບັນ. ຖ້າບໍ່ດັ່ງນັ້ນ ຈະຢູ່ໃນເລເຢີຕົ້ນສະບັບ.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">ໃຊ້ເລເຢີປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">ຈຳນວນສຳເນົາ.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ອົງປະກອບຕົ້ນສະບັບຈະຍັງຄົງຢູ່. ຖ້າບໍ່ດັ່ງນັ້ນ ຈະຖືກລຶບອອກ. </translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ຮັກສາຕົ້ນສະບັບໄວ້</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະໃຊ້ໄລຍະຫ່າງອັອບເຊັດແບບຄົງທີ່. ຖ້າບໍ່ດັ່ງນັ້ນ ຈະກຳນົດດ້ວຍເມົ້າ.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">ໄລຍະຫ່າງຄົງທີ່</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະນຳໃຊ້ຄຸນລັກສະນະປັດຈຸບັນໃຫ້ກັບອົງປະກອບທີ່ສ້າງຂຶ້ນ. ຖ້າບໍ່ດັ່ງນັ້ນ ຈະໃຊ້ຄຸນລັກສະນະຕົ້ນສະບັບ. </translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ໃຊ້ຄຸນລັກສະນະປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະສ້າງສຳເນົາຫຼາຍລາຍການ. </translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">ສຳເນົາຫຼາຍລາຍການ</translation>
-    </message>
 </context>
 <context>
     <name>Ui_MoveRotateOptions</name>
@@ -32936,69 +16876,9 @@ Point: (%8 , %9)</source>
         <translation>ຕົວເລືອກການຍ້າຍ ແລະ ໝູນ</translation>
     </message>
     <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະນຳໃຊ້ຄຸນລັກສະນະປັດຈຸບັນໃຫ້ກັບອົງປະກອບທີ່ສ້າງຂຶ້ນ. ຖ້າບໍ່ດັ່ງນັ້ນ ຈະໃຊ້ຄຸນລັກສະນະຕົ້ນສະບັບ. </translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ໃຊ້ຄຸນລັກສະນະປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະສ້າງສຳເນົາຫຼາຍລາຍການ. </translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">ສຳເນົາຫຼາຍລາຍການ</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ສຳເນົາທັງໝົດຈະຖືກໝູນດ້ວຍມຸມດຽວກັນ. ຖ້າບໍ່ດັ່ງນັ້ນ ມຸມຈະເປັນສັດສ່ວນຕາມຈຳນວນສຳເນົາ. </translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">ມຸມດຽວກັນສຳລັບທຸກສຳເນົາ</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">ມຸມການໝູນ. </translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">ຈຳນວນສຳເນົາ.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">ຖ້າເລືອກ, ມຸມການໝູນຈະຖືກກຳນົດດ້ວຍເມົ້າ. ຖ້າບໍ່ດັ່ງນັ້ນ ຈະໃຊ້ຄ່າທີ່ກຳນົດເອງ.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ອິດສະຫຼະ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="50"/>
         <source>Angle:</source>
         <translation>ມຸມ:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ອົງປະກອບທີ່ສ້າງຂຶ້ນຈະຖືກວາງໄວ້ໃນເລເຢີປັດຈຸບັນ. ຖ້າບໍ່ດັ່ງນັ້ນ ຈະຢູ່ໃນເລເຢີຕົ້ນສະບັບ. </translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">ໃຊ້ເລເຢີປັດຈຸບັນ</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ອົງປະກອບຕົ້ນສະບັບຈະຍັງຄົງຢູ່. ຖ້າບໍ່ດັ່ງນັ້ນ ຈະຖືກລຶບອອກ. </translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ຮັກສາຕົ້ນສະບັບໄວ້</translation>
     </message>
 </context>
 <context>
@@ -33009,30 +16889,14 @@ Point: (%8 , %9)</source>
         <translation>ຕົວເລືອກເສັ້ນຕໍ່ເນື່ອງ</translation>
     </message>
     <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">ເຊື່ອມຕໍ່ປາຍຂອງເສັ້ນຕໍ່ເນື່ອງເພື່ອສ້າງຂອບເຂດແບບປິດ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="53"/>
         <source>Close</source>
         <translation>ປິດ</translation>
     </message>
     <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">ເລີກທຳສຳລັບຈຸດມຸມກ່ອນໜ້າ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="60"/>
         <source>Undo</source>
         <translation>ເລີກທຳ</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">ປະເພດສ່ວນຂອງເສັ້ນ:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">ກຳນົດວ່າສ່ວນໃດຂອງເສັ້ນຕໍ່ເນື່ອງທີ່ຄວນສ້າງ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
@@ -33050,29 +16914,9 @@ Point: (%8 , %9)</source>
         <translation>ລັດສະໝີສຳພັນ</translation>
     </message>
     <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">ມຸມສຳພັນ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="95"/>
         <source>Angle</source>
         <translation>ມຸມ</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງສຳຜັດ</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງສຳຜັດທີ່ມີລັດສະໝີຄົງທີ່</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງສຳຜັດທີ່ມີມຸມຄົງທີ່</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">ເສັ້ນໂຄ້ງພ້ອມມຸມ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="103"/>
@@ -33080,25 +16924,9 @@ Point: (%8 , %9)</source>
         <translation>ລັດສະໝີ:</translation>
     </message>
     <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">ລັດສະໝີຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">ເລືອກລັດສະໝີຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="126"/>
         <source>Angle:</source>
         <translation>ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">ມຸມຂອງເສັ້ນໂຄ້ງ</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກຮູບແຕ້ມ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="181"/>
@@ -33117,18 +16945,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="20"/>
         <source>Print Preview Options</source>
         <translation>ຕົວເລືອກການເບິ່ງກ່ອນພິມ</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">ການວາງລວງນອນ</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">ການຕັ້ງຄ່າຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">ຂະໜາດ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="56"/>
@@ -33166,50 +16982,6 @@ Point: (%8 , %9)</source>
         <translation>ນຳໃຊ້ຂະໜາດການພິມໃຫ້ກັບຄວາມກວ້າງເສັ້ນ</translation>
     </message>
     <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">ການວາງເຈ້ຍແນວນອນ</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">ການວາງເຈ້ຍແນວຕັ້ງ</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">ວາງໜ້າເຈ້ຍໄວ້ໃຈກາງຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">ຊູມໄປທີ່ພື້ນທີ່ພິມ</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">ປັບໃຫ້ພໍດີ 1 ໜ້າ</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">ຖ້າເປີດໃຊ້, ພື້ນທີ່ເຈ້ຍຈະລວມເອົາຈຳນວນໜ້າທີ່ກຳນົດ ເຊິ່ງຈັດລຽງເປັນຄໍລຳ ແລະ ແຖວ</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">ພິມແບບແຍກແຜ່ນ (Tiled Print)</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">ແຖວໜ້າເຈ້ຍ:</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">ຈຳນວນຄໍລຳໜ້າເຈ້ຍ</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">ຄໍລຳໜ້າເຈ້ຍ:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">ຈຳນວນແຖວໜ້າເຈ້ຍ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
         <source>Calculate number of pages needed to contain the drawing</source>
         <translation>ຄໍານວນຈໍານວນໜ້າທີ່ຈໍາເປັນເພື່ອບັນຈຸຮູບແຕ້ມ</translation>
@@ -33237,14 +17009,6 @@ Point: (%8 , %9)</source>
         <source>Radius:</source>
         <translation>ລັດສະໝີ:</translation>
     </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">ລັດສະໝີຄວາມມົນ</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">ເລືອກລັດສະໝີຈາກຮູບແຕ້ມ</translation>
-    </message>
 </context>
 <context>
     <name>Ui_SnapDistOptions</name>
@@ -33258,18 +17022,6 @@ Point: (%8 , %9)</source>
         <source>Distance:</source>
         <translation type="unfinished">ໄລຍະຫ່າງ:</translation>
     </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">ໄລຍະການຈັບຈຸດ:</translation>
-    </message>
-    <message>
-        <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="vanished">ໄລຍະຫ່າງຂອງຈຸດຈັບຈາກຈຸດທີ່ກຳນົດໄວ້ຕອນທໍາອິດ</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing.</source>
-        <translation type="vanished">ເລືອກໄລຍະຫ່າງຈາກຮູບແຕ້ມ.</translation>
-    </message>
 </context>
 <context>
     <name>Ui_SnapMiddleOptions</name>
@@ -33282,10 +17034,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
         <source>Middle Points:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap Middle Points:</source>
-        <translation type="vanished">ຈັບຈຸດເຄິ່ງກາງ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="63"/>
@@ -33306,21 +17054,9 @@ Point: (%8 , %9)</source>
         <translation>ລະດັບ (Degree):</translation>
     </message>
     <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">ລະດັບຂອງເສັ້ນສະປຼາຍທີ່ໃຊ້ສຳລັບການຄຳນວນລະຫວ່າງຈຸດ</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະສ້າງເສັ້ນສະປຼາຍແບບປິດ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="91"/>
         <source>Closed</source>
         <translation>ປິດ</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">ເລີກທຳຈຸດກ່ອນໜ້າ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="104"/>
@@ -33345,14 +17081,6 @@ Point: (%8 , %9)</source>
         <source>Angle:</source>
         <translation>ມຸມ:</translation>
     </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">ມຸມການໝູນ</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">ເລືອກມຸມຈາກຮູບແຕ້ມ</translation>
-    </message>
 </context>
 <context>
     <name>Ui_TrimAmountOptions</name>
@@ -33367,10 +17095,6 @@ Point: (%8 , %9)</source>
         <translation>ໄລຍະຫ່າງ. ຄ່າລົບສຳລັບການຕັດເຂົ້າ, ຄ່າບວກສຳລັບການຢືດອອກ.</translation>
     </message>
     <message>
-        <source>Total</source>
-        <translation type="vanished">ທັງໝົດ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="56"/>
         <source>Length:</source>
         <translation>ຄວາມຍາວ:</translation>
@@ -33379,18 +17103,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="78"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
         <translation>ໄລຍະຫ່າງ. ຄ່າລົບສຳລັບການຕັດເຂົ້າ, ຄ່າບວກສຳລັບການຢືດອອກ. ເຄື່ອງໝາຍລົບຈະຖືກຂ້າມໄປເມື່ອຕັດໃຫ້ໄດ້ຄວາມຍາວທັງໝົດສຸດທ້າຍ.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">ເລືອກຄວາມຍາວຈາກຮູບແຕ້ມ</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະເຮັດການຕັດ/ຢືດທັງສອງເບື້ອງຂອງເສັ້ນ.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">ສົມມາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="97"/>

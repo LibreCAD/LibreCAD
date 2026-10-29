@@ -63,18 +63,6 @@ Ok to accept and start alignment.</source>
 Ok untuk menerima dan mulai alignmen.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Jika &apos;Jauhkan asli objek&apos; diperiksa,
-Align akan menyalin daripada memindahkan objek yang dipilih.
-Jika &apos;Spesifikasikan titik dasar pertama&apos; diperiksa,
-Align akan menanyakan untuk titik alignmen dalam urutan
-base pertama, base kedua, target pertama, target kedua.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
         <translation>titik dasar pertama:</translation>

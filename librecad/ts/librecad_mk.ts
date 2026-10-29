@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Рамка</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Внесете име и притиснете +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Зачувај</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Рамка</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Зачувај</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ or [%2]</source>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Наведи растојание (агол %1 степени)
-или [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Наведи растојание (агол %1 степени)
 или [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Додадете или избришете Акција</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,13 +2493,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Затвори</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2713,10 +2643,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>Прикажи совет за елементи во табела</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">Датотека со пидспалви:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2931,24 +2857,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Отстрани пидспалви</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Палета на пидспалви</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Локацијата на датотеката со пидспалви е променета, ве молиме рестартирајте ја апликацијата за да се користи новата датотека со пидспалви.
-Забележете дека ако зачувате пидспалва преку уредник без рестартирање, тековните пидспалви од палетата ќе се зачуваат во новата датотека и затоа постоечката содржина ќе биде презапишана.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Локацијата на датотеката со пенкала е променета, ве молиме рестартирајте ја апликацијата за да се користи новата датотека со пенкала.
-
-Ве молиме, имајте предвид дека ако ја зачувате пенкалата преку уредувачот без рестартирање, тековните пенкала од палетата ќе бидат зачувани во новата датотека и затоа постоечката содржина ќе биде препишана.</translation>
     </message>
 </context>
 <context>
@@ -3727,10 +3635,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Плочка &amp;хоризонтално</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">Креирање нов фајл...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>неименуван документ %1</translation>
@@ -3739,18 +3643,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>Вчитан документ: </translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">Отворањето прекинато</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">Печатење...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">Излегување од апликација...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
@@ -3773,17 +3665,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Создаден нов цртеж.</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">Зачувување на цртеж...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>Зачуван цртеж: %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Експортирање на цртеж...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3791,21 +3675,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Експортирано: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Експортирање...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Експорт завршен</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>Експорт неуспешен!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">Печатење завршено</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3830,10 +3702,6 @@ Please check the permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>&amp;Полилинија</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">Автоматско зачувување на цртеж...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4070,10 +3938,6 @@ Please check its existence and permissions.</source>
         <translation>Pen</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">Отворање на скорешен фајл...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
         <source>Dock Areas</source>
         <translation>Зони за докирање</translation>
@@ -4182,10 +4046,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="872"/>
         <source>&amp;Drawings</source>
         <translation>&amp;Цртежи</translation>
-    </message>
-    <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">Зачувување на цртеж: %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
@@ -4379,11 +4239,6 @@ Please check its existence and permissions.</source>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">излез</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4722,11 +4577,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>Историја и излез на командата</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">излез</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7333,41 +7183,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Променливи на цртеж</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Променлива</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Код</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Вредност</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Откажи</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -9399,12 +9214,6 @@ Please specify a different value.</source>
         <translation>Отстранете ги празните слоеви</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Најдени се слоеви без ентитети, но тие се филтрирани и не се видливи.
-Очистете ја маската за филтрирање и повторете.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>Не се најдени слоеви без ентитети, нема што да се отстрани.</translation>
@@ -9450,14 +9259,6 @@ Please specify a different name.</source>
         <translation>Дуплицирај селекција</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Дали да се замени вредноста „Според слој“ со вредностите на изворните слоеви?
-Ако е „Да“ - ентитетите со пенкала „Според слој“ ќе изгледаат на новиот слој точно како на претходните слоеви, а вредноста „Според слој“ ќе биде заменета со решените пенкала.
-Ако е „Не“ - вредностите „Според слој“ остануваат, и затоа пенкалото на целниот слој ќе го дефинира пенкалото за таквите ентитети.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9468,14 +9269,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>Невалидна вредност е дадена за бојата %1.
-Ве молиме, наведете друга вредност.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">Невалидна патека до датотеката со пенкала.
-%1
 Ве молиме, наведете друга вредност.</translation>
     </message>
     <message>
@@ -9550,14 +9343,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Ве молиме, изберете само еден објект за да го поставите стилусот.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">Зачувување на податоците за стилусите</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Не може да се зачуваат податоците за стилусите во наведената датотека. Дали сакате да наведете точна патека до датотеката?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11302,10 +11087,6 @@ Do you want to replace it?</source>
         <translation>Прво морате да внесете растојание.</translation>
     </message>
     <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>Калкулаторски режим: Вклучен</translation>
@@ -12583,11 +12364,6 @@ Do you want to replace it?</source>
         <translation type="unfinished">Големина на хартијата (ширина x висина) во мм.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Големина на хартијата (ширина x висина) во мм.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13274,16 +13050,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>Корисничка боја</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">пресметај</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -17393,67 +17159,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>Ажурирај</translation>
-    </message>
-</context>
-<context>
-    <name>dibPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Откажи</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Затвори</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Откажи</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Geardlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Откажи</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Откажи</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Откажи</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Откажи</translation>
-    </message>
-    <message>
-        <source>SplinePoints</source>
-        <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="vanished">СплајнТочка</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Слој:</translation>
     </message>
 </context>
 </TS>

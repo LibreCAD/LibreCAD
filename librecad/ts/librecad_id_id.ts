@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Bingkai</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Masukkan nama dan tekan +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Simpan</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Bingkai</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Simpan</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ atau [%2]</translation>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Tentukan jarak (sudut %1 derajat)
-atau [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Tentukan jarak (sudut %1 derajat)
 atau [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ atau [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Tambah atau Hapus Aksi</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,21 +2493,6 @@ atau [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>length</source>
-        <translation type="vanished">panjang</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">jari-jari</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Tertutup</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2721,10 +2643,6 @@ atau [%2]</translation>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>Tampilkan tooltip untuk item tabel</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">File pena:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2939,24 +2857,6 @@ atau [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Hapus Pena</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Palet pena</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Lokasi file pena telah diubah, silakan mulai ulang aplikasi agar file pena baru dapat digunakan.
-
-Harap perhatikan bahwa jika Anda menyimpan pena melalui editor tanpa memulai ulang, pena yang ada dari palet akan disimpan dalam file baru dan oleh karena itu konten yang ada di dalamnya akan ditimpa.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Lokasi file pena telah berubah, harap restart aplikasi agar file pena baru digunakan.
-Catatan: jika Anda menyimpan pena melalui editor tanpa restart, pena saat ini dari palet akan disimpan di file baru dan isi yang ada akan ditimpa.</translation>
     </message>
 </context>
 <context>
@@ -3984,10 +3884,6 @@ Catatan: jika Anda menyimpan pena melalui editor tanpa restart, pena saat ini da
         <translation>Mode Ta&amp;b</translation>
     </message>
     <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">Menyimpan gambar: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>Penyimpanan dibatalkan</translation>
@@ -4075,10 +3971,6 @@ Catatan: jika Anda menyimpan pena melalui editor tanpa restart, pena saat ini da
         <translation>&amp;Maksimalkan</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">Membuat berkas baru...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Blok &apos;%1&apos;</translation>
@@ -4159,14 +4051,6 @@ Silakan periksa izinnya.</translation>
         <translation>Dokumen yang dimuat: </translation>
     </message>
     <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">Pembukaan dibatalkan</translation>
-    </message>
-    <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">Menyimpan gambar...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>Gambar disimpan: %1</translation>
@@ -4216,10 +4100,6 @@ Silakan periksa keberadaannya dan izin.</translation>
         <translation>File &apos;%1&apos; tidak ada. Pembukaan dibatalkan</translation>
     </message>
     <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">Menyimpan gambar secara otomatis...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
         <source>Auto-saved drawing</source>
         <translation>Gambar disimpan otomatis</translation>
@@ -4241,10 +4121,6 @@ Penyimpanan otomatis dinonaktifkan.</translation>
         <translation>Penyimpanan otomatis gagal</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Mengekspor gambar...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2164"/>
         <source>Export as</source>
         <translation>Ekspor sebagai</translation>
@@ -4255,34 +4131,14 @@ Penyimpanan otomatis dinonaktifkan.</translation>
         <translation>Diekspor: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Mengekspor...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Mengekspor selesai</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>Mengekspor gagal!</translation>
     </message>
     <message>
-        <source>Printing...</source>
-        <translation type="vanished">Mencetak...</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">Mencetak selesai</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2768"/>
         <source>Print preview for %1</source>
         <translation>Pratinjau cetak untuk %1</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">Menutup aplikasi...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3069"/>
@@ -4350,10 +4206,6 @@ Penyimpanan otomatis dinonaktifkan.</translation>
         <translation>Widget Dok</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">Membuka file terbaru...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
@@ -4396,11 +4248,6 @@ Penyimpanan otomatis dinonaktifkan.</translation>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation>Spasi: mode snapping sementara diatur ke snap bebas</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">Esc</translation>
     </message>
 </context>
 <context>
@@ -4741,11 +4588,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="210"/>
         <source>Unknown command: %1</source>
         <translation>Perintah tidak dikenal: %1</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">escape</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
@@ -7341,41 +7183,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Variabel Gambar</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Variabel</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Kode</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Nilai</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Batal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -8431,10 +8238,6 @@ so default step value required for baking</source>
         <translation>lagi Tidak Ada Teks yang disediakan.</translation>
     </message>
     <message>
-        <source>Close</source>
-        <translation type="vanished">Tutup</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
         <translation>Hapus Semua</translation>
@@ -9252,102 +9055,6 @@ p, li { white-space: pre-wrap; }
         <source>By Layer</source>
         <translation>Berdasarkan Lapisan</translation>
     </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0,00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0,05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0,09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0,13mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0,15mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0,18mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0,20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0,25mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0,30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0,35mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0,40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0,50mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0,53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0,60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0,70mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0,80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0,90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1,00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1,06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1,20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1,40mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1,58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2,00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2,11mm</translation>
-    </message>
 </context>
 <context>
     <name>QMessageBox</name>
@@ -9410,12 +9117,6 @@ Tindakan ini TIDAK dapat dibatalkan.</translation>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="990"/>
         <source>Remove empty layers</source>
         <translation>Hapus lapisan kosong</translation>
-    </message>
-    <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Ditemukan lapisan tanpa entitas, namun lapisan tersebut difilter dan tidak terlihat.
-Hapus masker filter dan ulangi.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -9483,14 +9184,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 Jika Ya - entitas dengan pena &quot;Berdasarkan Lapisan&quot; akan terlihat di lapisan baru persis seperti di lapisan sebelumnya dan nilai &quot;Berdasarkan Lapisan&quot; akan diganti dengan pena yang telah ditentukan.
 
 Jika Tidak - nilai &quot;Berdasarkan Lapisan&quot; tetap dan pena lapisan target akan menentukan pena untuk entitas tersebut.</translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Ganti nilai &quot;By Layer&quot; dengan nilai lapisan sumber?
-Jika Ya - entitas dengan pena &quot;By Layer&quot; akan terlihat di lapisan baru persis seperti di lapisan sebelumnya dan nilai &quot;By Layer&quot; akan diganti dengan pena yang telah ditentukan.
-Jika Tidak - nilai &quot;By Layer&quot; tetap ada dan oleh karena itu pena lapisan target akan menentukan pena untuk entitas tersebut.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
@@ -9596,14 +9289,6 @@ Please specify a different value.</source>
 Mohon tentukan nilai yang berbeda.</translation>
     </message>
     <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">Jalur ke file pena tidak valid.
-%1 
-Mohon tentukan nilai yang berbeda.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
         <source>Remove pen</source>
         <translation>Hapus pena</translation>
@@ -9675,14 +9360,6 @@ Mohon tentukan nilai yang berbeda.</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Harap pilih hanya satu entitas untuk memilih pengaturan pena.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">Menyimpan Data Pena</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Tidak dapat menyimpan data pena ke file pena yang ditentukan. Apakah Anda ingin menentukan jalur yang benar ke file tersebut?</translation>
     </message>
 </context>
 <context>
@@ -13031,20 +12708,6 @@ Apakah Anda ingin menggantinya?</translation>
         <translation>Kesalahan kalkulator untuk input:</translation>
     </message>
     <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">Hitung</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>Mode Kalkulator: Aktif</translation>
@@ -13269,11 +12932,6 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="101"/>
         <source>Paper size (Width x Height) in mm.</source>
         <translation type="unfinished">Ukuran kertas (Lebar x Tinggi) dalam mm.</translation>
-    </message>
-    <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Ukuran kertas (Lebar x Tinggi) dalam mm.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
@@ -17496,67 +17154,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>Perbarui</translation>
-    </message>
-</context>
-<context>
-    <name>dibPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Batal</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>length</source>
-        <translation type="vanished">panjang</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">jari-jari</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Tertutup</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Batal</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Geardlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Batal</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Batal</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Skala:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Batal</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Batal</translation>
     </message>
 </context>
 </TS>

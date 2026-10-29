@@ -4,14 +4,6 @@
 <context>
     <name>AsciiFile</name>
     <message>
-        <source>Read ASCII points</source>
-        <translation type="vanished">Učitavanje ASCII tačaka</translation>
-    </message>
-    <message>
-        <source>Read ASCII test tip...</source>
-        <translation type="vanished">Učitavanje ASCII testa...</translation>
-    </message>
-    <message>
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <location filename="../asciifile/asciifile.cpp" line="41"/>
         <source>Read ascii points</source>
@@ -34,10 +26,6 @@
         <source>Export points to csv</source>
         <translation>Izvoz tačaka u CSV</translation>
     </message>
-    <message>
-        <source>Export to csv test tip...</source>
-        <translation type="vanished">Izvoz u CSV - test...</translation>
-    </message>
 </context>
 <context>
     <name>LC_Align</name>
@@ -51,10 +39,6 @@
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
         <translation>Postavke poravnanja...</translation>
-    </message>
-    <message>
-        <source>Align test tip...</source>
-        <translation type="vanished">Test poravnanja...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
@@ -86,15 +70,6 @@ If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Ako je opcija „Zadrži originalne objekte“ označena, alat za poравнање će kopirati, a ne premještati, izabrane objekte.
-Ako je opcija „Prvo odredite osnovne tačke“ označena, alat za poравнање će tražiti tačke za poравнање u sledećem redosledu: prva osnovna tačka, druga osnovna tačka, prva ciljna tačka, druga ciljna tačka.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="81"/>
@@ -130,11 +105,6 @@ Ako je opcija „Prvo odredite osnovne tačke“ označena, alat za poравна
         <source>Gear plugin</source>
         <translation>dodatak za zupčanike</translation>
     </message>
-    <message>
-        <source>Select point for center of gear and press left mouse button.
-Then fill in the fields and press &apos;Accept&apos; button.</source>
-        <translation type="vanished">Izaberite tačku za centar zupčanika i pritisnite levo dugme miša. Zatim popunite polja i pritisnite dugme „Prihvati“.</translation>
-    </message>
 </context>
 <context>
     <name>LC_List</name>
@@ -143,10 +113,6 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
         <translation>Prikaži entitete</translation>
-    </message>
-    <message>
-        <source>List test tip...</source>
-        <translation type="vanished">Prikaži testni opis...</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="46"/>
@@ -445,10 +411,6 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <translation>Iste osobine</translation>
     </message>
     <message>
-        <source>Same properties test tip...</source>
-        <translation type="vanished">Test saveta: Iste osobine...</translation>
-    </message>
-    <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
         <translation>izaberite originalni entitet:</translation>
@@ -467,10 +429,6 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <source>Sample plugin</source>
         <translation>Primer plugin-a</translation>
     </message>
-    <message>
-        <source>Sample test tip...</source>
-        <translation type="vanished">Primer testa...</translation>
-    </message>
 </context>
 <context>
     <name>PicFile</name>
@@ -478,10 +436,6 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../picfile/picfile.cpp" line="36"/>
         <source>Read PIC file</source>
         <translation>Učitavanje PIC datoteke</translation>
-    </message>
-    <message>
-        <source>PIC test tip...</source>
-        <translation type="vanished">PIC test...</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="42"/>
@@ -674,10 +628,6 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide</source>
         <translation>Podeli</translation>
-    </message>
-    <message>
-        <source>Divide test tip...</source>
-        <translation type="vanished">Test deljenja...</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
@@ -1205,10 +1155,6 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
         <translation>додатак за графике</translation>
-    </message>
-    <message>
-        <source>Plot test tip...</source>
-        <translation type="vanished">тест додатка за графике...</translation>
     </message>
 </context>
 <context>

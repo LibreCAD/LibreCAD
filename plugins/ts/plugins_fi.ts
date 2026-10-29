@@ -63,18 +63,6 @@ Ok to accept and start alignment.</source>
 Ok hyväksyä ja aloittaa linjaus.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Jos &apos;Pidä alkuperäiset objektit&apos; on valittu,
-Tasaus kopioi sen sijaan siirtää valitut objektit.
-Jos &apos;Tekstaa ensin peruspisteet&apos;,
-Tasaus vaatii linjauspistettä järjestyksessä
-Ensimmäinen pesä, toinen pesä, ensimmäinen kohde, toinen kohde.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
         <translation>ensimmäinen peruspiste:</translation>

@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Raam</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Sisestage nimi ja vajutage +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Salvesta</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Raam</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Salvesta</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ või [%2]</translation>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Määra kaugus (nurk %1 kraadi)
-või [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Määra kaugus (nurk %1 kraadi)
 või [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ või [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Lisa või eemalda tegevus</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,25 +2493,6 @@ või [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>n</source>
-        <translation type="vanished">a</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">pikkus</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">raadius</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Suletud</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2725,10 +2643,6 @@ või [%2]</translation>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>Näita tööriistanõu tabelielementidele</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">Pliiatsite fail:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2943,24 +2857,6 @@ või [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Eemalda pliiatsid</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Pliiatsipalett</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Pliiatsifaili asukoht on muutunud, palun taaskäivita rakendus, et kasutada uut pliiatsifaili.
-Pange tähele, et kui salvestate pliiatsi redaktori kaudu ilma taaskäivitamiseta, salvestatakse praegused paleti pliiatsid uude faili ja seega olemasolev sisu kirjutatakse üle.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Pliiatsete faili asukoht on muudetud, taaskäivitage rakendus, et uus pliiatsete fail saaks kasutusele võetud.
-
-Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, salvestatakse praegused pliiatsed paletist uude faili ja seega kirjutatakse selle olemasolev sisu üle.</translation>
     </message>
 </context>
 <context>
@@ -3739,34 +3635,14 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
         <translation>&amp;Horisontaalsete paanidena</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">Uue faili loomine...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>nimetu dokument %1</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">Hiljutise faili avamine...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>Laaditud dokument:</translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">Avamine katkestati</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">Printimine...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">Rakenduse sulgemine...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="424"/>
@@ -3814,17 +3690,9 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
         <translation>Uus joonis loodud.</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">Joonise salvestamine...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>Salvestatud joonis: %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Joonise eksportimine...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3832,21 +3700,9 @@ Pange tähele, et kui salvestate pliiatse redaktoris ilma taaskäivitamiseta, sa
         <translation>Eksporditud: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Eksportimine...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Eksportimine lõpetatud</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>Eksportimine ebaõnnestus!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">Printimine lõpetatud</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3871,10 +3727,6 @@ Palun kontrolli õigusi.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>&amp;Liitjoon</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">Automaatsalvestus joonis...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4196,10 +4048,6 @@ Palun kontrolli selle olemasolu ja õigusi.</translation>
         <translation>&amp;Joonised</translation>
     </message>
     <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">Joonise salvestamine: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>Salvestamine katkestati</translation>
@@ -4391,11 +4239,6 @@ Palun kontrolli selle olemasolu ja õigusi.</translation>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">Paigaldus</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4730,11 +4573,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>Teemahaarv ja väljund</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">selvustamine</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7341,41 +7179,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Joonistusmuutujad</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Muutuja</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Kood</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Väärtus</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Loobu</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -8431,10 +8234,6 @@ so default step value required for baking</source>
         <translation>Uu kohta pole teksti toimetatud.</translation>
     </message>
     <message>
-        <source>Close</source>
-        <translation type="vanished">Sulge</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
         <translation>Hävirka kõik</translation>
@@ -9244,98 +9043,6 @@ p, li { white-space: pre-wrap; }
         <source>By Layer</source>
         <translation>Kile järgi</translation>
     </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Ploki järgi</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Vaikimisi</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0,18 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0,25 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0,35 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0,50 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0,70 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1,40 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11mm</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Muutmata -</translation>
-    </message>
 </context>
 <context>
     <name>QMessageBox</name>
@@ -9489,12 +9196,6 @@ Please specify a different value.</source>
         <translation>Eemalda tühjad plaadid</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Kerestatud, kuid entiteete sisaldamata kiht(e) leitud, kuid nad on filtreeritud ja nähtavad.
-Selitage filtreerimismask ja kordake.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>Entiteete sisaldamata kihte ei leitud, eemaldada ei ole midagi.</translation>
@@ -9539,14 +9240,6 @@ Please specify a different name.</source>
         <translation>Duplikaat valik</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Kas soovite &quot;Kihtile&quot; väärtuse asendada allikakihtide väärtustega?
-Kui Jah - &quot;Kihtile&quot; plumega entiteetid näev uuel kihtil täpselt nagu eelmiste kihtidel ja &quot;Kihtile&quot; väärtus asendatakse määratletud plumega.
-Kui Ei - &quot;Kihtile&quot; väärtused jäävad ja nii määrab sihtkiht selliste entiteetide plumi.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9557,14 +9250,6 @@ Kui Ei - &quot;Kihtile&quot; väärtused jäävad ja nii määrab sihtkiht selli
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>Väärtus %1 värvi jaoks on saadetud. Palume määrata erinev väärtus.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">Vääriline teekonnad penna failile.
-%1 
-Please specify a different value.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
@@ -9638,14 +9323,6 @@ Please specify a different value.</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Palun valige pliiatsivapärate seadistamiseks ainult üks objekt.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">Pliiatsivapärate andmete salvestamine</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Ei ole võimalik salvestada pliiatsivapärate andmeid määratud pliiatsivapärate faili hulka. Kas soovite faili selt määrata?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11390,10 +11067,6 @@ Tahad sa seda asendada?</translation>
         <translation>Peab kõigepealt sisestama kauguse.</translation>
     </message>
     <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>Kalkulaatori režiim: päällä</translation>
@@ -12671,11 +12344,6 @@ Tahad sa seda asendada?</translation>
         <translation type="unfinished">Papi jaotuse mõõtmed (laius x kõrgus) mm-s.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Papi jaotuse mõõtmed (laius x kõrgus) mm-s.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13362,16 +13030,6 @@ Tahad sa seda asendada?</translation>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>Kasutaja värv</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">Arvuta</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -17483,94 +17141,6 @@ Seda plokki ei saa lisada.</translation>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>Uuenda</translation>
-    </message>
-</context>
-<context>
-    <name>dibPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Loobu</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Jaotaja</translation>
-    </message>
-    <message>
-        <source>n</source>
-        <translation type="vanished">a</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">pikkus</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">raadius</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Suletud</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Loobu</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Geardlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Loobu</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Loobu</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Mõõtkava:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Loobu</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Loobu</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="vanished">Liitjoon</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Kile:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Kõrgus:</translation>
     </message>
 </context>
 </TS>

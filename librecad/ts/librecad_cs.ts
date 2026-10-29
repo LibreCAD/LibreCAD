@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Rámec</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Zadejte název a stiskněte +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Uložit</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Rámec</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Uložit</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ nebo [%2]</translation>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Určete vzdálenost (úhel %1°)
-nebo [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Určete vzdálenost (úhel %1°)
 nebo [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ nebo [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Přidat nebo odebrat akci</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,33 +2493,6 @@ nebo [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>n</source>
-        <translation type="vanished">p</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">Druh čáry</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">délka</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">poloměr</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2733,10 +2643,6 @@ nebo [%2]</translation>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>Zobrazit nápovědu pro položky tabulky</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">Soubor per:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2951,24 +2857,6 @@ nebo [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Odstranit pera</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Paleta per</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Umístění souboru per se změnilo, restartujte aplikaci, aby se použil nový soubor per.
-Poznámka: Pokud uložíte pero přes editor bez restartu, aktuální pera z palety se uloží do nového souboru a stávající obsah bude přepsán.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Umístění souboru s pery bylo změněno, restartujte aplikaci, aby se použil nový soubor.
-
-Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální pera z palety budou uložena do nového souboru, čímž se přepíše stávající obsah.</translation>
     </message>
 </context>
 <context>
@@ -3747,34 +3635,14 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
         <translation>Dlaždice &amp;vodorovně</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">Vytváří se nový soubor...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>nepojmenovaný dokument %1</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">Otevírá se nedávno použitý soubor...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>Načtený dokument: </translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">Otevírání přerušeno</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">Probíhá tisk...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">Ukončuji program...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="424"/>
@@ -3822,17 +3690,9 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
         <translation>Nový výkres vytvořen.</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">Ukládá se výkres...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>Uložený výkres: %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Exportuje se výkres...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3840,21 +3700,9 @@ Upozorňujeme, že pokud uložíte pero pomocí editoru bez restartu, aktuální
         <translation>Exportovaný: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Exportuje se...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Exportování dokončeno</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>Export neúspěšný!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">Tisk dokončen</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3879,10 +3727,6 @@ Zkontrolujte prosím přístupová práva.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>Kři&amp;vka</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">Automaticky se ukládá výkres...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4204,10 +4048,6 @@ Zkontrolujte jeho existenci a oprávnění.</translation>
         <translation>&amp;Výkresy</translation>
     </message>
     <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">Ukládání výkresu: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>Ukládání zrušeno</translation>
@@ -4399,11 +4239,6 @@ Zkontrolujte jeho existenci a oprávnění.</translation>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">odejít</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4743,11 +4578,6 @@ v samostatném okně</translation>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>Historie příkazů a výstupu</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">odejít</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7354,41 +7184,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Proměnné výkresu</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Proměnná</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Kód</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Hodnota</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -8444,10 +8239,6 @@ so default step value required for baking</source>
         <translation>Text ještě nevložen.</translation>
     </message>
     <message>
-        <source>Close</source>
-        <translation type="vanished">Uzavřít</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
         <translation>Zrušit vše</translation>
@@ -9270,114 +9061,6 @@ p, li { white-space: pre-wrap; }
         <source>By Layer</source>
         <translation>Dle hladiny</translation>
     </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Dle bloku</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Výchozí</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0,00 mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0,05 mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0,09 mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0,13 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0,15 mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0,18 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0,20 mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0,25 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0,30 mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0,35 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0,40 mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0,50 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0,53 mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0,60 mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0,70 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0,80 mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0,90 mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1,06 mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1,20 mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1,40 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1,58 mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2,11 mm</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Beze změny -</translation>
-    </message>
 </context>
 <context>
     <name>QMessageBox</name>
@@ -9536,12 +9219,6 @@ Please specify a different value.</translation>
         <translation>Odstranit prázdné vrstvy</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Vrstva/Vrstva(y) bez entit byla/byly vy즌nalezena, ale jsou filtrovány a nejsou viditelné.
-Vymažte masku filtrování a opakujte.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>Žádné vrstvy bez entit nebyly nalezeny, nic k odstranění.</translation>
@@ -9587,14 +9264,6 @@ Uveďte prosím jiný název.</translation>
         <translation>Duplikovat výběr</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Nahradit hodnotu „Podle vrstvy“ hodnotami zdrojových vrstev?
-Pokud ano - entity s tuškami „Podle vrstvy“ budou na nové vrstvě vypadat přesně jako na předchozích vrstvách a hodnota „Podle vrstvy“ bude nahrazena vyřešenými tuškami.
-Pokud ne - hodnoty „Podle vrstvy“ zůstanou a tuška cílové vrstvy definuje tušku pro takové entity.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9605,14 +9274,6 @@ Pokud ne - hodnoty „Podle vrstvy“ zůstanou a tuška cílové vrstvy definuj
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>Neplatná hodnota pro barvu %1. Prosím, specifikujte jinou hodnotu.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">Neplatná cesta k souboru rysíků.
-%1 
-Please specify a different value.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
@@ -9686,14 +9347,6 @@ Please specify a different value.</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Vyberte prosím pouze jednu entitu pro nastavení rysu.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">Ukládání dat rysů</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Nelze uložit data rysů do zadaného souboru rysů. Chcete specifikovat správnou cestu ke souboru?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11245,16 +10898,6 @@ Přejete si ho přepsat?</translation>
         <translation>Dostupné příkazy:</translation>
     </message>
     <message>
-        <source>cal</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">vyp</translation>
-    </message>
-    <message>
-        <source>calculate</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">vypocti</translation>
-    </message>
-    <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
@@ -11446,10 +11089,6 @@ Přejete si ho přepsat?</translation>
         <location filename="../src/ui/qg_commandedit.cpp" line="138"/>
         <source>You must input a distance first.</source>
         <translation>Nejprve musíte zadat vzdálenost.</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
@@ -12729,11 +12368,6 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished">Velikost papíru (Šířka x Výška) v mm.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Velikost papíru (Šířka x Výška) v mm.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13420,16 +13054,6 @@ Přejete si ho přepsat?</translation>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>Barva uživatele</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">Vypočítat</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -15022,14 +14646,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="291"/>
         <source>Back</source>
         <translation>Back</translation>
-    </message>
-    <message>
-        <source>Select first circle or ellipse</source>
-        <translation type="vanished">Vyberte první kružnici nebo elipsu</translation>
-    </message>
-    <message>
-        <source>Select second circle or ellipse</source>
-        <translation type="vanished">Vyberte druhou kružnici nebo elipsu</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
@@ -17547,107 +17163,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>Aktualizovat</translation>
-    </message>
-</context>
-<context>
-    <name>dibPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Čerchovaná, dvě tečky</translation>
-    </message>
-    <message>
-        <source>n</source>
-        <translation type="vanished">p</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">Druh čáry</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">délka</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">poloměr</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Geardlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Měřítko:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="vanished">Křivka</translation>
-    </message>
-    <message>
-        <source>SplinePoints</source>
-        <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="vanished">Body splajny</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Hladina:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Výška:</translation>
     </message>
 </context>
 </TS>

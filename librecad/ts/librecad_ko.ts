@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">프레임</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">이름을 입력한 후 +를 누르세요</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">저장</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">프레임</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">저장</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -307,12 +257,6 @@ or [%2]</source>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>거리 지정 (각도 %1도)
-또는 [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">거리 지정 (각도 %1도)
 또는 [%2]</translation>
     </message>
 </context>
@@ -1727,13 +1671,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">액션 추가 또는 제거</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2555,25 +2492,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">선 종류</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">닫기</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2724,10 +2642,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>테이블 항목에 도구 설명 표시</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">펜 파일:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2942,24 +2856,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>펜 &amp;제거</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">펜 팔레트</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">펜 파일 위치가 변경되었습니다. 새 펜 파일을 사용하려면 응용 프로그램을 다시 시작하세요.
-재시작 없이 편집기를 통해 펜을 저장하면 팔레트의 현재 펜이 새 파일에 저장되어 기존 내용이 덮어쓰입니다.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">펜 파일 위치가 변경되었습니다. 새 펜 파일을 사용하려면 응용 프로그램을 다시 시작하십시오.
-
-편집기를 통해 펜을 저장하고 다시 시작하지 않으면 팔레트의 현재 펜이 새 파일에 저장되므로 기존 내용이 덮어쓰여집니다.</translation>
     </message>
 </context>
 <context>
@@ -3738,34 +3634,14 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>가로 &amp;타일</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">새 파일 만들기...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>이름없는 문서%1</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">최근 파일 열기...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>읽은 문서:</translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">열기 취소</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">인쇄하기...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">응용프로그램 종료...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
@@ -3788,17 +3664,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>새 도면 작성.</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">도면 저장하기...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>저장 도면 : %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">도면 내보내기...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3806,21 +3674,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>내보냄: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">내보내는 중...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">내보내기 완료</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>내보내기 실패!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">인쇄 완료</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3845,10 +3701,6 @@ Please check the permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>다각형(&amp;P)</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">도면 자동 저장...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4195,10 +4047,6 @@ Please check its existence and permissions.</source>
         <translation>&amp;그리기</translation>
     </message>
     <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">그리기 저장: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>저장 취소됨</translation>
@@ -4390,11 +4238,6 @@ Please check its existence and permissions.</source>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">이동</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4734,11 +4577,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>명령 기록과 출력</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">나가기</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7343,41 +7181,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">도면 변수</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">변수</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">코드</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">값</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">취소</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -8433,10 +8236,6 @@ so default step value required for baking</source>
         <translation>텍스트가 아직 입력되지 않았습니다.</translation>
     </message>
     <message>
-        <source>Close</source>
-        <translation type="vanished">닫기</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
         <translation>모두 삭제</translation>
@@ -9259,114 +9058,6 @@ p, li { white-space: pre-wrap; }
         <source>By Layer</source>
         <translation>레이어별</translation>
     </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">블록별</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">기본값</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0.05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0.09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0.13mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0.15mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0.18mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0.25mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0.35mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0.50mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0.70mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1.40mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11mm</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- 미변경 -</translation>
-    </message>
 </context>
 <context>
     <name>QMessageBox</name>
@@ -9517,12 +9208,6 @@ Please specify a different value.</source>
         <translation>빈 레이어 제거</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">엔터티가 없는 레이어가 발견되었지만 필터링되어 보이지 않습니다.
-필터 마스크를 지우고 다시 시도하십시오.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>엔터티가 없는 레이어가 없어 제거할 것이 없습니다.</translation>
@@ -9565,14 +9250,6 @@ Please specify a different name.</source>
         <translation>선택 항목 복제</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">&quot;레이어별&quot; 값을 소스 레이어 값으로 바꿀까요?
-예를 선택하면 &quot;레이어별&quot; 펜이 있는 개체는 새 레이어에서 이전 레이어와 정확히 동일하게 표시되며 &quot;레이어별&quot; 값이 해결된 펜으로 바뀝니다.
-아니요를 선택하면 &quot;레이어별&quot; 값이 유지되므로 대상 레이어의 펜이 해당 개체의 펜을 정의합니다.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9583,14 +9260,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>%1 색상에 유효하지 않은 값이 제공되었습니다.
-다른 값을 지정하십시오.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">펜 파일 경로가 유효하지 않습니다.
-%1
 다른 값을 지정하십시오.</translation>
     </message>
     <message>
@@ -9665,14 +9334,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>펜 설정을 선택할 개체를 하나만 선택하십시오.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">펜 데이터 저장 중</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">지정된 펜 파일에 펜 데이터를 저장할 수 없습니다. 파일의 올바른 경로를 지정하시겠습니까?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11417,10 +11078,6 @@ Do you want to replace it?</source>
         <translation>먼저 거리를 입력해야 합니다.</translation>
     </message>
     <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>계산기 모드: 켜짐</translation>
@@ -12698,11 +12355,6 @@ Do you want to replace it?</source>
         <translation type="unfinished">용지 크기(가로 x 세로) (mm).</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">용지 크기(가로 x 세로) (mm).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13389,16 +13041,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>사용자 색상</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">계산</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -17508,90 +17150,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>업데이트</translation>
-    </message>
-</context>
-<context>
-    <name>dibPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">취소</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">선 종류</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">닫기</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">레이어</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">취소</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Geardlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">취소</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">취소</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">취소</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">취소</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="vanished">폴리선</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">레이어:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">세로:</translation>
     </message>
 </context>
 </TS>

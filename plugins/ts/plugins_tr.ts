@@ -63,18 +63,6 @@ Ok to accept and start alignment.</source>
 Kabul etmek ve uyum başlatmak için.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Eğer ‘ Orijinal nesneleri tut’ kontrol edilirse,
-Align, seçilmiş nesneleri taşımak yerine kopyalayacaktır.
-İlk önce taban puanlarını tanımlarsa,
-Align, sırayla ayar noktaları için hızlı olacak
-İlk temel, ikinci temel, ilk hedef, ikinci hedef.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
         <translation>i̇lk temel nokta:</translation>

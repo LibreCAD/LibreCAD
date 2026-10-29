@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">फ्रेम</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">नाम दर्ज करें और फिर + दबाएं</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">सहेजें</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">फ्रेम</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">सहेजें</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ or [%2]</source>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>दूरी निर्दिष्ट करें (कोण %1 डिग्री)
-या [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">दूरी निर्दिष्ट करें (कोण %1 डिग्री)
 या [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">क्रिया जोड़ें या हटाएं</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2708,10 +2645,6 @@ or [%2]</source>
         <translation>तालिका आइटम्स के लिए टूलटिप दिखाएं</translation>
     </message>
     <message>
-        <source>Pens file:</source>
-        <translation type="vanished">पेन फ़ाइल:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
         <source>Show colorn name as</source>
         <translation>रंग नाम को इस रूप में दिखाएं</translation>
@@ -2924,24 +2857,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;पेन हटाएं</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">पेन पैलेट</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">पेन फ़ाइल का स्थान बदल दिया गया है, कृपया एप्लिकेशन को पुनरारंभ करें ताकि नई पेन फ़ाइल का उपयोग किया जा सके।
-
-कृपया ध्यान दें कि यदि आप पुनरारंभ किए बिना संपादक के माध्यम से पेन सहेजते हैं, तो पैलेट से वर्तमान पेन नई फ़ाइल में सहेजे जाएंगे और इसलिए इसकी मौजूदा सामग्री अधिलेखित हो जाएगी।</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">पेन फ़ाइल का स्थान बदल गया है, कृपया नई पेन फ़ाइल का उपयोग करने के लिए एप्लिकेशन को पुनः प्रारंभ करें।
-कृपया ध्यान दें कि यदि आप संपादक के माध्यम से पेन सहेजते हैं बिना पुनः प्रारंभ किए, तो पैलेट से वर्तमान पेन नई फ़ाइल में सहेजे जाएंगे और इसलिए इसका मौजूदा सामग्री अधिलेखित हो जाएगी।</translation>
     </message>
 </context>
 <context>
@@ -3984,10 +3899,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>हाल की फ़ाइलें</translation>
     </message>
     <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">चित्रण सहेजना: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>सहेजना रद्द किया गया</translation>
@@ -4075,10 +3986,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>&amp;अधिकतम</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">नई फ़ाइल बनाई जा रही है...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
         <source>Block &apos;%1&apos;</source>
         <translation>ब्लॉक &apos;%1&apos;</translation>
@@ -4137,14 +4044,6 @@ Please check its existence and permissions.</source>
         <translation>फ़ाइल &apos;%1&apos; मौजूद नहीं है। खोलना रद्द किया गया</translation>
     </message>
     <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">खोलना रद्द किया गया</translation>
-    </message>
-    <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">चित्रण सहेजा जा रहा है...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>सहेजा गया चित्रण: %1</translation>
@@ -4158,10 +4057,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="547"/>
         <source> , please check the filename and permissions.</source>
         <translation> , कृपया फ़ाइल नाम और अनुमतियाँ जाँचें।</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">स्वचालित सहेजना चित्रण...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4185,10 +4080,6 @@ Auto-save disabled.</source>
         <translation>स्वचालित सहेजना विफल</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">चित्रण निर्यात किया जा रहा है...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2164"/>
         <source>Export as</source>
         <translation>इस रूप में निर्यात करें</translation>
@@ -4197,14 +4088,6 @@ Auto-save disabled.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
         <source>Exported: %1</source>
         <translation>निर्यात किया गया: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">निर्यात किया जा रहा है...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">निर्यात पूर्ण</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
@@ -4222,26 +4105,14 @@ Auto-save disabled.</source>
         <translation>कृपया पहले प्रिंट पूर्वावलोकन में स्केलिंग और स्थिति समायोजित करें।</translation>
     </message>
     <message>
-        <source>Printing...</source>
-        <translation type="vanished">मुद्रण...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2500"/>
         <source>Export as PDF</source>
         <translation>PDF के रूप में निर्यात करें</translation>
     </message>
     <message>
-        <source>Printing complete</source>
-        <translation type="vanished">मुद्रण पूर्ण</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2768"/>
         <source>Print preview for %1</source>
         <translation>%1 के लिए मुद्रण पूर्वावलोकन</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">एप्लिकेशन से बाहर निकल रहे हैं...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3069"/>
@@ -4340,10 +4211,6 @@ Auto-save disabled.</source>
         <translation>डॉक विजेट</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">हाल की फ़ाइल खोली जा रही है...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
@@ -4381,11 +4248,6 @@ Auto-save disabled.</source>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation>स्पेसबार: स्नैपिंग मोड को अस्थायी रूप से फ्री स्नैपिंग पर सेट किया गया</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">एस्केप</translation>
     </message>
 </context>
 <context>
@@ -4722,11 +4584,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="210"/>
         <source>Unknown command: %1</source>
         <translation>अज्ञात कमांड: %1</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">एस्केप</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
@@ -7318,41 +7175,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">चित्रण चर</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">चर</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">कोड</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">मान</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">रद्द करें</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -9287,12 +9109,6 @@ This action can NOT be undone.</source>
         <translation>खाली परतें हटाएँ</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">संस्थाओं के बिना परतें मिलीं, फिर भी वे फ़िल्टर की गई हैं और दिखाई नहीं दे रही हैं।
-फ़िल्टरिंग मास्क साफ़ करें और दोहराएँ।</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -9355,14 +9171,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 यदि हाँ - &quot;लेयर के अनुसार&quot; पेन वाली इकाइयाँ नए लेयर पर ठीक उसी तरह दिखाई देंगी जैसे कि वे पिछली लेयर पर थीं, और &quot;लेयर के अनुसार&quot; मान को हल किए गए पेन से बदल दिया जाएगा।
 
 यदि नहीं - &quot;लेयर के अनुसार&quot; मान अपरिवर्तित रहेंगे, और इसलिए लक्षित लेयर का पेन ऐसी इकाइयों के लिए पेन को परिभाषित करेगा।</translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">क्या &quot;परत द्वारा&quot; मान को स्रोत परतों के मानों से बदलना है?
-यदि हाँ - &quot;परत द्वारा&quot; पेन वाली संस्थाएँ नई परत पर पिछली परतों की तरह ही दिखेंगी और &quot;परत द्वारा&quot; मान को हल किए गए पेन से बदल दिया जाएगा।
-यदि नहीं - &quot;परत द्वारा&quot; मान बने रहेंगे और इसलिए लक्ष्य परत का पेन ऐसी संस्थाओं के लिए पेन को परिभाषित करेगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
@@ -9467,14 +9275,6 @@ Please specify a different value.</source>
         <translation>%1 रंग के लिए अमान्य मान प्रदान किया गया है। कृपया कोई अन्य मान निर्दिष्ट करें।</translation>
     </message>
     <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">पेन फ़ाइल का अमान्य पथ।
-%1 
-कृपया कोई अन्य मान निर्दिष्ट करें।</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
         <source>Remove pen</source>
         <translation>पेन हटाएँ</translation>
@@ -9546,14 +9346,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>पेन सेटिंग चुनने के लिए कृपया केवल एक इकाई का चयन करें।</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">पेन डेटा सहेजा जा रहा है</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">निर्दिष्ट पेन फ़ाइल में पेन डेटा सहेजा नहीं जा सका। क्या आप फ़ाइल का सही पथ निर्दिष्ट करना चाहेंगे?</translation>
     </message>
 </context>
 <context>
@@ -12901,20 +12693,6 @@ Do you want to replace it?</source>
         <translation>इनपुट के लिए कैलकुलेटर त्रुटि:</translation>
     </message>
     <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">calculate</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>कैलकुलेटर मोड: चालू</translation>
@@ -13139,11 +12917,6 @@ Do you want to replace it?</source>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="101"/>
         <source>Paper size (Width x Height) in mm.</source>
         <translation type="unfinished">कागज़ का आकार (चौड़ाई x ऊँचाई) मिमी में।</translation>
-    </message>
-    <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">कागज़ का आकार (चौड़ाई x ऊँचाई) मिमी में।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>

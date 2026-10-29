@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">ਫਰੇਮ</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">नाम दर्ज करें और फिर + दबाएं</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">ਸੰਭਾਲੋ</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">ਫਰੇਮ</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">ਸੰਭਾਲੋ</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ or [%2]</source>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>ਦੂਰੀ ਨਿਰਧਾਰਤ ਕਰੋ (ਕੋਣ %1 ਡਿਗਰੀ)
-ਜਾਂ [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">ਦੂਰੀ ਨਿਰਧਾਰਤ ਕਰੋ (ਕੋਣ %1 ਡਿਗਰੀ)
 ਜਾਂ [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">ਐਕਸ਼ਨ ਜੋੜੋ ਜਾਂ ਹਟਾਓ</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,22 +2493,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>n</source>
-        <translation type="vanished">n
-ਗਿਣਤੀ</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">ਰੇਡੀਅਸ</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">ਬੰਦ ਕੀਤਾ</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2722,10 +2643,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>ਟੇਬਲ ਆਈਟਮਾਂ ਲਈ ਟੂਲਟਿੱਪ ਵਿਖਾਓ</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">ਪੈਨ ਫਾਈਲ:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2940,24 +2857,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;ਪੈਨ ਹਟਾਓ</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">ਪੈਨ ਪੈਲੈਟ</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">ਪੈਨ ਫਾਈਲ ਦੀ ਥਾਂ ਬਦਲੀ ਗਈ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਐਪਲੀਕੇਸ਼ਨ ਰੀਸਟਾਰਟ ਕਰੋ ਤਾਂ ਜੋ ਨਵੀਂ ਪੈਨ ਫਾਈਲ ਵਰਤੀ ਜਾ ਸਕੇ।
-ਨੋਟ: ਜੇ ਤੁਸੀਂ ਰੀਸਟਾਰਟ ਤੋਂ ਬਿਨਾਂ ਐਡੀਟਰ ਰਾਹੀਂ ਪੈਨ ਸੰਭਾਲਦੇ ਹੋ ਤਾਂ ਪੈਲੈਟ ਤੋਂ ਮੌਜੂਦਾ ਪੈਨ ਨਵੀਂ ਫਾਈਲ ਵਿੱਚ ਸੰਭਾਲੇ ਜਾਣਗੇ ਅਤੇ ਇਸ ਲਈ ਮੌਜੂਦਾ ਸਮੱਗਰੀ ਓਵਰਰਾਈਟ ਹੋ ਜਾਵੇਗੀ।</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">ਪੈਨ ਫਾਈਲ ਦੀ ਥਾਂ ਬਦਲੀ ਗਈ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਐਪਲੀਕੇਸ਼ਨ ਰੀਸਟਾਰਟ ਕਰੋ ਤਾਂ ਜੋ ਨਵੀਂ ਪੈਨ ਫਾਈਲ ਵਰਤੀ ਜਾ ਸਕੇ।
-
-ਨੋਟ: ਜੇ ਤੁਸੀਂ ਰੀਸਟਾਰਟ ਤੋਂ ਬਿਨਾਂ ਐਡੀਟਰ ਰਾਹੀਂ ਪੈਨ ਸੰਭਾਲਦੇ ਹੋ ਤਾਂ ਪੈਲੈਟ ਤੋਂ ਮੌਜੂਦਾ ਪੈਨ ਨਵੀਂ ਫਾਈਲ ਵਿੱਚ ਸੰਭਾਲੇ ਜਾਣਗੇ ਅਤੇ ਇਸ ਕਰਕੇ ਉਸ ਫਾਈਲ ਦੀ ਮੌਜੂਦਾ ਸਮੱਗਰੀ ਓਵਰਰਾਈਟ ਹੋ ਜਾਵੇਗੀ।</translation>
     </message>
 </context>
 <context>
@@ -3736,34 +3635,14 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>ਖਿਤਿਜੀ ਟਾਇਲ(&amp;H)</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">ਨਵੀਂ ਫਾਇਲ ਬਣਾਈ ਜਾ ਰਹੀ ਹੈ...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>ਬਿਨਾਂ ਨਾਂ ਦਸਤਾਵੇਜ਼ %1</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">ਤਾਜ਼ਾ ਫਾਇਲ ਖੋਲੀ ਜਾ ਰਹੀ ਹੈ...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>ਲੋਡ ਦਸਤਾਵੇਜ਼:</translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">ਅਧੂਰਾ ਛੱਡਿਆ ਜਾ ਰਿਹਾ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">ਛਾਪਿਆ ਜਾ ਰਿਹਾ ਹੈ...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">ਕਾਰਜ ਬੰਦ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="424"/>
@@ -3811,17 +3690,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>ਨਵੀਂ ਡਰਾਇੰਗ ਬਣਾਈ ਗਈ ਹੈ।</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">ਡਰਾਇੰਗ ਸੰਭਾਲੀ ਜਾ ਰਹੀ ਹੈ...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>ਸੰਭਾਲੀ ਜਾ ਰਹੀ ਡਰਾਇੰਗ: %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">ਡਰਾਇੰਗ ਨਿਰਯਾਤ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3829,21 +3700,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>ਨਿਰਯਾਤ: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">ਨਿਰਯਾਤ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">ਨਿਰਯਾਤ ਮੁਕੰਮਲ</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>ਨਿਰਯਾਤ ਅਸਫਲ!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">ਛਪਾਈ ਮੁਕੰਮਲ</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3868,10 +3727,6 @@ Please check the permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>ਬਹੁਭੁਜ(&amp;P)</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">ਆਟੋ-ਸੇਵ ਡ੍ਰਾਇੰਗ...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4193,10 +4048,6 @@ Please check its existence and permissions.</source>
         <translation>&amp;ਡ੍ਰਾਇੰਗ</translation>
     </message>
     <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">ਡ੍ਰਾਇੰਗ ਸੰਭਾਲੀ ਜਾ ਰਹੀ ਹੈ: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>ਸੰਭਾਲਣਾ ਰੱਦ ਕੀਤਾ ਗਿਆ</translation>
@@ -4388,11 +4239,6 @@ Please check its existence and permissions.</source>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">ਐਸਕੇਪ</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4732,11 +4578,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>ਕਮਾਂਡ ਅਤੀਤ ਅਤੇ ਆਉਟਪੁੱਟ</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">ਐਸਕੇਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7352,41 +7193,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">ਡਰਾਇੰਗ ਵੇਰੀਏਬਲਜ਼</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">ਵੇਰੀਏਬਲ</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">ਕੋਡ</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">ਮੁੱਲ</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ਰੱਦ ਕਰੋ</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -8442,10 +8248,6 @@ so default step value required for baking</source>
         <translation>ਦੁਬਾਰਾ ਹਾਲੇ ਵੀ ਕੋਈ ਟੈਕਸਟ ਨਹੀਂ ਦਿੱਤਾ ਗਿਆ।</translation>
     </message>
     <message>
-        <source>Close</source>
-        <translation type="vanished">ਬੰਦ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
         <translation>ਸਭ ਖਾਰਜ ਕਰੋ</translation>
@@ -9268,114 +9070,6 @@ p, li { white-space: pre-wrap; }
         <source>By Layer</source>
         <translation>ਪਰਤ ਨਾਲ</translation>
     </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">ਬਲਾਕ ਨਾਲ</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">ਮੂਲ</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00ਮਿਮੀ</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0.05ਮਿਮੀ</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0.09ਮਿਮੀ</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0.13ਮਿਮੀ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0.15ਮਿਮੀ</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0.18ਮਿਮੀ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20ਮਿਮੀ</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0.25ਮਿਮੀ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30ਮਿਮੀ</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0.35ਮਿਮੀ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40ਮਿਮੀ</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0.50ਮਿਮੀ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53ਮਿਮੀ</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60ਮਿਮੀ</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0.70ਮਿਮੀ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80ਮਿਮੀ</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90ਮਿਮੀ</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1.00ਮਿਮੀ (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06ਮਿਮੀ</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20ਮਿਮੀ</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1.40ਮਿਮੀ (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58ਮਿਮੀ</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2.00ਮਿਮੀ (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11ਮਿਮੀ</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- ਨਾ-ਤਬਦੀਲ -</translation>
-    </message>
 </context>
 <context>
     <name>QMessageBox</name>
@@ -9532,12 +9226,6 @@ Please specify a different value.</source>
         <translation>ਖਾਲੀ ਲੇਅਰਾਂ ਹਟਾਓ</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">ਬਿਨਾਂ ਐਂਟੀਟੀਆਂ ਦੇ ਲੇਅਰ ਮਿਲੇ, ਪਰ ਉਹ ਫਿਲਟਰ ਕੀਤੇ ਹੋਏ ਹਨ ਅਤੇ ਦਿਖਾਈ ਨਹੀਂ ਦਿੰਦੇ।
-ਫਿਲਟਰ ਮਾਸਕ ਸਾਫ਼ ਕਰੋ ਅਤੇ ਦੁਹਰਾਓ।</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>ਬਿਨਾਂ ਐਂਟੀਟੀਆਂ ਦੇ ਕੋਈ ਲੇਅਰ ਨਹੀਂ ਮਿਲਿਆ, ਹਟਾਉਣ ਲਈ ਕੁਝ ਨਹੀਂ ਹੈ।</translation>
@@ -9585,14 +9273,6 @@ Please specify a different name.</source>
         <translation>ਚੋਣ ਡੁਪਲੀਕੇਟ ਕਰੋ</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">&quot;ਪਰਤ ਨਾਲ&quot; ਮੁੱਲ ਨੂੰ ਸਰੋਤ ਲੇਅਰਾਂ ਦੇ ਮੁੱਲਾਂ ਨਾਲ ਬਦਲਣਾ ਹੈ?
-ਜੇ ਹਾਂ - &quot;ਪਰਤ ਨਾਲ&quot; ਪੈਨ ਵਾਲੀਆਂ ਐਂਟੀਟੀਆਂ ਨਵੀਂ ਲੇਅਰ ਉੱਤੇ ਬਿਲਕੁਲ ਉਸੇ ਤਰ੍ਹਾਂ ਦਿਖਣਗੀਆਂ ਜਿਵੇਂ ਪਿਛਲੀਆਂ ਲੇਅਰਾਂ ਉੱਤੇ ਦਿਖਦੀਆਂ ਸਨ ਅਤੇ &quot;ਪਰਤ ਨਾਲ&quot; ਮੁੱਲ ਨੂੰ ਹੱਲ ਕੀਤੀਆਂ ਪੈਨਾਂ ਨਾਲ ਬਦਲ ਦਿੱਤਾ ਜਾਵੇਗਾ।
-ਜੇ ਨਹੀਂ - &quot;ਪਰਤ ਨਾਲ&quot; ਮੁੱਲ ਬਣੇ ਰਹਿਣਗੇ ਅਤੇ ਇਸ ਲਈ ਨਿਸ਼ਾਨਾ ਲੇਅਰ ਦੀ ਪੈਨ ਹੀ ਅਜਿਹੀਆਂ ਐਂਟੀਟੀਆਂ ਲਈ ਪੈਨ ਨਿਰਧਾਰਤ ਕਰੇਗੀ।</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9603,14 +9283,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>%1 ਰੰਗ ਲਈ ਗਲਤ ਮੁੱਲ ਦਿੱਤਾ ਗਿਆ ਹੈ।
-ਕਿਰਪਾ ਕਰਕੇ ਵੱਖਰਾ ਮੁੱਲ ਦਿਓ।</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">ਗਲਤ ਪੈਨ ਫਾਈਲ ਪਾਥ।
-%1 
 ਕਿਰਪਾ ਕਰਕੇ ਵੱਖਰਾ ਮੁੱਲ ਦਿਓ।</translation>
     </message>
     <message>
@@ -9687,14 +9359,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>ਕਿਰਪਾ ਕਰਕੇ ਪੈਨ ਸੈਟਿੰਗ ਚੁਣਨ ਲਈ ਸਿਰਫ਼ ਇੱਕ ਐਂਟੀਟੀ ਚੁਣੋ।</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">ਪੈਨ ਡਾਟਾ ਸੰਭਾਲਿਆ ਜਾ ਰਿਹਾ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">ਨਿਰਧਾਰਤ ਪੈਨ ਫਾਈਲ ਵਿੱਚ ਪੈਨ ਡਾਟਾ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ। ਕੀ ਤੁਸੀਂ ਫਾਈਲ ਲਈ ਸਹੀ ਪਾਥ ਦੱਸਣਾ ਚਾਹੁੰਦੇ ਹੋ?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11439,10 +11103,6 @@ Do you want to replace it?</source>
         <translation>ਤੁਹਾਨੂੰ ਪਹਿਲਾਂ ਦੂਰੀ ਦਾਖਲ ਕਰਨੀ ਪਵੇਗੀ।</translation>
     </message>
     <message>
-        <source>cal</source>
-        <translation type="vanished">ਕੈਲ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>ਕੈਲਕੁਲੇਟਰ ਮੋਡ: ਚਾਲੂ</translation>
@@ -12720,11 +12380,6 @@ Do you want to replace it?</source>
         <translation type="unfinished">ਪੇਪਰ ਸਾਈਜ਼ (ਚੌੜਾਈ x ਉਚਾਈ) mm ਵਿੱਚ।</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">ਪੇਪਰ ਸਾਈਜ਼ (ਚੌੜਾਈ x ਉਚਾਈ) mm ਵਿੱਚ।</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13411,16 +13066,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>ਯੂਜ਼ਰ ਰੰਗ</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">ਕੈਲ </translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">ਕੈਲਕੁਲੇਟ </translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -17532,86 +17177,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>ਅੱਪਡੇਟ</translation>
-    </message>
-</context>
-<context>
-    <name>dibPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ਰੱਦ ਕਰੋ</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">ਭਾਗ</translation>
-    </message>
-    <message>
-        <source>n</source>
-        <translation type="vanished">n
-ਗਿਣਤੀ</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">ਰੇਡੀਅਸ</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">ਬੰਦ ਕੀਤਾ</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ਰੱਦ ਕਰੋ</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Geardlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ਰੱਦ ਕਰੋ</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ਰੱਦ ਕਰੋ</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">ਪੈਮਾਨਾ:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ਰੱਦ ਕਰੋ</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ਰੱਦ ਕਰੋ</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">ਪਰਤ:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">ਉਚਾਈ:</translation>
     </message>
 </context>
 </TS>

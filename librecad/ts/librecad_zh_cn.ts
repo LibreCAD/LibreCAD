@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">框架</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">输入名称然后按 +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">保存</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">框架</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">保存</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ or [%2]</source>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>指定距离（角度 %1 度）
-或 [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">指定距离（角度 %1 度）
 或 [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">添加或删除操作</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,41 +2493,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>n</source>
-        <translation type="vanished">n</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">图层</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">线类型</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">半径</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">名称</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">闭合</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2743,10 +2645,6 @@ or [%2]</source>
         <translation>显示表格项工具提示</translation>
     </message>
     <message>
-        <source>Pens file:</source>
-        <translation type="vanished">笔文件：</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
         <source>Show colorn name as</source>
         <translation>颜色名称显示为</translation>
@@ -2775,14 +2673,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
         <source>On double click on table item</source>
         <translation>双击表格项时</translation>
-    </message>
-    <message>
-        <source>Specify location</source>
-        <translation type="vanished">指定位置</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">取消</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="46"/>
@@ -2967,24 +2857,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>移除笔(&amp;R)</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">笔调色板</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">笔文件位置已更改，请重新启动应用程序以使用新的笔文件。
-
-请注意，如果您在不重新启动的情况下通过编辑器保存笔，则调色板中的当前笔将被保存到新文件中，从而覆盖其现有内容。</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">笔文件位置已更改，请重新启动应用程序以使用新笔文件。
-请注意，如果您在不重新启动的情况下通过编辑器保存笔，调色板中的当前笔将保存到新文件中，从而覆盖现有内容。</translation>
     </message>
 </context>
 <context>
@@ -3702,14 +3574,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>最近文件</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">正在保存图纸...</translation>
-    </message>
-    <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">正在保存图纸：%1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>保存已取消</translation>
@@ -3852,10 +3716,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>无法应用绘图页面设置。</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">正在创建新文件...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
         <source>Block &apos;%1&apos;</source>
         <translation>图块“%1”</translation>
@@ -3914,17 +3774,9 @@ Please check its existence and permissions.</source>
         <translation>文件“%1”不存在。打开已中止</translation>
     </message>
     <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">打开已中止</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2075"/>
         <source>Save All cancelled</source>
         <translation>全部保存已取消</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">正在自动保存图纸...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -3948,10 +3800,6 @@ Auto-save disabled.</source>
         <translation>自动保存失败</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">正在导出图纸...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2164"/>
         <source>Export as</source>
         <translation>导出为</translation>
@@ -3960,14 +3808,6 @@ Auto-save disabled.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
         <source>Exported: %1</source>
         <translation>已导出：%1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">正在导出...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">导出完成</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
@@ -3985,26 +3825,14 @@ Auto-save disabled.</source>
         <translation>请先在打印预览中调整缩放和位置。</translation>
     </message>
     <message>
-        <source>Printing...</source>
-        <translation type="vanished">打印中...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2500"/>
         <source>Export as PDF</source>
         <translation>导出为 PDF</translation>
     </message>
     <message>
-        <source>Printing complete</source>
-        <translation type="vanished">打印完成</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2768"/>
         <source>Print preview for %1</source>
         <translation>%1 的打印预览</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">正在退出应用程序...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3047"/>
@@ -4081,10 +3909,6 @@ Auto-save disabled.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3312"/>
         <source>Dockwidgets</source>
         <translation>停靠部件</translation>
-    </message>
-    <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">正在打开最近文件...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -4425,11 +4249,6 @@ Auto-save disabled.</source>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation>空格键：临时设置为自由对齐模式</translation>
     </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">退出</translation>
-    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
@@ -4769,11 +4588,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="210"/>
         <source>Unknown command: %1</source>
         <translation>未知命令：%1</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">退出</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
@@ -7317,11 +7131,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>导出点</translation>
     </message>
     <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation type="vanished">截至 2014 年 11 月，MakerCAM 不会隐藏已设置为不可见的 SVG 内容（“display: none”或“visibility: hidden”）。</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="33"/>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
@@ -7365,70 +7174,9 @@ so default step value required for baking</source>
         <translation>线型长度与缩放相关，因此需要默认步长值进行烘焙。</translation>
     </message>
     <message>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly,
-when they are created using the &lt;ellipse&gt; tag  with a rotation in
-the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="vanished">截至 2015 年 3 月，MakerCAM 无法正确显示椭圆和椭圆弧，尤其是在使用带有旋转的 &lt;transform&gt; 属性的 &lt;ellipse&gt; 标签创建它们，或者使用椭圆弧段作为 &lt;path&gt; 时。</translation>
-    </message>
-    <message>
-        <source>Exported images can be useful in SVG editors (Inkscape, etc),
-but avoided in some CAM&apos;s.</source>
-        <translation type="vanished">导出的图像可以在 SVG 编辑器（如 Inkscape）中使用，但在某些 CAM 软件中可能会出现问题。</translation>
-    </message>
-    <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style,
-which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation type="vanished">许多 CAM 软件（如 MakerCAM、EleskCAM、LaserWeb）会忽略虚线/点线样式，而这种样式在激光切割胶合板或制作纸艺时可能很有用。</translation>
-    </message>
-    <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors,
-but ignored by other</source>
-        <translation type="vanished">元素的默认宽度可能会影响某些 CAM 软件/SVG 编辑器，但其他软件则会忽略。</translation>
-    </message>
-    <message>
-        <source>Length of line pattern related to zoom,
-so default step value required for baking</source>
-        <translation type="vanished">线条图案的长度与缩放相关，因此需要为烘焙设置默认步长值。</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="40"/>
         <source>Whether to export points</source>
         <translation>是否导出点。</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">绘图变量</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">变量</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">代码</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">值</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">取消</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
     </message>
 </context>
 <context>
@@ -9338,13 +9086,6 @@ Please specify a different name.</source>
 请指定一个不同的名称。</translation>
     </message>
     <message>
-        <source>Attempt to create layer with duplicating name. Duplicated layer name is
-[%1].
-Please specify a different name.</source>
-        <translation type="vanished">尝试创建名称重复的图层。重复的图层名称为
-[%1]。请指定不同的名称。</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="153"/>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="191"/>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="215"/>
@@ -9375,12 +9116,6 @@ Please specify a different value.</source>
         <translation>移除空图层</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">找到没有实体的图层，但它们已被过滤且不可见。
-清除过滤蒙版并重复操作。</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -9400,19 +9135,6 @@ Clear filtering mask and repeat.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1184"/>
         <source>Add Layer</source>
         <translation>添加图层</translation>
-    </message>
-    <message>
-        <source>Such child layer already exist for
-[%1].
-Please specify a different name.</source>
-        <translation type="vanished">名为 [%1] 的子图层已存在。
-请指定不同的名称。</translation>
-    </message>
-    <message>
-        <source>Such child layer already exist for
-[%1].
-</source>
-        <translation type="vanished">名为 [%1] 的子图层已存在。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
@@ -9441,14 +9163,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 
 如果选择“是”，则具有“按图层”画笔的实体在新图层上的显示方式将与在原始图层上完全相同，并且“按图层”值将被替换为已解析的画笔。
 
-如果选择“否”，则“按图层”值将保持不变，因此目标图层的画笔将定义这些实体的画笔。</translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">是否将“按图层”值替换为源图层的值？
-如果选择“是”，则具有“按图层”画笔的实体在新图层上的显示方式将与在旧图层上完全相同，并且“按图层”值将被替换为已解析的画笔。
 如果选择“否”，则“按图层”值将保持不变，因此目标图层的画笔将定义这些实体的画笔。</translation>
     </message>
     <message>
@@ -9523,14 +9237,6 @@ Please specify a different value.</source>
 请指定不同的值。</translation>
     </message>
     <message>
-        <source>Invalid path to pens file.
-%1
-Please specify a different value.</source>
-        <translation type="vanished">笔文件路径无效。
-%1
-请指定不同的值。</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
         <source>Remove pen</source>
         <translation>移除画笔</translation>
@@ -9602,14 +9308,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>请仅选择一个实体来设置画笔。</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">正在保存画笔数据。</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">无法将画笔数据保存到指定的画笔文件中。您是否要指定正确的路径？</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
@@ -12858,11 +12556,6 @@ This action can NOT be undone.</source>
         <translation type="unfinished">纸张尺寸（宽度 x 高度），单位：毫米。</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">纸张尺寸（宽度 x 高度），单位：毫米。</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13155,20 +12848,6 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/qg_commandedit.cpp" line="216"/>
         <source>Calculator error for input: </source>
         <translation>输入计算器错误：</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">计算</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
@@ -17472,119 +17151,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>更新</translation>
-    </message>
-</context>
-<context>
-    <name>dibPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">取消</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Divide</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">错误</translation>
-    </message>
-    <message>
-        <source>n</source>
-        <translation type="vanished">n</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">图层</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">线类型</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">半径</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">闭合</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">图层</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">取消</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Geardlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">取消</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">取消</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">缩放:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">取消</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">取消</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="vanished">多段线</translation>
-    </message>
-    <message>
-        <source>SplinePoints</source>
-        <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="vanished">样条点</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">高度:</translation>
     </message>
 </context>
 </TS>
