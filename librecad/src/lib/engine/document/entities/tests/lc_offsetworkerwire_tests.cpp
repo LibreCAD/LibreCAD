@@ -122,8 +122,14 @@ TEST_CASE("offset worker wire retains the first refusal through all later input 
 
 TEST_CASE("offset worker wire bounds actual CBOR structure before building value trees",
           "[lc-offsetcurve][worker-protocol][wire]") {
-    const QCborArray fields{QCborArray{QCborArray{1}}};
+    QCborArray inner;
+    inner.append(1);
+    QCborArray middle;
+    middle.append(QCborValue(inner));
+    QCborArray fields;
+    fields.append(QCborValue(middle));
     const auto payload = QCborValue(fields).toCbor();
+    REQUIRE(payload == QByteArray::fromHex("81818101"));
     wire::Limits limits;
     limits.depth = 4; limits.items = 4; limits.arrayItems = 1;
     REQUIRE(wire::decode(payload, limits));
@@ -203,7 +209,9 @@ TEST_CASE("offset worker wire admits hard structural boundaries and rejects exac
     QByteArray excessiveDepth = exactDepth;
     excessiveDepth.prepend(char(0x81));
     CHECK(wire::decode(excessiveDepth).error == wire::Error::Depth);
-    CHECK(wire::encode(QCborArray{exactDepthValue.fields}, &error).isEmpty());
+    QCborArray wrapped;
+    wrapped.append(QCborValue(exactDepthValue.fields));
+    CHECK(wire::encode(wrapped, &error).isEmpty());
     CHECK(error == wire::Error::Depth);
 }
 

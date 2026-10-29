@@ -8,13 +8,23 @@
 
 #include <QCborValue>
 #include <QCoreApplication>
-#include <QFile>
 #include <QThread>
+#include <algorithm>
 #include <array>
+#include <cerrno>
+#include <cstddef>
 #include <csignal>
 #include <cstdio>
 #include <cstring>
 #include <utility>
+#ifdef Q_OS_WIN
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
 
 namespace {
 namespace Req = LC_OffsetWorkerRequest;
@@ -34,20 +44,52 @@ constexpr qsizetype InputCap = 64 * 1024;
 constexpr unsigned long HangMs = 10000;
 constexpr unsigned long LateMs = 2040; // Beyond the public 2-second preview limit.
 
-bool writeAll(QFile& output, const QByteArray& bytes) {
+bool readInput(char* data, qsizetype capacity, qsizetype& size) {
+#ifdef Q_OS_WIN
+    const HANDLE input = GetStdHandle(STD_INPUT_HANDLE);
+    if (!input || input == INVALID_HANDLE_VALUE) return false;
+    DWORD count = 0;
+    if (!ReadFile(input, data, DWORD(capacity), &count, nullptr)) {
+        if (GetLastError() == ERROR_BROKEN_PIPE) { size = 0; return true; }
+        return false;
+    }
+    size = qsizetype(count);
+    return true;
+#else
+    for (;;) {
+        const auto count = ::read(STDIN_FILENO, data, std::size_t(capacity));
+        if (count >= 0) { size = qsizetype(count); return true; }
+        if (errno != EINTR) return false;
+    }
+#endif
+}
+
+bool writeAll(const QByteArray& bytes, bool diagnostic = false) {
+#ifdef Q_OS_WIN
+    const HANDLE output = GetStdHandle(diagnostic ? STD_ERROR_HANDLE : STD_OUTPUT_HANDLE);
+    if (!output || output == INVALID_HANDLE_VALUE) return false;
+    qsizetype offset = 0;
+    while (offset < bytes.size()) {
+        const auto chunk = DWORD(std::min<qsizetype>(bytes.size() - offset, 64 * 1024));
+        DWORD written = 0;
+        if (!WriteFile(output, bytes.constData() + offset, chunk, &written, nullptr) || written == 0) return false;
+        offset += qsizetype(written);
+    }
+#else
+    const int output = diagnostic ? STDERR_FILENO : STDOUT_FILENO;
     qsizetype written = 0;
     while (written < bytes.size()) {
-        const auto n = output.write(bytes.constData() + written, bytes.size() - written);
-        if (n <= 0) return false;
-        written += n;
+        const auto count = ::write(output, bytes.constData() + written,
+                                   std::size_t(bytes.size() - written));
+        if (count > 0) written += qsizetype(count);
+        else if (count < 0 && errno == EINTR) continue;
+        else return false;
     }
-    return output.flush();
+#endif
+    return true;
 }
 
 int run() {
-    QFile input, output, diagnostic;
-    if (!input.open(stdin, QIODevice::ReadOnly) || !output.open(stdout, QIODevice::WriteOnly) ||
-        !diagnostic.open(stderr, QIODevice::WriteOnly)) return 2;
     Wire::Limits limits;
     limits.frameBytes = InputCap;
     limits.items = 4096;
@@ -56,8 +98,8 @@ int run() {
     Wire::Receiver receiver{limits};
     std::array<char, 4096> chunk{};
     for (;;) {
-        const auto n = input.read(chunk.data(), qsizetype(chunk.size()));
-        if (n < 0) return 2;
+        qsizetype n = 0;
+        if (!readInput(chunk.data(), qsizetype(chunk.size()), n)) return 2;
         if (!n) break;
         if (!receiver.append(QByteArray(chunk.data(), n))) return 2;
     }
@@ -79,8 +121,8 @@ int run() {
 #ifdef Q_OS_UNIX
     if (fault == Fault::CompleteThenHang) std::signal(SIGTERM, SIG_IGN);
 #endif
-    if (!writeAll(diagnostic, QByteArray("LC_OFFSET_FAULT_FIXTURE received=") +
-        QByteArray::number(selector) + '\n')) return 2;
+    if (!writeAll(QByteArray("LC_OFFSET_FAULT_FIXTURE received=") +
+        QByteArray::number(selector) + '\n', true)) return 2;
 
     Reply::Reply reply;
     reply.token = request->token;
@@ -122,7 +164,7 @@ int run() {
     case Fault::DuplicateResponse: frame += frame; break;
     case Fault::ExtraByte: frame.append('\0'); break;
     case Fault::StderrOverflow:
-        if (!writeAll(diagnostic, QByteArray(65537, 'x'))) return 2;
+        if (!writeAll(QByteArray(65537, 'x'), true)) return 2;
         break;
     case Fault::Hang:
         QThread::msleep(HangMs);
@@ -132,9 +174,9 @@ int run() {
         break;
     default: break;
     }
-    if (!writeAll(output, frame)) return 2;
+    if (!writeAll(frame)) return 2;
     if (fault == Fault::CompleteThenHang) {
-        if (!writeAll(diagnostic, QByteArray("LC_OFFSET_FAULT_STALLED\n"))) return 2;
+        if (!writeAll(QByteArray("LC_OFFSET_FAULT_STALLED\n"), true)) return 2;
         QThread::msleep(HangMs);
     }
     return fault == Fault::CompleteThenNonzero ? 23 : 0;

@@ -171,7 +171,7 @@ void geometryEntry(const QByteArray& diagnostics) {
         "(?m)^LC_OFFSET_GEOMETRY_ENTERED completed=1 native_prepare=1 check=1 "
         "engine_runs=([0-9]+) engine_status=([0-9]+) check_reason=([0-9]+) "
         "c_spans=([0-9]+) c_vertices=([0-9]+) c_pairs=([0-9]+) c_order=([0-9]+) c_depth=([0-9]+) "
-        "sigterm_ignored=([01])\n"));
+        "sigterm_ignored=([01])\\r?\\n"));
     const auto entered = entry.match(QString::fromLatin1(diagnostics));
     REQUIRE(entered.hasMatch());
     CHECK(entered.captured(1).toULongLong() == 1);
