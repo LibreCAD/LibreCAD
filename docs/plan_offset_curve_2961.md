@@ -25,7 +25,7 @@ USA.
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
 Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117/W126/W127 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W137 requalifies W126 preview-cache portability in the dedicated kernel/client/fresh-helper targets, W138 requalifies W127 Modify Offset creation/repeat GUI routing, W139 requalifies U4 persisted option/preview/commit behavior, W140 requalifies O1 Update from Source, W141 requalifies O2 Restore Original, and W142-W143 record the in-repo import-caller ownership audit plus current-source caller and GUI open/template tests; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan, and W124 requalifies local trim file/conversion/undo-reopen coverage in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100, W128 requalifies E1 guarded entity/factory/clone/transform behavior, W129 requalifies U1 type/INSERT/selection/SVG/menu/info/plugin dispatch, W131 requalifies E2 cached grips/snaps/through edits and transactional transforms, W132 requalifies F1 typed schema/carrier/ownership/resource-limit behavior, W133 requalifies F2 actual DXF/DWG writing and transactional refusal, W134 requalifies F3 independent fixture/version/write/conversion/reopen matrix, W135 requalifies U2 dialog/sheet async property publication, and W136 requalifies U3 async grip drag/cancel/ownership/history behavior in Release/ASan; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, external use of public synchronous low-level import APIs, remote cross-platform CI and final acceptance remain open**.
-Latest recorded slice: W147 requalifies Modify Offset creation/repeat GUI routing at current head in Release and ASan; W146 requalifies preview-cache portability after the current-master merge. W145 fixes a Windows MSVC include failure found by current PR CI; the Windows rerun is pending. W144 integrates and requalifies the five newer `origin/master` commits. External use of public synchronous low-level import APIs, physical visible interaction, and remote/final acceptance remain open.
+Latest recorded slice: W148 passes a fresh qmake6 app/helper build and exercises the qmake-built sibling helper with worker, preview-cache and creation/repeat Release suites. W147 requalifies Modify Offset creation/repeat GUI routing at current head in Release and ASan; W146 requalifies preview-cache portability after the current-master merge. W145 fixes a Windows MSVC include failure found by current PR CI; its rerun and other remote checks remain pending. W144 integrates and requalifies the five newer `origin/master` commits. External use of public synchronous low-level import APIs, physical visible interaction, and remote/final acceptance remain open.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -5850,3 +5850,34 @@ acceptance.
 | Creation/repeat GUI action selector, ASan | PASS; 11 / 318 | `1752444b033a90fa0ca92ebd854275550bf171c5231fa34e2508875f8dc84ae4` |
 
 Logs: `/private/tmp/offset-W147-creation-{release,asan}.log`.
+
+## 106. W148 Current-Source qmake6 Application and Helper Requalification
+
+At source head `ed0210844` (no product-source changes since the W145
+`<stdexcept>` fix), reconfigured the private out-of-source qmake6 directory
+`/private/tmp/offset-W55-qmake6` with qmake 3.1 / Qt 6.12.0 and completed the
+top-level `make -j4`. AppleClang 21 used the build directory's private macOS
+27.0 SDK cache. The application and `LibreCADOffsetWorker` are arm64 Mach-O
+files adjacent in `LibreCAD.app/Contents/MacOS`; plugin build steps also
+completed. The build log contains toolchain/linker warnings but no compile or
+link errors.
+
+Placed the current-source CMake Release `librecad_tests` runner beside the
+qmake-built helper and ran offscreen selectors through that directory, proving
+application-path helper discovery rather than only helper existence. The
+`[worker]` selector passed 15 cases / 3,960 assertions; `[preview-portable]`
+passed 4 / 67; `[creation-worker]` passed 11 / 318. The helper itself is the
+qmake build; the test runner is CMake-built. This is local macOS Release
+qualification, not a qmake test-runner build, ASan helper run, deployed/signed
+installation, physical visible interaction, or Windows/Linux runtime result.
+
+| W148 artifact | Result / SHA256 |
+|---|---|
+| qmake configure, `/private/tmp/offset-W148-qmake-configure.log` | PASS / `62b41930ee476584072b146a292cfeb127071b15dd08f0641fe70883d6c76c08` |
+| qmake app/helper/plugin build, `/private/tmp/offset-W148-qmake-build.log` | PASS / `e777682fc5c9bb8cb710d3a50cc8f5ad4e12b0cee0dc80ca675074853386980b` |
+| Adjacent qmake helper worker smoke, `/private/tmp/offset-W148-qmake-worker.log` | PASS; 15 / 3,960 / `8f254c770faca6a03b88b52eef3ff8903ae0456dd213dd499e80fbdebf3866b3` |
+| Adjacent qmake helper preview portability, `/private/tmp/offset-W148-qmake-preview.log` | PASS; 4 / 67 / `6486a29eda622eabbafaf81fa8c760a16b37b82ce86d1f9b59875dc4ad2079de` |
+| Adjacent qmake helper creation/repeat, `/private/tmp/offset-W148-qmake-creation.log` | PASS; 11 / 318 / `ce115f914358ea251e85c1713b2f8f7cce41793a6a0cc7afc46e0bc3871b6745` |
+
+Remote cross-platform CI, installed/deployed helper acceptance, visible UI,
+external public synchronous API use, and final W0-W2/R gates remain open.
