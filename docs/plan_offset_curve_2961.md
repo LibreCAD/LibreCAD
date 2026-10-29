@@ -3099,16 +3099,22 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] A-core through C-check: review/requalify existing code and patch only proven
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
 - [ ] W0-W2: typed/cached Produce, creation/repeat and local native Trim GUI routing and scoped action faults are qualified;
-  finish other import ownership, cross-platform failure coverage and remaining caller/final
-  adoption/failure acceptance. Reuse the qualified geometry-entry timeout/helper/client/
-  reply modules; do not redo them as absent. Keep Node runner scope separate.
+  a fresh macOS qmake6 full-app/bundle build and adjacent-helper worker smoke are now
+  qualified in W55. Finish other import ownership, Windows/native cross-platform failure
+  coverage and remaining caller/final adoption/failure acceptance. Reuse the qualified
+  geometry-entry timeout/helper/client/reply modules; do not redo them as absent. Keep
+  Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
   DXF/DWG, source and trim implementation with any new worker/publication changes.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
+  including Windows and actual installed-package acceptance not covered by W55,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
 **Next concrete action on implementation resume:** obtain a Windows compile and
-runtime run for W44 before claiming platform parity. W46 already bounds and
+runtime run for W44 before claiming platform parity. W55 now records a fresh
+full macOS qmake6 app/bundle build plus a worker-protocol smoke using the helper
+beside the bundled executable; this does not establish Windows behavior, an
+installed release package, or visible GUI acceptance. W46 already bounds and
 snapshots nested XREF bytes for staged imports; W47 adds source identity
 preflight but not atomic publication. W49a-W49c add a transaction guard, per-call
 DXF/DWG APIs, and source-identity checks at filter publication boundaries.
@@ -3482,3 +3488,30 @@ remains unexplained because this requalification was serialized.
 These are current-source macOS sanitizer results, not Windows, concurrent-load,
 leak, visible-GUI, or full-suite acceptance. The original concurrent assertion
 still needs a controlled reproduction/root-cause before it can be closed.
+
+## 17. W55 Fresh qmake6 Bundle and Helper Smoke
+
+Configured a fresh out-of-source build with qmake 3.1 / Qt 6.12.0 using
+`qmake6 /Users/dli/.codex/worktrees/offset-2961-runtime/LibreCAD/librecad.pro`
+in `/private/tmp/offset-W55-qmake6`, then completed the top-level `make -j4`.
+The result is `/private/tmp/offset-W55-qmake6/LibreCAD.app`, containing both
+`Contents/MacOS/LibreCAD` and the application-adjacent
+`Contents/MacOS/LibreCADOffsetWorker`. This compiles and links the qmake6 app,
+helper, and plugin targets; it is a local macOS build, not a Windows or release-
+packaging claim.
+
+For an application-directory helper smoke, ran the current-source W54 ASan
+`librecad_tests` binary from the bundle's `Contents/MacOS` directory beside the
+fresh qmake-built helper, with `ASAN_OPTIONS=detect_leaks=0`. The `[worker]`
+selection completed 13 testcases with JUnit `tests=3780`, zero errors,
+failures, or skips. The tests therefore resolved and exercised the actual
+application-adjacent qmake helper through worker requests, rather than only
+checking that the file exists.
+
+| W55 artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W55-bundled-worker.xml` | `39e567635eb9a00a7d20f9f3c310bb9aaefd04c70ef1956d831ed1c2a75cbe2b` |
+
+The bundle smoke does not establish codesigning/notarization, distribution
+installation, visible GUI interaction, Windows QFile/native rename semantics,
+or multi-file atomicity. Those remain open acceptance items.
