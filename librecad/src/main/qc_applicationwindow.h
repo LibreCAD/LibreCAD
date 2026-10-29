@@ -424,6 +424,7 @@ private:
     QMap<QString, bool> factoryDockVisibility;
     QMap<QString, QString> selectedDockByGroup;
     QMap<int, bool> requestedDockAreas;
+    QVariantMap dockAreaSizes;
     QList<CollapsedDockGroup> collapsedDockGroups;
     bool dockFitQueued {false};
     bool dockFitRunning {false};
