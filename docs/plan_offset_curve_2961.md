@@ -3111,9 +3111,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 runtime run for W44 before claiming platform parity. W46 already bounds and
 snapshots nested XREF bytes for staged imports; W47 adds source identity
 preflight but not atomic publication. W49a adds a transaction-level publication
-guard and race regression, but it is not yet connected to the DXF/DWG writer or
-LibreCAD's source-identity policy. Continue W49 with explicit per-call writer
-guard APIs, then wire the filter at low-level and outer DWG publish boundaries
+guard and race regression; W49b exposes it through per-call DXF/DWG writer APIs.
+Continue W49 by wiring the filter at low-level and outer DWG publish boundaries
 and test source replacement/aliases/backup/failed-rename behavior. This narrows
 the check-to-use window but cannot make path identity plus cross-platform rename
 atomic. Then audit direct synchronous and console XREF callers without silently
@@ -3280,6 +3279,23 @@ and `RS_FilterDXFRW` integration in W49b/W49c.
 
 The command `ctest -R ...` found no registered CTest cases in this build; the
 two Catch2 executables were run directly. No ASan, Windows, or visible GUI run
-is claimed. Next: add explicit per-call guarded DXF/DWG writer entry points and
-exercise guard invocation/rejection on real staged native writes; then integrate
-source identity checks into LibreCAD's DXF and DWG final publication boundaries.
+is claimed.
+
+W49b `5306c02bb` adds `DRW_OutputPublishGuard` and explicit `writeGuarded` plus
+guarded `writeVerified` overloads to `dxfRW` and `dwgRW`; existing writer entry
+points and `DRW_Interface`'s virtual layout remain unchanged. Both writers pass
+the guard through to the staged transaction. Native fixtures exercise allowed
+and rejected publication for AC1027/AC1032 DWG and ASCII/binary DXF, both with
+and without the staged verifier. The verifier reparses the real staged file;
+rejection preserves the original destination and leaves no stage behind.
+
+| W49b validation | Result |
+|---|---|
+| `libdxfrw_verified_write_tests` | 5 cases, 468 assertions passed |
+| Release build: `libdxfrw_verified_write_tests` | passed |
+| `git diff --check` | passed |
+
+No ASan, Windows, or visible GUI run is claimed. W49c remains: pass the filter's
+source-identity callback to DXF publication and DWG's low-level staged write,
+then recheck before the outer DWG backup/rename. Add fault-injected tests at
+those boundaries. This cannot eliminate the final OS check-to-rename race.
