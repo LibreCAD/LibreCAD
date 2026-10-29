@@ -306,7 +306,7 @@ candidate except the explicitly proposed native-worker tags.
 | A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; W63 focused budget-core Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][budget-core]` |
 | A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; W64 focused strict-budget Release/ASan requalification; broad audit remains open | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
 | A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; W65 focused reference-accounting Release/ASan requalification; paired graph audit remains open | `[lc-offsetcurve][reference-accounting]` |
-| A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; audit/retest | `[lc-offsetcurve][cache-budget-accounting]` |
+| A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66 focused cache-budget Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][cache-budget-accounting]` |
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; audit/retest | geometry terminal/occurrence case inventory |
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; audit/retest | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a` plus later search; audit/retest | `[lc-offsetcurve][cache-topology-chain]` |
@@ -3686,3 +3686,20 @@ check.
 |---|---|
 | `/private/tmp/offset-W65-reference-accounting-release.xml` | `eb124f18364bc1f6a86185bf62357a4f32b8234f117176be0d063096a96139fc` |
 | `/private/tmp/offset-W65-reference-accounting-asan.xml` | `060d4303d93901d01029d57c055341d3f9704375840987d7660f9662beca02a6` |
+
+## 25. W66 Cache-Budget and Failed-Stage Requalification
+
+Re-ran `[lc-offsetcurve][geometry][cache-budget-accounting]` with Release and
+ASan runners. Both passed 51 testcases / 8,677 JUnit assertions with zero
+errors, failures or skips. The source review confirmed retained critical
+occurrences are staged into a separate vector and published only after every
+occurrence maps and images successfully; entered depth remains charged on a
+later failed stage, while previous snapshots stay unchanged. Shared budget
+identity and sticky resource refusal remain enforced. This is focused A-cache
+requalification, not completion of A-cache source audit or C-search/C-check.
+ASan used `detect_leaks=0`, not leak validation.
+
+| W66 artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W66-cache-budget-release.xml` | `a496740a62bb4db96bdfa6931862a6e64929cbd1c7e41b1770389d6570939288` |
+| `/private/tmp/offset-W66-cache-budget-asan.xml` | `8e377fca524fb73b55bade949b8c7b9e52adbedfc0615b82dca975457bcb044d` |
