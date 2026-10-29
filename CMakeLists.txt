@@ -3817,6 +3817,23 @@ if (BUILD_TESTS)
         target_compile_options(librecad_offset_cache_trim_failure_tests PRIVATE /bigobj)
     endif()
 
+    # Verify the public cache-check publication debit in an isolated process.
+    # The global-new fault injector must never enter Catch or application runs.
+    add_executable(librecad_offset_cache_check_failure_tests EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offset_cache_check_failure_tests.cpp)
+    set_target_properties(librecad_offset_cache_check_failure_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+    target_include_directories(librecad_offset_cache_check_failure_tests PRIVATE ${SHARED_INCLUDES})
+    target_link_libraries(librecad_offset_cache_check_failure_tests PRIVATE
+        librecad_lib Qt6::Core Qt6::Gui Qt6::Network Qt6::PrintSupport Qt6::Svg Qt6::Widgets)
+    target_compile_features(librecad_offset_cache_check_failure_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_offset_cache_check_failure_tests PRIVATE
+        BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES)
+    if(MSVC)
+        target_compile_options(librecad_offset_cache_check_failure_tests PRIVATE /bigobj)
+    endif()
+
     # Keep the large corpus/diagnostic source isolated. It is an explicit
     # phase gate and should not lengthen the ordinary DWG fast lane.
     add_librecad_filter_micro_test(

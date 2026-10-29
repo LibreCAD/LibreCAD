@@ -6207,9 +6207,8 @@ LC_OffsetCheckResult CacheTopologyBuilder::run(const RS_SplineData& cache,
     else if (builder.m_unresolved) { out.reason = Reason::Ambiguous; }
     else if (builder.m_successes != 1) { out.reason = Reason::Topology; }
     else {
-        if (budget.remainingVertices() == 0) { budget.latchLimitExceeded(); return finish(); }
-        std::unique_ptr<const CacheTopologyAnalysis> owner{new CacheTopologyAnalysis{std::move(builder.m_data)}};
         if (!budget.consumeVertices(1)) { return finish(); }
+        std::unique_ptr<const CacheTopologyAnalysis> owner{new CacheTopologyAnalysis{std::move(builder.m_data)}};
         out.analysis = std::move(owner);
         out.reason = Reason::None; out.span = none;
     }
