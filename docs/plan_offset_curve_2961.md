@@ -4104,3 +4104,29 @@ Windows ARM64 and the workflow's Linux fast lane have not yet completed.
 | W78a artifact | SHA256 |
 |---|---|
 | `/private/tmp/offset-W78-output-transaction-release.xml` | `6500f10caa7cd2d79027e2ebb3470feacdaf2f2feb82ff3229d9de0368cae3dc` |
+
+## 41. W78b Current-Source qmake6 Bundle Requalification
+
+At product commit `8e4213399cbe889b3ebc43f27c319d4671d4b177`, configured a fresh
+out-of-tree macOS build with qmake 3.1 / Qt 6.12.0, completed the clean
+`make -j4`, then completed a second incremental `make -j4` after the
+`NOMINMAX` source change. Both commands exited 0; the incremental pass rebuilt
+`dwg_dxf_output_transaction.cpp`, relinked `libdxfrw`, and relinked the app and
+helper. The bundle contains both arm64 executables at
+`/private/tmp/offset-W78-qmake6-current/LibreCAD.app/Contents/MacOS/`.
+
+The user-facing app was not qualified interactively in this lane. Invoking
+`LibreCAD --version` from the non-GUI command environment aborted in macOS
+HIServices while registering the application, with pasteboard-service errors;
+the crash stack is in AppKit/QCocoa platform initialization before LibreCAD's
+window setup. The CUA attach did not produce a usable accessibility window, so
+this is recorded as an environment-limited launch attempt, not a GUI pass or a
+product defect. Prior W55 bundle/helper and W77 offscreen test evidence remains
+separate. Windows x64/ARM64 and Linux fast-lane run `40842072529` is still
+running against this product commit; do not claim Windows qualification until
+all its relevant jobs complete.
+
+| W78b artifact | SHA256 |
+|---|---|
+| `LibreCAD` bundle executable | `70fd5cde119b1439c5699bf2036c2330694aa0b6a202045361a1fe4b39a4cec9` |
+| `LibreCADOffsetWorker` bundle executable | `ede752059cd64b09c78eac6afc591812f8c575921b320b184e48c101af5ecaa0` |
