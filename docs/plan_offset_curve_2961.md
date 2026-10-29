@@ -3099,16 +3099,18 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] A-core through C-check: review/requalify existing code and patch only proven
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
 - [ ] W0-W2: typed/cached Produce, creation/repeat and local native Trim GUI routing and scoped action faults are qualified;
-  a fresh macOS qmake6 full-app/bundle build and adjacent-helper worker smoke are now
-  qualified in W55-W57. Finish other import ownership, Windows/native cross-platform failure
-  coverage and remaining caller/final adoption/failure acceptance. Reuse the qualified
-  geometry-entry timeout/helper/client/reply modules; do not redo them as absent. Keep
-  Node runner scope separate.
+  a fresh macOS qmake6 full-app/bundle build, adjacent-helper worker smoke and paired
+  cache/creation Release-ASan checks are qualified in W55-W57; asynchronous Trim test
+  synchronization is corrected and requalified in W58-W61. Finish other import ownership,
+  Windows/native cross-platform failure coverage and remaining caller/final adoption/failure
+  acceptance. Reuse the qualified geometry-entry timeout/helper/client/reply modules; do
+  not redo them as absent. Keep Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
   DXF/DWG, source and trim implementation with any new worker/publication changes.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
-  including Windows and actual installed-package acceptance not covered by W55,
-  review scoped commits, preserve reproducible evidence and close every required gap.
+  including Windows and actual installed-package acceptance not covered by W55; resolve
+  or baseline-classify the two order-sensitive command-alias cases in W59. Review scoped
+  commits, preserve reproducible evidence and close every required gap.
 
 **Next concrete action on implementation resume:** obtain a Windows compile and
 runtime run for W44 before claiming platform parity. W55 now records a fresh
@@ -3142,6 +3144,13 @@ W31/W32 drawing-open/template publication and W33 GUI queue bounds are
 implemented; do not repeat them as absent. Review the remaining cross-file
 time-of-check limits without weakening editable imports.
 Qualify remaining platform faults without weakening the existing worker tests.
+W58 isolated two stale synchronous assertions in native Trim tests; W61 fixes
+their event-pump/wait contract and requalifies the affected ASan lane. W59's
+full randomized fast-lane run no longer fails those offset cases, but reports
+five JUnit failure assertions in two `[commands]` alias cases; the isolated
+`[commands]` selection passes. Preserve this as an unresolved broader-suite
+order/state issue rather than changing unrelated command behavior or waiving the
+fast-lane gate.
 W16-W19 cache portability and local creation/repeat GUI
 routing are qualified; do not restart them as absent. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
@@ -3565,3 +3574,40 @@ The Release runner was built from the current worktree after W53; later W54-W56
 changes were roadmap-only. XML receipts pass `xmllint --noout`. These offscreen
 checks still do not substitute for visible interaction, Windows runtime, or
 installed-package acceptance.
+
+## 20. W58-W61 Broad Release and Async Trim Requalification
+
+The first full Release fast-lane run (W58) executed 6,272 Catch testcases with
+26 explicit skips. It found two failures in existing native Trim action tests:
+they asserted immediately after routing through the asynchronous native worker.
+Both failures reproduced when run alone, so they were not random-suite noise.
+The test probe now pumps Qt events while `hasPendingNativeTrim()` remains true,
+with a bounded 35-second wait before the preview-fragment and committed-line
+assertions. Production Trim behavior is unchanged.
+
+After the test fix, the same full Release fast-lane selection (W59) again
+executed 6,272 cases with 26 skips. The two Trim failures are gone. The JUnit
+suite reports `failures=5`; its failure nodes identify the two `[commands]`
+cases "Line gap commands start Line Gap, not Break/Divide" and "Line gap
+aliases survive saving and respect user overrides". Running `[commands]`
+alone (W60) passes 11 cases / 69 JUnit tests with no failures or skips,
+indicating an order-sensitive global alias-state issue in the broad process.
+No command code was changed and those failures remain open for baseline/order
+classification; they are not counted as an offset pass.
+
+The affected Release cases pass after the bounded wait. A current-source ASan
+rebuild then passed all five `[lc-offsetcurve][types][trim]` cases (7,176 JUnit
+tests) with zero errors, failures or skips. ASan used `detect_leaks=0`; this is
+not leak validation.
+
+| W58-W61 artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W58-release-fast-lane.xml` | `c700dea53e4c6eebaee0e75d70977c53411f44773bd6a7454eb4dfa3c4afd5b8` |
+| `/private/tmp/offset-W59-release-fast-lane.xml` | `8f51e2da5d622180d31bafe1f2bdd71182b6e2cb4227d5b84a8791bce61afd2c` |
+| `/private/tmp/offset-W60-commands.xml` | `21d0c647b90a23e8530c48b2f7a7424a923b86904b334a0a2c9eec5e95d614a8` |
+| `/private/tmp/offset-W61-trim-types-asan.xml` | `a1665274ed4e2eb8b26b9545e33aba4284268b300114d03b0466dce1656443e7` |
+
+All four reports pass strict `xmllint --noout`. W59 is explicitly not a clean
+full-fast-lane PASS: close the order-sensitive command alias issue or compare
+it against a fresh baseline before final R acceptance. Windows, visible GUI,
+installed packaging and the remaining worker/import gates are still open.
