@@ -3772,3 +3772,25 @@ classification before claiming all GUI/import routing is complete.
 | `/private/tmp/offset-W68-creation-release.xml` | `a23fcc834b33969f4bd200d85137ed3971abbd4140ce2fc4def33d433e49c6b5` |
 | `/private/tmp/offset-W68-creation-asan.xml` | `09d209d31a5fac1d54891fb643cf1648be346cbe95cc20da0fcc4caafc618804` |
 | `/private/tmp/offset-W68-library-insert-full-release.xml` | `055d0b1153f4c5a2bdb3d9e4167659f262159a332d73196b34a6a81b288c77a5` |
+
+## 29. W69 Library Import Cancellation and Retry
+
+Added an action-level lifecycle regression for resetting the library insert
+action while its staged import is still pending. It verifies no source is
+adopted after cancellation, drains the event loop to catch late delivery, then
+selects the file again and confirms successful recovery and insertion. This
+checks the GUI action's cancellation/retry handoff in addition to the import
+session's lower-level cancellation coverage.
+
+The focused library-insert case passes Release and ASan (20 assertions each).
+The complete creation-action target passes 133 JUnit cases / 90,237 assertions
+in both configurations, with zero errors, failures or skips. ASan used
+`detect_leaks=0`; it is not leak validation. These are offscreen macOS runs, not
+visible desktop, installed-package, Windows runtime or full-suite qualification.
+
+| W69 artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W69-library-insert-release.xml` | `420fd262fb5b64df222b8828e392a26ec3ddfab387ee8b5fbcbf1d6f9349a04d` |
+| `/private/tmp/offset-W69-library-insert-asan.xml` | `8d09d4ba7e82cac10ba0caf75f1d09eb3d6e51c563cd05fd19b7f64107864a44` |
+| `/private/tmp/offset-W69-creation-release.xml` | `e606b0febe0fb4288013ba3a22b74c733742d4e24cdfa7113a03e8001c3c4fe4` |
+| `/private/tmp/offset-W69-creation-asan.xml` | `354bbeaedd3cdbb549d9234f9d9de0074cd50d1f5c896bc06621bf49148a88da` |
