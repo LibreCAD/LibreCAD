@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, W79's complete staged macOS CMake install, and W86's relocated-install preview-cache and creation/repeat routing checks are qualified in focused Release/ASan or offscreen lanes; W80 fixes demonstrated compound admissions, while W85 preserves the explicitly staged contact-control accounting after review corrected W84; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, W79's complete staged macOS CMake install, and W86's relocated-install preview-cache and creation/repeat routing checks are qualified in focused Release/ASan or offscreen lanes; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -304,7 +304,7 @@ candidate except the explicitly proposed native-worker tags.
 |---|---|---|---|---|
 | S0 | Pin/reconcile candidate, main and feature; baseline/discovery; fix DWG enum classification and add R2007 execution | - | recovered; parser and ordinary R2007 slices qualified below; geometry/type/target qualification remains | `[curve-offset]`, `[lc-offsetcurve]`, `[entity-coverage]`, actual target/version inventory |
 | A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; `27f9c5239` fixes demonstrated compound admissions; `91dcde3c4` preserves ordered contact-control debit semantics; broader audit remains open | `[lc-offsetcurve][budget-core]` |
-| A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; W64 focused strict-budget Release/ASan requalification; broad audit remains open | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
+| A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; W64 focused strict-budget Release/ASan requalification; W87 fixes depth-ceiling-based queue over-allocation; broader audit remains open | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
 | A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; W65 focused reference-accounting Release/ASan requalification; paired graph audit remains open | `[lc-offsetcurve][reference-accounting]` |
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66 focused cache-budget Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][cache-budget-accounting]` |
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; audit/retest | geometry terminal/occurrence case inventory |
@@ -4299,3 +4299,27 @@ not visible desktop interaction, Linux/Windows relocation, or final W0-W2
 acceptance. The visible GUI check could not run because the Mac was locked at
 this checkpoint. Recheck the latest PR Actions run after pushing this roadmap
 record; cross-platform and final acceptance gates remain open.
+
+## 49. W87 Strict Intersection Queue Allocation
+
+Product/test commit `2a72977bf` removes strict preparation and pair-refinement
+queue reservations sized from the configured maximum depth and overall work
+ceilings. Queues now reserve the root or next pair of children only as that
+work is admitted, while capacity reservation still occurs before the
+corresponding item debit and queue mutation. Previously, an immediately
+resolvable two-line crossing with `UINT_MAX` depth and `SIZE_MAX` pair/item
+ceilings could request billions of unused queue slots before its first solve.
+The regression verifies the same exact crossing completes with shallow
+observed depth and bounded generated work under those maximal ceilings.
+
+| W87 lane | JUnit cases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Maximal-ceiling regression, Release | 1 / 22 | PASS; errors=0, failures=0, skipped=0 | `e6cb972eb29c2972adbc9e7b2775d58c9725fefd9f3655d272d5c3879122516d` |
+| Maximal-ceiling regression, ASan | 1 / 22 | PASS; errors=0, failures=0, skipped=0 | `82e94103e861775844f43c0de49a6a20d16c18b132e304bee6b2950634109787` |
+| Strict-budget selector, Release | 21 / 898 | PASS; errors=0, failures=0, skipped=0 | `e16c0462f7cac99e71d63c1cfb9fc8b8a592b1f799e4c268afb4060b006978aa` |
+| Strict-budget selector, ASan | 21 / 898 | PASS; errors=0, failures=0, skipped=0 | `51a6311c1b70b55690282b38a0e7add3b87581d896ec62f100b9273a54dc7dc0` |
+
+ASan used `detect_leaks=0`; this is not leak validation. Reports are in
+`/private/tmp/offset-W87-strict-{queue,budget}-{release,asan}.xml`. W87 closes
+this concrete allocation issue only; A-core/A-strict shared accounting,
+provider callbacks, lifetime, and cross-entry audits remain open.
