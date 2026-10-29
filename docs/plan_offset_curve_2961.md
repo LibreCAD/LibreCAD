@@ -3976,3 +3976,33 @@ these individually before changing them; user-facing DXF/DWG open/template and
 recursive-XREF paths are the next likely staged-import candidates. Visible
 desktop acceptance, installed-helper deployment, Windows runtime, and final
 acceptance remain open.
+
+## 36. W75 Staged Import Identity CI Lane
+
+CI/test-registration slice committed as `1516dc230a3394480ff62bc480d13cecc303ba4e`.
+The bounded DWG/DXF workflow now builds the console-import and staged-import
+hostile-file targets on Linux and both Windows architectures. CTest registers a
+focused source-identity selector that compiles and executes the platform-native
+file-identity cases. This also repairs the W74 workflow target list: its newly
+registered console-import CTest had not yet been included in the workflow's
+build command.
+
+On macOS, CMake Release build targets
+`librecad_console_command_utils_tests` and `librecad_offset_hostilefile_tests`
+build successfully. The workflow-matched CTest run passes both
+`librecad_console_import_tests` and `librecad_offset_import_identity_tests`.
+Direct JUnit reports show four console-import cases / 20 assertions and three
+POSIX identity cases / 128 assertions, with zero errors, failures, or skips.
+This host does not compile or execute the Windows-only branches; actual x64 and
+ARM64 source-identity validation remains pending the pushed GitHub Actions run.
+
+| W75 lane | JUnit cases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Console import Release | 4 / 20 | PASS | `e287b7d89efdb43f368d7961efc44becd2421cf3c276f118212aa74c3fa582de` |
+| POSIX source identity Release | 3 / 128 | PASS | `6350f6539f2743aa2f94327a98ae7d552aa0a82bcf9352f4124bbb84c92fbcbf` |
+| Workflow-matched CTest | 2 / 2 tests | PASS | n/a |
+
+Reports are `/private/tmp/offset-W75-{console-import,import-identity}-release.xml`.
+No ASan or Windows result is claimed for this slice. The PR workflow must pass
+before W44 Windows source-identity parity can be considered runtime-qualified;
+other visible-GUI, installed-helper and final acceptance gates remain open.
