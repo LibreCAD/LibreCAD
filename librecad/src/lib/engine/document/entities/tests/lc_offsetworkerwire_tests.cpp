@@ -194,14 +194,17 @@ TEST_CASE("offset worker wire admits hard structural boundaries and rejects exac
     CHECK(error == wire::Error::Items);
     CHECK(wire::decode(QCborValue(full).toCbor()).error == wire::Error::Items);
 
-    QCborArray nested{1};
-    for (unsigned depth = 2; depth < wire::Limits{}.depth; ++depth)
-        nested = QCborArray{nested};
-    REQUIRE(receive(wire::encode(nested)));
-    nested = QCborArray{nested};
-    CHECK(wire::encode(nested, &error).isEmpty());
+    QByteArray exactDepth(int(wire::Limits{}.depth - 1), char(0x81));
+    exactDepth.append(char(0x00));
+    const auto exactDepthValue = wire::decode(exactDepth);
+    REQUIRE(exactDepthValue);
+    CHECK(exactDepthValue.work.deepest == wire::Limits{}.depth);
+    REQUIRE_FALSE(wire::encode(exactDepthValue.fields).isEmpty());
+    QByteArray excessiveDepth = exactDepth;
+    excessiveDepth.prepend(char(0x81));
+    CHECK(wire::decode(excessiveDepth).error == wire::Error::Depth);
+    CHECK(wire::encode(QCborArray{exactDepthValue.fields}, &error).isEmpty());
     CHECK(error == wire::Error::Depth);
-    CHECK(wire::decode(QCborValue(nested).toCbor()).error == wire::Error::Depth);
 }
 
 TEST_CASE("offset worker wire rejects nonfinite ambiguous and extensible CBOR encodings",

@@ -998,9 +998,12 @@ TEST_CASE("Windows staged source identity binds its open handle",
     const auto path = directory.file("input.dxf"); writeInput(path, Lane::Ascii, f::raw(3));
     const auto stamp = LC_OffsetImportSourceStamp::capture(QString::fromStdString(path.string()));
     REQUIRE(stamp.valid); REQUIRE(stamp.native.valid);
-    QFile file(QString::fromStdString(path.string())); REQUIRE(file.open(QIODevice::ReadWrite));
+    QFile file(QString::fromStdString(path.string())); REQUIRE(file.open(QIODevice::ReadOnly));
     REQUIRE(stamp.matchesDescriptor(file.handle()));
-    REQUIRE(file.write("X", 1) == 1); REQUIRE(file.flush());
+    {
+        QFile writer(QString::fromStdString(path.string())); REQUIRE(writer.open(QIODevice::ReadWrite));
+        REQUIRE(writer.write("X", 1) == 1); REQUIRE(writer.flush());
+    }
     CHECK_FALSE(stamp.matchesDescriptor(file.handle()));
     CHECK_FALSE(stamp.matches(QString::fromStdString(path.string())));
 }

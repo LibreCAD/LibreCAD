@@ -9,12 +9,22 @@
 #include "rs_settings.h"
 
 #include <QCoreApplication>
-#include <QFile>
 #include <QSettings>
 #include <QTemporaryDir>
+#include <algorithm>
 #include <array>
+#include <cerrno>
+#include <cstddef>
 #include <cstdio>
 #include <cstring>
+#ifdef Q_OS_WIN
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
 
 #ifdef LC_OFFSET_WORKER_GEOMETRY_TIMEOUT_TEST_ONLY
 #include <csignal>
@@ -22,6 +32,49 @@
 #endif
 
 namespace {
+bool readInput(char* data, qsizetype capacity, qsizetype& size) noexcept {
+#ifdef Q_OS_WIN
+    const HANDLE input = GetStdHandle(STD_INPUT_HANDLE);
+    if (!input || input == INVALID_HANDLE_VALUE) return false;
+    DWORD count = 0;
+    if (!ReadFile(input, data, DWORD(capacity), &count, nullptr)) {
+        if (GetLastError() == ERROR_BROKEN_PIPE) { size = 0; return true; }
+        return false;
+    }
+    size = qsizetype(count);
+    return true;
+#else
+    for (;;) {
+        const auto count = ::read(STDIN_FILENO, data, std::size_t(capacity));
+        if (count >= 0) { size = qsizetype(count); return true; }
+        if (errno != EINTR) return false;
+    }
+#endif
+}
+
+bool writeOutput(const QByteArray& data) noexcept {
+    qsizetype offset = 0;
+#ifdef Q_OS_WIN
+    const HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
+    if (!output || output == INVALID_HANDLE_VALUE) return false;
+    while (offset < data.size()) {
+        const auto chunk = DWORD(std::min<qsizetype>(data.size() - offset, 64 * 1024));
+        DWORD written = 0;
+        if (!WriteFile(output, data.constData() + offset, chunk, &written, nullptr) || written == 0) return false;
+        offset += qsizetype(written);
+    }
+#else
+    while (offset < data.size()) {
+        const auto count = ::write(STDOUT_FILENO, data.constData() + offset,
+                                   std::size_t(data.size() - offset));
+        if (count > 0) offset += qsizetype(count);
+        else if (count < 0 && errno == EINTR) continue;
+        else return false;
+    }
+#endif
+    return true;
+}
+
 void prefix(const LC_OffsetWorkerKernel::Trace& trace) noexcept {
     const auto& c = trace.checkWork;
     const auto& t = trace.throughWork;
@@ -102,13 +155,11 @@ int main(int argc, char** argv) {
         RS_Settings::init("LibreCAD", "LibreCADOffsetWorker");
         RS_DEBUG->setLevel(RS_Debug::D_NOTHING);
 
-        QFile input;
-        if (!input.open(stdin, QIODevice::ReadOnly)) return 3;
         LC_OffsetWorkerWire::Receiver receiver;
         std::array<char, 65536> chunk{};
         for (;;) {
-            const auto size = input.read(chunk.data(), qsizetype(chunk.size()));
-            if (size < 0) return 3;
+            qsizetype size = 0;
+            if (!readInput(chunk.data(), qsizetype(chunk.size()), size)) return 3;
             if (size == 0) break;
             if (!receiver.append(QByteArray(chunk.data(), size))) {
                 std::fputs("offset-worker: invalid input frame\n", stderr);
@@ -143,15 +194,7 @@ int main(int argc, char** argv) {
             std::fputs("offset-worker: result framing failed\n", stderr);
             return 4;
         }
-        QFile output;
-        if (!output.open(stdout, QIODevice::WriteOnly)) return 5;
-        qsizetype written = 0;
-        while (written < frame.size()) {
-            const auto size = output.write(frame.constData() + written, frame.size() - written);
-            if (size <= 0) return 5;
-            written += size;
-        }
-        return output.flush() ? 0 : 5;
+        return writeOutput(frame) ? 0 : 5;
     } catch (const std::bad_alloc&) {
         prefix(trace);
         std::fputs("offset-worker: allocation failure; total work unknown\n", stderr);

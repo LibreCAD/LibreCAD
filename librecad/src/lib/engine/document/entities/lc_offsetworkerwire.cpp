@@ -5,7 +5,6 @@
  */
 #include "lc_offsetworkerwire.h"
 
-#include <QCborStreamReader>
 #include <QCborValue>
 #include <QtEndian>
 #include <algorithm>
@@ -23,6 +22,8 @@ bool valid(const Limits& limits) {
 }
 struct Scan {
     const Limits& limits;
+    const QByteArray* payload = nullptr;
+    qsizetype offset = 0;
     Work work;
     Error error = Error::None;
     bool fail(Error value) { error = value; return false; }
@@ -32,34 +33,66 @@ struct Scan {
         work.deepest = std::max(work.deepest, depth);
         return depth <= limits.depth || fail(Error::Depth);
     }
-    bool read(QCborStreamReader& reader, unsigned depth) {
+    bool byte(quint8& value) {
+        if (!payload || offset >= payload->size()) return fail(Error::InvalidCbor);
+        value = quint8(static_cast<unsigned char>(payload->at(offset++)));
+        return true;
+    }
+    bool argument(quint8 additional, quint64& value) {
+        if (additional < 24) { value = additional; return true; }
+        const auto remaining = payload->size() - offset;
+        if (additional == 24) {
+            quint8 raw;
+            if (!byte(raw)) return false;
+            value = raw;
+        } else if (additional == 25) {
+            if (remaining < 2) return fail(Error::InvalidCbor);
+            value = qFromBigEndian<quint16>(payload->constData() + offset);
+            offset += 2;
+        } else if (additional == 26) {
+            if (remaining < 4) return fail(Error::InvalidCbor);
+            value = qFromBigEndian<quint32>(payload->constData() + offset);
+            offset += 4;
+        } else if (additional == 27) {
+            if (remaining < 8) return fail(Error::InvalidCbor);
+            value = qFromBigEndian<quint64>(payload->constData() + offset);
+            offset += 8;
+        } else {
+            return fail(Error::UnsupportedType);
+        }
+        return true;
+    }
+    bool read(unsigned depth) {
         if (!admit(depth)) return false;
-        if (reader.isArray()) {
-            if (!reader.isLengthKnown()) return fail(Error::UnsupportedType);
-            const auto count = reader.length();
+        quint8 head;
+        if (!byte(head)) return false;
+        const quint8 major = head >> 5;
+        const quint8 additional = head & 0x1f;
+        if (major == 4) {
+            quint64 count;
+            if (!argument(additional, count)) return false;
             if (count > limits.arrayItems) return fail(Error::ArrayItems);
-            if (count > limits.items - work.items) return fail(Error::Items);
-            if (!reader.enterContainer()) return fail(Error::InvalidCbor);
-            for (quint64 i = 0; i < count; ++i)
-                if (!reader.hasNext() || !read(reader, depth + 1)) return failIfUnset();
-            if (reader.hasNext() || !reader.leaveContainer()) return fail(Error::InvalidCbor);
+            if (work.items > limits.items || count > limits.items - work.items) return fail(Error::Items);
+            for (quint64 i = 0; i < count; ++i) if (!read(depth + 1)) return false;
             return true;
         }
-        if (reader.isDouble()) {
-            if (!std::isfinite(reader.toDouble())) return fail(Error::NonFinite);
-        } else if (reader.isUnsignedInteger()) {
-            if (reader.toUnsignedInteger() > quint64(std::numeric_limits<qint64>::max()))
-                return fail(Error::UnsupportedType);
-        } else if (reader.isNegativeInteger()) {
-            // Qt exposes magnitude+1, which wraps to zero for CBOR -2^64.
-            const auto magnitude = quint64(reader.toNegativeInteger());
-            if (magnitude == 0 || magnitude > (quint64{1} << 63))
-                return fail(Error::UnsupportedType);
-        } else if (!reader.isBool() && !reader.isNull()) return fail(Error::UnsupportedType);
-        reader.next(0);
-        return reader.lastError() == QCborError::NoError || fail(Error::InvalidCbor);
+        if (major == 0 || major == 1) {
+            quint64 value;
+            if (!argument(additional, value)) return false;
+            return value <= quint64(std::numeric_limits<qint64>::max()) || fail(Error::UnsupportedType);
+        }
+        if (major != 7) return fail(Error::UnsupportedType);
+        if (additional == 20 || additional == 21 || additional == 22) return true;
+        if (additional == 25 || additional == 26) return fail(Error::UnsupportedType);
+        if (additional == 27) {
+            const auto remaining = payload->size() - offset;
+            if (remaining < 8) return fail(Error::InvalidCbor);
+            const auto bits = qFromBigEndian<quint64>(payload->constData() + offset);
+            offset += 8;
+            return (bits & 0x7ff0000000000000ULL) != 0x7ff0000000000000ULL || fail(Error::NonFinite);
+        }
+        return fail(Error::UnsupportedType);
     }
-    bool failIfUnset() { return error == Error::None ? fail(Error::InvalidCbor) : false; }
     bool value(const QCborValue& item, unsigned depth) {
         if (!admit(depth)) return false;
         if (item.isArray()) {
@@ -81,13 +114,11 @@ Message decode(const QByteArray& payload, const Limits& limits) {
     if (payload.isEmpty() || payload.size() > limits.frameBytes) {
         result.error = Error::FrameLength; return result;
     }
-    Scan scan{limits};
+    Scan scan{limits, &payload};
     scan.work.payloadBytes = payload.size();
-    QCborStreamReader reader(payload);
-    if (!reader.isArray()) result.error = Error::UnsupportedType;
-    else if (!scan.read(reader, 1)) result.error = scan.error;
-    else if (reader.lastError() != QCborError::NoError || reader.currentOffset() != payload.size())
-        result.error = Error::InvalidCbor;
+    if (quint8(static_cast<unsigned char>(payload.at(0))) >> 5 != 4) result.error = Error::UnsupportedType;
+    else if (!scan.read(1)) result.error = scan.error;
+    else if (scan.offset != payload.size()) result.error = Error::InvalidCbor;
     else {
         QCborParserError parse;
         const auto value = QCborValue::fromCbor(payload, &parse);
@@ -109,9 +140,15 @@ QByteArray encode(const QCborArray& fields, Error* error, const Limits& limits) 
             const auto payload = QCborValue(fields).toCbor();
             if (payload.isEmpty() || payload.size() > limits.frameBytes) failure = Error::FrameLength;
             else {
-                frame.resize(4);
-                qToBigEndian(quint32(payload.size()), frame.data());
-                frame.append(payload);
+                Scan encoded{limits, &payload};
+                if (quint8(static_cast<unsigned char>(payload.at(0))) >> 5 != 4) failure = Error::InvalidCbor;
+                else if (!encoded.read(1)) failure = encoded.error;
+                else if (encoded.offset != payload.size()) failure = Error::InvalidCbor;
+                else {
+                    frame.resize(4);
+                    qToBigEndian(quint32(payload.size()), frame.data());
+                    frame.append(payload);
+                }
             }
         }
     }
