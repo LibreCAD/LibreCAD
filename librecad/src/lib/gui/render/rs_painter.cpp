@@ -27,6 +27,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <limits>
 #include <utility>
 
 #include "dxf_format.h"
@@ -210,7 +211,9 @@ RS_Painter::RS_Painter(QPaintDevice* pd)
     : QPainter{pd}, m_cachedDpmm{getDpmm()} {
 }
 
-QVector<qreal> RS_Painter::canonicalDashPattern(const std::vector<double>& raw) {
+QVector<qreal> RS_Painter::canonicalDashPattern(const std::vector<double>& raw, qreal* phaseOffset) {
+    if (phaseOffset != nullptr)
+        *phaseOffset = 0.0;
     if (raw.empty())
         return {};
     // Runs of one state, in drawing units. A zero element takes the state the
@@ -228,8 +231,13 @@ QVector<qreal> RS_Painter::canonicalDashPattern(const std::vector<double>& raw) 
         else
             runs.push_back({isDash, length});
     }
-    // The list is cyclic: a run shared by both ends is one run.
-    if (runs.size() > 1 && runs.front().first == runs.back().first) {
+    // The list is cyclic: a run shared by both ends is one run. Retain the
+    // origin's position in that run before merging it for Qt.
+    const bool wraps = runs.size() > 1 && runs.front().first == runs.back().first;
+    const bool startsWithDash = runs.front().first;
+    const double leadingRun = runs.front().second;
+    const double trailingRun = runs.back().second;
+    if (wraps) {
         runs.front().second += runs.back().second;
         runs.pop_back();
     }
@@ -246,8 +254,12 @@ QVector<qreal> RS_Painter::canonicalDashPattern(const std::vector<double>& raw) 
         result.push_back(run.second);
         period += run.second;
     }
-    if (period <= 0.0)
+    if (!std::isfinite(period) || period <= 0.0)
         return {};
+    // Keep the DXF pattern's origin when rotation or a repeated end run moved
+    // it inside the Qt pattern's first dash/gap.
+    if (phaseOffset != nullptr)
+        *phaseOffset = startsWithDash ? (wraps ? trailingRun : 0.0) : period - leadingRun;
     return result;
 }
 
@@ -256,6 +268,17 @@ QVector<qreal> RS_Painter::dashPatternForQt(const QVector<qreal>& canonical, con
     QVector<qreal> pattern = canonical;
     for (qreal& dash : pattern)
         dash *= k;
+    if (pattern.size() % 2 != 0)
+        return {};
+    // QPen requires strictly positive dash and gap lengths. A zero group 49
+    // element is a dot; with the pen cap it becomes a point at this tiny length.
+    const qreal dotLength = std::numeric_limits<qreal>::epsilon();
+    for (qreal& dash : pattern) {
+        if (dash == 0.0)
+            dash = dotLength;
+        if (!std::isfinite(dash) || dash <= 0.0)
+            return {};
+    }
     return pattern;
 }
 
@@ -1628,8 +1651,9 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
     // a renderer or outside model space the enum decides, as it always did.
     const std::uint16_t lineTypeId = pen.getLineTypeId();
     const QVector<qreal>* tablePattern = nullptr;
+    qreal tablePhaseOffset = 0.0;
     if (lineTypeId != 0 && m_renderer != nullptr && dashSpace == DashSpace::Model)
-        tablePattern = m_renderer->resolveDashPattern(pen);
+        tablePattern = m_renderer->resolveDashPattern(pen, &tablePhaseOffset);
     if (tablePattern != nullptr)
         style = Qt::CustomDashLine;
 
@@ -1660,7 +1684,7 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
             }
         }
         if (style == Qt::CustomDashLine) {
-            m_lastUsedPen.setDashOffset(pen.dashOffset() * k);
+            m_lastUsedPen.setDashOffset((pen.dashOffset() + tablePhaseOffset) * k);
         }
     }
     if (style != Qt::CustomDashLine && m_lastUsedPen.style() != style) {

@@ -120,10 +120,11 @@ public:
     // The next setPen() rebuilds the dash pattern; the renderer calls it once per pass.
     void invalidateDashPattern() {m_lastDashValid = false;}
 
-    /// A group 49 list as Qt needs it: positive dashes, positive gaps,
-    /// starting with a dash; empty when the list cannot draw.
-    static QVector<qreal> canonicalDashPattern(const std::vector<double>& raw);
-    /// The single place where the painter scales a table pattern.
+    /// Canonicalise group 49 runs in drawing units, starting with a dash.
+    /// Returns the offset from this pattern's origin to the DXF origin.
+    static QVector<qreal> canonicalDashPattern(const std::vector<double>& raw,
+                                               qreal* phaseOffset = nullptr);
+    /// Scale a table pattern for QPen and make its lengths strictly positive.
     static QVector<qreal> dashPatternForQt(const QVector<qreal>& canonical, double k);
 
     void drawEntityArc(RS_Arc* arc);

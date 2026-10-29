@@ -185,6 +185,7 @@ struct InstalledPen {
     Qt::PenStyle style = Qt::SolidLine;
     bool hasDashes = false;
     double scale = 0.;
+    double dashOffset = 0.;
 };
 
 // One view pass over a line whose pen is @p pen, with @p graphic as the drawing.
@@ -206,6 +207,7 @@ InstalledPen installInView(RS_Graphic& graphic, const RS_Pen& pen) {
     result.dashPattern = painter.pen().dashPattern();
     result.style = painter.pen().style();
     result.hasDashes = painter.penHasDashPattern();
+    result.dashOffset = painter.pen().dashOffset();
     return result;
 }
 
@@ -652,6 +654,20 @@ TEST_CASE("Group 49 dash lists are canonicalised", "[gui][pen][linetype][dash]")
     CHECK(RS_Painter::canonicalDashPattern({5.}).isEmpty());
     CHECK(RS_Painter::canonicalDashPattern(
               {std::numeric_limits<double>::quiet_NaN(), -1.}).isEmpty());
+
+    qreal phaseOffset = 0.0;
+    CHECK(RS_Painter::canonicalDashPattern({-5., 10.}, &phaseOffset)
+          == QVector<qreal>{10., 5.});
+    CHECK(phaseOffset == Catch::Approx(10.));
+    CHECK(RS_Painter::canonicalDashPattern({20., -20., 10.}, &phaseOffset)
+          == QVector<qreal>{30., 20.});
+    CHECK(phaseOffset == Catch::Approx(10.));
+
+    const QVector<qreal> qtPattern = RS_Painter::dashPatternForQt(
+        RS_Painter::canonicalDashPattern({12.7, -6.35, 0., -6.35}), 1.0);
+    REQUIRE(qtPattern.size() == 4);
+    for (const qreal dash : qtPattern)
+        CHECK(dash > 0.0);
 }
 
 TEST_CASE("A named line draws its table dashes", "[gui][pen][linetype]") {
@@ -666,6 +682,21 @@ TEST_CASE("A named line draws its table dashes", "[gui][pen][linetype]") {
     CHECK(installed.hasDashes);
     checkDashPattern(installed.dashPattern,
                      {10. * installed.scale, 5. * installed.scale});
+}
+
+TEST_CASE("A table pattern starting with a gap keeps its phase", "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addLineType(graphic, "GAPSTART", {-5., 10.});
+    graphic.addVariable("$LTSCALE", 2.0, DXF_FORMAT_GC_LTScale);
+
+    const InstalledPen installed = installInView(graphic, namedPen("GAPSTART"));
+    CHECK(installed.style == Qt::CustomDashLine);
+    checkDashPattern(installed.dashPattern,
+                     {20. * installed.scale, 10. * installed.scale});
+    CHECK(installed.dashOffset == Catch::Approx(20. * installed.scale));
 }
 
 TEST_CASE("Two names with one enum keep separate dash lists", "[gui][pen][linetype]") {
@@ -698,7 +729,10 @@ TEST_CASE("Two names with one enum keep separate dash lists", "[gui][pen][linety
     REQUIRE(second.getPen().getLineType() == RS2::SolidLine);
     renderer.setPenForEntity(&painter, &second, false);
     CHECK(painter.pen().style() == Qt::CustomDashLine);
-    checkDashPattern(painter.pen().dashPattern(), {20. * k, 5. * k, 0., 5. * k});
+    const QVector<qreal> pointPattern = painter.pen().dashPattern();
+    CHECK(pointPattern.at(2) > 0.0);
+    checkDashPattern(pointPattern,
+                     {20. * k, 5. * k, std::numeric_limits<qreal>::epsilon(), 5. * k});
     checkDashPattern(firstPattern, {10. * k, 5. * k});
 }
 

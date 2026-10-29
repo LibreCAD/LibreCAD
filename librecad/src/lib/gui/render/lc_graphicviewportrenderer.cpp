@@ -218,12 +218,16 @@ void LC_GraphicViewportRenderer::setupPainter(RS_Painter *painter) {
     painter->setWorldBoundingRect(m_renderBoundingClipRect);
 }
 
-const QVector<qreal>* LC_GraphicViewportRenderer::resolveDashPattern(const RS_Pen& pen) {
+const QVector<qreal>* LC_GraphicViewportRenderer::resolveDashPattern(const RS_Pen& pen, qreal* phaseOffset) {
     if (!m_dashCacheBuilt)
         buildDashPatternCache();
     // No entry is ever added after the build, so the address stays valid.
     const auto it = m_dashByFold.constFind(pen.getLineTypeFoldId());
-    return it == m_dashByFold.cend() ? nullptr : &it.value();
+    if (it == m_dashByFold.cend())
+        return nullptr;
+    if (phaseOffset != nullptr)
+        *phaseOffset = it->phaseOffset;
+    return &it->dashes;
 }
 
 void LC_GraphicViewportRenderer::buildDashPatternCache() {
@@ -248,14 +252,21 @@ void LC_GraphicViewportRenderer::buildDashPatternCache() {
         const std::uint16_t foldId = probe.getLineTypeFoldId();
         if (foldId == 0)
             continue;
-        QVector<qreal> pattern = RS_Painter::canonicalDashPattern(entry->pattern);
+        qreal phaseOffset = 0.0;
+        QVector<qreal> pattern = RS_Painter::canonicalDashPattern(entry->pattern, &phaseOffset);
         if (pattern.isEmpty())
             continue;
-        for (qreal& dash : pattern)
+        bool valid = std::isfinite(phaseOffset);
+        for (qreal& dash : pattern) {
             dash *= lineTypeScale;
+            valid = valid && std::isfinite(dash) && dash >= 0.0;
+        }
+        phaseOffset *= lineTypeScale;
+        if (!valid || !std::isfinite(phaseOffset))
+            continue;
         // The first entry of a fold wins.
         if (!m_dashByFold.contains(foldId))
-            m_dashByFold.insert(foldId, pattern);
+            m_dashByFold.insert(foldId, DashPattern{pattern, phaseOffset});
     }
 }
 

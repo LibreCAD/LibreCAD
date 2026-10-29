@@ -77,7 +77,7 @@ class LC_GraphicViewportRenderer{
     /** The dashes a named pen draws from the drawing's line type table, or
      *  nullptr when the pen's enum decides. The pointer stays valid until the
      *  next setupPainter(). */
-    const QVector<qreal>* resolveDashPattern(const RS_Pen& pen);
+    const QVector<qreal>* resolveDashPattern(const RS_Pen& pen, qreal* phaseOffset = nullptr);
 
   protected:
     QPaintDevice* m_paintDevice = nullptr;
@@ -150,10 +150,15 @@ class LC_GraphicViewportRenderer{
     void updateAnglesBasis(const RS_Graphic *g);
 
 private:
+    struct DashPattern {
+        QVector<qreal> dashes;
+        qreal phaseOffset = 0.0;
+    };
+
     void buildDashPatternCache();
 
     // Named line type dashes of the drawing, by fold id, built once per pass.
-    QHash<std::uint16_t, QVector<qreal>> m_dashByFold;
+    QHash<std::uint16_t, DashPattern> m_dashByFold;
     bool m_dashCacheBuilt = false;
 };
 
