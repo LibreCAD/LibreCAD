@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, and W114 closes local A-cache allocation-failure coverage; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, C-check cusp and topology/failure inventory, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, and W114 closes local A-cache allocation-failure coverage; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109/W115 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, C-check cusp and topology/failure inventory, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -309,7 +309,7 @@ candidate except the explicitly proposed native-worker tags.
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66/W113 budget requalification; W114 exhaustively injects allocations in `checkCache`, standalone bounds and local-topology APIs with bounded ledgers and same-budget recovery; local A-cache audit complete; cross-platform/final R gates remain | `[lc-offsetcurve][cache-budget-accounting]`, standalone cache-check fault target |
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; W97 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | geometry terminal/occurrence case inventory |
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; W98 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
-| C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a`; W100 charges the final proof-publication slot; W103/W105/W108/W109 sweep every observed allocation failure over line, forward/reversed two-span cubic, forward/reversed whole-circle seam, and the open component of a producer-generated two-component trimmed path with bounded ledger and same-budget retry in Release/ASan; cusp and broader topology/site audit remain | `[lc-offsetcurve][cache-topology-chain]`, standalone cache-check allocation-fault target |
+| C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a`; W100 charges the final proof-publication slot; W103/W105/W108/W109/W115 sweep every observed allocation failure over line, forward/reversed two-span cubic, forward/reversed whole-circle seam, and both open and closed components of a producer-generated two-component trimmed path with bounded ledger and same-budget retry in focused Release/ASan runs; cusp and broader topology/site audit remain | `[lc-offsetcurve][cache-topology-chain]`, standalone cache-check allocation-fault target |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; finish caller/fallback/import ownership freeze before routing | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; full app/deployed-package gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
 | W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit and scoped action faults and geometry-entry timeout receipts qualified locally; W81 adds Linux/Windows CMake worker CI; W82 removes PR path filtering and W83 adds scoped feature-branch push triggering; current cross-platform run, import and final gates remain open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
@@ -5075,3 +5075,29 @@ execution and final R acceptance remain open.
 Logs: `/private/tmp/offset-W114-cache-fault-release.log` and
 `/private/tmp/offset-W114-cache-fault-asan.log`. ASan used `detect_leaks=0`;
 this is not leak validation.
+
+## 77. W115 Closed Trimmed-Component Cache-Checker Fault Sweep
+
+Test commit `47e2ec1cf` extends W109's producer-generated two-component
+fixture to select and check the closed component as well as retaining the open
+component in the default full run. A `--closed-trimmed` selector permits focused
+local validation; CI's no-argument invocation still runs the complete fixture
+set. The fixture requires exactly two generated splines and the successful
+checker baseline must identify the selected component as closed. At the
+checker-only `.1` world tolerance, the closed component contributes 5,497
+observed allocation sites over 1,374 vertices. Every allocation was failed
+once, bounded work was checked, and the same budget recovered a complete
+analysis. The focused Release run took about four minutes and ASan about five
+and a half minutes. This closes the selected closed-companion fault-sweep gap;
+the default full executable was not rerun in this slice, and cusp, broader
+topology/site audit, remote platform execution, and final R acceptance remain
+open.
+
+| W115 lane | Result | SHA256 |
+|---|---|---|
+| Closed trimmed-component fault sweep, Release | PASS; 5,497 injections and same-budget recoveries | `3a9f8effaabd3ef06b91c1b2e75b4b18fec9a806d063abe2f0e257a3fbcd5830` |
+| Closed trimmed-component fault sweep, ASan | PASS; 5,497 injections and same-budget recoveries | `3a9f8effaabd3ef06b91c1b2e75b4b18fec9a806d063abe2f0e257a3fbcd5830` |
+
+Logs: `/private/tmp/offset-W115-closed-trim-release.log` and
+`/private/tmp/offset-W115-closed-trim-asan.log`. ASan used
+`detect_leaks=0`; this is not leak validation.
