@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan, and W124 requalifies local trim file/conversion/undo-reopen coverage in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117/W126 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan, and W124 requalifies local trim file/conversion/undo-reopen coverage in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -5351,3 +5351,28 @@ ASan used `detect_leaks=0`; no leak-validation claim is made.
 
 Logs: `/private/tmp/offset-W124-trim-files-release.log` and
 `/private/tmp/offset-W124-trim-files-asan.log`.
+
+## 87. W126 Preview-Cache Portability Requalification
+
+At source revision `307cc4c88`, reviewed the owned preview snapshot, bounded
+CBOR admission/decoding, cache revision merge, and fresh-helper transport, then
+rebuilt and reran the preview/cache selectors. Snapshots contain owned ordinary
+line/spline values only; they carry no process-local entity pointers and never
+grant native-cache authority. The combined main selector passed 15 cases / 385
+assertions in both builds. Dedicated worker-client tests passed 2 cases (677
+Release assertions, 1,003 ASan assertions); the fresh-helper process test passed
+1 case (191 Release assertions, 212 ASan assertions). No portability or cache
+merge defect was demonstrated. ASan used `detect_leaks=0`, so this is not leak
+validation. These local checks do not replace packaged-helper installation or
+remote platform/final W0-W2 acceptance.
+
+| W126 lane | Result | SHA256 |
+|---|---|---|
+| Main preview + creation selector, Release | PASS; 15 cases / 385 assertions | `1e6e70d5987a5252b9f1189031937bb89bd91102baf35afcff8e3129eebdb1e0` |
+| Main preview + creation selector, ASan | PASS; 15 cases / 385 assertions | `4401b98758b765c1e293320ff04ce864a985e86b09eecac985e7feb0db0a7230` |
+| Worker-client preview portability, Release / ASan | PASS; 2 cases / 677 and 1,003 assertions | `3f14f70bebd20754f403400811b01997340cd4206481b8892d35c9151502414d` / `cd1a4460aed54214943fd87aada0a13fe2b71513e96b50b392c6e75dba7df48c` |
+| Fresh-helper process preview portability, Release / ASan | PASS; 1 case / 191 and 212 assertions | `73126d637d6c5bcd2bae8d3274290ae13502a976b177ab5e2ab9dc7cad9d26d6` / `db159af62b23bd55d672aca4b75b101c4d5da14fcbcbb2027e7a520fc45b87d2` |
+
+Logs: `/private/tmp/offset-W126-preview-creation-{release,asan}.log`,
+`/private/tmp/offset-W126-preview-client-{release,asan}.log`, and
+`/private/tmp/offset-W126-preview-process-{release,asan}.log`.
