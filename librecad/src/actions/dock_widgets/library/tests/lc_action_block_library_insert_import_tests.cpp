@@ -69,6 +69,25 @@ TEST_CASE("Block library insertion waits for staged native offset import before 
     fixture.m_action->onCoordinateEvent(BlockInsertProbe::SetTargetPoint, false, {5, 7});
     CHECK(fixture.m_graphic.count() == 0);
 
+    bool cancelledWhilePending = false;
+    QEventLoop cancelLoop;
+    QTimer::singleShot(1, fixture.m_action.get(), [&] {
+        cancelledWhilePending = fixture.m_action->isSourceLoading();
+        fixture.m_action->reset();
+        cancelLoop.quit();
+    });
+    cancelLoop.exec();
+    REQUIRE(cancelledWhilePending);
+    CHECK_FALSE(fixture.m_action->isSourceLoading());
+    CHECK_FALSE(fixture.m_action->hasSource());
+
+    QEventLoop drainLoop;
+    QTimer::singleShot(50, &drainLoop, &QEventLoop::quit);
+    drainLoop.exec();
+    CHECK_FALSE(fixture.m_action->hasSource());
+
+    fixture.m_action->setFile(file);
+    REQUIRE(fixture.m_action->isSourceLoading());
     waitForImport(*fixture.m_action);
     REQUIRE(fixture.m_action->hasSource());
     CHECK_FALSE(fixture.m_action->isSourceLoading());
