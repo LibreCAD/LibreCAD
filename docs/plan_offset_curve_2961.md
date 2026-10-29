@@ -305,7 +305,7 @@ candidate except the explicitly proposed native-worker tags.
 | S0 | Pin/reconcile candidate, main and feature; baseline/discovery; fix DWG enum classification and add R2007 execution | - | recovered; parser and ordinary R2007 slices qualified below; geometry/type/target qualification remains | `[curve-offset]`, `[lc-offsetcurve]`, `[entity-coverage]`, actual target/version inventory |
 | A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; W63 focused budget-core Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][budget-core]` |
 | A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; W64 focused strict-budget Release/ASan requalification; broad audit remains open | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
-| A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; audit/retest | `[lc-offsetcurve][reference-accounting]` |
+| A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; W65 focused reference-accounting Release/ASan requalification; paired graph audit remains open | `[lc-offsetcurve][reference-accounting]` |
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; audit/retest | `[lc-offsetcurve][cache-budget-accounting]` |
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; audit/retest | geometry terminal/occurrence case inventory |
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; audit/retest | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
@@ -3670,3 +3670,19 @@ failure audit remains open. ASan used `detect_leaks=0`, not leak validation.
 |---|---|
 | `/private/tmp/offset-W64-strict-budget-release.xml` | `5c4098717c03d69f45a6f30a97b90daa1a4f68029c50f36fcb1200141989a5ae` |
 | `/private/tmp/offset-W64-strict-budget-asan.xml` | `69d0485fa7d6e1ca3e3367ca6f0a07ce639557f79ff71fac0aa86da78bd20850` |
+
+## 24. W65 Reference-Accounting Requalification
+
+Re-ran `[lc-offsetcurve][geometry][reference-accounting]` with the current
+Release and ASan runners. Both passed eight testcases / 2,873 JUnit assertions,
+with zero errors, failures or skips. The checked cases include pre-spent and
+one-short ordering allowances, fixed-scan debit-before-iteration, refusal
+counter stability, and all-or-nothing retained occurrence inventory admission.
+This does not close the separate paired-reference graph publication audit or
+the full A-reference source review. ASan used `detect_leaks=0`; it is not a leak
+check.
+
+| W65 artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W65-reference-accounting-release.xml` | `eb124f18364bc1f6a86185bf62357a4f32b8234f117176be0d063096a96139fc` |
+| `/private/tmp/offset-W65-reference-accounting-asan.xml` | `060d4303d93901d01029d57c055341d3f9704375840987d7660f9662beca02a6` |
