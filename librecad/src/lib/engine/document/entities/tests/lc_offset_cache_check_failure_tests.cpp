@@ -12,6 +12,9 @@
 #include <cstddef>
 #include <cstdio>
 #include <cstdlib>
+#if defined(_MSC_VER)
+#include <malloc.h>
+#endif
 #include <new>
 
 namespace {
@@ -37,10 +40,42 @@ void* operator new(const std::size_t size) {
     throw std::bad_alloc{};
 }
 void* operator new[](const std::size_t size) { return ::operator new(size); }
+void* operator new(const std::size_t size, const std::align_val_t alignment) {
+    if (armed && ++allocationCount == failAt) {
+        injected = true;
+        throw std::bad_alloc{};
+    }
+#if defined(_MSC_VER)
+    if (void* memory = _aligned_malloc(size ? size : 1, static_cast<std::size_t>(alignment))) { return memory; }
+#else
+    void* memory = nullptr;
+    if (posix_memalign(&memory, static_cast<std::size_t>(alignment), size ? size : 1) == 0) { return memory; }
+#endif
+    throw std::bad_alloc{};
+}
+void* operator new[](const std::size_t size, const std::align_val_t alignment) {
+    return ::operator new(size, alignment);
+}
 void operator delete(void* memory) noexcept { std::free(memory); }
 void operator delete[](void* memory) noexcept { std::free(memory); }
 void operator delete(void* memory, std::size_t) noexcept { std::free(memory); }
 void operator delete[](void* memory, std::size_t) noexcept { std::free(memory); }
+void operator delete(void* memory, std::align_val_t) noexcept {
+#if defined(_MSC_VER)
+    _aligned_free(memory);
+#else
+    std::free(memory);
+#endif
+}
+void operator delete[](void* memory, std::align_val_t alignment) noexcept {
+    ::operator delete(memory, alignment);
+}
+void operator delete(void* memory, std::size_t, std::align_val_t alignment) noexcept {
+    ::operator delete(memory, alignment);
+}
+void operator delete[](void* memory, std::size_t, std::align_val_t alignment) noexcept {
+    ::operator delete(memory, alignment);
+}
 
 int main() {
     namespace geo = LC_EllipseOffsetGeometry;
@@ -81,32 +116,46 @@ int main() {
         return 5;
     }
 
-    geo::WorkBudget failedBudget;
-    failAt = completeAllocationCount;
-    allocationCount = 0;
-    injected = false;
-    armed = true;
-    bool threw = false;
-    try {
-        auto failed = geo::checkCache(cache, definition, .01, failedBudget);
-        (void)failed;
-    } catch (const std::bad_alloc&) {
-        threw = true;
-    } catch (...) {
+    for (std::size_t failure = 1; failure <= completeAllocationCount; ++failure) {
+        geo::WorkBudget failedBudget;
+        failAt = failure;
+        allocationCount = 0;
+        injected = false;
+        armed = true;
+        bool threw = false;
+        try {
+            auto failed = geo::checkCache(cache, definition, .01, failedBudget);
+            (void)failed;
+        } catch (const std::bad_alloc&) {
+            threw = true;
+        } catch (...) {
+            armed = false;
+            return 6;
+        }
         armed = false;
-        return 6;
-    }
-    armed = false;
 
-    if (!threw || !injected || failedBudget.status() != geo::BudgetStatus::Ok ||
-        !sameWork(failedBudget.consumed(), baseline.work)) {
-        std::printf("allocation_failure=%d injected=%d status=%u vertices=%zu expected=%zu\n",
-                    threw, injected, unsigned(failedBudget.status()), failedBudget.consumed().vertices,
-                    baseline.work.vertices);
-        return 7;
+        const auto& work = failedBudget.consumed();
+        if (!threw || !injected || failedBudget.status() != geo::BudgetStatus::Ok ||
+            work.cacheSpans > baseline.work.cacheSpans || work.vertices > baseline.work.vertices ||
+            work.distancePairs > baseline.work.distancePairs || work.deepest > baseline.work.deepest ||
+            work.orderingComparisons > baseline.work.orderingComparisons) {
+            std::printf("allocation_failure=%zu/%zu threw=%d injected=%d status=%u vertices=%zu expected_at_most=%zu\n",
+                        failure, completeAllocationCount, threw, injected, unsigned(failedBudget.status()),
+                        work.vertices, baseline.work.vertices);
+            return 7;
+        }
+
+        const auto recovered = geo::checkCache(cache, definition, .01, failedBudget);
+        if (!recovered.analysis || recovered.reason != LC_OffsetCheckResult::Reason::None ||
+            !sameWork(recovered.work, failedBudget.consumed())) {
+            std::printf("allocation_recovery=%zu/%zu reason=%u status=%u vertices=%zu\n",
+                        failure, completeAllocationCount, unsigned(recovered.reason),
+                        unsigned(failedBudget.status()), failedBudget.consumed().vertices);
+            return 8;
+        }
     }
 
-    std::printf("final_allocation_failure_preserved_full_budget=1 allocations=%zu vertices=%zu\n",
-                completeAllocationCount, failedBudget.consumed().vertices);
+    std::printf("allocation_failure_sweep_recovered=1 injection_points=%zu vertices=%zu\n",
+                completeAllocationCount, baseline.work.vertices);
     return 0;
 }
