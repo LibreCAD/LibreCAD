@@ -24,8 +24,11 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W155, superseding the W154 snapshot below): S0 and the local
+A-core through C-check audit are closed. W0-W2, E/U/G/F/O/T and R remain open,
+including remote platform/package, visible UI and external-CAD acceptance.
 Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117/W126/W127 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W137 requalifies W126 preview-cache portability in the dedicated kernel/client/fresh-helper targets, W138 requalifies W127 Modify Offset creation/repeat GUI routing, W139 requalifies U4 persisted option/preview/commit behavior, W140 requalifies O1 Update from Source, W141 requalifies O2 Restore Original, and W142-W143 record the in-repo import-caller ownership audit plus current-source caller and GUI open/template tests; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan, and W124 requalifies local trim file/conversion/undo-reopen coverage in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100, W128 requalifies E1 guarded entity/factory/clone/transform behavior, W129 requalifies U1 type/INSERT/selection/SVG/menu/info/plugin dispatch, W131 requalifies E2 cached grips/snaps/through edits and transactional transforms, W132 requalifies F1 typed schema/carrier/ownership/resource-limit behavior, W133 requalifies F2 actual DXF/DWG writing and transactional refusal, W134 requalifies F3 independent fixture/version/write/conversion/reopen matrix, W135 requalifies U2 dialog/sheet async property publication, and W136 requalifies U3 async grip drag/cancel/ownership/history behavior in Release/ASan; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; W154 adds Linux/Windows staged-helper execution coverage, with local macOS install/client validation passing and remote runs pending; broader A-C budget audit, external use of public synchronous low-level import APIs, remote cross-platform CI and final acceptance remain open**.
-Latest recorded slice: W154 adds a staged installed-helper client smoke to Linux/Windows CI and records a passing local macOS relocated-install run. W153 completes the durable source/target reconciliation for S0. W152 completes the previously interrupted aggregate cache-check fault sweep under ASan. W151 confirms the two broad randomized command-alias failures also occur in a fresh `origin/master` build; they are inherited baseline failures, not offset regressions. W150's three isolated randomized `[commands]` seeds pass; W149's full declaration-order and DXF/DWG fast Release lanes pass with documented optional fixture skips. W148 qmake6 app/helper qualification, W147 creation/repeat routing, and W146 preview-cache portability remain qualified. Remote/platform CI, packaged-helper acceptance beyond the local macOS path, external synchronous API use, physical visible interaction, and final W0-W2/R acceptance remain open.
+Latest recorded slice: W155 rechecks the shared-budget/counter-transfer chain and passes the current-source geometry selector; W154 adds the staged installed-helper client smoke and local macOS relocation result. W153 closes source/target reconciliation. W152 records the ASan cache-check fault sweep. W151 classifies five randomized command-alias failures as inherited baseline behavior. W149's broad local Release lanes and W148's qmake6 qualification remain recorded. Remote/platform CI, full deployed-package acceptance, external synchronous API use, visible interaction and final W0-W2/R acceptance remain open.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -304,13 +307,13 @@ candidate except the explicitly proposed native-worker tags.
 | ID | Owns / concrete deliverable | Depends on | Current state | Acceptance selector or artifact |
 |---|---|---|---|---|
 | S0 | Pin/reconcile candidate, main and feature; baseline/discovery; fix DWG enum classification and add R2007 execution | - | W153 closes the durable source/target reconciliation; parser/R2007, baseline/discovery, path/link and target inventories are recorded; later geometry and platform gates remain separate | `[curve-offset]`, `[lc-offsetcurve]`, `[entity-coverage]`, actual target/version inventory |
-| A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; `27f9c5239` fixes demonstrated compound admissions; `91dcde3c4` preserves ordered contact-control debit semantics; W107 requalifies budget-core primitives with no new gap; broader audit remains open | `[lc-offsetcurve][budget-core]` |
-| A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; W64 focused strict-budget Release/ASan requalification; W87 fixes depth-ceiling-based queue over-allocation; W111 current-source requalification; broader audit remains open | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
-| A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; W65/W112 focused Release/ASan requalification; W118/W119 sweep every allocation through six-pair/four-critical event and component publication paths with bounded ledgers and same-budget recovery; W120 runs all standalone default fault fixtures together in Release; W121 closes the local provider/contact/event/component/terminal/accounting matrix in Release/ASan; remote platform execution remains | `[lc-offsetcurve][reference-accounting]`, `[reference-terminals]`, `[reference-components]`, `[reference-events]`, isolated reference fault selectors |
-| A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66/W113 budget requalification; W114 exhaustively injects allocations in `checkCache`, standalone bounds and local-topology APIs with bounded ledgers and same-budget recovery; local A-cache audit complete; cross-platform/final R gates remain | `[lc-offsetcurve][cache-budget-accounting]`, standalone cache-check fault target |
-| B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; W97 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | geometry terminal/occurrence case inventory |
-| C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; W98 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
-| C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a`; W100 charges the final proof-publication slot; W103/W105/W108/W109/W115/W116 sweep every observed allocation failure over line, forward/reversed two-span cubic, forward/reversed whole-circle seam, both open and closed components of a producer-generated two-component trimmed path, and hidden-cusp endpoint refusal with bounded ledger and same-budget retry; W120 runs all standalone fault fixtures in one Release pass; W122 closes the local topology/test inventory with the full geometry selector in Release/ASan; remote platform/final gates remain | `[lc-offsetcurve][geometry][cache-topology-chain]`, standalone cache-check allocation-fault target |
+| A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; `27f9c5239` fixes demonstrated compound admissions; `91dcde3c4` preserves ordered contact-control debit semantics; W107 requalifies budget-core primitives; W155 closes the local cross-stage counter-transfer/ownership audit; remote/final acceptance remains | `[lc-offsetcurve][budget-core]` |
+| A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; W64 focused strict-budget Release/ASan requalification; W87 fixes depth-ceiling-based queue over-allocation; W111 current-source requalification; W155 verifies strict-kernel deltas enter the shared query ledger once; remote/final acceptance remains | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
+| A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; W65/W112 focused Release/ASan requalification; W118/W119 sweep every allocation through six-pair/four-critical event and component publication paths with bounded ledgers and same-budget recovery; W120 runs all standalone default fault fixtures together in Release; W121 closes the local provider/contact/event/component/terminal/accounting matrix in Release/ASan; W155 verifies current-source budget/lifetime composition; remote platform execution remains | `[lc-offsetcurve][reference-accounting]`, `[reference-terminals]`, `[reference-components]`, `[reference-events]`, isolated reference fault selectors |
+| A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66/W113 budget requalification; W114 exhaustively injects allocations in `checkCache`, standalone bounds and local-topology APIs with bounded ledgers and same-budget recovery; local A-cache audit complete; W155 confirms the current-source shared-budget chain; cross-platform/final R gates remain | `[lc-offsetcurve][cache-budget-accounting]`, standalone cache-check fault target |
+| B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; W97 current-source review and focused Release/ASan requalification found no gap; W155 confirms unchanged audited source and current full-geometry selector; final R acceptance remains | geometry terminal/occurrence case inventory |
+| C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; W98 current-source review and focused Release/ASan requalification found no gap; W155 confirms unchanged audited source and current full-geometry selector; final R acceptance remains | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
+| C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a`; W100 charges the final proof-publication slot; W103/W105/W108/W109/W115/W116 sweep every observed allocation failure over line, forward/reversed two-span cubic, forward/reversed whole-circle seam, both open and closed components of a producer-generated two-component trimmed path, and hidden-cusp endpoint refusal with bounded ledger and same-budget retry; W120 runs all standalone fault fixtures in one Release pass; W122 and W155 close the local topology/test inventory; remote platform/final gates remain | `[lc-offsetcurve][geometry][cache-topology-chain]`, standalone cache-check allocation-fault target |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; current in-repo caller/fallback/import ownership inventory recorded; external public low-level API use and platform/deployment gates remain | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; W154 adds component-only installed-helper execution to Linux/Windows CI; local macOS staged/relocated client passes, remote gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
 | W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit and scoped action faults and geometry-entry timeout receipts qualified locally; W81 adds Linux/Windows CMake worker CI; W82 removes PR path filtering and W83 adds scoped feature-branch push triggering; current cross-platform run, import and final gates remain open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
@@ -3098,8 +3101,12 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   product-source pin, PR base, preserved unrelated trees, and plan-only delta are in W153.
   The R2007 classification fix, baseline/discovery, 52-fixture provenance, and path/link
   inventory are recorded above. Do not redo implemented geometry as missing work.
-- [ ] A-core through C-check: review/requalify existing code and patch only proven
-  accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
+- [x] A-core through C-check local review: W155 maps shared budget ownership and
+  strict-kernel counter transfer across the public reference/cache/topology chain;
+  the fresh full geometry selector passes 373 cases / 1,576,298 assertions. Existing
+  W120 Release and W152 ASan fault sweeps cover 29,117 injection/recovery points, and
+  the audited implementation/test files are unchanged from that source pin. No new
+  local defect was found. Remote platform execution and final R acceptance remain open.
 - [ ] W0-W2: typed/cached Produce, creation/repeat and local native Trim GUI routing and scoped action faults are qualified;
   a fresh macOS qmake6 full-app/bundle build, adjacent-helper worker smoke and paired
   cache/creation Release-ASan checks are qualified in W55-W57; asynchronous Trim test
@@ -3121,9 +3128,10 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   the offset changes. Review scoped commits, preserve reproducible evidence and
   close every required gap.
 
-**Next concrete action on implementation resume:** inspect the latest PR checks
-for the pushed roadmap head, then follow Windows x64/ARM64 and other remote
-platform jobs and address any build/runtime failures before claiming parity.
+**Next concrete action on implementation resume:** follow PR-head run
+`40917026094` through Linux and Windows x64/ARM64 installed-helper tests, then
+address any platform/runtime failure before moving to the remaining W0-W2
+caller/deployment gates and final E/U/G/F/O/T integration.
 The W145 Windows include correction has local validation only. W55 now records a fresh full macOS qmake6 app/bundle
 build plus a worker-protocol smoke using the helper beside the bundled executable;
 W79 separately records a complete staged macOS CMake install and offscreen
@@ -6066,5 +6074,50 @@ performs real protocol requests.
 `actionlint .github/workflows/dwg-dxf-verify.yml` and `git diff --check`
 passed. This closes local staged helper/client validation and adds Linux/Windows
 coverage; it does not yet close remote platform acceptance, the separate full
-app/deployed-package checks, visible UI, external synchronous API use, broader
-A-core through C-check review, or final W0-W2/R gates.
+app/deployed-package checks, visible UI, external synchronous API use, or final
+W0-W2/R gates. W155 below closes the local A-core through C-check audit only.
+
+## 113. W155 Shared-Budget and Geometry Audit Requalification
+
+Reviewed the current A-core through C-check ownership chain. `WorkBudget` keeps
+separate cache-span, vertex, pair, depth and ordering ledgers; each debit is
+sticky, and compound `adoptWork` checks capacity before mutating counters. The
+strict intersection kernel receives only the remaining shared limits. Initial
+query work and later contraction work are adopted exactly once, including the
+entered prefix on exceptions. Critical refinement handles remain tied to the
+issuing session and its original budget identity.
+
+Reference construction passes the same budget through own/opposite critical
+analysis, event isolation, component/fringe construction, contact analysis,
+matching and path search. Cache validation passes one budget through layout,
+reference, bounds, local topology and global topology; only the public overload
+that accepts limits creates a budget, at the query boundary. Work snapshots stored
+in result objects are values. Failure/refusal clears published analysis; path
+search reports structural route counts as complete only on exhaustion, while
+visitor stop and limit status do not claim global validity.
+
+The audited source and test files have no diff from product source pin
+`0556b88c50b9f77f91d5a62e243c5d50e3cf3c06`, which anchors the W120 Release and
+W152 ASan fault-sweep evidence. Fresh current-tree CMake Release build and test:
+
+```text
+cmake --build /private/tmp/offset-W154-rel --target librecad_tests --parallel 4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-W154-rel/librecad_tests '[lc-offsetcurve][geometry]' --reporter console
+```
+
+The selector passed 373 Catch cases and 1,576,298 assertions with no failures
+or skips. The JUnit report has 445 case/section entries, zero failures/errors/
+skips, and SHA256
+`eac522623113d756cc1184b6db71268ecb4814fd9937a8ee988fc345cf5e736d` at
+`/private/tmp/offset-W155-geometry.xml`. The built test executable SHA256 is
+`c3921a5015ef005289195ca999d9df668fa9af22fff250dc8974105d83ddbcdb`.
+
+The plan parser/inventory regression passed 99/99, with all 71 original
+classifications and 93 executable obligations intact, zero pending declarations,
+and no production mismatches. `git diff --check` passed.
+
+No new local A-core through C-check defect was demonstrated, so no geometry
+product edit was justified. This closes the local audit/requalification row,
+not remote platform execution, external public synchronous API usage, or final
+W0-W2/R acceptance. The PR-head DWG/DXF workflow remains responsible for the
+new Linux/Windows installed-helper smoke.
