@@ -6470,3 +6470,74 @@ visual inspection by an external CAD application.
 | ACadSharp read result, `/private/tmp/offset-W165-oda-reader/acadsharp.txt` | 3 entities; 2 marker splines; parser succeeds; `HasValidKnotCount` true/false for the open/closed splines / `0f382e6b9049a1d2d4c4127d5f452d2c7af73eae4a8118db43c2a4db74beb333` |
 | Input DXF | `/private/tmp/offset-W160-G-matrix-outputs/offset-W163-ui-check.dxf`; `AC1032`; hash recorded in W163/W164 |
 | DWG specification | `~/doc/dwg/dwg.pdf`, §20.4.40, printed page 142 |
+
+## 124. W166 Current-Head DWG Writer Interoperability Matrix
+
+Built the full CMake `librecad_tests` target from PR head
+`3ecd80331b52eda2187a7f8960ae36287df42930` and ran the direct DWG writer and
+edited-cache second-save matrix cases. Both passed locally. To preserve the
+generated files for independent readers, the test-only temporary-directory
+cleanup was bypassed locally and then restored. The DWG writer/product sources
+match the PR head; W163-W166 changed only roadmap documentation. W167 below is
+a validation-test refactor, not a product DWG code change.
+
+LibreDWG 0.14 independently parsed all 24 current-head outputs: six physical
+versions (AC1015, AC1018, AC1021, AC1024, AC1027, AC1032), degree-1 and
+degree-3 initial writes, and their edited second-save outputs. Every file has
+the expected physical version, exactly one SPLINE and one `LC_OFFSET_CURVE`
+marker, an open-curve flag, and coherent degree/control/knot counts. Initial
+degree-1 rows decode as 1/2/4 and degree-3 rows as 3/4/8. The edited rows
+decode as cubic 3/4/8 splines, including rows whose source was degree 1; the
+local test contract intentionally allows the edited native cache to choose
+either supported spline representation.
+
+Pinned ACadSharp independently parsed the 20 files outside AC1021 with one
+marker spline, valid knot counts, and the expected geometry. Its four AC1021
+exceptions (initial/edit, degree 1/3) occur in
+`DwgReader.readFileHeaderAC21` at line 980 before entity decoding, on the
+known negative-`ComprLen` implementation gap. This is not an entity-level
+failure. Keep direct AC1021 ACadSharp acceptance open until that upstream
+reader supports this header encoding or another independent reader qualifies
+those exact files. This matrix is binary semantic-reader evidence, not visual
+inspection in an external CAD application.
+
+| W166 artifact | SHA256 / result |
+|---|---|
+| Current-source writer matrix, `/private/tmp/offset-W166-retained-testtmp/write.log` | PASS; 5,822 assertions / `07b4042f8929e629e9de0638b93ed5d9661198d4805720235b2630fd19d43ae4` |
+| Current-source edited second-save matrix, `/private/tmp/offset-W166-retained-testtmp/edit.log` | PASS; 5,414 assertions / `ffceade833c88e9a8e7f160192751738a73d5997d403b29a56b369591e401b4f` |
+| 24-file DWG SHA256 manifest, `/private/tmp/offset-W166-current-dwg-manifest.sha256` | 24 artifacts / `72643b0298b3f089442b32c645c6e31c41b356992fdb9130710c655ed8b18c90` |
+| LibreDWG semantic matrix, `/private/tmp/offset-W166-libredwg-current/summary.tsv` | 24/24 parsed and validated / `9d3aa5463e33d40277819354bd71fb6a72d0a6bf6661b94e16a0a1d29f81d515` |
+| ACadSharp semantic matrix, `/private/tmp/offset-W166-acadsharp-current/summary.tsv` | 20 parsed, 4 AC1021 header exceptions / `cc35e65eb5a0f54c1401073fefb29df36bd93121c7ee87599a31c3d12f0c6ded` |
+| Reader/source pins | LibreCAD PR head `3ecd80331b52eda2187a7f8960ae36287df42930`; LibreDWG `0.14`; ACadSharp `3a52a52047e84670759c1f9ad3916ec3ce85ff56` |
+
+The visible external-CAD acceptance remains open. CUA reported the Mac locked
+and could not unlock it, so no attempt was made to bypass the visible UI tool;
+the previously retained W163 focused UI check remains the only qualified
+visible interaction receipt. Full drag/cancel, context-menu, compact-options,
+locked/stale peers, Update/Restore, Trim, selection/layer combinations,
+Undo/Redo/Save/Open, screenshot/DPR, and external-CAD visual checks remain
+unqualified. W0-W2 platform/package gates and final R acceptance also remain
+open.
+
+## 125. W167 H6 Discovery Test Separation
+
+The first full validation run found one failure: parser unit tests had been
+added to `test-refusal-inventory.js`, which is also the H6 worker-discovery
+module. Its unlabelled parser tests were interpreted as production H6 refusal
+cases, but only the inventory sentinel is permitted to be unlabelled. Extracted
+`parseRoadmapOriginalRows()` to `roadmap-inventory-parser.js`, moved its five
+unit tests to `test-roadmap-inventory-parser.js`, and kept the H6 module's
+unlabelled inventory sentinel first. The worker-discovered refusal inventory
+remains at 93 executable obligations with zero pending declarations; no
+discovery exception or extra refusal ID was added.
+
+| W167 validation | Result |
+|---|---|
+| H6 refusal plus standalone roadmap-parser tests | PASS; 99 / 99; 93 executable; zero pending; zero mismatches |
+| Full validation suite, `node --test scripts/offset-curve-validation/test-*.js` | PASS; 412 / 412 / `c400d17c6c766cc75a8620f9e9a5fcb2fb6329ea2fe0c4bea3bce569e0d8abe6` |
+| Focused qualification-generation regression | PASS; reserved temp-root snapshot reached the real preflight boundary |
+| Code commit | `1a0d3d1bfaf24f9cfb68ea5a80175575570170e1` |
+
+This closes the local validation-test regression only. It does not close the
+visible CAD, cross-platform CI, installed-package, external AC1021 reader, or
+final W0-W2/R acceptance gates listed in W166.
