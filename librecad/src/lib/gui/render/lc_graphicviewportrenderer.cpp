@@ -190,17 +190,16 @@ void LC_GraphicViewportRenderer::setBackground(const RS_Color &bg, const RS_Colo
 }
 
 void LC_GraphicViewportRenderer::updateGraphicRelatedSettings(RS_Graphic *g) {
-    updateUnitAndDefaultWidthFactors(g);
+    updateUnitFactors(g);
     updatePointEntitiesStyle(g);
     updateEndCapsStyle(g);
     updateJoinStyle(g);
     updateAnglesBasis(g);
 }
 
-void LC_GraphicViewportRenderer::updateUnitAndDefaultWidthFactors(const RS_Graphic *g) {
+void LC_GraphicViewportRenderer::updateUnitFactors(const RS_Graphic *g) {
     m_unitFactor = RS_Units::convert(1.0, RS2::Millimeter, g->getUnit());
     m_unitFactor100 =  m_unitFactor / 100.0;
-    m_defaultWidthFactor = g->getVariableDouble("$DIMSCALE", 1.0);
 }
 
 void LC_GraphicViewportRenderer::setupPainter(RS_Painter *painter) {
@@ -208,7 +207,6 @@ void LC_GraphicViewportRenderer::setupPainter(RS_Painter *painter) {
     painter->setViewPort(m_viewport);
     painter->updatePointsScreenSize(m_pdsize);
     painter->setPointsMode(m_pdmode);
-    painter->setDefaultWidthFactor(m_defaultWidthFactor);
     painter->setWorldBoundingRect(m_renderBoundingClipRect);
 }
 

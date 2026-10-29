@@ -95,7 +95,6 @@ class LC_GraphicViewportRenderer{
     // painting cached values
     double m_unitFactor = 1.0;
     double m_unitFactor100 = 0.01;
-    double m_defaultWidthFactor = 1.0;
 
     bool m_scaleLineWidth = true;
 
@@ -114,7 +113,7 @@ class LC_GraphicViewportRenderer{
     void updateEndCapsStyle(const RS_Graphic *graphic);
     void updateJoinStyle(const RS_Graphic *graphic);
     void updatePointEntitiesStyle(const RS_Graphic *graphic);
-    void updateUnitAndDefaultWidthFactors(const RS_Graphic *g);
+    void updateUnitFactors(const RS_Graphic *g);
     bool isOutsideOfBoundingClipRect(const RS_Entity *e, bool constructionEntity) const;
 
     RS_Graphic* getGraphic() const {return m_graphic;}

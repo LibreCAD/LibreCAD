@@ -107,9 +107,12 @@ public:
      *  the viewport background.  Returns a default-constructed color if no
      *  renderer is attached (e.g. during headless tests). */
     RS_Color getBackgroundColor() const;
+    enum class DashSpace { Model, Screen };
     void updateDashOffset(const RS_Entity* e);
     void clearDashOffset() {m_currenPatternOffset = 0.0;}
-    double currentDashOffset() const {return m_currenPatternOffset;}
+    double currentDashOffset(DashSpace dashSpace = DashSpace::Model) const;
+    // Whether the pen setPen() last built carries a dash pattern.
+    bool penHasDashPattern() const {return m_lastUsedPen.style() == Qt::CustomDashLine;}
 
     void drawEntityArc(RS_Arc* arc);
     void drawEntityPolyline(const RS_Polyline *polyline);
@@ -200,7 +203,6 @@ public:
 //    void drawHandle(const RS_Vector& p, const RS_Color& c, int size=-1);
 
     RS_Pen getPen() const;
-    enum class DashSpace { Model, Screen };
     void setPen(const RS_Pen& pen);
     void setPen(const RS_Pen& pen, DashSpace dashSpace);
     void setPen(const RS_Color& color);
@@ -234,7 +236,6 @@ public:
     void setMinEllipseMinorRadius(double val);
     void setMinLineDrawingLen(double val);
     void setMinRenderableTextHeightInPx(int i);
-    void setDefaultWidthFactor(const double factor){ m_defaultWidthFactor = factor;}
     void updatePointsScreenSize(double pdSize);
 
     bool isTextLineNotRenderable(double wcsLineHeight) const;
@@ -449,9 +450,8 @@ protected:
     bool m_circleRenderSameAsArcs = false;
 
     double m_minRenderableTextHeightInPx = 1;
-    double m_defaultWidthFactor = 1.0;
 
-    double m_currenPatternOffset = 0.0;
+    double m_currenPatternOffset = 0.0; // logical pixels along the rendered path
 
     int m_screenPointsSize = 0;
     int m_pointsMode = 0;

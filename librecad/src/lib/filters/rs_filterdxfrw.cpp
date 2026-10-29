@@ -33114,14 +33114,20 @@ makeDrwSplineFromSplinePoints(const LC_SplinePoints *sp) {
 // Emit an RS_Spline (general NURBS, degree 1-3, possibly rational) boundary
 // edge as a DRW_Spline carrying its full data. Mirrors weight into both
 // drw->weightlist[i] AND drw->controllist[i]->z so both DXF and DWG
-// consumers can read it correctly. See plan §C.3.
+// consumers can read it correctly.
+//
+// A closed RS_Spline repeats its first degree control points and weights at
+// the end of its data, with a knot vector to match, so that the data draws
+// the closed curve over [knots[degree], knots[count]] in any reader. Write it
+// as it is: getControlPoints() and getWeights() leave the repeats out, and
+// with the whole knot vector they gave an edge with degree knots too many.
 std::shared_ptr<DRW_Spline> makeDrwSplineFromRSSpline(const RS_Spline *sp) {
   auto drw = std::make_shared<DRW_Spline>();
   const auto &sd = sp->getData();
   drw->degree = static_cast<std::int32_t>(sd.degree);
 
-  const auto cps = sp->getControlPoints();
-  const auto ws = sp->getWeights();
+  const auto &cps = sd.controlPoints;
+  const auto &ws = sd.weights;
   const bool weightsAlign = (ws.size() == cps.size());
   const bool isRational =
       weightsAlign && std::any_of(ws.begin(), ws.end(), [](double w) {

@@ -2802,6 +2802,7 @@ if (BUILD_TESTS)
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_trim_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_offsetcachetrim_action_tests.cpp
+        librecad/src/actions/drawing/modify/tests/lc_actionmodifylinejointests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_move_tests.cpp
         librecad/src/actions/drawing/draw/curve/tests/lc_actiondrawdualtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_offset_tests.cpp
@@ -2922,6 +2923,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/lc_export_commit_tests.cpp
         librecad/src/lib/filters/tests/lc_attribute_export_tests.cpp
         librecad/src/lib/filters/tests/dxf_closed_spline_tests.cpp
+        librecad/src/lib/filters/tests/lc_hatch_closed_spline_export_tests.cpp
         librecad/src/lib/filters/tests/jww_import_tests.cpp
         librecad/src/lib/filters/tests/byte_identity_harness.cpp
         librecad/src/lib/filters/tests/dxf_corpus_tests.cpp
@@ -2967,6 +2969,7 @@ if (BUILD_TESTS)
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
         librecad/src/plugins/tests/doc_plugin_offsetcurve_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
+        librecad/src/lib/gui/tests/lc_linetype_render_tests.cpp
         librecad/src/lib/gui/tests/lc_scrollmodel_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewport_zoomauto_tests.cpp
         librecad/src/ui/view/tests/qg_graphicview_scroll_tests.cpp
@@ -3470,6 +3473,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/lc_dxf_shape_name_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_appid_registration_tests.cpp
         librecad/src/lib/filters/tests/lc_dxf_xdata_appid_tests.cpp
+        librecad/src/lib/filters/tests/lc_hatch_closed_spline_export_tests.cpp
         librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
     )
     add_executable(librecad_dxf_fast_tests
@@ -3892,7 +3896,8 @@ if (BUILD_TESTS)
         librecad_painter_tests
         librecad/src/lib/gui/tests/rs_painter_tests.cpp)
     target_sources(librecad_painter_tests PRIVATE
-        librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp)
+        librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
+        librecad/src/lib/gui/tests/lc_linetype_render_tests.cpp)
     add_librecad_filter_micro_test(
         librecad_dock_layout_tests
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp)
