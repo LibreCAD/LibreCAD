@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W164, superseding W163 below): S0 source/target reconciliation
+Current status (W165, superseding W164 below): S0 source/target reconciliation
 and the local A-core through C-check audit are closed. Direct synchronous
 `fileImport`, stream, and byte filter imports validate offset carriers through
 the worker in the current source. W158 requalifies the qmake6 app/helper bundle;
@@ -44,6 +44,13 @@ W134 DWG matrix outputs, LibreDWG read 24/24; ACadSharp read 20/24, with the fou
 AC1021 files failing at its known negative-ComprLen header exception. The DWG
 matrix files predate the current product source pin, so current-head external
 DWG acceptance remains open.
+W165 converted the current-source W163 DXF through ODA File Converter 27.1.0.0
+to AC1032 DWG; both LibreDWG and ACadSharp parsed the output and recovered both
+owned markers. ACadSharp's `HasValidKnotCount` is false for its 88-control closed
+spline after ODA sets the closed bit without changing its 92-knot array. ODA and
+LibreDWG agree on the closed bit; the DWG spec lists these counts independently,
+so this is recorded as a validator discrepancy, not proof of malformed output.
+This tests DXF-to-DWG conversion, not LibreCAD's direct DWG writer.
 W163 records one focused macOS qmake6 UI check: an ellipse offset preview and
 commit, properties, Undo/Redo, and AC1032 DXF save/reopen. This is partial
 evidence only; the full visible interaction matrix and its screenshot/display/
@@ -54,7 +61,8 @@ W1-W160. W156 closes local routing for the public synchronous file/stream/byte
 filter APIs. Current-head worker CI, Windows failure coverage, deployed-package
 checks, visible UI, external-CAD interoperability, and final integration remain
 open.**
-Latest recorded slice: W164 records independent ACadSharp/LibreDWG reads; W163
+Latest recorded slice: W165 records ODA conversion and independent readers; W164
+records independent ACadSharp/LibreDWG reads; W163
 records a focused macOS qmake6 ellipse UI/save/reopen check; W162 records direct
 LibreDWG semantic inspection of the
 13 AC1021 files; W161 records direct/converted ACadSharp triage; W160
@@ -6430,3 +6438,35 @@ current-head DWG interoperability or direct AC1021 ACadSharp acceptance.
 | Retained DWG matrix + LibreDWG, `/private/tmp/offset-W164-libredwg-dwg-writer-matrix.tsv` | 24/24 accepted with semantic spline checks / `1e449466b6e8b5761b54198e5759740553b6ca0fe16bea103db3293d6c8bdc2d` |
 | Retained DWG matrix + ACadSharp, `/private/tmp/offset-W164-acadsharp-dwg-writer-matrix.tsv` | 20/24 accepted; four AC1021 header exceptions at `DwgReader.cs:980` / `3c47a6e768bfb3be0ef5ac31e1a025d2076fa19e0bd58b4feb8467b0f7316a80` |
 | Source pins | LibreCAD DWG matrix `563da4a26`; W163 DXF product `41d0089d8d583f5521f5069e18631445699b14d3`; ACadSharp `3a52a52047e84670759c1f9ad3916ec3ce85ff56` |
+
+## 123. W165 ODA Conversion of Current-Source DXF
+
+Copied the W163 current-source DXF to an isolated temporary input directory and
+ran ODA File Converter 27.1.0.0 to ACAD2018 DWG. It exited successfully and
+produced a file with the physical `AC1032` signature. LibreDWG 0.14 parsed it
+and recovered both SPLINEs and their `LC_OFFSET_CURVE` markers. Pinned ACadSharp
+also parsed three modelspace entities and both marker splines.
+
+There is one reader-validator discrepancy worth retaining: the 88-control
+spline has 92 knots and coincident first/last controls in the input DXF, whose
+group 70 is planar-only (`8`, not closed). ODA marks that spline closed in the
+DWG, keeps the same control/knot arrays, and LibreDWG independently reports the
+closed bit. ACadSharp's `HasValidKnotCount` property then returns false for that
+spline; the 4-control open spline validates. ODA and LibreDWG agree on the DWG
+closed flag, while ODA's conversion did not alter the count arrays. ODA spec
+§20.4.40 documents the closed bit and the two counts independently and does not
+state ACadSharp's closed-curve cardinality formula. Do not classify the output
+as malformed based only on this validator; retain the caveat for future semantic
+round-trip tests.
+
+This verifies an external DXF reader/conversion path and independent parsing of
+the converted DWG. It does not qualify LibreCAD's direct DWG writer or replace
+visual inspection by an external CAD application.
+
+| W165 artifact | SHA256 / result |
+|---|---|
+| ODA AC1032 DWG, `/private/tmp/offset-W164-oda/out/offset-W163-ui-check.dwg` | generated from current-source W163 DXF; AC1032 / `cd365d451e34973413e5ab2101a69bb101634e42c0572f336133ae52a4294a03` |
+| LibreDWG semantic summary, `/private/tmp/offset-W165-oda-reader/libredwg.json-summary` | 2 SPLINEs; one marker each; degrees 3; arrays `(4,8)` and `(88,92)`; second closed / `e73731262e9942c143bd673aa8207a8ca52a10d13b411724259fcabfdcef7452` |
+| ACadSharp read result, `/private/tmp/offset-W165-oda-reader/acadsharp.txt` | 3 entities; 2 marker splines; parser succeeds; `HasValidKnotCount` true/false for the open/closed splines / `0f382e6b9049a1d2d4c4127d5f452d2c7af73eae4a8118db43c2a4db74beb333` |
+| Input DXF | `/private/tmp/offset-W160-G-matrix-outputs/offset-W163-ui-check.dxf`; `AC1032`; hash recorded in W163/W164 |
+| DWG specification | `~/doc/dwg/dwg.pdf`, §20.4.40, printed page 142 |
