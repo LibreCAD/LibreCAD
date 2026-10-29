@@ -3109,7 +3109,9 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   DXF/DWG, source and trim implementation with any new worker/publication changes.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   including Windows and actual installed-package acceptance not covered by W55; resolve
-  or baseline-classify the two order-sensitive command-alias cases in W59. Review scoped
+  or baseline-classify the two order-sensitive command-alias cases in W59. The command
+  source/tests are unchanged from `origin/master`, and W62 isolated random-order seeds
+  1-3 pass; this does not yet baseline the broad-process interaction. Review scoped
   commits, preserve reproducible evidence and close every required gap.
 
 **Next concrete action on implementation resume:** obtain a Windows compile and
@@ -3611,3 +3613,26 @@ All four reports pass strict `xmllint --noout`. W59 is explicitly not a clean
 full-fast-lane PASS: close the order-sensitive command alias issue or compare
 it against a fresh baseline before final R acceptance. Windows, visible GUI,
 installed packaging and the remaining worker/import gates are still open.
+
+## 21. W62 Isolated Command-Alias Order Check
+
+To separate the W59 broad-process failures from the command tests themselves,
+ran the `[commands]` selection in three fresh processes with Catch randomized
+ordering and seeds 1, 2 and 3. Each run passed 11 testcases / 69 JUnit tests,
+with zero errors, failures or skips. All three XML reports pass strict
+`xmllint --noout`.
+
+`librecad/src/cmd/rs_commands.cpp` and
+`librecad/src/cmd/tests/rs_commands_tests.cpp` have no diff against
+`origin/master`. This establishes that the tested command implementation and
+test definitions are baseline-identical and that the isolated selection passes
+these three orders. It does not establish whether the failures in W59's full
+process are pre-existing or caused by interaction with other tests; the two
+reported command-alias failures and the non-clean broad fast lane therefore
+remain open for R acceptance.
+
+| W62 artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W62-commands-seed1.xml` | `5be463d531081975b243d6b3352b8b2a00246065973f4da5529e43fbf33a222a` |
+| `/private/tmp/offset-W62-commands-seed2.xml` | `cd3b1561c4fd3224c83e452cf7440588b0fd107a57761b2f48d0f768c98e2062` |
+| `/private/tmp/offset-W62-commands-seed3.xml` | `9b9eb1fb55794a33117b47f00287747f14a380995ec7465d2a521ca64b0ad141` |
