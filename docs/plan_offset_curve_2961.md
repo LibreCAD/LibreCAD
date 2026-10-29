@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117/W126/W127 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan, and W124 requalifies local trim file/conversion/undo-reopen coverage in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100, and W128 requalifies E1 guarded entity/factory/clone/transform behavior in Release/ASan; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117/W126/W127 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan, and W124 requalifies local trim file/conversion/undo-reopen coverage in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100, W128 requalifies E1 guarded entity/factory/clone/transform behavior, and W129 requalifies U1 type/INSERT/selection/SVG/menu/info/plugin dispatch in Release/ASan; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -314,7 +314,7 @@ candidate except the explicitly proposed native-worker tags.
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; full app/deployed-package gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
 | W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit and scoped action faults and geometry-entry timeout receipts qualified locally; W81 adds Linux/Windows CMake worker CI; W82 removes PR path filtering and W83 adds scoped feature-branch push triggering; current cross-platform run, import and final gates remain open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; W128 current-source review and focused Release/ASan requalification found no gap; remote/final R acceptance remains | `[lc-offsetcurve][native]`, `[entity-coverage]` |
-| U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; audit/retest | native type/name/dispatch TUs, `[entity-coverage]` |
+| U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; W129 current-source dispatch review and focused Release/ASan coverage found no gap; separately gated legacy DXF test remains unavailable in this configuration; remote/final R acceptance remains | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; audit/retest | native edit/grip/transform TUs |
 | G | Eligible creation, repeated offset and bounded ordinary fallback/reporting | E2,U1,W2 | shared preparation `ef40eecad`, typed Produce `558c3bba2`, W16/W17 cache and W18/W19 GUI/publication qualified through `f035d983e`; current-source W67a/W67b and W117 Release+ASan requalification; final platform/visible acceptance remains | creation/repeat/modification TUs, `[creation-worker]`, `[creation-publication]`, `[creation-sources]` and existing Offset tests |
 | F1 | Shared typed schema, raw-carrier eligibility, ownership and byte limits | E1 | candidate `305042903`; audit/retest | `lc_offsetcurvexdata_tests.cpp`, `lc_offsetcurvecarrier_tests.cpp` |
@@ -5421,3 +5421,32 @@ made. The local slice does not close remote platforms or final R acceptance.
 
 Logs: `/private/tmp/offset-W128-e1-release.log` and
 `/private/tmp/offset-W128-e1-asan.log`.
+
+## 90. W129 UI, Selection and Consumer Dispatch Requalification (U1)
+
+At source revision `e2e69ea5f`, reviewed `EntityOffsetCurve` dispatch sites for
+type/name registration, INSERT expansion, selection ownership, MakerCAM SVG,
+quick info and match properties, context menus, actions, and plugin consumers.
+The broad `[lc-offsetcurve][types],[lc-offsetcurve][f-actions],[entity-coverage]`
+selector passed 61,271 assertions in 87 cases in Release and ASan; one test was
+skipped because this configuration does not build/register the legacy
+`RS_FilterDXF` exporter (`dl_dxf.h` and old-format enums are absent). This skip
+does not substitute a surrogate writer and is outside U1's SVG/UI dispatch
+claim. The focused `[lc-offsetcurve][f-names]` suite passed 16 cases / 463
+assertions, and the `[plugins][offsetcurve]` suite passed 16 cases / 19,125
+assertions, in each configuration. These cover native type naming, selection
+checkboxes and pick descriptors, hiding the control net from generic matchers,
+unavailable-value refusal, quick info, owner-normalized popup actions, SVG
+cache output, INSERT expansion, plugin spline aliases and staged import. No U1
+dispatch gap was demonstrated. ASan used `detect_leaks=0`; no leak-validation
+claim is made. Remote platforms and final R acceptance remain open.
+
+| W129 lane | Result | SHA256 |
+|---|---|---|
+| Type/action/entity dispatch, Release / ASan | PASS; 87 passed, 1 legacy-DXF skip; 61,271 assertions each | `2cac14d8b021ca095dc06ebd9c1db339960cf32e7fba2761f1ab34fe2a12d0b5` / `3634af215d88510c6f321db563c6a1908c2afddf9a8befabc1d2e2b0f7ecd1e4` |
+| Native naming/quick-info/menu dispatch, Release / ASan | PASS; 16 cases / 463 assertions each | `e58161ffd61261ec50f2597961d5fe285c55a074243554bf912cd63543a0bcb1` / `39afeeed3776749bcd20fb318e57e57b3c70920341eb7f25936e9f40dc74a8c6` |
+| Plugin native consumers, Release / ASan | PASS; 16 cases / 19,125 assertions each | `98599640757961b9caa30054f6186a0c672c0c446ab1b84f5497a3c79dbcfccf` / `c5daaea2bae58dc5eecb9bfda8878762c8a0b724af2e65e8969531290ee641ce` |
+
+Logs: `/private/tmp/offset-W129-u1-{release,asan}.log`,
+`/private/tmp/offset-W130-u1-names-{release,asan}.log`, and
+`/private/tmp/offset-W130-u1-plugin-{release,asan}.log`.
