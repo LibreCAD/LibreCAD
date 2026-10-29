@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, and W79's complete staged macOS CMake install are qualified in focused Release/ASan lanes; W80 fixes demonstrated compound admissions, while W85 preserves the explicitly staged contact-control accounting after review corrected W84; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, W79's complete staged macOS CMake install, and W86's relocated-install preview-cache and creation/repeat routing checks are qualified in focused Release/ASan or offscreen lanes; W80 fixes demonstrated compound admissions, while W85 preserves the explicitly staged contact-control accounting after review corrected W84; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -4274,3 +4274,28 @@ superseded by W85's source-semantics review. At this checkpoint, PR Actions run
 `a4c62eb66b9dabf3b2b6d822a17c7f57e0fdc175`; both Windows jobs were still in Qt
 setup. Pushing W85 supersedes that run, so inspect the replacement run before
 claiming cross-platform qualification. The full A-core audit remains open.
+
+## 48. W86 Relocated Install Preview and Creation/Repeat Routing
+
+Copied the complete W79 staged CMake Release install to
+`/private/tmp/offset W79 relocated`, preserving the app bundle and its adjacent
+`LibreCADOffsetWorker`. Ran the installed test executables from the relocated
+`Contents/MacOS` directory. The worker-client test asserts that production
+`helperPath()` resolves to the executable's own directory; its real cached
+preview/client cases then start the relocated helper. The offscreen Modify
+Offset creation-worker selector likewise routes preview and creation/repeat
+publication through that sibling helper. This checks path relocation and spaces
+in the install path without relying on a build-tree helper or environment
+override.
+
+| W86 relocated-install lane | JUnit cases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Worker client, `/private/tmp/offset-W86-relocated-worker.xml` | 17 / 8209 | PASS; errors=0, failures=0, skipped=0 | `e8d82fc52987498ad8b18aadffed26b0c9f269ed9caa4021ac46189580a98a16` |
+| Creation/repeat, `/private/tmp/offset-W86-relocated-creation.xml` | 13 / 318 | PASS; errors=0, failures=0, skipped=0 | `389f8250ac8fb46614c1f7e52b38e8d2954aff62889b9a4df69bba8d1564b453` |
+
+The installed test executables and production helper were copied together; no
+source change was needed. This is macOS offscreen package-relocation evidence,
+not visible desktop interaction, Linux/Windows relocation, or final W0-W2
+acceptance. The visible GUI check could not run because the Mac was locked at
+this checkpoint. Recheck the latest PR Actions run after pushing this roadmap
+record; cross-platform and final acceptance gates remain open.
