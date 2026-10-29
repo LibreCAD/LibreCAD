@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports and W89 makes dimension-style preview failures noninteractive and clears partial sample content; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, public low-level storage compatibility, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -3977,20 +3977,18 @@ not make parsing or rendering itself nonblocking.
 | Top-level qmake6 build | application + helper | PASS | n/a |
 
 Reports are `/private/tmp/offset-W74-console-{import,svg}-{release,asan}.xml`.
-Remaining direct import sites were classified: the console helper's ordinary
-format fallback, generic document-storage APIs, hatch-pattern loading, and the
-bundled dimension-style preview. W32/W88 route user-facing drawing-open,
-template, and staged recursive-XREF imports through owned admission; W88 closes
-hatch-pattern failure propagation and suppresses its inappropriate modal import
-error; W89 closes the dimension-style preview's modal-error and partial-content
-path; W91 routes both async and legacy plugin block imports. The generic storage
-API still needs explicit caller-policy review. In addition, `RS_Pattern::loadPattern`
-can synchronously adopt a native offset carrier from a user-provided pattern
-DXF while hatch geometry is prepared; avoid nested event-loop staging in this
-path and decide whether it should consume only the ordinary display cache. This
-is a separate import-caller slice, not a gap in W16-W19 preview-cache transport
-or creation/repeat GUI routing. Visible desktop acceptance, installed-helper
-deployment, Windows runtime, and final acceptance remain open.
+The remaining direct import sites were subsequently classified. W32/W88 route
+user-facing drawing-open and template flows through owned admission; W74 stages
+supported console DXF/DWG imports; W91 routes both async and legacy plugin
+block-import APIs through the staged session; W93 and W95 make hatch-pattern
+and dimension-style previews consume ordinary display cache only. The in-tree
+calls into generic `LC_DocumentsStorage` synchronous loading are reached only
+for unsupported formats after their caller's DXF/DWG gate. The public
+low-level storage API itself remains synchronous and has not been proven safe
+for direct external DXF/DWG callers; do not describe it as staged. This is not
+a gap in W16-W19 preview-cache transport or creation/repeat GUI routing.
+Visible desktop acceptance, installed-helper deployment, Windows runtime, and
+final acceptance remain open.
 
 ## 36. W75 Staged Import Identity CI Lane
 
@@ -4566,6 +4564,56 @@ artifacts are:
 | `/private/tmp/offset-W93-hostile-release.xml` | `f92cbe916a3adbd739c0285b4494501c30239a1dc0ed4be50f8f14ad712850bd` |
 | `/private/tmp/offset-W93-hostile-asan.xml` | `d6f27b319ff9af37fb420711b8adb508c57dd9c3fe414ebb2deced42d1427078` |
 
-W94 is verification-only. W93 remains the latest product change in this
-caller/cache thread. Other import caller classification and W0-W2 platform,
-deployment, and visible acceptance work remain open.
+W94 is verification-only. W93 remains the latest product change in the
+preview-cache/creation thread; caller-policy follow-up continues below.
+
+## 57. W95 Dimension-Style Preview Cache-Only Import
+
+Product/test commit `1a6b422a3` makes the dimension-style sample viewer opt into
+`RS_FileIO::OffsetCurveImportPolicy::DisplayCacheOnly`, matching hatch-pattern
+preview behavior. An owned offset carrier therefore renders as an ordinary
+marker-free spline in this visual-only context; the same fixture still imports
+as an editable `LC_OffsetCurve` through the normal drawing-import policy. The
+existing malformed-sample behavior remains non-modal and clears partial
+content.
+
+The direct-import inventory was reconciled against production callsites:
+
+| Caller | Supported DXF/DWG policy | Current disposition |
+|---|---|---|
+| Main drawing open and template creation | staged session before document publication | W31/W32 |
+| Library block insertion and thumbnail preview | staged session before preview/publication | W68-W70 |
+| Console import/conversion | staged session for supported DXF/DWG; other formats use legacy fallback | W74 |
+| Plugin block import | staged async entry; legacy sync compatibility entry waits on staged completion | W72/W91 |
+| Hatch-pattern preview | ordinary display cache only | W93 |
+| Dimension-style preview | ordinary display cache only | W95 |
+| `LC_DocumentsStorage` low-level synchronous API | in-tree GUI callers reach it only for unsupported formats; direct external calls are not proven staged | compatibility exposure remains explicit |
+
+| W95 lane | Release cases / assertions | ASan cases / assertions | Result |
+|---|---:|---:|---|
+| Native offset carrier remains editable in drawing import and becomes plain marker-free spline in dimension preview | 1 / 67 | 1 / 67 | PASS |
+| Malformed dimension sample remains non-modal and clears partial content | 1 / 9 | 1 / 9 | PASS |
+| Normal hatch/dimension preview and navigation selector | 38 / 9625 | 38 / 9625 | PASS |
+| Hatch-pattern cache-only hostile import | 1 / 71 | 1 / 71 | PASS |
+| CMake app and `librecad_tests` builds | PASS | PASS | n/a |
+| qmake6 full app and plugin build (`make -j4`) | PASS, exit 0 | n/a | n/a |
+
+All JUnit reports have zero errors, failures or skips. ASan used
+`detect_leaks=0`; no leak-validation claim is made. Test reports and SHA256:
+
+| W95 artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W95-dimstyle-release.xml` | `f7bdeba3a4b021648c9c7c75d0dcdb38cc331c1583de610d46877ef7796ae337` |
+| `/private/tmp/offset-W95-dimstyle-asan.xml` | `3c1896bec37d092d2ce266ec2958b344680cff1ae52651f7c58ffc49960960bb` |
+| `/private/tmp/offset-W95-dimstyle-partial-release.xml` | `657523dcc7cbf8e502aaa77c52fa91da672f4f06f968ea654c2846e7b1ed28b2` |
+| `/private/tmp/offset-W95-dimstyle-partial-asan.xml` | `212288e15a28fff308481cfe94fa7b7851fe508a81ba108d7ac5917d7aaf4882` |
+| `/private/tmp/offset-W95-preview-release.xml` | `a6b485c46c76f8ad7d558f1ad4a7358177adbc9be6f9b39df89a8fb7adeffefc` |
+| `/private/tmp/offset-W95-preview-asan.xml` | `3271709e925b7a539ad519f61734e43a08d5ae3eb043b895fec913dad96c4057` |
+| `/private/tmp/offset-W95-pattern-release.xml` | `487fb2c77121a53ed5d6ebdeccaba4d0892227af2482662eb356f899e435ce8b` |
+| `/private/tmp/offset-W95-pattern-asan.xml` | `68480628e648fe8e6e07ba2ac389848f4fc3773d6d75c3912fae45cd9b89fbcc` |
+
+W95 closes the identified dimension-style preview caller bypass; it does not
+convert the public low-level synchronous storage API into an async API,
+establish that external callers use the staged route, or close remaining
+source/budget, Windows/Linux runtime, installed-helper, visible-GUI, and final
+W0-W2 acceptance.
