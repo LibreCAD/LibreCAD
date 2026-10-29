@@ -50,6 +50,7 @@
 #include "rs_blocklist.h"
 #include "rs_settings.h"
 #include "rs_units.h"
+#include "../../../lib/filters/tests/lc_offsetcurve_persistence_fixture.h"
 
 using namespace lc::navtest;
 
@@ -1326,6 +1327,40 @@ TEST_CASE("Dimension style preview rejects a partial sample without a modal dial
     REQUIRE(preview->getGraphic() != nullptr);
     CHECK(preview->getGraphic()->empty());
     CHECK(preview->getGraphic()->getBlockList()->find(QStringLiteral("ARROW")) != nullptr);
+}
+
+TEST_CASE("Dimension style preview renders native offset carriers as ordinary cache splines",
+          "[lc-offsetcurve][dimstyle-preview][hostile]") {
+    REQUIRE(lc::test::application() != nullptr);
+    namespace fixture = lc::test::offset_persistence;
+    lc::test::OutputDirectory directory("offset-dimstyle-preview-cache");
+    const auto path = directory.file("native-offset.dxf");
+    fixture::put(path, fixture::ascii(fixture::raw(3)));
+
+    RS_Graphic ordinary;
+    REQUIRE(lc::test::importDrawing(ordinary, path, RS2::FormatDXFRW2018));
+    REQUIRE(fixture::native(ordinary, 3));
+
+    RS_Graphic original;
+    original.initForNewDocument();
+    QWidget parent;
+    auto* preview = LC_DimStylePreviewGraphicViewTestAccess::init(
+        &parent, &original, RS2::EntityUnknown, lc::test::toQString(path));
+    REQUIRE(preview != nullptr);
+    RS_Graphic* previewGraphic = preview->getGraphic();
+    REQUIRE(previewGraphic != nullptr);
+
+    const RS_Spline* cachedSpline = nullptr;
+    for (auto* entity : *previewGraphic) {
+        if (entity == nullptr) continue;
+        CHECK(entity->rtti() != RS2::EntityOffsetCurve);
+        if (entity->rtti() == RS2::EntitySpline)
+            cachedSpline = dynamic_cast<const RS_Spline*>(entity);
+    }
+    REQUIRE(cachedSpline != nullptr);
+    CHECK(cachedSpline->rtti() == RS2::EntitySpline);
+    CHECK(dynamic_cast<const LC_OffsetCurve*>(cachedSpline) == nullptr);
+    CHECK(fixture::markerCount(cachedSpline->getDrwExtData()) == 0);
 }
 
 TEST_CASE("Fresh profile: the options dialog shows Scrollbars checked and the band box enabled",

@@ -147,7 +147,7 @@ LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::init(QWidget* pare
             RS_DEBUG->print(RS_Debug::D_WARNING, "Dimension style preview import failed for '%s': %s",
                             sampleFileName.toUtf8().constData(), error.toUtf8().constData());
             return false;
-        });
+        }, RS2::DxfTextEncoding::Declared, RS_FileIO::OffsetCurveImportPolicy::DisplayCacheOnly);
     if (loaded) {
         LC_DimStylePreviewGraphicView* result = createAndSetupView(parent, graphic, originalGraphic, true);
         result->hideNonRelevantLayers(dimensionType);
