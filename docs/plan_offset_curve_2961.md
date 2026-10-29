@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W165, superseding W164 below): S0 source/target reconciliation
+Current status (W168, superseding W167 below): S0 source/target reconciliation
 and the local A-core through C-check audit are closed. Direct synchronous
 `fileImport`, stream, and byte filter imports validate offset carriers through
 the worker in the current source. W158 requalifies the qmake6 app/helper bundle;
@@ -55,13 +55,18 @@ W163 records one focused macOS qmake6 UI check: an ellipse offset preview and
 commit, properties, Undo/Redo, and AC1032 DXF save/reopen. This is partial
 evidence only; the full visible interaction matrix and its screenshot/display/
 DPR receipts remain open.
+W168 remediates the current Windows worker/wire/import CI failures: bounded raw
+CBOR scanning replaces platform-divergent stream traversal, and the helper uses
+binary native handles for redirected pipes. The local macOS CMake selection
+passes 9/9; the pushed Windows x64/ARM64 rerun is still required.
 Status: **W0-W2 is partially implemented; worker, geometry, creation/repeat, trim,
 GUI open/template, and DXF/DWG paths have scoped local qualifications recorded in
 W1-W160. W156 closes local routing for the public synchronous file/stream/byte
 filter APIs. Current-head worker CI, Windows failure coverage, deployed-package
 checks, visible UI, external-CAD interoperability, and final integration remain
 open.**
-Latest recorded slice: W165 records ODA conversion and independent readers; W164
+Latest recorded slice: W168 records Windows worker/wire CI remediation and local
+validation; W165 records ODA conversion and independent readers; W164
 records independent ACadSharp/LibreDWG reads; W163
 records a focused macOS qmake6 ellipse UI/save/reopen check; W162 records direct
 LibreDWG semantic inspection of the
@@ -6541,3 +6546,54 @@ discovery exception or extra refusal ID was added.
 This closes the local validation-test regression only. It does not close the
 visible CAD, cross-platform CI, installed-package, external AC1021 reader, or
 final W0-W2/R acceptance gates listed in W166.
+
+## 126. W168 Windows Worker/Wire CI Remediation
+
+PR-head Windows x64 job `123694069995` failed its worker and import lanes. The
+first causes were `QCborStreamReader` depth/item traversal that did not enforce
+the same structural limits on Windows, plus the worker's `QFile::open(stdin / stdout)`
+wrappers failing on redirected helper pipes. Their failures cascaded into worker
+client/fault/timeout and native-offset import assertions. A separate Windows-only
+identity test wrote through the same still-open handle and assumed the filesystem
+published metadata changes synchronously.
+
+The committed remediation replaces pre-materialization wire traversal with a
+bounded scanner for the protocol's fixed arrays and permitted scalar types. It
+enforces frame, depth, per-array and total-item caps before calling
+`QCborValue::fromCbor`, rejects unsupported/narrow/nonfinite values and trailing
+bytes, and validates encoded payloads through the same wire grammar after a
+bounded typed-tree precheck. The depth-boundary test uses explicit CBOR bytes at
+exactly the admitted depth and one level beyond. The helper reads and writes
+redirected process handles directly (`ReadFile`/`WriteFile` on Windows and
+`read`/`write` on POSIX), avoiding CRT text-mode and Qt `FILE*` pipe behavior.
+The Windows identity test keeps the stamped descriptor open while a distinct
+writer handle changes the file and closes, then checks both descriptor and path
+stamps.
+
+Local toolchain: CMake 4.4.4, Qt 6.12.0, AppleClang 21, macOS arm64. The
+isolated Debug build is `/private/tmp/librecad-offset-2961-ci`; the isolated
+ASan wire build is `/private/tmp/librecad-offset-2961-wire-asan`.
+
+```bash
+cmake --build /private/tmp/librecad-offset-2961-ci --target librecad_offset_worker --parallel 12
+cmake --build /private/tmp/librecad-offset-2961-ci --target librecad_offset_worker_process_tests librecad_offset_worker_client_tests librecad_offset_worker_fault_tests librecad_offset_worker_geometry_timeout_tests librecad_offset_hostilefile_tests librecad_console_command_utils_tests librecad_dxf_fast_tests --parallel 8
+ctest --test-dir /private/tmp/librecad-offset-2961-ci -R '^(offset_worker_(wire|process|client|fault|geometry_timeout|process_ordinary)|librecad_(console_import_tests|offset_import_identity_tests|dxf_fast_tests))$' --output-on-failure --parallel 1
+cmake --build /private/tmp/librecad-offset-2961-wire-asan --target librecad_offset_worker_wire_tests --parallel 4
+ASAN_OPTIONS=detect_leaks=0 ctest --test-dir /private/tmp/librecad-offset-2961-wire-asan -R '^offset_worker_wire$' --output-on-failure
+```
+
+| W168 validation | Result |
+|---|---|
+| Debug CMake wire selector | PASS; `offset_worker_wire` 1/1 |
+| CMake ASan wire selector | PASS; `offset_worker_wire` 1/1 (`detect_leaks=0`) |
+| CMake worker/helper and process/client/fault/geometry-timeout test builds | PASS |
+| Focused CTest: wire, process, client, fault, geometry timeout, ordinary fallback, console import, source identity, DXF fast | PASS; 9/9, 85.73s |
+| Post-freeze helper rebuild and process rerun | PASS; process plus ordinary fallback 2/2 |
+| Product/test commit | `4adedea92e7262d55cd9296f43987e85533733e2` |
+| Windows x64/ARM64 PR-head rerun | Pending; local macOS execution does not qualify Windows handle behavior |
+
+W168 closes the local diagnosis/remediation slice only. Recheck the pushed
+Windows x64 and ARM64 jobs, especially source identity and the prior worker
+timeout/fault chain, before closing current-head cross-platform CI. Remaining
+visible CAD workflow, deployed/package checks, direct AC1021 ACadSharp reading,
+external-CAD visual checks, and final W0-W2/R acceptance are unchanged.
