@@ -4189,6 +4189,12 @@ if (BUILD_TESTS)
                 "[console][import]" --reporter compact)
         set_tests_properties(librecad_console_import_tests PROPERTIES
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
+        add_test(NAME librecad_offset_import_identity_tests
+            COMMAND $<TARGET_FILE:librecad_offset_hostilefile_tests>
+                "[lc-offsetcurve][import-session][snapshot][identity]" --reporter compact)
+        set_tests_properties(librecad_offset_import_identity_tests PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
         add_test(NAME librecad_painter_tests
             COMMAND $<TARGET_FILE:librecad_painter_tests> --reporter compact)
         set_tests_properties(librecad_painter_tests PROPERTIES
