@@ -24,11 +24,26 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W155, superseding the W154 snapshot below): S0 and the local
-A-core through C-check audit are closed. W0-W2, E/U/G/F/O/T and R remain open,
-including remote platform/package, visible UI and external-CAD acceptance.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117/W126/W127 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W137 requalifies W126 preview-cache portability in the dedicated kernel/client/fresh-helper targets, W138 requalifies W127 Modify Offset creation/repeat GUI routing, W139 requalifies U4 persisted option/preview/commit behavior, W140 requalifies O1 Update from Source, W141 requalifies O2 Restore Original, and W142-W143 record the in-repo import-caller ownership audit plus current-source caller and GUI open/template tests; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan, and W124 requalifies local trim file/conversion/undo-reopen coverage in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100, W128 requalifies E1 guarded entity/factory/clone/transform behavior, W129 requalifies U1 type/INSERT/selection/SVG/menu/info/plugin dispatch, W131 requalifies E2 cached grips/snaps/through edits and transactional transforms, W132 requalifies F1 typed schema/carrier/ownership/resource-limit behavior, W133 requalifies F2 actual DXF/DWG writing and transactional refusal, W134 requalifies F3 independent fixture/version/write/conversion/reopen matrix, W135 requalifies U2 dialog/sheet async property publication, and W136 requalifies U3 async grip drag/cancel/ownership/history behavior in Release/ASan; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; W154 adds Linux/Windows staged-helper execution coverage, with local macOS install/client validation passing and remote runs pending; broader A-C budget audit, external use of public synchronous low-level import APIs, remote cross-platform CI and final acceptance remain open**.
-Latest recorded slice: W155 rechecks the shared-budget/counter-transfer chain and passes the current-source geometry selector; W154 adds the staged installed-helper client smoke and local macOS relocation result. W153 closes source/target reconciliation. W152 records the ASan cache-check fault sweep. W151 classifies five randomized command-alias failures as inherited baseline behavior. W149's broad local Release lanes and W148's qmake6 qualification remain recorded. Remote/platform CI, full deployed-package acceptance, external synchronous API use, visible interaction and final W0-W2/R acceptance remain open.
+Current status (W156, superseding W155 below): S0 source/target reconciliation and
+the local A-core through C-check audit are closed. Direct synchronous
+`fileImport`, stream, and byte filter imports now validate offset carriers through
+the worker in the current source. W0-W2, E/U/G/F/O/T and R remain open for
+cross-platform, package, visible UI, external-CAD, and final integration acceptance.
+Status: **W0-W2 is partially implemented; worker, geometry, creation/repeat, trim,
+GUI open/template, and DXF/DWG paths have scoped local qualifications recorded in
+W1-W155. W156 closes local routing for the public synchronous file/stream/byte
+filter APIs. Remote worker CI, Windows failure coverage, deployed-package checks,
+visible UI, external-CAD interoperability, and final current-source integration
+remain open.**
+Latest recorded slice: W156 routes synchronous file/stream/byte filter imports
+through bounded worker validation and records current Release evidence. W155
+rechecks the shared-budget/counter-transfer chain; W154 adds staged installed-
+helper CI and local macOS relocation evidence. W153 closes source/target
+reconciliation. W152 records the ASan cache-check fault sweep. W151 classifies
+five randomized command-alias failures as inherited baseline behavior. W149's
+broad local Release lanes and W148's qmake6 qualification remain recorded.
+Remote/platform CI, full deployed-package acceptance, visible interaction,
+external-CAD checks and final W0-W2/R acceptance remain open.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -3114,10 +3129,16 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   installation plus installed-directory worker-client and creation/repeat routing tests.
   W154 adds a component-only staged helper/client smoke to Linux/Windows CI.
   The local macOS staged/relocated client lane passes, while remote results are pending.
-  Finish other import ownership, Windows/native cross-platform failure coverage and
-  remaining caller/final adoption/failure acceptance. Reuse the qualified geometry-entry
-  timeout/helper/client/reply modules; do not redo them as absent. Keep Node runner scope
-  separate.
+  W156 routes public synchronous `fileImport`, `fileImportStream` and
+  `fileImportBytes` through deferred parsing and bounded sibling-worker validation,
+  sharing import-budget state with XREF child filters and restoring deferred INSERT
+  expansion. The caller remains synchronous through a bounded nested event loop;
+  GUI open/templates retain their asynchronous staged session. Current-source
+  Release direct-API and broad format lanes pass locally. Finish Windows/native
+  cross-platform failure coverage, deployed-helper acceptance, and final
+  caller/adoption/failure acceptance. Reuse the qualified geometry-entry
+  timeout/helper/client/reply modules; do not redo them as absent. Keep Node runner
+  scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
   DXF/DWG, source and trim implementation with any new worker/publication changes.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
@@ -3128,10 +3149,11 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   the offset changes. Review scoped commits, preserve reproducible evidence and
   close every required gap.
 
-**Next concrete action on implementation resume:** follow PR-head run
-`40917026094` through Linux and Windows x64/ARM64 installed-helper tests, then
-address any platform/runtime failure before moving to the remaining W0-W2
-caller/deployment gates and final E/U/G/F/O/T integration.
+**Next concrete action on implementation resume:** complete the current-source
+ASan direct-import selector if its focused build finishes; then push W156 and
+follow the new PR-head Linux and Windows x64/ARM64 installed-helper checks.
+Address platform/runtime failures before the remaining W0-W2 deployment gates
+and final E/U/G/F/O/T integration.
 The W145 Windows include correction has local validation only. W55 now records a fresh full macOS qmake6 app/bundle
 build plus a worker-protocol smoke using the helper beside the bundled executable;
 W79 separately records a complete staged macOS CMake install and offscreen
@@ -6121,3 +6143,51 @@ product edit was justified. This closes the local audit/requalification row,
 not remote platform execution, external public synchronous API usage, or final
 W0-W2/R acceptance. The PR-head DWG/DXF workflow remains responsible for the
 new Linux/Windows installed-helper smoke.
+
+## 114. W156 Synchronous Filter Import Worker Bridge
+
+Commit `763d3f695` moves direct public synchronous `RS_FilterDXFRW` imports onto
+the worker-backed carrier validation path. `fileImportImpl` defers offset
+admission while the DXF/DWG parser builds the caller-owned graph, passes one
+shared bounded import budget through XREF child filters, and validates admitted
+placeholders through `LC_OffsetImportSession` before returning. The compatibility
+API waits in a bounded nested Qt event loop that excludes user input; geometry
+validation remains in the sibling process. On worker startup failure, timeout,
+refusal, or missing Qt application, remaining internal placeholders are replaced
+with ordinary `RS_Spline` fallbacks. Deferred INSERT expansion is restored after
+validation. GUI drawing-open/template workflows continue to use the asynchronous
+staged session. If budget allocation fails, parsing uses cache-only ordinary
+spline import rather than in-process editable adoption.
+
+The regression covers public file, caller-owned stream, and byte-array entry
+points for both degree-1 and cubic DXF offset carriers. Native type, source
+geometry, display cache, attributes, source handle, and owned/foreign XDATA are
+checked after each import; an inline worker dependency ensures the test cannot
+silently pass by downgrading every carrier. CMake test-helper dependencies cover
+the adapter, persistence, hostile-file, matrix, and grouped DXF/DWG fast targets.
+
+Fresh macOS CMake Release build and focused checks passed:
+
+| Lane | Result |
+|---|---|
+| `[sync-api]` | 1 case, 219 assertions; file/stream/bytes x degree 1/cubic |
+| Offset adapter | 21 cases, 9,690 assertions |
+| Offset persistence | 55 cases, 40,876 assertions |
+| Offset matrix | 22 cases, 60,653 assertions |
+| Offset hostile-file | 67 cases, 55,972 assertions |
+| DXF fast | 798 passed, 4 existing fixture skips; 84,477 assertions |
+| DWG fast | 1,033 passed, 37 existing fixture skips; 363,699 assertions |
+
+`git diff --check` passed. A focused ASan build was started in
+`/private/tmp/offset-W77-asan`, but that cache required a cold 998-step app/test
+build and had not completed at this checkpoint; no ASan result is claimed for
+W156. PR #3193 head `0b2630a83fb1754fa18adf646e3743545efb8e78` had Text
+foundations passing, with CodeQL, DWG/DXF verification, and Pixi builds still
+in progress when checked. The roadmap parser/inventory regression passed 99/99,
+with all 71 original classifications and 93 executable obligations intact, no
+pending declarations, and no production mismatch. W156's commits must be pushed
+before new remote checks can qualify this change.
+
+This closes the in-repository synchronous filter entry-point routing gap, not
+Windows runtime/failure coverage, full deployed-package acceptance, visible UI,
+external-CAD interoperability, or final W0-W2/E/U/G/F/O/T/R acceptance.
