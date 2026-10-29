@@ -2666,13 +2666,56 @@ test targets were rebuilt in both configurations. Evidence root is unchanged:
 | `offset-W37-final-gui-asan.xml` | `105da3a96a7a4561529f6968f267809863e699bf21b5f66d5bde846aaf4e3a5b` |
 | `offset-W37-gui-discovery.xml` | `797412160ec2fff6ac714f8db9a69671ed735b8289984d1a3bc091398ced2197` |
 
-The source-protection audit remains open: an import snapshot must preserve the
-original host path for XREF resolution, and source stamps alone do not bind the
-bytes parsed. DXF output uses a staged rename, but the output transaction closes
-its exclusively created temporary descriptor and reopens by pathname; exclusive
-creation by itself does not protect that reopen or an altered parent path.
-Design a bounded, cross-platform identity and publication contract, including
-its failure policy, before treating either race as fixed.
+At W37 the source-protection audit found that an import snapshot must preserve
+the original host path for XREF resolution, and source stamps alone do not bind
+the bytes parsed. The output transaction then closed its exclusively created
+descriptor and reopened the stage by pathname; W38 below fixes that reopen, but
+not all publication and source-identity races.
+
+Descriptor-backed output W38 (`0fb12e534`):
+DWG/DXF output now writes through the descriptor returned by exclusive stage
+creation. Its stream supports DXF position queries and patching; internal DWG
+writers accept `std::ostream`. The stage's identity is checked after the write
+and again after verification before publication, and cleanup avoids deliberately
+removing a stage already observed to have been replaced. POSIX retains a
+close-on-exec duplicate until publication/abort, preventing inode reuse during
+those checks; descriptor exhaustion refuses publication. A private test hook
+reproduced the old immediate truncation when the stage was swapped for a symlink
+between exclusive creation and pathname reopen. The new code keeps the original
+destination intact and refuses the substituted stage; a second test replaces
+the stage during verification. These tests run on macOS, not Windows.
+
+This is not an atomic identity-and-rename guarantee. The stage or its parent
+may still change between a check and rename or cleanup; verification can observe
+an altered or temporarily substituted stage; Windows closes its descriptor
+before the pathname checks and has not been runtime-qualified. Autosave's
+source/destination alias checks and the staged import's metadata-only source
+stamp remain non-atomic. Preserve the open roadmap items for stable imported
+bytes, XREF path semantics, anchored destination policy and adversarial races.
+
+Fresh Release application, full-test, helper, DWG/DXF fast targets and
+qmake6 libdxfrw archive builds passed. Release/ASan (`detect_leaks=0`) stage
+tests pass all 14 declarations / 14 entries, 131 assertions, no skips. The full
+offset hostile-file target passes all 48 declarations / 53 entries with no
+skips (53804 / 54187 assertions, including polling). Additional Release runs
+have zero errors/failures: `[dwg-write]` 685 declarations / 713 entries / 6
+skips, DWG fast 1066 / 1152 / 37 skips, DXF fast 795 / 1090 / 4 skips, and
+documents storage 33 / 56 / 1 skip. Discovery identities were checked; these
+overlapping suites are not summed. Skipped external fixtures remain unqualified.
+Full qmake application link, Windows tests, leak checking, visible acceptance and
+the broader plan are not claimed. Evidence root is unchanged:
+
+| W38 artifact | SHA256 |
+| --- | --- |
+| `offset-W38-final-stage-release.xml` | `663bef82bfabcca9952a97affe0e1ce97224033a58ffd2c74d6dd7c6309b7a85` |
+| `offset-W38-final-stage-asan.xml` | `1d52f3520fe3f029debbef92429365219498243c0ba76362eee9af212435797a` |
+| `offset-W38-final-stage-discovery.xml` | `10583c4785a23e94aad62bee28113cb10d54db37b0c425dbf4004289871b88fb` |
+| `offset-W38-final-dwg-release.xml` | `5cc6b2174af519719ff7b249820886654825a7d4372c956d5cd71efc189ae9e8` |
+| `offset-W38-final-dxf-release.xml` | `f8577e2c5a3214b1772f85f8d3a241b41b8f4f2501c606b26c49c6ad515c1af7` |
+| `offset-W38-final-dwg-write-release.xml` | `2d5fc3842c3517f70707e23344550a081a18b39aad75db51acd9c94a45247dbe` |
+| `offset-W38-final-hostile-release.xml` | `09ef6b4c97546e5cb77061d6d1d8625c9303779d810980636a701455e910b800` |
+| `offset-W38-final-hostile-asan.xml` | `cad1bb61d2f464d72cae8ad0aada641d16d596fdb8da76cbba36554d921ca618` |
+| `offset-W38-final-storage-release.xml` | `cbe71a7680c30f505c3d78e02ce8d92d2046fc203e143fe150f157c1afe144b3` |
 
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
