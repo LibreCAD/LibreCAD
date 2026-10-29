@@ -304,7 +304,7 @@ candidate except the explicitly proposed native-worker tags.
 |---|---|---|---|---|
 | S0 | Pin/reconcile candidate, main and feature; baseline/discovery; fix DWG enum classification and add R2007 execution | - | recovered; parser and ordinary R2007 slices qualified below; geometry/type/target qualification remains | `[curve-offset]`, `[lc-offsetcurve]`, `[entity-coverage]`, actual target/version inventory |
 | A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; W63 focused budget-core Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][budget-core]` |
-| A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; audit/retest | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
+| A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; W64 focused strict-budget Release/ASan requalification; broad audit remains open | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
 | A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; audit/retest | `[lc-offsetcurve][reference-accounting]` |
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; audit/retest | `[lc-offsetcurve][cache-budget-accounting]` |
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; audit/retest | geometry terminal/occurrence case inventory |
@@ -3652,3 +3652,21 @@ ASan used `detect_leaks=0`, so it is not a leak check.
 |---|---|
 | `/private/tmp/offset-W63-budget-core-release.xml` | `4ced959a310c99e22f06fe12a475b44ea95823b1d48a18cb4b41577010855084` |
 | `/private/tmp/offset-W63-budget-core-asan.xml` | `dc5607f1c217a13fa714fa74844c214f53410bb14bb162d8f1d39d0e71c23cd7` |
+
+## 23. W64 Strict-Query Budget Requalification
+
+Reviewed and reran `[lc-offsetcurve][geometry][strict-budget]` with Release
+and ASan runners. Both passed 20 testcases / 876 JUnit assertions with zero
+errors, failures or skips. The source path was checked for the high-risk ordering
+invariants: mandatory seed reservations precede segment callbacks; queue growth
+is bounded before insertion; event records are charged before append; retained
+session roots receive their separate metadata debit; and provider exceptions
+invalidate retained proof credentials while the exit ledger preserves work.
+No new code defect was demonstrated, so this slice is requalification rather
+than an implementation change. A-core/A-strict full cross-entry and allocation-
+failure audit remains open. ASan used `detect_leaks=0`, not leak validation.
+
+| W64 artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W64-strict-budget-release.xml` | `5c4098717c03d69f45a6f30a97b90daa1a4f68029c50f36fcb1200141989a5ae` |
+| `/private/tmp/offset-W64-strict-budget-asan.xml` | `69d0485fa7d6e1ca3e3367ca6f0a07ce639557f79ff71fac0aa86da78bd20850` |
