@@ -103,6 +103,7 @@ public:
     static QString helperPath();
 private:
     friend class LC_OffsetWorkerClientTestAccess;
+    friend struct LC_GuiImportTestAccess;
     friend class LC_OffsetCreationActionTestAccess;
     friend class LC_OffsetTrimWorkerTestAccess;
     struct Job;

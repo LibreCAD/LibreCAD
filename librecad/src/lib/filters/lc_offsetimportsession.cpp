@@ -134,6 +134,7 @@ LC_OffsetImportSession::LC_OffsetImportSession(QObject* parent) : QObject(parent
     });
 }
 LC_OffsetImportSession::~LC_OffsetImportSession() { cancel(); }
+bool LC_OffsetImportSession::supportsType(RS2::FormatType type) { return supportedImportType(type); }
 bool LC_OffsetImportSession::busy() const noexcept { return bool(m_work) || m_worker.busy(); }
 void LC_OffsetImportSession::cancel() { m_deadline.stop(); m_work.reset(); m_worker.cancel(); }
 

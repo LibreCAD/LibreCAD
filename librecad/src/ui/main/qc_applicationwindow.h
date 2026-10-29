@@ -38,6 +38,8 @@
 #include <QMap>
 #include <QSet>
 #include <QStringList>
+#include <QPointer>
+#include <memory>
 
 class RS_Graphic;
 class RS_GraphicView;
@@ -56,6 +58,7 @@ class LC_LastOpenFilesOpener;
 class LC_LayerTreeWidget;
 class LC_MenuFactory;
 class LC_NamedViewsListWidget;
+class LC_OffsetImportSession;
 class LC_PenPaletteWidget;
 class LC_PenWizard;
 class LC_PluginInvoker;
@@ -146,6 +149,7 @@ class QC_ApplicationWindow : public LC_MDIApplicationWindow {
     void relayAction(QAction* q_action);
     /** generates a new document for a graphic. */
     QC_MDIWindow* createNewDrawingWindow(RS_Document* doc, const QString& expectedFileName);
+    QC_MDIWindow* createOwnedDrawingWindow(std::unique_ptr<RS_Graphic> graphic, const QString& expectedFileName);
     void recreateToolbarsMenu();
     void initializeDockLayout();
     void prepareWindowForShow();
@@ -336,6 +340,7 @@ public:
  */
     void openFile(const QString& fileName, RS2::FormatType type,
                   RS2::DxfTextEncoding encoding = RS2::DxfTextEncoding::Declared);
+    void restoreActiveFileAfterPendingImports(const QString& fileName);
     void notifyCurrentDrawingOptionsChanged();
     void changeDrawingOptions(int tabToShowIndex);
     void closeWindow(QC_MDIWindow* win) override;
@@ -394,6 +399,11 @@ protected:
     QString getFileNameFromFullPath(const QString& path);
     void updateCoordinateWidgetFormat() const;
     void updateWidgetsAsDocumentLoaded(const QC_MDIWindow* w);
+    void completeOpenedDrawing(QC_MDIWindow* w, const QString& fileName, bool legacyUtf8);
+    void beginStagedOpen(const QString& fileName, RS2::FormatType type, RS2::DxfTextEncoding encoding);
+    void cancelPendingImports();
+    QC_MDIWindow* createDrawingWindow(RS_Document* doc, const QString& expectedFileName,
+                                      std::unique_ptr<RS_Graphic> owned);
     void autoZoomAfterLoad(const QG_GraphicView* graphicView);
     bool newDrawingFromTemplate(const QString& fileName, QC_MDIWindow* w = nullptr);
     void doActivate(QMdiSubWindow* w) override;
@@ -529,6 +539,8 @@ protected:
     QList<QAction*> m_recentFilesActionList;
 
     QStringList m_openedFiles;
+    QList<QPointer<LC_OffsetImportSession>> m_pendingImports;
+    QString m_restoreActiveFile;
     QList<QAction*> m_actionsToDisableInPrintPreviewList;
 
     friend class LC_WidgetFactory;

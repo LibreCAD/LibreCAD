@@ -76,6 +76,7 @@ public:
     using PartialRequest = std::function<void(bool hasEntities, const QString& error, PartialReply reply)>;
     explicit LC_OffsetImportSession(QObject* parent = nullptr);
     ~LC_OffsetImportSession() override;
+    static bool supportsType(RS2::FormatType type);
     bool start(const QString& file, RS2::FormatType type, RS2::DxfTextEncoding encoding,
         bool acceptPartial, Callback callback);
     bool start(const QString& file, RS2::FormatType type, RS2::DxfTextEncoding encoding,
@@ -86,6 +87,7 @@ public:
     bool busy() const noexcept;
 private:
     friend class LC_OffsetImportSessionTestAccess;
+    friend struct LC_GuiImportTestAccess;
     struct Work;
     void parse(const std::shared_ptr<Work>&);
     void resolvePartial(const std::shared_ptr<Work>&, bool accepted);

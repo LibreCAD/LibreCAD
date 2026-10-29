@@ -9,8 +9,12 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QElapsedTimer>
+#include <QProcess>
 
 #include "lc_actiontestsupport.h"
+#include "lc_offsetcurve.h"
+#include "lc_offsetimportsession.h"
 #include "lc_testsettingsisolation.h"
 #include "lc_workspacesmanager.h"
 #include "qc_applicationwindow.h"
@@ -23,6 +27,18 @@
 #include "qg_blockwidget.h"
 #include "rs_block.h"
 #include "rs_line.h"
+#include "rs_spline.h"
+#ifdef Q_OS_UNIX
+#include <cerrno>
+#include <csignal>
+#include <unistd.h>
+#endif
+
+struct LC_GuiImportTestAccess {
+    static void onStarted(LC_OffsetImportSession& session, std::function<void(QProcess&)> hook) {
+        session.m_worker.m_testStarted = std::move(hook);
+    }
+};
 
 struct LC_DockLayoutTestAccess {
     using Workspace = LC_WorkspacesManager::LC_Workspace;
@@ -57,6 +73,12 @@ struct LC_DockLayoutTestAccess {
         const int count = window.maybeSurfaceBlocksDock(&graphic);
         window.m_blockWidget->setGraphicView(nullptr);
         return count;
+    }
+    static int drawingCount(QC_ApplicationWindow& window) { return window.findChildren<QC_MDIWindow*>().size(); }
+    static int pendingImports(QC_ApplicationWindow& window) { return window.m_pendingImports.size(); }
+    static void cancelImports(QC_ApplicationWindow& window) { window.cancelPendingImports(); }
+    static LC_OffsetImportSession* pendingImport(QC_ApplicationWindow& window) {
+        return window.m_pendingImports.isEmpty() ? nullptr : window.m_pendingImports.first().data();
     }
     static Workspace capture() {
         Workspace workspace;
@@ -393,6 +415,172 @@ TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][dock-window
         CHECK(table->currentIndex().row() == model->getIndex(expected).row());
         CHECK_FALSE(graphic->isModified());
     }
+}
+
+TEST_CASE("GUI open publishes a validated native offset only after staging", "[.gui][dock-window][offset-import]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString root = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    QString fileName; bool expectNative = true;
+    SECTION("binary DXF") { fileName = root + "dxf-binary-R2018-native-degree3.dxf"; }
+    SECTION("ODA DWG") { fileName = root + "oda-dwg-R2018-native-degree3.dwg"; }
+    SECTION("DWG counted-NUL marker") { fileName = root + "dwg-R2018-native-degree3.dwg"; expectNative = false; }
+    REQUIRE(QFileInfo::exists(fileName));
+    window.openFile(fileName);
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+    REQUIRE(LC_DockLayoutTestAccess::pendingImports(window) == 1);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) {
+        REQUIRE(elapsed.elapsed() < 35000); settle(10);
+    }
+    REQUIRE(LC_DockLayoutTestAccess::drawingCount(window) == initial + 1);
+    auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); auto* graphic = mdi->getGraphic(); REQUIRE(graphic);
+    CHECK(graphic->getFilename() == fileName); CHECK_FALSE(graphic->isModified());
+    bool found = false, spline = false;
+    for (const auto* entity : *graphic) {
+        found |= dynamic_cast<const LC_OffsetCurve*>(entity) != nullptr;
+        spline |= dynamic_cast<const RS_Spline*>(entity) != nullptr;
+    }
+    CHECK(spline); CHECK(found == expectNative);
+}
+
+TEST_CASE("An MDI window owns and destroys a transferred graphic", "[.gui][dock-window][offset-import][lifetime]") {
+    struct TrackedGraphic final : RS_Graphic {
+        explicit TrackedGraphic(int& count) : destroyed(count) {}
+        ~TrackedGraphic() override { ++destroyed; }
+        int& destroyed;
+    };
+    DockFixture fixture; auto& window = fixture.window; int destroyed = 0;
+    auto graphic = std::make_unique<TrackedGraphic>(destroyed); graphic->initForNewDocument();
+    auto* original = graphic.get();
+    QPointer<QC_MDIWindow> mdi(window.createOwnedDrawingWindow(std::move(graphic), QStringLiteral("owned.dxf")));
+    REQUIRE(mdi); CHECK(mdi->getGraphic() == original); CHECK(destroyed == 0);
+    window.doClose(mdi); QApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    CHECK_FALSE(mdi); CHECK(destroyed == 1);
+}
+
+TEST_CASE("Cancelling a pending GUI import publishes no drawing", "[.gui][dock-window][offset-import]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFileInfo::exists(fileName)); window.openFile(fileName);
+    REQUIRE(LC_DockLayoutTestAccess::pendingImports(window) == 1);
+    LC_DockLayoutTestAccess::cancelImports(window); settle(25);
+    CHECK(LC_DockLayoutTestAccess::pendingImports(window) == 0);
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+}
+
+TEST_CASE("Startup restores the active file after asynchronous opens", "[.gui][dock-window][offset-import][startup]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const QString root = QString(LIBRECAD_SOURCE_DIR) + "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    const QString active = root + "dxf-binary-R2018-line-control.dxf";
+    const QString other = root + "dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFileInfo::exists(active)); REQUIRE(QFileInfo::exists(other));
+    window.openFile(active); window.openFile(other);
+    window.restoreActiveFileAfterPendingImports(active);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(window.getCurrentMDIWindow()); CHECK(window.getCurrentMDIWindow()->getFileName() == active);
+    window.openFile(other);
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(window.getCurrentMDIWindow()); CHECK(window.getCurrentMDIWindow()->getFileName() == other);
+}
+
+#ifdef Q_OS_UNIX
+TEST_CASE("GUI import cancels and reaps its running helper before retry", "[.gui][dock-window][offset-import][worker]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFileInfo::exists(fileName)); window.openFile(fileName);
+    auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+    bool started = false; pid_t pid = 0; int suspended = -1;
+    LC_GuiImportTestAccess::onStarted(*session, [&](QProcess& process) {
+        pid = static_cast<pid_t>(process.processId()); suspended = ::kill(pid, SIGSTOP); started = true;
+    });
+    QElapsedTimer elapsed; elapsed.start();
+    while (!started) { REQUIRE(elapsed.elapsed() < 10000); settle(10); }
+    REQUIRE(pid > 0); REQUIRE(suspended == 0);
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+    SECTION("cancel and retry") {
+        LC_DockLayoutTestAccess::cancelImports(window);
+        errno = 0; CHECK(::kill(pid, 0) == -1); CHECK(errno == ESRCH);
+        CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+        window.openFile(fileName);
+        while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+        CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial + 1);
+        auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); REQUIRE(mdi->getGraphic());
+        bool found = false; for (const auto* entity : *mdi->getGraphic()) if (dynamic_cast<const LC_OffsetCurve*>(entity)) found = true;
+        CHECK(found);
+    }
+    SECTION("application close") {
+        REQUIRE(window.close()); settle(25);
+        errno = 0; CHECK(::kill(pid, 0) == -1); CHECK(errno == ESRCH);
+        CHECK(LC_DockLayoutTestAccess::pendingImports(window) == 0);
+        CHECK(LC_DockLayoutTestAccess::drawingCount(window) == 0);
+    }
+}
+#endif
+
+TEST_CASE("GUI recovery import stays modified after automatic zoom", "[.gui][dock-window][offset-import]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString fileName = directory.filePath("recovery.dxf"); QFile file(fileName);
+    REQUIRE(file.open(QIODevice::WriteOnly));
+    const QByteArray bytes = "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n9\n$DWGCODEPAGE\n3\nANSI_1252\n"
+        "0\nENDSEC\n0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n0\nENDSEC\n0\nEOF\n";
+    REQUIRE(file.write(bytes) == bytes.size()); file.close();
+    window.openFile(fileName, RS2::FormatDXFRW, RS2::DxfTextEncoding::LegacyLibreCadUtf8);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 5000); settle(10); }
+    auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); auto* graphic = mdi->getGraphic(); REQUIRE(graphic);
+    CHECK(graphic->isDxfRecoverySourceFile(fileName)); CHECK(graphic->isModified());
+}
+
+TEST_CASE("A GUI import helper failure publishes an ordinary fallback", "[.gui][dock-window][offset-import][worker]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFileInfo::exists(fileName)); window.openFile(fileName);
+    auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+    bool started = false;
+    LC_GuiImportTestAccess::onStarted(*session, [&](QProcess& process) { started = true; process.kill(); });
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(started); REQUIRE(LC_DockLayoutTestAccess::drawingCount(window) == initial + 1);
+    auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); REQUIRE(mdi->getGraphic());
+    bool spline = false, native = false;
+    for (const auto* entity : *mdi->getGraphic()) {
+        spline |= dynamic_cast<const RS_Spline*>(entity) != nullptr;
+        native |= dynamic_cast<const LC_OffsetCurve*>(entity) != nullptr;
+    }
+    CHECK(spline); CHECK_FALSE(native);
+    bool reported = false;
+    for (const auto* history : window.findChildren<QTextEdit*>())
+        reported |= history->toPlainText().contains("could not be restored as editable");
+    CHECK(reported);
+}
+
+TEST_CASE("A malformed DXF is reported without publishing a GUI drawing", "[.gui][dock-window][offset-import]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = directory.filePath("broken.dxf"); QFile file(fileName);
+    REQUIRE(file.open(QIODevice::WriteOnly));
+    const QByteArray bytes = "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1032\n0\nENDSEC\n"
+        "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n"
+        "0\nLINE\n8\n0\n10\n0.0\n";
+    REQUIRE(file.write(bytes) == bytes.size()); file.close(); window.openFile(fileName);
+    QElapsedTimer elapsed; elapsed.start(); QPointer<QMessageBox> box;
+    while (!box) {
+        REQUIRE(elapsed.elapsed() < 5000); settle(10);
+        for (auto* candidate : window.findChildren<QMessageBox*>()) if (candidate->isVisible()) { box = candidate; break; }
+    }
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+    box->done(QMessageBox::Ok);
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 5000); settle(10); }
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
 }
 
 TEST_CASE("Legacy UTF-8 recovery has a separate File menu action", "[.gui][legacy-utf8-ui]") {
