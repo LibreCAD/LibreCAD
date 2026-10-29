@@ -4057,3 +4057,29 @@ the matching Release discovery receipts are
 `detect_leaks=0`, so this is not leak validation. This is current-head macOS
 offscreen qualification; Windows runtime, installed-helper deployment, visible
 GUI and final acceptance remain open. No product gap was found in this slice.
+
+## 39. W77b Current-Head Creation and Repeat GUI Routing
+
+At the same product source `f6f4f369d37ae4675558d9437a3f94c50ce0f9c5`, rebuilt
+and ran the complete offscreen `[creation-worker]` selector in isolated CMake
+Release and ASan trees. Coverage includes cached-preview reuse at publication,
+native repeat and the zero-sum stored-cache fallback, mixed-source ordering and
+attributes, stale input/selection/layer/UCS rejection, cancellation and actual
+helper-timeout recovery, two-click relative-zero behavior, and atomic
+undo/redo publication. Discovery reports 11 top-level test declarations; Catch2
+executes 13 JUnit identities because the repeat declaration contains two
+independent `SECTION` paths. Every declared identity is represented in both
+configurations, the Release and ASan identity lists match, and there are no
+failures, errors, skips, duplicates or undeclared executions.
+
+| W77b lane | Declared / executed JUnit cases | Assertions | Result | SHA256 |
+|---|---:|---:|---|---|
+| Creation/repeat Release | 11 / 13 | 318 | PASS | `347cf215367a92a4e0f5c0be4e45e7a1f0423ab8d1e1a65f965f94f1ea905448` |
+| Creation/repeat ASan | 11 / 13 | 318 | PASS | `a5255be684e36bddaf2ab30bf5d1857b3818a072bd8c26a213c979cc571c1166` |
+
+Reports are `/private/tmp/offset-W77-creation-{release,asan}.xml`; Release
+discovery is `/private/tmp/offset-W77-creation-discovery.xml`. ASan used
+`detect_leaks=0`, so this is not leak validation. This is current-head macOS
+offscreen caller qualification, not visible desktop, Windows runtime,
+installed-helper deployment or final acceptance. No creation/repeat product gap
+was found in this slice.
