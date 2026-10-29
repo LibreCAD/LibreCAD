@@ -1599,7 +1599,6 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
             }
         }
         if (style == Qt::CustomDashLine) {
-            // fixme - how this is related to RS_AtomicEntity::updateDashOffset??? Will we set dash offset twice?
             m_lastUsedPen.setDashOffset(pen.dashOffset() * k);
         }
     }
@@ -1802,15 +1801,35 @@ void RS_Painter::setMinRenderableTextHeightInPx(const int i) {
     m_minRenderableTextHeightInPx = i;
 }
 
-void RS_Painter::updateDashOffset(const RS_Entity* e) {
-    // Adjust dash offset
-    if (m_lpen.getLineType() == RS2::SolidLine /*|| view.getGraphic() == nullptr*/) {
-        return;
-    }
+double RS_Painter::currentDashOffset(const DashSpace dashSpace) const {
+    const double scale = dashSpace == DashSpace::Model && m_viewport
+        ? std::abs(toGuiDX(1.0)) : getDpmmCached();
+    return scale > 0.0 ? m_currenPatternOffset / scale : 0.0;
+}
 
-    // factor from model space to GUI
-    const double toMm = m_defaultWidthFactor;
-    m_currenPatternOffset -= e->getLength() * toMm;
+void RS_Painter::updateDashOffset(const RS_Entity* e) {
+    if (!penHasDashPattern()) return;
+
+    // Track the rendered length in logical pixels so model and screen patterns can share it.
+    double length = e->getLength() * std::abs(toGuiDX(1.0));
+    if (m_viewPortFactor.x != m_viewPortFactor.y) {
+        if (const auto* line = dynamic_cast<const RS_Line*>(e)) {
+            const QPointF delta = toGuiPointF(line->getEndpoint()) - toGuiPointF(line->getStartpoint());
+            length = std::hypot(delta.x(), delta.y());
+        } else if (const auto* spline = dynamic_cast<const LC_SplinePoints*>(e)) {
+            const auto& data = spline->getData();
+            if (!data.controlPoints.empty()) {
+                std::vector<RS_Vector> points;
+                points.reserve(data.controlPoints.size());
+                std::transform(data.controlPoints.cbegin(), data.controlPoints.cend(), std::back_inserter(points),
+                               [this](const RS_Vector& point) { return toGui(point); });
+                QPainterPath path(QPointF(points.front().x, points.front().y));
+                addSplinePointsToPath(points, data.closed, path);
+                length = path.length();
+            }
+        }
+    }
+    m_currenPatternOffset += length;
 }
 
 int RS_Painter::determinePointScreenSize(const double pdsize) const {
