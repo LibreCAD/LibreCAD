@@ -6619,6 +6619,11 @@ empty-array request was rejected with exit2 and `invalid request`, as expected.
 The isolated CMake Debug tree `/private/tmp/librecad-offset-2961-ci` also built
 the complete `librecad` app target (161 build steps); an incremental rebuild
 returned exit0 with `ninja: no work to do.` The resulting app binary was hashed.
+Installed only the `OffsetWorker` component into
+`/private/tmp/offset-2961 current installed`, copied the client test beside the
+installed helper, and ran it from the relocated app-bundle directory. All 17
+worker-client cases passed (11,059 assertions), exercising sibling discovery
+with a path containing spaces.
 This is local build and bundled-helper evidence, not a signed/deployed bundle on
 another machine or a GUI interaction receipt.
 
@@ -6627,6 +6632,7 @@ another machine or a GUI interaction receipt.
 | qmake6 application binary | `/private/tmp/offset-2961-qmake-final-9d983e/LibreCAD.app/Contents/MacOS/LibreCAD` / `ead4a2a24abea643fead31136b0fedc49ce99d610406bd14cb50ee437bf893a1` |
 | qmake6 worker binary | `/private/tmp/offset-2961-qmake-final-9d983e/LibreCAD.app/Contents/MacOS/LibreCADOffsetWorker` / `f468b857359de8b76e86357b8efda545d114b538c28928ef2983cf1739ea767c` |
 | CMake Debug application binary | `/private/tmp/librecad-offset-2961-ci/LibreCAD.app/Contents/MacOS/LibreCAD` / `c66fc9a46f29be6a46207a72cb6b696e16eb8e1f5912bff0c3b4c7763df9371c` |
+| Relocated installed helper-client | PASS; 17 cases, 11,059 assertions; component `OffsetWorker` from the current Debug tree; install prefix contains spaces |
 | Valid helper exchange | protocol4; op0; failure0; 15 payload items; frame530 bytes |
 | Empty-array negative control | helper exit2; `invalid request`; no response frame |
 | Full validation-script suite | PASS; `node --test scripts/offset-curve-validation/test-*.js`; 412/412, 0 failures, 195.2s |
