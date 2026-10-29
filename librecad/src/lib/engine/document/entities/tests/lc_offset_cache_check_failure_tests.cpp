@@ -251,6 +251,67 @@ int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definiti
                 label, completeAllocationCount, baseline.work.vertices);
     return 0;
 }
+
+template<typename Operation, typename Complete>
+int sweepStage(const char* label, Operation&& operation, Complete&& complete,
+               std::size_t& totalInjectionPoints) {
+    namespace geo = LC_EllipseOffsetGeometry;
+    geo::WorkBudget baselineBudget;
+    failAt = 0;
+    allocationCount = 0;
+    injected = false;
+    armed = true;
+    auto baseline = operation(baselineBudget);
+    armed = false;
+    const std::size_t completeAllocationCount = allocationCount;
+    if (!complete(baseline) || !sameWork(baseline.work, baselineBudget.consumed()) ||
+        completeAllocationCount == 0) {
+        std::printf("allocation_stage_baseline_failed=1 fixture=%s status=%u allocations=%zu\n",
+                    label, unsigned(baseline.status), completeAllocationCount);
+        return 12;
+    }
+
+    for (std::size_t failure = 1; failure <= completeAllocationCount; ++failure) {
+        geo::WorkBudget failedBudget;
+        failAt = failure;
+        allocationCount = 0;
+        injected = false;
+        armed = true;
+        bool threw = false;
+        try {
+            auto failed = operation(failedBudget);
+            (void)failed;
+        } catch (const std::bad_alloc&) {
+            threw = true;
+        } catch (...) {
+            armed = false;
+            return 13;
+        }
+        armed = false;
+
+        const auto& work = failedBudget.consumed();
+        if (!threw || !injected || failedBudget.status() != geo::BudgetStatus::Ok ||
+            work.cacheSpans > baseline.work.cacheSpans || work.vertices > baseline.work.vertices ||
+            work.distancePairs > baseline.work.distancePairs || work.deepest > baseline.work.deepest ||
+            work.orderingComparisons > baseline.work.orderingComparisons) {
+            std::printf("allocation_stage_failure=%zu/%zu fixture=%s threw=%d injected=%d status=%u\n",
+                        failure, completeAllocationCount, label, threw, injected, unsigned(failedBudget.status()));
+            return 14;
+        }
+
+        const auto recovered = operation(failedBudget);
+        if (!complete(recovered) || !sameWork(recovered.work, failedBudget.consumed())) {
+            std::printf("allocation_stage_recovery=%zu/%zu fixture=%s status=%u\n",
+                        failure, completeAllocationCount, label, unsigned(recovered.status));
+            return 15;
+        }
+    }
+
+    totalInjectionPoints += completeAllocationCount;
+    std::printf("allocation_stage_sweep_recovered=1 fixture=%s injection_points=%zu vertices=%zu\n",
+                label, completeAllocationCount, baseline.work.vertices);
+    return 0;
+}
 }
 
 int main() {
@@ -276,6 +337,28 @@ int main() {
         auto cubic = cubicFixture(reversed);
         if (const int result = sweep(cubic.cache, cubic.definition,
             reversed ? "two-span-cubic-reversed" : "two-span-cubic", injectionPoints)) { return result; }
+    }
+    {
+        const auto cubic = cubicFixture(false);
+        const auto bounds = [&](geo::WorkBudget& budget) {
+            return geo::analyseCacheBounds(cubic.cache, cubic.definition.basis, cubic.definition.distance, .01, budget);
+        };
+        const auto boundsComplete = [](const geo::CacheBoundsResult& result) {
+            return result.status == geo::CacheBoundsStatus::Ok && bool(result.analysis);
+        };
+        if (const int result = sweepStage("standalone-cache-bounds", bounds, boundsComplete, injectionPoints)) {
+            return result;
+        }
+        const auto local = [&](geo::WorkBudget& budget) {
+            return geo::analyseCacheTopologyLocally(cubic.cache, cubic.definition, .01, budget);
+        };
+        const auto localComplete = [](const geo::CacheLocalTopologyResult& result) {
+            return result.status == geo::CacheLocalTopologyStatus::Ok && bool(result.analysis) &&
+                result.boundsStatus == geo::CacheBoundsStatus::Ok;
+        };
+        if (const int result = sweepStage("standalone-cache-local-topology", local, localComplete, injectionPoints)) {
+            return result;
+        }
     }
     for (const bool reversed : {false, true}) {
         auto circle = wholeCircleFixture(reversed);
