@@ -3009,6 +3009,45 @@ Direct synchronous/console imports still use the legacy path-based contract;
 Windows runtime validation, save/check-to-use and destination publication remain
 open. Do not claim cross-platform or ASan qualification from this Release run.
 
+W47 source-save identity guard `14c7cc902` moves the existing import stamp into
+shared `LC_FileIdentity` and carries it with `RS_Graphic`. Staged GUI import
+keeps the identity captured before parsing; ordinary finalized imports capture
+the current source, while new/template drawings clear it. Save detects a source
+identity mismatch and routes through Save As. The final writer preflight also
+rejects a destination that is the original normalized source path or native file
+object when it no longer matches the imported snapshot, including forced Save
+As to the old path, hard-link aliases, and a source path replaced by a symlink.
+Autosave refuses a hard link to the imported file even after the source pathname
+has been replaced. Successful saves refresh the stored identity.
+
+This is still a check-before-use policy, not atomic destination publication: a
+path can change after the final identity check and before the exporter opens or
+replaces it. Do not describe this as eliminating the check-to-use race. Direct
+console/synchronous XREF handling also remains path-based; W46 only snapshots
+dependencies in staged GUI imports.
+
+A fresh macOS Release CMake build of `librecad_tests` and a qmake6 `src.pro`
+rebuild both succeeded. Offscreen Release results:
+
+| W47 suite | Test cases | Assertions | Result |
+| --- | ---: | ---: | --- |
+| Document storage/import/save | 36 | 1303 | 35 passed, 1 existing JWW skip |
+| Hostile offset-file/import coverage | 32 | 48849 | pass |
+
+The document-storage cases include same-size content rewrite with restored
+mtime, refusing the original path after the Save As prompt, replacement of the
+source path with a symlink, hard-link autosave alias after path replacement,
+source identity refresh after save, and template identity clearing. The hostile
+suite requalifies staged import after extraction of the stamp implementation.
+Saved logs under `/private/tmp`:
+
+| W47 artifact | SHA256 |
+| --- | --- |
+| `offset-W47-documentsstorage.log` | `b0b868190bfb13bf3ed3d4a6cd6cc6deaf6eec0f9c2a2380ea3a69b8c1b465f7` |
+| `offset-W47-hostile.log` | `aef67d6aec1547c26a3072d98be9342fd821882e4c0c3d2d3a71e29cd5a09691` |
+
+No Windows runtime, sanitizer, or atomic export-race proof is claimed here.
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -3070,12 +3109,14 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 
 **Next concrete action on implementation resume:** obtain a Windows compile and
 runtime run for W44 before claiming platform parity. W46 already bounds and
-snapshots nested XREF bytes for staged imports; do not repeat that implementation.
-Continue with source-save/check-to-use and destination-publication alias/race
-coverage, then audit direct synchronous and console XREF callers without silently
-weakening their behavior. Investigate the recorded ASan template failure under
-load, and exercise a genuine partial DWG
-through the GUI dialog. W35 fixes the observed W33 teardown assertion; retain its
+snapshots nested XREF bytes for staged imports; W47 adds source identity
+preflight but not atomic publication. Do not repeat either implementation.
+Design destination publication so same-source identity is revalidated at the
+actual replacement boundary, with fault-injected path swaps, aliases, backup,
+and failed-rename cases; then audit direct synchronous and console XREF callers
+without silently weakening their behavior. Investigate the recorded ASan template failure under
+load, and exercise a genuine partial DWG through the GUI dialog. W35 fixes the
+observed W33 teardown assertion; retain its
 forced-destruction regression while auditing other close/dialog reentrancy.
 W36/W37 handle observed switches and later staged requests; also audit
 same-window interaction, reentrant/visible startup focus and failure behavior.
