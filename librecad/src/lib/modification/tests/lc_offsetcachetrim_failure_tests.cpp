@@ -341,10 +341,11 @@ int exerciseWrapperLastCancellation() {
         const bool prepared = positive(result, warm), preserved = unchanged();
         if (!prepared || !preserved) {
             const auto* output = dynamic_cast<const RS_Spline*>(result.trimmed1);
-            std::fprintf(stderr, "wrapper_warm result=%d refusal=%d adds=%lld deletes=%lld native_demotions=%zu roots=%zu degree=%d controls=%zu parent=%d variables=%d preserved=%d\n",
+            std::fprintf(stderr, "wrapper_warm result=%d refusal=%d adds=%lld deletes=%lld native_demotions=%zu roots=%zu degree=%zu controls=%zu parent=%d variables=%d preserved=%d\n",
                 result.result, result.cacheRefusal ? int(*result.cacheRefusal) : -1,
                 static_cast<long long>(warm.value.entitiesToAdd.size()), static_cast<long long>(warm.value.entitiesToDelete.size()),
-                result.nativeDemotions, result.cacheWork.rootRecords, output ? output->getData().degree : -1,
+                result.nativeDemotions, result.cacheWork.rootRecords,
+                output ? std::size_t(output->getData().degree) : std::size_t(-1),
                 output ? output->getData().controlPoints.size() : 0, output && output->getParent() == &graphic,
                 output && output->getUserDefVar("R03_WRAPPER_FOREIGN") == "unchanged", preserved);
             return error(63, "wrapper positive warmup");
