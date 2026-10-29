@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W161, superseding W160 below): S0 source/target reconciliation
+Current status (W162, superseding W161 below): S0 source/target reconciliation
 and the local A-core through C-check audit are closed. Direct synchronous
 `fileImport`, stream, and byte filter imports validate offset carriers through
 the worker in the current source. W158 requalifies the qmake6 app/helper bundle;
@@ -33,7 +33,9 @@ current source in Release and ASan; W160 requalifies the staged installed-helper
 path in Release and ASan. W161 triages all 13 direct ACadSharp failures as its
 known AC1021 uncompressed-metadata reader limitation; ODA re-saves those exact
 files and ACadSharp reads all 13 converted files with the expected entity/spline
-counts. Direct AC1021 ACadSharp acceptance remains unqualified. W0-W2,
+counts. LibreDWG 0.14 also reads the 13 original AC1021 files directly; its JSON
+retains all eight spline entities and their owned schema marker. Direct AC1021
+ACadSharp acceptance remains unqualified. W0-W2,
 E/U/G/F/O/T and R remain open for cross-platform, package, visible UI,
 external-CAD, and final integration acceptance.
 Status: **W0-W2 is partially implemented; worker, geometry, creation/repeat, trim,
@@ -42,7 +44,8 @@ W1-W160. W156 closes local routing for the public synchronous file/stream/byte
 filter APIs. Current-head worker CI, Windows failure coverage, deployed-package
 checks, visible UI, external-CAD interoperability, and final integration remain
 open.**
-Latest recorded slice: W161 records direct/converted ACadSharp triage; W160
+Latest recorded slice: W162 records direct LibreDWG semantic inspection of the
+13 AC1021 files; W161 records direct/converted ACadSharp triage; W160
 requalifies the current-source staged install helper with Release and ASan
 clients; W159 requalifies cache portability and GUI
 creation/repeat, and W158 records a full qmake6 app/helper build and client smoke.
@@ -6326,7 +6329,7 @@ acceptance based on this diagnosis.
 
 As a bounded follow-up, ODAFileConverter 27.1.0.0 re-saved those exact 13 files
 to ACAD2018 DWG with audit/repair disabled. It emitted 13 files; the pinned
-ACadSharp inspector then read all 13 as AC1032. The four offset-spline rows
+ACadSharp inspector then read all 13 as AC1032. The eight offset-spline rows
 retained the expected degree/control/knot layouts and LibreCAD schema marker;
 the ordinary line row had one non-spline entity, and the four plot-only rows
 had zero modelspace entities. This is conversion-path semantic corroboration,
@@ -6341,3 +6344,25 @@ remain open.
 | Roadmap parser/inventory, `/private/tmp/offset-W161-plan-inventory-final.log` | PASS; 99 / 99, 93 executable obligations, zero pending/mismatches / `b5a3b7d111052e265bdd36b7b0868e7f3da88170f7554822ff4339fe0332df75` |
 | ACadSharp source | commit `3a52a52047e84670759c1f9ad3916ec3ce85ff56`; `src/ACadSharp/IO/DwgReader.cs:976-980` |
 | LibreCAD source under test | product code unchanged at `41d0089d8d583f5521f5069e18631445699b14d3`; plan-only head before W161 |
+
+## 120. W162 LibreDWG Direct AC1021 Inspection
+
+Ran LibreDWG `dwgread 0.14` on the same 13 original `AC1021` files that ACadSharp
+could not open. All 13 JSON exports completed successfully. Inspected the parsed
+JSON rather than treating process exit alone as semantic evidence: eight files
+contain one SPLINE each, all eight retain `LC_OFFSET_CURVE` in EED, and their
+degree/control/knot layouts are six `(3,4,8)` and two `(1,2,4)`. One file contains
+the expected ordinary line entity; four plot-only files have no modelspace
+entities. The direct LibreDWG results show this is not a general AC1021 read
+failure, while ACadSharp's direct AC1021 gap remains specifically open.
+
+W162 did not change product code. The ODA-resaved AC1032 to ACadSharp check from
+W161 remains corroborative only; neither it nor LibreDWG JSON replaces the
+remaining visible CAD application and end-to-end DWG acceptance rows.
+
+| W162 artifact | SHA256 / result |
+|---|---|
+| Direct LibreDWG read list, `/private/tmp/offset-W161-libredwg-direct.log` | 13 / 13 process successes / `408a33a63e6fed5e66dd9720237b23e0fbff04d102996d9113584c85d56e3822` |
+| LibreDWG JSON semantic summary, `/private/tmp/offset-W161-libredwg-semantic-summary.tsv` | eight SPLINEs retain schema marker and valid degree/control/knot cardinalities / `f7efdc1f0f118329f0ca943a420c3c86370b156ecb18b4e58ab135d539b6dfa1` |
+| Roadmap parser/inventory, `/private/tmp/offset-W162-plan-inventory.log` | PASS; 99 / 99, 93 executable obligations, zero pending/mismatches / `e72525f4decfb8de0506aec9749dab1dff59389ba2ffc7393f87dcc130b7a0a7` |
+| LibreDWG tool | `dwgread 0.14`; original files all have `AC1021` signature |
