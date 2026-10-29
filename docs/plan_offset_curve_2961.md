@@ -309,7 +309,7 @@ candidate except the explicitly proposed native-worker tags.
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66 focused cache-budget Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][cache-budget-accounting]` |
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; W97 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | geometry terminal/occurrence case inventory |
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; W98 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
-| C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a`; W100 charges the final proof-publication slot before allocation; W103 sweeps every observed allocation failure in a public check and verifies bounded ledger plus same-budget retry in Release/ASan; broader site audit remains | `[lc-offsetcurve][cache-topology-chain]`, standalone cache-check allocation-fault target |
+| C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a`; W100 charges the final proof-publication slot; W103/W105 sweep every observed allocation failure over a line fixture and forward/reversed two-span cubic caches with bounded ledger and same-budget retry in Release/ASan; broader site audit remains | `[lc-offsetcurve][cache-topology-chain]`, standalone cache-check allocation-fault target |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; finish caller/fallback/import ownership freeze before routing | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; full app/deployed-package gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
 | W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit and scoped action faults and geometry-entry timeout receipts qualified locally; W81 adds Linux/Windows CMake worker CI; W82 removes PR path filtering and W83 adds scoped feature-branch push triggering; current cross-platform run, import and final gates remain open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
@@ -4851,3 +4851,20 @@ allocation failures and four conic cancellations, with subsequent recovery.
 workflow on this pushed head is pending; no remote Windows/Linux success is
 claimed until its jobs finish. This adds platform execution for both global
 allocator test processes but does not close the broader A-C/T fault inventory.
+
+## 67. W105 Multi-Layout Cache-Checker Fault Sweep
+
+Product/test commit `46a1a5438` extends the standalone public `checkCache`
+allocation sweep to three successful inputs: the original one-span line cache,
+a two-span cubic cache in stored order, and the same cubic cache with reversed
+stored controls plus `cacheReversed`. For every allocation observed in each
+baseline, the test injects failure, checks that the shared work ledger is
+componentwise bounded by the successful baseline, and retries with the same
+budget to obtain a complete analysis. Release and ASan each pass all 338
+injection/recovery points (108 for the line case, 115 per cubic direction); the
+successful ledgers are 140 and 155 vertices respectively. ASan used
+`detect_leaks=0`.
+
+This adds line/cubic, multispan and orientation coverage to the failure census.
+It still does not fault-sweep every analytic regime, contact/seam/cusp topology,
+or every A/B/C public operation; keep the broader site audit open.
