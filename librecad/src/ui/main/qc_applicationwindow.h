@@ -405,6 +405,7 @@ protected:
     void startQueuedImports();
     bool hasPendingImports() const;
     void cancelPendingImports();
+    void clearStartupImportSelection();
     QC_MDIWindow* createDrawingWindow(RS_Document* doc, const QString& expectedFileName,
                                       std::unique_ptr<RS_Graphic> owned);
     void autoZoomAfterLoad(const QG_GraphicView* graphicView);
@@ -554,6 +555,9 @@ protected:
     QList<QPointer<LC_OffsetImportSession>> m_pendingImports;
     QList<QueuedImport> m_queuedImports;
     QString m_restoreActiveFile;
+    QPointer<QMdiSubWindow> m_startupSelectedWindow;
+    bool m_startupSelectionChanged{false};
+    unsigned m_importActivationDepth{0};
     QList<QAction*> m_actionsToDisableInPrintPreviewList;
 
     friend class LC_WidgetFactory;

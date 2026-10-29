@@ -88,6 +88,10 @@ struct LC_DockLayoutTestAccess {
     static QString queuedFile(QC_ApplicationWindow& window, int index) { return window.m_queuedImports.at(index).fileName; }
     static bool queuedTemplate(QC_ApplicationWindow& window, int index) { return window.m_queuedImports.at(index).asTemplate; }
     static void cancelImports(QC_ApplicationWindow& window) { window.cancelPendingImports(); }
+    static void closeDrawing(QC_ApplicationWindow& window, QC_MDIWindow* drawing) {
+        drawing->setSaveOnClosePolicy(QC_MDIWindow::DONT_SAVE);
+        window.doClose(drawing);
+    }
     static bool newTemplate(QC_ApplicationWindow& window, const QString& file) { return window.newDrawingFromTemplate(file); }
     static bool tracksOpenedFile(QC_ApplicationWindow& window, const QString& file) { return window.m_openedFiles.contains(file); }
     static void closeDrawings(QC_ApplicationWindow& window) {
@@ -508,6 +512,62 @@ TEST_CASE("Startup restores the active file after asynchronous opens", "[.gui][d
     while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
     REQUIRE(window.getCurrentMDIWindow()); CHECK(window.getCurrentMDIWindow()->getFileName() == other);
 }
+
+#ifdef Q_OS_UNIX
+TEST_CASE("Startup imports preserve a later drawing selection", "[.gui][dock-window][offset-import][startup]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString root = QString(LIBRECAD_SOURCE_DIR) + "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    const QString line = root + "dxf-binary-R2018-line-control.dxf";
+    const QString active = directory.filePath("active.dxf"), selected = directory.filePath("selected.dxf");
+    const QString pending = root + "dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFile::copy(line, active)); REQUIRE(QFile::copy(line, selected));
+    window.openFile(active); window.openFile(selected);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    QC_MDIWindow* chosen = nullptr;
+    for (auto* mdi : window.findChildren<QC_MDIWindow*>()) if (mdi->getFileName() == selected) chosen = mdi;
+    REQUIRE(chosen);
+    window.openFile(pending);
+    auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+    bool started = false; pid_t pid = 0; int suspended = -1;
+    LC_GuiImportTestAccess::onStarted(*session, [&](QProcess& process) {
+        pid = static_cast<pid_t>(process.processId()); suspended = ::kill(pid, SIGSTOP); started = true;
+    });
+    while (!started) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(pid > 0); REQUIRE(suspended == 0);
+    window.restoreActiveFileAfterPendingImports(active);
+    REQUIRE(window.getCurrentMDIWindow()); REQUIRE(window.getCurrentMDIWindow()->getFileName() == active);
+    const auto verifySelection = [&] {
+        REQUIRE(window.getCurrentMDIWindow() == chosen);
+        SECTION("selection survives multiple publications") {
+            const int before = LC_DockLayoutTestAccess::drawingCount(window);
+            window.openFile(active);
+            while (LC_DockLayoutTestAccess::drawingCount(window) == before) {
+                REQUIRE(elapsed.elapsed() < 35000); settle(10);
+            }
+            CHECK(window.getCurrentMDIWindow() == chosen);
+        }
+        SECTION("closing the selected window preserves its replacement") {
+            LC_DockLayoutTestAccess::closeDrawing(window, chosen);
+            chosen = window.getCurrentMDIWindow();
+            REQUIRE(chosen); REQUIRE(chosen->getFileName() == active);
+        }
+        REQUIRE(::kill(pid, SIGCONT) == 0);
+        while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+        CHECK(window.getCurrentMDIWindow() == chosen);
+        LC_DockLayoutTestAccess::closeDrawings(window);
+    };
+    SECTION("window command") {
+        window.activateWindow(chosen);
+        verifySelection();
+    }
+    SECTION("MDI activation") {
+        REQUIRE(chosen->mdiArea());
+        chosen->mdiArea()->setActiveSubWindow(chosen);
+        verifySelection();
+    }
+}
+#endif
 
 TEST_CASE("Staged GUI imports are bounded and queued work completes", "[.gui][dock-window][offset-import][queue]") {
     DockFixture fixture; auto& window = fixture.window;

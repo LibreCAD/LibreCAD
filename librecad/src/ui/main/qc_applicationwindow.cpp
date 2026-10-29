@@ -43,6 +43,7 @@
 #include <QMimeData>
 #include <QPushButton>
 #include <QResizeEvent>
+#include <QScopeGuard>
 #include <QScopedValueRollback>
 #include <QScreen>
 #include <QShowEvent>
@@ -1328,6 +1329,11 @@ void QC_ApplicationWindow::doWindowActivated(QMdiSubWindow* w, const bool forced
         }
     }
 
+    if (!m_restoreActiveFile.isEmpty() && !m_importActivationDepth && w != m_activeMdiSubWindow) {
+        m_startupSelectedWindow = w;
+        m_startupSelectionChanged = true;
+    }
+
     if (w == m_activeMdiSubWindow) {
         // this may occur after file open, so additional update is needed :(
         RS_GraphicView* activatedGraphicView = getCurrentGraphicView();
@@ -1795,10 +1801,16 @@ void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatTy
 void QC_ApplicationWindow::cancelPendingImports() {
     const auto pending = std::exchange(m_pendingImports, {});
     m_queuedImports.clear();
-    m_restoreActiveFile.clear();
+    clearStartupImportSelection();
     for (const auto& session : pending) {
         if (session) { session->cancel(); delete session.data(); }
     }
+}
+
+void QC_ApplicationWindow::clearStartupImportSelection() {
+    m_restoreActiveFile.clear();
+    m_startupSelectedWindow.clear();
+    m_startupSelectionChanged = false;
 }
 
 bool QC_ApplicationWindow::hasPendingImports() const {
@@ -1806,8 +1818,9 @@ bool QC_ApplicationWindow::hasPendingImports() const {
 }
 
 void QC_ApplicationWindow::restoreActiveFileAfterPendingImports(const QString& fileName) {
-    m_restoreActiveFile = hasPendingImports() ? fileName : QString{};
+    clearStartupImportSelection();
     activateWindowWithFile(fileName);
+    m_restoreActiveFile = hasPendingImports() ? fileName : QString{};
 }
 
 bool QC_ApplicationWindow::beginStagedImport(const QString& fileName, RS2::FormatType type,
@@ -1833,7 +1846,7 @@ void QC_ApplicationWindow::startQueuedImports() {
         startStagedImport(request.fileName, request.type, request.encoding, request.asTemplate);
         if (!window) return;
     }
-    if (!hasPendingImports()) m_restoreActiveFile.clear();
+    if (!hasPendingImports()) clearStartupImportSelection();
 }
 
 bool QC_ApplicationWindow::startStagedImport(const QString& fileName, RS2::FormatType type,
@@ -1874,11 +1887,15 @@ bool QC_ApplicationWindow::startStagedImport(const QString& fileName, RS2::Forma
                                                 QMessageBox::Ok, window);
                     box->setAttribute(Qt::WA_DeleteOnClose); box->open();
                 }
-                if (!window->hasPendingImports()) window->m_restoreActiveFile.clear();
+                if (!window->hasPendingImports()) window->clearStartupImportSelection();
                 return;
             }
             QPointer<QC_MDIWindow> mdi;
             try {
+                ++window->m_importActivationDepth;
+                const auto activationGuard = qScopeGuard([window] {
+                    if (window) --window->m_importActivationDepth;
+                });
                 const bool sourceUnverified = outcome.sourceUnverified || !outcome.sourceStamp.matches(fileName);
                 LC_DocumentsStorage storage;
                 if (asTemplate) storage.finalizeTemplateGraphic(*outcome.graphic);
@@ -1898,8 +1915,14 @@ bool QC_ApplicationWindow::startStagedImport(const QString& fileName, RS2::Forma
                 if (!window || !mdi) return;
                 if (asTemplate) window->completeNewDrawing(mdi, fileName);
                 else window->completeOpenedDrawing(mdi, fileName, encoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8);
-                if (window && !window->m_restoreActiveFile.isEmpty())
-                    window->activateWindowWithFile(window->m_restoreActiveFile);
+                if (window && !window->m_restoreActiveFile.isEmpty()) {
+                    if (window->m_startupSelectionChanged) {
+                        auto* selected = qobject_cast<QC_MDIWindow*>(window->m_startupSelectedWindow.data());
+                        if (selected && window->m_windowList.contains(selected)) window->doActivate(selected);
+                    } else {
+                        window->activateWindowWithFile(window->m_restoreActiveFile);
+                    }
+                }
                 if (window && outcome.downgraded)
                     window->m_commandWidget->appendHistory(QObject::tr("%1 offset curves could not be restored as editable and were retained as ordinary geometry.").arg(qulonglong(outcome.downgraded)));
                 if (window && sourceUnverified)
@@ -1910,7 +1933,7 @@ bool QC_ApplicationWindow::startStagedImport(const QString& fileName, RS2::Forma
                 if (window && mdi) window->doClose(mdi);
                 if (window) window->m_commandWidget->appendHistory(QObject::tr("Could not complete the imported drawing."));
             }
-            if (window && !window->hasPendingImports()) window->m_restoreActiveFile.clear();
+            if (window && !window->hasPendingImports()) window->clearStartupImportSelection();
         });
     if (!started) {
         m_pendingImports.removeAll(pending);
