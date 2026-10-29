@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-28. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; helper/client, dialog/sheet/grip/Update routing and typed Produce qualified; creation/cache/trim/import integration remains open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim and GUI drawing-open routing are qualified; template and other import callers, cross-platform and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -105,7 +105,7 @@ This inventory compares the older attached tree with the later candidate.
 | Type/UI/source actions | Entity enum/coverage, property queue/dialog, default drag, Update/Restore actions | Candidate present. Property queue defers publication with a timer, but prepares geometry synchronously in `apply`; a deferred commit is not background computation. |
 | Stored-cache Trim | `lc_offsetcachetrim`, contacts/matching helpers, Modify Trim action and file tests | Candidate present: pure preparation, exact fragments, two-operand publication and plain-fragment persistence. Recheck precision/ownership/undo guarantees. |
 | Validation workers | `scripts/offset-curve-validation/`, X-H1 through X-H7 | Candidate has Node developer/test workers and recorded timeout fixes. These tools are not a shipped isolated geometry worker. Do not confuse their deadlines with GUI computation limits. |
-| Native geometry-worker path | Real seven-operation protocol4 helper/client, cached source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip, Update, Modify Offset and native Trim preview/commit GUI routing committed/qualified locally | W16-W19 qualify cache portability and creation/repeat; W24-W26 qualify local Trim routing and scoped action faults. Import, cross-platform and packaged/final acceptance remain mandatory W0-W2 work. |
+| Native geometry-worker path | Real seven-operation protocol4 helper/client, cached source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip, Update, Modify Offset, native Trim and GUI drawing-open routing committed/qualified locally | W16-W19 qualify cache portability and creation/repeat; W24-W26 qualify local Trim routing and scoped action faults; W31 covers GUI drawing open. Template/other import callers, cross-platform and packaged/final acceptance remain mandatory W0-W2 work. |
 | Tests/build targets | Main Catch target, filter micro targets and two standalone offset allocation-failure targets | Candidate present; source registration is not discovery/execution. Use the actual targets in section5.3, not just the old grouped fast lanes. |
 | Surviving test defect | `spline_offset_representation_tests.cpp` lines205 and668 in candidate still use DWG enum ranges | `FormatDWG2007` is outside the range; those ordinary representation loops also omit it. Fix classification and add an executed R2007 regression in S0. The separate candidate matrix already lists all six DWG versions. |
 
@@ -2392,6 +2392,51 @@ Reports in the same evidence root are `offset-W30-{hostile,client}-{release,asan
 | hostile | `b573da61e7cdd6d8b55c13612916345b002d07be4e5976d28dc468b0bba90ba0` | `0702591a0a8bddf7da80017c3038efd0b1df408d3c13414a47044f750e32e895` |
 | client | `bcd6d4ffd7608f14dc963b130bbbb28ad73572397c4e37f00e79e8f62b59d4f6` | `16057201446687d91c2d74a04fa7610b0840c9e6c8b3011109cfe924ff3a50c1` |
 
+W31 GUI drawing open `f38abfa7a` connects supported DXF/DWG opens to the
+unpublished session. The owning MDI window is created only after validation and
+document finalization; `std::unique_ptr` explicitly transfers graphic ownership.
+Non-DXF/DWG opens remain on the existing synchronous path. A partial DWG with
+entities gets a nonblocking Yes/No dialog; accepted partials retain the
+format-unknown protection. Other parse failures get a nonblocking error dialog.
+Downgraded offset carriers are reported in command history. Closing or destroying
+the application cancels pending sessions, and the saved startup-active drawing
+is restored after pending opens finish. Automatic zoom restores the pre-zoom
+modified state so it does not erase recovery/repair dirty state. Parsing still
+runs synchronously on the Qt thread; only native validation is asynchronous.
+
+Fresh Release application/full-test/helper and focused Release/ASan binaries
+built. The following offscreen reports have complete discovered-identity coverage
+and zero errors/failures. `SECTION` cases are not additional declarations:
+
+| Suite | Declarations | Cases | Assertions Release / ASan | Skips |
+| --- | ---: | ---: | ---: | ---: |
+| GUI offset import | 8 | 11 | 188 / 224 | 0 |
+| dock-window | 33 | 36 | 413 / 450 | 7 |
+| hostile file | 48 | 53 | 53442 / 54195 | 0 |
+| documents storage | 29 | 52 | 1202 / 1202 | 1 |
+
+GUI tests cover native binary DXF and standards-safe ODA DWG, the original
+ACadSharp counted-NUL DWG remaining ordinary, ownership destruction, startup
+active-file restoration, a malformed DXF dialog, recovery dirty state, helper
+failure fallback/reporting, cancellation and application close with a stopped
+real helper, and retry. The helper is suspended before numeric work; no naturally
+hung primitive is claimed. Seven dock tests require a larger offscreen screen;
+the storage skip is the existing unavailable JWW writer. ASan uses
+`detect_leaks=0`. Four changed qmake6 objects compiled; full qmake linking and
+visible/deployed or cross-platform acceptance are not claimed. The earlier red
+DWG probe assumed the documented ACadSharp counted-NUL input should be native;
+it is retained, and the final test explicitly checks ordinary fallback instead.
+
+In the evidence root, reports `offset-W31-final4-{import,gui}-{release,asan}.xml`
+and `offset-W31-final3-{hostile,storage}-{release,asan}.xml` have SHA256:
+
+| Suite | Release SHA256 | ASan SHA256 |
+| --- | --- | --- |
+| GUI import | `f4be0e7eadbb57b7744e92e077e612ac1956b10239408fd7d6cf24328190e7f0` | `2ab8df6874f3633ff0e806036955b12637e25560bf1d5db69951d7a04beb8b4a` |
+| dock-window | `38411dae426a3d625f680bfecfbe304413b8517c350c8a2d4827a0c054e43c2f` | `bc08d21b56fb977593beba9f55ce11a29023df9c3d3f302c51b911d334c2eb15` |
+| hostile | `37b54e328b9fb85f0bbc1341445da418b9a17811f742fcf4019655e33313dd40` | `51c1a217d0b5c1b849d8540f2e6d1b23cc0d89e56b0e87185a0c8ce2e79d4c87` |
+| storage | `57f1016995f5522432c84585bd04c87efc4b54aba3240d2fcc0950aab3fbfe1f` | `7ecea1be5dc10c38f387893d0eba3b75c25c3d736dd6ba2d50faa26dfff1d73a` |
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -2409,7 +2454,7 @@ Creation/repeat status after these review follow-ups:
    during remaining caller integration; this closes local creation/repeat routing,
    not platform/deployed/visible acceptance.
 
-Then continue unpublished import ownership and cross-platform fault qualification in4.2 order.
+Then continue template/other import callers and cross-platform fault qualification in4.2 order.
 Full current-source application/deployed builds, complete file/version matrix,
 visible acceptance, source reconciliation/A-C audit and final R remain open.
 
@@ -2431,7 +2476,7 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] A-core through C-check: review/requalify existing code and patch only proven
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
 - [ ] W0-W2: typed/cached Produce, creation/repeat and local native Trim GUI routing and scoped action faults are qualified;
-  finish import ownership, cross-platform failure coverage and remaining caller/final
+  finish template/other import ownership, cross-platform failure coverage and remaining caller/final
   adoption/failure acceptance. Reuse the qualified geometry-entry timeout/helper/client/
   reply modules; do not redo them as absent. Keep Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
@@ -2439,22 +2484,21 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** integrate actual GUI open and
-template paths with the W27 unpublished session. Transfer the resolved graphic
-into an owning MDI document only after all carriers resolve, preserve explicit
-partial-import decisions, filename/saved/autosave state and document ownership,
-and cancel on window death without stale delivery or nested event loops. Existing
-`QC_MDIWindow` does not own a supplied document; establish ownership explicitly.
-Use the W29 finalizer before publication, and audit the existing open path's
-post-load `setModified(false)` so that repair-dirty state is not discarded.
-Design and test direct synchronous, console, nested-XREF and error-dialog contracts
-without silently weakening editable imports. Qualify remaining platform faults
-without weakening the existing worker tests.
+**Next concrete action on implementation resume:** integrate template creation
+with the unpublished session, preserving the new-document/autosave and caller
+success/failure contracts. Exercise a genuine partial DWG through the GUI dialog,
+and audit concurrent-open resource limits, source-file changes while validation
+is pending, close/dialog reentrancy and startup selection versus later user action.
+The W31 drawing-open path and ownership transfer are implemented; do not repeat
+them as absent. Design and test direct synchronous, console and nested-XREF
+contracts without silently weakening editable imports. Qualify remaining platform
+faults without weakening the existing worker tests.
 W16-W19 cache portability and local creation/repeat GUI
 routing are qualified; do not restart them as absent. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
-Nothing is automatically copied into the dirty main tree. Native import routing,
-the remaining lifecycle/packaging gates and final UI/file acceptance are open.
+Nothing is automatically copied into the dirty main tree. Template and other
+import callers, remaining lifecycle/packaging gates and final UI/file acceptance
+are open.
 
 Completion requires every required deliverable and validation row on the selected
 source, no unhandled type/lossy silent fallback, no pending P1/P2 finding, and an
