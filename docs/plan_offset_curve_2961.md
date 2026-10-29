@@ -4774,3 +4774,33 @@ cross-platform, package or complete A-C static audit gates.
 Reports: `/private/tmp/offset-W101-offset-release.xml` and
 `/private/tmp/offset-W101-offset-asan.xml`. ASan used `detect_leaks=0`; this
 is not leak validation. The skipped real exporter remains an explicit gap.
+
+## 64. W102 Preview-Cache Portability and Creation/Repeat Audit
+
+Re-reviewed the owned preview snapshot representation, CBOR admission and
+decode, fresh-helper restoration, revision-bound merge/eviction, and the Modify
+Offset creation/repeat continuation at source head `9eb53537f`. The snapshot
+contains only bounded ordinary line/spline values; it carries no entity
+addresses, native-cache capability, or process-local ownership. Source rebinding
+occurs only after decode/admission, and completion checks the captured revision
+before merging. The GUI action routes eligible ellipse/native-offset work
+through the worker and seals the captured source, options, selection, view/UCS,
+layer, pen, and undo epoch before one-cycle publication. Cancellation, timeout,
+supersession, context destruction, repeated native output, and zero-sum stored
+cache fallback already have direct cases. No new product defect was found.
+
+Rebuilt the Release and ASan test targets and reran
+`[preview-portable],[creation-worker]` offscreen. Each run executed 17 JUnit
+cases / 385 assertions with zero errors, failures, or skips. ASan used
+`detect_leaks=0`. These are macOS offscreen checks; Windows runtime and visible
+GUI acceptance remain dependent on the existing PR workflow and final W0-W2
+gates. No product change was warranted, so this is a roadmap/evidence checkpoint
+only.
+
+| W102 lane | Result | SHA256 |
+|---|---|---|
+| Preview portability + creation/repeat, Release; 17 cases / 385 assertions | PASS | `a2afe3bbce77fac3e5b86d438c2018d1cdb233e6585c904e02697441116b2463` |
+| Preview portability + creation/repeat, ASan; 17 cases / 385 assertions | PASS | `85a884d3dc4a567953d5d8ff370990cdc092f808b9a2ac40992369cc1bb01947` |
+
+Reports: `/private/tmp/offset-W102-preview-creation-release.xml` and
+`/private/tmp/offset-W102-preview-creation-asan.xml`.
