@@ -2734,7 +2734,7 @@ ReferenceProviderPreparation ReferenceProviderBuilder::run(
 LC_IntersectionStatus ReferenceProviderBuilder::prepareContacts(
     ReferenceProviders::Impl& provider, CriticalRefinementSession& own, CriticalRefinementSession* opposite,
     const double delta, WorkBudget& budget) {
-    if (!budget.consumeVertices(1) || !budget.consumePairs(1)) { return LC_IntersectionStatus::LimitExceeded; }
+    if (!budget.adoptWork({0, 1, 1})) { return LC_IntersectionStatus::LimitExceeded; }
     const std::array<CriticalRefinementSession*, 2> sessions{{&own, opposite}};
     for (std::size_t part = 0; part < 2; ++part) {
         const auto& adapter = provider.adapters[part];
