@@ -3121,18 +3121,18 @@ replacement is not accepted as the imported source. This is conservative if
 the path changes before the reader opens it; the source-save guard then requires
 Save As. W52 now binds direct parser bytes to the already-open file descriptor,
 including console and recursive XREF imports through this filter. The read is
-still synchronous, and separately opened host/XREF files are not one atomic
-multi-file snapshot. Obtain Windows compile/runtime evidence for QFile handle
-identity and rename behavior; add direct nested-XREF mutation coverage before
-closing that contract. Investigate the recorded ASan template failure under
+still synchronous. W53 revalidates all opened host/XREF identities after the
+root import, including mutations to an earlier dependency while later XREFs
+load; this is not an atomic multi-file snapshot. Obtain Windows compile/runtime
+evidence for QFile handle identity and rename behavior. Investigate the recorded ASan template failure under
 load, and exercise a genuine partial DWG through the GUI dialog. W35 fixes the
 observed W33 teardown assertion; retain its
 forced-destruction regression while auditing other close/dialog reentrancy.
 W36/W37 handle observed switches and later staged requests; also audit
 same-window interaction, reentrant/visible startup focus and failure behavior.
 W31/W32 drawing-open/template publication and W33 GUI queue bounds are
-implemented; do not repeat them as absent. Complete cross-file XREF mutation
-coverage without weakening editable imports.
+implemented; do not repeat them as absent. Review the remaining cross-file
+time-of-check limits without weakening editable imports.
 Qualify remaining platform faults without weakening the existing worker tests.
 W16-W19 cache portability and local creation/repeat GUI
 routing are qualified; do not restart them as absent. The ordinary DWG2007 correction and fresh broad
@@ -3432,3 +3432,29 @@ This is per-file descriptor binding, not an atomic snapshot spanning the host
 drawing and its separately opened XREF dependencies. Parsing still runs on the
 calling thread. Windows native handle/rename behavior, ASan, deployed packaging
 and visible GUI/failure acceptance remain unqualified.
+
+## 15. W53 Direct XREF Revalidation
+
+Commit `b1e6145ae` shares a direct-import identity ledger with recursive XREF
+filters. Each path is opened and parsed through W52's bounded stream, checked
+against its opened descriptor after parsing, then all captured identities are
+revalidated against their paths after the root import completes. A changed
+dependency therefore rejects the host import even when it changed after its
+own parse while a later XREF was loading. The behavior is per-file stability,
+not an atomic snapshot of all files at one instant; parsing remains synchronous.
+
+Current macOS Release/offscreen validation, zero errors/failures/skips:
+
+| W53 suite | Testcases | JUnit `tests` | Result |
+|---|---:|---:|---|
+| Direct XREF stable/change/cross-change | 3 | 153 | PASS |
+| Staged XREF snapshot and limit regressions | 13 | 2874 | PASS |
+
+JUnit receipts are in `/private/tmp`:
+
+| W53 artifact | SHA256 |
+|---|---|
+| `offset-W53-direct-xref.xml` | `9b7380d821a251ab6ca4b6c43eaaac1c8f1c812c4fcea794538dc17b76de59dd` |
+| `offset-W53-staged-xref.xml` | `f8924e401e99ae14390ee6c002adb6b755304b32afa604c5c8f8c524fba32f5b` |
+
+No Windows, ASan, visible GUI, or multi-file atomicity claim is made.
