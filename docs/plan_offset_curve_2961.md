@@ -3895,10 +3895,13 @@ view teardown. The broader `[plugins][offsetcurve]` selector passes in both
 configurations (9 cases / 19,120 assertions). Full `LibreCAD` targets link in
 CMake Release and ASan. ASan used `detect_leaks=0`, so these runs are not leak
 validation. The top-level qmake6 clean build was attempted in
-`/private/tmp/offset-W72-qmake6-full`; its helper target linked, but the full
-GUI target was still compiling when the optional long rebuild was interrupted.
-Do not count qmake6 as passed. Visible UI, installed-helper, Windows runtime,
-remaining import callers, and final acceptance remain open.
+`/private/tmp/offset-W72-qmake6-full` and completed with exit status 0, producing
+`LibreCAD.app` with the application and adjacent `LibreCADOffsetWorker`. A
+protocol-4 Generate request sent to that bundled helper exited 0 and returned
+one size-exact framed reply (530-byte payload, 534 bytes including the prefix).
+This is a local macOS build/smoke, not installed-package or Windows acceptance.
+Visible UI, installed-helper deployment, Windows runtime, remaining import
+callers, and final acceptance remain open.
 
 | W72 lane | Testcases / assertions | Result | SHA256 |
 |---|---:|---|---|
@@ -3908,3 +3911,4 @@ remaining import callers, and final acceptance remain open.
 | Plugin offset selector ASan | 9 / 19,120 | PASS | `d361bb543333245c89fd240dc42d300e7530090f3d665435012be89f0775c66b` |
 
 Reports are `/private/tmp/offset-W72-plugin-{import,offset}-{release,asan}.xml`.
+The qmake6 build and helper smoke used the same W72 source commit.
