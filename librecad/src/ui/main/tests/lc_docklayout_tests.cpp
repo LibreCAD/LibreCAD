@@ -15,6 +15,7 @@
 #include "lc_actiontestsupport.h"
 #include "lc_offsetcurve.h"
 #include "lc_offsetimportsession.h"
+#include "lc_settingguard.h"
 #include "lc_testsettingsisolation.h"
 #include "lc_workspacesmanager.h"
 #include "qc_applicationwindow.h"
@@ -77,6 +78,8 @@ struct LC_DockLayoutTestAccess {
     static int drawingCount(QC_ApplicationWindow& window) { return window.findChildren<QC_MDIWindow*>().size(); }
     static int pendingImports(QC_ApplicationWindow& window) { return window.m_pendingImports.size(); }
     static void cancelImports(QC_ApplicationWindow& window) { window.cancelPendingImports(); }
+    static bool newTemplate(QC_ApplicationWindow& window, const QString& file) { return window.newDrawingFromTemplate(file); }
+    static bool tracksOpenedFile(QC_ApplicationWindow& window, const QString& file) { return window.m_openedFiles.contains(file); }
     static LC_OffsetImportSession* pendingImport(QC_ApplicationWindow& window) {
         return window.m_pendingImports.isEmpty() ? nullptr : window.m_pendingImports.first().data();
     }
@@ -582,6 +585,104 @@ TEST_CASE("A malformed DXF is reported without publishing a GUI drawing", "[.gui
     while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 5000); settle(10); }
     CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
 }
+
+TEST_CASE("GUI templates publish validated untitled native drawings", "[.gui][dock-window][offset-template]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString root = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    QString fileName;
+    SECTION("binary DXF") { fileName = root + "dxf-binary-R2018-native-degree3.dxf"; }
+    SECTION("DWG") { fileName = root + "oda-dwg-R2018-native-degree3.dwg"; }
+    QFile source(fileName); REQUIRE(source.open(QIODevice::ReadOnly)); const auto original = source.readAll(); source.close();
+    REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, fileName));
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+    REQUIRE(LC_DockLayoutTestAccess::pendingImports(window) == 1);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(LC_DockLayoutTestAccess::drawingCount(window) == initial + 1);
+    auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); auto* graphic = mdi->getGraphic(); REQUIRE(graphic);
+    CHECK(graphic->getFilename().isEmpty()); CHECK(graphic->getFormatType() == RS2::FormatDXFRW);
+    CHECK_FALSE(graphic->getAutoSaveFileName().isEmpty()); CHECK(graphic->getAutoSaveFileName() != fileName);
+    CHECK_FALSE(LC_DockLayoutTestAccess::tracksOpenedFile(window, fileName));
+    bool native = false; for (const auto* entity : *graphic) native |= dynamic_cast<const LC_OffsetCurve*>(entity) != nullptr;
+    CHECK(native); REQUIRE(source.open(QIODevice::ReadOnly)); CHECK(source.readAll() == original);
+}
+
+TEST_CASE("Blank new drawings remain immediate", "[.gui][dock-window][offset-template]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, QString{}));
+    CHECK(LC_DockLayoutTestAccess::pendingImports(window) == 0);
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial + 1);
+    REQUIRE(window.getCurrentMDIWindow()); REQUIRE(window.getCurrentMDIWindow()->getGraphic());
+    CHECK(window.getCurrentMDIWindow()->getGraphic()->getFilename().isEmpty());
+}
+
+TEST_CASE("Default-template action stages its drawing before publication", "[.gui][dock-window][offset-template]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    lc::test::SettingGuard setting(RS_SETTINGS, "Paths", "Template"); setting.set(fileName);
+    window.slotFileNewFromDefaultTemplate();
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+    REQUIRE(LC_DockLayoutTestAccess::pendingImports(window) == 1);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(LC_DockLayoutTestAccess::drawingCount(window) == initial + 1);
+    auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); REQUIRE(mdi->getGraphic());
+    bool native = false; for (const auto* entity : *mdi->getGraphic()) native |= dynamic_cast<const LC_OffsetCurve*>(entity) != nullptr;
+    CHECK(native); CHECK(mdi->getGraphic()->getFilename().isEmpty());
+}
+
+TEST_CASE("Malformed GUI template reports failure without a new drawing", "[.gui][dock-window][offset-template]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = directory.filePath("broken.dxf"); QFile file(fileName);
+    REQUIRE(file.open(QIODevice::WriteOnly));
+    const QByteArray bytes = "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1032\n0\nENDSEC\n"
+        "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n"
+        "0\nLINE\n8\n0\n10\n0.0\n";
+    REQUIRE(file.write(bytes) == bytes.size()); file.close();
+    REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, fileName));
+    QElapsedTimer elapsed; elapsed.start(); QPointer<QMessageBox> box;
+    while (!box) {
+        REQUIRE(elapsed.elapsed() < 5000); settle(10);
+        for (auto* candidate : window.findChildren<QMessageBox*>()) if (candidate->isVisible()) { box = candidate; break; }
+    }
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial); box->done(QMessageBox::Ok);
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 5000); settle(10); }
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+}
+
+#ifdef Q_OS_UNIX
+TEST_CASE("Cancelling a GUI template reaps its active helper without publication", "[.gui][dock-window][offset-template][worker]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, fileName));
+    auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+    bool started = false; pid_t pid = 0; int suspended = -1;
+    LC_GuiImportTestAccess::onStarted(*session, [&](QProcess& process) {
+        pid = static_cast<pid_t>(process.processId()); suspended = ::kill(pid, SIGSTOP); started = true;
+    });
+    QElapsedTimer elapsed; elapsed.start();
+    while (!started) { REQUIRE(elapsed.elapsed() < 10000); settle(10); }
+    REQUIRE(pid > 0); REQUIRE(suspended == 0);
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+    LC_DockLayoutTestAccess::cancelImports(window);
+    errno = 0; CHECK(::kill(pid, 0) == -1); CHECK(errno == ESRCH);
+    settle(25); CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+    REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, fileName));
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(LC_DockLayoutTestAccess::drawingCount(window) == initial + 1);
+    auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); REQUIRE(mdi->getGraphic());
+    bool native = false; for (const auto* entity : *mdi->getGraphic()) native |= dynamic_cast<const LC_OffsetCurve*>(entity) != nullptr;
+    CHECK(native); CHECK(mdi->getGraphic()->getFilename().isEmpty());
+}
+#endif
 
 TEST_CASE("Legacy UTF-8 recovery has a separate File menu action", "[.gui][legacy-utf8-ui]") {
     DockFixture fixture;

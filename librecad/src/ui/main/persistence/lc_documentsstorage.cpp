@@ -226,20 +226,21 @@ bool LC_DocumentsStorage::loadDocumentFromTemplate(const RS_Document* document, 
  * Loads the given file into this graphic.
  */
 bool LC_DocumentsStorage::loadGraphicFromTemplate(RS_Graphic* graphic, const QString &templateFileName, const RS2::FormatType type) const {
-    const QString autosaveFilename = createAutoSaveFileName(QFileInfo(QDir::tempPath() + "/" + tr("Unnamed") + ".dxf"));
-
     // clean all:
     graphic->initForNewDocument();
 
     // import template file:
     const bool ret = RS_FileIO::instance()->fileImport(*graphic, templateFileName, type);
-    // a drawing made from a template is a new drawing, saved as DXF
-    graphic->setFormatType(RS2::FormatDXFRW);
-
-    const QFileInfo finfo;
-    graphic->markSaved(finfo.lastModified());
-    graphic->setAutosaveFileName(autosaveFilename);
+    finalizeTemplateGraphic(*graphic);
     return ret;
+}
+
+void LC_DocumentsStorage::finalizeTemplateGraphic(RS_Graphic& graphic) const {
+    const QString autosaveFilename = createAutoSaveFileName(QFileInfo(QDir::tempPath() + "/" + tr("Unnamed") + ".dxf"));
+    graphic.setFilename(QString{});
+    graphic.setFormatType(RS2::FormatDXFRW);
+    graphic.markSaved(QFileInfo().lastModified());
+    graphic.setAutosaveFileName(autosaveFilename);
 }
 
 bool LC_DocumentsStorage::loadGraphic(RS_Graphic* graphic, const QString &filename, const RS2::FormatType type,

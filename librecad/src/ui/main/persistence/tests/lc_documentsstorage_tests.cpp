@@ -280,6 +280,15 @@ TEST_CASE("Private graphic finalization preserves normal open bookkeeping", "[do
     CHECK_FALSE(graphic.takeImportGeometryMutated());
 }
 
+TEST_CASE("Private template finalization keeps an untitled DXF document", "[documentsstorage][import][offset][template]") {
+    ensureApp(); TestStorage storage; RS_Graphic graphic; graphic.initForNewDocument();
+    graphic.setFilename(QStringLiteral("previous.dwg")); graphic.setFormatType(RS2::FormatDWG2018); graphic.setModified(true);
+    storage.finalizeTemplateGraphic(graphic);
+    CHECK(graphic.getFilename().isEmpty()); CHECK(graphic.getFormatType() == RS2::FormatDXFRW);
+    CHECK_FALSE(graphic.getAutoSaveFileName().isEmpty()); CHECK_FALSE(graphic.getLastSaveTime().isValid());
+    CHECK_FALSE(graphic.isModified());
+}
+
 TEST_CASE("Legacy DXF recovery saves a corrected copy and protects its original",
           "[documentsstorage][save][legacyutf8]") {
     ensureApp();

@@ -47,6 +47,7 @@ public:
     bool loadDocument(const RS_Document *document, const QString &fileName) const;
     // Complete the normal open bookkeeping after a successful private import.
     void finalizeLoadedGraphic(RS_Graphic& graphic, const QString& filename) const;
+    void finalizeTemplateGraphic(RS_Graphic& graphic) const;
     bool loadDocumentFromTemplate(const RS_Document *document, const RS_GraphicView *graphicView, const QString &fileName, RS2::FormatType type) const;
     QString createAutoSaveFileName(const QFileInfo &fileInfo) const;
 protected:

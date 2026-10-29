@@ -1539,47 +1539,30 @@ QG_GraphicView* QC_ApplicationWindow::setupNewGraphicView(const QC_MDIWindow* w)
     return view;
 }
 
-bool QC_ApplicationWindow::newDrawingFromTemplate(const QString& fileName, QC_MDIWindow* w) {
-    bool ret = false;
-    constexpr RS2::FormatType type = RS2::FormatDXFRW;
-
+bool QC_ApplicationWindow::newDrawingFromTemplate(const QString& fileName) {
+    if (!fileName.isEmpty()) {
+        auto type = RS_FileIO::detectFormat(fileName);
+        if (!LC_OffsetImportSession::supportsType(type)) type = RS2::FormatDXFRW;
+        return beginStagedImport(fileName, type, RS2::DxfTextEncoding::Declared, true);
+    }
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-    w = createNewDrawingWindow(nullptr, "");
+    auto* w = createNewDrawingWindow(nullptr, "");
     qApp->processEvents(QEventLoop::AllEvents, 1000);
-
-    const bool noFile = fileName.isEmpty();
-    if (noFile) {
-        ret = true;
-    }
-    else {
-        // loads the template file in the new view:
-        ret = w->loadDocumentFromTemplate(fileName, type);
-    }
-
-    if (ret) {
-        updateCoordinateWidgetFormat();
-        doActivate(w);
-        doArrangeWindows(RS2::CurrentMode);
-        autoZoomAfterLoad(w->getGraphicView());
-        if (!noFile) {
-            const QString message = tr("New document from template: ") + fileName;
-            showStatusMessage(message, 2000);
-        }
-        else {
-            showStatusMessage(tr("New Drawing created."), 2000);
-        }
-        const auto graphic = w->getGraphic();
-        if (graphic != nullptr) {
-            if (noFile) {
-                // indicate that loading is completed so we could update default dim style from vars
-                graphic->onLoadingCompleted();
-            }
-            emit gridChanged(graphic->isGridOn());
-        }
-    }
-
+    completeNewDrawing(w, fileName);
     QApplication::restoreOverrideCursor();
-    return ret;
+    return true;
+}
+
+void QC_ApplicationWindow::completeNewDrawing(QC_MDIWindow* w, const QString& fileName) {
+    updateCoordinateWidgetFormat();
+    doActivate(w);
+    doArrangeWindows(RS2::CurrentMode);
+    autoZoomAfterLoad(w->getGraphicView());
+    showStatusMessage(fileName.isEmpty() ? tr("New Drawing created.") : tr("New document from template: ") + fileName, 2000);
+    if (const auto graphic = w->getGraphic()) {
+        if (fileName.isEmpty()) graphic->onLoadingCompleted();
+        emit gridChanged(graphic->isGridOn());
+    }
 }
 
 /**
@@ -1598,48 +1581,7 @@ void QC_ApplicationWindow::slotFileNewFromTemplate() {
         return;
     }
 
-    // Create new document window:
-    const QMdiSubWindow* old = m_activeMdiSubWindow;
-    QRect geo;
-    bool maximized = false;
-    if (old != nullptr) {
-        //save old geometry
-        geo = old->geometry();
-        maximized = old->isMaximized();
-    }
-    QC_MDIWindow* w = nullptr;
-    if (!newDrawingFromTemplate(fileName, w)) {
-        // error
-        const QString msg = tr("Cannot open the file\n%1\nPlease check the permissions.").arg(fileName);
-        m_commandWidget->appendHistory(msg);
-        QMessageBox::information(this, QMessageBox::tr("Warning"), msg, QMessageBox::Ok);
-        //file opening failed, clean up QC_MDIWindow and QMdiSubWindow
-        if (w != nullptr) {
-            slotFilePrintPreview(false); // fixme - sand  why it's there?
-            doClose(w); //force closing, without asking user for confirmation
-        }
-        QMdiSubWindow* activeWindow = m_mdiAreaCAD->currentSubWindow();
-
-        // activeMDIWindowChanged(w);
-        // m_activeMdiSubWindow = nullptr; //to allow reactivate the previous active
-
-        if (activeWindow != nullptr) {
-            //restore old geometry
-            m_mdiAreaCAD->setActiveSubWindow(activeWindow);
-            activeWindow->raise();
-            activeWindow->setFocus();
-            if (old == nullptr || maximized) {
-                activeWindow->showMaximized();
-            }
-            else {
-                activeWindow->setGeometry(geo);
-            }
-        }
-        RS_DEBUG->print("QC_ApplicationWindow::slotFileNewTemplate: load Template failed");
-    }
-    else {
-        RS_DEBUG->print("QC_ApplicationWindow::slotFileNewTemplate() OK");
-    }
+    newDrawingFromTemplate(fileName);
 }
 
 /**
@@ -1808,7 +1750,7 @@ void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatTy
 
     const auto actualType = type == RS2::FormatUnknown ? RS_FileIO::detectFormat(fileName) : type;
     if (LC_OffsetImportSession::supportsType(actualType)) {
-        beginStagedOpen(fileName, actualType, encoding);
+        beginStagedImport(fileName, actualType, encoding, false);
         return;
     }
 
@@ -1860,9 +1802,9 @@ void QC_ApplicationWindow::restoreActiveFileAfterPendingImports(const QString& f
     activateWindowWithFile(fileName);
 }
 
-void QC_ApplicationWindow::beginStagedOpen(const QString& fileName, RS2::FormatType type,
-                                            RS2::DxfTextEncoding encoding) {
-    if (m_openedFiles.contains(fileName))
+bool QC_ApplicationWindow::beginStagedImport(const QString& fileName, RS2::FormatType type,
+                                              RS2::DxfTextEncoding encoding, bool asTemplate) {
+    if (!asTemplate && m_openedFiles.contains(fileName))
         showStatusMessage(tr("Warning: File already opened : ") + fileName, 2000);
     auto* session = new LC_OffsetImportSession(this);
     m_pendingImports.append(session);
@@ -1887,7 +1829,7 @@ void QC_ApplicationWindow::beginStagedOpen(const QString& fileName, RS2::FormatT
             QObject::connect(pending, &QObject::destroyed, box, &QDialog::reject);
             box->open();
         },
-        [window, pending, fileName, encoding](LC_OffsetImportSession::Outcome outcome) {
+        [window, pending, fileName, encoding, asTemplate](LC_OffsetImportSession::Outcome outcome) {
             if (!window || !pending) return;
             window->m_pendingImports.removeAll(pending);
             pending->deleteLater();
@@ -1902,17 +1844,21 @@ void QC_ApplicationWindow::beginStagedOpen(const QString& fileName, RS2::FormatT
             }
             QPointer<QC_MDIWindow> mdi;
             try {
-                LC_DocumentsStorage{}.finalizeLoadedGraphic(*outcome.graphic, fileName);
+                LC_DocumentsStorage storage;
+                if (asTemplate) storage.finalizeTemplateGraphic(*outcome.graphic);
+                else storage.finalizeLoadedGraphic(*outcome.graphic, fileName);
                 if (!window) return;
-                mdi = window->createOwnedDrawingWindow(std::move(outcome.graphic), fileName);
+                mdi = window->createOwnedDrawingWindow(std::move(outcome.graphic), asTemplate ? QString{} : fileName);
                 if (!window || !mdi) return;
-                mdi->initializeLoadedDocument(fileName);
+                if (asTemplate) mdi->getGraphicView()->zoomAuto(false);
+                else mdi->initializeLoadedDocument(fileName);
                 if (!window || !mdi) return;
-                window->completeOpenedDrawing(mdi, fileName, encoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8);
+                if (asTemplate) window->completeNewDrawing(mdi, fileName);
+                else window->completeOpenedDrawing(mdi, fileName, encoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8);
                 if (window && !window->m_restoreActiveFile.isEmpty())
                     window->activateWindowWithFile(window->m_restoreActiveFile);
                 if (window && outcome.downgraded)
-                    window->m_commandWidget->appendHistory(QObject::tr("%1 offset curves could not be restored as editable and were opened as ordinary geometry.").arg(qulonglong(outcome.downgraded)));
+                    window->m_commandWidget->appendHistory(QObject::tr("%1 offset curves could not be restored as editable and were retained as ordinary geometry.").arg(qulonglong(outcome.downgraded)));
             } catch (...) {
                 if (window && mdi) window->doClose(mdi);
                 if (window) window->m_commandWidget->appendHistory(QObject::tr("Could not complete the imported drawing."));
@@ -1924,6 +1870,7 @@ void QC_ApplicationWindow::beginStagedOpen(const QString& fileName, RS2::FormatT
         delete session;
         m_commandWidget->appendHistory(tr("Could not start importing '%1'.").arg(fileName));
     }
+    return started;
 }
 
 void QC_ApplicationWindow::completeOpenedDrawing(QC_MDIWindow* w, const QString& fileName, bool legacyUtf8) {

@@ -400,12 +400,13 @@ protected:
     void updateCoordinateWidgetFormat() const;
     void updateWidgetsAsDocumentLoaded(const QC_MDIWindow* w);
     void completeOpenedDrawing(QC_MDIWindow* w, const QString& fileName, bool legacyUtf8);
-    void beginStagedOpen(const QString& fileName, RS2::FormatType type, RS2::DxfTextEncoding encoding);
+    bool beginStagedImport(const QString& fileName, RS2::FormatType type, RS2::DxfTextEncoding encoding, bool asTemplate);
     void cancelPendingImports();
     QC_MDIWindow* createDrawingWindow(RS_Document* doc, const QString& expectedFileName,
                                       std::unique_ptr<RS_Graphic> owned);
     void autoZoomAfterLoad(const QG_GraphicView* graphicView);
-    bool newDrawingFromTemplate(const QString& fileName, QC_MDIWindow* w = nullptr);
+    bool newDrawingFromTemplate(const QString& fileName);
+    void completeNewDrawing(QC_MDIWindow* w, const QString& fileName);
     void doActivate(QMdiSubWindow* w) override;
     void enableFileActions(const QC_MDIWindow* w);
     void enableFileActions();
