@@ -15,6 +15,7 @@
 #define LIBDXFRW_H
 
 #include <functional>
+#include <istream>
 #include <list>
 #include <map>
 #include <memory>
@@ -105,6 +106,9 @@ public:
      * @return true for success
      */
     [[nodiscard]] bool read(DRW_Interface *interface_, bool ext);
+    /// Read from the current position of a caller-owned, seekable binary stream.
+    /// The stream must remain valid for the duration of this synchronous call.
+    [[nodiscard]] bool readStream(DRW_Interface *interface_, bool ext, std::istream& input);
     [[nodiscard]] bool readAscii(DRW_Interface *interface_, bool ext, std::string& content);
     /** Select before read()/readAscii(); the choice applies to each new reader.
      * Recovery interprets only known pre-R2007 default/ANSI_1252 DXF input as
@@ -386,6 +390,8 @@ public:
     DRW_WritingContext* getWritingContext() { return &m_writingContext; }
 
 private:
+    friend struct LC_DxfReadProbeTestAccess;
+    void resetReadSession(DRW_Interface *interface_, bool ext);
     bool writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
                    DRW_StagedFileVerifier verifier, void* context);
     enum class DxfEntityBoundary {
@@ -651,6 +657,7 @@ private:
     bool m_writeError {false};
     std::string fileName;
     std::string codePage;
+    std::function<void()> m_testAfterProbe;
     bool binFile {false};
     std::unique_ptr<dxfReader> reader;
     DRW::DxfTextEncoding m_dxfTextEncoding {DRW::DxfTextEncoding::Declared};

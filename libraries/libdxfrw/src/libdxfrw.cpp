@@ -1182,8 +1182,7 @@ void dxfRW::setDebug(DRW::DebugLevel lvl){
     }
 }
 
-bool dxfRW::read(DRW_Interface *interface_, bool ext){
-    drw_assert(fileName.empty() == false);
+void dxfRW::resetReadSession(DRW_Interface *interface_, bool ext) {
     version = DRW::UNKNOWNV;
     m_sourceVersion = DRW::UNKNOWNV;
     error = DRW::BAD_NONE;
@@ -1194,16 +1193,31 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
     m_readingContext.blockRecordMap.clear();
     m_readRawHandles.clear();
     applyExt = ext;
-    std::ifstream filestr;
+    binFile = false;
+    iface = interface_;
+    reader.reset();
+}
+
+bool dxfRW::read(DRW_Interface *interface_, bool ext){
+    drw_assert(fileName.empty() == false);
     if (nullptr == interface_) {
         return setError(DRW::BAD_UNKNOWN);
     }
+    resetReadSession(interface_, ext);
     DRW_DBG("dxfRW::read 1def\n");
-    filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
+    std::ifstream filestr(fileName.c_str(), std::ios_base::in | std::ios::binary);
     if (!filestr.is_open()
         || !filestr.good()) {
         return setError(DRW::BAD_OPEN);
     }
+    return readStream(interface_, ext, filestr);
+}
+
+bool dxfRW::readStream(DRW_Interface *interface_, bool ext, std::istream& input) {
+    if (nullptr == interface_) return setError(DRW::BAD_UNKNOWN);
+    resetReadSession(interface_, ext);
+    const auto start = input.tellg();
+    if (start == std::streampos(-1)) return setError(DRW::BAD_OPEN);
 
     char line[24]{};
     char line2[22] = "AutoCAD Binary DXF\r\n";
@@ -1211,46 +1225,48 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
     line2[21] = '\0';
     // Read the 22-byte sentinel plus the first 2 bytes of the group stream so
     // the binary sub-format can be detected before any group is parsed.
-    filestr.read (line, 24);
-    filestr.close();
-    iface = interface_;
+    input.read(line, sizeof(line));
+    const auto probed = input.gcount();
+    if (input.bad()) return setError(DRW::BAD_OPEN);
+    if (m_testAfterProbe) {
+        auto hook = std::move(m_testAfterProbe);
+        m_testAfterProbe = {};
+        hook();
+    }
     DRW_DBG("dxfRW::read 2\n");
     // `line` is filled by an unterminated read; compare the sentinel by exact
     // length to avoid strcmp reading past the buffer when the sentinel
     // bytes don't include an embedded NUL.
-    if (std::memcmp(line, line2, 22) == 0) {
-        filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
-        if (!filestr.is_open() || !filestr.good())
-            return setError(DRW::BAD_OPEN);
-        binFile = true;
-        //skip sentinel
-        filestr.seekg (22, std::ios::beg);
-        if (!filestr.good())
-            return setError(DRW::BAD_OPEN);
+    binFile = probed >= 22 && std::memcmp(line, line2, 22) == 0;
+    input.clear();
+    input.seekg(start);
+    if (binFile && input.good()) input.seekg(22, std::ios::cur);
+    if (!input.good()) return setError(DRW::BAD_OPEN);
+    if (binFile) {
         // R12/AC1009 binary uses 1-byte group codes; R13+ uses 2-byte LE. The
         // first group is always code 0 (SECTION): R12 => bytes 00 'S' (byte[1]
         // != 0); R13+ => bytes 00 00. So a non-zero second byte selects the
         // 1-byte reader.
         if (static_cast<unsigned char>(line[23]) != 0)
-            reader = std::make_unique<dxfReaderBinaryR12>(&filestr);
+            reader = std::make_unique<dxfReaderBinaryR12>(&input);
         else
-            reader = std::make_unique<dxfReaderBinary>(&filestr);
+            reader = std::make_unique<dxfReaderBinary>(&input);
         DRW_DBG("dxfRW::read binary file\n");
     } else {
-        binFile = false;
-        filestr.open (fileName.c_str(), std::ios_base::in);
-        if (!filestr.is_open() || !filestr.good())
-            return setError(DRW::BAD_OPEN);
-        reader = std::make_unique<dxfReaderAscii>(&filestr);
+        reader = std::make_unique<dxfReaderAscii>(&input);
     }
 
     reader->setDxfTextEncoding(m_dxfTextEncoding);
-    bool isOk {processDxf()};
-    filestr.close();
-    version = (DRW::Version) reader->getVersion();
-    m_sourceVersion = reader->getSourceVersion();
-    reader.reset();
-    return isOk;
+    try {
+        bool isOk {processDxf()};
+        version = (DRW::Version) reader->getVersion();
+        m_sourceVersion = reader->getSourceVersion();
+        reader.reset();
+        return isOk;
+    } catch (...) {
+        reader.reset();
+        throw;
+    }
 }
 
 
@@ -1258,17 +1274,7 @@ bool dxfRW::readAscii(DRW_Interface *interface_, bool ext, std::string& content)
     if (nullptr == interface_) {
         return setError(DRW::BAD_UNKNOWN);
     }
-    version = DRW::UNKNOWNV;
-    m_sourceVersion = DRW::UNKNOWNV;
-    error = DRW::BAD_NONE;
-    nextentity.clear();
-    m_hasPendingEntityBoundary = false;
-    m_readingBlockEntities = false;
-    m_readingContext.lineTypeNameMap.clear();
-    m_readingContext.blockRecordMap.clear();
-    m_readRawHandles.clear();
-    applyExt = ext;
-    iface = interface_;
+    resetReadSession(interface_, ext);
     std::istringstream strstream(content);
     reader = std::make_unique<dxfReaderAscii>(&strstream);
     reader->setDxfTextEncoding(m_dxfTextEncoding);

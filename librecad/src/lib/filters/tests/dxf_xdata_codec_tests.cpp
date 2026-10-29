@@ -29,6 +29,12 @@
 #include "lc_drwnullinterface.h"
 #include "libdxfrw.h"
 
+struct LC_DxfReadProbeTestAccess {
+    static void afterProbe(dxfRW& reader, std::function<void()> hook) {
+        reader.m_testAfterProbe = std::move(hook);
+    }
+};
+
 namespace {
 using Tags = std::vector<std::shared_ptr<DRW_Variant>>;
 
@@ -526,6 +532,82 @@ TEST_CASE("Actual DXF ASCII and binary writers round trip foreign and native-sch
             CHECK(bytes.find("owned^A^I^ J^ ^  caf") != std::string::npos);
         }
     }
+}
+
+#ifndef _WIN32
+TEST_CASE("DXF detection and parsing use the same opened file", "[libdxfrw][read][source-identity]") {
+    OutputDirectory directory;
+    for (const bool originalBinary : {false, true}) for (const bool replacementBinary : {false, true}) {
+        CAPTURE(originalBinary, replacementBinary);
+        const auto sourcePath = directory.path / "source.dxf";
+        const auto replacementPath = directory.path / "replacement.dxf";
+        const auto savedPath = directory.path / "opened-original.dxf";
+        std::error_code error;
+        std::filesystem::remove(sourcePath, error); std::filesystem::remove(replacementPath, error);
+        std::filesystem::remove(savedPath, error);
+        const auto writeFile = [&](const std::filesystem::path& path, const char* layer, bool binary) {
+            FileInterface source; source.layerName = layer;
+            dxfRW writer(path.string().c_str()); source.writer = &writer;
+            REQUIRE(writer.write(&source, DRW::AC1032, binary)); REQUIRE(source.wroteLine);
+        };
+        writeFile(sourcePath, "ORIGINAL", originalBinary);
+        writeFile(replacementPath, "REPLACEMENT", replacementBinary);
+        dxfRW reader(sourcePath.string().c_str()); FileInterface captured; bool swapped = false;
+        LC_DxfReadProbeTestAccess::afterProbe(reader, [&] {
+            std::filesystem::rename(sourcePath, savedPath, error); REQUIRE_FALSE(error);
+            std::filesystem::rename(replacementPath, sourcePath, error); REQUIRE_FALSE(error);
+            swapped = true;
+        });
+        REQUIRE(reader.read(&captured, false)); REQUIRE(swapped);
+        REQUIRE(captured.lines.size() == 1); CHECK(captured.lines.front().layer == "ORIGINAL");
+        CHECK(reader.isBinary() == originalBinary);
+    }
+}
+#endif
+
+TEST_CASE("DXF stream reader accepts ASCII and binary at a nonzero position", "[libdxfrw][read][stream]") {
+    OutputDirectory directory;
+    dxfRW reader("");
+    for (const auto version : {DRW::AC1009, DRW::AC1032}) for (const bool binary : {false, true}) {
+        CAPTURE(static_cast<int>(version), binary);
+        const auto path = directory.path / "stream.dxf";
+        FileInterface source; source.layerName = "STREAM_LAYER";
+        dxfRW writer(path.string().c_str()); source.writer = &writer;
+        REQUIRE(writer.write(&source, version, binary)); REQUIRE(source.wroteLine);
+        std::ifstream file(path, std::ios::binary); REQUIRE(file.good());
+        const std::string bytes{std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>()};
+        const std::string prefix("prefix\0", 7);
+        std::istringstream input(prefix + bytes, std::ios::in | std::ios::binary);
+        input.seekg(static_cast<std::streamoff>(prefix.size())); REQUIRE(input.good());
+        FileInterface captured;
+        REQUIRE(reader.readStream(&captured, false, input));
+        REQUIRE(captured.lines.size() == 1); CHECK(captured.lines.front().layer == "STREAM_LAYER");
+        CHECK(reader.isBinary() == binary); CHECK(reader.getSourceVersion() == version);
+    }
+}
+
+TEST_CASE("DXF stream reader rejects nonseekable and invalid input", "[libdxfrw][read][stream]") {
+    struct ForwardOnly final : std::stringbuf {
+        explicit ForwardOnly(const std::string& data) : std::stringbuf(data) {}
+        pos_type seekoff(off_type, std::ios_base::seekdir, std::ios_base::openmode) override { return pos_type(off_type(-1)); }
+        pos_type seekpos(pos_type, std::ios_base::openmode) override { return pos_type(off_type(-1)); }
+    } buffer("0\nEOF\n");
+    std::istream input(&buffer); dxfRW reader(""); FileInterface captured;
+    CHECK_FALSE(reader.readStream(&captured, false, input)); CHECK(reader.getError() == DRW::BAD_OPEN);
+    CHECK(captured.lines.empty());
+    std::istringstream empty;
+    CHECK_FALSE(reader.readStream(&captured, false, empty)); CHECK(captured.lines.empty());
+    std::istringstream valid("0\nEOF\n");
+    CHECK_FALSE(reader.readStream(nullptr, false, valid)); CHECK(reader.getError() == DRW::BAD_UNKNOWN);
+}
+
+TEST_CASE("DXF stream reader preserves CRLF and newline-less ASCII handling", "[libdxfrw][read][stream]") {
+    const std::string text = "0\r\nSECTION\r\n2\r\nENTITIES\r\n0\r\nLINE\r\n8\r\n0\r\n"
+        "10\r\n1.0\r\n20\r\n2.0\r\n11\r\n3.0\r\n21\r\n4.0\r\n0\r\nENDSEC\r\n0\r\nEOF";
+    std::istringstream input(text, std::ios::in | std::ios::binary); dxfRW reader(""); FileInterface captured;
+    REQUIRE(reader.readStream(&captured, false, input));
+    REQUIRE(captured.lines.size() == 1); CHECK(captured.lines.front().basePoint.x == 1.0);
+    CHECK(captured.lines.front().secPoint.x == 3.0); CHECK_FALSE(reader.isBinary());
 }
 
 TEST_CASE("Actual DXF XDATA symbol references resolve to decoded APPID and layer table identities",
