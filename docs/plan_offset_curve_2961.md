@@ -4006,3 +4006,29 @@ Reports are `/private/tmp/offset-W75-{console-import,import-identity}-release.xm
 No ASan or Windows result is claimed for this slice. The PR workflow must pass
 before W44 Windows source-identity parity can be considered runtime-qualified;
 other visible-GUI, installed-helper and final acceptance gates remain open.
+
+## 37. W76 MSVC Property-Queue Portability Fix
+
+Fixed the prior Windows CI failure in product commit
+`fef374fb14a8cbe0efcbb3ad3838d622c4bf2b4c`. The MSVC log for earlier PR run
+`40742822290` showed C2607 at the assertion that `std::map` move construction
+is nonthrowing. The publication path now swaps nodes into an empty local map,
+which preserves candidate addresses and the existing refusal rollback while
+relying only on the map's nonthrowing `swap` guarantee already asserted by the
+code. This avoids depending on standard-library-specific conditional move
+traits.
+
+On macOS CMake Release, the changed library and
+`librecad_offset_properties_sheet_tests` build successfully. The full
+`[gui][properties][offsetcurve]` selector passes 53 JUnit cases / 9,367
+assertions with zero failures, errors, or skips.
+
+| W76 lane | JUnit cases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Property sheet Release | 53 / 9,367 | PASS | `56e317250d63809cd11d9c7a0966ed92d5bc318a64021cac5aec355ad6c40559` |
+
+Report: `/private/tmp/offset-W76-properties-release.xml`. This host cannot
+reproduce MSVC's move-trait result; the exact failing static assertion is
+removed, but Windows x64/ARM64 compile and runtime evidence remains pending the
+updated PR workflow. W75 identity-lane and other final acceptance gates remain
+open.
