@@ -3912,3 +3912,29 @@ callers, and final acceptance remain open.
 
 Reports are `/private/tmp/offset-W72-plugin-{import,offset}-{release,asan}.xml`.
 The qmake6 build and helper smoke used the same W72 source commit.
+
+## 34. W73 Current-Head Cache and Creation Requalification
+
+At PR head `f5d9d9e48`, rebuilt the real helper-process, worker-client, and
+creation-action test targets from the current source in CMake Release and ASan
+configurations. The fresh helper-process lane exercises portable cached values
+across child lifetimes and native-adoption checks; the client lane covers
+joined-cache merge/revocation and action-wide eviction; the creation lane covers
+the complete worker-routed Modify Offset preview/commit/repeat path. All six
+runs pass with zero failures, errors, or skips:
+
+| W73 lane | JUnit cases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Helper process Release | 1 / 212 | PASS | `7e0a8163f678268418a9896925bded0e6035714b262e7206ef2a4ca27b975557` |
+| Helper process ASan | 1 / 275 | PASS | `f3f206b22c0ee5f3821b3e7a4befb5ee70fb1828b158c8b7a58df570cc4e5b43` |
+| Worker client Release | 2 / 699 | PASS | `e8ea40ac2486cdbf163b798dcaae09fc3f284e989345bd19b4e9237d387e2325` |
+| Worker client ASan | 2 / 1005 | PASS | `75146490cbfc4613c0cf17776b776fc541ee72e6ab4f2a50df3c8925235667ed` |
+| Creation/repeat Release | 13 / 318 | PASS | `d47068050770b70413c3b9f69edbebb8662c8e1da8f4908f93cfd6285b8ac534` |
+| Creation/repeat ASan | 13 / 318 | PASS | `4279071a77d07f9d0396702fbc89476d7d465819ce23b34ff4461a2fdc67d156` |
+
+Reports are `/private/tmp/offset-W73-{cache-process,cache-client,creation}-{release,asan}.xml`.
+ASan used `detect_leaks=0`; these runs are not leak validation. This is current-
+head macOS offscreen requalification, not Windows runtime, visible-GUI,
+installed-helper, or final acceptance. No product gap was found, so W73 changes
+the evidence checkpoint only; W16-W19 remain implemented and the broader W0-W2
+and platform gates remain open.
