@@ -3742,3 +3742,30 @@ remains the implementation checkpoint; W67b is current-source requalification.
 |---|---|
 | `/private/tmp/offset-W67-creation-action-release.xml` | `311e2fcfb0b8cd3d4406e4621dccb74b2a83aa5a5b0ea96ee398dc9c7b526dc6` |
 | `/private/tmp/offset-W67-creation-action-asan.xml` | `c43baacbc8b6409c81cf145c6dcdb12931c73ce65bc15a08a67961a1b5ba17dc` |
+
+## 28. W68 Library Block Insertion Staged Import Routing
+
+DXF/DWG files selected through the block-library insertion action now use
+`LC_OffsetImportSession` before preview or commit. The unpublished imported
+graphic is action-owned, its source stamp is checked again before adoption,
+and the previous import session is cancelled when the selection changes. Mouse
+preview and coordinate commit remain disabled until import completes. Other
+library formats retain the prior synchronous loader. The focused offscreen test
+confirms pending imports are not published early and the inserted block retains
+its native `EntityOffsetCurve`.
+
+The complete offscreen creation-action target passes 133 JUnit cases and
+90,232 assertions in both Release and ASan, with zero errors, failures or skips.
+The focused library-insert case also passes in both configurations. ASan ran
+with `detect_leaks=0`; this is not leak validation. This is local test-harness
+coverage, not visible desktop, installed-package, or Windows runtime validation.
+The library thumbnail renderer and synchronous plugin import API remain separate
+call paths; CLI, hatch-pattern, and preview-only import callers also need explicit
+classification before claiming all GUI/import routing is complete.
+
+| W68 artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W68-library-insert-release.xml` | `6810c430eafea142c8bf233f5c552af202885ca30e059868fd7be792012f2717` |
+| `/private/tmp/offset-W68-library-insert-asan.xml` | `2420dfdb67968fbb5f1d6c78c95afc8ae431dc986036bceccf2d09c727bf5595` |
+| `/private/tmp/offset-W68-creation-release.xml` | `a23fcc834b33969f4bd200d85137ed3971abbd4140ce2fc4def33d433e49c6b5` |
+| `/private/tmp/offset-W68-creation-asan.xml` | `09d209d31a5fac1d54891fb643cf1648be346cbe95cc20da0fcc4caafc618804` |
