@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117/W126 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan, and W124 requalifies local trim file/conversion/undo-reopen coverage in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117/W126/W127 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan, and W124 requalifies local trim file/conversion/undo-reopen coverage in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -5376,3 +5376,27 @@ remote platform/final W0-W2 acceptance.
 Logs: `/private/tmp/offset-W126-preview-creation-{release,asan}.log`,
 `/private/tmp/offset-W126-preview-client-{release,asan}.log`, and
 `/private/tmp/offset-W126-preview-process-{release,asan}.log`.
+
+## 88. W127 Creation/Repeat GUI Routing Requalification
+
+At product source revision `307cc4c88`, reran the dedicated
+`[creation-worker]` action selector offscreen in Release and ASan. The 11 cases
+/ 318 assertions in each configuration cover cache-hit preview followed by
+one-cycle native publication, repeated native definitions and zero-sum stored
+cache fallback, mixed-source ordering/attributes, stale-input refusal, cancel
+and retry, preview supersession and timeout recovery, action/document lifetime,
+two-click ellipse creation, and provenance policy. Source review confirmed the
+GUI path captures bounded owned inputs, submits the worker, checks the live
+action/document/view/selection/options/viewport seal before publication, and
+commits only prepared results. No routing gap was demonstrated. ASan used
+`detect_leaks=0`; this is not leak validation. Local offscreen coverage does not
+close visible user interaction, packaged-helper behavior, remote platforms, or
+final W0-W2 acceptance.
+
+| W127 lane | Result | SHA256 |
+|---|---|---|
+| Creation/repeat GUI action selector, Release | PASS; 11 cases / 318 assertions | `bee0ace13e80d6d7110a38ae58d664b3d5bac54ef1c0cfd12dd19b88ce7d223b` |
+| Creation/repeat GUI action selector, ASan | PASS; 11 cases / 318 assertions | `fac8abcdbe645d40af2be6c7d07ebcc118c5ec36840da30aa19d6e96af42e2a6` |
+
+Logs: `/private/tmp/offset-W127-creation-release.log` and
+`/private/tmp/offset-W127-creation-asan.log`.
