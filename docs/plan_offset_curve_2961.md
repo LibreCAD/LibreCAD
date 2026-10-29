@@ -24,20 +24,19 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W168, superseding W167 below): S0 source/target reconciliation
-and the local A-core through C-check audit are closed. Direct synchronous
-`fileImport`, stream, and byte filter imports validate offset carriers through
-the worker in the current source. W158 requalifies the qmake6 app/helper bundle;
-W159 requalifies preview-cache portability and creation/repeat routing on the
-current source in Release and ASan; W160 requalifies the staged installed-helper
-path in Release and ASan. W161 triages all 13 direct ACadSharp failures as its
-known AC1021 uncompressed-metadata reader limitation; ODA re-saves those exact
-files and ACadSharp reads all 13 converted files with the expected entity/spline
-counts. LibreDWG 0.14 also reads the 13 original AC1021 files directly; its JSON
-retains all eight spline entities and their owned schema marker. Direct AC1021
-ACadSharp acceptance remains unqualified. W0-W2,
-E/U/G/F/O/T and R remain open for cross-platform, package, visible UI,
-external-CAD, and final integration acceptance.
+Current status (W169, superseding W168 below): implementation slices A-core
+through T3 and the local A-core through C-check audit are closed. Direct
+synchronous `fileImport`, stream, and byte filter imports validate offset
+carriers through the worker. W158-W160 requalify qmake6 and staged installed
+helper paths, preview-cache portability, and creation/repeat routing in Release
+and ASan. W161-W165 record AC1021 reader triage and AC1032 independent-reader
+checks; direct AC1021 ACadSharp acceptance remains unqualified because its
+reader throws before entity decoding. W168 fixes Windows worker/wire/import
+failures; W169 freshly builds the complete app with qmake6 and CMake, exercises
+the bundled helper, and passes the full local Node validation suite (412/412).
+Current-head platform/format CI is still running. W0-W2 and E/U/G/F/O/T/R remain
+open for Windows/Linux runtime, package/deployment, full visible UI, external-CAD
+acceptance, and final integration.
 W164 independently parsed the actual W163 AC1032 DXF output with ACadSharp,
 preserving both owned markers and valid spline knot layouts. On the retained
 W134 DWG matrix outputs, LibreDWG read 24/24; ACadSharp read 20/24, with the four
@@ -59,14 +58,16 @@ W168 remediates the current Windows worker/wire/import CI failures: bounded raw
 CBOR scanning replaces platform-divergent stream traversal, and the helper uses
 binary native handles for redirected pipes. The local macOS CMake selection
 passes 9/9; the pushed Windows x64/ARM64 rerun is still required.
-Status: **W0-W2 is partially implemented; worker, geometry, creation/repeat, trim,
-GUI open/template, and DXF/DWG paths have scoped local qualifications recorded in
-W1-W160. W156 closes local routing for the public synchronous file/stream/byte
-filter APIs. Current-head worker CI, Windows failure coverage, deployed-package
-checks, visible UI, external-CAD interoperability, and final integration remain
-open.**
-Latest recorded slice: W168 records Windows worker/wire CI remediation and local
-validation; W165 records ODA conversion and independent readers; W164
+Status: **The planned product implementation is present; remaining work is
+acceptance, not an identified feature-code gap.** Worker, geometry,
+creation/repeat, trim, GUI open/template, and DXF/DWG paths have scoped local
+qualifications recorded in W1-W169. W156 closes local routing for the public
+synchronous file/stream/byte filter APIs. Exact-head platform/format CI,
+deployed-package checks, full visible UI, external-CAD interoperability, and
+final W0-W2/R integration remain open.
+Latest recorded slice: W169 records fresh qmake6/CMake app builds, bundled helper
+exchange, and full local validation; W168 records Windows worker/wire CI
+remediation; W165 records ODA conversion and independent readers; W164
 records independent ACadSharp/LibreDWG reads; W163
 records a focused macOS qmake6 ellipse UI/save/reopen check; W162 records direct
 LibreDWG semantic inspection of the
@@ -6615,21 +6616,41 @@ used token `[7,11,13,17]` and the full typed definition/run-limit layout. The
 helper exited0; decoding its response confirmed protocol4, the exact token,
 operation0, failure0, a 15-item typed payload and a 530-byte frame. A separate
 empty-array request was rejected with exit2 and `invalid request`, as expected.
-This is a local bundled-helper request/response smoke, not a signed/deployed
-bundle on another machine or a GUI interaction receipt.
+The isolated CMake Debug tree `/private/tmp/librecad-offset-2961-ci` also built
+the complete `librecad` app target (161 build steps); an incremental rebuild
+returned exit0 with `ninja: no work to do.` The resulting app binary was hashed.
+This is local build and bundled-helper evidence, not a signed/deployed bundle on
+another machine or a GUI interaction receipt.
 
 | W169 artifact | SHA256 / result |
 |---|---|
 | qmake6 application binary | `/private/tmp/offset-2961-qmake-final-9d983e/LibreCAD.app/Contents/MacOS/LibreCAD` / `ead4a2a24abea643fead31136b0fedc49ce99d610406bd14cb50ee437bf893a1` |
 | qmake6 worker binary | `/private/tmp/offset-2961-qmake-final-9d983e/LibreCAD.app/Contents/MacOS/LibreCADOffsetWorker` / `f468b857359de8b76e86357b8efda545d114b538c28928ef2983cf1739ea767c` |
+| CMake Debug application binary | `/private/tmp/librecad-offset-2961-ci/LibreCAD.app/Contents/MacOS/LibreCAD` / `c66fc9a46f29be6a46207a72cb6b696e16eb8e1f5912bff0c3b4c7763df9371c` |
 | Valid helper exchange | protocol4; op0; failure0; 15 payload items; frame530 bytes |
 | Empty-array negative control | helper exit2; `invalid request`; no response frame |
+| Full validation-script suite | PASS; `node --test scripts/offset-curve-validation/test-*.js`; 412/412, 0 failures, 195.2s |
+| Roadmap parser focused suite | PASS; 5/5; `git diff --check` clean |
+| Native CTest worker/import/format selector | PASS; 9/9, 81.05s (`offset_worker_wire`, process/client/fault/timeout/ordinary, console import, source identity, DXF fast) |
 
-At checkpoint, PR workflow `40953169555` is still in progress: the Ubuntu
-bounded build step passed and its DWG/DXF and relocated-helper execution is
-running; Windows x64 and ARM64 are compiling. PR Headless OFF and ON checks
-passed. Do not close W168/current-head CI until both Windows architectures and
-the bounded format/helper lanes finish successfully.
+The earlier workflow `40953169555` tested the same product source before a
+documentation-only commit and was superseded by branch concurrency. Its
+cancelled jobs are not acceptance results. Headless OFF and ON passed on the
+exact current head in `40957917654`. Do not close W168/current-head CI until the
+current run below completes successfully.
+
+The plan-only follow-up `efe1a1bb007ca1977ceb2681a72c6db38eaf4ca4` triggered
+exact-head workflow `40957917479`. At this checkpoint its Ubuntu bounded-lane
+build is in progress; Windows x64 has completed dependency setup and is
+configuring/building; ARM64 has completed Qt and Boost setup and is
+configuring/building. No failure has surfaced. Exact-head Headless OFF and ON both passed
+(`40957917654`). The earlier `40953169555` run tested the identical product
+source before this documentation-only commit; its ARM job was
+superseded/cancelled by branch concurrency and is not current-head acceptance.
+CodeQL `40957917558` and Pixi cross-platform build checks `40957917529` remain
+in progress without surfaced failures. `40957909720` is a duplicate Pixi run
+triggered by branch activity; use the exact-head run IDs above for acceptance.
+Use `40957917479` for the next format/helper CI checkpoint.
 
 The desktop became unlocked, but CUA still returned
 `Computer Use was not approved to use LibreCAD-PR3193-visible` after the user
