@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W96 requalifies A-core and the full offset selector, W97 requalifies B occurrence/terminal identity, and W98 requalifies C-search without new findings; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, C-check, public low-level storage compatibility, cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, and W101 the full offset selector after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, C-check, public low-level storage compatibility, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -309,7 +309,7 @@ candidate except the explicitly proposed native-worker tags.
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66 focused cache-budget Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][cache-budget-accounting]` |
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; W97 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | geometry terminal/occurrence case inventory |
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; W98 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
-| C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a`; W100 charges the final proof-publication slot before allocation and verifies injected failure in Release/ASan; broader audit/retest remains | `[lc-offsetcurve][cache-topology-chain]`, standalone cache-check allocation-fault target |
+| C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a`; W100 charges the final proof-publication slot before allocation and verifies injected failure in Release/ASan; W101 current-source full-selector requalification; broader site audit remains | `[lc-offsetcurve][cache-topology-chain]`, standalone cache-check allocation-fault target |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; finish caller/fallback/import ownership freeze before routing | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; full app/deployed-package gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
 | W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit and scoped action faults and geometry-entry timeout receipts qualified locally; W81 adds Linux/Windows CMake worker CI; W82 removes PR path filtering and W83 adds scoped feature-branch push triggering; current cross-platform run, import and final gates remain open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
@@ -4753,3 +4753,24 @@ Reports: `/private/tmp/offset-W100-cache-check-release.xml` and
 tests the output-publication accounting gap, but it does not close the full
 C-check inventory, the broader A-C allocation/failure audit, or final worker
 acceptance.
+
+## 63. W101 Full Offset Selector After Cache-Checker Fix
+
+Ran the full `[lc-offsetcurve]` selector against product commit `fccd107af`,
+including the W100 final publication-debit change. Both test binaries link
+after the updated geometry object. Each run completed all 1,354 JUnit entries
+with zero errors and failures. The single retained skip is the real
+legacy-DXF-exporter dispatch case because `RS_FilterDXF`, `dl_dxf.h`, and
+`FormatDXFOLD` are absent in this build; no surrogate writer is used. The
+selectors cover geometry, budgets, worker/UI, trim, persistence, hostile input
+and entity coverage; this broad pass does not replace the remaining manual,
+cross-platform, package or complete A-C static audit gates.
+
+| W101 lane | JUnit entries / assertions | Result | SHA256 |
+|---|---:|---|---|
+| `[lc-offsetcurve]`, Release | 1,354 / 3,947,585 | PASS; 0 errors, 0 failures, 1 known skip | `ff9b6933b9c6d8a85ab7a255f357b993b8e712c1f57e6be6af4ffd1fb5154646` |
+| `[lc-offsetcurve]`, ASan | 1,354 / 3,970,466 | PASS; 0 errors, 0 failures, 1 known skip | `de7c50f30c952d1b6d2d747615f5abea65633a17b4612739c60ba5a0b69e9ebe` |
+
+Reports: `/private/tmp/offset-W101-offset-release.xml` and
+`/private/tmp/offset-W101-offset-asan.xml`. ASan used `detect_leaks=0`; this
+is not leak validation. The skipped real exporter remains an explicit gap.
