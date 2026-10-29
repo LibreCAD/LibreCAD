@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W96 requalifies A-core and the full offset selector and W97 requalifies B occurrence/terminal identity without new findings; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, public low-level storage compatibility, cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W96 requalifies A-core and the full offset selector, W97 requalifies B occurrence/terminal identity, and W98 requalifies C-search without new findings; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, C-check, public low-level storage compatibility, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -308,7 +308,7 @@ candidate except the explicitly proposed native-worker tags.
 | A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; W65 focused reference-accounting Release/ASan requalification; paired graph audit remains open | `[lc-offsetcurve][reference-accounting]` |
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66 focused cache-budget Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][cache-budget-accounting]` |
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; W97 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | geometry terminal/occurrence case inventory |
-| C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; audit/retest | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
+| C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; W98 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a` plus later search; audit/retest | `[lc-offsetcurve][cache-topology-chain]` |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; finish caller/fallback/import ownership freeze before routing | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; full app/deployed-package gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
@@ -4671,5 +4671,31 @@ skip documented above. ASan used `detect_leaks=0`.
 | Occurrence/terminal identity union, ASan; 24 JUnit entries / 1,453 assertions | PASS | `3e0f7e2391ae356162244180640edeb4ecdef5165e5906195fca1d69f561786c` |
 
 No product edit was needed. C-search, C-check, broader source/budget audit,
+cross-platform CI, public low-level storage compatibility, visible-GUI testing,
+and final acceptance remain open.
+
+## 60. W98 Current-Source Offset Path Search Audit
+
+Reviewed C-search at the W97 source head. Input CSR validation checks size
+arithmetic before `edgeCount + 1`, accounts row/transition and duplicate-key
+comparisons, and refuses malformed graphs before callbacks. DFS route scratch
+and each memo key/state/frame are bounded and admitted before publication.
+Memo keys include seed, current directed edge, and every used-edge word;
+structural suffix counts saturate at two but do not merge distinct ordered
+prefixes or imply geometric acceptance. Closed cycles are emitted modulo
+rotation from their least edge; open routes preserve both endpoint eligibility
+and transition identity. Shared budget refusals stay sticky. No C-search defect
+was found; C-check remains dependent and unaudited.
+
+The `[offset-path-search]` selector completed all 30 JUnit entries in Release
+and ASan, with 2,965 assertions and zero errors/failures/skips in each. ASan
+used `detect_leaks=0`.
+
+| W98 lane | Result | SHA256 |
+|---|---|---|
+| Offset path search, Release; 30 JUnit entries / 2,965 assertions | PASS | `7487b052c4ab2064bb9278ba41f50d4b929b8151b8a50d8f4d99c06ab73d0351` |
+| Offset path search, ASan; 30 JUnit entries / 2,965 assertions | PASS | `fddf6efbabf9a38410259d872404672e1a18e54c958b30f586061294268cbdd9` |
+
+No product edit was needed. C-check, broader source/budget audit,
 cross-platform CI, public low-level storage compatibility, visible-GUI testing,
 and final acceptance remain open.
