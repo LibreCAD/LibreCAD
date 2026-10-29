@@ -3828,3 +3828,27 @@ visible desktop, installed-package, Windows runtime, or full-suite acceptance.
 | `/private/tmp/offset-W70-thumbnail-full-asan.xml` | `de97b270749cd8f78cabb1df043db6e37ea3fb341d00ff80c86f35ca988ecc11` |
 | `/private/tmp/offset-W70-creation-release.xml` | `214472cc9af6ee3e15e7a3bdc4ac36869ead14e6f14590281ed1195c938246f9` |
 | `/private/tmp/offset-W70-creation-asan.xml` | `bad218f3af3207266a376c59b36a201d23145d5491a0fad700d552d349010e4c` |
+
+## 31. W71a Preview-Cache Portability Requalification
+
+At current source `7a90b5884` (after W70), rebuilt and reran the real helper
+process and worker-client portability selectors in Release and address-sanitized
+builds. The helper test starts fresh processes, transports cached preview values,
+and still performs native adoption checks; client cases cover source rebinding,
+stale-revision rejection, and action-wide eviction/merge. All runs completed with
+zero failures, errors, or skips. JUnit `tests` below is the assertion count, which
+varies with process scheduling; each process report has one testcase and each
+client report has two.
+
+| W71a lane | Testcases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Helper process Release | 1 / 209 | PASS | `59ef7145192eeeece9519ea7a2cab7fe01997873f581a014d93ffc35ac9d4c43` |
+| Helper process ASan | 1 / 272 | PASS | `de968c4afb59722b36097bfed2cd9247964d75b4b42140afb18892950306c87f` |
+| Worker client Release | 2 / 681 | PASS | `50f529e4fb423f0a44bf78bc7e19dc4fe6f022c9481759974f984c66dcd99016` |
+| Worker client ASan | 2 / 1009 | PASS | `261d87b92eca752be05c16d7f73dd0da5124e6adce2bff42db26cdca4f81b9d9` |
+
+Reports are `/private/tmp/offset-W71-cache-{process,client}-{release,asan}.xml`.
+ASan used `detect_leaks=0`, so this is not leak validation. This confirms the
+existing W16/W17 portable-cache implementation on the current W70 tree; no
+product gap was found and no cache implementation was duplicated. Cross-platform,
+installed-helper, and final acceptance gates remain open.
