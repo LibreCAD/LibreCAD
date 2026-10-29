@@ -606,6 +606,7 @@ void dwgRW::setDebug(DRW::DebugLevel lvl){
 
 /*reads metadata and loads image preview*/
 bool dwgRW::getPreview(){
+    if (m_invokingReadVersionObserver) return false;
     bool isOk = false;
     error = DRW::BAD_NONE;
 
@@ -628,6 +629,7 @@ bool dwgRW::getPreview(){
 }
 
 bool dwgRW::testReader(){
+    if (m_invokingReadVersionObserver) return false;
     bool isOk = false;
 
     std::ifstream filestr;
@@ -691,6 +693,7 @@ bool dwgRW::testReader(){
 
 /*start reading dwg file header and, if can read it, continue reading all*/
 bool dwgRW::read(DRW_Interface *interface_, bool ext){
+    if (m_invokingReadVersionObserver) return false;
     bool isOk = false;
     error = DRW::BAD_NONE;
     applyExt = ext;
@@ -712,6 +715,7 @@ bool dwgRW::read(DRW_Interface *interface_, bool ext){
 
 bool dwgRW::readBuffer(const std::uint8_t *data, std::uint64_t size,
                        DRW_Interface *interface_, bool ext) {
+    if (m_invokingReadVersionObserver) return false;
     error = DRW::BAD_NONE;
     applyExt = ext;
     iface = interface_;
@@ -731,8 +735,9 @@ bool dwgRW::readBuffer(const std::uint8_t *data, std::uint64_t size,
 }
 
 bool dwgRW::readInstalledReader() {
-    if (!reader) {
+    if (!reader || !iface) {
         error = DRW::BAD_OPEN;
+        reader.reset();
         return false;
     }
 
@@ -740,7 +745,22 @@ bool dwgRW::readInstalledReader() {
     if (isOk) {
         isOk = reader->readFileHeader();
         if (isOk) {
-            isOk = processDwg();
+            try {
+                if (m_readVersionObserver) {
+                    m_invokingReadVersionObserver = true;
+                    try {
+                        m_readVersionObserver(version, m_readVersionContext);
+                    } catch (...) {
+                        m_invokingReadVersionObserver = false;
+                        throw;
+                    }
+                    m_invokingReadVersionObserver = false;
+                }
+            } catch (...) {
+                error = DRW::BAD_READ_HEADER;
+                isOk = false;
+            }
+            if (isOk) isOk = processDwg();
         } else {
             error = DRW::BAD_READ_FILE_HEADER;
         }
@@ -1208,11 +1228,13 @@ bool dwgRW::encodeEntityForWrite(DRW_Entity *ent,
 }
 
 bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
+    if (m_invokingReadVersionObserver) return false;
     return writeImpl(interface_, ver, bin, nullptr, nullptr);
 }
 
 bool dwgRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
                          DRW_StagedFileVerifier verifier, void* context) {
+    if (m_invokingReadVersionObserver) return false;
     if (!verifier) {
         error = DRW::BAD_OPEN;
         return false;

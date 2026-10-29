@@ -4295,36 +4295,22 @@ QString RS_FilterDXFRW::lastError() const {
 
 namespace {
 
-// Pre-R13 DWG files often omit $ACADVER from the table snapshot delivered to
-// addHeader(), leaving m_version at the 1021 fallback during entity import.
-// Sniff the on-disk magic so import-time guards can key off AC1009 et al.
-int versionIdFromDwgMagic(const QString &filePath) {
-  QFile file(filePath);
-  if (!file.open(QIODevice::ReadOnly))
-    return 0;
-  const QByteArray magic = file.read(6);
-  if (magic.size() < 6)
-    return 0;
-  if (magic == "AC1009")
-    return 1009;
-  if (magic == "AC1012")
-    return 1012;
-  if (magic == "AC1014")
-    return 1014;
-  if (magic == "AC1015")
-    return 1015;
-  if (magic == "AC1018")
-    return 1018;
-  if (magic == "AC1021")
-    return 1021;
-  if (magic == "AC1024")
-    return 1024;
-  if (magic == "AC1027")
-    return 1027;
-  if (magic == "AC1032")
-    return 1032;
-  return 0;
+#ifdef DWGSUPPORT
+int versionIdForDwg(DRW::Version version) noexcept {
+  switch (version) {
+  case DRW::AC1009: return 1009;
+  case DRW::AC1012: return 1012;
+  case DRW::AC1014: return 1014;
+  case DRW::AC1015: return 1015;
+  case DRW::AC1018: return 1018;
+  case DRW::AC1021: return 1021;
+  case DRW::AC1024: return 1024;
+  case DRW::AC1027: return 1027;
+  case DRW::AC1032: return 1032;
+  default: return 0;
+  }
 }
+#endif
 
 // Expand NoUpdate INSERTs even after a failed read, which the caller may keep.
 void updateImportedInserts(RS_Graphic &graphic) {
@@ -4437,15 +4423,18 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
   if (type == RS2::FormatDWG || type == RS2::FormatDWG2004 ||
       type == RS2::FormatDWG2007 || type == RS2::FormatDWG2010 ||
       type == RS2::FormatDWG2013 || type == RS2::FormatDWG2018) {
-    const int magicVersion = versionIdFromDwgMagic(file);
-    if (magicVersion != 0)
-      m_version = magicVersion;
-    const auto magic = std::string("AC") + std::to_string(magicVersion);
-    for (const auto &entry : DRW::dwgVersionStrings)
-      if (magic == entry.first) m_offsetInputVersion = entry.second;
-
+    if (m_testBeforeDwgOpen) {
+      auto hook = std::move(m_testBeforeDwgOpen);
+      m_testBeforeDwgOpen = {};
+      hook();
+    }
     dwgR dwgr(QFile::encodeName(file));
     m_offsetInputKind = OffsetInputKind::Dwg;
+    dwgr.setReadVersionObserver([](DRW::Version version, void* context) {
+      auto* filter = static_cast<RS_FilterDXFRW*>(context);
+      filter->m_offsetInputVersion = version;
+      filter->m_version = versionIdForDwg(version);
+    }, this);
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file");
     if (RS_DEBUG->getLevel() == RS_Debug::D_DEBUGGING)
       dwgr.setDebug(DRW::DebugLevel::Debug);
@@ -11857,12 +11846,11 @@ void RS_FilterDXFRW::addHeader(const DRW_Header *data) {
   acadver.replace(QRegularExpression("[a-zA-Z]"), "");
   bool ok;
   const int parsedVersion = acadver.toInt(&ok);
-  if (ok) {
-    m_version = parsedVersion;
-  } else if (m_version == 0) {
-    // Pre-R13 DWG may omit $ACADVER; fileImport primes m_version from the
-    // on-disk magic before entities are read.
-    m_version = 1021;
+  // DWG entity layouts follow the opened file rather than an inconsistent
+  // or absent header variable.
+  if (m_offsetInputKind != OffsetInputKind::Dwg || m_version == 0) {
+    if (ok) m_version = parsedVersion;
+    else if (m_version == 0) m_version = 1021;
   }
 
   // detect if dxf lib are a old dxflib or libdxfrw < 0.5.4 (used to correct

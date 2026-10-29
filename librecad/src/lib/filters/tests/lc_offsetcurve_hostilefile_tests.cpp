@@ -23,6 +23,23 @@
 #include "rs_block.h"
 #include "rs_undo.h"
 #include "rs_variable.h"
+#ifdef DWGSUPPORT
+#include "rs_filterdxfrw.h"
+
+class LC_DwgReadVersionTestAccess {
+public:
+    static void beforeOpen(RS_FilterDXFRW& filter, std::function<void()> hook) {
+        filter.m_testBeforeDwgOpen = std::move(hook);
+    }
+    static DRW::Version inputVersion(const RS_FilterDXFRW& filter) { return filter.m_offsetInputVersion; }
+    static int numericVersion(const RS_FilterDXFRW& filter) { return filter.m_version; }
+    static void prepareHeader(RS_FilterDXFRW& filter, RS_Graphic& graphic, bool dwg) {
+        filter.m_graphic = &graphic; filter.m_currentContainer = &graphic;
+        filter.m_offsetInputKind = dwg ? RS_FilterDXFRW::OffsetInputKind::Dwg : RS_FilterDXFRW::OffsetInputKind::Dxf;
+        filter.m_offsetInputVersion = DRW::AC1015; filter.m_version = 1015;
+    }
+};
+#endif
 
 class LC_OffsetWorkerClientTestAccess {
 public:
@@ -44,6 +61,21 @@ struct Setup {
     const bool ready{lc::test::ensureSettings()};
     lc::test::QuietLog quiet;
 };
+
+#if defined(DWGSUPPORT) && defined(Q_OS_UNIX)
+class ObservedDwgVersionFilter final : public RS_FilterDXFRW {
+public:
+    DRW::Version observed = DRW::UNKNOWNV;
+    int numeric = 0;
+    unsigned splines = 0;
+    void addSpline(const DRW_Spline* spline) override {
+        observed = LC_DwgReadVersionTestAccess::inputVersion(*this);
+        numeric = LC_DwgReadVersionTestAccess::numericVersion(*this);
+        ++splines;
+        RS_FilterDXFRW::addSpline(spline);
+    }
+};
+#endif
 
 enum class Lane { Ascii, Binary14, Binary18, Eed2000, Eed18 };
 std::vector<Lane> lanes() {
@@ -298,6 +330,102 @@ void seedHistory(lc::test::EditableDrawing& drawing) {
     drawing.m_graphic.addVariable("$G_HOSTILE_SENTINEL", "retained variables", 1);
 }
 }
+
+#if defined(DWGSUPPORT) && defined(Q_OS_UNIX)
+TEST_CASE("DWG offset input version follows the opened drawing after path replacement",
+          "[lc-offsetcurve][import-session][dwg-version][source-identity]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-dwg-version-source");
+    for (const auto original : {Lane::Eed2000, Lane::Eed18}) {
+        const auto replacement = original == Lane::Eed2000 ? Lane::Eed18 : Lane::Eed2000;
+        const std::string prefix = original == Lane::Eed2000 ? "from-2000-" : "from-2018-";
+        const auto sourcePath = directory.file(prefix + "source.dwg");
+        const auto replacementPath = directory.file(prefix + "replacement.dwg");
+        const auto savedPath = directory.file(prefix + "saved.dwg");
+        std::error_code error;
+        writeInput(sourcePath, original, f::raw(3)); writeInput(replacementPath, replacement, f::raw(3));
+        RS_Graphic graphic; graphic.initForNewDocument(); ObservedDwgVersionFilter filter; bool swapped = false;
+        LC_DwgReadVersionTestAccess::beforeOpen(filter, [&] {
+            std::filesystem::rename(sourcePath, savedPath, error); REQUIRE_FALSE(error);
+            std::filesystem::rename(replacementPath, sourcePath, error); REQUIRE_FALSE(error);
+            swapped = true;
+        });
+        REQUIRE(filter.fileImport(graphic, QString::fromStdString(sourcePath.string()), RS2::FormatDWG));
+        REQUIRE(swapped); REQUIRE(filter.splines > 0);
+        CHECK(filter.observed == (replacement == Lane::Eed2000 ? DRW::AC1015 : DRW::AC1032));
+        CHECK(filter.numeric == (replacement == Lane::Eed2000 ? 1015 : 1032));
+    }
+}
+#endif
+
+#ifdef DWGSUPPORT
+TEST_CASE("DWG source version observer precedes callbacks for files and buffers",
+          "[lc-offsetcurve][import-session][dwg-version][observer]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-dwg-version-observer");
+    for (const auto version : {DRW::AC1015, DRW::AC1032}) {
+        const auto path = directory.file(version == DRW::AC1015 ? "r2000.dwg" : "r2018.dwg");
+        f::dwgFile(path, f::raw(3), version);
+        const auto bytes = lc::test::fileBytes(path); REQUIRE_FALSE(bytes.empty());
+        for (const bool buffered : {false, true}) {
+            CAPTURE(static_cast<int>(version), buffered);
+            struct State {
+                DRW::Version observed = DRW::UNKNOWNV;
+                unsigned calls = 0, headers = 0, splines = 0;
+                bool throwNow = false, attemptedReentry = false, expectObserver = true;
+                std::function<void()> reenter;
+            } state;
+            struct Interface final : lc::test::NullDrwInterface {
+                explicit Interface(State& s) : state(s) {}
+                State& state;
+                void addHeader(const DRW_Header*) override { CHECK(state.calls == (state.expectObserver ? 1u : 0u)); ++state.headers; }
+                void addSpline(const DRW_Spline*) override { CHECK(state.calls == (state.expectObserver ? 1u : 0u)); ++state.splines; }
+            } sink(state);
+            dwgRW reader(path.string().c_str());
+            state.reenter = [&] {
+                state.attemptedReentry = true;
+                CHECK_FALSE(reader.read(&sink, false));
+                CHECK_FALSE(reader.readBuffer(reinterpret_cast<const std::uint8_t*>(bytes.data()), bytes.size(), &sink, false));
+                CHECK_FALSE(reader.getPreview()); CHECK_FALSE(reader.testReader());
+                CHECK_FALSE(reader.write(&sink, version, false));
+                CHECK_FALSE(reader.writeVerified(&sink, version, false, nullptr, nullptr));
+            };
+            reader.setReadVersionObserver([](DRW::Version value, void* context) {
+                auto& target = *static_cast<State*>(context); target.observed = value; ++target.calls;
+                if (target.throwNow) throw std::runtime_error("observer failure");
+                if (target.reenter) target.reenter();
+            }, &state);
+            const bool ok = buffered
+                ? reader.readBuffer(reinterpret_cast<const std::uint8_t*>(bytes.data()), bytes.size(), &sink, false)
+                : reader.read(&sink, false);
+            REQUIRE(ok); CHECK(state.calls == 1); CHECK(state.observed == version); CHECK(state.attemptedReentry);
+            CHECK(state.headers == 1); CHECK(state.splines > 0); CHECK(reader.getVersion() == version);
+            CHECK(reader.getError() == DRW::BAD_NONE);
+            state = {}; state.throwNow = true;
+            CHECK_FALSE(reader.readBuffer(reinterpret_cast<const std::uint8_t*>(bytes.data()), bytes.size(), &sink, false));
+            CHECK(state.calls == 1); CHECK(state.headers == 0); CHECK(state.splines == 0);
+            CHECK(reader.getError() == DRW::BAD_READ_HEADER);
+            state = {};
+            CHECK_FALSE(reader.readBuffer(reinterpret_cast<const std::uint8_t*>(bytes.data()), 5, &sink, false));
+            CHECK(state.calls == 0); CHECK(state.headers == 0);
+            reader.setReadVersionObserver(nullptr, nullptr);
+            state = {}; state.expectObserver = false;
+            REQUIRE(reader.readBuffer(reinterpret_cast<const std::uint8_t*>(bytes.data()), bytes.size(), &sink, false));
+            CHECK(state.calls == 0); CHECK(state.headers == 1); CHECK(state.splines > 0);
+        }
+    }
+}
+
+TEST_CASE("DWG physical version overrides a conflicting header variable",
+          "[lc-offsetcurve][import-session][dwg-version][header]") {
+    Setup setup;
+    for (const bool dwg : {false, true}) {
+        RS_Graphic graphic; graphic.initForNewDocument(); RS_FilterDXFRW filter;
+        LC_DwgReadVersionTestAccess::prepareHeader(filter, graphic, dwg);
+        DRW_Header header; header.addStr("$ACADVER", "AC1032", 1); filter.addHeader(&header);
+        CHECK(LC_DwgReadVersionTestAccess::numericVersion(filter) == (dwg ? 1015 : 1032));
+        CHECK(LC_DwgReadVersionTestAccess::inputVersion(filter) == (dwg ? DRW::AC1015 : DRW::AC1032));
+    }
+}
+#endif
 
 TEST_CASE("G hostile malformed then valid candidate never promotes the valid suffix", "[lc-offsetcurve][g-hostile-file][duplicate]") {
     Setup setup; auto bad = f::owned(); bad[10] = std::make_shared<DRW_Variant>(1040, 1.);

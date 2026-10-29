@@ -245,6 +245,18 @@ public:
     [[nodiscard]] bool readBuffer(const std::uint8_t *data, std::uint64_t size,
                     DRW_Interface *interface_, bool ext);
 
+    /// Called after the opened DWG header is accepted, before model callbacks.
+    /// The observer and context are caller-owned and used synchronously by
+    /// both read() and readBuffer(). Reentrant top-level read, write, preview
+    /// or testReader operations from the observer are refused without changing
+    /// the outer read's state. The observer must not otherwise mutate the
+    /// reader. Passing nullptr clears the observer.
+    using ReadVersionObserver = void (*)(DRW::Version, void*);
+    void setReadVersionObserver(ReadVersionObserver observer, void* context) noexcept {
+        m_readVersionObserver = observer;
+        m_readVersionContext = context;
+    }
+
     /// Write the in-memory model (driven via DRW_Interface callbacks)
     /// out to the file named at construction.
     /// The `bin` parameter is ignored — DWG is always binary — but
@@ -775,6 +787,9 @@ private:
     bool applyExt { false }; /*apply extrusion in entities to conv in 2D?*/
     std::string codePage;
     DRW_Interface *iface { nullptr };
+    ReadVersionObserver m_readVersionObserver { nullptr };
+    void* m_readVersionContext { nullptr };
+    bool m_invokingReadVersionObserver { false };
     std::unique_ptr< dwgReader > reader;
     std::unique_ptr< dwgWriter > writer;
     /// Handles reserved by the caller via reserveHandle() before write();

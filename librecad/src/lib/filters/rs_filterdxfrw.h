@@ -1973,6 +1973,7 @@ class RS_FilterDXFRW : public RS_FilterInterface,
   friend class LC_OffsetImportSession;
 #ifdef DWGSUPPORT
   friend class DwgWriteFailureTestAccess;
+  friend class LC_DwgReadVersionTestAccess;
 #endif
 public:
   enum class DwgDataStorageIdentityStatus : std::uint8_t {
@@ -3134,6 +3135,9 @@ private:
   enum class OffsetInputKind { None, Dxf, Dwg };
   OffsetInputKind m_offsetInputKind = OffsetInputKind::None;
   DRW::Version m_offsetInputVersion = DRW::UNKNOWNV;
+#ifdef DWGSUPPORT
+  std::function<void()> m_testBeforeDwgOpen;
+#endif
   QString m_offsetInputCodePage = QStringLiteral("ANSI_1252");
   struct OffsetXDataContext {
     LC_OffsetCurveXData::Options options;
