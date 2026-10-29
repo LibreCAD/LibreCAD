@@ -3110,13 +3110,13 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 **Next concrete action on implementation resume:** obtain a Windows compile and
 runtime run for W44 before claiming platform parity. W46 already bounds and
 snapshots nested XREF bytes for staged imports; W47 adds source identity
-preflight but not atomic publication. W49a adds a transaction-level publication
-guard and race regression; W49b exposes it through per-call DXF/DWG writer APIs.
-Continue W49 by wiring the filter at low-level and outer DWG publish boundaries
-and test source replacement/aliases/backup/failed-rename behavior. This narrows
-the check-to-use window but cannot make path identity plus cross-platform rename
-atomic. Then audit direct synchronous and console XREF callers without silently
-weakening their behavior. Investigate the recorded ASan template failure under
+preflight but not atomic publication. W49a-W49c add a transaction guard, per-call
+DXF/DWG APIs, and source-identity checks at filter publication boundaries.
+These narrow but cannot eliminate the check-to-rename window. Still add a
+deterministic test for mutation between successful low-level DWG publication
+and the outer backup/rename, and exercise backup restoration/failed rename on
+Windows. Then audit direct synchronous and console XREF callers without
+silently weakening their behavior. Investigate the recorded ASan template failure under
 load, and exercise a genuine partial DWG through the GUI dialog. W35 fixes the
 observed W33 teardown assertion; retain its
 forced-destruction regression while auditing other close/dialog reentrancy.
@@ -3295,7 +3295,30 @@ rejection preserves the original destination and leaves no stage behind.
 | Release build: `libdxfrw_verified_write_tests` | passed |
 | `git diff --check` | passed |
 
-No ASan, Windows, or visible GUI run is claimed. W49c remains: pass the filter's
-source-identity callback to DXF publication and DWG's low-level staged write,
-then recheck before the outer DWG backup/rename. Add fault-injected tests at
-those boundaries. This cannot eliminate the final OS check-to-rename race.
+No ASan, Windows, or visible GUI run is claimed. The W49c wiring and source
+replacement regressions follow; the outer-DWG timing/backup-failure cases and
+the final OS check-to-rename race remain explicitly open.
+
+W49c `f69c034e7` captures the drawing's imported `LC_FileIdentity` at export
+start, classifies the destination by normalized source path, canonical path, or
+native file identity, and rejects a stale source before serialization. The
+guard is passed into DXF publication and the inner DWG staged write; DWG also
+rechecks immediately before moving the existing destination to backup. It does
+not change `DRW_Interface`'s vtable. Tests replace the source from the DXF/DWG
+finalization callback and prove publication refuses while preserving the
+external bytes. Hard-link aliases are rejected at preflight without touching
+either link.
+
+| W49c validation | Result |
+|---|---|
+| `librecad_tests [source-identity]` | 3 cases, 115 assertions passed |
+| `librecad_tests [export-commit]` | 5 cases, 86 assertions passed |
+| `librecad_output_transaction_tests` | 15 cases, 137 assertions passed |
+| `libdxfrw_verified_write_tests` | 5 cases, 468 assertions passed |
+| Release build: `librecad_tests` | passed |
+| `git diff --check` | passed |
+
+The outer DWG recheck is present but not fault-injected after a successful
+low-level publish; that specific timing and backup restoration after a rename
+failure remain open. The identity guard cannot atomically bind the final
+pathname check to replacement. No ASan, Windows, or visible GUI run is claimed.
