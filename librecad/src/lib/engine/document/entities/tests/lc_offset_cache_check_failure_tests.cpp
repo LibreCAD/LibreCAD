@@ -113,8 +113,37 @@ Fixture cubicFixture(const bool reversed) {
     return fixture;
 }
 
+Fixture wholeCircleFixture(const bool reversed) {
+    const RS_EllipseData source{RS_Vector{0, 0}, RS_Vector{1, 0}, 1.0, 0.0, 0.0, false};
+    Fixture fixture;
+    fixture.definition.basis = source;
+    fixture.definition.distance = 1.0;
+    fixture.definition.relTolerance = .01;
+    fixture.definition.cacheReversed = reversed;
+
+    auto& cache = fixture.cache;
+    cache.degree = 3;
+    for (int knot = 0; knot <= 4; ++knot) {
+        const int multiplicity = knot == 0 || knot == 4 ? 4 : 3;
+        cache.knotslist.insert(cache.knotslist.end(), multiplicity, double(knot));
+    }
+    std::array<RS_Vector, 4> controls{{{2, 0}, {2, 9.0 / 8}, {9.0 / 8, 2}, {0, 2}}};
+    cache.controlPoints.reserve(13);
+    for (int quadrant = 0; quadrant < 4; ++quadrant) {
+        if (quadrant != 0) {
+            for (auto& point : controls) { point = {-point.y, point.x}; }
+        }
+        const auto begin = quadrant == 0 ? controls.begin() : controls.begin() + 1;
+        cache.controlPoints.insert(cache.controlPoints.end(), begin, controls.end());
+    }
+    cache.weights.assign(cache.controlPoints.size(), 1.0);
+    if (reversed) { std::reverse(cache.controlPoints.begin(), cache.controlPoints.end()); }
+    return fixture;
+}
+
 int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definition,
-          const char* label, std::size_t& totalInjectionPoints) {
+          const char* label, std::size_t& totalInjectionPoints, const double worldTolerance = .01,
+          const bool expectSeam = false) {
     namespace geo = LC_EllipseOffsetGeometry;
     const auto& source = definition.basis;
     const auto frame = geo::ReferenceFrame::create(source, 1.0);
@@ -127,7 +156,7 @@ int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definiti
     armed = true;
     LC_OffsetCheckResult baseline;
     try {
-        baseline = geo::checkCache(cache, definition, .01, baselineBudget);
+        baseline = geo::checkCache(cache, definition, worldTolerance, baselineBudget);
     } catch (...) {
         armed = false;
         return 4;
@@ -138,6 +167,12 @@ int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definiti
         !sameWork(baseline.work, baselineBudget.consumed()) || completeAllocationCount == 0) {
         return 5;
     }
+    if (expectSeam) {
+        const auto& joins = baseline.analysis->joins();
+        if (!baseline.analysis->closed() || std::none_of(joins.begin(), joins.end(), [](const auto& join) {
+                return join.kind == geo::CachePathJoinKind::Seam;
+            })) { return 9; }
+    }
 
     for (std::size_t failure = 1; failure <= completeAllocationCount; ++failure) {
         geo::WorkBudget failedBudget;
@@ -147,7 +182,7 @@ int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definiti
         armed = true;
         bool threw = false;
         try {
-            auto failed = geo::checkCache(cache, definition, .01, failedBudget);
+            auto failed = geo::checkCache(cache, definition, worldTolerance, failedBudget);
             (void)failed;
         } catch (const std::bad_alloc&) {
             threw = true;
@@ -168,7 +203,7 @@ int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definiti
             return 7;
         }
 
-        const auto recovered = geo::checkCache(cache, definition, .01, failedBudget);
+        const auto recovered = geo::checkCache(cache, definition, worldTolerance, failedBudget);
         if (!recovered.analysis || recovered.reason != LC_OffsetCheckResult::Reason::None ||
             !sameWork(recovered.work, failedBudget.consumed())) {
             std::printf("allocation_recovery=%zu/%zu reason=%u status=%u vertices=%zu\n",
@@ -208,6 +243,13 @@ int main() {
         auto cubic = cubicFixture(reversed);
         if (const int result = sweep(cubic.cache, cubic.definition,
             reversed ? "two-span-cubic-reversed" : "two-span-cubic", injectionPoints)) { return result; }
+    }
+    for (const bool reversed : {false, true}) {
+        auto circle = wholeCircleFixture(reversed);
+        if (const int result = sweep(circle.cache, circle.definition,
+            reversed ? "whole-circle-seam-reversed" : "whole-circle-seam", injectionPoints, .02, true)) {
+            return result;
+        }
     }
     std::printf("allocation_failure_sweep_all_fixtures_recovered=1 injection_points=%zu\n", injectionPoints);
     return 0;
