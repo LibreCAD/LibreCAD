@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports and W89 makes dimension-style preview failures noninteractive and clears partial sample content; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports and W89 makes dimension-style preview failures noninteractive and clears partial sample content; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -3978,15 +3978,19 @@ not make parsing or rendering itself nonblocking.
 
 Reports are `/private/tmp/offset-W74-console-{import,svg}-{release,asan}.xml`.
 Remaining direct import sites were classified: the console helper's ordinary
-format fallback, document-storage open/template loading, recursive XREF
-fallback, hatch-pattern loading, and the bundled dimension-style preview. W88
-closes hatch-pattern failure propagation and suppresses its inappropriate
-modal import error; W89 closes the dimension-style preview's modal-error and
-partial-content path. User-facing DXF/DWG open/template and recursive-XREF paths
-remain the likely staged-import candidates. The document-storage methods and
-all other import sites still need explicit caller-policy review. Visible
-desktop acceptance, installed-helper deployment, Windows runtime, and final
-acceptance remain open.
+format fallback, generic document-storage APIs, hatch-pattern loading, and the
+bundled dimension-style preview. W32/W88 route user-facing drawing-open,
+template, and staged recursive-XREF imports through owned admission; W88 closes
+hatch-pattern failure propagation and suppresses its inappropriate modal import
+error; W89 closes the dimension-style preview's modal-error and partial-content
+path; W91 routes both async and legacy plugin block imports. The generic storage
+API still needs explicit caller-policy review. In addition, `RS_Pattern::loadPattern`
+can synchronously adopt a native offset carrier from a user-provided pattern
+DXF while hatch geometry is prepared; avoid nested event-loop staging in this
+path and decide whether it should consume only the ordinary display cache. This
+is a separate import-caller slice, not a gap in W16-W19 preview-cache transport
+or creation/repeat GUI routing. Visible desktop acceptance, installed-helper
+deployment, Windows runtime, and final acceptance remain open.
 
 ## 36. W75 Staged Import Identity CI Lane
 
@@ -4443,3 +4447,51 @@ is responsive or that external plugins have migrated to the async entry point.
 Windows/Linux runtime, installed-helper retesting at this head, remaining
 import ownership, broader budget/source audit and final W0-W2 acceptance remain
 open.
+
+## 54. W92 Current-Head Preview Portability and Creation/Repeat
+
+Rebuilt and requalified the existing W16-W19 portable preview-cache transport
+and Modify Offset creation/repeat GUI continuation at `2477268af` in CMake
+Release and ASan. The code review found no new product defect in these requested
+paths: the helper receives bounded value snapshots rather than entity pointers;
+joined completions bind cache updates to the expected request/revision; eligible
+ellipse/native-source preview and commit route through owned asynchronous
+continuations; repeated outputs preserve cache reuse, stored-cache zero-sum
+fallback, ordering, attributes, selection and one-step undo/redo. Ordinary-only
+selection keeps its established synchronous path. This checkpoint is
+qualification-only; it does not claim visible desktop, installed-helper, or
+cross-platform acceptance.
+
+All focused selectors passed with zero errors, failures, or skips. The first
+number is JUnit testcase records; the second is assertion count. ASan used
+`detect_leaks=0`, so no leak-validation claim is made.
+
+| W92 suite | Release cases / assertions | ASan cases / assertions | Result |
+|---|---:|---:|---|
+| Portable cache request codec | 1 / 111 | 1 / 111 | PASS |
+| Portable cache result codec | 1 / 18 | 1 / 18 | PASS |
+| Cached Produce kernel | 4 / 156 | 4 / 156 | PASS |
+| Fresh-helper process transport | 1 / 216 | 1 / 271 | PASS |
+| Worker-client cache merge/eviction | 2 / 697 | 2 / 981 | PASS |
+| Creation/repeat GUI routing | 13 / 318 | 13 / 318 | PASS |
+
+Reports and SHA256:
+
+| W92 artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W92-request-release.xml` | `1277aa854e70beaf792d9f2a174f81665f3571a3f246288eaa1d384ae895ba09` |
+| `/private/tmp/offset-W92-request-asan.xml` | `2efaccd201851d6b68bcb1d263ab2ab5ca53a3b5a2848866534d5f5c33d65c99` |
+| `/private/tmp/offset-W92-result-release.xml` | `875d5c07677542caf03476a5642b44486bf04754eb71d4aa22a5fb4926e52d41` |
+| `/private/tmp/offset-W92-result-asan.xml` | `9f4bd2a9c56bc524457c89399963773abf831d4830793a02ab62ac4767c49d01` |
+| `/private/tmp/offset-W92-kernel-release.xml` | `c7e542e3bf74befb880f445574857b12cf030621c877b5c4de85e5509bcc8d0e` |
+| `/private/tmp/offset-W92-kernel-asan.xml` | `ae9cbe35a3c0d9aafedcfc5463588d82229c09992d286d14a4ed39c0e9a007e0` |
+| `/private/tmp/offset-W92-process-release.xml` | `8f0c144dfea733f9dba391c13fa953af7719c73b730ec03058bdb668c0984570` |
+| `/private/tmp/offset-W92-process-asan.xml` | `2bb42ad3521bd8806fbafef693ea40dbc13fcf88b5fd53096de395f870f6e858` |
+| `/private/tmp/offset-W92-client-release.xml` | `d3a644f5095ac495ccb510aec64c1b7887a274a90c1cf4e6335d3cb747522f47` |
+| `/private/tmp/offset-W92-client-asan.xml` | `0ad33611177a606c6e49a7c3a98a7dcd992f39984402482aafbcd847b5525007` |
+| `/private/tmp/offset-W92-creation-release.xml` | `835dec0e892f74af2feb3a250f184feac0b0fcdeb4296b8abfcd3eeef9d87af6` |
+| `/private/tmp/offset-W92-creation-asan.xml` | `e1cd8834475952a008dbf122d65d3e2a610fe84670767028ed4b2ee6912bb4e9` |
+
+W92 is a verification checkpoint, not a new implementation slice. Continue with
+the remaining budget and caller-policy audit, including the pattern-DXF import
+noted above, then finish cross-platform/deployed and visible-GUI acceptance.
