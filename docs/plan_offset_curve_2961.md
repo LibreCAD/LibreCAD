@@ -24,24 +24,25 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W159, superseding W157 below): S0 source/target reconciliation
+Current status (W160, superseding W159 below): S0 source/target reconciliation
 and the local A-core through C-check audit are closed. Direct synchronous
 `fileImport`, stream, and byte filter imports validate offset carriers through
 the worker in the current source. W158 requalifies the qmake6 app/helper bundle;
 W159 requalifies preview-cache portability and creation/repeat routing on the
-current source in Release and ASan. W0-W2, E/U/G/F/O/T and R remain open for
+current source in Release and ASan; W160 requalifies the staged installed-helper
+path in Release and ASan. W0-W2, E/U/G/F/O/T and R remain open for
 cross-platform, package, visible UI, external-CAD, and final integration acceptance.
 Status: **W0-W2 is partially implemented; worker, geometry, creation/repeat, trim,
 GUI open/template, and DXF/DWG paths have scoped local qualifications recorded in
-W1-W159. W156 closes local routing for the public synchronous file/stream/byte
+W1-W160. W156 closes local routing for the public synchronous file/stream/byte
 filter APIs. Current-head worker CI, Windows failure coverage, deployed-package
 checks, visible UI, external-CAD interoperability, and final integration remain
 open.**
-Latest recorded slice: W159 requalifies cache portability and GUI creation/repeat
-with current-source Release and focused ASan tests; W158 records a full qmake6
-app/helper build and helper-client smoke. W157 adds the synchronous import
-selector to Linux and Windows x64/ARM64 CI; W156 routes file/stream/byte filter
-imports through bounded worker validation. W155
+Latest recorded slice: W160 requalifies the current-source staged install helper
+with Release and ASan clients; W159 requalifies cache portability and GUI
+creation/repeat, and W158 records a full qmake6 app/helper build and client smoke.
+W157 adds the synchronous import selector to Linux and Windows x64/ARM64 CI; W156
+routes file/stream/byte filter imports through bounded worker validation. W155
 rechecks the shared-budget/counter-transfer chain; W154 adds staged installed-
 helper CI and local macOS relocation evidence. W153 closes source/target
 reconciliation. W152 records the ASan cache-check fault sweep. W151 classifies
@@ -6276,3 +6277,29 @@ This does not close visible GUI interaction, installed/deployed helper
 acceptance, Windows runtime, external-CAD interoperability, or final W0-W2/R.
 The W157 PR-head CI run was still active at this checkpoint; after this
 roadmap-only commit, the pushed head must be rechecked for current CI status.
+
+## 118. W160 Current-Source Staged Install Helper Requalification
+
+At product source head `41d0089d8d583f5521f5069e18631445699b14d3`, installed
+only the production `OffsetWorker` component from the current-source Release
+and RelWithDebInfo+ASan CMake trees into separate temporary prefixes containing
+spaces. Copied only the matching worker-client test executable beside the
+installed helper, then ran the full `[lc-offsetcurve][worker-client]` suite from
+each installed app-bundle directory. This verifies `helperPath()` discovery
+after relocation rather than using either build-tree helper.
+
+Both installed-client runs passed all 17 cases: Release 3,721 assertions and
+ASan 5,150. ASan used `detect_leaks=0`. This closes the local current-source
+staged helper/client route in both instrumented and production configurations;
+it does not qualify signed packaging, a full app install, Windows/Linux runtime,
+or remote CI.
+The roadmap parser/inventory also passed 99/99 with 93 executable obligations,
+zero pending declarations, and no production mismatches; `git diff --check` passed.
+
+| W160 artifact | SHA256 |
+|---|---|
+| Release installed helper-client, `/private/tmp/offset-W159-installed-worker-client.log` | `2f010aea56f7f059f642d5b1dab4f85c6ecf626d9b4752bf3c3d02c5a61dd8fb` |
+| Release installed helper, `/private/tmp/offset-W159 relocated install/bin/LibreCAD.app/Contents/MacOS/LibreCADOffsetWorker` | `a88af8f02000bc1e90f993d63f0114365e54d9c1a1e111c7ed665bda679b94b8` |
+| ASan installed helper-client, `/private/tmp/offset-W159-installed-worker-client-asan.log` | `61bfbe8b05bc6c4b4f962bd23995987ea97ffe19a385f494b4168b2ab4043431` |
+| ASan installed helper, `/private/tmp/offset-W159 ASan relocated install/bin/LibreCAD.app/Contents/MacOS/LibreCADOffsetWorker` | `c06edb294686e19f0f43c8ce61757bf6500b47abc8d46aaeb54563dc7d367b5e` |
+| Roadmap parser/inventory, `/private/tmp/offset-W160-plan-inventory.log` | PASS; 99 / 99 / `dfddcd7598ec6945ea5d4daa4f877dc79d622354a686f5205a535f891d3b2e15` |
