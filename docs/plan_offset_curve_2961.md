@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, and W114 closes local A-cache allocation-failure coverage; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, C-check topology/site inventory, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, and W114 closes local A-cache allocation-failure coverage; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, C-check topology/site inventory, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -316,7 +316,7 @@ candidate except the explicitly proposed native-worker tags.
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; audit/retest | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; audit/retest | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; audit/retest | native edit/grip/transform TUs |
-| G | Eligible creation, repeated offset and bounded ordinary fallback/reporting | E2,U1,W2 | shared preparation `ef40eecad`, typed Produce `558c3bba2`, W16/W17 cache and W18/W19 GUI/publication qualified through `f035d983e`; current-source W67a/W67b Release+ASan requalification; final platform/visible acceptance remains | creation/repeat/modification TUs, `[creation-worker]`, `[creation-publication]`, `[creation-sources]` and existing Offset tests |
+| G | Eligible creation, repeated offset and bounded ordinary fallback/reporting | E2,U1,W2 | shared preparation `ef40eecad`, typed Produce `558c3bba2`, W16/W17 cache and W18/W19 GUI/publication qualified through `f035d983e`; current-source W67a/W67b and W117 Release+ASan requalification; final platform/visible acceptance remains | creation/repeat/modification TUs, `[creation-worker]`, `[creation-publication]`, `[creation-sources]` and existing Offset tests |
 | F1 | Shared typed schema, raw-carrier eligibility, ownership and byte limits | E1 | candidate `305042903`; audit/retest | `lc_offsetcurvexdata_tests.cpp`, `lc_offsetcurvecarrier_tests.cpp` |
 | F2 | Actual DXF/DWG SPLINE writer/adoption and transactional errors | F1,G | candidate `32597762b`, `7e46b2de8`; audit/retest | offset adapter/persistence/hostile-file TUs |
 | F3 | Version/read/write/conversion, clipboard, independent fixtures and output inspection | F2 | candidate `79ae1930b`; fixtures present, rerun scope required | `[lc-offsetcurve][g-matrix]`, explicit per-row evidence |
@@ -5133,3 +5133,41 @@ Logs: `/private/tmp/offset-W116-cusp-release.log`,
 `/private/tmp/offset-W116-chain-release.log`, and
 `/private/tmp/offset-W116-chain-asan.log`. ASan used `detect_leaks=0`; this is
 not leak validation.
+
+## 79. W117 Current-Head Preview Portability and Creation/Repeat Requalification
+
+At source head `f7aab74fa`, rebuilt the affected CMake targets and requalified
+preview-cache value transport, request/result schemas, helper-process reuse,
+worker-client cache merge/eviction, and Modify Offset creation/repeat routing.
+The main `librecad_tests` selector `[preview-portable],[creation-worker]` passed
+15 cases / 385 assertions in Release and ASan. The dedicated creation-action
+target independently passed 11 cases / 318 assertions in each configuration.
+The worker lanes also passed: kernel 4 / 156; request 1 / 111; result 1 / 18;
+worker-client 2 cases (1,045 Release assertions, 1,867 ASan assertions); and
+fresh-helper process cache portability 1 case (190 Release assertions, 216 ASan
+assertions). All had zero failures/errors; ASan used `detect_leaks=0`. The
+separate process test confirmed that cache hits survive a new helper process,
+while native adoption remains checked. No product defect was demonstrated.
+
+W110 recorded 17 cases / 385 assertions for the combined selector. The current
+main executable enumerates 15 cases / 385 assertions, and the 17-case count is
+not reproducible from that executable; W117 records the current split by target
+instead of treating the older aggregate as verified. The relevant implementation
+files have not changed since the prior preview/creation checkpoint. This closes
+the requested current-head preview and creation/repeat requalification, not
+packaged/visible acceptance or remaining W0-W2 platform gates.
+
+| W117 lane | Result | SHA256 |
+|---|---|---|
+| Main preview + creation selector, Release | PASS; 15 cases / 385 assertions | `4a038bbdff22737e8c8caecbdb8a1eb0b456a4e90c4ba00d2a2d6f976f9229fe` |
+| Main preview + creation selector, ASan | PASS; 15 cases / 385 assertions | `f709c245bbab2c7a0ee30579e1cdfd596b52686969134db34930a86e1e22cebe` |
+| Dedicated creation action, Release / ASan | PASS; 11 cases / 318 assertions each | `185f929d48c27f8f0ebe8ed79604da2ee2e5b088db0765e2f1fe891ec3b204be` / `71840ac04dab122480cda3cf422c848c311b51fa2a56a704e6ebd6e7a01a899b` |
+| Worker kernel portability, Release / ASan | PASS; 4 cases / 156 assertions each | `18320ed64823ac9da7caf14ce93066539f5d3f20cfd29f40d3896809bafc3cb4` / `8bc8565cb2ab40d6af12a632305b3f3d65f03e6e747abd42e3a597ead6a35cbf` |
+| Worker request portability, Release / ASan | PASS; 1 case / 111 assertions each | `1cdaca981cd4542e4d86b6abfa11ef26200724f4362877549b3b8789e0823a15` / `c68ede3f51820953e8c0e36b6523dd9a898917e44d08a9a1fc5edd9f3e61a070` |
+| Worker result portability, Release / ASan | PASS; 1 case / 18 assertions each | `00f322a3d493faf6c13aed5ddbcc9cc56a7cb54a599c33c02a9f54175c1382de` / `1c387c1ef216c2be61a4a1b6b41a3f2aaced981bba1a5f64e429530170be1af6` |
+| Worker-client cache portability, Release / ASan | PASS; 2 cases / 1,045 and 1,867 assertions | `d3529fdd6ee1e10cb78f2db0a26ff936fb68108b5705a00a28c9bc4122a6f0b8` / `44b85134427b912ef86eb6565eb8a0761e42fe89e3d6a660d998f4d02f1902d2` |
+| Fresh-helper process cache portability, Release / ASan | PASS; 1 case / 190 and 216 assertions | `29b7dc250a6676ed7aabd23a6dc98f64d92bca2bc36be61ab672ed67c65d1771` / `0cfb1fd63a7350ffa42dd75495e0787f9d7a41ae113b33c42c53918752586550` |
+
+Logs: `/private/tmp/offset-W117-preview-creation-release.log`,
+`/private/tmp/offset-W117-preview-creation-asan.log`, and the matching
+`/private/tmp/offset-W117-{kernel,client,process,request,result,creation}-{release,asan}.log` files.
