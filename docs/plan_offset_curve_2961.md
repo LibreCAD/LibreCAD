@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W163, superseding W162 below): S0 source/target reconciliation
+Current status (W164, superseding W163 below): S0 source/target reconciliation
 and the local A-core through C-check audit are closed. Direct synchronous
 `fileImport`, stream, and byte filter imports validate offset carriers through
 the worker in the current source. W158 requalifies the qmake6 app/helper bundle;
@@ -38,6 +38,12 @@ retains all eight spline entities and their owned schema marker. Direct AC1021
 ACadSharp acceptance remains unqualified. W0-W2,
 E/U/G/F/O/T and R remain open for cross-platform, package, visible UI,
 external-CAD, and final integration acceptance.
+W164 independently parsed the actual W163 AC1032 DXF output with ACadSharp,
+preserving both owned markers and valid spline knot layouts. On the retained
+W134 DWG matrix outputs, LibreDWG read 24/24; ACadSharp read 20/24, with the four
+AC1021 files failing at its known negative-ComprLen header exception. The DWG
+matrix files predate the current product source pin, so current-head external
+DWG acceptance remains open.
 W163 records one focused macOS qmake6 UI check: an ellipse offset preview and
 commit, properties, Undo/Redo, and AC1032 DXF save/reopen. This is partial
 evidence only; the full visible interaction matrix and its screenshot/display/
@@ -48,8 +54,9 @@ W1-W160. W156 closes local routing for the public synchronous file/stream/byte
 filter APIs. Current-head worker CI, Windows failure coverage, deployed-package
 checks, visible UI, external-CAD interoperability, and final integration remain
 open.**
-Latest recorded slice: W163 records a focused macOS qmake6 ellipse UI/save/reopen
-check; W162 records direct LibreDWG semantic inspection of the
+Latest recorded slice: W164 records independent ACadSharp/LibreDWG reads; W163
+records a focused macOS qmake6 ellipse UI/save/reopen check; W162 records direct
+LibreDWG semantic inspection of the
 13 AC1021 files; W161 records direct/converted ACadSharp triage; W160
 requalifies the current-source staged install helper with Release and ASan
 clients; W159 requalifies cache portability and GUI
@@ -6396,3 +6403,30 @@ interaction was attempted.
 | LibreCAD source under test | PR head `84fe54790859ce998cd022515d3d26a4167fd6cb`; qmake6 Qt 6.12.0 app |
 | Roadmap parser/inventory test, `node --test scripts/offset-curve-validation/test-refusal-inventory.js` | PASS; 99 / 99; 93 executable obligations, zero pending declarations, no mismatches |
 | Remaining visible UI acceptance | open; screenshot, display/DPR, and full interaction matrix not captured |
+
+## 122. W164 Independent Reader Checks
+
+Used ACadSharp commit `3a52a52047e84670759c1f9ad3916ec3ce85ff56` to parse the
+actual W163 DXF 2018 save. ACadSharp returned three modelspace entities, two
+splines carrying `LC_OFFSET_CURVE` XDATA, and valid knot counts for both (degree
+3; 4 and 88 controls). This output was saved by the qmake6 product at source
+`41d0089d8d583f5521f5069e18631445699b14d3` and is the current-source DXF
+external-reader result.
+
+Also directly read the retained W134 DWG writer matrix: four degree-1/edited and
+degree-3/edited outputs for each of R2000, R2004, R2007, R2010, R2013 and R2018.
+LibreDWG 0.14 accepted all 24 and its JSON retained one SPLINE, one owned marker,
+and valid degree/control/knot cardinalities in every file. ACadSharp accepted
+20/24. All four R2007/AC1021 inputs throw `NotImplementedException` in
+`DwgReader.readFileHeaderAC21` at line 980 before entity decoding; the source
+comment there explicitly identifies negative `ComprLen` as unimplemented. The
+matrix files were generated at W134 source `563da4a26`, not the current product
+source. These reads supplement historical matrix evidence and do not close
+current-head DWG interoperability or direct AC1021 ACadSharp acceptance.
+
+| W164 artifact | SHA256 / result |
+|---|---|
+| Current-source W163 DXF, `/private/tmp/offset-W160-G-matrix-outputs/offset-W163-ui-check.dxf` | ACadSharp 3/3 entities; 2/2 marker splines with valid knots / `d58e9d13b280f8f3b2fcb46ef276a0b251955ad8441fde811edcbbdd61d317a9` |
+| Retained DWG matrix + LibreDWG, `/private/tmp/offset-W164-libredwg-dwg-writer-matrix.tsv` | 24/24 accepted with semantic spline checks / `1e449466b6e8b5761b54198e5759740553b6ca0fe16bea103db3293d6c8bdc2d` |
+| Retained DWG matrix + ACadSharp, `/private/tmp/offset-W164-acadsharp-dwg-writer-matrix.tsv` | 20/24 accepted; four AC1021 header exceptions at `DwgReader.cs:980` / `3c47a6e768bfb3be0ef5ac31e1a025d2076fa19e0bd58b4feb8467b0f7316a80` |
+| Source pins | LibreCAD DWG matrix `563da4a26`; W163 DXF product `41d0089d8d583f5521f5069e18631445699b14d3`; ACadSharp `3a52a52047e84670759c1f9ad3916ec3ce85ff56` |
