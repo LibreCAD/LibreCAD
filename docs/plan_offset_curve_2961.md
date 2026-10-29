@@ -25,7 +25,7 @@ USA.
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
 Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117/W126/W127 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W137 requalifies W126 preview-cache portability in the dedicated kernel/client/fresh-helper targets, W138 requalifies W127 Modify Offset creation/repeat GUI routing, W139 requalifies U4 persisted option/preview/commit behavior, W140 requalifies O1 Update from Source, W141 requalifies O2 Restore Original, and W142-W143 record the in-repo import-caller ownership audit plus current-source caller and GUI open/template tests; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan, and W124 requalifies local trim file/conversion/undo-reopen coverage in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100, W128 requalifies E1 guarded entity/factory/clone/transform behavior, W129 requalifies U1 type/INSERT/selection/SVG/menu/info/plugin dispatch, W131 requalifies E2 cached grips/snaps/through edits and transactional transforms, W132 requalifies F1 typed schema/carrier/ownership/resource-limit behavior, W133 requalifies F2 actual DXF/DWG writing and transactional refusal, W134 requalifies F3 independent fixture/version/write/conversion/reopen matrix, W135 requalifies U2 dialog/sheet async property publication, and W136 requalifies U3 async grip drag/cancel/ownership/history behavior in Release/ASan; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, external use of public synchronous low-level import APIs, remote cross-platform CI and final acceptance remain open**.
-Latest recorded slice: W151 confirms the two broad randomized command-alias failures also occur in a fresh `origin/master` build; they are inherited baseline failures, not offset regressions. W150's three isolated randomized `[commands]` seeds pass; W149's full declaration-order and DXF/DWG fast Release lanes pass with documented optional fixture skips. W148 qmake6 app/helper qualification, W147 creation/repeat routing, and W146 preview-cache portability remain qualified. Remote/platform CI, packaged-helper acceptance, external synchronous API use, physical visible interaction, and final W0-W2/R acceptance remain open.
+Latest recorded slice: W152 completes the previously interrupted aggregate cache-check fault sweep under ASan. W151 confirms the two broad randomized command-alias failures also occur in a fresh `origin/master` build; they are inherited baseline failures, not offset regressions. W150's three isolated randomized `[commands]` seeds pass; W149's full declaration-order and DXF/DWG fast Release lanes pass with documented optional fixture skips. W148 qmake6 app/helper qualification, W147 creation/repeat routing, and W146 preview-cache portability remain qualified. Remote/platform CI, packaged-helper acceptance, external synchronous API use, physical visible interaction, and final W0-W2/R acceptance remain open.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -5963,3 +5963,38 @@ and `40903562899` for earlier product head `d739b5a33` are completed with
 `cancelled` conclusions. No passing remote platform result is available for
 the current PR head; rerun/obtain the required checks before claiming remote
 qualification.
+
+## 110. W152 Full Aggregate Cache-Check Fault Sweep, ASan
+
+Rebuilt and ran the standalone cache-check failure target from the current
+worktree at PR head `0556b88c50b9f77f91d5a62e243c5d50e3cf3c06`. The configured
+CMake tree is `RelWithDebInfo` with `-fsanitize=address -fno-omit-frame-pointer`;
+`librecad_lib` was checked immediately before execution and Ninja reported no
+stale work. The no-argument aggregate runner passed every allocation-injection
+point, refusal-atomicity check, and same-budget retry across all fixtures: 29,117
+injection/recovery points. This closes W120's previously interrupted aggregate
+ASan lane; it does not establish leak freedom (`detect_leaks=0`) or close the
+broader A-C review, platform, package, visible UI, external caller, or final R
+gates.
+
+| W152 lane | Result | SHA256 |
+|---|---|---|
+| `librecad_offset_cache_check_failure_tests` executable | PASS; ASan; 29,117 injection/recovery points | `68c0f7e6523cc4965f69b569fb78a6abeec868e15f590b7747ca45b2dfcb6e38` |
+
+Command: `ASAN_OPTIONS=detect_leaks=0 /private/tmp/offset-W77-asan/librecad_offset_cache_check_failure_tests`
+(exit 0). Fixture counts: single-line 108; two-span cubic forward/reversed 115
+each; standalone cache bounds 92; standalone local topology 100; whole-circle
+seam forward/reversed 459 each; open/closed two-component trimmed paths 6,031 /
+5,497; hidden-cusp endpoint refusal 6,095; six-pair/four-critical reference
+graph 6,501; reference events 3,545. Their sum matches the executable's final
+`allocation_failure_sweep_all_fixtures_recovered=1 injection_points=29117`.
+The updated roadmap's H6 inventory/parser suite also passed:
+`node --test scripts/offset-curve-validation/test-refusal-inventory.js`, 99/99
+tests, zero failures/cancellations/skips, 71 original classifications retained,
+93 executable obligations, and no pending declarations or production mismatches.
+
+The PR remains open and draft at head `0556b88c50b9f77f91d5a62e243c5d50e3cf3c06`.
+At the latest check snapshot, Text foundations passed; DWG/DXF verification,
+Pixi Builds (including Windows, Linux ARM, macOS arm64 and Intel), and CodeQL
+were still in progress. Obtain their terminal results on the pushed head before
+claiming remote/platform qualification.
