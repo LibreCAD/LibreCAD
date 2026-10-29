@@ -179,6 +179,9 @@ QC_ApplicationWindow::QC_ApplicationWindow() {
  */
 QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow");
+    // Destroying an MDI child can activate another child. The singleton may
+    // already be reset, so no activation callback may run during teardown.
+    if (m_mdiAreaCAD) disconnect(m_mdiAreaCAD, nullptr, this, nullptr);
     cancelPendingImports();
 
     // Quitting closes every drawing through doClose(), and the windows' deferred

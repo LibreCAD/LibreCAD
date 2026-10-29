@@ -537,6 +537,42 @@ TEST_CASE("Staged GUI imports are bounded and queued work completes", "[.gui][do
     LC_DockLayoutTestAccess::closeDrawings(window);
 }
 
+TEST_CASE("Forced application destruction closes live imported drawings", "[.gui][dock-window][offset-import][forced-destruction]") {
+    auto& window = testWindow(); window.resize(700, 500); window.prepareWindowForShow(); window.show(); settle();
+    const QString root = QString(LIBRECAD_SOURCE_DIR) + "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    const QString line = root + "dxf-binary-R2018-line-control.dxf";
+    const QString native = root + "dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFileInfo::exists(line)); REQUIRE(QFileInfo::exists(native));
+    for (int i = 0; i < 4; ++i) window.openFile(line);
+    window.openFile(native); REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, native));
+    window.restoreActiveFileAfterPendingImports(line);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 60000); settle(10); }
+    bool helperStarted = false; qint64 helperPid = 0; int suspended = -1;
+    SECTION("live drawings") {}
+#ifdef Q_OS_UNIX
+    SECTION("live drawings and an active helper") {
+        window.openFile(native); auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+        LC_GuiImportTestAccess::onStarted(*session, [&](QProcess& process) {
+            helperPid = process.processId(); suspended = ::kill(static_cast<pid_t>(helperPid), SIGSTOP); helperStarted = true;
+        });
+        while (!helperStarted) { REQUIRE(elapsed.elapsed() < 60000); settle(10); }
+        REQUIRE(helperPid > 0); REQUIRE(suspended == 0);
+    }
+#endif
+    QList<QPointer<QC_MDIWindow>> drawings;
+    for (auto* drawing : window.findChildren<QC_MDIWindow*>()) drawings.append(drawing);
+    REQUIRE(drawings.size() == 6); window.hide(); QApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    REQUIRE(testWindowOwner); testWindowOwner->reset();
+    QApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    for (const auto& drawing : drawings) CHECK_FALSE(drawing);
+#ifdef Q_OS_UNIX
+    if (helperStarted) { errno = 0; CHECK(::kill(static_cast<pid_t>(helperPid), 0) == -1); CHECK(errno == ESRCH); }
+#endif
+    auto& replacement = testWindow(); replacement.resize(700, 500); replacement.prepareWindowForShow(); replacement.show(); settle();
+    CHECK(LC_DockLayoutTestAccess::drawingCount(replacement) == 0);
+}
+
 TEST_CASE("Staged GUI import queue reports overflow and cancellation clears it", "[.gui][dock-window][offset-import][queue]") {
     DockFixture fixture; auto& window = fixture.window;
     const int initial = LC_DockLayoutTestAccess::drawingCount(window);
