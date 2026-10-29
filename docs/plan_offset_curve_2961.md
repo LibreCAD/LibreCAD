@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, and W107/W111 requalify budget-core/strict-query slices without closing A-core/A-strict; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, C-check cusp and topology/failure inventory, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, and W107/W111/W112 requalify budget-core, strict-query and paired-reference graph slices without closing A-core/A-strict/A-reference; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, C-check cusp and topology/failure inventory, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -305,7 +305,7 @@ candidate except the explicitly proposed native-worker tags.
 | S0 | Pin/reconcile candidate, main and feature; baseline/discovery; fix DWG enum classification and add R2007 execution | - | recovered; parser and ordinary R2007 slices qualified below; geometry/type/target qualification remains | `[curve-offset]`, `[lc-offsetcurve]`, `[entity-coverage]`, actual target/version inventory |
 | A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; `27f9c5239` fixes demonstrated compound admissions; `91dcde3c4` preserves ordered contact-control debit semantics; W107 requalifies budget-core primitives with no new gap; broader audit remains open | `[lc-offsetcurve][budget-core]` |
 | A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; W64 focused strict-budget Release/ASan requalification; W87 fixes depth-ceiling-based queue over-allocation; W111 current-source requalification; broader audit remains open | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
-| A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; W65 focused reference-accounting Release/ASan requalification; paired graph audit remains open | `[lc-offsetcurve][reference-accounting]` |
+| A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; W65 focused reference-accounting Release/ASan requalification; W112 current paired-graph/terminal audit and requalification; exhaustive assembly allocation-failure audit remains open | `[lc-offsetcurve][reference-accounting]`, `[reference-terminals]`, `[reference-components]` |
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66 focused cache-budget Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][cache-budget-accounting]` |
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; W97 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | geometry terminal/occurrence case inventory |
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; W98 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
@@ -5006,3 +5006,25 @@ cross-entry or allocation-failure audit, nor A-core/A-reference/A-cache.
 Reports: `/private/tmp/offset-W111-strict-budget-release.xml` and
 `/private/tmp/offset-W111-strict-budget-asan.xml`. ASan used `detect_leaks=0`;
 this is not leak validation.
+
+## 74. W112 Paired Reference-Graph Publication Review
+
+At source head `e7c6f8c0a`, reviewed the reference event/component builder's
+paired graph path and reran `[reference-accounting],[reference-terminals],
+[reference-components]` in CMake Release and ASan. Both lanes passed 33 cases /
+25,367 assertions with zero errors, failures or skips. The audit traced graph
+records through private staging, checked reserve and budget admission before
+append/resize, reviewed public occurrence and edge-terminal cross-links, and
+confirmed the result exposes `analysis` only after event publication and full
+component assembly succeed. No publication defect was demonstrated. Exhaustive
+allocation-failure injection at each graph assembly stage and the broader
+A-reference cross-entry audit remain open; this is not a closeout.
+
+| W112 lane | JUnit cases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Paired reference graph, Release | 33 / 25,367 | PASS; 0 errors, 0 failures, 0 skips | `b4ab6b892e23d47b916ccfac68bd8b5ee8748950bdf51942b5de93cc9c85bc4d` |
+| Paired reference graph, ASan | 33 / 25,367 | PASS; 0 errors, 0 failures, 0 skips | `ca51098ff4a472a9c2840ab408604ca83a28cdb889ed5120a53aca35babf538d` |
+
+Reports: `/private/tmp/offset-W112-reference-graph-release.xml` and
+`/private/tmp/offset-W112-reference-graph-asan.xml`. ASan used
+`detect_leaks=0`; this is not leak validation.
