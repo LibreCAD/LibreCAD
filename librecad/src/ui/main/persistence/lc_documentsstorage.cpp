@@ -281,10 +281,12 @@ void LC_DocumentsStorage::finalizeTemplateGraphic(RS_Graphic& graphic) const {
 bool LC_DocumentsStorage::loadGraphic(RS_Graphic* graphic, const QString &filename, const RS2::FormatType type,
                                      const RS2::DxfTextEncoding encoding) const {
     graphic->initForNewDocument();
+    const LC_FileIdentity sourceIdentity = LC_FileIdentity::capture(filename);
 
     const bool ret = RS_FileIO::instance()->fileImport(*graphic, filename, type, nullptr, encoding);
 
     if (ret) {
+        graphic->setSourceFileIdentity(sourceIdentity);
         finalizeLoadedGraphic(*graphic, filename);
     }
     return ret;
@@ -295,7 +297,10 @@ void LC_DocumentsStorage::finalizeLoadedGraphic(RS_Graphic& graphic, const QStri
     const QFileInfo finfo(filename);
     graphic.setAutosaveFileName(createAutoSaveFileName(finfo));
     graphic.setFilename(filename);
-    graphic.setSourceFileIdentity(LC_FileIdentity::capture(filename));
+    if (!graphic.sourceFileIdentity().valid ||
+        !graphic.sourceFileIdentity().refersToPath(filename)) {
+        graphic.setSourceFileIdentity(LC_FileIdentity::capture(filename));
+    }
     // Keep repairs and recovery imports dirty after markSaved clears the flag.
     const bool importMutated = graphic.takeImportGeometryMutated();
     graphic.markSaved(finfo.lastModified());

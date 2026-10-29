@@ -282,6 +282,40 @@ TEST_CASE("Private graphic finalization preserves normal open bookkeeping", "[do
     CHECK_FALSE(graphic.takeImportGeometryMutated());
 }
 
+TEST_CASE("Document finalization retains source identity captured before import", "[documentsstorage][import][source-change]") {
+    ensureApp();
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const QString source = directory.filePath("drawing.dxf");
+    const QString original = directory.filePath("original.dxf");
+    QFile file(source);
+    REQUIRE(file.open(QIODevice::WriteOnly));
+    REQUIRE(file.write("original") == 8);
+    file.close();
+    const LC_FileIdentity importedIdentity = LC_FileIdentity::capture(source);
+    REQUIRE(importedIdentity.valid);
+
+    REQUIRE(QFile::rename(source, original));
+    REQUIRE(file.open(QIODevice::WriteOnly));
+    REQUIRE(file.write("replacement") == 11);
+    file.close();
+
+    TestStorage storage;
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    graphic.setSourceFileIdentity(importedIdentity);
+    storage.finalizeLoadedGraphic(graphic, source);
+    CHECK(graphic.sourceFileIdentity().refersToSameObject(original));
+    CHECK_FALSE(graphic.sourceFileIdentity().matches(source));
+
+    graphic.setModified(true);
+    bool cancelled = false;
+    CHECK(storage.saveDocument(&graphic, nullptr, cancelled));
+    CHECK(cancelled);
+    CHECK(storage.m_asked == 1);
+    CHECK(contents(source) == QByteArray("replacement"));
+}
+
 TEST_CASE("Private template finalization keeps an untitled DXF document", "[documentsstorage][import][offset][template]") {
     ensureApp(); TestStorage storage; RS_Graphic graphic; graphic.initForNewDocument();
     graphic.setFilename(QStringLiteral("previous.dwg")); graphic.setFormatType(RS2::FormatDWG2018); graphic.setModified(true);
