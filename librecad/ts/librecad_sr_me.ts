@@ -39,67 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="14"/>
-        <source>Frame</source>
-        <translation>Оквир</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="86"/>
-        <source>&gt;</source>
-        <translation>&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="105"/>
-        <source>&lt;</source>
-        <translation>&lt;</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="139"/>
-        <source>+</source>
-        <translation>+</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="149"/>
-        <source>-</source>
-        <translation>-</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="156"/>
-        <source>input a name and then press +</source>
-        <translation>Унесите име и притисните +</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="193"/>
-        <source>Save</source>
-        <translation>Сачувај</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <location filename="../src/ui/generic/customwidgetcreator.ui" line="14"/>
-        <source>Frame</source>
-        <translation>Оквир</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/generic/customwidgetcreator.ui" line="65"/>
-        <source>-&gt;</source>
-        <translation>-></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/generic/customwidgetcreator.ui" line="72"/>
-        <source>&lt;-</source>
-        <translation>&lt;-</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/generic/customwidgetcreator.ui" line="115"/>
-        <source>Save</source>
-        <translation>Сачувај</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -312,13 +251,6 @@ ili [%2]</translation>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
         <source>Y</source>
         <translation>Y</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="521"/>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation>Odredite udaljenost (ugao %1 stepeni)
-ili [%2]</translation>
     </message>
 </context>
 <context>
@@ -1729,14 +1661,6 @@ ili [%2]</translation>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="73"/>
         <source>Percent</source>
         <translation>Procenat</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <location filename="../src/ui/lc_customtoolbar.cpp" line="36"/>
-        <source>Add or Remove Action</source>
-        <translation>Додajte или избришите Акцију</translation>
     </message>
 </context>
 <context>
@@ -3656,16 +3580,6 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
         <translation>Недавне Датотеке</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="516"/>
-        <source>Saving drawing...</source>
-        <translation>Čuvanje crteža...</translation>
-    </message>
-    <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="516"/>
-        <source>Saving drawing: %1</source>
-        <translation>Čuvanje crteža: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="521"/>
         <source>Save cancelled</source>
         <translation>Čuvanje otkazano</translation>
@@ -3849,11 +3763,6 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
         <translation>Додељивач Менија</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1538"/>
-        <source>Creating new file...</source>
-        <translation>Kreiranje nove datoteke...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1727"/>
         <source>New document from template: </source>
         <translation>Nova datoteka iz šablona:</translation>
@@ -3954,19 +3863,9 @@ Proverite dozvole.</translation>
         <translation>Виџети поставке</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3327"/>
-        <source>Opening recent file...</source>
-        <translation>Otvaranje nedavne datoteke...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2020"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>Datoteka &quot;%1&quot; ne postoji. Otvaranje je otkazano</translation>
-    </message>
-    <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2021"/>
-        <source>Opening aborted</source>
-        <translation>Otvaranje otkazano</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1891"/>
@@ -3991,11 +3890,6 @@ Please check its existence and permissions.</source>
         <translation>Čuvanje svih fajlova otkazano.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2087"/>
-        <source>Auto-saving drawing...</source>
-        <translation>Automatsko čuvanje crteža...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2095"/>
         <source>Auto-saved drawing</source>
         <translation>Automatski sačuvani crtež.</translation>
@@ -4014,11 +3908,6 @@ Auto-save disabled.</source>
         <translation>Automatsko čuvanje nije uspelo.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2118"/>
-        <source>Exporting drawing...</source>
-        <translation>Извозим цртеж...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2155"/>
         <source>Export as</source>
         <translation>Извези као</translation>
@@ -4027,16 +3916,6 @@ Auto-save disabled.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2214"/>
         <source>Exported: %1</source>
         <translation>Извезено: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2254"/>
-        <source>Exporting...</source>
-        <translation>Извозим...</translation>
-    </message>
-    <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2327"/>
-        <source>Export complete</source>
-        <translation>Завршен извоз</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2329"/>
@@ -4054,24 +3933,9 @@ Auto-save disabled.</source>
         <translation>Молимо прво подесите скалирање и позиционирање у прегледу штампе.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2438"/>
-        <source>Printing...</source>
-        <translation>Štampanje...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2490"/>
         <source>Export as PDF</source>
         <translation>Извези као ПДФ</translation>
-    </message>
-    <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2684"/>
-        <source>Printing complete</source>
-        <translation>Štampanje završeno</translation>
-    </message>
-    <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2838"/>
-        <source>Exiting application...</source>
-        <translation>Izlazak iz aplikacije...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="257"/>
@@ -4365,12 +4229,6 @@ Auto-save disabled.</source>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1263"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation>Просторна тастер: привремено подешавање привлачења на слободно привлачење</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1273"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>escape</translation>
     </message>
 </context>
 <context>
@@ -4712,12 +4570,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="210"/>
         <source>Unknown command: %1</source>
         <translation>Непозната команда: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="254"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>izlaz</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="343"/>
@@ -7311,49 +7163,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="40"/>
         <source>Whether to export points</source>
         <translation>Да ли да се извезу тачке</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="17"/>
-        <source>Drawing Variables</source>
-        <translation>Променљиве цртежа</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="54"/>
-        <source>Variable</source>
-        <translation>Променљива</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="59"/>
-        <source>Code</source>
-        <translation>Код</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="64"/>
-        <source>Value</source>
-        <translation>Вредност</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="96"/>
-        <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="99"/>
-        <source>Alt+O</source>
-        <translation>Alt+O</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="112"/>
-        <source>Cancel</source>
-        <translation>Откажи</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="115"/>
-        <source>Esc</source>
-        <translation>Esc</translation>
     </message>
 </context>
 <context>
@@ -12724,12 +12533,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <translation>Одштампај монохроматски (црно/бело).</translation>
     </message>
     <message>
-        <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="101"/>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation>Величина папира (ширина x висина) у мм.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13285,23 +13088,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/qg_commandedit.cpp" line="198"/>
         <source>Calculator error for input: </source>
         <translation>Greška kalkulatora za unos:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="258"/>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>cal</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="259"/>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>izračunaj</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="297"/>
-        <source>cal</source>
-        <translation>cal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="301"/>
