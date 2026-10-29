@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, and W114 closes local A-cache allocation-failure coverage; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, C-check topology/site inventory, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, and W118 closes selected rich A-reference graph allocation-failure coverage; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, C-check topology/site inventory, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -305,7 +305,7 @@ candidate except the explicitly proposed native-worker tags.
 | S0 | Pin/reconcile candidate, main and feature; baseline/discovery; fix DWG enum classification and add R2007 execution | - | recovered; parser and ordinary R2007 slices qualified below; geometry/type/target qualification remains | `[curve-offset]`, `[lc-offsetcurve]`, `[entity-coverage]`, actual target/version inventory |
 | A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; `27f9c5239` fixes demonstrated compound admissions; `91dcde3c4` preserves ordered contact-control debit semantics; W107 requalifies budget-core primitives with no new gap; broader audit remains open | `[lc-offsetcurve][budget-core]` |
 | A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; W64 focused strict-budget Release/ASan requalification; W87 fixes depth-ceiling-based queue over-allocation; W111 current-source requalification; broader audit remains open | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
-| A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; W65 focused reference-accounting Release/ASan requalification; W112 current paired-graph/terminal audit and requalification; exhaustive assembly allocation-failure audit remains open | `[lc-offsetcurve][reference-accounting]`, `[reference-terminals]`, `[reference-components]` |
+| A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; W65/W112 focused Release/ASan requalification; W118 sweeps every allocation through a six-pair/four-critical component-graph publication with bounded ledgers and same-budget recovery; broader fixture/cross-entry audit remains | `[lc-offsetcurve][reference-accounting]`, `[reference-terminals]`, `[reference-components]`, isolated reference-graph fault selector |
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66/W113 budget requalification; W114 exhaustively injects allocations in `checkCache`, standalone bounds and local-topology APIs with bounded ledgers and same-budget recovery; local A-cache audit complete; cross-platform/final R gates remain | `[lc-offsetcurve][cache-budget-accounting]`, standalone cache-check fault target |
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; W97 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | geometry terminal/occurrence case inventory |
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; W98 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
@@ -5171,3 +5171,37 @@ packaged/visible acceptance or remaining W0-W2 platform gates.
 Logs: `/private/tmp/offset-W117-preview-creation-release.log`,
 `/private/tmp/offset-W117-preview-creation-asan.log`, and the matching
 `/private/tmp/offset-W117-{kernel,client,process,request,result,creation}-{release,asan}.log` files.
+
+## 80. W118 Reference-Component Publication Allocation-Failure Sweep
+
+Test commit `cb1d9b43f` adds the isolated `--reference-components` fault sweep
+and includes it in the standalone executable's default full run. Its fixture is
+the established partial-ellipse family with six pair events and four critical
+records; the public component analysis must publish successfully before the
+sweep begins. Every observed C++ allocation is then failed once, the cumulative
+work ledger must remain bounded with budget status still usable, and retrying
+with the same budget must publish the complete graph with an exact accumulated
+ledger. Release and ASan each passed 6,501 injection/recovery points over 1,373
+work vertices.
+
+The current Release and ASan reference-accounting/terminal/component selector
+also passes 25,367 assertions. Catch reports 28 test cases in each current
+binary; W112 recorded 33 cases with the same assertions, and that historical
+case count is not reproducible from the current selector. The no-argument
+fault executable was not rerun as a whole after adding this fixture, and this
+single rich graph does not close A-reference's broader cross-entry/site audit,
+remote platform execution, or final R acceptance. No product defect was
+demonstrated.
+
+| W118 lane | Result | SHA256 |
+|---|---|---|
+| Six-pair/four-critical reference graph fault sweep, Release | PASS; 6,501 injections and same-budget recoveries | `9d88358cc0bde797fe12d166ccfb7fdd75e16a71f03c8d19f74b6b6f1dfd5f86` |
+| Six-pair/four-critical reference graph fault sweep, ASan | PASS; 6,501 injections and same-budget recoveries | `9d88358cc0bde797fe12d166ccfb7fdd75e16a71f03c8d19f74b6b6f1dfd5f86` |
+| Reference accounting/terminal/component selector, Release | PASS; 28 cases / 25,367 assertions | `e67b1e220024a7365c3e59698502d17aed99f76d4c545d212fd5caa8aba1897c` |
+| Reference accounting/terminal/component selector, ASan | PASS; 28 cases / 25,367 assertions | `bb35978c1eb8e3e8b5b4251480d891080c2e3d600952a78f36512ec5c5b4584a` |
+
+Logs: `/private/tmp/offset-W118-reference-fault-release.log`,
+`/private/tmp/offset-W118-reference-fault-asan.log`,
+`/private/tmp/offset-W118-reference-release.log`, and
+`/private/tmp/offset-W118-reference-asan.log`. ASan used `detect_leaks=0`; this
+is not leak validation.
