@@ -3100,7 +3100,7 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
 - [ ] W0-W2: typed/cached Produce, creation/repeat and local native Trim GUI routing and scoped action faults are qualified;
   a fresh macOS qmake6 full-app/bundle build and adjacent-helper worker smoke are now
-  qualified in W55. Finish other import ownership, Windows/native cross-platform failure
+  qualified in W55/W56. Finish other import ownership, Windows/native cross-platform failure
   coverage and remaining caller/final adoption/failure acceptance. Reuse the qualified
   geometry-entry timeout/helper/client/reply modules; do not redo them as absent. Keep
   Node runner scope separate.
@@ -3515,3 +3515,31 @@ checking that the file exists.
 The bundle smoke does not establish codesigning/notarization, distribution
 installation, visible GUI interaction, Windows QFile/native rename semantics,
 or multi-file atomicity. Those remain open acceptance items.
+
+## 18. W56 Current ASan Cache and Creation Tests Against qmake Helper
+
+Reused the W54 current-source ASan `librecad_tests` binary as the test runner,
+placed it in the fresh W55 bundle's `Contents/MacOS` directory so production
+application-directory discovery resolves the qmake-built
+`LibreCADOffsetWorker` beside it. The test runner is ASan-instrumented; the
+qmake helper is the ordinary Release binary. With `ASAN_OPTIONS=detect_leaks=0`,
+the focused requalification passed:
+
+| W56 suite | Testcases | JUnit `tests` | Errors / failures / skips | Result |
+|---|---:|---:|---:|---|
+| `[preview-portable]` | 4 | 67 | 0 / 0 / 0 | PASS |
+| `[creation-worker]` | 13 | 318 | 0 / 0 / 0 | PASS |
+
+Both suites exercise the real adjacent helper path; the creation tests cover
+worker-routed preview, commit, repeat, cache reuse, fallback and publication
+invariants. The cache portability tests cover decoding/rebinding to fresh
+owned sources. These are ASan caller/test-runner checks against an uninstrumented
+qmake helper, not ASan coverage of the helper process itself or leak validation.
+
+| W56 artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W55-preview-portable-asan.xml` | `04a7dd4c45b808d523f9f928484ff058cd4794fcbe5911f9d5d0dbe9ec40538c` |
+| `/private/tmp/offset-W55-creation-worker-asan.xml` | `5fe52feffba9e98afff426f5f3c96f3b0454480fa741e9c85cf89ab9f6b6cdb3` |
+
+Visible interactive GUI acceptance, Windows behavior, packaged installation,
+and full-plan integration/failure acceptance remain open.
