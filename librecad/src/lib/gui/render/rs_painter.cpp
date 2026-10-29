@@ -27,6 +27,8 @@
 
 #include <algorithm>
 #include <cmath>
+#include <limits>
+#include <utility>
 
 #include "dxf_format.h"
 #include "lc_graphicviewport.h"
@@ -207,6 +209,77 @@ namespace {
 // RVT_PORT changed from RS_PainterQt::RS_PainterQt( const QPaintDevice* pd)
 RS_Painter::RS_Painter(QPaintDevice* pd)
     : QPainter{pd}, m_cachedDpmm{getDpmm()} {
+}
+
+QVector<qreal> RS_Painter::canonicalDashPattern(const std::vector<double>& raw, qreal* phaseOffset) {
+    if (phaseOffset != nullptr)
+        *phaseOffset = 0.0;
+    if (raw.empty())
+        return {};
+    // Runs of one state, in drawing units. A zero element takes the state the
+    // previous one left open, so the alternation survives DOT-like records.
+    std::vector<std::pair<bool, double>> runs; // dash, length
+    bool nextIsDash = true;
+    for (const double value : raw) {
+        if (!std::isfinite(value))
+            return {};
+        const bool isDash = value > 0.0 || (value == 0.0 && nextIsDash);
+        nextIsDash = !isDash;
+        const double length = std::abs(value);
+        if (!runs.empty() && runs.back().first == isDash)
+            runs.back().second += length;
+        else
+            runs.push_back({isDash, length});
+    }
+    // The list is cyclic: a run shared by both ends is one run. Retain the
+    // origin's position in that run before merging it for Qt.
+    const bool wraps = runs.size() > 1 && runs.front().first == runs.back().first;
+    const bool startsWithDash = runs.front().first;
+    const double leadingRun = runs.front().second;
+    const double trailingRun = runs.back().second;
+    if (wraps) {
+        runs.front().second += runs.back().second;
+        runs.pop_back();
+    }
+    // No dash or no gap means nothing Qt can draw.
+    if (runs.size() < 2)
+        return {};
+    // Rotate to start with a dash; the states alternate, so one step suffices.
+    const std::size_t first = runs.front().first ? 0 : 1;
+    double period = 0.0;
+    QVector<qreal> result;
+    result.reserve(static_cast<int>(runs.size()));
+    for (std::size_t i = 0; i < runs.size(); ++i) {
+        const auto& run = runs[(first + i) % runs.size()];
+        result.push_back(run.second);
+        period += run.second;
+    }
+    if (!std::isfinite(period) || period <= 0.0)
+        return {};
+    // Keep the DXF pattern's origin when rotation or a repeated end run moved
+    // it inside the Qt pattern's first dash/gap.
+    if (phaseOffset != nullptr)
+        *phaseOffset = startsWithDash ? (wraps ? trailingRun : 0.0) : period - leadingRun;
+    return result;
+}
+
+QVector<qreal> RS_Painter::dashPatternForQt(const QVector<qreal>& canonical, const double k) {
+    // The single place where the painter scales a table pattern.
+    QVector<qreal> pattern = canonical;
+    for (qreal& dash : pattern)
+        dash *= k;
+    if (pattern.size() % 2 != 0)
+        return {};
+    // QPen requires strictly positive dash and gap lengths. A zero group 49
+    // element is a dot; with the pen cap it becomes a point at this tiny length.
+    const qreal dotLength = std::numeric_limits<qreal>::epsilon();
+    for (qreal& dash : pattern) {
+        if (dash == 0.0)
+            dash = dotLength;
+        if (!std::isfinite(dash) || dash <= 0.0)
+            return {};
+    }
+    return pattern;
 }
 
 /**
@@ -1574,6 +1647,15 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
     pColor.setAlphaF(pen.getAlpha());
     RS2::LineType lineType = pen.getLineType();
     Qt::PenStyle style = rsToQtLineType(lineType);
+    // A named pen may draw dashes from the drawing's line type table; without
+    // a renderer or outside model space the enum decides, as it always did.
+    const std::uint16_t lineTypeId = pen.getLineTypeId();
+    const QVector<qreal>* tablePattern = nullptr;
+    qreal tablePhaseOffset = 0.0;
+    if (lineTypeId != 0 && m_renderer != nullptr && dashSpace == DashSpace::Model)
+        tablePattern = m_renderer->resolveDashPattern(pen, &tablePhaseOffset);
+    if (tablePattern != nullptr)
+        style = Qt::CustomDashLine;
 
     double screenWidth = pen.getScreenWidth();
     if (style == Qt::CustomDashLine) {
@@ -1583,23 +1665,26 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
         if (m_viewport && screenWidth == 0.0)
             deviceScale *= getDevicePixelRatio();
         const double k = dashPatternScale(screenWidth, deviceScale);
-        // Rebuild when the line type, width or viewport scale changes.
-        if (!m_lastDashValid || m_lastDashLineType != lineType
+        // Rebuild when the spelled identity, line type, width or viewport scale changes.
+        if (!m_lastDashValid || m_lastDashLineTypeId != lineTypeId
+            || m_lastDashLineType != lineType
             || m_lastDashScreenWidth != screenWidth || m_lastDashDeviceScale != deviceScale) {
-            QVector<qreal> dashPattern = rsToQDashPattern(lineType, k);
+            QVector<qreal> dashPattern = tablePattern != nullptr
+                ? dashPatternForQt(*tablePattern, k) : rsToQDashPattern(lineType, k);
             if (dashPattern.isEmpty()) {
                 style = Qt::SolidLine;
             }
             else {
                 m_lastUsedPen.setDashPattern(dashPattern); // also sets Qt::CustomDashLine
                 m_lastDashValid = true;
+                m_lastDashLineTypeId = lineTypeId;
                 m_lastDashLineType = lineType;
                 m_lastDashScreenWidth = screenWidth;
                 m_lastDashDeviceScale = deviceScale;
             }
         }
         if (style == Qt::CustomDashLine) {
-            m_lastUsedPen.setDashOffset(pen.dashOffset() * k);
+            m_lastUsedPen.setDashOffset((pen.dashOffset() + tablePhaseOffset) * k);
         }
     }
     if (style != Qt::CustomDashLine && m_lastUsedPen.style() != style) {

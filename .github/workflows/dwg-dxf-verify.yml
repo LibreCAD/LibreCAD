@@ -48,6 +48,9 @@ on:
       - 'librecad/src/lib/gui/render/widget/lc_graphicviewrenderer.*'
       - 'librecad/src/lib/gui/grid/lc_gridsystem.*'
       - 'librecad/src/lib/gui/tests/rs_painter_tests.cpp'
+      - 'librecad/src/lib/gui/render/lc_graphicviewportrenderer.cpp'
+      - 'librecad/src/lib/gui/render/lc_graphicviewportrenderer.h'
+      - 'librecad/src/lib/gui/tests/lc_linetype_render_tests.cpp'
       - 'librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp'
       - 'scripts/dwg-fast-check.sh'
   pull_request:
@@ -74,6 +77,9 @@ on:
       - 'librecad/src/lib/gui/render/widget/lc_graphicviewrenderer.*'
       - 'librecad/src/lib/gui/grid/lc_gridsystem.*'
       - 'librecad/src/lib/gui/tests/rs_painter_tests.cpp'
+      - 'librecad/src/lib/gui/render/lc_graphicviewportrenderer.cpp'
+      - 'librecad/src/lib/gui/render/lc_graphicviewportrenderer.h'
+      - 'librecad/src/lib/gui/tests/lc_linetype_render_tests.cpp'
       - 'librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp'
       - 'scripts/dwg-fast-check.sh'
   workflow_dispatch:
