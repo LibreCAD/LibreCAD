@@ -105,7 +105,7 @@ This inventory compares the older attached tree with the later candidate.
 | Type/UI/source actions | Entity enum/coverage, property queue/dialog, default drag, Update/Restore actions | Candidate present. Property queue defers publication with a timer, but prepares geometry synchronously in `apply`; a deferred commit is not background computation. |
 | Stored-cache Trim | `lc_offsetcachetrim`, contacts/matching helpers, Modify Trim action and file tests | Candidate present: pure preparation, exact fragments, two-operand publication and plain-fragment persistence. Recheck precision/ownership/undo guarantees. |
 | Validation workers | `scripts/offset-curve-validation/`, X-H1 through X-H7 | Candidate has Node developer/test workers and recorded timeout fixes. These tools are not a shipped isolated geometry worker. Do not confuse their deadlines with GUI computation limits. |
-| Native geometry-worker path | Real seven-operation protocol4 helper/client, cached source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip, Update, Modify Offset, native Trim and GUI drawing-open/template routing committed/qualified locally | W16-W19 qualify cache portability and creation/repeat; W24-W26 qualify local Trim routing and scoped action faults; W31/W32 cover GUI drawing open/templates. W72 adds an asynchronous staged DXF/DWG plugin block-import API, but no in-tree production caller uses it yet; legacy synchronous callers remain blocking. Other import callers, cross-platform and packaged/final acceptance remain mandatory W0-W2 work. |
+| Native geometry-worker path | Real seven-operation protocol4 helper/client, cached source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip, Update, Modify Offset, native Trim and GUI drawing-open/template routing committed/qualified locally | W16-W19 qualify cache portability and creation/repeat; W24-W26 qualify local Trim routing and scoped action faults; W31/W32 cover GUI drawing open/templates. W72 adds staged DXF/DWG plugin block import; W91 routes the legacy synchronous entry through that staged session (it still waits for compatibility) and preserves the async callback entry. W93 classifies hatch-pattern input as display-cache-only. Other import callers, cross-platform and packaged/final acceptance remain mandatory W0-W2 work. |
 | Tests/build targets | Main Catch target, filter micro targets and two standalone offset allocation-failure targets | Candidate present; source registration is not discovery/execution. Use the actual targets in section5.3, not just the old grouped fast lanes. |
 | Surviving test defect | `spline_offset_representation_tests.cpp` lines205 and668 in candidate still use DWG enum ranges | `FormatDWG2007` is outside the range; those ordinary representation loops also omit it. Fix classification and add an executed R2007 regression in S0. The separate candidate matrix already lists all six DWG versions. |
 
@@ -4531,3 +4531,41 @@ macOS/offscreen and qmake6 build evidence, not visible desktop testing or
 Windows/Linux runtime qualification. Remaining GUI/import caller audit,
 broader source/budget audit, installed-helper portability, and final W0-W2
 acceptance remain open.
+
+## 56. W94 Current-Source Cache and Creation/Repeat Qualification
+
+Rebuilt the Release process-cache, worker-client, creation-action and shared
+`librecad_tests` targets after W93, then requalified the focused worker cache
+portability and Modify Offset creation/repeat paths at source head
+`124d3cbc1`. The ASan process-cache, worker-client, creation-action and hostile
+file targets were also rebuilt. No new product defect was found in the portable
+cache transport, revision-bound merge/eviction, preview-cache reuse, or
+creation/repeat publication and fallback paths.
+
+| W94 lane | Release cases / assertions | ASan cases / assertions | Result |
+|---|---:|---:|---|
+| Fresh-helper preview cache, `[preview-portable][worker-process]` | 1 / 212 | 1 / 274 | PASS |
+| Worker-client cache merge/eviction, `[preview-portable][worker-client]` | 2 / 697 | 2 / 1019 | PASS |
+| Modify Offset creation/repeat, `[creation-worker]` | 13 / 318 | 13 / 318 | PASS |
+| Hatch-pattern hostile import, `[lc-offsetcurve][hostile]` | 1 / 71 | 1 / 71 | PASS |
+
+All reports contain zero errors, failures or skips. ASan used
+`detect_leaks=0`; this is not leak validation. The focused execution is
+macOS/offscreen and does not replace visible desktop, Windows/Linux runtime,
+installed-helper relocation, or final W0-W2 acceptance. The exact JUnit
+artifacts are:
+
+| W94 artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W93-process-release.xml` | `84ea312a6f0e2242a09f50d9a32b1c76ebf55603cb45d912ababee6b90f06fb9` |
+| `/private/tmp/offset-W93-process-asan.xml` | `a7a1e38367eb67595c688a13b82f41d851212342c34e0bbcf4b744acb71c85e4` |
+| `/private/tmp/offset-W93-client-release.xml` | `d7e6655b0a122832b4a185aca7fcdfc5d3836a0fabd7c34e2fc3fd08f65b2e56` |
+| `/private/tmp/offset-W93-client-asan.xml` | `fca4e5e8b7325fa74b829a75d338131d6e4c6ff8164af72e72584c1a5254bb6f` |
+| `/private/tmp/offset-W93-creation-release.xml` | `472ac2d166ae06e3edb3996ffbbe6380b6cecd7fee0d29671f85db33d252d891` |
+| `/private/tmp/offset-W93-creation-asan.xml` | `3bc7f42abc91f17c92179b0be70f5b6062844a7b104d1e9d00c8c80906bf5a31` |
+| `/private/tmp/offset-W93-hostile-release.xml` | `f92cbe916a3adbd739c0285b4494501c30239a1dc0ed4be50f8f14ad712850bd` |
+| `/private/tmp/offset-W93-hostile-asan.xml` | `d6f27b319ff9af37fb420711b8adb508c57dd9c3fe414ebb2deced42d1427078` |
+
+W94 is verification-only. W93 remains the latest product change in this
+caller/cache thread. Other import caller classification and W0-W2 platform,
+deployment, and visible acceptance work remain open.
