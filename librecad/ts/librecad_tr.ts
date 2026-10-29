@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Çerçeve</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Bir isim girin ve + tuşuna basın</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Kaydet</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Çerçeve</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Kaydet</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ veya [%2]</translation>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Mesafeyi belirtin (açı %1 derece)
-veya [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Mesafeyi belirtin (açı %1 derece)
 veya [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ veya [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Eylem Ekle veya Kaldır</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,45 +2493,6 @@ veya [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>n</source>
-        <translation type="vanished">s</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">Katman</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">Çizgi tipi</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">uzunluk</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">yarıçap</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Ad</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Kapalı</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2745,10 +2643,6 @@ veya [%2]</translation>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>Tablo öğeleri için araç ipucu göster</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">Kalem dosyası:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2963,24 +2857,6 @@ veya [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>Kalemleri &amp;Kaldır</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Kalem paleti</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Kalem dosyası konumu değişti, yeni kalem dosyasının kullanılabilmesi için uygulamayı yeniden başlatın.
-Not: Düzenleyici üzerinden yeniden başlatmadan kalem kaydederseniz, paletten mevcut kalemler yeni dosyaya kaydedilecek ve mevcut içerik üzerine yazılacaktır.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Kalem dosyası konumu değiştirildi, lütfen uygulamayı yeniden başlatın, böylece yeni kalem dosyası kullanılabilir.
-
-Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz, paletten mevcut kalemler yeni dosyaya kaydedilecek ve bu nedenle mevcut içeriği üzerine yazılacaktır.</translation>
     </message>
 </context>
 <context>
@@ -3799,10 +3675,6 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
         <translation>&amp;Yatay Döşe</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">Yeni dosya oluşturuluyor...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Blok &apos;%1&apos;</translation>
@@ -3816,10 +3688,6 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla kalemi kaydederseniz
         <location filename="../src/main/qc_applicationwindow.cpp" line="1744"/>
         <source>New Drawing created.</source>
         <translation>Yeni Çizim oluşturuldu.</translation>
-    </message>
-    <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">Son kullanılan dosya açılıyor...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1806"/>
@@ -3836,21 +3704,9 @@ Lütfen dosya izinlerini kontrol edin.</translation>
         <translation>Yüklü belge: </translation>
     </message>
     <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">Açmaktan vazgeçildi</translation>
-    </message>
-    <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">Çizim kaydediliyor...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>Kaydedilen çizim: %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Çizim dışa aktarılıyor...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3858,25 +3714,9 @@ Lütfen dosya izinlerini kontrol edin.</translation>
         <translation>Aktarıldı: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Dışa aktarılıyor...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Dışa aktarım tamamlandı</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>Dışa aktarım gerçekleşmedi!</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">Yazdırılıyor...</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">Yazdırma tamamlandı</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2768"/>
@@ -3884,17 +3724,9 @@ Lütfen dosya izinlerini kontrol edin.</translation>
         <translation>%1 için yazıcı çıktı örneği</translation>
     </message>
     <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">Uygulamadan çıkılıyor...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>&amp;Çoklu çizgi</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">Çizim otomatik olarak kaydediliyor...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4216,10 +4048,6 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <translation>&amp;Çizimler</translation>
     </message>
     <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">Çizim kaydediliyor: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>Kaydet iptal edildi</translation>
@@ -4411,11 +4239,6 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">kaçış</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4755,11 +4578,6 @@ pencerede düzenle</translation>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>Komut geçmişi ve çıktısı</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">kaçış</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7205,10 +7023,6 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>BOŞLUK ÇUBUĞUNA basıldığında girilen komutları çalıştır</translation>
     </message>
     <message>
-        <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
-        <translation type="vanished">Komut penceresi boşken BOŞLUK ÇUBUĞUNA basıldığında serbest yakalama moduna geçiş yap</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1244"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
         <translation>BOŞLUK ÇUBUĞUNA basıldığında serbest yakalama moduna geç</translation>
@@ -7376,41 +7190,6 @@ yani pişirme için gereken varsayılan adım değeri</translation>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="40"/>
         <source>Whether to export points</source>
         <translation>Noktaların dışa aktarılıp aktarılmayacağı</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Çizim Değişkenleri</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Değişken</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Kod</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Değer</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
     </message>
 </context>
 <context>
@@ -8469,14 +8248,6 @@ yani pişirme için gereken varsayılan adım değeri</translation>
         <translation>tekrar Hiçbir Metin sağlanmadı.</translation>
     </message>
     <message>
-        <source>Close All</source>
-        <translation type="vanished">Tümünü Kapat</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Kapat</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
         <translation>Tümünü Kaldır</translation>
@@ -9295,117 +9066,9 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_WidthBox</name>
     <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Değişmedi -</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="247"/>
         <source>By Layer</source>
         <translation>Katmana göre</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Bloğa göre</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Varsyılan</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0.05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0.09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0,13 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0.15mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0,18 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0,25 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0,35 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0,50 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0,70 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1,40 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11mm</translation>
     </message>
 </context>
 <context>
@@ -9560,12 +9223,6 @@ Lütfen farklı bir değer belirtin.</translation>
         <translation>Boş katmanları kaldır</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Varlık içermeyen katman(lar) bulundu, ancak bunlar filtrelenmiş ve görünmüyor.
-Filtre maskesini temizleyin ve tekrar deneyin.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>Varlık içermeyen katman bulunamadı, kaldırılacak bir şey yok.</translation>
@@ -9609,14 +9266,6 @@ Lütfen farklı bir ad belirtin.</translation>
         <translation>Seçimi Kopyala</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">&quot;Katmana Göre&quot; değerini kaynak katmanların değerleriyle değiştirmek ister misiniz?
-Evet ise, &quot;Katmana Göre&quot; kalemlere sahip varlıklar yeni katmanda tam olarak önceki katmanlardaki gibi görünecek ve &quot;Katmana Göre&quot; değeri çözümlenmiş kalemlerle değiştirilecektir.
-Hayır ise, &quot;Katmana Göre&quot; değerleri korunacak ve böylece hedef katmanın kalemi bu tür varlıklar için kalemi tanımlayacaktır.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9627,14 +9276,6 @@ Hayır ise, &quot;Katmana Göre&quot; değerleri korunacak ve böylece hedef kat
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>%1 rengi için geçersiz bir değer girildi.
-Lütfen farklı bir değer belirtin.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">Kalem dosyasına geçersiz bir yol girildi.
-%1
 Lütfen farklı bir değer belirtin.</translation>
     </message>
     <message>
@@ -9709,14 +9350,6 @@ Lütfen farklı bir değer belirtin.</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Lütfen kalem ayarlarını seçmek için yalnızca bir öğe seçin.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">Kalem Verileri Kaydediliyor</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Kalem verileri belirtilen kalem dosyasına kaydedilemedi. Dosyanın doğru yolunu belirtmek ister misiniz?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11268,16 +10901,6 @@ Do you want to replace it?</source>
         <translation>Mevcut Komutlar:</translation>
     </message>
     <message>
-        <source>cal</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">hm</translation>
-    </message>
-    <message>
-        <source>calculate</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">hesapla</translation>
-    </message>
-    <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
@@ -11469,10 +11092,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/qg_commandedit.cpp" line="138"/>
         <source>You must input a distance first.</source>
         <translation>Önce bir mesafe girmelisiniz.</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
@@ -12752,11 +12371,6 @@ Do you want to replace it?</source>
         <translation type="unfinished">Kağıt boyutu (Genişlik x Yükseklik), mm.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Kağıt boyutu (Genişlik x Yükseklik), mm.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13443,16 +13057,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>Kullanıcı Rengi</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">hesapla</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -15047,14 +14651,6 @@ Bu blok eklenemez.</translation>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="291"/>
         <source>Back</source>
         <translation>Back</translation>
-    </message>
-    <message>
-        <source>Select first circle or ellipse</source>
-        <translation type="vanished">İlk çemberi veya elipsi seçin</translation>
-    </message>
-    <message>
-        <source>Select second circle or ellipse</source>
-        <translation type="vanished">İkinci çemberi veya elipsi seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
@@ -17572,119 +17168,6 @@ Bu blok eklenemez.</translation>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>Güncelle</translation>
-    </message>
-</context>
-<context>
-    <name>dibPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Bölme çizgisi</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Hata</translation>
-    </message>
-    <message>
-        <source>n</source>
-        <translation type="vanished">s</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">Katman</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">Çizgi tipi</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">uzunluk</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">yarıçap</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Kapalı</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Katmanlar</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Geardlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="vanished">Çoklu çizgi</translation>
-    </message>
-    <message>
-        <source>SplinePoints</source>
-        <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="vanished">EğriÇizgiNoktaları</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Katman:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Yükseklik:</translation>
     </message>
 </context>
 </TS>

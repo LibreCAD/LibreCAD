@@ -63,18 +63,6 @@ Ok to accept and start alignment.</source>
 수락 및 시작 정렬.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">&apos;Keep Original object&apos;가 체크된 경우,
-Align는 선택된 객체를 이동하기 보다는 오히려 복사합니다.
-&apos;Specify base point first&apos;가 체크된 경우,
-Align는 순서에 정렬 점을 신속하게합니다.
-첫번째 기초, 두번째 기초, 첫번째 표적, 두번째 표적.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
         <translation>제1 기준점</translation>

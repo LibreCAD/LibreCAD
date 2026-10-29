@@ -62,15 +62,6 @@ Ok to accept and start alignment.</source>
         <translation>ਵਿਕਲਪਾਂ &apos;ਤੇ ਕਲਿੱਕ ਕਰਕੇ ਸੈੱਟ/ਅਨਸੈੱਟ ਕਰੋ, ਸਵੀਕਾਰ ਕਰਨ ਅਤੇ ਸੰਗਠਿਤ ਕਰਨ ਲਈ ਠੀਕ ਹੈ &apos;ਤੇ ਕਲਿੱਕ ਕਰੋ।</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">ਜੇ &apos;ਮੂਲ ਆਬਜੈਕਟ ਰੱਖੋ&apos; ਚੈੱਕ ਕੀਤਾ ਗਿਆ ਹੈ, ਤਾਂ ਸੰਗਠਿਤ ਕਰਨ ਨਾਲ ਚੁਣੇ ਗਏ ਆਬਜੈਕਟਾਂ ਨੂੰ ਹਿਲਾਉਣ ਦੀ ਬਜਾਏ ਕਾਪੀ ਕੀਤਾ ਜਾਵੇਗਾ। 
-ਜੇ &apos;ਪਹਿਲਾਂ ਬੇਸ ਪੁਆਇੰਟ ਦੱਸੋ&apos; ਚੈੱਕ ਕੀਤਾ ਗਿਆ ਹੈ, ਤਾਂ ਸੰਗਠਿਤ ਕਰਨ ਨਾਲ ਸੰਗਠਿਤ ਕਰਨ ਵਾਲੇ ਪੁਆਇੰਟਾਂ ਲਈ ਪੁੱਛਿਆ ਜਾਵੇਗਾ, ਪਹਿਲਾਂ ਬੇਸ, ਦੂਜਾ ਬੇਸ, ਪਹਿਲਾ ਟੀਚਾ, ਦੂਜਾ ਟੀਚਾ।</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
         <translation>ਪਹਿਲਾ ਬੇਸ ਪੁਆਇੰਟ:</translation>

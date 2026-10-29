@@ -168,117 +168,6 @@
     </message>
 </context>
 <context>
-    <name>LC_AbstractActionDrawLine</name>
-    <message>
-        <source>Start point may set in distance or point state only</source>
-        <translation type="vanished">Почетна тачка може да се подеси само у режиму удаљености или тачке</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Треба креирати:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">Правоугаоник</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Ширина:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Висина:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Центар:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">Неважећи угао</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">Неважећи полупречник</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">Неважећа вредност</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Наведите тачку убацивања</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Наведите угао</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">Наведите величину (ширина, висина)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">Наведите тип углова
-[оштар|заобљен|скошен]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">Наведите дужину скошеног угла (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">Odredite poluprečnik ugla</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">[&apos;Odredite režim ivica\n[oba|hor|vert]&apos;, &apos;Odredite režim ivica\n[oba|horizontalno|vertikalno]&apos;, &apos;Odredite režim ivica\n[oba|vodeće|bočne]&apos;]</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionWithPreview</name>
-    <message>
-        <source> is not divided as it is locked.</source>
-        <translation type="vanished">nije podeljen jer je zaključan.</translation>
-    </message>
-    <message>
-        <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation type="vanished">nije podeljen jer je deo polilinije. Prvo proširite poliliniju.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionCircleDimBase</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">Nije krug ili lučna entitet.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nije važeći izraz.</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">Izaberite lučni ili kružni entitet.</translation>
-    </message>
-    <message>
-        <source>Free angle</source>
-        <translation type="vanished">Slobodan ugao.</translation>
-    </message>
-    <message>
-        <source>Specify dimension line position or enter angle:</source>
-        <translation type="vanished">Odredite položaj dimenzione linije ili unesite ugao:</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Unesite tekst dimenzije:</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDimArc</name>
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="267"/>
@@ -295,231 +184,6 @@
         <location filename="../src/actions/lc_actiondimarc.cpp" line="272"/>
         <source>Specify dimension arc location</source>
         <translation>Одредите положај лучне димензије</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDimLinearBase</name>
-    <message>
-        <source>Specify second extension line origin</source>
-        <translation type="vanished">Одредите почетак друге продужене линије</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Одредите положај димензионе линије</translation>
-    </message>
-    <message>
-        <source>Snap to Adjacent Dim</source>
-        <translation type="vanished">Прилагоди се оближњој димензији</translation>
-    </message>
-    <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">Одредите почетак прве продужене линије</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Унесите текст димензије:</translation>
-    </message>
-    <message>
-        <source>Enter dimension line angle:</source>
-        <translation type="vanished">Унесите угао димензионе линије:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDimOrdinate</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Одредите прву тачку</translation>
-    </message>
-    <message>
-        <source>Specify leader end point</source>
-        <translation type="vanished">Одредите крајњу тачку вођице</translation>
-    </message>
-    <message>
-        <source>Change Ordinate</source>
-        <translation type="vanished">Promeni ordinatu</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDimOrdinateRebase</name>
-    <message>
-        <source>Select and rebase</source>
-        <translation type="vanished">[&apos;Izaberite i ponovo postavite&apos;, &apos;Izaberite i ponovo postavite&apos;, &apos;Izaberite i ponovo postavite&apos;]</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDimStyleApply</name>
-    <message>
-        <source>Specify dimension to pick the style</source>
-        <translation type="vanished">Odredite dimenziju za primenu stila</translation>
-    </message>
-    <message>
-        <source>Specify dimension to apply style</source>
-        <translation type="vanished">Odredite dimenziju za primenu stila</translation>
-    </message>
-    <message>
-        <source>Do not apply style override</source>
-        <translation type="vanished">Ne primenjujte prepisivanje stila</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">U smeru kazaljke na satu</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">Visina luka (rastojanje između tetive i najviše tačke luka)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Visina:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">Dužina luka</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Дужина:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Полупречник лука</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Полупречник:</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">Централни угао лука</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угао:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">У смеру казаљке на сату</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">Изаберите угао са цртежа</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Изаберите полупречник са цртежа</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">Изаберите висину са цртежа</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Изаберите дужину са цртежа</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Изаберите угао из цртежа</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawArc2PointsAngle</name>
-    <message>
-        <source>Enter value of central angle</source>
-        <translation type="vanished">Унесите вредност централног угла</translation>
-    </message>
-    <message>
-        <source>Alternate angle to outer arc</source>
-        <translation type="vanished">Алтернативни угао за спољни лук</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawArc2PointsBase</name>
-    <message>
-        <source>The end point is too close to the start point</source>
-        <translation type="vanished">Крајња тачка је преблизу почетној тачки</translation>
-    </message>
-    <message>
-        <source>Positive value is expected</source>
-        <translation type="vanished">Очекује се позитивна вредност</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Није валидан израз</translation>
-    </message>
-    <message>
-        <source>Specify first point of arc</source>
-        <translation type="vanished">Наведите прву тачку лука</translation>
-    </message>
-    <message>
-        <source>Specify second point of arc</source>
-        <translation type="vanished">Наведите другу тачку лука</translation>
-    </message>
-    <message>
-        <source>Opposite Arc direction</source>
-        <translation type="vanished">Супротни смер лука</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawArc2PointsHeight</name>
-    <message>
-        <source>Enter height of arc</source>
-        <translation type="vanished">Унесите висину лука</translation>
-    </message>
-    <message>
-        <source>Alternative arc where diameter is reduced by height</source>
-        <translation type="vanished">Alternativni luk gde je prečnik smanjen za visinu</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawArc2PointsLength</name>
-    <message>
-        <source>The distance between the two points must be less than the arc length</source>
-        <translation type="vanished">[&apos;Udaljenost između dve tačke mora biti manja od dužine luka&apos;, &apos;Udaljenost između dve tačke mora biti manja od dužine luka.&apos;, &apos;Udaljenost između dve tačke mora biti manja od dužine luka!&apos;]</translation>
-    </message>
-    <message>
-        <source>Enter length of arc</source>
-        <translation type="vanished">Unesite dužinu luka</translation>
-    </message>
-    <message>
-        <source>Alternate solutions</source>
-        <translation type="vanished">[&apos;Alternativna rešenja&apos;, &apos;Alternativna rešenja.&apos;, &apos;Alternativna rešenja!&apos;]</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawArc2PointsRadius</name>
-    <message>
-        <source>Enter radius of arc</source>
-        <translation type="vanished">Unesite poluprečnik luka</translation>
-    </message>
-    <message>
-        <source>Create outer arc</source>
-        <translation type="vanished">Napravite spoljašnji luk</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawBoundingBox</name>
-    <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">Izaberite entitete za ograničavajući okvir (Pritisnite Enter da biste dovršili)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Izaberite konturu</translation>
-    </message>
-    <message>
-        <source>Select and draw</source>
-        <translation type="vanished">Izaberite i nacrtajte</translation>
-    </message>
-    <message>
-        <source>Note: Bounding box was created for world coordinate system.</source>
-        <translation type="vanished">Napomena: Ograničavajući okvir je kreiran za svetski koordinatni sistem.</translation>
     </message>
 </context>
 <context>
@@ -563,105 +227,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCircleByArc</name>
-    <message>
-        <source>Select arc or ellipse arc</source>
-        <translation type="vanished">Izaberite luk ili luk elipse.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">Izaberite krug, luk ili elipsu.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawDimBaseline</name>
-    <message>
-        <source>Select base linear/aligned dimension</source>
-        <translation type="vanished">Izaberite osnovnu linearnu/poravnatu dimenziju.</translation>
-    </message>
-    <message>
-        <source>Select distant extension point</source>
-        <translation type="vanished">Izaberite udaljenu tačku produžetka.</translation>
-    </message>
-    <message>
-        <source>Specify second extension line origin</source>
-        <translation type="vanished">Odredite početak druge produžne linije.</translation>
-    </message>
-    <message>
-        <source>Mirror offset direction</source>
-        <translation type="vanished">Obrni smer pomaka</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Odredite položaj linije dimenzije</translation>
-    </message>
-    <message>
-        <source>Snap to Adjacent Dim</source>
-        <translation type="vanished">Podesite na susednu dimenziju</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Unesite tekst dimenzije:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawDual</name>
-    <message>
-        <source>Select Center</source>
-        <translation type="vanished">Izaberite centar</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">Nije određen centar.</translation>
-    </message>
-    <message>
-        <source>No entities selected. Dual creation cancelled.</source>
-        <translation type="vanished">Nisu izabrane entitete. Kreiranje duplikata otkazano.</translation>
-    </message>
-    <message>
-        <source>No supported entities could be dualized.</source>
-        <translation type="vanished">Nijedan od izabranih entiteta ne može biti dupliran.</translation>
-    </message>
-    <message>
-        <source>Dual created around center (%1 entities)</source>
-        <translation type="vanished">Duplikat kreiran oko centra (%1 entiteta)</translation>
-    </message>
-    <message>
-        <source>Select to create dual (Enter to complete)</source>
-        <translation type="vanished">Izaberite da biste kreirali duplikat (Pritisnite Enter da biste dovršili)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Избор контуре</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawEllipse1Point</name>
-    <message>
-        <source>Specify ellipse center</source>
-        <translation type="vanished">Одредите центар елипсе</translation>
-    </message>
-    <message>
-        <source>Specify angle for major axis</source>
-        <translation type="vanished">Одредите угао за главну осу</translation>
-    </message>
-    <message>
-        <source>Set start angle of arc</source>
-        <translation type="vanished">Подесите почетни угао лука</translation>
-    </message>
-    <message>
-        <source>Set end angle of arc</source>
-        <translation type="vanished">Подесите завршни угао лука</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Није валидан израз</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawHyperbolaFP</name>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
@@ -672,30 +237,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
         <source>Start and end points cannot be the same</source>
         <translation>Početna i krajnja tačka ne smeju biti iste</translation>
-    </message>
-    <message>
-        <source>Invalid foci or point</source>
-        <translation type="vanished">Невалидна жаришта или тачка</translation>
-    </message>
-    <message>
-        <source>Points not on hyperbola</source>
-        <translation type="vanished">Тачке нису на хиперболи</translation>
-    </message>
-    <message>
-        <source>Specify first focus</source>
-        <translation type="vanished">Odredite prvu fokusnu tačku</translation>
-    </message>
-    <message>
-        <source>Specify second focus</source>
-        <translation type="vanished">Odredite drugu fokusnu tačku</translation>
-    </message>
-    <message>
-        <source>Specify start point on branch</source>
-        <translation type="vanished">Odredite početnu tačku na ogranku</translation>
-    </message>
-    <message>
-        <source>Specify end point on branch</source>
-        <translation type="vanished">Odredite krajnju tačku na ogranku</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
@@ -746,68 +287,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLineAngleRel</name>
-    <message>
-        <source>Select base line</source>
-        <translation type="vanished">Izaberite osnovnu liniju</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">Odredite dužinu</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLineFromPointToLine</name>
-    <message>
-        <source>Select Initial Point</source>
-        <translation type="vanished">Izaberite početnu tačku</translation>
-    </message>
-    <message>
-        <source>Select Line</source>
-        <translation type="vanished">Izaberite liniju</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">Odredite prvu tačku</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">[&apos;Odredite drugu tačku&apos;, &apos;Odredite drugu tačku&apos;, &apos;Odredite drugu tačku&apos;]</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">Odredite drugu tačku
-ili [broj]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">Odredite smer linije
-[x|y|ugao|p|udaljenost]</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">Odredite ugao smera linije
-ili [x|y|p|broj|ivice|udaljenost]</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">Odredite režim tačaka ivica
-[nema|početak|kraj|oba|udaljenost]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">Odredite fiksnu udaljenost između tačaka
-ili [x|y|p|broj|ivice]</translation>
-    </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="513"/>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
@@ -839,80 +319,6 @@ ili [%2]</translation>
 or [%2]</source>
         <translation>Odredite udaljenost (ugao %1 stepeni)
 ili [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">Odredite broj tačaka</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Odredite drugi ugao</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">Odredite drugu tangentu</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Odredite prvi ugao</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">Odredite prvu tangentu</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Nevažeći broj. Pokušajte sa 1..9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">Nevažeća vrednost poluprečnika zaobljavanja</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nevažeći izraz</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Unesite broj:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">Unesite poluprečnik zaobljavanja:</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Odredite centar</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">[&apos;Biće kreirano:&apos;, &apos;Biće kreirano:&apos;, &apos;Biće kreirano:&apos;]</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Poligon</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Centar:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">Početni ugao:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Poluprečnik:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">Unutrašnji poluprečnik:</translation>
     </message>
 </context>
 <context>
@@ -946,14 +352,6 @@ ili [%2]</translation>
 <context>
     <name>LC_ActionDrawLineSnake</name>
     <message>
-        <source>Point</source>
-        <translation type="vanished">Tačka</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Ugao</translation>
-    </message>
-    <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="453"/>
         <source>Y</source>
         <translation>Y</translation>
@@ -962,14 +360,6 @@ ili [%2]</translation>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="448"/>
         <source>X</source>
         <translation>X</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">Смер:</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Одредите прву тачку</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="434"/>
@@ -1003,44 +393,9 @@ ili [%2]</translation>
         <translation>Наведи угао или [%2]</translation>
     </message>
     <message>
-        <source>Specify angle or [%1]</source>
-        <translation type="vanished">Одредите угао или [%1]</translation>
-    </message>
-    <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="486"/>
         <source>Specify point or [%1]</source>
         <translation>Одредите тачку или [%1]</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">Не могу да поништим: Достигнут је почетак историје</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">Ne može se ponoviti: Dostignut je kraj istorije</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nevažeći izraz</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Izaberite prvu entitet</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Izaberite drugi entitet</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">Naizmenični krajnji punktovi</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">Unesite vrednost pomaka</translation>
     </message>
 </context>
 <context>
@@ -1092,10 +447,6 @@ ili [%2]</translation>
         <translation>Odredite fokus parabole</translation>
     </message>
     <message>
-        <source>Select line that is parallel to directrix of parabola or set vertex point</source>
-        <translation type="vanished">Odaberite liniju koja je paralelna sa direktriksom parabole ili postavite tačku temena</translation>
-    </message>
-    <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="291"/>
         <source>Cancel</source>
         <translation>Откажи</translation>
@@ -1124,142 +475,6 @@ ili [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawPointsLattice</name>
-    <message>
-        <source>Second point is too close to the first one</source>
-        <translation type="vanished">Druga tačka je preblizu prvoj</translation>
-    </message>
-    <message>
-        <source>Third point is too close to the second one</source>
-        <translation type="vanished">Treća tačka je preblizu drugoj</translation>
-    </message>
-    <message>
-        <source>Invalid value provided</source>
-        <translation type="vanished">Uneta je nevažeća vrednost</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Odredite prvu tačku</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Odredite drugu tačku</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Odredite treću tačku</translation>
-    </message>
-    <message>
-        <source>Specify fourth point</source>
-        <translation type="vanished">Odredite četvrtu tačku</translation>
-    </message>
-    <message>
-        <source>Last point position is un-adjusted</source>
-        <translation type="vanished">Pozicija poslednje tačke nije podešena</translation>
-    </message>
-    <message>
-        <source>Last point position is adjusted to first</source>
-        <translation type="vanished">Pozicija poslednje tačke je podešena na prvu</translation>
-    </message>
-    <message>
-        <source>Enter number of points by X</source>
-        <translation type="vanished">Unesite broj tačaka po X osi</translation>
-    </message>
-    <message>
-        <source>Enter number of points by Y</source>
-        <translation type="vanished">Unesite broj tačaka po Y osi</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawRectangle1Point</name>
-    <message>
-        <source>Specify height</source>
-        <translation type="vanished">Odredite visinu</translation>
-    </message>
-    <message>
-        <source>Specify width</source>
-        <translation type="vanished">Odredite širinu</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height))</source>
-        <translation type="vanished">Odredite veličinu (širina, visina)</translation>
-    </message>
-    <message>
-        <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
-        <translation type="vanished">Odredite referentnu tačku [gornji levi ugao|gornji ugao|gornji desni ugao|leva strana|sredina|desna strana|donji levi ugao|donji ugao|donji desni ugao]</translation>
-    </message>
-    <message>
-        <source>Specify point that defines base angle for rectangle</source>
-        <translation type="vanished">Odredite tačku koja definiše osnovni ugao za pravougaonik</translation>
-    </message>
-    <message>
-        <source>Don&apos;t keep insertion point</source>
-        <translation type="vanished">Ne zadržavajte tačku ubacivanja</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawRectangle2Points</name>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Odredite drugu tačku</translation>
-    </message>
-    <message>
-        <source>Draw Square</source>
-        <translation type="vanished">Nacrtajte kvadrat</translation>
-    </message>
-    <message>
-        <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation type="vanished">Odredite prvu tačku, način prianjanja: [ugao|sredina vertikale|sredina horizontale|sredina]</translation>
-    </message>
-    <message>
-        <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation type="vanished">Odredite drugu tačku, način prianjanja: [ugao|sredina vertikale|sredina horizontale|sredina]</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">Odredite veličinu (širina, visina)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawRectangle3Points</name>
-    <message>
-        <source>Specify first point first</source>
-        <translation type="vanished">Odredite prvo tačku</translation>
-    </message>
-    <message>
-        <source>Specify width or second point first</source>
-        <translation type="vanished">Odredite širinu ili drugu tačku</translation>
-    </message>
-    <message>
-        <source>Specify width</source>
-        <translation type="vanished">Odredite širinu</translation>
-    </message>
-    <message>
-        <source>Specify height</source>
-        <translation type="vanished">Odredite visinu</translation>
-    </message>
-    <message>
-        <source>Specify start point)</source>
-        <translation type="vanished">Odredite početnu tačku</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Odredite drugu tačku</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Odredite treću tačku</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Odredite ugao</translation>
-    </message>
-    <message>
-        <source>Specify inner angle</source>
-        <translation type="vanished">Odredite unutrašnji ugao</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawSliceDivide</name>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
@@ -1275,14 +490,6 @@ ili [%2]</translation>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
         <source>Circle</source>
         <translation>Krug</translation>
-    </message>
-    <message>
-        <source>Select line</source>
-        <translation type="vanished">Izaberite liniju</translation>
-    </message>
-    <message>
-        <source>Select circle or arc</source>
-        <translation type="vanished">Izaberite krug ili luk</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="846"/>
@@ -1336,321 +543,7 @@ ili [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawStar</name>
-    <message>
-        <source>Invalid rays number, should be in range [3..99]</source>
-        <translation type="vanished">Neispravan broj zraka, treba da bude u opsegu [3..99]</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">Neispravna vrednost</translation>
-    </message>
-    <message>
-        <source>Set center point</source>
-        <translation type="vanished">Postavite centralnu tačku</translation>
-    </message>
-    <message>
-        <source>Set outer point</source>
-        <translation type="vanished">Подесите спољну тачку</translation>
-    </message>
-    <message>
-        <source>Set inner point</source>
-        <translation type="vanished">Подесите унутрашњу тачку</translation>
-    </message>
-    <message>
-        <source>Set rounding radiuses (outer, inner)</source>
-        <translation type="vanished">Подесите радијусе за заобљавање (спољни, унутрашњи)</translation>
-    </message>
-    <message>
-        <source>Set rays number</source>
-        <translation type="vanished">Подесите број зрака</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionEditPasteTransform</name>
-    <message>
-        <source>Clipboard is empty</source>
-        <translation type="vanished">Припрема је празна</translation>
-    </message>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="vanished">Подесите референтну тачку за лепљење</translation>
-    </message>
-    <message>
-        <source>Paste Multiple</source>
-        <translation type="vanished">Лепи вишеструко</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionFactory</name>
-    <message>
-        <source>Block</source>
-        <translation type="vanished">Блок</translation>
-    </message>
-    <message>
-        <source>Block related operations</source>
-        <translation type="vanished">Блокирајте повезане операције</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Круг</translation>
-    </message>
-    <message>
-        <source>Circle drawing commands</source>
-        <translation type="vanished">Команде за цртање кругова</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Arc drawing commands</source>
-        <translation type="vanished">Команде за цртање лукова</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">Сплин</translation>
-    </message>
-    <message>
-        <source>Spline drawing commands</source>
-        <translation type="vanished">Команде за цртање сплина</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Edit</translation>
-    </message>
-    <message>
-        <source>Editing operations</source>
-        <translation type="vanished">Операције уређивања</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Елипса</translation>
-    </message>
-    <message>
-        <source>Ellipse drawing commands</source>
-        <translation type="vanished">Команде за цртање елипсе</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">File</translation>
-    </message>
-    <message>
-        <source>File Operations</source>
-        <translation type="vanished">Операције са датотекама</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Димензија</translation>
-    </message>
-    <message>
-        <source>Dimensions creation commands</source>
-        <translation type="vanished">Команде за креирање димензија</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>Informational commands</source>
-        <translation type="vanished">Информативне команде</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">Слој</translation>
-    </message>
-    <message>
-        <source>Layers operations</source>
-        <translation type="vanished">Операције са слојевима</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Line</translation>
-    </message>
-    <message>
-        <source>Line drawing commands</source>
-        <translation type="vanished">Команде за цртање линија</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Тачка</translation>
-    </message>
-    <message>
-        <source>Point drawing commands</source>
-        <translation type="vanished">Команде за цртање тачака</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Полигон</translation>
-    </message>
-    <message>
-        <source>Polygon drawing commands</source>
-        <translation type="vanished">Команде за цртање полигона</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Измени</translation>
-    </message>
-    <message>
-        <source>Modification operations</source>
-        <translation type="vanished">Операције за измену</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">Опције</translation>
-    </message>
-    <message>
-        <source>Options management</source>
-        <translation type="vanished">Управљање опцијама</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Остало</translation>
-    </message>
-    <message>
-        <source>Other operations</source>
-        <translation type="vanished">Остале операције</translation>
-    </message>
-    <message>
-        <source>Relative Zero</source>
-        <translation type="vanished">Релативна нула</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilinija</translation>
-    </message>
-    <message>
-        <source>Polyline drawing commands</source>
-        <translation type="vanished">Komande za crtanje polilinije</translation>
-    </message>
-    <message>
-        <source>PenTB</source>
-        <translation type="vanished">Paleta alata za olovku</translation>
-    </message>
-    <message>
-        <source>Pen related operations</source>
-        <translation type="vanished">Operacije povezane sa olovkom</translation>
-    </message>
-    <message>
-        <source>Restriction</source>
-        <translation type="vanished">Ograničenje</translation>
-    </message>
-    <message>
-        <source>Snap restrictions</source>
-        <translation type="vanished">Ograničenja za „snapping“</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Izaberi</translation>
-    </message>
-    <message>
-        <source>Entity selection operations</source>
-        <translation type="vanished">Operacije za izbor entiteta</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">Snap</translation>
-    </message>
-    <message>
-        <source>Snapping operations</source>
-        <translation type="vanished">Operacije „snapping“-a</translation>
-    </message>
-    <message>
-        <source>Snap Extras</source>
-        <translation type="vanished">Dodatne aplikacije</translation>
-    </message>
-    <message>
-        <source>Additional Snaps</source>
-        <translation type="vanished">Dodatne aplikacije</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">View</translation>
-    </message>
-    <message>
-        <source>View related operations</source>
-        <translation type="vanished">Prikaži povezane operacije</translation>
-    </message>
-    <message>
-        <source>Named Views</source>
-        <translation type="vanished">Sačuvane konfiguracije</translation>
-    </message>
-    <message>
-        <source>Persistent Views operations</source>
-        <translation type="vanished">Operacije sa sačuvanim konfiguracijama</translation>
-    </message>
-    <message>
-        <source>Workspaces</source>
-        <translation type="vanished">Radni prostori</translation>
-    </message>
-    <message>
-        <source>Workspaces operations</source>
-        <translation type="vanished">Operacije sa radnim prostorima</translation>
-    </message>
-    <message>
-        <source>UCS</source>
-        <translation type="vanished">UCS</translation>
-    </message>
-    <message>
-        <source>UCS operations</source>
-        <translation type="vanished">UCS operacije</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">Виџети</translation>
-    </message>
-    <message>
-        <source>Widgets management</source>
-        <translation type="vanished">Управљање виџетима</translation>
-    </message>
-    <message>
-        <source>InfoCursor</source>
-        <translation type="vanished">Инфо курсор</translation>
-    </message>
-    <message>
-        <source>Informational Cursor</source>
-        <translation type="vanished">Информативни курсор</translation>
-    </message>
-    <message>
-        <source>Entity Layer</source>
-        <translation type="vanished">Слој ентитета</translation>
-    </message>
-    <message>
-        <source>Entity&apos;s Layer</source>
-        <translation type="vanished">Слој ентитета</translation>
-    </message>
-    <message>
-        <source>Interactive</source>
-        <translation type="vanished">Интерактивно</translation>
-    </message>
-    <message>
-        <source>Interactive Pick</source>
-        <translation type="vanished">Интерактивна селекција</translation>
-    </message>
-    <message>
-        <source>Activate Entity&apos;s Layer</source>
-        <translation type="vanished">Активирај слој ентитета</translation>
-    </message>
-    <message>
-        <source>Hide Entity&apos;s Layer</source>
-        <translation type="vanished">Сакриј слој ентитета</translation>
-    </message>
-    <message>
-        <source>Hide Other Layers than Entity&apos;s</source>
-        <translation type="vanished">Sakrij ostale slojeve osim sloja entiteta</translation>
-    </message>
-    <message>
-        <source>Lock Entity&apos;s Layer</source>
-        <translation type="vanished">Zaključaj sloj entiteta</translation>
-    </message>
-    <message>
-        <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation type="vanished">Preklopi prikaz konstrukcije sloja entiteta</translation>
-    </message>
-    <message>
-        <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation type="vanished">Preklopi štampanje sloja entiteta</translation>
-    </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="179"/>
         <source>Rectangle</source>
@@ -1670,10 +563,6 @@ ili [%2]</translation>
         <location filename="../src/ui/lc_actionfactory.cpp" line="242"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
         <translation>Poligon (ugao, ugao)</translation>
-    </message>
-    <message>
-        <source>Polygo&amp;n (Tan,Tan)</source>
-        <translation type="vanished">Poligon (tangenta, tangenta)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="299"/>
@@ -1797,14 +686,6 @@ ili [%2]</translation>
         <translation>Од тачке до линије</translation>
     </message>
     <message>
-        <source>Centerline</source>
-        <translation type="vanished">Централна линија</translation>
-    </message>
-    <message>
-        <source>Center Mark</source>
-        <translation type="vanished">Централна тачка</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="335"/>
         <source>Slice/Divide Line</source>
         <translation>Исећи/поделити линију</translation>
@@ -1823,22 +704,6 @@ ili [%2]</translation>
         <location filename="../src/ui/lc_actionfactory.cpp" line="347"/>
         <source>Line of Points</source>
         <translation>Линија тачака</translation>
-    </message>
-    <message>
-        <source>Middle Points</source>
-        <translation type="vanished">Средње тачке</translation>
-    </message>
-    <message>
-        <source>Lattice of Points</source>
-        <translation type="vanished">Решетка тачака</translation>
-    </message>
-    <message>
-        <source>Select Points</source>
-        <translation type="vanished">Izaberite tačke</translation>
-    </message>
-    <message>
-        <source>Paste to Points</source>
-        <translation type="vanished">Nalepite na tačke</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="63"/>
@@ -1917,18 +782,6 @@ ili [%2]</translation>
         <translation>Уписани круг</translation>
     </message>
     <message>
-        <source>Tangential 2 Entities, Radius</source>
-        <translation type="vanished">Тангентно на 2 објекта, полупречник</translation>
-    </message>
-    <message>
-        <source>Tangential 2 Entities, 1 Point</source>
-        <translation type="vanished">Тангентно на 2 објекта, 1 тачка</translation>
-    </message>
-    <message>
-        <source>Tangential &amp;3 Entities</source>
-        <translation type="vanished">Тангентно на 3 објекта</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="424"/>
         <source>Tangential, 2 P&amp;oints</source>
         <translation>Тангента, 2 тачке</translation>
@@ -1939,42 +792,14 @@ ili [%2]</translation>
         <translation>&amp;Центар, тачка, углови</translation>
     </message>
     <message>
-        <source>&amp;Center, Point, Chord</source>
-        <translation type="vanished">&amp;Центар, тачка, тетива</translation>
-    </message>
-    <message>
-        <source>&amp;Center, Point, Arc Angle</source>
-        <translation type="vanished">&amp;Центар, тачка, угао лука</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="441"/>
         <source>&amp;3 Points</source>
         <translation>&amp;3 тачке</translation>
     </message>
     <message>
-        <source>&amp;2 Points, Angle</source>
-        <translation type="vanished">&amp;2 тачке, угао</translation>
-    </message>
-    <message>
-        <source>&amp;2 Points, Radius</source>
-        <translation type="vanished">&amp;2 тачке, полупречник</translation>
-    </message>
-    <message>
-        <source>&amp;2 Points, Length</source>
-        <translation type="vanished">&amp;2 тачке, дужина</translation>
-    </message>
-    <message>
-        <source>&amp;2 Points, Height</source>
-        <translation type="vanished">&amp;2 тачке, висина</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="457"/>
         <source>Arc &amp;Tangential</source>
         <translation>Лук &amp;тангентан</translation>
-    </message>
-    <message>
-        <source>&amp;Dual Curve</source>
-        <translation type="vanished">&amp;Dvojna kriva</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
@@ -1987,10 +812,6 @@ ili [%2]</translation>
         <translation>Parabola, &amp;fokus i direktrisa</translation>
     </message>
     <message>
-        <source>&amp;Hyperbola &amp;Foci Point</source>
-        <translation type="vanished">&amp;Hiperbola, &amp;fokus i tačka</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="526"/>
         <source>&amp;Spline</source>
         <translation>&amp;Splajn</translation>
@@ -1999,38 +820,6 @@ ili [%2]</translation>
         <location filename="../src/ui/lc_actionfactory.cpp" line="533"/>
         <source>&amp;Spline through points</source>
         <translation>&amp;Splajn kroz tačke</translation>
-    </message>
-    <message>
-        <source>&amp;Append spline point</source>
-        <translation type="vanished">&amp;Dodaj tačku splajnu</translation>
-    </message>
-    <message>
-        <source>&amp;Remove spline points</source>
-        <translation type="vanished">&amp;Ukloni tačke splajna</translation>
-    </message>
-    <message>
-        <source>&amp;Insert spline points</source>
-        <translation type="vanished">&amp;Ubaci tačke splajna</translation>
-    </message>
-    <message>
-        <source>&amp;Explode spline to lines</source>
-        <translation type="vanished">&amp;Razdvoji splajn u linije</translation>
-    </message>
-    <message>
-        <source>&amp;Spline from polyline</source>
-        <translation type="vanished">&amp;Сплин од полилиније</translation>
-    </message>
-    <message>
-        <source>&amp;Remove between two points</source>
-        <translation type="vanished">&amp;Уклони између две тачке</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse (1 Point)</source>
-        <translation type="vanished">&amp;Елипса (1 тачка)</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse Arc (1 Point)</source>
-        <translation type="vanished">&amp;Лук елипсе (1 тачка)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="467"/>
@@ -2098,18 +887,6 @@ ili [%2]</translation>
         <translation>Kreiraj &amp;ekvidistantne polilinije</translation>
     </message>
     <message>
-        <source>Polyline from Existing &amp;Segments</source>
-        <translation type="vanished">Polilinija od postojećih &amp;segmenata</translation>
-    </message>
-    <message>
-        <source>Polyline Arcs to Chords</source>
-        <translation type="vanished">Polilinijske linije u lukove</translation>
-    </message>
-    <message>
-        <source>Polyline Change Segment Type</source>
-        <translation type="vanished">Promeni tip segmenta polilinije</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
         <translation>Povećanje i pomeranje</translation>
@@ -2133,10 +910,6 @@ ili [%2]</translation>
         <location filename="../src/ui/lc_actionfactory.cpp" line="625"/>
         <source>Insert &amp;Image</source>
         <translation>Ubaci &amp;sliku</translation>
-    </message>
-    <message>
-        <source>Bounding &amp;Box</source>
-        <translation type="vanished">Ograničavajući &amp;okvir</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
@@ -2177,38 +950,6 @@ ili [%2]</translation>
         <location filename="../src/ui/lc_actionfactory.cpp" line="690"/>
         <source>&amp;Leader</source>
         <translation>&amp;Водећа линија</translation>
-    </message>
-    <message>
-        <source>&amp;Baseline</source>
-        <translation type="vanished">&amp;Основна линија</translation>
-    </message>
-    <message>
-        <source>&amp;Continue</source>
-        <translation type="vanished">&amp;Настави</translation>
-    </message>
-    <message>
-        <source>&amp;Ordinate</source>
-        <translation type="vanished">&amp;Ордината</translation>
-    </message>
-    <message>
-        <source>Select Ordinates by base</source>
-        <translation type="vanished">Одаберите ординате према основи</translation>
-    </message>
-    <message>
-        <source>Ordinates Re-base</source>
-        <translation type="vanished">Поновно подешавање ордината</translation>
-    </message>
-    <message>
-        <source>Feature Control Frame</source>
-        <translation type="vanished">Оквир за контролу карактеристика</translation>
-    </message>
-    <message>
-        <source>Copy Style</source>
-        <translation type="vanished">Kopiraj stil</translation>
-    </message>
-    <message>
-        <source>Modify Style</source>
-        <translation type="vanished">Izmeni stil</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
@@ -2341,18 +1082,6 @@ ili [%2]</translation>
         <translation>Дуплирај</translation>
     </message>
     <message>
-        <source>Align</source>
-        <translation type="vanished">Поравнај</translation>
-    </message>
-    <message>
-        <source>Align One</source>
-        <translation type="vanished">Поравнај један</translation>
-    </message>
-    <message>
-        <source>Align Reference Points</source>
-        <translation type="vanished">Поравнај референтне тачке</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1632"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
         <translation>Ажурирај тренутни стил оловке помоћу стила оловке активног слоја</translation>
@@ -2378,149 +1107,9 @@ ili [%2]</translation>
         <translation>Kopiraj olovku</translation>
     </message>
     <message>
-        <source>Show Entity Description</source>
-        <translation type="vanished">Prikaži opis entiteta</translation>
-    </message>
-    <message>
-        <source>Enable Info Cursor</source>
-        <translation type="vanished">Omogući informativni kursor</translation>
-    </message>
-    <message>
-        <source>Absolute Pos</source>
-        <translation type="vanished">Apsolutna pozicija</translation>
-    </message>
-    <message>
-        <source>Relative</source>
-        <translation type="vanished">Relativno</translation>
-    </message>
-    <message>
-        <source>Prompt</source>
-        <translation type="vanished">Prompt</translation>
-    </message>
-    <message>
-        <source>Caught Entity</source>
-        <translation type="vanished">Uhvaćen entitet</translation>
-    </message>
-    <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">Podesi na mrežu</translation>
-    </message>
-    <message>
-        <source>Snap Middle Manual</source>
-        <translation type="vanished">Ručno podešavanje središnje tačke</translation>
-    </message>
-    <message>
-        <source>Snap on Endpoints</source>
-        <translation type="vanished">Podesi na krajnje tačke</translation>
-    </message>
-    <message>
-        <source>Snap on Entity</source>
-        <translation type="vanished">Podesi na entitet</translation>
-    </message>
-    <message>
-        <source>Snap Center</source>
-        <translation type="vanished">Podesi središte</translation>
-    </message>
-    <message>
-        <source>Snap Middle</source>
-        <translation type="vanished">Podesi središnju tačku</translation>
-    </message>
-    <message>
-        <source>Snap Distance</source>
-        <translation type="vanished">Podesi udaljenost</translation>
-    </message>
-    <message>
-        <source>Snap Intersection</source>
-        <translation type="vanished">Podesi presečnu tačku</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontal</source>
-        <translation type="vanished">Ograniči horizontalno</translation>
-    </message>
-    <message>
-        <source>Restrict Vertical</source>
-        <translation type="vanished">Ograniči vertikalno</translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonal</source>
-        <translation type="vanished">Ograniči ortogonalno</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="vanished">Ne ograničavaj</translation>
-    </message>
-    <message>
-        <source>To WCS</source>
-        <translation type="vanished">Na WCS</translation>
-    </message>
-    <message>
-        <source>Create UCS</source>
-        <translation type="vanished">Kreiraj UCS</translation>
-    </message>
-    <message>
-        <source>Set UCS By Ordinate Dimension</source>
-        <translation type="vanished">Postavi UCS pomoću ordinate</translation>
-    </message>
-    <message>
-        <source>Save Workspace</source>
-        <translation type="vanished">Sačuvaj radni prostor</translation>
-    </message>
-    <message>
-        <source>Remove Workspace</source>
-        <translation type="vanished">Ukloni radni prostor</translation>
-    </message>
-    <message>
-        <source>Restore Workspace</source>
-        <translation type="vanished">Vrati radni prostor</translation>
-    </message>
-    <message>
-        <source>Set relative zero position</source>
-        <translation type="vanished">Postavi relativnu nultu poziciju</translation>
-    </message>
-    <message>
-        <source>Lock relative zero position</source>
-        <translation type="vanished">Zaključaj relativnu nultu poziciju</translation>
-    </message>
-    <message>
-        <source>Exclusive Snap Mode</source>
-        <translation type="vanished">Ekskluzivni režim prianjivanja</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="vanished">Slobodno prianjivanje</translation>
-    </message>
-    <message>
-        <source>Move to Bottom</source>
-        <translation type="vanished">Premesti na dno</translation>
-    </message>
-    <message>
-        <source>Lower After Entity</source>
-        <translation type="vanished">Spusti ispod entiteta</translation>
-    </message>
-    <message>
-        <source>Raise Over Entity</source>
-        <translation type="vanished">Podigni iznad entiteta</translation>
-    </message>
-    <message>
-        <source>Move to Top</source>
-        <translation type="vanished">Premesti na vrh</translation>
-    </message>
-    <message>
-        <source>&amp;Point Coordinates</source>
-        <translation type="vanished">&amp;Koordinate tačke</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="919"/>
         <source>&amp;Distance Point to Point</source>
         <translation>&amp;Udaljenost između dve tačke</translation>
-    </message>
-    <message>
-        <source>Distance &amp;Entity to Point</source>
-        <translation type="vanished">Udaljenost &amp;entiteta od tačke</translation>
-    </message>
-    <message>
-        <source>Distance &amp;Point to Entity</source>
-        <translation type="vanished">Udaljenost &amp;tačke od entiteta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="933"/>
@@ -2528,25 +1117,9 @@ ili [%2]</translation>
         <translation>Ugao između dve linije</translation>
     </message>
     <message>
-        <source>Total &amp;length of selected entities</source>
-        <translation type="vanished">Ukupna dužina izabranih entiteta</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="947"/>
         <source>Polygonal &amp;Area</source>
         <translation>Poligonalna površina</translation>
-    </message>
-    <message>
-        <source>Entity Pro&amp;perties</source>
-        <translation type="vanished">Svojstva entiteta</translation>
-    </message>
-    <message>
-        <source>Collect &amp;Coordinates</source>
-        <translation type="vanished">Prikupi koordinate</translation>
-    </message>
-    <message>
-        <source>Ang&amp;le between 3 points</source>
-        <translation type="vanished">Ugao između 3 tačke</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1528"/>
@@ -2569,33 +1142,9 @@ ili [%2]</translation>
         <translation>Skiciranje</translation>
     </message>
     <message>
-        <source>&amp;Draft Lines</source>
-        <translation type="vanished">&amp;Linije nacrta</translation>
-    </message>
-    <message>
-        <source>&amp;Antialiasing</source>
-        <translation type="vanished">&amp;Antialiasing</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1309"/>
         <source>&amp;Statusbar</source>
         <translation>&amp;Statusna traka</translation>
-    </message>
-    <message>
-        <source>&amp;Orthogonal Grid</source>
-        <translation type="vanished">&amp;Ortogonalna mreža</translation>
-    </message>
-    <message>
-        <source>&amp;Isometric Left Grid</source>
-        <translation type="vanished">&amp;Izometrična mreža (levo)</translation>
-    </message>
-    <message>
-        <source>&amp;Isometric Top Grid</source>
-        <translation type="vanished">&amp;Izometrična mreža (gore)</translation>
-    </message>
-    <message>
-        <source>&amp;Isometric Right Grid</source>
-        <translation type="vanished">&amp;Izometrična mreža (desno)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1000"/>
@@ -2726,10 +1275,6 @@ ili [%2]</translation>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1178"/>
         <source>Widget Options</source>
         <translation>Opcije widgeta</translation>
-    </message>
-    <message>
-        <source>Keyboard Shortcuts</source>
-        <translation type="vanished">Prečice sa tastature</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1184"/>
@@ -2923,21 +1468,9 @@ ili [%2]</translation>
         <translation>Ponovno postavljanje vidžeta</translation>
     </message>
     <message>
-        <source>Custom Menu Creator</source>
-        <translation type="vanished">Kreiraj prilagođeni meni</translation>
-    </message>
-    <message>
-        <source>Custom Toolbar Creator</source>
-        <translation type="vanished">Kreiraj prilagođenu alatnu traku</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1317"/>
         <source>Focus on &amp;Command Line</source>
         <translation>Fokusiraj na &amp;komandnu liniju</translation>
-    </message>
-    <message>
-        <source>Focus on &amp;Options Widget</source>
-        <translation type="vanished">Fokusiraj se na &amp;Opcije</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1476"/>
@@ -2965,34 +1498,6 @@ ili [%2]</translation>
         <translation>&amp;Precrtaj</translation>
     </message>
     <message>
-        <source>&amp;Save View</source>
-        <translation type="vanished">&amp;Sačuvaj Prikaz</translation>
-    </message>
-    <message>
-        <source>Restore Current View</source>
-        <translation type="vanished">Vrati trenutni prikaz</translation>
-    </message>
-    <message>
-        <source>Restore View 1</source>
-        <translation type="vanished">Vrati prikaz 1</translation>
-    </message>
-    <message>
-        <source>Restore View 2</source>
-        <translation type="vanished">Vrati prikaz 2</translation>
-    </message>
-    <message>
-        <source>Restore View 3</source>
-        <translation type="vanished">Vrati prikaz 3</translation>
-    </message>
-    <message>
-        <source>Restore View 4</source>
-        <translation type="vanished">Vrati prikaz 4</translation>
-    </message>
-    <message>
-        <source>Restore View 5</source>
-        <translation type="vanished">Vrati prikaz 5</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1200"/>
         <source>Select &amp;All</source>
         <translation>Izaberi &amp;sve</translation>
@@ -3018,41 +1523,9 @@ ili [%2]</translation>
         <translation>&amp;Ponovi</translation>
     </message>
     <message>
-        <source>&amp;Delete Selected</source>
-        <translation type="vanished">&amp;Obriši izabrano</translation>
-    </message>
-    <message>
-        <source>&amp;Selection Pointer</source>
-        <translation type="vanished">&amp;Pokazivač selekcije</translation>
-    </message>
-    <message>
-        <source>Regenerate Dimensions</source>
-        <translation type="vanished">Ponovo generiši dimenzije</translation>
-    </message>
-    <message>
-        <source>&amp;Dimension Styles</source>
-        <translation type="vanished">&amp;Stilovi dimenzija</translation>
-    </message>
-    <message>
-        <source>Pick Point</source>
-        <translation type="vanished">Odaberi tačku</translation>
-    </message>
-    <message>
-        <source>Pick Distance</source>
-        <translation type="vanished">Odaberi udaljenost</translation>
-    </message>
-    <message>
-        <source>Pick Angle</source>
-        <translation type="vanished">Odaberi ugao</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1441"/>
         <source>Cu&amp;t</source>
         <translation>Ise&amp;ci</translation>
-    </message>
-    <message>
-        <source>Cut Quic&amp;k</source>
-        <translation type="vanished">Brzo ise&amp;ci</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1452"/>
@@ -3060,17 +1533,9 @@ ili [%2]</translation>
         <translation>&amp;Kopiraj</translation>
     </message>
     <message>
-        <source>Copy &amp;Quick</source>
-        <translation type="vanished">Brzo kopiraj</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1463"/>
         <source>&amp;Paste</source>
         <translation>&amp;Nalepi</translation>
-    </message>
-    <message>
-        <source>Paste &amp;Transform</source>
-        <translation type="vanished">Прилепи и трансформиши</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1212"/>
@@ -3110,704 +1575,11 @@ ili [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionInfo3PointsAngle</name>
-    <message>
-        <source>Angle: %1
-Complementary: %2
-Supplementary: %3
-Alternative: %4
-Start Edge Point: (%5 , %6)
-Intersection Point :(%7, %8)
-End Edge Point: (%9 , %10)</source>
-        <translation type="vanished">Угао: %1
-Допунски угао: %2
-Супплементарни угао: %3
-Наизменични угао: %4
-Почетна тачка ивице: (%5 , %6)
-Пресечна тачка: (%7, %8)
-Крајња тачка ивице: (%9 , %10)</translation>
-    </message>
-    <message>
-        <source>Select first edge point of angle</source>
-        <translation type="vanished">Изаберите прву тачку ивице угла</translation>
-    </message>
-    <message>
-        <source>Select second (intersection) point of angle</source>
-        <translation type="vanished">Изаберите другу (пресечну) тачку угла</translation>
-    </message>
-    <message>
-        <source>Select second edge point of angle</source>
-        <translation type="vanished">Изаберите другу тачку ивице угла</translation>
-    </message>
-    <message>
-        <source>Restart with first edge point selection</source>
-        <translation type="vanished">Ponovo pokrenite sa prvom selektovanom tačkom ivice</translation>
-    </message>
-    <message>
-        <source>Angle Info</source>
-        <translation type="vanished">Informacije o uglu</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Udaljenost:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Ugao:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">Od:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">Do:</translation>
-    </message>
-    <message>
-        <source>Complementary:</source>
-        <translation type="vanished">Komplementarni:</translation>
-    </message>
-    <message>
-        <source>Supplementary:</source>
-        <translation type="vanished">Suplementarni:</translation>
-    </message>
-    <message>
-        <source>Alternative: </source>
-        <translation type="vanished">Alternativni:</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Presek:</translation>
-    </message>
-    <message>
-        <source>Distance1:</source>
-        <translation type="vanished">Растојање 1:</translation>
-    </message>
-    <message>
-        <source>Distance2:</source>
-        <translation type="vanished">Растојање 2:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">Угао 1:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">Угао 2:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionInfoPickCoordinates</name>
-    <message>
-        <source>Select point</source>
-        <translation type="vanished">Изаберите тачку</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionInfoPoint</name>
-    <message>
-        <source>Absolute: (%1)</source>
-        <translation type="vanished">Апсолутно: (%1)</translation>
-    </message>
-    <message>
-        <source>Relative: (%1)</source>
-        <translation type="vanished">Релативно: (%1)</translation>
-    </message>
-    <message>
-        <source>Polar: (%1)</source>
-        <translation type="vanished">Поларно: (%1)</translation>
-    </message>
-    <message>
-        <source>Polar Relative: (%1)</source>
-        <translation type="vanished">Релативно поларно: (%1)</translation>
-    </message>
-    <message>
-        <source>Absolute WCS: (%1)</source>
-        <translation type="vanished">Апсолутно у координатном систему: (%1)</translation>
-    </message>
-    <message>
-        <source>Point Coordinates</source>
-        <translation type="vanished">Координате тачке</translation>
-    </message>
-    <message>
-        <source>Absolute:</source>
-        <translation type="vanished">Апсолутно:</translation>
-    </message>
-    <message>
-        <source>Polar:</source>
-        <translation type="vanished">Поларно:</translation>
-    </message>
-    <message>
-        <source>Relative:</source>
-        <translation type="vanished">Релативно:</translation>
-    </message>
-    <message>
-        <source>Relative Polar:</source>
-        <translation type="vanished">Релативно поларно:</translation>
-    </message>
-    <message>
-        <source>Relative Zero:</source>
-        <translation type="vanished">Релативна нула:</translation>
-    </message>
-    <message>
-        <source>Select position for coordinates</source>
-        <translation type="vanished">Изаберите позицију за координате</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionInfoProperties</name>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">Изаберите објекат</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">Изаберите подређене објекте</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionInteractivePickAngle</name>
-    <message>
-        <source>Lines are parallel</source>
-        <translation type="vanished">Линије су паралелне</translation>
-    </message>
-    <message>
-        <source>Angle Info</source>
-        <translation type="vanished">Информације о углу</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угао:</translation>
-    </message>
-    <message>
-        <source>Complementary:</source>
-        <translation type="vanished">Комплементаран:</translation>
-    </message>
-    <message>
-        <source>Supplementary:</source>
-        <translation type="vanished">Суплементаран:</translation>
-    </message>
-    <message>
-        <source>Alternative: </source>
-        <translation type="vanished">Алтернативан:</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Пресек:</translation>
-    </message>
-    <message>
-        <source>Line 1 Angle:</source>
-        <translation type="vanished">Угао прве линије:</translation>
-    </message>
-    <message>
-        <source>Line 2 Angle:</source>
-        <translation type="vanished">Угао друге линије:</translation>
-    </message>
-    <message>
-        <source>Select first edge point of angle</source>
-        <translation type="vanished">Изаберите прву тачку угла</translation>
-    </message>
-    <message>
-        <source>Select first line/Pick Supplementary</source>
-        <translation type="vanished">Изаберите прву линију / Изаберите суплементарну линију</translation>
-    </message>
-    <message>
-        <source>Pick from line</source>
-        <translation type="vanished">Izaberite iz linije</translation>
-    </message>
-    <message>
-        <source>Select second (intersection) point of angle</source>
-        <translation type="vanished">[&apos;Izaberite drugu (presecnu) tačku ugla&apos;, &apos;Izaberite drugu tačku ugla&apos;, &apos;Izaberite drugu tačku&apos;]</translation>
-    </message>
-    <message>
-        <source>Pick angle</source>
-        <translation type="vanished">Izaberite ugao</translation>
-    </message>
-    <message>
-        <source>Select second edge point of angle</source>
-        <translation type="vanished">Izaberite drugu tačku ivice ugla</translation>
-    </message>
-    <message>
-        <source>Pick Supplementary</source>
-        <translation type="vanished">Izaberite suplement</translation>
-    </message>
-    <message>
-        <source>Specify second line</source>
-        <translation type="vanished">Odredite drugu liniju</translation>
-    </message>
-    <message>
-        <source>Pick Complementary</source>
-        <translation type="vanished">Izaberite komplement</translation>
-    </message>
-    <message>
-        <source>Pick Angle</source>
-        <translation type="vanished">Izaberite ugao</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">Od:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">Do:</translation>
-    </message>
-    <message>
-        <source>Distance1:</source>
-        <translation type="vanished">Растојање 1:</translation>
-    </message>
-    <message>
-        <source>Distance2:</source>
-        <translation type="vanished">Растојање 2:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">Угао 1:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">Угао 2:</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Растојање:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionInteractivePickDistance</name>
-    <message>
-        <source>Pick Distance</source>
-        <translation type="vanished">Одаберите растојање</translation>
-    </message>
-    <message>
-        <source>Absolute:</source>
-        <translation type="vanished">Апсолутно:</translation>
-    </message>
-    <message>
-        <source>Polar:</source>
-        <translation type="vanished">Поларно:</translation>
-    </message>
-    <message>
-        <source>Relative:</source>
-        <translation type="vanished">Релативно:</translation>
-    </message>
-    <message>
-        <source>Relative Polar:</source>
-        <translation type="vanished">Релативно поларно:</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Растојање:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угао:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">Од:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">До:</translation>
-    </message>
-    <message>
-        <source>Start and end points are too close to each other to calculate the distance.</source>
-        <translation type="vanished">Почетна и крајња тачка су преблизу једна другој да би се израчунало растојање.</translation>
-    </message>
-    <message>
-        <source>Specify first point of distance</source>
-        <translation type="vanished">Одредите прву тачку растојања</translation>
-    </message>
-    <message>
-        <source>Entity geometry length</source>
-        <translation type="vanished">Дужина геометрије објекта</translation>
-    </message>
-    <message>
-        <source>Segment length/Diameter</source>
-        <translation type="vanished">Дужина сегмента/пречник</translation>
-    </message>
-    <message>
-        <source>Specify second point of distance</source>
-        <translation type="vanished">Одредите другу тачку растојања</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionInteractivePickPosition</name>
-    <message>
-        <source>Pick Coordinates</source>
-        <translation type="vanished">Одаберите координате</translation>
-    </message>
-    <message>
-        <source>Absolute:</source>
-        <translation type="vanished">Apsolutno:</translation>
-    </message>
-    <message>
-        <source>Polar:</source>
-        <translation type="vanished">Polarno:</translation>
-    </message>
-    <message>
-        <source>Relative:</source>
-        <translation type="vanished">Relativno:</translation>
-    </message>
-    <message>
-        <source>Relative Polar:</source>
-        <translation type="vanished">Relativno polarno:</translation>
-    </message>
-    <message>
-        <source>Relative Zero:</source>
-        <translation type="vanished">Relativna nula:</translation>
-    </message>
-    <message>
-        <source>Pick coordinates from the drawing</source>
-        <translation type="vanished">Odaberite koordinate sa crteža</translation>
-    </message>
-    <message>
-        <source>Pick relative zero coordinates</source>
-        <translation type="vanished">Odaberite relativne koordinate nule</translation>
-    </message>
-    <message>
-        <source>Pick relative coordinates</source>
-        <translation type="vanished">Odaberite relativne koordinate</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionLayersCmd</name>
-    <message>
-        <source>Enter layer name to %1</source>
-        <translation type="vanished">Unesite ime sloja za %1</translation>
-    </message>
-    <message>
-        <source>activate</source>
-        <translation type="vanished">aktiviranje</translation>
-    </message>
-    <message>
-        <source>create</source>
-        <translation type="vanished">креирај</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionLayersExport</name>
-    <message>
-        <source>selected</source>
-        <comment>Layers to export</comment>
-        <translation type="vanished">изабрано</translation>
-    </message>
-    <message>
-        <source>visible</source>
-        <comment>Layers to export</comment>
-        <translation type="vanished">видљиво</translation>
-    </message>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="281"/>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
         <translation>Чувам слој &quot;%1&quot; као &quot;%2&quot; </translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifyAlign</name>
-    <message>
-        <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation type="vanished">Тренутно, акција поравњања подржава само систем светских координата и не може се покренути ако је активан систем корисничких координата.</translation>
-    </message>
-    <message>
-        <source>Align to </source>
-        <translation type="vanished">Поравнај на</translation>
-    </message>
-    <message>
-        <source>Entity</source>
-        <translation type="vanished">Ентитет</translation>
-    </message>
-    <message>
-        <source>Position</source>
-        <translation type="vanished">Позиција</translation>
-    </message>
-    <message>
-        <source>Drawing</source>
-        <translation type="vanished">Цртеж</translation>
-    </message>
-    <message>
-        <source>Reference: </source>
-        <translation type="vanished">Референтна тачка:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Офсет:</translation>
-    </message>
-    <message>
-        <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
-        <translation type="vanished">Координата се прихвата само за поравнање са „Позицијом“</translation>
-    </message>
-    <message>
-        <source>Select base alignment entity</source>
-        <translation type="vanished">Изаберите основну јединицу поравнања</translation>
-    </message>
-    <message>
-        <source>Select child entities of containers</source>
-        <translation type="vanished">Изаберите подређене јединице контејнера</translation>
-    </message>
-    <message>
-        <source>Specify base alignment point</source>
-        <translation type="vanished">Наведите основну тачку поравнања</translation>
-    </message>
-    <message>
-        <source>Click or Enter to finish align</source>
-        <translation type="vanished">Кликните или притисните Enter да бисте завршили поравнање</translation>
-    </message>
-    <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">Изаберите јединице које треба поравнати (притисните Enter да бисте завршили)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Изаберите контуру</translation>
-    </message>
-    <message>
-        <source>Select and align</source>
-        <translation type="vanished">Изаберите и поравнајте</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifyAlignRef</name>
-    <message>
-        <source>Align References</source>
-        <translation type="vanished">Поравнајте референце</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Офсет:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угао:</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Скала:</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">Изаберите за поравнање (Притисните Enter да бисте завршили)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Изаберите контуру</translation>
-    </message>
-    <message>
-        <source>Align immediately after selection</source>
-        <translation type="vanished">Поравнајте одмах након избора</translation>
-    </message>
-    <message>
-        <source>Select first reference point</source>
-        <translation type="vanished">Изаберите прву референтну тачку</translation>
-    </message>
-    <message>
-        <source>Select first target point</source>
-        <translation type="vanished">Изаберите прву циљну тачку</translation>
-    </message>
-    <message>
-        <source>Select second reference point</source>
-        <translation type="vanished">Изаберите другу референтну тачку</translation>
-    </message>
-    <message>
-        <source>Select second target point</source>
-        <translation type="vanished">Изаберите другу циљну тачку</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifyAlignSingle</name>
-    <message>
-        <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation type="vanished">Акција поравнања тренутно подржава само систем светских координата и не може се покренути ако је активан систем корисничких координата.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Odstupanje:</translation>
-    </message>
-    <message>
-        <source>Align to </source>
-        <translation type="vanished">Poravnajte sa</translation>
-    </message>
-    <message>
-        <source>Entity</source>
-        <translation type="vanished">Entitet</translation>
-    </message>
-    <message>
-        <source>Position</source>
-        <translation type="vanished">Pozicija</translation>
-    </message>
-    <message>
-        <source>Drawing</source>
-        <translation type="vanished">Crtanje</translation>
-    </message>
-    <message>
-        <source>Reference: </source>
-        <translation type="vanished">Referenca:</translation>
-    </message>
-    <message>
-        <source>Select base alignment entity</source>
-        <translation type="vanished">Izaberite osnovni entitet za poravnanje</translation>
-    </message>
-    <message>
-        <source>Specify base alignment point</source>
-        <translation type="vanished">Odredite osnovnu tačku za poravnanje</translation>
-    </message>
-    <message>
-        <source>Select entity to align</source>
-        <translation type="vanished">Izaberite entitet za poravnanje</translation>
-    </message>
-    <message>
-        <source>Finish alignment after selection</source>
-        <translation type="vanished">Završite poravnanje nakon izbora</translation>
-    </message>
-    <message>
-        <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
-        <translation type="vanished">Координата се прихвата само за поравнање на „Позицију“</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifyBreakDivide</name>
-    <message>
-        <source>Invalid entity selected - no segments between intersections to break/divide.</source>
-        <translation type="vanished">Изабран неважећи објекат - нема сегмената између пресечних тачака за поделу.</translation>
-    </message>
-    <message>
-        <source>Break/Divide Line</source>
-        <translation type="vanished">Подели линију</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Тачка 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Тачка 2:</translation>
-    </message>
-    <message>
-        <source>Break/Divide Circle</source>
-        <translation type="vanished">Подели круг</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">Угао 1:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">Угао 2:</translation>
-    </message>
-    <message>
-        <source>Break/Divide Arc</source>
-        <translation type="vanished">Подели лук</translation>
-    </message>
-    <message>
-        <source>Select line, arc or circle</source>
-        <translation type="vanished">Изаберите линију, лук или круг</translation>
-    </message>
-    <message>
-        <source>Proceed even if no intersections</source>
-        <translation type="vanished">Nastavite čak i ako nema preseka</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifyDuplicate</name>
-    <message>
-        <source>Duplicate Offset</source>
-        <translation type="vanished">Dupliraj ofset</translation>
-    </message>
-    <message>
-        <source>Select entity to duplicate</source>
-        <translation type="vanished">Izaberite entitet za dupliranje</translation>
-    </message>
-    <message>
-        <source>Interactive Offset</source>
-        <translation type="vanished">Interaktivni ofset</translation>
-    </message>
-    <message>
-        <source>Select direction of offset</source>
-        <translation type="vanished">Izaberite smer ofseta</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifyLineGap</name>
-    <message>
-        <source>Line Gap</source>
-        <translation type="vanished">Razmak između linija</translation>
-    </message>
-    <message>
-        <source>Start:</source>
-        <translation type="vanished">Početak:</translation>
-    </message>
-    <message>
-        <source>End:</source>
-        <translation type="vanished">Kraj:</translation>
-    </message>
-    <message>
-        <source>Select line</source>
-        <translation type="vanished">Izaberite liniju</translation>
-    </message>
-    <message>
-        <source>Use Alternative Line Endpoint</source>
-        <translation type="vanished">Koristite alternativnu krajnju tačku linije</translation>
-    </message>
-    <message>
-        <source>Select endpoint of gap</source>
-        <translation type="vanished">Izaberite krajnji punkt razmaka</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifyLineJoin</name>
-    <message>
-        <source>Lines Join</source>
-        <translation type="vanished">Spoj linija</translation>
-    </message>
-    <message>
-        <source>Lines are parallel</source>
-        <translation type="vanished">Linije su paralelne</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Presek:</translation>
-    </message>
-    <message>
-        <source>No line selected</source>
-        <translation type="vanished">Nijedna linija nije izabrana</translation>
-    </message>
-    <message>
-        <source>Lines are parallel, can&apos;t merge</source>
-        <translation type="vanished">Linije su paralelne, ne mogu se spojiti</translation>
-    </message>
-    <message>
-        <source>Lines already intersects, can&apos;t merge</source>
-        <translation type="vanished">Linije se već seku, ne mogu se spojiti</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">Izaberite prvu liniju</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">Izaberite drugu liniju</translation>
-    </message>
-    <message>
-        <source>Select part of first line that should remain after trim</source>
-        <translation type="vanished">Izaberite deo prve linije koji treba da ostane nakon skraćivanja</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Није одабрана ниједна јединица!</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionPasteToPoints</name>
-    <message>
-        <source>Clipboard is empty</source>
-        <translation type="vanished">Припрема је празна</translation>
-    </message>
-    <message>
-        <source>Select and paste</source>
-        <translation type="vanished">Одаберите и налепите</translation>
     </message>
 </context>
 <context>
@@ -3828,10 +1600,6 @@ End Edge Point: (%9 , %10)</source>
         <source>Specify entity to apply pen</source>
         <translation>Одаберите јединицу на коју желите да примените оловку</translation>
     </message>
-    <message>
-        <source>Apply Resolved Pen</source>
-        <translation type="vanished">Примените решену оловку</translation>
-    </message>
 </context>
 <context>
     <name>LC_ActionPenPick</name>
@@ -3844,89 +1612,6 @@ End Edge Point: (%9 , %10)</source>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="109"/>
         <source>Cancel</source>
         <translation>Откажи</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionPolylineArcsToLines</name>
-    <message>
-        <source>Specify polyline with arc segments</source>
-        <translation type="vanished">Одаберите полилинија са сегментима лука</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionPolylineChangeSegmentType</name>
-    <message>
-        <source>Invalid arc point to create arc, select another one</source>
-        <translation type="vanished">Неважећа тачка лука за креирање лука, одаберите другу</translation>
-    </message>
-    <message>
-        <source>Select polyline to modify</source>
-        <translation type="vanished">Одаберите полилинија коју желите да измените</translation>
-    </message>
-    <message>
-        <source>Select segment of polyline to modify</source>
-        <translation type="vanished">Izaberite segment polilinije za izmenu</translation>
-    </message>
-    <message>
-        <source>Specify position on arc to create</source>
-        <translation type="vanished">Odredite položaj na luku za kreiranje</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionPreSelectionAwareBase</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">Deaktiviranje selekcije</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">Aktiviranje selekcije</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">entiteti</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">koji se seku sa poljem</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">koji se nalaze unutar polja</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">Izaberite drugu ivicu</translation>
-    </message>
-    <message>
-        <source>Select/Deselect entities</source>
-        <translation type="vanished">Izaberite/Deaktivirajte entitete</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">Izaberite presečne</translation>
-    </message>
-    <message>
-        <source>No valid entities selected, select them first</source>
-        <translation type="vanished">Nijedan validan entitet nije izabran, prvo ih izaberite.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionRemoveSplinePoints</name>
-    <message>
-        <source>Select spline or spline points entity</source>
-        <translation type="vanished">Izaberite splajn ili entitet tačaka splajna.</translation>
-    </message>
-    <message>
-        <source>Select control point of entity</source>
-        <translation type="vanished">Izaberite kontrolnu tačku entiteta.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionSelectDimOrdinateSameOrigin</name>
-    <message>
-        <source>Select reference ordinate dimension</source>
-        <translation type="vanished">Izaberite referentnu ordinatnu dimenziju.</translation>
     </message>
 </context>
 <context>
@@ -3959,455 +1644,6 @@ End Edge Point: (%9 , %10)</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionSplineAddPoint</name>
-    <message>
-        <source>Select spline or spline points entity</source>
-        <translation type="vanished">Izaberite splajn ili entitet tačaka splajna.</translation>
-    </message>
-    <message>
-        <source>Select control point to insert before</source>
-        <translation type="vanished">Izaberite kontrolnu tačku u koju želite da ubacite novu tačku.</translation>
-    </message>
-    <message>
-        <source>Specify control point</source>
-        <translation type="vanished">Odredite kontrolnu tačku.</translation>
-    </message>
-    <message>
-        <source>Insert AFTER selected point</source>
-        <translation type="vanished">Umetnite NAKON odabranog tačke</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionSplineAppendPoint</name>
-    <message>
-        <source>Select spline or spline points entity</source>
-        <translation type="vanished">Odaberite splajn ili entitet tačaka splajna</translation>
-    </message>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">Odredite prvu kontrolnu tačku</translation>
-    </message>
-    <message>
-        <source>Specify control point</source>
-        <translation type="vanished">Odredite kontrolnu tačku</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionSplineExplode</name>
-    <message>
-        <source>Select spline or spline points entity</source>
-        <translation type="vanished">Odaberite splajn ili entitet tačaka splajna</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionSplineFromPolyline</name>
-    <message>
-        <source>Select polyline to create spline or spline points</source>
-        <translation type="vanished">Odaberite poliliniju za kreiranje splajna ili tačaka splajna</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionSplineRemoveBetween</name>
-    <message>
-        <source>Not enough points remains for the spline</source>
-        <translation type="vanished">Nije dovoljno tačaka za splajn</translation>
-    </message>
-    <message>
-        <source>Select spline or spline points entity</source>
-        <translation type="vanished">Odaberite splajn ili entitet tačaka splajna</translation>
-    </message>
-    <message>
-        <source>Select first point for deletion</source>
-        <translation type="vanished">Odaberite prvu tačku za brisanje</translation>
-    </message>
-    <message>
-        <source>Select second point for deletion</source>
-        <translation type="vanished">Odaberite drugu tačku za brisanje</translation>
-    </message>
-    <message>
-        <source>Delete from endpoints TO selected points</source>
-        <translation type="vanished">Izbriši od krajnjih tačaka do izabranih tačaka</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionUCSByDimOrdinate</name>
-    <message>
-        <source>Select ordinate dimension to set UCS</source>
-        <translation type="vanished">Izaberi ordinatnu dimenziju za postavljanje UCS</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionsShortcutsDialog</name>
-    <message>
-        <source>Action Shortcuts Mappings</source>
-        <translation type="vanished">Mapiranja prečica akcija</translation>
-    </message>
-    <message>
-        <source>Shortcut</source>
-        <translation type="vanished">Prečica</translation>
-    </message>
-    <message>
-        <source>Key Sequence:</source>
-        <translation type="vanished">Niz tastera:</translation>
-    </message>
-    <message>
-        <source>Reset shortcut for current action to it&apos;s default value</source>
-        <translation type="vanished">Resetuj prečicu za trenutnu akciju na njenu podrazumevanu vrednost</translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation type="vanished">Resetuj</translation>
-    </message>
-    <message>
-        <source>Shortcut key sequence recording</source>
-        <translation type="vanished">Snimanje niza tastera za prečicu</translation>
-    </message>
-    <message>
-        <source>Start Recording</source>
-        <translation type="vanished">Pokreni snimanje</translation>
-    </message>
-    <message>
-        <source>Keyboard shortcut value</source>
-        <translation type="vanished">Vrednost prečice sa tastature</translation>
-    </message>
-    <message>
-        <source>Removes shortcut for the action</source>
-        <translation type="vanished">Уклања пречицу за акцију</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="vanished">Обриши</translation>
-    </message>
-    <message>
-        <source>For</source>
-        <translation type="vanished">For</translation>
-    </message>
-    <message>
-        <source>group</source>
-        <translation type="vanished">група</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">Текстуална етикета</translation>
-    </message>
-    <message>
-        <source>name</source>
-        <translation type="vanished">name</translation>
-    </message>
-    <message>
-        <source>Action Shortcuts</source>
-        <translation type="vanished">Пречице за акције</translation>
-    </message>
-    <message>
-        <source>Click on action for details. Double click on action to edit. </source>
-        <translation type="vanished">Кликните на акцију да бисте видели детаље. Двапут кликните на акцију да бисте је уредили.</translation>
-    </message>
-    <message>
-        <source>Loads shortcuts mapping from external file.</source>
-        <translation type="vanished">Учитава мапирање пречица из екстерне датотеке.</translation>
-    </message>
-    <message>
-        <source>Import...</source>
-        <translation type="vanished">Увези...</translation>
-    </message>
-    <message>
-        <source>Export shortcuts mappings to external file</source>
-        <translation type="vanished">Извезите мапирање пречица у екстерну датотеку</translation>
-    </message>
-    <message>
-        <source>Export...</source>
-        <translation type="vanished">Извоз...</translation>
-    </message>
-    <message>
-        <source>All changes made during editing sessions are discarded to initial values</source>
-        <translation type="vanished">Све промене направљене током сесија уређивања се враћају на почетне вредности</translation>
-    </message>
-    <message>
-        <source>Reset All</source>
-        <translation type="vanished">Вратите све на почетак</translation>
-    </message>
-    <message>
-        <source>Filter:</source>
-        <translation type="vanished">Филтер:</translation>
-    </message>
-    <message>
-        <source>Filtering actions by name</source>
-        <translation type="vanished">Филтрирање акција по имену</translation>
-    </message>
-    <message>
-        <source>If checked, matched actions will be highlighted onlye, otherwide - non-matched actions are hidden</source>
-        <translation type="vanished">Ако је поље означено, само ће се приказивати акције које одговарају критеријумима филтера, у супротном, акције које не одговарају биће скривене</translation>
-    </message>
-    <message>
-        <source>Highlight</source>
-        <translation type="vanished">Истицање</translation>
-    </message>
-    <message>
-        <source>Import shortcuts mapping</source>
-        <translation type="vanished">Увезите мапирање пречица</translation>
-    </message>
-    <message>
-        <source>Export shortcuts mapping</source>
-        <translation type="vanished">Извезите мапирање пречица</translation>
-    </message>
-    <message>
-        <source>LibreCAD Shortcuts file (*.%1)</source>
-        <translation type="vanished">LibreCAD datoteka prečica (*.%1)</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were loaded successfully.</source>
-        <translation type="vanished">Prečice su uspešno učitane.</translation>
-    </message>
-    <message>
-        <source>Can&apos;t read provided file - please check that it is exists and it is allowed to read from it.</source>
-        <translation type="vanished">Ne mogu da pročitam navedenu datoteku - proverite da li postoji i da li imate dozvolu za čitanje.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">Prečice nisu uvežene.
-Navedena datoteka postoji, ali ne sadrži mapiranje prečica za LibreCAD.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">Prečice nisu uvežene. 
-Došlo je do greške prilikom parsiranja XML-a tokom obrade datoteke.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were saved successfully.</source>
-        <translation type="vanished">Prečice su uspešno sačuvane.</translation>
-    </message>
-    <message>
-        <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
-        <translation type="vanished">Ne mogu da pišem u navedenu datoteku - proverite da li imate dozvolu za pisanje.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">Prečice nisu uvežene. 
-Došlo je do neke greške tokom generisanja XML-a.</translation>
-    </message>
-    <message>
-        <source>Import Shortcuts Mapping</source>
-        <translation type="vanished">Uvezi mapiranje prečica</translation>
-    </message>
-    <message>
-        <source>Export Shortcuts Mapping</source>
-        <translation type="vanished">Izvezi mapiranje prečica</translation>
-    </message>
-    <message>
-        <source>Invalid key sequence.</source>
-        <translation type="vanished">Невалидна секвенца тастера.</translation>
-    </message>
-    <message>
-        <source>Resolve conflicts before saving.</source>
-        <translation type="vanished">Решите конфликте пре чувања.</translation>
-    </message>
-    <message>
-        <source>Key sequence has potential conflicts. &lt;a href=&quot;show&quot;&gt;Show.&lt;/a&gt;</source>
-        <translation type="vanished">Секвенца тастера има потенцијалне конфликте. &lt;a href=&quot;show&quot;&gt;Прикажи.&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>Some mappings are modified.
-Are you sure you are going to discard changes?</source>
-        <translation type="vanished">Неке мапе су измењене.
-Да ли сте сигурни да желите да одбаците промене?</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AnglesBasisWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Angles basis information. Click to change.</source>
-        <translation type="vanished">Информације о бази углова. Кликните да бисте променили.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Базни угао:</translation>
-    </message>
-    <message>
-        <source>Zero base angle relative to the current user coordinate system. 0.0 is 3pm.</source>
-        <translation type="vanished">Нула базни угао у односу на тренутни кориснички координатни систем. 0,0 је 15 часова.</translation>
-    </message>
-    <message>
-        <source>0.000</source>
-        <translation type="vanished">0,000</translation>
-    </message>
-    <message>
-        <source>Positive angles direction is counterclockwise.</source>
-        <translation type="vanished">Смер позитивних углова је супротан смеру казаљке на сату.</translation>
-    </message>
-    <message>
-        <source>Positive angles direction is clockwise.</source>
-        <translation type="vanished">Pozitivni uglovi se mere u smeru kazaljke na satu.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AppWindowDialogsInvoker</name>
-    <message>
-        <source>License</source>
-        <translation type="vanished">Лиценца</translation>
-    </message>
-    <message>
-        <source>The following files could not be loaded:
-</source>
-        <translation type="vanished">Следеће датотеке нису могле да се учитају:</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Грешка</translation>
-    </message>
-    <message>
-        <source>Device Options</source>
-        <translation type="vanished">Опције уређаја</translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="vanished">Уређај</translation>
-    </message>
-    <message>
-        <source>Closing Drawing</source>
-        <translation type="vanished">Затварање цртежа</translation>
-    </message>
-    <message>
-        <source>Draft Mode</source>
-        <translation type="vanished">Нацртни режим</translation>
-    </message>
-    <message>
-        <source>Save changes to the following item?
-%1</source>
-        <translation type="vanished">Да ли да сачувам промене у следећем елементу?
-%1</translation>
-    </message>
-    <message>
-        <source>Export as</source>
-        <translation type="vanished">Извези као</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ArcPropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Геометрија</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">Центар (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="vanished">X координата центра лука</translation>
-    </message>
-    <message>
-        <source>Pick center coordinate from the drawing</source>
-        <translation type="vanished">Изаберите координату центра са цртежа</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">Центар (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">Y координата центра лука</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Полупречник:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Полупречник лука</translation>
-    </message>
-    <message>
-        <source>Pick radius value from the drawing</source>
-        <translation type="vanished">Изаберите вредност полупречника са цртежа</translation>
-    </message>
-    <message>
-        <source>Diameter:</source>
-        <translation type="vanished">Пречник:</translation>
-    </message>
-    <message>
-        <source>Diameter of arc</source>
-        <translation type="vanished">Пречник лука</translation>
-    </message>
-    <message>
-        <source>Pick diameter value from the drawing</source>
-        <translation type="vanished">Изаберите вредност пречника из цртежа</translation>
-    </message>
-    <message>
-        <source>Arc Length:</source>
-        <translation type="vanished">Дужина лука:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">Дужина лука</translation>
-    </message>
-    <message>
-        <source>Pick arc length value from the drawing</source>
-        <translation type="vanished">Изаберите вредност дужине лука из цртежа</translation>
-    </message>
-    <message>
-        <source>Sweep Angle:</source>
-        <translation type="vanished">Угао закривљења:</translation>
-    </message>
-    <message>
-        <source>Sweep angle of the arc (degrees)</source>
-        <translation type="vanished">Угао закривљења лука (степени)</translation>
-    </message>
-    <message>
-        <source>Pick sweep angle from the drawing</source>
-        <translation type="vanished">Изаберите угао закривљења из цртежа</translation>
-    </message>
-    <message>
-        <source>Bulge:</source>
-        <translation type="vanished">Избочење:</translation>
-    </message>
-    <message>
-        <source>Bulge (sagitta) of the arc</source>
-        <translation type="vanished">Izbočenje (sagita) luka</translation>
-    </message>
-    <message>
-        <source>Pick bulge value from the drawing</source>
-        <translation type="vanished">Odaberite vrednost izbočenja iz crteža</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">Početni ugao:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="vanished">Početni ugao luka</translation>
-    </message>
-    <message>
-        <source>Pick angle value from the drawing</source>
-        <translation type="vanished">Odaberite vrednost ugla iz crteža</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">Završni ugao:</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="vanished">Završni ugao luka</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="vanished">Određuje da li je luk obrnut (u smeru kazaljke na satu)</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">Obrnut</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="14"/>
@@ -4437,46 +1673,9 @@ Are you sure you are going to discard changes?</source>
         <translation>Оловка:</translation>
     </message>
     <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">Делта полупречника круга у односу на полупречник лука</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="45"/>
         <source>Radius Shift:</source>
         <translation>Помак полупречника:</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">Слој у који треба сместити креирани круг</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Активно</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Оригинално</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">Оловка која се примењује на креирани круг</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Активно</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Оригинално</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Оригинално решено</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="65"/>
@@ -4484,79 +1683,9 @@ Are you sure you are going to discard changes?</source>
         <translation>Слој:</translation>
     </message>
     <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">Ако је означено, оригинални лук ће бити уклоњен</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="102"/>
         <source>Replace arc</source>
         <translation>Замени лук</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">Изаберите вредност офсета из цртежа</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CirclePropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Геометрија</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">Центар (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="vanished">X координата центра круга</translation>
-    </message>
-    <message>
-        <source>Pick center coordinate from drawing</source>
-        <translation type="vanished">Изаберите координату центра из цртежа</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">Центар (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="vanished">Y координата центра круга</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Радијус:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Радијус круга</translation>
-    </message>
-    <message>
-        <source>Pick radius value from drawing</source>
-        <translation type="vanished">Изаберите вредност радијуса са цртежа</translation>
-    </message>
-    <message>
-        <source>Diameter:</source>
-        <translation type="vanished">Пречник:</translation>
-    </message>
-    <message>
-        <source>Diameter of circle</source>
-        <translation type="vanished">Пречник круга</translation>
-    </message>
-    <message>
-        <source>Pick diameter value from drawing</source>
-        <translation type="vanished">Изаберите вредност пречника са цртежа</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CreatorInvoker</name>
-    <message>
-        <source>Toolbar: %1 (Custom)</source>
-        <translation type="vanished">Алатна трака: %1 (Прилагођено)</translation>
     </message>
 </context>
 <context>
@@ -4572,21 +1701,9 @@ Are you sure you are going to discard changes?</source>
         <translation>Type</translation>
     </message>
     <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">Вертикална димензија крста</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="168"/>
         <source>Angle:</source>
         <translation>Угао:</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">Угао ротације крста око центра</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">Хоризонтална димензија крста</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="125"/>
@@ -4594,17 +1711,9 @@ Are you sure you are going to discard changes?</source>
         <translation>X:</translation>
     </message>
     <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">Изаберите X вредност из цртежа</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="132"/>
         <source>Y:</source>
         <translation>Y:</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">Дефинише како се примењују димензије крста</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="63"/>
@@ -4620,14 +1729,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="73"/>
         <source>Percent</source>
         <translation>Procenat</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">Odaberite Y vrednost sa grafikona</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Odaberite ugao sa grafikona</translation>
     </message>
 </context>
 <context>
@@ -4651,2265 +1752,9 @@ Are you sure you are going to discard changes?</source>
         <translation>Uređaj</translation>
     </message>
     <message>
-        <source>Selection of pointing device</source>
-        <translation type="vanished">Izbor uređaja za pokazivanje</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="53"/>
         <source>Save</source>
         <translation>Save</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DimArrowRegistry</name>
-    <message>
-        <source>Closed Filled</source>
-        <translation type="vanished">Zatvoreno, ispunjeno</translation>
-    </message>
-    <message>
-        <source>Dot</source>
-        <translation type="vanished">Dot</translation>
-    </message>
-    <message>
-        <source>Dot Small</source>
-        <translation type="vanished">Mala tačka</translation>
-    </message>
-    <message>
-        <source>Dot Blank</source>
-        <translation type="vanished">Tačka - prazno</translation>
-    </message>
-    <message>
-        <source>Origin Indicator</source>
-        <translation type="vanished">Индикатор почетка</translation>
-    </message>
-    <message>
-        <source>Origin Indicator 2</source>
-        <translation type="vanished">Индикатор почетка 2</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="vanished">Open</translation>
-    </message>
-    <message>
-        <source>Right Angle</source>
-        <translation type="vanished">Прави угао</translation>
-    </message>
-    <message>
-        <source>Open 30</source>
-        <translation type="vanished">Отворено 30</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Затворено</translation>
-    </message>
-    <message>
-        <source>Dot Small Blank</source>
-        <translation type="vanished">Мала тачка - празno</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">None</translation>
-    </message>
-    <message>
-        <source>Oblique</source>
-        <translation type="vanished">Косо</translation>
-    </message>
-    <message>
-        <source>Box Filled</source>
-        <translation type="vanished">Popunjena kutija</translation>
-    </message>
-    <message>
-        <source>Box Blank</source>
-        <translation type="vanished">Prazna kutija</translation>
-    </message>
-    <message>
-        <source>Closed Blank</source>
-        <translation type="vanished">Zatvorena, prazna</translation>
-    </message>
-    <message>
-        <source>Datum Filled</source>
-        <translation type="vanished">Popunjena referentna tačka</translation>
-    </message>
-    <message>
-        <source>Datum Blank</source>
-        <translation type="vanished">Prazna referentna tačka</translation>
-    </message>
-    <message>
-        <source>Integral</source>
-        <translation type="vanished">Integral</translation>
-    </message>
-    <message>
-        <source>Architecture Tick</source>
-        <translation type="vanished">Arhitektonski znak</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DimStyleItem</name>
-    <message>
-        <source>Linear</source>
-        <translation type="vanished">Linearna</translation>
-    </message>
-    <message>
-        <source>Angular</source>
-        <translation type="vanished">Ugaona</translation>
-    </message>
-    <message>
-        <source>Diametric</source>
-        <translation type="vanished">Dijametrijska</translation>
-    </message>
-    <message>
-        <source>Radial</source>
-        <translation type="vanished">Радијално</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="vanished">Ордината</translation>
-    </message>
-    <message>
-        <source>Leader and Tolerance</source>
-        <translation type="vanished">Водећа линија и толеранција</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DimStylePreviewPanel</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Zoom Auto</source>
-        <translation type="vanished">Аутоматско зумирање</translation>
-    </message>
-    <message>
-        <source>Zoom In</source>
-        <translation type="vanished">Увећај</translation>
-    </message>
-    <message>
-        <source>Zoom Out</source>
-        <translation type="vanished">Смањи</translation>
-    </message>
-    <message>
-        <source>Zoom Pan</source>
-        <translation type="vanished">Зумирање и померање</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DimStylesExporter</name>
-    <message>
-        <source>Dimension Styles Export Error</source>
-        <translation type="vanished">Грешка при извозу стилова димензија</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open provided file for writing - check that provided location is writable. Dimension styles were not exported.</source>
-        <translation type="vanished">Не могу да отворим наведену датотеку за писање - проверите да ли је наведена локација доступна за писање. Стилови димензија нису извезени.</translation>
-    </message>
-    <message>
-        <source>Dimension Styles Export</source>
-        <translation type="vanished">Izvoz stilova dimenzija</translation>
-    </message>
-    <message>
-        <source>Dimensions Styles were exported.</source>
-        <translation type="vanished">Stilovi dimenzija su izvezeni.</translation>
-    </message>
-    <message>
-        <source>Dimension Styles Import Error</source>
-        <translation type="vanished">Greška pri uvozu stilova dimenzija</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open provided file for reading. Dimension styles were not imported.</source>
-        <translation type="vanished">Nije moguće otvoriti navedenu datoteku za čitanje. Stilovi dimenzija nisu uvezeni.</translation>
-    </message>
-    <message>
-        <source>Unexpected error during dimension styles parsing. Message:</source>
-        <translation type="vanished">Neočekivana greška tokom parsiranja stilova dimenzija. Poruka:</translation>
-    </message>
-    <message>
-        <source>Unexpected format of file, it does not contains LibreCAD dimension styles.</source>
-        <translation type="vanished">Neočekivani format datoteke, ne sadrži stilove dimenzija LibreCAD-a.</translation>
-    </message>
-    <message>
-        <source>Dimension Styles Import</source>
-        <translation type="vanished">Uvoz stilova dimenzija</translation>
-    </message>
-    <message>
-        <source>No dimension styles to import.</source>
-        <translation type="vanished">Nema stilova dimenzija za uvoz.</translation>
-    </message>
-    <message>
-        <source>Dimension styles were imported.</source>
-        <translation type="vanished">Stilovi dimenzija su uvezeni.</translation>
-    </message>
-    <message>
-        <source>Import Dimension Styles</source>
-        <translation type="vanished">Uvoz stilova dimenzija</translation>
-    </message>
-    <message>
-        <source>Export Dimension Styles</source>
-        <translation type="vanished">Izvoz stilova dimenzija</translation>
-    </message>
-    <message>
-        <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation type="vanished">LibreCAD datoteka stilova dimenzija (*.%1)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgAbout</name>
-    <message>
-        <source>About LibreCAD</source>
-        <translation type="vanished">O programu LibreCAD</translation>
-    </message>
-    <message>
-        <source>Version Information</source>
-        <translation type="vanished">Informacije o verziji</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">Tekstualna oznaka</translation>
-    </message>
-    <message>
-        <source>Copies version information into clipboard</source>
-        <translation type="vanished">Kopira informacije o verziji u međuspremnik</translation>
-    </message>
-    <message>
-        <source>&amp;Copy Version Info</source>
-        <translation type="vanished">&amp;Kopiraj informacije o verziji</translation>
-    </message>
-    <message>
-        <source>Force check whether new version is available</source>
-        <translation type="vanished">Prisilno proverava da li je dostupna nova verzija</translation>
-    </message>
-    <message>
-        <source>Check for New Version</source>
-        <translation type="vanished">Proveri za novu verziju</translation>
-    </message>
-    <message>
-        <source>Other </source>
-        <translation type="vanished">Ostalo</translation>
-    </message>
-    <message>
-        <source>Version: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="vanished">Верзија: &lt;b&gt;%1&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="vanished">Компилатор: Clang %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="vanished">Компилатор: GNU GCC %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Compiler: Microsoft Visual C++</source>
-        <translation type="vanished">Компилатор: Microsoft Visual C++</translation>
-    </message>
-    <message>
-        <source>Compiled on: %1</source>
-        <translation type="vanished">Компилирано: %1</translation>
-    </message>
-    <message>
-        <source>Qt Version: %1</source>
-        <translation type="vanished">Qt верзија: %1</translation>
-    </message>
-    <message>
-        <source>Boost Version: %1.%2.%3</source>
-        <translation type="vanished">Boost верзија: %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Contributors</source>
-        <translation type="vanished">Сарадници</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation type="vanished">Лиценца</translation>
-    </message>
-    <message>
-        <source>The Code</source>
-        <translation type="vanished">Код</translation>
-    </message>
-    <message>
-        <source>System</source>
-        <translation type="vanished">Систем</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgDimStyleManager</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">Дијалог</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">Линије</translation>
-    </message>
-    <message>
-        <source>Dimension Lines</source>
-        <translation type="vanished">Линије димензија</translation>
-    </message>
-    <message>
-        <source>Sets the linetype of the dimension line. (DIMLTYPE system variable)</source>
-        <translation type="vanished">Подешава тип линије за линију димензије. (системска променљива DIMLTYPE)</translation>
-    </message>
-    <message>
-        <source>Color:</source>
-        <translation type="vanished">Боја:</translation>
-    </message>
-    <message>
-        <source>Linetype:</source>
-        <translation type="vanished">Тип линије:</translation>
-    </message>
-    <message>
-        <source>Linewidth:</source>
-        <translation type="vanished">Дебљина линије:</translation>
-    </message>
-    <message>
-        <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation type="vanished">Опредељује растојање за које се линија димензије протеже изван продужне линије када се користе коси, архитектонски, означени, интегрални или без ознака за стрелице. (системска променљива DIMDLE)</translation>
-    </message>
-    <message>
-        <source>Extend beyond</source>
-        <translation type="vanished">Протеже се изван</translation>
-    </message>
-    <message>
-        <source>Displays and sets the color for the dimension line (DIMCLRD system variable).</source>
-        <translation type="vanished">Приказује и подешава боју димензионе линије (системска променљива DIMCLRD).</translation>
-    </message>
-    <message>
-        <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation type="vanished">Подешава дебљину димензионе линије (системска променљива DIMLWD).</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">Подешава размак између димензионих линија основне димензије. Унесите удаљеност. За информације о основним димензијама, погледајте DIMBASELINE (системска променљива DIMDLI).</translation>
-    </message>
-    <message>
-        <source>Baseline spacing:</source>
-        <translation type="vanished">Размак основне линије:</translation>
-    </message>
-    <message>
-        <source>Suppresses display of second dimension line (DIMSD2 system variable)</source>
-        <translation type="vanished">Скрива приказ друге димензионе линије (системска променљива DIMSD2).</translation>
-    </message>
-    <message>
-        <source>Suppress Dim line 2 and arrow</source>
-        <translation type="vanished">Скрива димензиону линију 2 и стрелицу.</translation>
-    </message>
-    <message>
-        <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation type="vanished">Скрива приказ прве димензионе линије (системска променљива DIMSD1).</translation>
-    </message>
-    <message>
-        <source>Suppress Dim line 1 and arrow</source>
-        <translation type="vanished">Скрива димензиону линију 1 и стрелицу.</translation>
-    </message>
-    <message>
-        <source>Extension Lines</source>
-        <translation type="vanished">Продужне линије</translation>
-    </message>
-    <message>
-        <source>Sets the color for the extension line (DIMCLRE system variable.)</source>
-        <translation type="vanished">Подешава боју продужне линије (системска променљива DIMCLRE).</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Дужина:</translation>
-    </message>
-    <message>
-        <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation type="vanished">Подешава дебљину линије продужетка. (системска променљива DIMLWE)</translation>
-    </message>
-    <message>
-        <source>Suppresses the display of first extension line (DIMSE1 system variable).</source>
-        <translation type="vanished">Скрива приказ прве линије продужетка (системска променљива DIMSE1).</translation>
-    </message>
-    <message>
-        <source>Suppress Ext line 1</source>
-        <translation type="vanished">Сакриј линију продужетка 1</translation>
-    </message>
-    <message>
-        <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation type="vanished">Опредељује растојање за продужење линија продужетка изнад линије димензије. (системска променљива DIMEXE)</translation>
-    </message>
-    <message>
-        <source>Linetype ext line 1:</source>
-        <translation type="vanished">Тип линије, линија продужетка 1:</translation>
-    </message>
-    <message>
-        <source>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</source>
-        <translation type="vanished">Подешава тип линије друге линије продужетка. (системска променљива DIMLTEX2)</translation>
-    </message>
-    <message>
-        <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation type="vanished">Скрива приказ друге линије продужетка (системска променљива DIMSE2).</translation>
-    </message>
-    <message>
-        <source>Suppress Ext line 2</source>
-        <translation type="vanished">Сакриј линију продужетка 2</translation>
-    </message>
-    <message>
-        <source>Lineweight:</source>
-        <translation type="vanished">Дебљина линије:</translation>
-    </message>
-    <message>
-        <source>Linetype ext line 2:</source>
-        <translation type="vanished">Tip linije za produžetak 2:</translation>
-    </message>
-    <message>
-        <source>Enables fixed length extension lines. (DIMFXLON system variable)</source>
-        <translation type="vanished">Omogućava produžetke fiksne dužine. (sistemska promenljiva DIMFXLON)</translation>
-    </message>
-    <message>
-        <source>Fixed length extension lines</source>
-        <translation type="vanished">Produžeci fiksne dužine</translation>
-    </message>
-    <message>
-        <source>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</source>
-        <translation type="vanished">Postavlja tip linije za prvi produžetak. (sistemska promenljiva DIMLTEX1)</translation>
-    </message>
-    <message>
-        <source>Extend beyond dim lines:</source>
-        <translation type="vanished">Produžetak izvan dimenzionih linija:</translation>
-    </message>
-    <message>
-        <source>Offset from origin:</source>
-        <translation type="vanished">Odmik od početka:</translation>
-    </message>
-    <message>
-        <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation type="vanished">Postavlja ukupnu dužinu produžetaka, počevši od dimenzione linije prema početku dimenzije. (sistemska promenljiva DIMFXL)</translation>
-    </message>
-    <message>
-        <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation type="vanished">Postavlja udaljenost za odmak produžetaka od tačaka na crtežu koje definišu dimenziju. (sistemska promenljiva DIMEXO)</translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="vanished">Pregled</translation>
-    </message>
-    <message>
-        <source>Symbols and Arrows</source>
-        <translation type="vanished">Simboli i strelice</translation>
-    </message>
-    <message>
-        <source>Linear jog dimension</source>
-        <translation type="vanished">Linearni pomak dimenzije</translation>
-    </message>
-    <message>
-        <source>Jog height factor:</source>
-        <translation type="vanished">Faktor visine pomaka:</translation>
-    </message>
-    <message>
-        <source>* Text height</source>
-        <translation type="vanished">* Visina teksta</translation>
-    </message>
-    <message>
-        <source>Radius jog dimension</source>
-        <translation type="vanished">Poluprečnik pomaka dimenzije</translation>
-    </message>
-    <message>
-        <source>Jog angle:</source>
-        <translation type="vanished">Ugao pomaka:</translation>
-    </message>
-    <message>
-        <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation type="vanished">Određuje ugao poprečnog segmenta linije dimenzije u pomaknutoj poluprečnoj dimenziji. (sistemska promenljiva DIMJOGANG)</translation>
-    </message>
-    <message>
-        <source>Arrowheads</source>
-        <translation type="vanished">Strelice</translation>
-    </message>
-    <message>
-        <source>Leader:</source>
-        <translation type="vanished">Linija:</translation>
-    </message>
-    <message>
-        <source>Sets the arrowhead for the first dimension line. When you change the first arrowhead type, the second arrowhead automatically changes to match it. (DIMBLK1 system variable)</source>
-        <translation type="vanished">Postavlja strelicu za prvu liniju dimenzije. Kada promenite tip prve strelice, druga strelica se automatski menja kako bi odgovarala.</translation>
-    </message>
-    <message>
-        <source>First:</source>
-        <translation type="vanished">Prva:</translation>
-    </message>
-    <message>
-        <source>Tick Size:</source>
-        <translation type="vanished">Величина ознаке:</translation>
-    </message>
-    <message>
-        <source>Sets the arrowhead for the leader line. (DIMLDRBLK system variable)</source>
-        <translation type="vanished">Подешава стрелицу за водећу линију. (системска променљива DIMLDRBLK)</translation>
-    </message>
-    <message>
-        <source>Second:</source>
-        <translation type="vanished">Други:</translation>
-    </message>
-    <message>
-        <source>Displays and sets the size of arrowheads. (DIMASZ system variable)</source>
-        <translation type="vanished">Приказује и подешава величину стрелица.</translation>
-    </message>
-    <message>
-        <source>Arrow size:</source>
-        <translation type="vanished">Величина стрелице:</translation>
-    </message>
-    <message>
-        <source>Use the same arrowhead for dimension line</source>
-        <translation type="vanished">Користи исту стрелицу за димензиону линију</translation>
-    </message>
-    <message>
-        <source>Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If = 0 – draws arrowheads.
-&gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </source>
-        <translation type="vanished">Опредељује величину косих линија које се цртају уместо стрелица за линеарне, радијусне и пречничке димензије. Ако је = 0, црта стрелице.
-&gt;0 – Црта косе линије уместо стрелица (системска променљива DIMTSZ).</translation>
-    </message>
-    <message>
-        <source>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</source>
-        <translation type="vanished">Подешава стрелицу за другу димензиону линију. (системска променљива DIMBLK2)</translation>
-    </message>
-    <message>
-        <source>Dimension break</source>
-        <translation type="vanished">Прекид димензије</translation>
-    </message>
-    <message>
-        <source>Break size:</source>
-        <translation type="vanished">Величина прекида:</translation>
-    </message>
-    <message>
-        <source>Arc length symbol</source>
-        <translation type="vanished">Симбол дужине лука</translation>
-    </message>
-    <message>
-        <source>Suppresses the display of arc length symbols. (DIMARCSYM system variable)</source>
-        <translation type="vanished">Потискује приказ симбола дужине лука. (Системска променљива DIMARCSYM)</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">None</translation>
-    </message>
-    <message>
-        <source>Places arc length symbols before the dimension text. (DIMARCSYM system variable)</source>
-        <translation type="vanished">Симболи дужине лука се постављају испред текста димензије. (Системска променљива DIMARCSYM)</translation>
-    </message>
-    <message>
-        <source>Preceding dimension text</source>
-        <translation type="vanished">Испред текста димензије</translation>
-    </message>
-    <message>
-        <source>Places arc length symbols above the dimension text. (DIMARCSYM system variable)</source>
-        <translation type="vanished">Симболи дужине лука се постављају изнад текста димензије. (Системска променљива DIMARCSYM)</translation>
-    </message>
-    <message>
-        <source>Above dimension text</source>
-        <translation type="vanished">Изнад текста димензије</translation>
-    </message>
-    <message>
-        <source>Centermarks</source>
-        <translation type="vanished">Централни маркери</translation>
-    </message>
-    <message>
-        <source>Creates no center mark or centerline. The value is stored as 0 in the DIMCEN system variable.</source>
-        <translation type="vanished">Не креира централни маркер или централну линију. Вредност се чува као 0 у системској променљивој DIMCEN.</translation>
-    </message>
-    <message>
-        <source>Creates a center mark. The size of the center mark is stored as a positive value in the DIMCEN system variable.</source>
-        <translation type="vanished">Креира централни маркер. Величина централног маркера се чува као позитивна вредност у системској променљивој DIMCEN.</translation>
-    </message>
-    <message>
-        <source>Mark</source>
-        <translation type="vanished">Mark</translation>
-    </message>
-    <message>
-        <source>Creates a centerline. The size of the centerline is stored as a negative value in the DIMCEN system variable.</source>
-        <translation type="vanished">Креира централну линију. Величина централне линије се чува као негативна вредност у системској променљивој DIMCEN.</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Line</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">Величина:</translation>
-    </message>
-    <message>
-        <source>Displays and sets the size of the center mark or centerline. (DIMCEN system variable)</source>
-        <translation type="vanished">Приказује и подешава величину централне ознаке или централне линије. (системска променљива DIMCEN)</translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="vanished">Text</translation>
-    </message>
-    <message>
-        <source>Text Appearance</source>
-        <translation type="vanished">Изглед текста</translation>
-    </message>
-    <message>
-        <source>Lists the available text styles.</source>
-        <translation type="vanished">Наводи доступне стилове текста.</translation>
-    </message>
-    <message>
-        <source>Fill Color:</source>
-        <translation type="vanished">Боја попуњавања:</translation>
-    </message>
-    <message>
-        <source>Text Style:</source>
-        <translation type="vanished">Стил текста:</translation>
-    </message>
-    <message>
-        <source>Sets the color for the text background in dimensions (DIMTFILLCLR system variable)</source>
-        <translation type="vanished">Postavlja boju pozadine teksta u dimenzijama (sistemska promenljiva DIMTFILLCLR)</translation>
-    </message>
-    <message>
-        <source>Text Color:</source>
-        <translation type="vanished">Boja teksta:</translation>
-    </message>
-    <message>
-        <source>Text Height</source>
-        <translation type="vanished">Visina teksta</translation>
-    </message>
-    <message>
-        <source>Sets the scale of fractions relative to dimension text. (DIMTFAC system variable)</source>
-        <translation type="vanished">Postavlja skalu razlomaka u odnosu na tekst dimenzije (sistemska promenljiva DIMTFAC)</translation>
-    </message>
-    <message>
-        <source>Fraction height scale:</source>
-        <translation type="vanished">Skala visine razlomka:</translation>
-    </message>
-    <message>
-        <source>Sets the height of the current dimension text style. (DIMTXT system variable)</source>
-        <translation type="vanished">Postavlja visinu trenutnog stila teksta dimenzije (sistemska promenljiva DIMTXT)</translation>
-    </message>
-    <message>
-        <source>Sets the color for the dimension text (DIMCLRT system variable)</source>
-        <translation type="vanished">Postavlja boju teksta dimenzije (sistemska promenljiva DIMCLRT)</translation>
-    </message>
-    <message>
-        <source>Defines whether text background will be filled by color</source>
-        <translation type="vanished">Definiše da li će pozadina teksta biti popunjena bojom</translation>
-    </message>
-    <message>
-        <source>Fill text background by color</source>
-        <translation type="vanished">Popuni pozadinu teksta bojom</translation>
-    </message>
-    <message>
-        <source>Displays a rectangular frame around the dimension text. This option changes the value stored in the DIMGAP system variable to a negative value.</source>
-        <translation type="vanished">Prikazuje pravougaoni okvir oko teksta dimenzije. Ova opcija menja vrednost koja je sačuvana u sistemskoj promenljivoj DIMGAP na negativnu vrednost.</translation>
-    </message>
-    <message>
-        <source>Draw frame around text</source>
-        <translation type="vanished">Crta okvir oko teksta</translation>
-    </message>
-    <message>
-        <source>Text Alignment</source>
-        <translation type="vanished">Poravnanje teksta</translation>
-    </message>
-    <message>
-        <source>Places text in a horizontal position (DIMTIH and DIMTOH system variables).</source>
-        <translation type="vanished">Postavlja tekst u horizontalnu poziciju (sistemske varijable DIMTIH i DIMTOH).</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontalno</translation>
-    </message>
-    <message>
-        <source>Aligns text with the dimension line (DIMTIH and DIMTOH system variables).</source>
-        <translation type="vanished">Poravna tekst sa linijom dimenzije (sistemske varijable DIMTIH i DIMTOH).</translation>
-    </message>
-    <message>
-        <source>Aligned with dimension line</source>
-        <translation type="vanished">Poravnato sa linijom dimenzije</translation>
-    </message>
-    <message>
-        <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation type="vanished">Poravna tekst sa linijom dimenzije kada je tekst unutar produžnih linija, ali ga horizontalno poravna kada je tekst izvan produžnih linija (sistemske varijable DIMTIH i DIMTOH).</translation>
-    </message>
-    <message>
-        <source>ISO Standard</source>
-        <translation type="vanished">ISO standard</translation>
-    </message>
-    <message>
-        <source>Text Placement</source>
-        <translation type="vanished">Položaj teksta</translation>
-    </message>
-    <message>
-        <source>Controls the dimension text viewing direction. (DIMTXTDIRECTION system variable)</source>
-        <translation type="vanished">Kontroliše smer gledanja teksta dimenzije (sistemska varijabla DIMTXTDIRECTION).</translation>
-    </message>
-    <message>
-        <source>Left-To-Right</source>
-        <translation type="vanished">Od leva na desno</translation>
-    </message>
-    <message>
-        <source>Right-To-Left</source>
-        <translation type="vanished">Od desna na levo</translation>
-    </message>
-    <message>
-        <source>Offset from dim line:</source>
-        <translation type="vanished">Odstupanje od linije dimenzije:</translation>
-    </message>
-    <message>
-        <source>Horizontal:</source>
-        <translation type="vanished">Horizontalno:</translation>
-    </message>
-    <message>
-        <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation type="vanished">Kontroliše horizontalni položaj teksta dimenzije duž linije dimenzije, u odnosu na produžne linije. (sistemska promenljiva DIMJUST)</translation>
-    </message>
-    <message>
-        <source>Centered</source>
-        <translation type="vanished">Centrirano</translation>
-    </message>
-    <message>
-        <source>At Ext Line 1</source>
-        <translation type="vanished">Na produžnoj liniji 1</translation>
-    </message>
-    <message>
-        <source>At Ext Line 2</source>
-        <translation type="vanished">Na produžnoj liniji 2</translation>
-    </message>
-    <message>
-        <source>Over Ext Line 1</source>
-        <translation type="vanished">Iznad produžne linije 1</translation>
-    </message>
-    <message>
-        <source>Over Ext Line 2</source>
-        <translation type="vanished">Iznad produžne linije 2</translation>
-    </message>
-    <message>
-        <source>View Direction:</source>
-        <translation type="vanished">Smer prikaza:</translation>
-    </message>
-    <message>
-        <source>Vertical:</source>
-        <translation type="vanished">Vertikalno:</translation>
-    </message>
-    <message>
-        <source>Controls the vertical placement of dimension text in relation to the dimension line. (DIMTAD system variable)</source>
-        <translation type="vanished">Kontroliše vertikalni položaj teksta dimenzije u odnosu na liniju dimenzije. (sistemska promenljiva DIMTAD)</translation>
-    </message>
-    <message>
-        <source>Above</source>
-        <translation type="vanished">Iznad</translation>
-    </message>
-    <message>
-        <source>Outside</source>
-        <translation type="vanished">Spolja</translation>
-    </message>
-    <message>
-        <source>JIS</source>
-        <translation type="vanished">JIS</translation>
-    </message>
-    <message>
-        <source>Below</source>
-        <translation type="vanished">Ispod</translation>
-    </message>
-    <message>
-        <source>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not &quot;Centered&quot; (DIMTVP variable).</source>
-        <translation type="vanished">Vertikalni položaj teksta iznad ili ispod linije dimenzije ako je vertikalni položaj (DIMTAD) postavljen na nešto različito od „Centrirano” (sistemska promenljiva DIMTVP).</translation>
-    </message>
-    <message>
-        <source>Broken dim line text gap:</source>
-        <translation type="vanished">Razmak teksta prekidne linije dimenzije:</translation>
-    </message>
-    <message>
-        <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation type="vanished">Postavlja trenutni razmak teksta, što je udaljenost oko teksta dimenzije kada je linija dimenzije prekinuta kako bi se prilagodila tekst dimenzije (sistemska promenljiva DIMGAP).</translation>
-    </message>
-    <message>
-        <source>Fit</source>
-        <translation type="vanished">Fit</translation>
-    </message>
-    <message>
-        <source>Fine tuning</source>
-        <translation type="vanished">Фино подешавање</translation>
-    </message>
-    <message>
-        <source>Ignores any horizontal justification settings and places the text at the position you specify at the Dimension Line Location prompt. (DIMUPT system variable)</source>
-        <translation type="vanished">Игнорише сва подешавања хоризонталног поравнања и поставља текст на позицију коју наведете у упуту за подешавање положаја димензионе линије. (системска променљива DIMUPT)</translation>
-    </message>
-    <message>
-        <source>Place text manually</source>
-        <translation type="vanished">Ручно поставите текст</translation>
-    </message>
-    <message>
-        <source>Draws dimension lines between the measured points even when the arrowheads are placed outside the measured points. (DIMTOFL system variable)</source>
-        <translation type="vanished">Црта димензионе линије између измерених тачака, чак и када су врхови стрелица постављени изван измерених тачака. (системска променљива DIMTOFL)</translation>
-    </message>
-    <message>
-        <source>Draw dim line betwen ext lines</source>
-        <translation type="vanished">Цртај димензиону линију између спољних линија</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Скала</translation>
-    </message>
-    <message>
-        <source>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</source>
-        <translation type="vanished">Подешава скалу за сва подешавања стила димензија која наводе величину, удаљеност или размак, укључујући величину текста и врхова стрелица. Ова скала не мења измерене вредности димензија. (системска променљива DIMSCALE)</translation>
-    </message>
-    <message>
-        <source>Use overall scale of:</source>
-        <translation type="vanished">Користите укупну скалу од:</translation>
-    </message>
-    <message>
-        <source>Determines a scale factor based on the scaling between the current model space viewport and paper space. (DIMSCALE system variable)</source>
-        <translation type="vanished">Одређује фактор скале на основу скалирања између тренутног приказа модела и простора за цртање. (системска променљива DIMSCALE)</translation>
-    </message>
-    <message>
-        <source>Scale to layout</source>
-        <translation type="vanished">Skaliraj prema rasporedu</translation>
-    </message>
-    <message>
-        <source>If selected, moves the dimension line whenever dimension text is moved. (DIMTMOVE system variable)</source>
-        <translation type="vanished">Ako je izabrano, linija dimenzije se pomera svaki put kada se pomera tekst dimenzije. (Sistemska promenljiva DIMTMOVE)</translation>
-    </message>
-    <message>
-        <source>Beside the dimention line</source>
-        <translation type="vanished">Pored linije dimenzije</translation>
-    </message>
-    <message>
-        <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation type="vanished">Ako je izabrano, linije dimenzije se ne pomera kada se pomera tekst. Ako se tekst pomera dalje od linije dimenzije, kreira se vodeća linija koja povezuje tekst sa linijom dimenzije. Vodeća linija se izostavlja kada je tekst preblizu liniji dimenzije. (Sistemska promenljiva DIMTMOVE)</translation>
-    </message>
-    <message>
-        <source>Over dimension line, with leader</source>
-        <translation type="vanished">Iznad linije dimenzije, sa vodećom linijom</translation>
-    </message>
-    <message>
-        <source>When text is not in the default position, place it:</source>
-        <translation type="vanished">Kada tekst nije u podrazumevanoj poziciji, postavi ga:</translation>
-    </message>
-    <message>
-        <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation type="vanished">Ako je izabrano, linije dimenzije se ne pomera kada se pomera tekst. Tekst koji se pomera dalje od linije dimenzije nije povezan sa linijom dimenzije pomoću vodeće linije. (Sistemska promenljiva DIMTMOVE)</translation>
-    </message>
-    <message>
-        <source>Over dimension line, without leader</source>
-        <translation type="vanished">Iznad linije dimenzije, bez vodeće linije</translation>
-    </message>
-    <message>
-        <source>Fit Options</source>
-        <translation type="vanished">Opcije prilagođavanja</translation>
-    </message>
-    <message>
-        <source>If there isn&apos;t enough room to place both text and arrow inside extension lines, the first thing to move outside the extension lines is:</source>
-        <translation type="vanished">Ako nema dovoljno prostora da se postavi i tekst i strelica unutar produžnih linija, prvo što se pomera izvan produžnih linija je:</translation>
-    </message>
-    <message>
-        <source>Suppresses arrowheads if not enough space is available inside the extension lines. (DIMSOXD system variable)</source>
-        <translation type="vanished">Potišće strelice ako nema dovoljno prostora unutar produžnih linija. (sistemska promenljiva DIMSOXD)</translation>
-    </message>
-    <message>
-        <source>Suppress arrows if they don&apos;t fit inside extension lines</source>
-        <translation type="vanished">Potišće strelice ako se ne mogu smestiti unutar produžnih linija</translation>
-    </message>
-    <message>
-        <source>When not enough space is available for text and arrowheads, moves both outside the extension lines (DIMATFIT system variable).</source>
-        <translation type="vanished">Kada nema dovoljno prostora za tekst i strelice, premesta ih izvan produžnih linija (sistemska promenljiva DIMATFIT).</translation>
-    </message>
-    <message>
-        <source>Both text and arrows</source>
-        <translation type="vanished">I tekst i strelice</translation>
-    </message>
-    <message>
-        <source>Moves either the text or the arrowheads outside the extension lines based on the best fit (DIMATFIT system variable).</source>
-        <translation type="vanished">Premesta ili tekst ili strelice izvan produžnih linija, u zavisnosti od najboljeg rešenja (sistemska promenljiva DIMATFIT).</translation>
-    </message>
-    <message>
-        <source>Either text or arrows (best fit)</source>
-        <translation type="vanished">Ili tekst ili strelice (najbolje rešenje)</translation>
-    </message>
-    <message>
-        <source>Moves arrowheads outside the extension lines first, then text (DIMATFIT system variable).</source>
-        <translation type="vanished">Prvo premesta strelice izvan produžnih linija, a zatim tekst (sistemska promenljiva DIMATFIT).</translation>
-    </message>
-    <message>
-        <source>Arrows</source>
-        <translation type="vanished">Strelice</translation>
-    </message>
-    <message>
-        <source>Moves text outside the extension lines first, then arrowheads (DIMATFIT system variable).</source>
-        <translation type="vanished">Prvo premesta tekst izvan produžnih linija, a zatim strelice (sistemska promenljiva DIMATFIT).</translation>
-    </message>
-    <message>
-        <source>Always places text between extension lines. (DIMTIX system variable)</source>
-        <translation type="vanished">Uvek postavlja tekst između produžnih linija. (sistemska promenljiva DIMTIX)</translation>
-    </message>
-    <message>
-        <source>Always fit text between ext lines</source>
-        <translation type="vanished">Uvek prilagodi tekst između spoljašnjih linija</translation>
-    </message>
-    <message>
-        <source>Primary Units</source>
-        <translation type="vanished">Primarne jedinice</translation>
-    </message>
-    <message>
-        <source>Angular Dimensions</source>
-        <translation type="vanished">Ugaone dimenzije</translation>
-    </message>
-    <message>
-        <source>Precision:</source>
-        <translation type="vanished">Preciznost:</translation>
-    </message>
-    <message>
-        <source>Zero suppression</source>
-        <translation type="vanished">Potiskivanje nula</translation>
-    </message>
-    <message>
-        <source>Controls the suppression of leading zeros (DIMAZIN system variable)</source>
-        <translation type="vanished">Kontroliše potiskivanje vodećih nula (sistemska promenljiva DIMAZIN)</translation>
-    </message>
-    <message>
-        <source>Leading</source>
-        <translation type="vanished">Vodeće</translation>
-    </message>
-    <message>
-        <source>Controls the suppression of  trailing zeros. (DIMAZIN system variable)</source>
-        <translation type="vanished">Kontroliše potiskivanje završnih nula. (sistemska promenljiva DIMAZIN)</translation>
-    </message>
-    <message>
-        <source>Trailing</source>
-        <translation type="vanished">Završne</translation>
-    </message>
-    <message>
-        <source>Unit Format:</source>
-        <translation type="vanished">Format jedinica:</translation>
-    </message>
-    <message>
-        <source>Sets the number of decimal places for angular dimensions. DIMADEC system variable)</source>
-        <translation type="vanished">Postavlja broj decimalnih mesta za ugaone dimenzije. (sistemska promenljiva DIMADEC)</translation>
-    </message>
-    <message>
-        <source>Sets the angular units format. (DIMAUNIT system variable)</source>
-        <translation type="vanished">Postavlja format za ugaone jedinice. (sistemska promenljiva DIMAUNIT)</translation>
-    </message>
-    <message>
-        <source>Linear Dimensions</source>
-        <translation type="vanished">Linearna dimenzija</translation>
-    </message>
-    <message>
-        <source>Measurement scale</source>
-        <translation type="vanished">Skala merenja</translation>
-    </message>
-    <message>
-        <source>Scale factor:</source>
-        <translation type="vanished">Faktor skale:</translation>
-    </message>
-    <message>
-        <source>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</source>
-        <translation type="vanished">Postavlja faktor skale za linearna merenja dimenzija. Preporučuje se da ne menjate ovu vrednost od podrazumevane vrednosti od 1,00. (sistemska promenljiva DIMLFAC)</translation>
-    </message>
-    <message>
-        <source>Applies the measurement scale factor only to dimensions created in layout viewports. </source>
-        <translation type="vanished">Primena faktora skale merenja samo na dimenzije kreirane u pregledima rasporeda.</translation>
-    </message>
-    <message>
-        <source>Apply to layout dimensions only</source>
-        <translation type="vanished">Primeni samo na dimenzije rasporeda</translation>
-    </message>
-    <message>
-        <source>Fraction format:</source>
-        <translation type="vanished">Format razlomka:</translation>
-    </message>
-    <message>
-        <source>Round off:</source>
-        <translation type="vanished">Zaokruživanje:</translation>
-    </message>
-    <message>
-        <source>Decimal separator:</source>
-        <translation type="vanished">Децимални разделич:</translation>
-    </message>
-    <message>
-        <source>Includes a suffix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation type="vanished">[&apos;Укључује суфикс који одређујете у тексту димензије. (системска променљива DIMPOST)&apos;, &apos;Укључује суфикс који задајете у тексту димензије. (системска променљива DIMPOST)&apos;, &apos;Садржи суфикс који задајете у тексту димензије. (системска променљива DIMPOST)&apos;]</translation>
-    </message>
-    <message>
-        <source>Sets the current units format for all dimension types except Angular. (DIMLUNIT system variable)</source>
-        <translation type="vanished">Подешава тренутни формат јединица за све типове димензија, осим углова. (системска променљива DIMLUNIT)</translation>
-    </message>
-    <message>
-        <source>Prefix:</source>
-        <translation type="vanished">Префикс:</translation>
-    </message>
-    <message>
-        <source>Sets the separator for decimal formats. (DIMDSEP system variable)</source>
-        <translation type="vanished">Подешава разделич за децималне формате. (системска променљива DIMDSEP)</translation>
-    </message>
-    <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation type="vanished">&apos;.&apos; (тачка)</translation>
-    </message>
-    <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation type="vanished">&apos;,&apos; (зарезна)</translation>
-    </message>
-    <message>
-        <source>Sets nearest rounding value for dimension measurements for all dimension types except Angular. (DIMRND system variable)</source>
-        <translation type="vanished">Подешава најближу вредност за округливање мерења димензија за све типове димензија, осим углова. (системска променљива DIMRND)</translation>
-    </message>
-    <message>
-        <source>Displays and sets the number of decimal places in the dimension text. (DIMDEC system variable)</source>
-        <translation type="vanished">Приказује и подешава број децималних места у тексту димензије. (системска променљива DIMDEC)</translation>
-    </message>
-    <message>
-        <source>Includes a prefix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation type="vanished">Укључује префикс који одређујете у тексту димензије. (системска променљива DIMPOST)</translation>
-    </message>
-    <message>
-        <source>Sets the format for fractions. (DIMFRAC system variable)</source>
-        <translation type="vanished">Postavlja format za razlomke (sistemska promenljiva DIMFRAC).</translation>
-    </message>
-    <message>
-        <source>Diagonal Stacked</source>
-        <translation type="vanished">Dijagonalno slaganje</translation>
-    </message>
-    <message>
-        <source>Not Stacked</source>
-        <translation type="vanished">Nije slaganje</translation>
-    </message>
-    <message>
-        <source>Suffix:</source>
-        <translation type="vanished">Sufiks:</translation>
-    </message>
-    <message>
-        <source>Sub-units factor:</source>
-        <translation type="vanished">Faktor podjedinica:</translation>
-    </message>
-    <message>
-        <source>Suppresses trailing zeros in all decimal dimensions. (DIMZIN system variable)</source>
-        <translation type="vanished">Uklanja završne nule u svim decimalnim dimenzijama (sistemska promenljiva DIMZIN).</translation>
-    </message>
-    <message>
-        <source> Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMZIN system variable)</source>
-        <translation type="vanished">Uklanja deo sa inčima u dimenziji izraženoj u stopama i inčima kada je udaljenost ceo broj stopa (sistemska promenljiva DIMZIN).</translation>
-    </message>
-    <message>
-        <source>0 inches</source>
-        <translation type="vanished">0 inča</translation>
-    </message>
-    <message>
-        <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than one foot.  (DIMZIN system variable)</source>
-        <translation type="vanished">Uklanja deo sa stopama u dimenziji izraženoj u stopama i inčima kada je udaljenost manja od jedne stope (sistemska promenljiva DIMZIN).</translation>
-    </message>
-    <message>
-        <source>0 feet</source>
-        <translation type="vanished">0 stopa</translation>
-    </message>
-    <message>
-        <source>Suppresses leading zeros in all decimal dimensions (DIMZIN system variable)</source>
-        <translation type="vanished">Потискује водеће нуле у свим децималним димензијама (системска променљива DIMZIN)</translation>
-    </message>
-    <message>
-        <source>Sub-unit suffix:</source>
-        <translation type="vanished">Суфикс за подјединицу:</translation>
-    </message>
-    <message>
-        <source>Sets the number of sub units to a unit. It is used to calculate the dimension distance in a sub unit when the distance is less than one unit. </source>
-        <translation type="vanished">Подешава број подјединица у јединици. Користи се за израчунавање растојања димензије у подјединици када је растојање мање од једне јединице.</translation>
-    </message>
-    <message>
-        <source>Includes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</source>
-        <translation type="vanished">Додаје суфикс вредности димензије у подјединици. Можете унети текст или користити контролне кодове за приказивање специјалних симбола.</translation>
-    </message>
-    <message>
-        <source>Alternate Units</source>
-        <translation type="vanished">Алтернативне јединице</translation>
-    </message>
-    <message>
-        <source>Adds alternate measurement units to dimension text. Sets the DIMALT system variable to 1.</source>
-        <translation type="vanished">Додаје алтернативне мерне јединице тексту димензије. Подешава системску променљиву DIMALT на 1.</translation>
-    </message>
-    <message>
-        <source>Display alternate units</source>
-        <translation type="vanished">Прикажи алтернативне јединице</translation>
-    </message>
-    <message>
-        <source>Alternate units</source>
-        <translation type="vanished">Алтернативне јединице</translation>
-    </message>
-    <message>
-        <source>Specifies the multiplier used as the conversion factor between primary and alternate units.For example, to convert inches to millimeters, enter 25.4. The value has no effect on angular dimensions, and it is not applied to the rounding value or the plus or minus tolerance values. (DIMALTF system variable)</source>
-        <translation type="vanished">Опредељује мултипликатор који се користи као фактор конверзије између основних и алтернативних јединица. На пример, да бисте претворили инче у милиметре, унесите 25,4. Вредност нема утицаја на угловне димензије и не примењује се на вредност заокруживања или вредности позитивне или негативне толеранције. (системска променљива DIMALTF)</translation>
-    </message>
-    <message>
-        <source>Multiplier for alt units:</source>
-        <translation type="vanished">Мултипликатор за алт. јединице:</translation>
-    </message>
-    <message>
-        <source>Sets rounding rules for alternate units for all dimension types except Angular. If you enter a value of 0.25, all alternate measurements are rounded to the nearest 0.25 unit. If you enter a value of 1.0, all dimension measurements are rounded to the nearest integer. The number of digits displayed after the decimal point depends on the Precision setting. (DIMALTRND system variable)</source>
-        <translation type="vanished">Postavlja pravila zaokruživanja za alternativne jedinice za sve tipove dimenzija, osim za ugaone. Ako unesete vrednost 0,25, sve alternativne mere se zaokružuju na najbližu jedinicu od 0,25. Ako unesete vrednost 1,0, sve mere dimenzija se zaokružuju na najbliži ceo broj. Broj cifara prikazanih nakon decimalne tačke zavisi od podešavanja „Preciznost“. (sistemska promenljiva DIMALTRND)</translation>
-    </message>
-    <message>
-        <source>Sets the unit format for alternate units. (DIMALTU system variable)</source>
-        <translation type="vanished">Postavlja format jedinica za alternativne jedinice. (sistemska promenljiva DIMALTU)</translation>
-    </message>
-    <message>
-        <source>Placement</source>
-        <translation type="vanished">Položaj</translation>
-    </message>
-    <message>
-        <source>Places alternate units after the primary units in dimension text.</source>
-        <translation type="vanished">Postavlja alternativne jedinice nakon primarnih jedinica u tekstu dimenzije.</translation>
-    </message>
-    <message>
-        <source>After primary value</source>
-        <translation type="vanished">Nakon primarne vrednosti</translation>
-    </message>
-    <message>
-        <source>Places alternate units below the primary units in dimension text.</source>
-        <translation type="vanished">Postavlja alternativne jedinice ispod primarnih jedinica u tekstu dimenzije.</translation>
-    </message>
-    <message>
-        <source>Below primary value</source>
-        <translation type="vanished">Ispod primarne vrednosti</translation>
-    </message>
-    <message>
-        <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation type="vanished">Uključuje prefiks u tekst alternativne dimenzije. Možete uneti tekst ili koristiti kontrolne kodove za prikaz posebnih simbola. Na primer, unos kontrolnog koda %%c prikazuje simbol prečnika. (sistemska promenljiva DIMAPOST)</translation>
-    </message>
-    <message>
-        <source>Round distances to:</source>
-        <translation type="vanished">Zaokružite udaljenosti na:</translation>
-    </message>
-    <message>
-        <source>Suppresses leading zeros in all decimal dimensions. For example, 0.5000 becomes .5000.</source>
-        <translation type="vanished">Uklanja vodeće nule u svim decimalnim dimenzijama. Na primer, 0,5000 postaje .5000.</translation>
-    </message>
-    <message>
-        <source>Suppresses trailing zeros in all decimal dimensions. For example, 12.5000 becomes 12.5, and 30.0000 becomes 30 (DIMALTZ system variable).</source>
-        <translation type="vanished">Потискује водеће нуле у свим децималним димензијама. На пример, 12.5000 постаје 12.5, а 30.0000 постаје 30 (системска променљива DIMALTZ).</translation>
-    </message>
-    <message>
-        <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot. For example, 0&apos;-6 1/2&quot; becomes 6 1/2&quot; (DIMALTZ system variable)</source>
-        <translation type="vanished">Потискује део димензије у стопама и инчима када је растојање мање од 1 стопе. На пример, 0&apos;-6 1/2&quot; постаје 6 1/2&quot; (системска променљива DIMALTZ).</translation>
-    </message>
-    <message>
-        <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet. For example, 1&apos;-0&quot; becomes 1&apos;. (DIMALTZ system variable)</source>
-        <translation type="vanished">Потискује део димензије у инчима у димензији стопа-инч када је растојање целобројан број стопа. На пример, 1&apos;-0&quot; постаје 1&apos;. (системска променљива DIMALTZ).</translation>
-    </message>
-    <message>
-        <source>Sets the number of decimal places for alternate units. (DIMALTD system variable)</source>
-        <translation type="vanished">Подешава број децималних места за алтернативне јединице. (системска променљива DIMALTD).</translation>
-    </message>
-    <message>
-        <source>Includes a suffix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the text cm results in dimension text similar to that shown in the illustration. When you enter a suffix, it overrides any default suffixes. (DIMAPOST system variable)</source>
-        <translation type="vanished">Укључује суфикс у текст алтернативне димензије. Можете унети текст или користити контролне кодове за приказивање специјалних симбола. На пример, уношењем текста cm добија се текст димензије сличан ономе што је приказано на илустрацији. Када унесете суфикс, он преписује све подразумеване суфиксе. (системска променљива DIMAPOST).</translation>
-    </message>
-    <message>
-        <source>Tolerances</source>
-        <translation type="vanished">Толеранције</translation>
-    </message>
-    <message>
-        <source>Sets the minimum or lower tolerance value. (DIMTM system variable)</source>
-        <translation type="vanished">Подешава минималну или доњу вредност толеранције. (системска променљива DIMTM).</translation>
-    </message>
-    <message>
-        <source>Suppresses leading zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation type="vanished">Потискује водеће нуле у свим децималним димензијама (системска променљива DIMTZIN).</translation>
-    </message>
-    <message>
-        <source>Suppresses trailing zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation type="vanished">Потискује водеће нуле у свим децималним димензијама (системска променљива DIMTZIN).</translation>
-    </message>
-    <message>
-        <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMTZIN system variable). </source>
-        <translation type="vanished">Потискује део димензије у стопама у димензији стопа-инч када је растојање мање од 1 стопе (системска променљива DIMTZIN).</translation>
-    </message>
-    <message>
-        <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMTZIN system variable). </source>
-        <translation type="vanished">Potišće deo dimenzije koji se odnosi na inče, kada je udaljenost ceo broj stopa (sistemska promenljiva DIMTZIN).</translation>
-    </message>
-    <message>
-        <source>Sets the method for calculating the tolerance. (DIMTOL system variable)</source>
-        <translation type="vanished">Postavlja metod za izračunavanje tolerancije (sistemska promenljiva DIMTOL).</translation>
-    </message>
-    <message>
-        <source>Symmetrical</source>
-        <translation type="vanished">Simetrično</translation>
-    </message>
-    <message>
-        <source>Deviation</source>
-        <translation type="vanished">Odstupanje</translation>
-    </message>
-    <message>
-        <source>Limits</source>
-        <translation type="vanished">Granice</translation>
-    </message>
-    <message>
-        <source>Basic</source>
-        <translation type="vanished">Osnovno</translation>
-    </message>
-    <message>
-        <source>Controls text justification for symmetrical and deviation tolerances (DIMTOLJ system variable).</source>
-        <translation type="vanished">Kontroliše poravnanje teksta za simetrične i odstupajuće tolerancije (sistemska promenljiva DIMTOLJ).</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Top</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Sredina</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Dole</translation>
-    </message>
-    <message>
-        <source>Upper value:</source>
-        <translation type="vanished">Gornja vrednost:</translation>
-    </message>
-    <message>
-        <source>Lower value:</source>
-        <translation type="vanished">Donja vrednost:</translation>
-    </message>
-    <message>
-        <source>Sets the number of decimal places. (DIMTDEC system variable)</source>
-        <translation type="vanished">Postavlja broj decimalnih mesta. (Sistemska promenljiva DIMTDEC)</translation>
-    </message>
-    <message>
-        <source>Sets the maximum or upper tolerance value. When you select Symmetrical in Method, this value is used for the tolerance. (DIMTP system variable)</source>
-        <translation type="vanished">Postavlja maksimalnu ili gornju vrednost tolerancije. Kada izaberete opciju „Simetrično“ u polju „Metoda“, ova vrednost se koristi za toleranciju. (Sistemska promenljiva DIMTP)</translation>
-    </message>
-    <message>
-        <source>Method:</source>
-        <translation type="vanished">Metoda:</translation>
-    </message>
-    <message>
-        <source>Vertical position:</source>
-        <translation type="vanished">Vertikalna pozicija:</translation>
-    </message>
-    <message>
-        <source>Sets the current height for the tolerance text. The ratio of the tolerance height to the main dimension text height is calculated and stored in the DIMTFAC system variable.</source>
-        <translation type="vanished">Postavlja trenutnu visinu teksta tolerancije. Izračunava se odnos visine tolerancije i visine glavnog teksta dimenzije i čuva u sistemskoj promenljivoj DIMTFAC.</translation>
-    </message>
-    <message>
-        <source>Scaling for height:</source>
-        <translation type="vanished">Skaliranje za visinu:</translation>
-    </message>
-    <message>
-        <source>Tolerance Adjustment</source>
-        <translation type="vanished">Podešavanje tolerancije</translation>
-    </message>
-    <message>
-        <source>Values are stacked by their decimal separators.</source>
-        <translation type="vanished">Vrednosti se slažu prema njihovim decimalnim separatorima.</translation>
-    </message>
-    <message>
-        <source>Align decimal separators</source>
-        <translation type="vanished">Poravnajte decimalne razdelnike</translation>
-    </message>
-    <message>
-        <source>Values are stacked by their operational symbols.</source>
-        <translation type="vanished">Vrednosti su grupisane po operativnim simbolima.</translation>
-    </message>
-    <message>
-        <source>Align operational symbols</source>
-        <translation type="vanished">Poravnajte operativne simbole</translation>
-    </message>
-    <message>
-        <source>Alternate Unit Tolerance</source>
-        <translation type="vanished">Alternativna tolerancija jedinica</translation>
-    </message>
-    <message>
-        <source>Displays and sets the number of decimal places. (DIMALTTD system variable)</source>
-        <translation type="vanished">Prikazuje i postavlja broj decimalnih mesta. (sistemska promenljiva DIMALTTD)</translation>
-    </message>
-    <message>
-        <source>Suppresses leading zeros in all decimal dimensions (DIMALTTZ system variable). </source>
-        <translation type="vanished">Uklanja vodeće nule u svim decimalnim dimenzijama (sistemska promenljiva DIMALTTZ).</translation>
-    </message>
-    <message>
-        <source>Suppresses trailing zeros in all decimal dimensions (DIMALTTZ system variable).</source>
-        <translation type="vanished">Uklanja poslednje nule u svim decimalnim dimenzijama (sistemska promenljiva DIMALTTZ).</translation>
-    </message>
-    <message>
-        <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMALTTZ system variable).</source>
-        <translation type="vanished">Uklanja deo sa stopama u dimenziji izraženoj u stopama i inčima kada je udaljenost manja od 1 stope (sistemska promenljiva DIMALTTZ).</translation>
-    </message>
-    <message>
-        <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMALTTZ system variable).</source>
-        <translation type="vanished">Uklanja deo sa inčima u dimenziji izraženoj u stopama i inčima kada je udaljenost ceo broj stopa (sistemska promenljiva DIMALTTZ).</translation>
-    </message>
-    <message>
-        <source>Select Block for arrow</source>
-        <translation type="vanished">Izaberite blok za strelicu</translation>
-    </message>
-    <message>
-        <source>User Block...</source>
-        <translation type="vanished">Кориснички блок...</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Димензија</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Геометрија</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="vanished">Ордината</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угао:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="vanished">Угао ротације димензије</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">Слој</translation>
-    </message>
-    <message>
-        <source>Style</source>
-        <translation type="vanished">Стил</translation>
-    </message>
-    <message>
-        <source>Apply style to dimension</source>
-        <translation type="vanished">Primeni stil na dimenziju</translation>
-    </message>
-    <message>
-        <source>Select dimension style</source>
-        <translation type="vanished">Izaberi stil za dimenziju</translation>
-    </message>
-    <message>
-        <source>Override entity&apos;s style</source>
-        <translation type="vanished">Prepiši stil entiteta</translation>
-    </message>
-    <message>
-        <source>Remove style override</source>
-        <translation type="vanished">Ukloni prepisivanje stila</translation>
-    </message>
-    <message>
-        <source>Edit style override</source>
-        <translation type="vanished">Izmeni prepisivanje stila</translation>
-    </message>
-    <message>
-        <source>Save style override as independent style.</source>
-        <translation type="vanished">Sačuvaj prepisivanje stila kao nezavisan stil.</translation>
-    </message>
-    <message>
-        <source>Set style as active one. Active style is applied to newly created dimensions.</source>
-        <translation type="vanished">Postavi stil kao aktivni. Aktivni stil se primenjuje na novo kreirane dimenzije.</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Izvezi</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Uvezi</translation>
-    </message>
-    <message>
-        <source>Style Info</source>
-        <translation type="vanished">Informacije o stilu</translation>
-    </message>
-    <message>
-        <source>Name of style for this dimension entity</source>
-        <translation type="vanished">Назив стила за овај елемент димензије</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">Текстуална етикета</translation>
-    </message>
-    <message>
-        <source>Active:</source>
-        <translation type="vanished">Активно:</translation>
-    </message>
-    <message>
-        <source>Active style that is applied when new dimension is created.</source>
-        <translation type="vanished">Активни стил који се примењује када се креира нова димензија.</translation>
-    </message>
-    <message>
-        <source>Overriden:</source>
-        <translation type="vanished">Пребришено:</translation>
-    </message>
-    <message>
-        <source>Indicates whether style is overriden for specific entity (and so is unique for it).</source>
-        <translation type="vanished">Означава да ли је стил пребрисан за одређени елемент (и самим тим је јединствен за њега).</translation>
-    </message>
-    <message>
-        <source>Style:</source>
-        <translation type="vanished">Стил:</translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="vanished">Преглед</translation>
-    </message>
-    <message>
-        <source>Flip</source>
-        <translation type="vanished">Flip</translation>
-    </message>
-    <message>
-        <source>If set, first arrow will be flipped</source>
-        <translation type="vanished">Ако је подешено, прва стрелица ће бити окренута</translation>
-    </message>
-    <message>
-        <source>Arrow 1</source>
-        <translation type="vanished">Стрелица 1</translation>
-    </message>
-    <message>
-        <source>If set, second arrow will be flipped</source>
-        <translation type="vanished">Ако је подешено, друга стрелица ће бити обрнута</translation>
-    </message>
-    <message>
-        <source>Arrow 2</source>
-        <translation type="vanished">Стрелица 2</translation>
-    </message>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="vanished">Ординатна димензија</translation>
-    </message>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">Линеарна димензија</translation>
-    </message>
-    <message>
-        <source>Aligned Dimension</source>
-        <translation type="vanished">Поравната димензија</translation>
-    </message>
-    <message>
-        <source>Angular Dimension</source>
-        <translation type="vanished">Угаона димензија</translation>
-    </message>
-    <message>
-        <source>Arc Dimension</source>
-        <translation type="vanished">Димензија лука</translation>
-    </message>
-    <message>
-        <source>Diametric Dimension</source>
-        <translation type="vanished">Дијаметријска димензија</translation>
-    </message>
-    <message>
-        <source>Radial Dimension</source>
-        <translation type="vanished">Радијална димензија</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-    <message>
-        <source>Saving Style Override</source>
-        <translation type="vanished">Стил преписивања за чување</translation>
-    </message>
-    <message>
-        <source>New Style Name</source>
-        <translation type="vanished">Ново име стила</translation>
-    </message>
-    <message>
-        <source>Style with such name already exists, please enter another unique one.</source>
-        <translation type="vanished">Стил са тим именом већ постоји, унесите друго, јединствено име.</translation>
-    </message>
-    <message>
-        <source>New Dimension Style Override - </source>
-        <translation type="vanished">Нови стил преписивања димензија -</translation>
-    </message>
-    <message>
-        <source>Edit Dimension Style Override - </source>
-        <translation type="vanished">Уреди стил преписивања димензија -</translation>
-    </message>
-    <message>
-        <source>View Dimension Style - </source>
-        <translation type="vanished">Прикажи стил димензија -</translation>
-    </message>
-    <message>
-        <source>&amp;Apply Style</source>
-        <translation type="vanished">&amp;Примени стил</translation>
-    </message>
-    <message>
-        <source>&amp;Select Style</source>
-        <translation type="vanished">&amp;Изабери стил</translation>
-    </message>
-    <message>
-        <source>&amp;Set as Active</source>
-        <translation type="vanished">&amp;Постави као активни</translation>
-    </message>
-    <message>
-        <source>&amp;Create override</source>
-        <translation type="vanished">&amp;Kreiraj predefinisan stil</translation>
-    </message>
-    <message>
-        <source>&amp;View Style</source>
-        <translation type="vanished">&amp;Stil prikaza</translation>
-    </message>
-    <message>
-        <source>&amp;Edit override</source>
-        <translation type="vanished">&amp;Izmeni predefinisan stil</translation>
-    </message>
-    <message>
-        <source>&amp;Save As Style</source>
-        <translation type="vanished">&amp;Sačuvaj kao stil</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Override</source>
-        <translation type="vanished">&amp;Ukloni predefinisan stil</translation>
-    </message>
-    <message>
-        <source>E&amp;xport Styles</source>
-        <translation type="vanished">&amp;Izvezi stilove</translation>
-    </message>
-    <message>
-        <source>&amp;Import Styles</source>
-        <translation type="vanished">&amp;Uvezi stilove</translation>
-    </message>
-    <message>
-        <source>YES</source>
-        <translation type="vanished">YES</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation type="vanished">No</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgEntityProperties</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">Dijalog</translation>
-    </message>
-    <message>
-        <source>Object ID: 121</source>
-        <translation type="vanished">ID објекта: 121</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">Слој</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation type="vanished">Назив:</translation>
-    </message>
-    <message>
-        <source>Layer of entity</source>
-        <translation type="vanished">Слој објекта</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-    <message>
-        <source>Point Properties</source>
-        <translation type="vanished">Својства тачке</translation>
-    </message>
-    <message>
-        <source>Line Properties</source>
-        <translation type="vanished">Својства линије</translation>
-    </message>
-    <message>
-        <source>Arc Properties</source>
-        <translation type="vanished">Својства лука</translation>
-    </message>
-    <message>
-        <source>Circle Properties</source>
-        <translation type="vanished">Својства круга</translation>
-    </message>
-    <message>
-        <source>Ellipse Properties</source>
-        <translation type="vanished">Својства елипсе</translation>
-    </message>
-    <message>
-        <source>Hyperbola Properties</source>
-        <translation type="vanished">Svojstva hiperbole</translation>
-    </message>
-    <message>
-        <source>Polyline Properties</source>
-        <translation type="vanished">Svojstva polilinije</translation>
-    </message>
-    <message>
-        <source>Parabola Properties</source>
-        <translation type="vanished">Svojstva parabole</translation>
-    </message>
-    <message>
-        <source>Spline Properties</source>
-        <translation type="vanished">Svojstva splajna</translation>
-    </message>
-    <message>
-        <source>Spline Points Properties</source>
-        <translation type="vanished">Svojstva tačaka splajna</translation>
-    </message>
-    <message>
-        <source>Image Properties</source>
-        <translation type="vanished">Svojstva slike</translation>
-    </message>
-    <message>
-        <source>Insert Properties</source>
-        <translation type="vanished">Svojstva umetanja</translation>
-    </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">Svojstva?</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgIconsSetup</name>
-    <message>
-        <source>Advanced Icons Styling</source>
-        <translation type="vanished">Napredno stilizovanje ikona</translation>
-    </message>
-    <message>
-        <source>Disabled Icon</source>
-        <translation type="vanished">Onemogućena ikona</translation>
-    </message>
-    <message>
-        <source>State ON: </source>
-        <translation type="vanished">Стање: Укључено:</translation>
-    </message>
-    <message>
-        <source>Main color for specfic icon state</source>
-        <translation type="vanished">Главна боја за одређено стање иконе</translation>
-    </message>
-    <message>
-        <source>#00FFFF</source>
-        <translation type="vanished">#00FFFF</translation>
-    </message>
-    <message>
-        <source>Click to select color</source>
-        <translation type="vanished">Кликните да бисте одабрали боју</translation>
-    </message>
-    <message>
-        <source>Accent color for specfic icon state</source>
-        <translation type="vanished">Акцентна боја за одређено стање иконе</translation>
-    </message>
-    <message>
-        <source>State OFF:</source>
-        <translation type="vanished">Стање: Искључено:</translation>
-    </message>
-    <message>
-        <source>Background color for specfic icon state</source>
-        <translation type="vanished">Боја позадине за одређено стање иконе</translation>
-    </message>
-    <message>
-        <source>Generic Colors</source>
-        <translation type="vanished">Опште боје</translation>
-    </message>
-    <message>
-        <source>Default Accent color for all states</source>
-        <translation type="vanished">Подразумевана акцентна боја за сва стања</translation>
-    </message>
-    <message>
-        <source>All States</source>
-        <translation type="vanished">Сва стања</translation>
-    </message>
-    <message>
-        <source>Default Main color all states</source>
-        <translation type="vanished">Podrazumevana glavna boja za sva stanja</translation>
-    </message>
-    <message>
-        <source>Default Background color for all states</source>
-        <translation type="vanished">Podrazumevana boja pozadine za sva stanja</translation>
-    </message>
-    <message>
-        <source>Active Icon</source>
-        <translation type="vanished">Aktivna ikona</translation>
-    </message>
-    <message>
-        <source>Selected Icon</source>
-        <translation type="vanished">Izabrana ikona</translation>
-    </message>
-    <message>
-        <source>Main Color    |  Accent Color   |  Back Color</source>
-        <translation type="vanished">Glavna boja | Akcentna boja | Boja pozadine</translation>
-    </message>
-    <message>
-        <source>Reset to Defaults</source>
-        <translation type="vanished">Vrati na podrazumevane vrednosti</translation>
-    </message>
-    <message>
-        <source>Normal Icon</source>
-        <translation type="vanished">Normalna ikona</translation>
-    </message>
-    <message>
-        <source>Select Color</source>
-        <translation type="vanished">Izaberi boju</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgMenuAssigner</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">Dijalog</translation>
-    </message>
-    <message>
-        <source>Note:</source>
-        <translation type="vanished">Napomena:</translation>
-    </message>
-    <message>
-        <source>This shortcut is already assigned to &quot;Dimensions My&quot; menu!</source>
-        <translation type="vanished">Ова пречица је већ додељена менију „Димензије моје“!</translation>
-    </message>
-    <message>
-        <source>Defines which mouse button is part of menu invocation</source>
-        <translation type="vanished">Опредељује који дугме миша се користи за покретање менија</translation>
-    </message>
-    <message>
-        <source>Mouse Button</source>
-        <translation type="vanished">Дугме миша</translation>
-    </message>
-    <message>
-        <source>Left </source>
-        <translation type="vanished">Лево</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Средње</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Десно</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Back</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation type="vanished">Напред</translation>
-    </message>
-    <message>
-        <source>Task</source>
-        <translation type="vanished">Task</translation>
-    </message>
-    <message>
-        <source>Specify pressed key modifier(s)</source>
-        <translation type="vanished">Наведите притиснуте модификаторске тастере</translation>
-    </message>
-    <message>
-        <source>Key</source>
-        <translation type="vanished">Key</translation>
-    </message>
-    <message>
-        <source>CTRL</source>
-        <translation type="vanished">CTRL</translation>
-    </message>
-    <message>
-        <source>SHIFT</source>
-        <translation type="vanished">SHIFT</translation>
-    </message>
-    <message>
-        <source>ALT</source>
-        <translation type="vanished">ALT</translation>
-    </message>
-    <message>
-        <source>Entity Context</source>
-        <translation type="vanished">Контекст ентитета</translation>
-    </message>
-    <message>
-        <source>Applicable if invoked for:</source>
-        <translation type="vanished">Применљиво ако се покреће за:</translation>
-    </message>
-    <message>
-        <source>Defines the context for menu and whether click on specific entity will trigger menu invocation. </source>
-        <translation type="vanished">Дефинише контекст за мени и да ли ће клик на одређени ентитет покренути позив менија.</translation>
-    </message>
-    <message>
-        <source>Defines type of mouse click for invocation</source>
-        <translation type="vanished">Дефинише тип клика мишем за позив</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation type="vanished">Догађај</translation>
-    </message>
-    <message>
-        <source>Single Click (Release)</source>
-        <translation type="vanished">[&apos;Једноставан клик (отпуштање)&apos;, &apos;Једноставан клик (отпуштање)&apos;, &apos;Једноставан клик (отпуштање)&apos;]</translation>
-    </message>
-    <message>
-        <source>Double Click</source>
-        <translation type="vanished">Dvaput kliknite</translation>
-    </message>
-    <message>
-        <source> Click with desired combination to set invocation shortcut. </source>
-        <translation type="vanished">Kliknite sa željenom kombinacijom da biste postavili prečicu za aktiviranje.</translation>
-    </message>
-    <message>
-        <source>Invocation Shortcut (click to set components)</source>
-        <translation type="vanished">Prečica za aktiviranje (kliknite da biste podesili komponente)</translation>
-    </message>
-    <message>
-        <source>Resulting invocation shortcut. Click with desired combination to set. </source>
-        <translation type="vanished">Rezultirajuća prečica za aktiviranje. Kliknite sa željenom kombinacijom da biste je podesili.</translation>
-    </message>
-    <message>
-        <source>CTRL+ALT+SHIFT+Middle Button Double-Click</source>
-        <translation type="vanished">CTRL+ALT+SHIFT+Srednji taster - dvaput klik</translation>
-    </message>
-    <message>
-        <source>Menu Assignment - &quot;%1&quot; Menu</source>
-        <translation type="vanished">Dodela menija - &quot;%1&quot; meni</translation>
-    </message>
-    <message>
-        <source>Either Absent or Any Entity</source>
-        <translation type="vanished">Ili ne postoji entitet, ili bilo koji entitet</translation>
-    </message>
-    <message>
-        <source>Absent Entity</source>
-        <translation type="vanished">Entitet koji ne postoji</translation>
-    </message>
-    <message>
-        <source>Any Entity</source>
-        <translation type="vanished">Bilo koji entitet</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Line</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Круг</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Полилинија</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">Сплин</translation>
-    </message>
-    <message>
-        <source>Spline By Points</source>
-        <translation type="vanished">Сплин кроз тачке</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Елипса</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Тачка</translation>
-    </message>
-    <message>
-        <source>Parabola</source>
-        <translation type="vanished">Парабола</translation>
-    </message>
-    <message>
-        <source>Image</source>
-        <translation type="vanished">Слика</translation>
-    </message>
-    <message>
-        <source>Hatch</source>
-        <translation type="vanished">Шара</translation>
-    </message>
-    <message>
-        <source>Insert</source>
-        <translation type="vanished">Уметни</translation>
-    </message>
-    <message>
-        <source>Dimension Linear</source>
-        <translation type="vanished">Линеарна димензија</translation>
-    </message>
-    <message>
-        <source>Dimension Aligned</source>
-        <translation type="vanished">Поравната димензија</translation>
-    </message>
-    <message>
-        <source>Dimension Diametric</source>
-        <translation type="vanished">Дијаметарска димензија</translation>
-    </message>
-    <message>
-        <source>Dimension Radial</source>
-        <translation type="vanished">Радијална димензија</translation>
-    </message>
-    <message>
-        <source>Dimension Ordinate</source>
-        <translation type="vanished">Ординатна димензија</translation>
-    </message>
-    <message>
-        <source>Dimension Arc</source>
-        <translation type="vanished">Димензија лука</translation>
-    </message>
-    <message>
-        <source>Leader</source>
-        <translation type="vanished">Водећа линија</translation>
-    </message>
-    <message>
-        <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Properties&apos;.</source>
-        <translation type="vanished">НАПОМЕНА: Додела менија ће бити игнорисана. Резервисано је за &apos;Својства објекта&apos;.</translation>
-    </message>
-    <message>
-        <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Select&apos;.</source>
-        <translation type="vanished">НАПОМЕНА: Додела менија ће бити игнорисана. Резервисано је за &apos;Избор објекта&apos;.</translation>
-    </message>
-    <message>
-        <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Pan&apos;.</source>
-        <translation type="vanished">NAPOMENA: Dodela menija će biti ignorisana. Rezervisano je za funkciju &apos;Pan&apos;.</translation>
-    </message>
-    <message>
-        <source>NNOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
-        <translation type="vanished">NAPOMENA: Dodela menija će biti ignorisana. Rezervisano je za funkciju &apos;Izaberi konturu&apos;.</translation>
-    </message>
-    <message>
-        <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
-        <translation type="vanished">NAPOMENA: Ova kombinacija je rezervisana za podrazumevani kontekstni meni i može sprečiti njegovo aktiviranje!</translation>
-    </message>
-    <message>
-        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored</source>
-        <translation type="vanished">NAPOMENA: Ova kombinacija je rezervisana za funkciju &apos;Pan&apos;! Dodela menija će biti ignorisana.</translation>
-    </message>
-    <message>
-        <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
-        <translation type="vanished">NAPOMENA: Ova prečica je već dodeljena meniju &quot;%1&quot; i taj meni će biti uklonjen prilikom čuvanja!</translation>
-    </message>
-    <message>
-        <source>Shortcut is valid to use.</source>
-        <translation type="vanished">Prečica je validna za upotrebu.</translation>
-    </message>
-    <message>
-        <source>Note: make sure that selected button is supported by your mouse device.</source>
-        <translation type="vanished">Napomena: Proverite da li vaš miš podržava izabrani taster.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgNamedViewsListOptions</name>
-    <message>
-        <source>Named Views Settings</source>
-        <translation type="vanished">Postavke imenovanih prikaza</translation>
-    </message>
-    <message>
-        <source>Editing</source>
-        <translation type="vanished">Uređivanje</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">[&apos;Ako je izabrano, prikazaće se dijalog za potvrdu prilikom uklanjanja prikaza. U suprotnom, prikaz će biti uklonjen tiho.&apos;]</translation>
-    </message>
-    <message>
-        <source>Ask for confirmation before views removal</source>
-        <translation type="vanished">Tražite potvrdu pre uklanjanja prikaza</translation>
-    </message>
-    <message>
-        <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
-        <translation type="vanished">Ako je označeno i tokom kreiranja prikaza, a prikaz sa unetim imenom već postoji, ažuriraće se novom pozicijom. U suprotnom, biće potrebno jedinstveno ime za novi prikaz.</translation>
-    </message>
-    <message>
-        <source>Silently update existing view with same name by created one</source>
-        <translation type="vanished">Tiho ažurirajte postojeći prikaz sa istim imenom kreiranim prikazom</translation>
-    </message>
-    <message>
-        <source>Display</source>
-        <translation type="vanished">Prikaži</translation>
-    </message>
-    <message>
-        <source>If show, tooltip with additional information about view will be shown for table item.</source>
-        <translation type="vanished">Ako je uključeno, prikazivaće se alatka sa dodatnim informacijama o prikazu za stavku tabele.</translation>
-    </message>
-    <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">Alatka sa detaljima prikaza za stavke tabele</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">Ako je označeno, kolona sa detaljima koordinatnog sistema prikaza biće prikazana.</translation>
-    </message>
-    <message>
-        <source>UCS Details column</source>
-        <translation type="vanished">Kolona sa detaljima UCS</translation>
-    </message>
-    <message>
-        <source>If checked, type of grid for saved view will be shown.</source>
-        <translation type="vanished">Ako je označeno, tip mreže za sačuvani prikaz biće prikazan.</translation>
-    </message>
-    <message>
-        <source>Grid Type icon column</source>
-        <translation type="vanished">Kolona sa ikonom tipa mreže</translation>
-    </message>
-    <message>
-        <source>If checked, the column with view type icon will be shown.</source>
-        <translation type="vanished">Ако је означено, колона са иконом типа приказа биће приказана.</translation>
-    </message>
-    <message>
-        <source>Type icon column</source>
-        <translation type="vanished">Колона иконе типа</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of coordinate system for the view will be shown.</source>
-        <translation type="vanished">Ако је означено, колона са иконом типа координатног система за приказ ће бити приказана.</translation>
-    </message>
-    <message>
-        <source>UCS Type icon column</source>
-        <translation type="vanished">Колона иконе типа координатног система</translation>
-    </message>
-    <message>
-        <source>If checked, the column with view details will be shown in the table.</source>
-        <translation type="vanished">Ако је означено, колона са детаљима приказа ће бити приказана у табели.</translation>
-    </message>
-    <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">Колона детаља приказа</translation>
-    </message>
-    <message>
-        <source>Operations</source>
-        <translation type="vanished">Операције</translation>
-    </message>
-    <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">Приликом двапут клика на ставку у табели</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table.</source>
-        <translation type="vanished">Дефинише коју акцију треба извршити приликом двапут клика на ставку приказа у табели.</translation>
-    </message>
-    <message>
-        <source>Do Nothing</source>
-        <translation type="vanished">Не ради ништа</translation>
-    </message>
-    <message>
-        <source>Rename View</source>
-        <translation type="vanished">Preimenuj prikaz</translation>
-    </message>
-    <message>
-        <source>Update View</source>
-        <translation type="vanished">Ažuriraj prikaz</translation>
-    </message>
-    <message>
-        <source>Restore View</source>
-        <translation type="vanished">Vrati prikaz</translation>
-    </message>
-    <message>
-        <source>If enabled, click on the view table item will restore view. Otherwise, view should be restored explicitly.</source>
-        <translation type="vanished">Ako je omogućeno, klikom na element tabele prikaza će se vratiti prikaz. U suprotnom, prikaz bi trebalo vratiti eksplicitno.</translation>
-    </message>
-    <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">Vrati prikaz jednim klikom na element tabele</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgNewCustomVariable</name>
-    <message>
-        <source>New Custom Property</source>
-        <translation type="vanished">Nova prilagođena svojstva</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation type="vanished">Naziv:</translation>
-    </message>
-    <message>
-        <source>Value:</source>
-        <translation type="vanished">Vrednost:</translation>
-    </message>
-    <message>
-        <source>Property with provided name already exists. Please specify unique name.</source>
-        <translation type="vanished">Svojstvo sa navedenim imenom već postoji. Molimo, navedite jedinstveno ime.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgNewDimStyle</name>
-    <message>
-        <source>New Dimension Style</source>
-        <translation type="vanished">Novi stil dimenzija</translation>
-    </message>
-    <message>
-        <source>Use For:</source>
-        <translation type="vanished">Koristi za:</translation>
-    </message>
-    <message>
-        <source>Defines which type of dimensions are controlled by this style.</source>
-        <translation type="vanished">Određuje koji tip dimenzija kontroliše ovaj stil.</translation>
-    </message>
-    <message>
-        <source>All Dimensions</source>
-        <translation type="vanished">Sve dimenzije</translation>
-    </message>
-    <message>
-        <source>Linear Dimensions</source>
-        <translation type="vanished">Linearne dimenzije</translation>
-    </message>
-    <message>
-        <source>Angular Dimensions</source>
-        <translation type="vanished">Ugaone dimenzije</translation>
-    </message>
-    <message>
-        <source>Radius Dimensions</source>
-        <translation type="vanished">Dimenzije poluprečnika</translation>
-    </message>
-    <message>
-        <source>Diameter Dimensions</source>
-        <translation type="vanished">Dimenzije prečnika</translation>
-    </message>
-    <message>
-        <source>Ordinate Dimensions</source>
-        <translation type="vanished">Dimenzije ordinate</translation>
-    </message>
-    <message>
-        <source>Leader And Tolerances</source>
-        <translation type="vanished">Linija i tolerancije</translation>
-    </message>
-    <message>
-        <source>Based on Style:</source>
-        <translation type="vanished">Na osnovu stila:</translation>
-    </message>
-    <message>
-        <source>Existing dimension style which new style is based on</source>
-        <translation type="vanished">Postojeći stil dimenzija na kojem se zasniva novi stil</translation>
-    </message>
-    <message>
-        <source>New Style Name:</source>
-        <translation type="vanished">Novo ime stila:</translation>
-    </message>
-    <message>
-        <source>Name of new dimension style</source>
-        <translation type="vanished">Ime novog stila dimenzija</translation>
-    </message>
-    <message>
-        <source>Empty name of style is not allowed.</source>
-        <translation type="vanished">Prazno ime stila nije dozvoljeno.</translation>
-    </message>
-    <message>
-        <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation type="vanished">Dato ime stila dimenzija (%1) nije jedinstveno! Molimo, unesite drugo ime.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgNewVersionAvailable</name>
-    <message>
-        <source>New Version Available</source>
-        <translation type="vanished">Nova verzija dostupna</translation>
-    </message>
-    <message>
-        <source>Latest Pre-release Version</source>
-        <translation type="vanished">Najnovija pretverzija</translation>
-    </message>
-    <message>
-        <source>Click to open release page on GitHub</source>
-        <translation type="vanished">Kliknite da biste otvorili stranicu sa objavom na GitHub-u</translation>
-    </message>
-    <message>
-        <source>2.2.0.3-alpha</source>
-        <translation type="vanished">2.2.0.3-alpha</translation>
-    </message>
-    <message>
-        <source>Version:</source>
-        <translation type="vanished">Verzija:</translation>
-    </message>
-    <message>
-        <source>Published:</source>
-        <translation type="vanished">Objavljeno:</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">Текстуална етикета</translation>
-    </message>
-    <message>
-        <source>Check if you prefer not to be notified about this update on subsequent version checks</source>
-        <translation type="vanished">Означите ако не желите да будете обавештени о овом ажурирању при следећим проверама верзије</translation>
-    </message>
-    <message>
-        <source>Ignore this update</source>
-        <translation type="vanished">Игнориши ово ажурирање</translation>
-    </message>
-    <message>
-        <source>Nothing to update</source>
-        <translation type="vanished">Нема шта да се ажурира</translation>
-    </message>
-    <message>
-        <source>There is no newer version, you are using the latest one.</source>
-        <translation type="vanished">Не постоји новија верзија, користите најновију.</translation>
-    </message>
-    <message>
-        <source>However, if you&apos;d like to check the most recent and fresh features included into pre-release builds, disable &quot;Ignore pre-release updates&quot; checkbox below.</source>
-        <translation type="vanished">Међутим, ако желите да проверите најновије функције које су укључене у претходне верзије, деактивирајте поље за потврду „Игнориши претходне верзије“.</translation>
-    </message>
-    <message>
-        <source>Updates Check Settings</source>
-        <translation type="vanished">Подешавања провере ажурирања</translation>
-    </message>
-    <message>
-        <source>If checked, notifications about pre-release updates will not be shown.</source>
-        <translation type="vanished">Ако је означено, обавештења о претходним ажурирањима неће бити приказана.</translation>
-    </message>
-    <message>
-        <source>Ignore pre-release updates</source>
-        <translation type="vanished">Игнориши претходне верзије</translation>
-    </message>
-    <message>
-        <source>Check to disable automatic version check on startup</source>
-        <translation type="vanished">Obeležite da biste onemogućili automatsku proveru verzije pri pokretanju</translation>
-    </message>
-    <message>
-        <source>Check for new version on startup</source>
-        <translation type="vanished">Proverite da li postoji nova verzija pri pokretanju</translation>
-    </message>
-    <message>
-        <source>Ignored Pre-Release</source>
-        <translation type="vanished">Ignorisan pretverzija</translation>
-    </message>
-    <message>
-        <source>Current Version:</source>
-        <translation type="vanished">Trenutna verzija:</translation>
-    </message>
-    <message>
-        <source>Ignored Release:</source>
-        <translation type="vanished">Ignorisana verzija:</translation>
-    </message>
-    <message>
-        <source>Lateat Release Version</source>
-        <translation type="vanished">Najnovija dostupna verzija</translation>
-    </message>
-    <message>
-        <source>&lt;a href=&quot;https://api.github.com/repos/LibreCAD/LibreCAD/releases/176244221&quot;&gt;2.2.0.2-rc-alpha&lt;/a&gt;</source>
-        <translation type="vanished">Nova verzija je dostupna: &lt;a href=&quot;https://api.github.com/repos/LibreCAD/LibreCAD/releases/176244221&quot;&gt;2.2.0.2-rc-alpha&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>Version Check</source>
-        <translation type="vanished">Provera verzije</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgNewWidget</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">Dijalog</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">Tekstualna oznaka</translation>
-    </message>
-    <message>
-        <source>Clear Actions List</source>
-        <translation type="vanished">Očisti listu akcija</translation>
-    </message>
-    <message>
-        <source>Menu Name:</source>
-        <translation type="vanished">Naziv menija:</translation>
-    </message>
-    <message>
-        <source>Unique name of menu to create.</source>
-        <translation type="vanished">Jedinstveni naziv menija koji želite da kreirate.</translation>
-    </message>
-    <message>
-        <source>Toolbar Name:</source>
-        <translation type="vanished">Naziv alatne trake:</translation>
-    </message>
-    <message>
-        <source>Unique name of toolbar to create.</source>
-        <translation type="vanished">Jedinstveni naziv alatne trake koju želite da kreirate.</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Greška</translation>
-    </message>
-    <message>
-        <source>Please enter a name.</source>
-        <translation type="vanished">Molimo, unesite naziv.</translation>
-    </message>
-    <message>
-        <source>Name is not unique. Please enter unique name.</source>
-        <translation type="vanished">Naziv nije jedinstven. Molimo, unesite jedinstveni naziv.</translation>
     </message>
 </context>
 <context>
@@ -6921,512 +1766,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DlgTolerance</name>
-    <message>
-        <source>Feature Control Frame</source>
-        <translation type="vanished">Okvir za kontrolu karakteristika</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">Sloj dimenzije</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Atributi olovke</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Sloj:</translation>
-    </message>
-    <message>
-        <source>Geometric Characteristics</source>
-        <translation type="vanished">Geometrijske karakteristike</translation>
-    </message>
-    <message>
-        <source>Composite</source>
-        <translation type="vanished">Kompozit</translation>
-    </message>
-    <message>
-        <source>Stated Tolerance</source>
-        <translation type="vanished">Navedena tolerancija</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Primary Datum</source>
-        <translation type="vanished">Primarni datum</translation>
-    </message>
-    <message>
-        <source>Secondary Datum</source>
-        <translation type="vanished">Sekundarni datum</translation>
-    </message>
-    <message>
-        <source>Tertiary Datum</source>
-        <translation type="vanished">Tercijarni datum</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgUCSListOptions</name>
-    <message>
-        <source>UCS List Options</source>
-        <translation type="vanished">Opcije liste UCS</translation>
-    </message>
-    <message>
-        <source>Display</source>
-        <translation type="vanished">Prikaz</translation>
-    </message>
-    <message>
-        <source>If сhecked, the tooltip with additional information about UCS will be shown for table item.</source>
-        <translation type="vanished">Ako je ovo polje označeno, prikazivaće se balon sa dodatnim informacijama o UCS-u za stavku u tabeli.</translation>
-    </message>
-    <message>
-        <source>Tooltip with UCS details for table items</source>
-        <translation type="vanished">Balon sa detaljima o UCS-u za stavke u tabeli</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table.</source>
-        <translation type="vanished">Ako je ovo polje označeno, kolona sa ikonom za tip UCS-a biće prikazana u tabeli.</translation>
-    </message>
-    <message>
-        <source>Type icon column</source>
-        <translation type="vanished">Kolona sa ikonom tipa</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table.</source>
-        <translation type="vanished">Ako je ovo polje označeno, kolona sa detaljima o poreklu i uglu UCS-a biće prikazana u tabeli.</translation>
-    </message>
-    <message>
-        <source>UCS Details column</source>
-        <translation type="vanished">Kolona sa detaljima o UCS-u</translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown.</source>
-        <translation type="vanished">Ako je ovo polje označeno, kolona sa tipom mreže za UCS biće prikazana.</translation>
-    </message>
-    <message>
-        <source>Grid Type column</source>
-        <translation type="vanished">Kolona sa tipom mreže</translation>
-    </message>
-    <message>
-        <source>Editing</source>
-        <translation type="vanished">Измена</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">Ако је одабрано, приликом уклањања приказа појављиваће се потврдни дијалог. У супротном, приказ ће бити уклоњен без најаве.</translation>
-    </message>
-    <message>
-        <source>Ask for confirmation before UCS removal</source>
-        <translation type="vanished">Затражите потврду пре уклањања УКС-а</translation>
-    </message>
-    <message>
-        <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
-        <translation type="vanished">Ако је подешено и током креирања приказ са унетим именом већ постоји, он ће бити ажуриран новом позицијом. У супротном, биће потребно унети јединствено име за нови приказ.</translation>
-    </message>
-    <message>
-        <source>Silently update existing UCS if the same exists</source>
-        <translation type="vanished">Тихо ажурирајте постојећи УКС ако већ постоји</translation>
-    </message>
-    <message>
-        <source>Operations</source>
-        <translation type="vanished">Операције</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied.</source>
-        <translation type="vanished">Дефинише како би требало да се прилагоди прозор приказа нацрта након примене УКС-а.</translation>
-    </message>
-    <message>
-        <source>Zoom Auto</source>
-        <translation type="vanished">Аутоматско зумирање</translation>
-    </message>
-    <message>
-        <source>Pan, UCS Origin in Center</source>
-        <translation type="vanished">Померање, УКС оријентисан у центру</translation>
-    </message>
-    <message>
-        <source>Pan, UCS Origin in Left-Bottom</source>
-        <translation type="vanished">Померање, УКС оријентисан у доњем левом углу</translation>
-    </message>
-    <message>
-        <source>If enabled, click on the table item will apply coordinates system. Otherwise, coordinates system should be applied explicitly.</source>
-        <translation type="vanished">Ako je omogućeno, klikom na element tabele primeni se koordinatni sistem. U suprotnom, koordinatni sistem treba primeniti eksplicitno.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">Vrati UCS jednim klikom na element tabele</translation>
-    </message>
-    <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">Na dvostruki klik na element tabele</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on the item of the table.</source>
-        <translation type="vanished">Definiše koju akciju treba izvršiti na dvostruki klik na element tabele.</translation>
-    </message>
-    <message>
-        <source>Do Nothing</source>
-        <translation type="vanished">Ne radi ništa</translation>
-    </message>
-    <message>
-        <source>Edit UCS</source>
-        <translation type="vanished">Uredi UCS</translation>
-    </message>
-    <message>
-        <source>Apply UCS</source>
-        <translation type="vanished">Primenite UCS</translation>
-    </message>
-    <message>
-        <source>Highlight UCS</source>
-        <translation type="vanished">Istakni UCS</translation>
-    </message>
-    <message>
-        <source>As UCS is applied, perform</source>
-        <translation type="vanished">Kada se UCS primeni, izvrši</translation>
-    </message>
-    <message>
-        <source>UCS Highlight</source>
-        <translation type="vanished">Isticanje UCS</translation>
-    </message>
-    <message>
-        <source>Defines delay between UCS marker blinks.</source>
-        <translation type="vanished">Одређује временски интервал између трептања УКС маркера.</translation>
-    </message>
-    <message>
-        <source> ms</source>
-        <translation type="vanished">мс</translation>
-    </message>
-    <message>
-        <source>Blink:</source>
-        <translation type="vanished">Трептај:</translation>
-    </message>
-    <message>
-        <source>Blink Delay:</source>
-        <translation type="vanished">Временски интервал трептања:</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting.</source>
-        <translation type="vanished">Одређује број трептаја УКС маркера за истицање УКС-а.</translation>
-    </message>
-    <message>
-        <source> times</source>
-        <translation type="vanished">пута</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgUCSProperties</name>
-    <message>
-        <source>UCS Edit</source>
-        <translation type="vanished">Уређивање УКС-а</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>X-Axis Angle:</source>
-        <translation type="vanished">Угао X-осе:</translation>
-    </message>
-    <message>
-        <source>X-Axis Direction:</source>
-        <translation type="vanished">Смер X-осе:</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">Текстна етикета</translation>
-    </message>
-    <message>
-        <source>Origin:</source>
-        <translation type="vanished">Почетак:</translation>
-    </message>
-    <message>
-        <source>Grid Type:</source>
-        <translation type="vanished">Тип мреже:</translation>
-    </message>
-    <message>
-        <source>UCS Name:</source>
-        <translation type="vanished">Име УКС-а:</translation>
-    </message>
-    <message>
-        <source>Please specify name of UCS</source>
-        <translation type="vanished">Молимо, унесите име УКС-а</translation>
-    </message>
-    <message>
-        <source>Name contains not allowed characters</source>
-        <translation type="vanished">Име садржи недозвољене знакове</translation>
-    </message>
-    <message>
-        <source>Ortho</source>
-        <translation type="vanished">Орто</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Left</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Десно</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Top</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgWidgetCreator</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">Дијалог</translation>
-    </message>
-    <message>
-        <source>Available Actions:</source>
-        <translation type="vanished">Доступне акције:</translation>
-    </message>
-    <message>
-        <source>Action Group:</source>
-        <translation type="vanished">Група акција:</translation>
-    </message>
-    <message>
-        <source>Select action group with actions</source>
-        <translation type="vanished">Изаберите групу акција са акцијама</translation>
-    </message>
-    <message>
-        <source>Actions that are included. Use drag-n-drop to reorder, double-click for remove item from the list.</source>
-        <translation type="vanished">Акције које су укључене. Користите превлачење да бисте променили редослед, двапут кликните да бисте уклонили ставку са листе.</translation>
-    </message>
-    <message>
-        <source>Define a custom menu by specifing the set of included actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
-        <translation type="vanished">Дефинишите прилагођени мени навођењем скупа укључених акција. Мени ће се приказати као искачући прозор у области цртања чим се покрене пречица за позивање менија.</translation>
-    </message>
-    <message>
-        <source>Save Used Actions List</source>
-        <translation type="vanished">Сачувајте листу коришћених акција</translation>
-    </message>
-    <message>
-        <source>Widget Name: </source>
-        <translation type="vanished">Име видгета:</translation>
-    </message>
-    <message>
-        <source>Destroy</source>
-        <translation type="vanished">Уништи</translation>
-    </message>
-    <message>
-        <source>Remove selected item from the list of used actions</source>
-        <translation type="vanished">Уклоните изабрану ставку са листе коришћених акција</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>Used Actions:</source>
-        <translation type="vanished">Коришћене акције:</translation>
-    </message>
-    <message>
-        <source>Available actions. Double click on item to add it to the list of used actions.</source>
-        <translation type="vanished">Доступне акције. Двапут кликните на ставку да бисте je dodali na listu korišćenih akcija.</translation>
-    </message>
-    <message>
-        <source>Menu Assignment</source>
-        <translation type="vanished">Додела менија</translation>
-    </message>
-    <message>
-        <source>NONE</source>
-        <translation type="vanished">NONE</translation>
-    </message>
-    <message>
-        <source>Removes menu assignment. Menu itself is not deleted.</source>
-        <translation type="vanished">Уклања доделу менија. Сам мени се не брише.</translation>
-    </message>
-    <message>
-        <source>Unassign</source>
-        <translation type="vanished">Уклони</translation>
-    </message>
-    <message>
-        <source>Note: for single-action menus, popup invocation directly triggers the action instead of menu.</source>
-        <translation type="vanished">Напомена: за меније са једном акцијом, позив приликом отварања директно покреће акцију уместо менија.</translation>
-    </message>
-    <message>
-        <source>Assign menu activation shortcut.</source>
-        <translation type="vanished">Додели пречицу за активирање менија.</translation>
-    </message>
-    <message>
-        <source>Assign</source>
-        <translation type="vanished">Додели</translation>
-    </message>
-    <message>
-        <source>Add selected item to the list of used actions</source>
-        <translation type="vanished">Dodajte izabrani element u listu korišćenih akcija</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>Remove ALL items from the list of used actions</source>
-        <translation type="vanished">Uklonite SVE elemente iz liste korišćenih akcija</translation>
-    </message>
-    <message>
-        <source>&lt;&lt;</source>
-        <translation type="vanished">&lt;&lt;</translation>
-    </message>
-    <message>
-        <source>Toolbar Placement</source>
-        <translation type="vanished">Položaj alatne trake</translation>
-    </message>
-    <message>
-        <source>Put new toolbars to </source>
-        <translation type="vanished">Postavite nove alatne trake u</translation>
-    </message>
-    <message>
-        <source>Specifies docking area that is used to initial placement of created toolbar. Make sure that this area is enabled.</source>
-        <translation type="vanished">Određuje oblast za priključivanje koja se koristi za početno postavljanje kreirane alatne trake. Uverite se da je ova oblast omogućena.</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Dno</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Left</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Desno</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Top</translation>
-    </message>
-    <message>
-        <source>Custom Menu Creator</source>
-        <translation type="vanished">Kreiranje prilagođenog menija</translation>
-    </message>
-    <message>
-        <source>Menu Name:</source>
-        <translation type="vanished">Naziv menija:</translation>
-    </message>
-    <message>
-        <source>Destroy Menu</source>
-        <translation type="vanished">Obriši meni</translation>
-    </message>
-    <message>
-        <source>New Menu</source>
-        <translation type="vanished">Novi meni</translation>
-    </message>
-    <message>
-        <source>Name of Custom Nenu</source>
-        <translation type="vanished">Naziv prilagođenog menija</translation>
-    </message>
-    <message>
-        <source>Define a custom menu by specifying the set of used actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
-        <translation type="vanished">Definišite prilagođeni meni navodeći skup korišćenih akcija. Meni će se prikazivati kao iskačući prozor u oblasti za crtanje čim se aktivira prečica za pozivanje menija.</translation>
-    </message>
-    <message>
-        <source>Custom Toolbar Creator</source>
-        <translation type="vanished">Kreiranje prilagođene alatne trake</translation>
-    </message>
-    <message>
-        <source>Toolbar Name:</source>
-        <translation type="vanished">Naziv alatne trake:</translation>
-    </message>
-    <message>
-        <source>Destroy toolbar</source>
-        <translation type="vanished">Obriši alatnu traku</translation>
-    </message>
-    <message>
-        <source>New Toolbar</source>
-        <translation type="vanished">Нова трака са алаткама</translation>
-    </message>
-    <message>
-        <source>Name of Custom Toolbar</source>
-        <translation type="vanished">Име прилагођене траке са алаткама</translation>
-    </message>
-    <message>
-        <source>Define a custom toolbar by specifying the set of used actions. Once created, the custom toolbar will behave exactly as built-in ones.</source>
-        <translation type="vanished">Дефинишите прилагођену траку са алаткама навођењем скупа коришћених акција. Након креирања, прилагођена трака са алаткама ће се понашати тачно као и уграђене.</translation>
-    </message>
-    <message>
-        <source>Unassign menu</source>
-        <translation type="vanished">Уклоните мени</translation>
-    </message>
-    <message>
-        <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation type="vanished">Да ли сте сигурни да желите да уклоните мени „%1“? Напомена: Уклониће се само пречица за позивање, а мени неће бити избрисан.</translation>
-    </message>
-    <message>
-        <source>NOT ASSIGNED</source>
-        <translation type="vanished">НИЈЕ ДОДЕЉЕНО</translation>
-    </message>
-    <message>
-        <source>menu</source>
-        <translation type="vanished">menu</translation>
-    </message>
-    <message>
-        <source>toolbar</source>
-        <translation type="vanished">трака са алаткама</translation>
-    </message>
-    <message>
-        <source>Remove %1</source>
-        <translation type="vanished">Уклоните %1</translation>
-    </message>
-    <message>
-        <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation type="vanished">Да ли сте сигурни да желите да уклоните „%1“ %2?</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DocumentsStorage</name>
-    <message>
-        <source>Unnamed</source>
-        <translation type="vanished">Bez naziva</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">Ако је изабрано, за оквир ће се цртати само углови. У супротном, цртаће се ивице.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">Само углови</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Офсет:</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">Ако је изабрано, оквир се црта као полилинија</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Полилинија</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">Ако је подешено, оквир ће се креирати за целу селекцију. У супротном, креираће се за појединачне елементе.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">Селекција као група</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Изаберите офсет из цртежа</translation>
-    </message>
-</context>
-<context>
     <name>LC_DuplicateOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="14"/>
@@ -7434,54 +1773,9 @@ Are you sure you are going to discard changes?</source>
         <translation>Form</translation>
     </message>
     <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">Слој на који треба да се постави дупликат</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Активно</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Оригинал</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="40"/>
         <source>Offset X:</source>
         <translation>Офсет по оси X:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">Оловка која се примењује на креирани дупликат</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Активно</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Оригинал</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Оригинал решен</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">Хоризонтални офсет дупликата од оригиналног објекта</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">Вертикално pomeranje duplikata od originalnog objekta</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">Odaberite pomeranje po X osi iz crteža</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="48"/>
@@ -7516,567 +1810,9 @@ Are you sure you are going to discard changes?</source>
         <translation>Sloj:</translation>
     </message>
     <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">Ako je ovo polje označeno, duplikat će biti postavljen na originalne koordinate</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="33"/>
         <source>In Place</source>
         <translation>Na istom mestu</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">Odaberite pomeranje po Y osi iz crteža</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">U smeru kazaljke na satu</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">Дужина мање полупречнице елипсе</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">Дужина веће полупречнице елипсе</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">Ако је означено, може се задати угао за већу полупречницу</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Базни угао:</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">Ако је означено, угао веће полупречнице се задаје мишем</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Free</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">Вредност угла за већу полупречницу</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Супротно казаљкама сата</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">Изаберите главне акције из цртежа</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">Мања полупречница:</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">Odaberite manji poluprečnik iz crteža</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">Odaberite veći poluprečnik</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Odaberite ugao iz crteža</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Opcije luka</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">U smeru kazaljke na satu</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">U suprotnom smeru od kazaljke na satu</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipsePropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrija</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">Centar (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="vanished">X koordinata centra elipse</translation>
-    </message>
-    <message>
-        <source>Pick center coordinate from drawing</source>
-        <translation type="vanished">Odaberite koordinatu centra sa crteža</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">Centar (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">Y koordinata centra luka</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="vanished">Glavna osa:</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="vanished">Poluprečnik glavne ose elipse</translation>
-    </message>
-    <message>
-        <source>Pick length of major axis radius from drawing</source>
-        <translation type="vanished">Odaberite dužinu poluprečnika glavne ose sa crteža</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="vanished">Sporedna osa:</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="vanished">Poluprečnik sporedne ose elipse</translation>
-    </message>
-    <message>
-        <source>Pick length of minor axis radius from drawing</source>
-        <translation type="vanished">Odaberite dužinu poluprečnika sporedne ose sa crteža</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="vanished">u stepenima</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="vanished">Ротација (°):</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="vanished">Угао ротације за главну осу елипсе, у степенима</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Изаберите угао ротације са цртежа</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="vanished">Почетни угао (°):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="vanished">Почетни угао елиптичног лука, у степенима</translation>
-    </message>
-    <message>
-        <source>Pick start angle from drawing</source>
-        <translation type="vanished">Изаберите почетни угао са цртежа</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="vanished">Завршни угао (°):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="vanished">Завршни угао елиптичног лука, у степенима</translation>
-    </message>
-    <message>
-        <source>Pick end angle from drawing</source>
-        <translation type="vanished">Изаберите завршни угао са цртежа</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="vanished">Одређује да ли је лук обрнут</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">Окренуто</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ExportLayersService</name>
-    <message>
-        <source>Export Layers</source>
-        <translation type="vanished">Извоз слојева</translation>
-    </message>
-    <message>
-        <source>Exported Layers</source>
-        <translation type="vanished">Извезени слојеви</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ExportToImageService</name>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Извоз цртежа...</translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="vanished">Извезено: %1</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="vanished">Извоз није успео!</translation>
-    </message>
-</context>
-<context>
-    <name>LC_HyperbolaPropertiesEditingWidget</name>
-    <message>
-        <source>Hyperbola Properties</source>
-        <translation type="vanished">Својства хиперболе</translation>
-    </message>
-    <message>
-        <source>Standard Parameters</source>
-        <translation type="vanished">Стандардни параметри</translation>
-    </message>
-    <message>
-        <source>Center X:</source>
-        <translation type="vanished">X координата центра:</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>Major Radius (a):</source>
-        <translation type="vanished">Главни полупречник (a):</translation>
-    </message>
-    <message>
-        <source>Minor Radius (b):</source>
-        <translation type="vanished">Мали полупречник (b):</translation>
-    </message>
-    <message>
-        <source>Ratio (b/a):</source>
-        <translation type="vanished">Однос (b/a):</translation>
-    </message>
-    <message>
-        <source>Rotation (deg):</source>
-        <translation type="vanished">Ротација (степени):</translation>
-    </message>
-    <message>
-        <source>Vertex X:</source>
-        <translation type="vanished">X координата врха:</translation>
-    </message>
-    <message>
-        <source>Start φ:</source>
-        <translation type="vanished">Почетни угао φ:</translation>
-    </message>
-    <message>
-        <source>End φ:</source>
-        <translation type="vanished">Завршни угао φ:</translation>
-    </message>
-    <message>
-        <source>(0,0 = full branch)</source>
-        <translation type="vanished">(0,0 = цела грана)</translation>
-    </message>
-    <message>
-        <source>Left Branch</source>
-        <translation type="vanished">Лево крило</translation>
-    </message>
-    <message>
-        <source>Foci &amp; Point on Curve (Alternative Editing)</source>
-        <translation type="vanished">Фокуси и тачка на кривој (алтернативно уређивање)</translation>
-    </message>
-    <message>
-        <source>Focus 1 X:</source>
-        <translation type="vanished">Фокус 1 X:</translation>
-    </message>
-    <message>
-        <source>Focus 2 X:</source>
-        <translation type="vanished">Фокус 2 X:</translation>
-    </message>
-    <message>
-        <source>Point on Curve X:</source>
-        <translation type="vanished">Тачка на кривој X:</translation>
-    </message>
-    <message>
-        <source>Derived Properties (Read-only)</source>
-        <translation type="vanished">Изведене особине (само за читање)</translation>
-    </message>
-    <message>
-        <source>Eccentricity:</source>
-        <translation type="vanished">Ексцентрицитет:</translation>
-    </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">Невалидна дефиниција хиперболе</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">Фокуси морају бити различити</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">Невалидне координате центра</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">Главни полупречник мора бити позитиван</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">Невалидан угао ротације</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">Однос или мала полуоса морају бити позитивни.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ImagePropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Геометрија</translation>
-    </message>
-    <message>
-        <source>Insert Point(x):</source>
-        <translation type="vanished">Унесите тачку (x):</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">X координата тачке уноса</translation>
-    </message>
-    <message>
-        <source>Pick insertion point coordinates from drawing</source>
-        <translation type="vanished">Изаберите координате тачке уноса са цртежа</translation>
-    </message>
-    <message>
-        <source>Insert Point (y):</source>
-        <translation type="vanished">Унесите тачку (y):</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">Y координата тачке уноса</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Ширина:</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="vanished">Ширина слике</translation>
-    </message>
-    <message>
-        <source>Pick width value from drawing</source>
-        <translation type="vanished">Odaberite širinu iz crteža</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Visina:</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="vanished">Visina slike</translation>
-    </message>
-    <message>
-        <source>Pick height value from the drawing</source>
-        <translation type="vanished">Odaberite visinu iz crteža</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Skala:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">Faktor skaliranja</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Ugao:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Ugao rotacije</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">Odaberite ugao iz crteža</translation>
-    </message>
-    <message>
-        <source>File Path:</source>
-        <translation type="vanished">Putanja do datoteke:</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="vanished">Путања до датотеке слике</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="vanished">Изаберите датотеку слике</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">Величина (пх):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">Величина слике у пикселима</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">Резолуција (тачке по инчу)</translation>
-    </message>
-    <message>
-        <source>Pick scale from drawing</source>
-        <translation type="vanished">Изаберите скалу са цртежа</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">Ако је поље означено, тачка ће увек бити унутар изабране јединице</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">Прикачи на јединицу</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InputTextDialog</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">Дијалог</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">Текстуална етикета</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InsertPropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Геометрија</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="vanished">Тачка убацивања (x):</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">X координата тачке убацивања</translation>
-    </message>
-    <message>
-        <source>Pick insertion point coordinates from drawing</source>
-        <translation type="vanished">Изаберите координате тачке убацивања са цртежа</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="vanished">Тачка убацивања (y):</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">Y координата тачке убацивања</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="vanished">Скала X:</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="vanished">Faktor skaliranja po X osi</translation>
-    </message>
-    <message>
-        <source>Pick scale by X value from drawing</source>
-        <translation type="vanished">Odaberite faktor skaliranja po X osi sa crteža</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="vanished">Skala Y:</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="vanished">Faktor skaliranja po Y osi</translation>
-    </message>
-    <message>
-        <source>Pick scale Y value from drawing</source>
-        <translation type="vanished">Odaberite faktor skaliranja po Y osi sa crteža</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Ugao:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Ugao rotacije</translation>
-    </message>
-    <message>
-        <source>Pick Angle value from drawing</source>
-        <translation type="vanished">Odaberite vrednost ugla sa crteža</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="vanished">Redovi:</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="vanished">[&apos;Broj redova za kopije&apos;, &apos;Broj redova za kopije&apos;, &apos;Broj redova za kopije&apos;]</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="vanished">Kolone:</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="vanished">Broj kolona za kopije</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="vanished">Razmak između redova:</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="vanished">Razmak između redova</translation>
-    </message>
-    <message>
-        <source>Pick row spacing value from drawing</source>
-        <translation type="vanished">Odaberite vrednost razmaka između redova sa crteža</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="vanished">Razmak između kolona:</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="vanished">Razmak između kolona</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">Odaberite razmak između kolona sa crteža</translation>
     </message>
 </context>
 <context>
@@ -8085,10 +1821,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
         <translation>Podešavanja sloja</translation>
-    </message>
-    <message>
-        <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation type="vanished">Naziv novog sloja. Da biste kreirali hijerarhijske slojeve, uključite naziv virtuelnog sloja i separator naziva sloja.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="61"/>
@@ -8101,17 +1833,9 @@ Are you sure you are going to discard changes?</source>
         <translation>Тип слоја</translation>
     </message>
     <message>
-        <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation type="vanished">Слој за различите информативне елементе, белешке, нацрте итд.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="90"/>
         <source>Informational</source>
         <translation>Информативни</translation>
-    </message>
-    <message>
-        <source>Normal layer with drawing eleements</source>
-        <translation type="vanished">Обичан слој са елементима за цртање</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="100"/>
@@ -8119,17 +1843,9 @@ Are you sure you are going to discard changes?</source>
         <translation>Обичан</translation>
     </message>
     <message>
-        <source>Layer that holds dimensions</source>
-        <translation type="vanished">Слој који садржи димензије</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="110"/>
         <source>Dimensions</source>
         <translation>Димензије</translation>
-    </message>
-    <message>
-        <source>Layer with alternate position of entities located on normal layers</source>
-        <translation type="vanished">Слој са алтернативном позицијом ентитета који се налазе на обичним слојевима</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="120"/>
@@ -8147,10 +1863,6 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
         <source>Construction Layer</source>
         <translation>Konstrukcioni sloj</translation>
-    </message>
-    <message>
-        <source>Path for parent layer</source>
-        <translation type="vanished">Putanja do roditeljskog sloja</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="179"/>
@@ -8191,49 +1903,6 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
     </message>
 </context>
 <context>
-    <name>LC_LayerExportOptionsWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Layers Export Options</source>
-        <translation type="vanished">Опције за извоз слојева</translation>
-    </message>
-    <message>
-        <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation type="vanished">Ако је поље означено, именовани прикази из документа биће укључени у извезени цртеж. У супротном, прикази неће бити укључени.</translation>
-    </message>
-    <message>
-        <source>Export Named Views too</source>
-        <translation type="vanished">Извези и именоване приказе</translation>
-    </message>
-    <message>
-        <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation type="vanished">Ако је поље означено, сваки оригинални извезени слој ће бити сачуван у засебном цртежу. У супротном, сви слојеви ће бити извезени у један комбиновани цртеж.</translation>
-    </message>
-    <message>
-        <source>Export each layer to own drawing file</source>
-        <translation type="vanished">Извези сваки слој у засебну датотеку цртежа</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation type="vanished">Ако је поље означено, ентитети ће бити сачувани у оригиналном слоју. У супротном, они ће бити смештени у слој „0”.</translation>
-    </message>
-    <message>
-        <source>Retain original layer for entities</source>
-        <translation type="vanished">Задржи оригинални слој за ентитете</translation>
-    </message>
-    <message>
-        <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation type="vanished">Ако је поље означено, УЦС-ови из документа ће бити укључени у извезени цртеж. У супротном, УЦС-ови неће бити укључени.</translation>
-    </message>
-    <message>
-        <source>Export UCSs too</source>
-        <translation type="vanished">Извези и УЦС-ове</translation>
-    </message>
-</context>
-<context>
     <name>LC_LayerTreeOptionsDialog</name>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="20"/>
@@ -8241,17 +1910,9 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
         <translation>Опције за стабло слојева</translation>
     </message>
     <message>
-        <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation type="vanished">Подешавања за конвенцију именовања која се користи за креирање хијерархије слојева на основу равног списка слојева</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="33"/>
         <source>Naming Convention</source>
         <translation>Конвенција именовања</translation>
-    </message>
-    <message>
-        <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation type="vanished">Разделилац који се користи за поделу унутрашњег имена слоја на хијерархијска имена</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="68"/>
@@ -8269,26 +1930,14 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
         <translation>Димензионално</translation>
     </message>
     <message>
-        <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation type="vanished">Суфикс имена слоја који означава да је слој димензионалан</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="114"/>
         <source>Informational</source>
         <translation>Информативно</translation>
     </message>
     <message>
-        <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation type="vanished">Суфикс имена слоја који означава да је слој информативан</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="134"/>
         <source>Alternative Position </source>
         <translation>Alternativna pozicija</translation>
-    </message>
-    <message>
-        <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation type="vanished">Суфикс имена слоја који означава да је слој за алтернативну позицију.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="157"/>
@@ -8301,21 +1950,9 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
         <translation>Префикс</translation>
     </message>
     <message>
-        <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation type="vanished">Префикс имена слоја који се користи ако слој са тим именом већ постоји (на пример, приликом креирања дупликата)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="183"/>
         <source>Suffix</source>
         <translation>Суфикс</translation>
-    </message>
-    <message>
-        <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation type="vanished">Суфикс имена слоја који се користи ако слој са тим именом већ постоји (на пример, приликом креирања дупликата)</translation>
-    </message>
-    <message>
-        <source>Display and operations settings</source>
-        <translation type="vanished">Подешавања приказа и операција</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="207"/>
@@ -8323,17 +1960,9 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
         <translation>Приказ и операције</translation>
     </message>
     <message>
-        <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation type="vanished">Ако је поље означено, у помоћни текст ће бити укључено цело име слоја (са свим горњим нивоима)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="213"/>
         <source>Show full name as ToolTip</source>
         <translation>Prikaži puni naziv kao alatku</translation>
-    </message>
-    <message>
-        <source>If checked, icons for layer types will be shown</source>
-        <translation type="vanished">Ako je označeno, ikone za tipove slojeva će biti prikazane</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="220"/>
@@ -8341,21 +1970,9 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
         <translation>Prikaži ikone tipova slojeva</translation>
     </message>
     <message>
-        <source>Indentation for child layers</source>
-        <translation type="vanished">Udubljenje za podređene slojeve</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="233"/>
         <source>Show indented layer names. Ident size:</source>
         <translation>Prikaži nazive slojeva sa udubljenjem. Veličina udubljenja:</translation>
-    </message>
-    <message>
-        <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation type="vanished">Veličina udubljenja u znakovima, za udubljenje naziva podređenog sloja od roditeljskog</translation>
-    </message>
-    <message>
-        <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation type="vanished">Ako je označeno, operacije povlačenja i ispuštanja u listi slojeva su omogućene i hijerarhija slojeva može biti restrukturirana</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="266"/>
@@ -8363,17 +1980,9 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
         <translation>Dozvoli restrukturiranje putem povlačenja i ispuštanja</translation>
     </message>
     <message>
-        <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation type="vanished">Ako se preimenuje primarni sloj, sekundarni slojevi se takođe preimenuju</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="273"/>
         <source>Rename secondary layers on primary rename</source>
         <translation>Preimenuj sekundarne slojeve prilikom preimenovanja primarnog sloja</translation>
-    </message>
-    <message>
-        <source>Various colors settings</source>
-        <translation type="vanished">Različita podešavanja boja</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="281"/>
@@ -8381,29 +1990,9 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
         <translation>Boje</translation>
     </message>
     <message>
-        <source>Background color for selected items in layers tree.</source>
-        <translation type="vanished">Boja pozadine za izabrane elemente u stablu slojeva.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">Boja za linije razdvajanja u prikazu stabla slojeva</translation>
-    </message>
-    <message>
-        <source>Background color for virtual layers items in layers list</source>
-        <translation type="vanished">Boja pozadine za virtuelne elemente slojeva u listi slojeva</translation>
-    </message>
-    <message>
-        <source>Click to select color</source>
-        <translation type="vanished">Kliknite da biste izabrali boju</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="384"/>
         <source>Matched item in highlight filter mode</source>
         <translation>Odgovarajući element u režimu isticanja filtera</translation>
-    </message>
-    <message>
-        <source>Color for items that matches filter conditions</source>
-        <translation type="vanished">Boja za elemente koji odgovaraju uslovima filtera</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="416"/>
@@ -8426,17 +2015,9 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
         <translation>Боја позадине изабраних ставки</translation>
     </message>
     <message>
-        <source>Background color for active layer item in layers tree</source>
-        <translation type="vanished">Боја позадине за активну ставку слоја у стаблици слојева</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="504"/>
         <source>Active layer background color</source>
         <translation>Боја позадине за активни слој</translation>
-    </message>
-    <message>
-        <source>Pens that will be set for newly created layers of different types.</source>
-        <translation type="vanished">Оловке које ће се подесити за новостворене слојеве различитих типова</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="525"/>
@@ -8462,35 +2043,6 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="74"/>
         <source>Alternative Position Layer</source>
         <translation>Алтернативни слој позиције</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">grid</translation>
-    </message>
-    <message>
-        <source>highlighted item</source>
-        <translation type="vanished">označena stavka</translation>
-    </message>
-    <message>
-        <source>virtual layer background</source>
-        <translation type="vanished">pozadina virtuelnog sloja</translation>
-    </message>
-    <message>
-        <source>selected item background</source>
-        <translation type="vanished">pozadina izabrane stavke</translation>
-    </message>
-    <message>
-        <source>active layer background</source>
-        <translation type="vanished">pozadina aktivnog sloja</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Greška</translation>
-    </message>
-    <message>
-        <source>Invalid value provide for %1 color.
-Please specify a different value.</source>
-        <translation type="vanished">Neispravna vrednost za boju %1. Molimo, navedite drugačiju vrednost.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="239"/>
@@ -8744,18 +2296,6 @@ Please specify a different value.</source>
         <translation>&amp;Onemogući štampanje svih slojeva</translation>
     </message>
     <message>
-        <source>&amp;Export Single Layer</source>
-        <translation type="vanished">&amp;Izvezi pojedinačni sloj</translation>
-    </message>
-    <message>
-        <source>&amp;Export Layer Sub-Tree</source>
-        <translation type="vanished">&amp;Izvezi pod-drvo slojeva</translation>
-    </message>
-    <message>
-        <source>Export &amp;Visible Layer(s)</source>
-        <translation type="vanished">Izvezi &amp;vidljive slojeve</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="766"/>
         <source>&amp;Find And Remove Empty Layers</source>
         <translation>&amp;Pronađi i ukloni prazne slojeve</translation>
@@ -8767,19 +2307,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="14"/>
         <source>Form</source>
         <translation>Form</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">Udaljenost tačke preseka od određene tačke na liniji</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">Tačka na kojoj se linija prilagođava, za poziciju tačke preseka između kreirane linije i izvornog objekta (unutar originalne linije)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">Free</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
@@ -8800,14 +2327,6 @@ Please specify a different value.</source>
         <translation>End</translation>
     </message>
     <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Ugao linije</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">Ako je označeno, izvorni objekat će biti podeljen tačkom preseka.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="144"/>
         <source>Divide</source>
         <translation>Podeli</translation>
@@ -8823,10 +2342,6 @@ Please specify a different value.</source>
         <translation>Дужина:</translation>
     </message>
     <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">Ако је означено, угао је релативан у односу на угао изабране јединице</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
         <source>Rel</source>
         <translation>Rel</translation>
@@ -8835,10 +2350,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73"/>
         <source>Line Snap:</source>
         <translation>Привлачење линије:</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">Ако је означено, дужина линије се дефинише положајем миша уместо подешавањем</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
@@ -8852,42 +2363,14 @@ Please specify a different value.</source>
         <translation>Растојање привлачења:</translation>
     </message>
     <message>
-        <source>Length of line</source>
-        <translation type="vanished">Дужина линије</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Изаберите растојање привлачења из цртежа</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="167"/>
         <source>Tick Snap:</source>
         <translation>Привлачење према ознакама:</translation>
     </message>
     <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Odaberite ugao sa crteža</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">Odstupanje tačke prianjanja od presečne tačke</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">Određuje koji deo kreirane linije će se prikačiti na presečnu tačku</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="201"/>
         <source>Angle:</source>
         <translation>Ugao:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Odaberite dužinu sa crteža</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Odaberite odstupanje sa crteža</translation>
     </message>
 </context>
 <context>
@@ -8898,25 +2381,9 @@ Please specify a different value.</source>
         <translation>Form</translation>
     </message>
     <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">Ugao između originalne i kreirane linije</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Odaberite ugao sa crteža</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">Ako je označeno, kreirana linija će biti ortogonalna na odabranu liniju</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="62"/>
         <source>Orthogonal</source>
         <translation>Окомито</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">Тачка привлачења за креирану линију</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="217"/>
@@ -8944,29 +2411,9 @@ Please specify a different value.</source>
         <translation>Дужина:</translation>
     </message>
     <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">Фиксна дужина креиране линије</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Изаберите дужину из цртежа</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">Офсет за креирану линију од тачке пресека</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="139"/>
         <source>End offset:</source>
         <translation>Krajnji ofset:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Odredi ofset iz crteža</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">Određuje da li će kreirana linija biti kreirana do tačke preseka ili će imati fiksnu dužinu</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="105"/>
@@ -8997,17 +2444,9 @@ Please specify a different value.</source>
         <translation>Form</translation>
     </message>
     <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">Ako je označeno, umesto pojedinačnih linija biće kreirana polilinija</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="69"/>
         <source>Create Polyline</source>
         <translation>Kreiraj poliliniju</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">Izabrana je druga politika za liniju.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
@@ -9038,14 +2477,6 @@ Please specify a different value.</source>
         <translation>Linija 2:</translation>
     </message>
     <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">Izabrana je prva politika za spajanje linije.</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">Definiše kako bi se olovka trebala primenjivati na kreirane entitete.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="102"/>
         <source>Active Pen</source>
         <translation>Aktivna olovka</translation>
@@ -9071,10 +2502,6 @@ Please specify a different value.</source>
         <translation>Атрибути:</translation>
     </message>
     <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">Ако је означено, оригиналне линије ће бити уклоњене</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="162"/>
         <source>Remove originals</source>
         <translation>Уклони оригинал</translation>
@@ -9088,17 +2515,9 @@ Please specify a different value.</source>
         <translation>Form</translation>
     </message>
     <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">Ако је означено, линија тачака ће бити нацртана са наведеним углом</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="32"/>
         <source>Angle:</source>
         <translation>Угао:</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">Одређује како се тачке на ивицама (почетне/завршне тачке) треба креирати.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="128"/>
@@ -9121,25 +2540,9 @@ Please specify a different value.</source>
         <translation>End</translation>
     </message>
     <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">Опредељује да ли треба да сви тачки буду распоређени између почетне и крајње тачке линије, или да се дужина линије израчунава на основу броја тачака и растојања између њих.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="73"/>
         <source>Fit Line</source>
         <translation>Прилагоди линију</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">Растојање између тачака</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Изабери растојање са цртежа</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">Ако је означено, користиће се фиксирано задато растојање између тачака. У супротном, растојање ће се израчунати.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="209"/>
@@ -9147,633 +2550,14 @@ Please specify a different value.</source>
         <translation>Фиксно растојање</translation>
     </message>
     <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">Број тачака за креирање</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="196"/>
         <source>Number of points:</source>
         <translation>Broj tačaka:</translation>
     </message>
     <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Ugao linije</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="183"/>
         <source>Edge Points:</source>
         <translation>Tačke na ivici:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Odaberite ugao sa crteža</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrija</translation>
-    </message>
-    <message>
-        <source>Pick endpoint from the drawing</source>
-        <translation type="vanished">Odaberite krajnju tačku sa crteža</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="vanished">Početna tačka (y):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="vanished">Y koordinata početne tačke</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="vanished">Krajnja tačka (y):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="vanished">Početna X koordinata</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="vanished">Početna tačka (x):</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="vanished">Završna Y koordinata</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="vanished">Završna X koordinata</translation>
-    </message>
-    <message>
-        <source>Pick start point from the drawing</source>
-        <translation type="vanished">Odaberite početnu tačku na crtežu</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="vanished">Završna tačka (x):</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;Izaberi</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Pomoć</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">Onlajn &amp;dokumentacija</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;Viki</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">Korisnički &amp;priručnik</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp;Komande</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">&amp;Tabelarni stilovi</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">&amp;Vidžeti</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">O programu</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp;Forum</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">Zulip &amp;ćaskanje</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">&amp;Prijavi grešku</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">&amp;Predloži novu funkciju</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">&amp;Stranica sa verzijama</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp;Донација</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Линија</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">&amp;Тачка</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Круг</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">&amp;Лук</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">Поли&amp;гон</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">Сплин&amp;а</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">Елип&amp;са</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Полилинија</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">&amp;Остало</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">&amp;Crtaj</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;Elipsa</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">&amp;Ostalo</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Izmeni</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp;Red</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">&amp;Dimenzije</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Info</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp;Алати</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">&amp;Димензија</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;Фајл</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Nedavne datoteke</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Uvezi</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Izvezi</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;Opcije</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp;Izmeni</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;Prikaži</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">&amp;Vrati prikaze</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">&amp;Dodaci</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">&amp;Radni prostor</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Područja za prikaze</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">CAD виджети</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">Алатне траке</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">CAD алатне траке</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">Радне површине</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">Цртежи</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Режим картица</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">Режим прозора</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">Изглед</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">Заобљен</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">Троугласт</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">Север</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">Југ</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">East</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">West</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp;Пореди</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp;Максимизирано</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;Каскадно</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Поређај</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Пореди &amp;вертикално</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Пореди &amp;хоризонтално</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">Контекст</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Алатне траке</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">Виџети</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">CAD виџети</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">CAD алатне траке</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Изаберите</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">Недавни</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Измени</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">Измени више</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Draw</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Line</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Полилинија</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Тачка</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Круг</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Полигон</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">Полилинија/Сплин</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Елипса</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Остало</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">Додај димензије</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">Poravnaj</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">Redosled crtanja</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Slojevi</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Edit</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">Opcije</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">&amp;Sačuvane perspektive</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">Izmeni svojstva</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">Izmeni generički</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">Izmeni liniju</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">Nacrtaj liniju</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">Nacrtaj krug</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">Nacrtaj ostalo</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">Izmeni krug</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">Izmeni luk</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">Izmeni poliliniju</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">Izmeni splajn</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">Izmeni tačke splajna</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">Izmeni tekst</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">Izmeni višelinijski tekst</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">Uredi blok</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Poredak</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Офсет:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Изаберите офсет из цртежа</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyAlignOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>No change of horizontal position</source>
-        <translation type="vanished">Не мењајте хоризонталну позицију</translation>
-    </message>
-    <message>
-        <source>Align left edges</source>
-        <translation type="vanished">Поравнајте леве ивице</translation>
-    </message>
-    <message>
-        <source>Center entities horizontally</source>
-        <translation type="vanished">Центрирајте објекте хоризонтално</translation>
-    </message>
-    <message>
-        <source>Align right edges</source>
-        <translation type="vanished">Поравнајте десне ивице</translation>
-    </message>
-    <message>
-        <source>Horizontal Align:</source>
-        <translation type="vanished">Хоризонтално поравнање:</translation>
-    </message>
-    <message>
-        <source>Vertical Align:</source>
-        <translation type="vanished">Вертикално поравнање:</translation>
-    </message>
-    <message>
-        <source>Defines the way of selected entities alignment.</source>
-        <translation type="vanished">Дефинише начин поравнања изабраних објеката.</translation>
-    </message>
-    <message>
-        <source>Entity</source>
-        <translation type="vanished">Објекат</translation>
-    </message>
-    <message>
-        <source>Position</source>
-        <translation type="vanished">Позиција</translation>
-    </message>
-    <message>
-        <source>Drawing</source>
-        <translation type="vanished">Цртање</translation>
-    </message>
-    <message>
-        <source>If selected, relative positions of entities within selection will be unchanged. Otherwise, each entity will be positioned individually.</source>
-        <translation type="vanished">Ако је изабрано, релативне позиције објеката у оквиру избора остају непромењене. У супротном, сваки објекат ће бити позициониран појединачно.</translation>
-    </message>
-    <message>
-        <source>As Group</source>
-        <translation type="vanished">Као група</translation>
-    </message>
-    <message>
-        <source>Align to:</source>
-        <translation type="vanished">Поравнај према:</translation>
-    </message>
-    <message>
-        <source>Align top edges</source>
-        <translation type="vanished">Поравнај горње ивице</translation>
-    </message>
-    <message>
-        <source>Center entities vertically</source>
-        <translation type="vanished">Центрирај ентитете вертикално</translation>
-    </message>
-    <message>
-        <source>Align bottom edges</source>
-        <translation type="vanished">Поравнај доње ивице</translation>
-    </message>
-    <message>
-        <source>No vertical alignment</source>
-        <translation type="vanished">Нема вертикалног поравнања</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Ако је означено, тренутни атрибути ће се користити за огледалне ентитете, у супротном - оригинални атрибути.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Користи тренутне атрибуте</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Ако није означено, оригинални ентитети ће бити уклоњени, у супротном ће остати.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Зачувај оригиналне</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Ако је означено, огледални ентитети ће бити постављени на тренутни слој, у супротном ће бити постављени у оригиналне слојеве.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Користи тренутни слој</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">Ako je ovo označeno, entiteti će se skalirati ako je potrebno. U suprotnom, biće samo pozicionirani i rotirani.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Skaliraj</translation>
     </message>
 </context>
 <context>
@@ -9784,17 +2568,9 @@ Please specify a different value.</source>
         <translation>Form</translation>
     </message>
     <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">Ako je ovo označeno, segmenti između presečnih tačaka biće uklonjeni. Ako nije označeno, entitet će biti podeljen na presečnim tačkama.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="39"/>
         <source>Remove Segments</source>
         <translation>Ukloni segmente</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">Ako je ovo označeno, izabrani segment će biti uklonjen. U suprotnom, izabrani segment će ostati, a ostali segmenti će biti uklonjeni.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="46"/>
@@ -9828,25 +2604,6 @@ Please specify a different value.</source>
         <translation>End</translation>
     </message>
     <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">Uskladite tačku početka razmaka sa tačkom na liniji</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">Početak</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">Sredina</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">End</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
         <source>Gap Size:</source>
         <translation>Величина размака:</translation>
@@ -9857,45 +2614,9 @@ Please specify a different value.</source>
         <translation>Прилагођавање размака:</translation>
     </message>
     <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">Тачка прилагођавања размака на линији</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">Free</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">Почетак</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">Средина</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">End</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
         <source>Line Snap:</source>
         <translation>Прилагођавање линије:</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">Величина размака, ако nije slobodna</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">Odaberite veličinu razmaka sa crteža</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">Ako je označeno, veličina razmaka se određuje pomoću miša</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
@@ -9904,967 +2625,9 @@ Please specify a different value.</source>
         <translation>Free</translation>
     </message>
     <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">Udaljenost od tačke sidra</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="49"/>
         <source>Snap Distance:</source>
         <translation>Udaljenost od tačke sidra:</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Odaberite udaljenost od tačke sidra sa crteža</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">Ako je označeno, ogledanje će se izvršiti pomoću odabrane linije.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">Ogledaj u odnosu na odabranu liniju</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Ako nije označeno, originalni entiteti će biti uklonjeni, u suprotnom će biti sačuvani.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Sačuvaj originale</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Ako je označeno, trenutni atributi će se koristiti za ogledane entitete, u suprotnom - originalni.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Koristi trenutne atribute</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Ako je označeno, ogledani entiteti će biti postavljeni na trenutni sloj, u suprotnom će biti postavljeni u originalne slojeve.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Koristi trenutni sloj</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Premesti opcije rotacije</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">Ako je označeno, slobodan izbor faktora biće izvršen pomoću miša.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Free</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">Ugao za dodatnu rotaciju oko referentne tačke</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Odaberite ugao rotacije iz crteža</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Broj kopija</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">Ako je označeno, originalni elementi će biti sačuvani, u suprotnom će biti uklonjeni.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Sačuvaj originale</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">Ako je označeno, biće kreirano više kopija.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Više kopija</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">Ugao rotacije:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Određuje da li je ugao definisan unetom vrednošću ili pozicijom miša</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">Ako je apsolutno, referentna tačka će biti rotirana, ali će se entitet rotirati samo za drugi ugao, u suprotnom će se uglovi sabirati</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">Apsolutno</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Ako je označeno, novi elementi će biti postavljeni na trenutni sloj, u suprotnom će biti na originalnim slojevima.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Koristi trenutni sloj</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">Ako je označeno, druga rotacija će biti oko referentne tačke.</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">Rotiraj dva puta</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">Ako je označeno, trenutni atributi će biti primenjeni na kreirane elemente, u suprotnom će se koristiti originalni atributi.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Koristi trenutne atribute</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">Ugao za rotiranje elementa oko tačke rotacije.</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">Odaberi drugi ugao rotacije iz crteža.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Premesti opcije rotacije</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Broj kopija</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">Ako je označeno, biće kreirano više kopija.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">[&apos;Više kopija&apos;]</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Ako je označeno, originalni elementi će biti sačuvani, u suprotnom će biti uklonjeni.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">[&apos;Sačuvaj originale&apos;]</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">Ako je označeno, kreirani elementi će biti postavljeni u trenutni sloj. U suprotnom, biće postavljeni u originalne slojeve.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">[&apos;Koristi trenutni sloj&apos;]</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">Faktor skaliranja za Y osu</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Faktor skaliranja:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">Ako je označeno, isti faktor skaliranja će biti primenjen na X i Y osu.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">Izotropno</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">Faktor skaliranja za X osu</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Ako je ovo polje označeno, trenutna svojstva će se primeniti na kreirane entitete, u suprotnom će se koristiti originalna svojstva.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Koristi trenutna svojstva</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">Ako je ovo polje označeno, faktor će se slobodno birati pomoću miša. U suprotnom, koristiće se navedene vrednosti faktora.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Free</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Ako je ovo polje označeno, originalni entiteti će biti sačuvani, u suprotnom će biti uklonjeni.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">Sačuvaj originale</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">Ако је означено, креирани објекти ће бити постављени на тренутни слој. У супротном, биће постављени на оригиналне слојеве.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Користи тренутни слој</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Број копија</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">Ако је означено, тренутни атрибути ће бити примењени на креиране објекте, у супротном ће се користити оригинални атрибути.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Користи тренутне атрибуте</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Ако је означено, оригинални објекти ће остати, у супротном ће бити уклоњени.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Задржи оригиналне</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Ако је означено, биће креиране више копија.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Више копија</translation>
-    </message>
-</context>
-<context>
-    <name>LC_NamedViewsListWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Create view for current zoom and offset of drawing</source>
-        <translation type="vanished">Направи приказ за тренутни зум и офсет цртежа</translation>
-    </message>
-    <message>
-        <source>Restores selected view</source>
-        <translation type="vanished">Враћа изабрани приказ</translation>
-    </message>
-    <message>
-        <source>Update selected view by current zoom/position</source>
-        <translation type="vanished">Ажурира изабрани приказ са тренутним зумом/позицијом</translation>
-    </message>
-    <message>
-        <source>Edit selected view name</source>
-        <translation type="vanished">Уреди име изабраног приказа</translation>
-    </message>
-    <message>
-        <source>Removes selected view</source>
-        <translation type="vanished">Уклања изабрани приказ</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">Филтрирање приказа по имену</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Филтер...</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">Подешавања</translation>
-    </message>
-    <message>
-        <source>Delete View</source>
-        <translation type="vanished">Izbriši prikaz</translation>
-    </message>
-    <message>
-        <source>Are you sure to delete ALL views?
- Warning: this action can NOT be undone!</source>
-        <translation type="vanished">Da li ste sigurni da želite da izbrišete SVE prikaze?
-Upozorenje: ova akcija se NE može poništiti!</translation>
-    </message>
-    <message>
-        <source>Are you sure to delete view
- &quot;%1&quot;?
- Warning: this action can NOT be undone!</source>
-        <translation type="vanished">Da li ste sigurni da želite da izbrišete prikaz &quot;%1&quot;?
-Upozorenje: ova akcija se NE može poništiti!</translation>
-    </message>
-    <message>
-        <source>Delete Views</source>
-        <translation type="vanished">Izbriši prikaze</translation>
-    </message>
-    <message>
-        <source>Are you sure to delete views %1?
-Warning: this action can NOT be undone!</source>
-        <translation type="vanished">Da li ste sigurni da želite da izbrišete prikaze %1?
-Upozorenje: ova akcija se NE može poništiti!</translation>
-    </message>
-    <message>
-        <source>New View</source>
-        <translation type="vanished">Novi prikaz</translation>
-    </message>
-    <message>
-        <source>View name:</source>
-        <translation type="vanished">Naziv prikaza:</translation>
-    </message>
-    <message>
-        <source>View Creation</source>
-        <translation type="vanished">Kreiranje prikaza</translation>
-    </message>
-    <message>
-        <source>Empty name of View is not allowed</source>
-        <translation type="vanished">Prazan naziv prikaza nije dozvoljen</translation>
-    </message>
-    <message>
-        <source>View with provided name already exists</source>
-        <translation type="vanished">Prikaz sa navedenim nazivom već postoji</translation>
-    </message>
-    <message>
-        <source>Rename View</source>
-        <translation type="vanished">Preimenuj prizor</translation>
-    </message>
-    <message>
-        <source>View Rename</source>
-        <translation type="vanished">Preimenovanje prizora</translation>
-    </message>
-    <message>
-        <source>View with provided name already exists, select another one</source>
-        <translation type="vanished">Prizor sa navedenim imenom već postoji, izaberite drugi</translation>
-    </message>
-    <message>
-        <source>&amp;Add View</source>
-        <translation type="vanished">Dodaj prizor</translation>
-    </message>
-    <message>
-        <source>R&amp;emove Selected Views</source>
-        <translation type="vanished">Ukloni izabrane prizore</translation>
-    </message>
-    <message>
-        <source>&amp;Restore View</source>
-        <translation type="vanished">Vrati prizor</translation>
-    </message>
-    <message>
-        <source>Re&amp;name View</source>
-        <translation type="vanished">Preimenuj prizor</translation>
-    </message>
-    <message>
-        <source>&amp;Update View</source>
-        <translation type="vanished">Ažuriraj prizor</translation>
-    </message>
-    <message>
-        <source>R&amp;emove View</source>
-        <translation type="vanished">Ukloni prizor</translation>
-    </message>
-    <message>
-        <source>Remove A&amp;ll Views</source>
-        <translation type="vanished">Ukloni sve prizore</translation>
-    </message>
-    <message>
-        <source>Restore View</source>
-        <translation type="vanished">Vrati prikaz</translation>
-    </message>
-    <message>
-        <source>Paper space view is not fully supported yet.</source>
-        <translation type="vanished">Prikaz prostora za papir još uvek nije u potpunosti podržan.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_NamedViewsModel</name>
-    <message>
-        <source>&lt;No name&gt;</source>
-        <translation type="vanished">&lt;Bez naziva&gt;</translation>
-    </message>
-    <message>
-        <source>Ortho</source>
-        <translation type="vanished">Orto</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Left</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Desno</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Top</translation>
-    </message>
-    <message>
-        <source>WCS</source>
-        <translation type="vanished">WCS</translation>
-    </message>
-    <message>
-        <source>UCS</source>
-        <translation type="vanished">UCS</translation>
-    </message>
-    <message>
-        <source>Name: </source>
-        <translation type="vanished">Naziv:</translation>
-    </message>
-    <message>
-        <source>Center X: </source>
-        <translation type="vanished">Централна тачка X:</translation>
-    </message>
-    <message>
-        <source>Center Y: </source>
-        <translation type="vanished">Централна тачка Y:</translation>
-    </message>
-    <message>
-        <source>Width: </source>
-        <translation type="vanished">Ширина:</translation>
-    </message>
-    <message>
-        <source>Height: </source>
-        <translation type="vanished">Висина:</translation>
-    </message>
-    <message>
-        <source>UCS: </source>
-        <translation type="vanished">УКС:</translation>
-    </message>
-    <message>
-        <source>UCS Name: </source>
-        <translation type="vanished">Назив УКС:</translation>
-    </message>
-    <message>
-        <source>Grid View: </source>
-        <translation type="vanished">Приказ мреже:</translation>
-    </message>
-    <message>
-        <source>UCS Origin X: </source>
-        <translation type="vanished">X координата почетка УКС:</translation>
-    </message>
-    <message>
-        <source>UCS Origin Y: </source>
-        <translation type="vanished">Y координата почетка УКС:</translation>
-    </message>
-    <message>
-        <source>UCS Angle: </source>
-        <translation type="vanished">Угао УКС:</translation>
-    </message>
-    <message>
-        <source>In Paperspace: </source>
-        <translation type="vanished">U Paperspace-u:</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation type="vanished">Yes</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation type="vanished">No</translation>
-    </message>
-</context>
-<context>
-    <name>LC_OptionsWidgetsHolder</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Current Action:</source>
-        <translation type="vanished">Тренутна акција:</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Подразумевано</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ParabolaPropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Геометрија</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">Тачке на кривој</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">Контролне тачке</translation>
-    </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Tačke parabole ne smeju biti kolinearne.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Угао ротације за залепљене објекте</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Фактор скалирања</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">Ако је изабрано, тачка објекта која се користи као тачка уметања биће избрисана након операције лепљења. У супротном, она ће остати.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">Уклони тачку</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угао:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Фактор скалирања за залепљене објекте</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Изаберите угао са цртежа</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Угао ротације за налепљене елементе</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">Ако је означено, при лепљењу ће се креирати низови копија.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">Низ</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">Размак између тачака убацивања елемената у низовима.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угао:</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Размак:</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">Угао ротације за низ.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">Одаберите размак низа према X оси из цртежа</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">Број низова.</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Фактор скалирања за налепљене елементе</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Фактор скалирања</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">Одаберите размак низа по оси Y из цртежа</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Одаберите угао из цртежа</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">Угао низа:</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">Размак између тачака убацивања ентитета у колонама.</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">Ако је поље означено, исти угао ротације се користи за свако појединачно убацивање и за цео низ. У супротном, користе се различити углови.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">Исти углови</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">Број колона низа.</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">Одаберите угао низа из цртежа</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PenInfoRegistry</name>
-    <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Непромењено -</translation>
-    </message>
-    <message>
-        <source>By Layer</source>
-        <translation type="vanished">Po sloju</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Po bloku</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Podrazumevano</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0,00 mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0,05 mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0,09 mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0,13 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0,15 mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0,18 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0,20 mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0,25 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0,30 mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0,35 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0,40 mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0,50 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0,53 mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0,60 mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0,70 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0,80 mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0,90 mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1,06 mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1,20 mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1,40 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1,58 mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2,11 mm</translation>
-    </message>
-    <message>
-        <source>No Pen</source>
-        <translation type="vanished">Нема оловке</translation>
-    </message>
-    <message>
-        <source>Continuous</source>
-        <translation type="vanished">Континуално</translation>
-    </message>
-    <message>
-        <source>Dot</source>
-        <translation type="vanished">Dot</translation>
-    </message>
-    <message>
-        <source>Dot (tiny)</source>
-        <translation type="vanished">Tačka (vrlo mala)</translation>
-    </message>
-    <message>
-        <source>Dot (small)</source>
-        <translation type="vanished">Tačka (mala)</translation>
-    </message>
-    <message>
-        <source>Dot (large)</source>
-        <translation type="vanished">Tačka (velika)</translation>
-    </message>
-    <message>
-        <source>Dash</source>
-        <translation type="vanished">Dash</translation>
-    </message>
-    <message>
-        <source>Dash (tiny)</source>
-        <translation type="vanished">Linija (vrlo mala)</translation>
-    </message>
-    <message>
-        <source>Dash (small)</source>
-        <translation type="vanished">Linija (mala)</translation>
-    </message>
-    <message>
-        <source>Dash (large)</source>
-        <translation type="vanished">Linija (velika)</translation>
-    </message>
-    <message>
-        <source>Dash Dot</source>
-        <translation type="vanished">Linija-tačka</translation>
-    </message>
-    <message>
-        <source>Dash Dot (tiny)</source>
-        <translation type="vanished">Linija-tačka (vrlo mala)</translation>
-    </message>
-    <message>
-        <source>Dash Dot (small)</source>
-        <translation type="vanished">Linija-tačka (mala)</translation>
-    </message>
-    <message>
-        <source>Dash Dot (large)</source>
-        <translation type="vanished">Linija sa tačkama (velika)</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Podeli</translation>
-    </message>
-    <message>
-        <source>Divide (tiny)</source>
-        <translation type="vanished">Podeli (vrlo malo)</translation>
-    </message>
-    <message>
-        <source>Divide (small)</source>
-        <translation type="vanished">Podeli (malo)</translation>
-    </message>
-    <message>
-        <source>Divide (large)</source>
-        <translation type="vanished">Podeli (veliko)</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation type="vanished">Centar</translation>
-    </message>
-    <message>
-        <source>Center (tiny)</source>
-        <translation type="vanished">Centar (vrlo malo)</translation>
-    </message>
-    <message>
-        <source>Center (small)</source>
-        <translation type="vanished">Centar (malo)</translation>
-    </message>
-    <message>
-        <source>Center (large)</source>
-        <translation type="vanished">Centar (veliko)</translation>
-    </message>
-    <message>
-        <source>Border</source>
-        <translation type="vanished">Okolina</translation>
-    </message>
-    <message>
-        <source>Border (tiny)</source>
-        <translation type="vanished">Ивица (врло мала)</translation>
-    </message>
-    <message>
-        <source>Border (small)</source>
-        <translation type="vanished">Ивица (мала)</translation>
-    </message>
-    <message>
-        <source>Border (large)</source>
-        <translation type="vanished">Ивица (велика)</translation>
-    </message>
-    <message>
-        <source>Red</source>
-        <translation type="vanished">Red</translation>
-    </message>
-    <message>
-        <source>Dark Red</source>
-        <translation type="vanished">Тамноцрвена</translation>
-    </message>
-    <message>
-        <source>Yellow</source>
-        <translation type="vanished">Жута</translation>
-    </message>
-    <message>
-        <source>Dark Yellow</source>
-        <translation type="vanished">Тамножута</translation>
-    </message>
-    <message>
-        <source>Green</source>
-        <translation type="vanished">Зелена</translation>
-    </message>
-    <message>
-        <source>Dark Green</source>
-        <translation type="vanished">Тамнозелена</translation>
-    </message>
-    <message>
-        <source>Cyan</source>
-        <translation type="vanished">Cyan</translation>
-    </message>
-    <message>
-        <source>Dark Cyan</source>
-        <translation type="vanished">Tamno tirkizna</translation>
-    </message>
-    <message>
-        <source>Blue</source>
-        <translation type="vanished">Blue</translation>
-    </message>
-    <message>
-        <source>Dark Blue</source>
-        <translation type="vanished">Tamno plava</translation>
-    </message>
-    <message>
-        <source>Magenta</source>
-        <translation type="vanished">Magenta</translation>
-    </message>
-    <message>
-        <source>Dark Magenta</source>
-        <translation type="vanished">Tamno magenta</translation>
-    </message>
-    <message>
-        <source>Black / White</source>
-        <translation type="vanished">Crna / Bela</translation>
-    </message>
-    <message>
-        <source>Gray</source>
-        <translation type="vanished">Gray</translation>
-    </message>
-    <message>
-        <source>Dark Gray</source>
-        <translation type="vanished">Tamno siva</translation>
-    </message>
-    <message>
-        <source>Light Gray</source>
-        <translation type="vanished">Svetlo siva</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PenPaletteModel</name>
-    <message>
-        <source>Name:</source>
-        <translation type="vanished">Назив:</translation>
-    </message>
-    <message>
-        <source>Line Type:</source>
-        <translation type="vanished">Тип линије:</translation>
-    </message>
-    <message>
-        <source>Line Width:</source>
-        <translation type="vanished">Ширина линије:</translation>
-    </message>
-    <message>
-        <source>Color:</source>
-        <translation type="vanished">Боја:</translation>
     </message>
 </context>
 <context>
@@ -10880,25 +2643,9 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
         <translation>Боје</translation>
     </message>
     <message>
-        <source>Background color for pen element currently edited in pen&apos;s table</source>
-        <translation type="vanished">Боја позадине за елемент оловке који се тренутно уређује у табели оловки</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">Боја мреже за листу оловки</translation>
-    </message>
-    <message>
-        <source>Click to select color</source>
-        <translation type="vanished">Кликните да бисте одабрали боју</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="132"/>
         <source>Active Pen Background:</source>
         <translation>Позадинска боја активне оловке:</translation>
-    </message>
-    <message>
-        <source>If set, bold font is used for all elements of active pen item (otherwise, only for name)</source>
-        <translation type="vanished">Ако је подешено, подебљани фонт се користи за све елементе ставке активне оловке (иначе, само за име)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="150"/>
@@ -10916,10 +2663,6 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
         <translation>Boja usklađenog elementa:</translation>
     </message>
     <message>
-        <source>Color of pen item that is matched by filter</source>
-        <translation type="vanished">Boja elementa alata koji je usklađen sa filterom.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="209"/>
         <source>Controls whether tooltip will be shown for table item or not</source>
         <translation>Određuje da li će se prikazivati balon sa objašnjenjem za element tabele ili ne.</translation>
@@ -10933,10 +2676,6 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
         <source>On double click on table item</source>
         <translation>Pri dvostrukom kliku na element tabele.</translation>
-    </message>
-    <message>
-        <source>Defines how the program to react on double click on pen item in table</source>
-        <translation type="vanished">Određuje kako program treba da reaguje na dvostruki klik na element alata u tabeli.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="37"/>
@@ -10979,17 +2718,9 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
         <translation>Прикажи име боје као</translation>
     </message>
     <message>
-        <source>Hexadecimal value of color</source>
-        <translation type="vanished">Хексадецимална вредност боје</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="225"/>
         <source>HEX</source>
         <translation>HEX</translation>
-    </message>
-    <message>
-        <source>Red, Green, Blue components of color</source>
-        <translation type="vanished">Црвена, зелена, плава компонента боје</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="232"/>
@@ -10997,26 +2728,14 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
         <translation>RGB</translation>
     </message>
     <message>
-        <source>Natural name of color or HEX value of it</source>
-        <translation type="vanished">Prirodno ime boje ili njena heksadecimalna vrednost</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="239"/>
         <source>Natural name where possible</source>
         <translation>Prirodno ime, kad god je moguće</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">Ako je izabrano, dodatne poruke će se prikazivati kao deo operacija vezanih za olovku</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>Prikaži informativnu poruku ako nijedan entitet ne može da bude izabran pomoću olovke</translation>
-    </message>
-    <message>
-        <source>If set, filter will igore the case of pen&apos;s name</source>
-        <translation type="vanished">Ako je postavljeno, filter će ignorisati velika i mala slova u imenu olovke</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="192"/>
@@ -11133,26 +2852,14 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
         <translation>Tip:</translation>
     </message>
     <message>
-        <source>Line type</source>
-        <translation type="vanished">Tip linije</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="246"/>
         <source>Width:</source>
         <translation>Širina:</translation>
     </message>
     <message>
-        <source>Width of line</source>
-        <translation type="vanished">Širina linije</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="44"/>
         <source>Pen Name:</source>
         <translation>Назив оловке:</translation>
-    </message>
-    <message>
-        <source>Name of pen</source>
-        <translation type="vanished">Назив оловке</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="94"/>
@@ -11165,17 +2872,9 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
         <translation>Подешавања</translation>
     </message>
     <message>
-        <source>Filtering pens by name</source>
-        <translation type="vanished">Филтрирање оловки по називу</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="191"/>
         <source>Filter...</source>
         <translation>Филтар...</translation>
-    </message>
-    <message>
-        <source>If checked, matched pens are highlighted, otherwise non-matching pens are hidden.</source>
-        <translation type="vanished">Ако је поље означено, усклађене оловке ће бити истакнуте, у супротном, оловке које се не поклапају биће сакривене.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="201"/>
@@ -11227,896 +2926,6 @@ Upozorenje: ova akcija se NE može poništiti!</translation>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Ukloni olovke</translation>
     </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Paleta olovaka</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Lokacija datoteke olovaka je promenjena, molimo restartujte aplikaciju kako bi se nova datoteka olovaka primenila.
-Imajte na umu da ako sačuvate olovku putem uređivača bez ponovnog pokretanja, trenutne olovke iz palete biće sačuvane u novoj datoteci i time će se prepisati postojeći sadržaj.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointPickButton</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointPropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Геометрија</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="vanished">Позиција тачке према Y координати</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="vanished">Позиција (x):</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="vanished">Позиција (y):</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="vanished">Позиција тачке према X координати</translation>
-    </message>
-    <message>
-        <source>Pick position from the drawing</source>
-        <translation type="vanished">Одаберите позицију са цртежа</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">Број тачака у Y смеру решетке (број редова решетке)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">Број редова:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">Број колона:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">Број тачака у смеру X осе решетке (број колона решетке)</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">Ако је изабрано, последња тачка решетке ће бити прилагођена положају прве тачке, тако да ће решетка бити правоугаоник или четвороугао</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">Прилагоди последњу тачку првој</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PolylinePropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Геометрија</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="vanished">Одређује да ли је полилинија затворена контура</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Затворена</translation>
-    </message>
-</context>
-<context>
-    <name>LC_QTStatusbarManager</name>
-    <message>
-        <source> SHIFT Key: </source>
-        <translation type="vanished">SHIFT тастер:</translation>
-    </message>
-    <message>
-        <source> CTRL Key: </source>
-        <translation type="vanished">CTRL тастер:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_QuickInfoEntityData</name>
-    <message>
-        <source>To be created: </source>
-        <translation type="vanished">Треба креирати:</translation>
-    </message>
-    <message>
-        <source>Captured: </source>
-        <translation type="vanished">Захваћено:</translation>
-    </message>
-    <message>
-        <source>ID</source>
-        <translation type="vanished">ID</translation>
-    </message>
-    <message>
-        <source>
-Layer: </source>
-        <translation type="vanished">Слој:</translation>
-    </message>
-    <message>
-        <source>SOLID</source>
-        <translation type="vanished">ЧВРСТО</translation>
-    </message>
-    <message>
-        <source>CONSTRUCTION</source>
-        <translation type="vanished">КОНСТРУКЦИЈА</translation>
-    </message>
-    <message>
-        <source>UNKNOWN</source>
-        <translation type="vanished">НЕПОЗНАТО</translation>
-    </message>
-    <message>
-        <source>Set Relative Zero</source>
-        <translation type="vanished">Подеси релативну нулу</translation>
-    </message>
-    <message>
-        <source>To Cmd</source>
-        <translation type="vanished">У команду</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">Слој</translation>
-    </message>
-    <message>
-        <source>Color</source>
-        <translation type="vanished">Боја</translation>
-    </message>
-    <message>
-        <source>Line Type</source>
-        <translation type="vanished">Tip linije</translation>
-    </message>
-    <message>
-        <source>Line Width</source>
-        <translation type="vanished">Širina linije</translation>
-    </message>
-    <message>
-        <source>Min</source>
-        <translation type="vanished">Min</translation>
-    </message>
-    <message>
-        <source>Max</source>
-        <translation type="vanished">Max</translation>
-    </message>
-    <message>
-        <source>LINE</source>
-        <translation type="vanished">LINE</translation>
-    </message>
-    <message>
-        <source>From</source>
-        <translation type="vanished">From</translation>
-    </message>
-    <message>
-        <source>To</source>
-        <translation type="vanished">To</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Sredina</translation>
-    </message>
-    <message>
-        <source>Delta</source>
-        <translation type="vanished">Delta</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Ugao</translation>
-    </message>
-    <message>
-        <source>Angle 2</source>
-        <translation type="vanished">Угао 2</translation>
-    </message>
-    <message>
-        <source>Length</source>
-        <translation type="vanished">Дужина</translation>
-    </message>
-    <message>
-        <source>Angle2</source>
-        <translation type="vanished">Угао2</translation>
-    </message>
-    <message>
-        <source>CIRCLE</source>
-        <translation type="vanished">КРУГ</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation type="vanished">Центар</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">Полупречник</translation>
-    </message>
-    <message>
-        <source>Diameter</source>
-        <translation type="vanished">Пречник</translation>
-    </message>
-    <message>
-        <source>Circumference</source>
-        <translation type="vanished">Обим</translation>
-    </message>
-    <message>
-        <source>Area</source>
-        <translation type="vanished">Area</translation>
-    </message>
-    <message>
-        <source>ARC</source>
-        <translation type="vanished">ARC</translation>
-    </message>
-    <message>
-        <source>Chord Length</source>
-        <translation type="vanished">Дужина акорда</translation>
-    </message>
-    <message>
-        <source>Angle Length</source>
-        <translation type="vanished">Дужина угла</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Почетак</translation>
-    </message>
-    <message>
-        <source>Start Angle</source>
-        <translation type="vanished">Почетни угао</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">End</translation>
-    </message>
-    <message>
-        <source>End Angle</source>
-        <translation type="vanished">Крајњи угао</translation>
-    </message>
-    <message>
-        <source>Bulge</source>
-        <translation type="vanished">Избочење</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">Окренут</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation type="vanished">Yes</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation type="vanished">No</translation>
-    </message>
-    <message>
-        <source>Minor Radius</source>
-        <translation type="vanished">Mali poluprečnik</translation>
-    </message>
-    <message>
-        <source>Major Radius</source>
-        <translation type="vanished">Veliki poluprečnik</translation>
-    </message>
-    <message>
-        <source>Ratio</source>
-        <translation type="vanished">Odnos</translation>
-    </message>
-    <message>
-        <source>ELLIPSE ARC</source>
-        <translation type="vanished">LUK ELIPSE</translation>
-    </message>
-    <message>
-        <source>ELLIPSE</source>
-        <translation type="vanished">ELIPSA</translation>
-    </message>
-    <message>
-        <source>POINT</source>
-        <translation type="vanished">TAČKA</translation>
-    </message>
-    <message>
-        <source>Position</source>
-        <translation type="vanished">Pozicija</translation>
-    </message>
-    <message>
-        <source>POLYLINE</source>
-        <translation type="vanished">POLILINIJA</translation>
-    </message>
-    <message>
-        <source>Segments</source>
-        <translation type="vanished">Segmenti</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">[&apos;Otvorena&apos;, &apos;Zatvorena&apos;, &apos;Zatvorena&apos;]</translation>
-    </message>
-    <message>
-        <source>Vertex - 0:</source>
-        <translation type="vanished">Вртлог - 0:</translation>
-    </message>
-    <message>
-        <source>Vertex - </source>
-        <translation type="vanished">Вртлог -</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">Укупна дужина</translation>
-    </message>
-    <message>
-        <source>INSERT</source>
-        <translation type="vanished">УМЕТНИ</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Name</translation>
-    </message>
-    <message>
-        <source>Insertion Point</source>
-        <translation type="vanished">Тачка уметања</translation>
-    </message>
-    <message>
-        <source>Scale X</source>
-        <translation type="vanished">Скала X</translation>
-    </message>
-    <message>
-        <source>Scale Y</source>
-        <translation type="vanished">Скала Y</translation>
-    </message>
-    <message>
-        <source>Cols</source>
-        <translation type="vanished">Cols</translation>
-    </message>
-    <message>
-        <source>Spacing X</source>
-        <translation type="vanished">Размак X</translation>
-    </message>
-    <message>
-        <source>Rows</source>
-        <translation type="vanished">Rows</translation>
-    </message>
-    <message>
-        <source>Spacing Y</source>
-        <translation type="vanished">Размак по Y оси</translation>
-    </message>
-    <message>
-        <source>TEXT</source>
-        <translation type="vanished">TEXT</translation>
-    </message>
-    <message>
-        <source>Second Point</source>
-        <translation type="vanished">Друга тачка</translation>
-    </message>
-    <message>
-        <source>Width/Height</source>
-        <translation type="vanished">Ширина/Висина</translation>
-    </message>
-    <message>
-        <source>Style</source>
-        <translation type="vanished">Стил</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">Висина</translation>
-    </message>
-    <message>
-        <source>HAlign</source>
-        <translation type="vanished">Хоризонтално поравнање</translation>
-    </message>
-    <message>
-        <source>VAlign</source>
-        <translation type="vanished">Вертикално поравнање</translation>
-    </message>
-    <message>
-        <source>Generation</source>
-        <translation type="vanished">Генерација</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Left</translation>
-    </message>
-    <message>
-        <source>Centered</source>
-        <translation type="vanished">Centrirano</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Desno</translation>
-    </message>
-    <message>
-        <source>Aligned</source>
-        <translation type="vanished">Poravnato</translation>
-    </message>
-    <message>
-        <source>Fit</source>
-        <translation type="vanished">Fit</translation>
-    </message>
-    <message>
-        <source>Baseline</source>
-        <translation type="vanished">Bazna linija</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Dno</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Top</translation>
-    </message>
-    <message>
-        <source>Normal text</source>
-        <translation type="vanished">Normalan tekst</translation>
-    </message>
-    <message>
-        <source>Mirrored in X</source>
-        <translation type="vanished">Ogledano u X osi</translation>
-    </message>
-    <message>
-        <source>Mirrored in Y</source>
-        <translation type="vanished">Огледа се у оси Y</translation>
-    </message>
-    <message>
-        <source>MTEXT</source>
-        <translation type="vanished">MTEXT</translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="vanished">Ширина</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">Редови</translation>
-    </message>
-    <message>
-        <source>Direction</source>
-        <translation type="vanished">Смер</translation>
-    </message>
-    <message>
-        <source>Line Spacing Factor</source>
-        <translation type="vanished">Фактор размака између редова</translation>
-    </message>
-    <message>
-        <source>Line Spacing</source>
-        <translation type="vanished">Размак између редова</translation>
-    </message>
-    <message>
-        <source>By Style</source>
-        <translation type="vanished">Према стилу</translation>
-    </message>
-    <message>
-        <source>Left To Right</source>
-        <translation type="vanished">С лева на десно</translation>
-    </message>
-    <message>
-        <source>Right To Left</source>
-        <translation type="vanished">С десна на лево</translation>
-    </message>
-    <message>
-        <source>Top To Bottom</source>
-        <translation type="vanished">Od vrha do dna</translation>
-    </message>
-    <message>
-        <source>At Least</source>
-        <translation type="vanished">Najmanje</translation>
-    </message>
-    <message>
-        <source>Exact</source>
-        <translation type="vanished">Tačno</translation>
-    </message>
-    <message>
-        <source>IMAGE</source>
-        <translation type="vanished">SLIKA</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">File</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Skaliranje</translation>
-    </message>
-    <message>
-        <source>Size (X) px</source>
-        <translation type="vanished">Veličina (X) px</translation>
-    </message>
-    <message>
-        <source>Size (Y) px</source>
-        <translation type="vanished">Veličina (Y) px</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>SPLINE</source>
-        <translation type="vanished">SPLINE</translation>
-    </message>
-    <message>
-        <source>Degree</source>
-        <translation type="vanished">Степен</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">Контролне тачке</translation>
-    </message>
-    <message>
-        <source>Control Point </source>
-        <translation type="vanished">Контролна тачка</translation>
-    </message>
-    <message>
-        <source>SPLINEPOINTS</source>
-        <translation type="vanished">ТАЧКЕ СПЛАЈНА</translation>
-    </message>
-    <message>
-        <source>Use Control Points</source>
-        <translation type="vanished">Користите контролне тачке</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="vanished">Тачке сплајна</translation>
-    </message>
-    <message>
-        <source>Spline Point </source>
-        <translation type="vanished">Тачка сплајна</translation>
-    </message>
-    <message>
-        <source>PARABOLA</source>
-        <translation type="vanished">ПАРАБОЛА</translation>
-    </message>
-    <message>
-        <source>Focus</source>
-        <translation type="vanished">Фокус</translation>
-    </message>
-    <message>
-        <source>Vertex</source>
-        <translation type="vanished">Врх</translation>
-    </message>
-    <message>
-        <source>Axis Angle</source>
-        <translation type="vanished">Угао осе</translation>
-    </message>
-    <message>
-        <source>Control Point</source>
-        <translation type="vanished">Контролна тачка</translation>
-    </message>
-    <message>
-        <source>HATCH</source>
-        <translation type="vanished">ШАРА</translation>
-    </message>
-    <message>
-        <source>Solid</source>
-        <translation type="vanished">Пуно</translation>
-    </message>
-    <message>
-        <source>Pattern</source>
-        <translation type="vanished">Шаблон</translation>
-    </message>
-    <message>
-        <source>Total Area</source>
-        <translation type="vanished">Укупна површина</translation>
-    </message>
-    <message>
-        <source>DIMLEADER</source>
-        <translation type="vanished">ДИМЛЕАДЕР</translation>
-    </message>
-    <message>
-        <source>Arrow Head</source>
-        <translation type="vanished">Врх стрелице</translation>
-    </message>
-    <message>
-        <source>DIMARC</source>
-        <translation type="vanished">ДИМАРК</translation>
-    </message>
-    <message>
-        <source>Arc Length</source>
-        <translation type="vanished">Дужина лука</translation>
-    </message>
-    <message>
-        <source>DIMANGULAR</source>
-        <translation type="vanished">ДИМАНГУЛАРНО</translation>
-    </message>
-    <message>
-        <source>DIMDIAMETRIC</source>
-        <translation type="vanished">ДИМДИЈАМЕТРИЧНО</translation>
-    </message>
-    <message>
-        <source>Definition Point</source>
-        <translation type="vanished">Дефинициона тачка</translation>
-    </message>
-    <message>
-        <source>DIMRADIAL</source>
-        <translation type="vanished">ДИМРАДИЈАЛНО</translation>
-    </message>
-    <message>
-        <source>[Override]</source>
-        <translation type="vanished">[Override] </translation>
-    </message>
-    <message>
-        <source>DIMLINEAR</source>
-        <translation type="vanished">ДИМЛИНЕАРНО</translation>
-    </message>
-    <message>
-        <source>Extension Point 1</source>
-        <translation type="vanished">Продужна тачка 1</translation>
-    </message>
-    <message>
-        <source>Extension Point 2</source>
-        <translation type="vanished">Продужна тачка 2</translation>
-    </message>
-    <message>
-        <source>Text Middle Point</source>
-        <translation type="vanished">Средња тачка текста</translation>
-    </message>
-    <message>
-        <source>Oblique</source>
-        <translation type="vanished">Косо</translation>
-    </message>
-    <message>
-        <source>DIMORDINATE</source>
-        <translation type="vanished">ДИМОРДИНАТНО</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="vanished">Ордината</translation>
-    </message>
-    <message>
-        <source>Origin Point</source>
-        <translation type="vanished">Почетна тачка</translation>
-    </message>
-    <message>
-        <source>Horizontal Direction</source>
-        <translation type="vanished">Хоризонтална правац</translation>
-    </message>
-    <message>
-        <source>Feature Point</source>
-        <translation type="vanished">Одређена тачка</translation>
-    </message>
-    <message>
-        <source>Leader End Point</source>
-        <translation type="vanished">Крајња тачка вођице</translation>
-    </message>
-    <message>
-        <source>Text Middle Point </source>
-        <translation type="vanished">Средња тачка текста</translation>
-    </message>
-    <message>
-        <source>DIMALIGNED</source>
-        <translation type="vanished">DIMALIGNED</translation>
-    </message>
-</context>
-<context>
-    <name>LC_QuickInfoPointsData</name>
-    <message>
-        <source>Zero</source>
-        <translation type="vanished">Zero</translation>
-    </message>
-    <message>
-        <source>Relative Zero</source>
-        <translation type="vanished">Релативна нула</translation>
-    </message>
-    <message>
-        <source>First point</source>
-        <translation type="vanished">Прва тачка</translation>
-    </message>
-    <message>
-        <source>Set Relative Zero</source>
-        <translation type="vanished">Postavi relativnu nulu</translation>
-    </message>
-    <message>
-        <source>To Cmd</source>
-        <translation type="vanished">Na komandu</translation>
-    </message>
-    <message>
-        <source>Points Path Distance:</source>
-        <translation type="vanished">Udaljenost između tačaka:</translation>
-    </message>
-    <message>
-        <source>No data - select coordinates first...</source>
-        <translation type="vanished">Nema podataka - prvo izaberite koordinate...</translation>
-    </message>
-</context>
-<context>
-    <name>LC_QuickInfoWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Select entity for properties</source>
-        <translation type="vanished">Изаберите објекат за чије ћете прегледати својства</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Select current entity in drawing</source>
-        <translation type="vanished">Изаберите тренутни објекат на цртежу</translation>
-    </message>
-    <message>
-        <source>Properties Edit</source>
-        <translation type="vanished">Уређивање својстава</translation>
-    </message>
-    <message>
-        <source>Copy to Clipboard</source>
-        <translation type="vanished">Копирај у припрему</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="vanished">Обриши</translation>
-    </message>
-    <message>
-        <source>Collect Coordinates</source>
-        <translation type="vanished">Прикупи координате</translation>
-    </message>
-    <message>
-        <source>Coordinates:</source>
-        <translation type="vanished">Координате:</translation>
-    </message>
-    <message>
-        <source>Mode to display collected coordinates</source>
-        <translation type="vanished">Режим приказивања прикупљених координата</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">Апсолутно</translation>
-    </message>
-    <message>
-        <source>Relative</source>
-        <translation type="vanished">Релативно</translation>
-    </message>
-    <message>
-        <source>Delta to First</source>
-        <translation type="vanished">Делта до прве</translation>
-    </message>
-    <message>
-        <source>Delta to Previous</source>
-        <translation type="vanished">Делта до претходне</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">Подешавања</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Copy All</source>
-        <translation type="vanished">&amp;Kopiraj sve</translation>
-    </message>
-    <message>
-        <source>&amp;To Cmd</source>
-        <translation type="vanished">&amp;U komandnu liniju</translation>
-    </message>
-    <message>
-        <source>&amp;Set Relative Zero</source>
-        <translation type="vanished">&amp;Postavi relativnu nulu</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Coordinate</source>
-        <translation type="vanished">&amp;Ukloni koordinatu</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Coordinates</source>
-        <translation type="vanished">&amp;Ubaci koordinate</translation>
-    </message>
-    <message>
-        <source>&amp;Clear</source>
-        <translation type="vanished">&amp;Očisti</translation>
-    </message>
-    <message>
-        <source>&amp;Select Entity</source>
-        <translation type="vanished">&amp;Izaberi entitet</translation>
-    </message>
-    <message>
-        <source>&amp;Select in Drawing</source>
-        <translation type="vanished">&amp;Izaberi na crtežu</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Properties</source>
-        <translation type="vanished">&amp;Uredi svojstva</translation>
-    </message>
-    <message>
-        <source>&amp;Collect Coordinates</source>
-        <translation type="vanished">&amp;Sakupi koordinate</translation>
-    </message>
-    <message>
-        <source>No data - select entity of coordinates first...</source>
-        <translation type="vanished">Нема података - прво изаберите објекат са координатама...</translation>
-    </message>
-</context>
-<context>
-    <name>LC_QuickInfoWidgetOptionsDialog</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">Дијалог</translation>
-    </message>
-    <message>
-        <source>Collected Coordinates</source>
-        <translation type="vanished">Прикупљене координате</translation>
-    </message>
-    <message>
-        <source>If selected, the distance and angle between adjacent points will be shown together with coordinates.</source>
-        <translation type="vanished">Ако је изабрано, растојање и угао између суседних тачака ће се приказати заједно са координатама.</translation>
-    </message>
-    <message>
-        <source>Display distance and angle to point in addition to coordinates</source>
-        <translation type="vanished">Прикажи растојање и угао до тачке, поред координата</translation>
-    </message>
-    <message>
-        <source>If selected, all points collected will be connected by path that shows how they will be selected during point preview</source>
-        <translation type="vanished">Ако је изабрано, све прикупљене тачке ће бити повезане путањом која показује како ће бити одабране током прегледа тачака.</translation>
-    </message>
-    <message>
-        <source>Draw points path on preview</source>
-        <translation type="vanished">Нацртај путању тачака на прегледу</translation>
-    </message>
-    <message>
-        <source>Entity Info</source>
-        <translation type="vanished">Информације о објекту</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ако је изабрано, више детаљних информација о линијама и луковима који су део полилиније ће се приказати у виджету „Информације о објекту“.&lt;br/&gt;У супротном, приказиваће се само информације о врховима/избочењима.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Include polyline child entities information to vertexes</source>
-        <translation type="vanished">Укључи информације о дечјим објектима полилиније у врхове</translation>
-    </message>
-    <message>
-        <source>If selected, coordinates of boundary box area for the entity will be also shown</source>
-        <translation type="vanished">Ako je izabrano, koordinate oblasti okružujućeg okvira entiteta će takođe biti prikazane.</translation>
-    </message>
-    <message>
-        <source>Display entity boundaries (Min, Max) coordinates</source>
-        <translation type="vanished">Prikaži koordinate granica entiteta (minimum, maksimum).</translation>
-    </message>
-    <message>
-        <source>Entity Selection</source>
-        <translation type="vanished">Izbor entiteta</translation>
-    </message>
-    <message>
-        <source>Entity under cursor will be examined only if CTRL is pressed and no active action</source>
-        <translation type="vanished">Entitet pod kursorom će biti pregledan samo ako je pritisnut taster CTRL i ne postoji aktivna akcija.</translation>
-    </message>
-    <message>
-        <source>Select entity under cursor if not active action and CTRL is pressed</source>
-        <translation type="vanished">Izaberi entitet pod kursorom ako ne postoji aktivna akcija i pritisnut je taster CTRL.</translation>
-    </message>
-    <message>
-        <source>If selected, entities under mouse cursor will be examined for theif settings, if there is no active action</source>
-        <translation type="vanished">Ako je izabrano, entiteti pod kursorom miša će biti pregledani radi njihovih postavki, ako ne postoji aktivna akcija.</translation>
-    </message>
-    <message>
-        <source>Always select entity under cursor if no active action</source>
-        <translation type="vanished">Uvek izaberi entitet pod kursorom ako ne postoji aktivna akcija.</translation>
-    </message>
-    <message>
-        <source>Points highlight pen</source>
-        <translation type="vanished">Olovka za isticanje tačaka</translation>
-    </message>
 </context>
 <context>
     <name>LC_Rectangle1PointOptions</name>
@@ -12131,10 +2940,6 @@ p, li { white-space: pre-wrap; }
         <translation>Dužina Y:</translation>
     </message>
     <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">Ako je ovo označeno, pravougaonik će biti kreiran kao polilinija umesto kao niz pojedinačnih segmenata.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
         <source>Polyline</source>
         <translation>Polilinija</translation>
@@ -12143,14 +2948,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="93"/>
         <source>Length X:</source>
         <translation>Dužina X:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">Visina pravougaonika</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">Tačka pravougaonika koja će biti postavljena na tačku ubacivanja.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="170"/>
@@ -12198,25 +2995,9 @@ p, li { white-space: pre-wrap; }
         <translation>Доњи десни</translation>
     </message>
     <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">Дужина ивице за заобљавање у смеру X.</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Изаберите угао ротације са цртежа</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="100"/>
         <source>Radius:</source>
         <translation>Радијус:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Изаберите радијус заобљених углова са цртежа.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Опредељује које ивице правоугаоника треба да се нацртају (тако да је могуће креирати само две паралелне линије уместо правоугаоника)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
@@ -12234,14 +3015,6 @@ p, li { white-space: pre-wrap; }
         <translation>Хоризонтално</translation>
     </message>
     <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">Дужина ивице угла за Y смер.</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">Одређује како bi se uglovi pravougaonika trebali crtati.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="219"/>
         <source>Straight</source>
         <translation>Право</translation>
@@ -12257,46 +3030,14 @@ p, li { white-space: pre-wrap; }
         <translation>Ivičasto</translation>
     </message>
     <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">Ако je označeno, navedena visina i širina pravougaonika definišu udaljenost između centara lukova za zaobljavanje uglova. U suprotnom, ove vrednosti definišu spoljašnju veličinu pravougaonika.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="86"/>
         <source>Size inner</source>
         <translation>Unutrašnja veličina</translation>
     </message>
     <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Угао ротације</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">Ako je ovo označeno, pravougaonik će biti rotiran za navedeni ugao.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="286"/>
         <source>Base Angle:</source>
         <translation>Osnovni ugao:</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">Ako je ovo označeno, ugao će biti određen pozicijom miša. U suprotnom, koristi se navedena vrednost.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Free</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">Širina pravougaonika</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">Odaberite visinu pravougaonika sa crteža</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">Odaberite širinu pravougaonika sa crteža</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="279"/>
@@ -12307,10 +3048,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="40"/>
         <source>Edges:</source>
         <translation>Ivice:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">Ako je ovo označeno, određuje se da tačka učvršćenja treba da bude pomerena za poluprečnik uglova.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
@@ -12332,18 +3069,6 @@ p, li { white-space: pre-wrap; }
         <source>Snap:</source>
         <translation>Prilagođavanje:</translation>
     </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Poluprečnik zaobljeni uglova.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">Odaberite dužinu kosog ugla za X smer iz crteža.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">Odaberite dužinu kosog ugla za Y smer iz crteža.</translation>
-    </message>
 </context>
 <context>
     <name>LC_Rectangle2PointsOptions</name>
@@ -12351,10 +3076,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="14"/>
         <source>Form</source>
         <translation>Form</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">Određuje koji ugao pravougaonika treba da bude postavljen u početnu poziciju.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="131"/>
@@ -12381,17 +3102,9 @@ p, li { white-space: pre-wrap; }
         <translation>Средина</translation>
     </message>
     <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">Ако је означено, цео правоугаоник ће бити нацртан као полилинија.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="63"/>
         <source>Polyline</source>
         <translation>Полилинија</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">Опредељује како би требало да буду нацртани углови правоугаоника.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="202"/>
@@ -12414,42 +3127,14 @@ p, li { white-space: pre-wrap; }
         <translation>Почетак привлачења:</translation>
     </message>
     <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">Odaberite ugao rotacije pravougaonika sa crteža.</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">Poluprečnik zaobljenih uglova.</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">Odaberite poluprečnik zaobljenih uglova sa crteža.</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">Ugao rotacije pravougaonika.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="77"/>
         <source>Corners:</source>
         <translation>Uglovi:</translation>
     </message>
     <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Dužina kosine u Y pravcu.</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">Određuje koja tačka pravougaonika treba da bude postavljena u krajnju tačku.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="220"/>
         <source>Length Y:</source>
         <translation>Dužina Y:</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Određuje koje ivice pravougaonika treba da se nacrtaju (tako da je moguće kreirati samo dve paralelne linije umesto pravougaonika).</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="228"/>
@@ -12467,14 +3152,6 @@ p, li { white-space: pre-wrap; }
         <translation>Хоризонтално</translation>
     </message>
     <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Одаберите дужину ивице у смеру X из цртежа.</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">Ако је означено, омогућава навођење угла ротације за правоугаоник.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="170"/>
         <source>Base Angle:</source>
         <translation>Базни угао:</translation>
@@ -12490,17 +3167,9 @@ p, li { white-space: pre-wrap; }
         <translation>Радијус:</translation>
     </message>
     <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Ако је означено, наводи да се тачке привлачења треба да буду померене за радијус углова.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="26"/>
         <source>Snap shift</source>
         <translation>Померај тачака привлачења</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Дужина ивице у смеру X.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
@@ -12512,10 +3181,6 @@ p, li { white-space: pre-wrap; }
         <source>Edges:</source>
         <translation>Ivice:</translation>
     </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">Odaberite dužinu zakošenja u smeru Y sa crteža.</translation>
-    </message>
 </context>
 <context>
     <name>LC_Rectangle3PointsOptions</name>
@@ -12525,17 +3190,9 @@ p, li { white-space: pre-wrap; }
         <translation>Form</translation>
     </message>
     <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">Ako je ovo polje označeno, oblik će biti kreiran kao polilinija.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
         <source>Polyline</source>
         <translation>Polilinija</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">Ako je ovo polje označeno, unutrašnji ugao četvorougla biće fiksiran na navedenu vrednost.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="312"/>
@@ -12543,21 +3200,9 @@ p, li { white-space: pre-wrap; }
         <translation>Fiksni unutrašnji ugao:</translation>
     </message>
     <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">Unutrašnji ugao četvorougla.</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">Odaberite unutrašnji ugao četvorougla sa crteža.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="81"/>
         <source>Edges:</source>
         <translation>Ивице:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">Ако је поље означено, правоугаоник ће бити ротиран на задати основни угао. У супротном, основни угао ће бити дефинисан углом између прве и друге тачке правоугаоника.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="95"/>
@@ -12565,21 +3210,9 @@ p, li { white-space: pre-wrap; }
         <translation>Фиксиран основни угао:</translation>
     </message>
     <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">Основни угао правоугаоника.</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">Ако је поље означено, уместо правоугаоника ће бити креиран четвороугао.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="88"/>
         <source>Quadrangle</source>
         <translation>Четвороугао</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Ако је поље означено, наводи се да би тачке привлачења требало да буду померене за радијус углова.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="185"/>
@@ -12597,29 +3230,9 @@ p, li { white-space: pre-wrap; }
         <translation>Радијус:</translation>
     </message>
     <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Дужина ивице у X смеру.</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Дужина ивице у Y смеру.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="130"/>
         <source>Length X:</source>
         <translation>Дужина X:</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Радијус заобљених углова.</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Изаберите радијус заобљених углова са цртежа.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">Дефинише како би углови требало да се цртају за правоугаоник.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="160"/>
@@ -12642,18 +3255,6 @@ p, li { white-space: pre-wrap; }
         <translation>Углови:</translation>
     </message>
     <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Odaberite dužinu zakošenja u X smeru sa crteža.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">Odaberite dužinu zakošenja u Y smeru sa crteža.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Određuje koje ivice pravougaonika treba da se nacrtaju (tako da je moguće kreirati samo dve paralelne linije umesto pravougaonika).</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
         <source>Both</source>
         <translation>Both</translation>
@@ -12667,260 +3268,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="73"/>
         <source>Horizontal</source>
         <translation>Horizontalno</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">Odaberite osnovni ugao pravougaonika sa crteža.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_RelZeroCoordinatesWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Relative Zero (Cartesian)</source>
-        <translation type="vanished">Relativna nula (Kartezijanski)</translation>
-    </message>
-    <message>
-        <source>Relative Zero (Polar)</source>
-        <translation type="vanished">Relativna nula (Polarni)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">Žao nam je, tokom provere za novu verziju došlo je do greške u mreži.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">Nije moguće analizirati odgovor sa servera.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Premesti opcije rotacije</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">Prilagodite sekundarni ugao tako da je zbir uglova (relativni ugao rotacije) 0. Uz ovu postavku, entitet će biti pomeren, ali ne i rotiran.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">Uglovi su ogledani</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">Ako je ovo označeno, isti ugao će se koristiti za sve kopije. U suprotnom, biće povećan proporcionalno broju kopija.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">Isti sekundarni ugao za kopije</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">Primarni ugao:</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">Broj kopija koje treba kreirati</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">Sekundarni ugao:</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">Угао за ротацију у односу на апсолутну референтну тачку</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">Угао за ротацију у односу на секундарну референтну тачку</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Ако је поље означено, оригинални објекти ће остати, у супротном ће бити уклоњени.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Задржи оригинал</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">Одаберите примарни угао из цртежа</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">Одређује да ли ће копије бити уметнуте у тренутни или оригинални слој</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Користи тренутни слој</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Ако је поље означено, креираће се више копија.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Више копија</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">Одређује да ли ће се применити атрибути тренутног или оригиналног цртежа</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Koristi trenutna svojstva</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">Odaberi sekundarni ugao iz crteža</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SelectWindowOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Elipsa</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Dimenzija</translation>
-    </message>
-    <message>
-        <source>Insert</source>
-        <translation type="vanished">Ubaci</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">Splina</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Tačka</translation>
-    </message>
-    <message>
-        <source>All</source>
-        <translation type="vanished">All</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilinija</translation>
-    </message>
-    <message>
-        <source>Image</source>
-        <translation type="vanished">Слика</translation>
-    </message>
-    <message>
-        <source>MText</source>
-        <translation type="vanished">МТекст</translation>
-    </message>
-    <message>
-        <source>Entity type</source>
-        <translation type="vanished">Тип ентитета</translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="vanished">Text</translation>
-    </message>
-    <message>
-        <source>Hatch</source>
-        <translation type="vanished">Шара</translation>
-    </message>
-    <message>
-        <source>Wipeout</source>
-        <translation type="vanished">Површина за брисање</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Line</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Круг</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SettingsExporter</name>
-    <message>
-        <source>Import settings</source>
-        <translation type="vanished">Увези подешавања</translation>
-    </message>
-    <message>
-        <source>Export Settings</source>
-        <translation type="vanished">Извоз подешавања</translation>
-    </message>
-    <message>
-        <source>LibreCAD settings file (*.%1)</source>
-        <translation type="vanished">LibreCAD датотека са подешавањима (*.%1)</translation>
-    </message>
-    <message>
-        <source>Settings Export</source>
-        <translation type="vanished">Извоз подешавања</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open provided file for writing - check that provided location is writable. Preferences were not exported.</source>
-        <translation type="vanished">Не могу да отворим наведену датотеку за писање - проверите да ли је наведена локација доступна за писање. Подешавања нису извезена.</translation>
-    </message>
-    <message>
-        <source>Application preferences were exported.</source>
-        <translation type="vanished">Подешавања апликације су извезена.</translation>
-    </message>
-    <message>
-        <source>Settings Import Error</source>
-        <translation type="vanished">Грешка при увозу подешавања</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open provided file for reading. Preferences were not imported.</source>
-        <translation type="vanished">Не могу да отворим наведену датотеку за читање. Подешавања нису увезена.</translation>
-    </message>
-    <message>
-        <source>Unexpected error during preferences parsing. Message:</source>
-        <translation type="vanished">Неочекивана грешка током обраде подешавања. Порука:</translation>
-    </message>
-    <message>
-        <source>Unexpected format of file, it does not contains LibreCAD preferences.</source>
-        <translation type="vanished">Неочекивани формат датотеке, не садржи LibreCAD подешавања.</translation>
-    </message>
-    <message>
-        <source>Settings Import</source>
-        <translation type="vanished">Увоз подешавања</translation>
-    </message>
-    <message>
-        <source>No settings groups to import.</source>
-        <translation type="vanished">Nema grupa postavki za uvoz.</translation>
-    </message>
-    <message>
-        <source>Application preferences were imported.</source>
-        <translation type="vanished">Uvezeni su podaci o preferencijama aplikacije.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ShortcutButton</name>
-    <message>
-        <source>Click and type the new key sequence.</source>
-        <translation type="vanished">Kliknite i unesite novu sekvencu tastera.</translation>
-    </message>
-    <message>
-        <source>Stop Recording</source>
-        <translation type="vanished">Zaustavi snimanje</translation>
-    </message>
-    <message>
-        <source>Record Shortcut</source>
-        <translation type="vanished">Snimi prečicu</translation>
     </message>
 </context>
 <context>
@@ -12944,21 +3291,9 @@ p, li { white-space: pre-wrap; }
         <translation>Form</translation>
     </message>
     <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Odaberite udaljenost sa crteža</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="318"/>
         <source>Distance:</source>
         <translation>Udaljenost:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">Растојање између ознака.</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">Одређује како се ознаке na ivicama entiteta treba da postave.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="48"/>
@@ -12988,10 +3323,6 @@ p, li { white-space: pre-wrap; }
         <translation>Ознака na ivici:</translation>
     </message>
     <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">Ако je označeno, izabrani entitet će biti podeljen na tačke preseka oznaka.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="242"/>
         <source>Divide</source>
         <translation>Подели</translation>
@@ -13007,29 +3338,9 @@ p, li { white-space: pre-wrap; }
         <translation>Угао:</translation>
     </message>
     <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">Одаберите офсет ознаке из цртежа</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">Дужина ознаке.</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">Одаберите угао ознаке из цртежа</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">Опредељује која тачка ознаке треба да буде постављена на пресек са изабраним објектом.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="271"/>
         <source>Middle</source>
         <translation>Средина</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">Офсет тачке привлачења ознаке до тачке пресека.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
@@ -13042,21 +3353,9 @@ p, li { white-space: pre-wrap; }
         <translation>Дужина ознаке:</translation>
     </message>
     <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">Ако је поље означено, угао ознаке је у вези са изабраним објектом, у супротном је апсолутни угао.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="113"/>
         <source>Rel</source>
         <translation>Rel</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">Odredite dužinu oznake iz grafičkog prikaza</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">Početni ugao kruga iz kojeg će početi oznake.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="189"/>
@@ -13064,297 +3363,14 @@ p, li { white-space: pre-wrap; }
         <translation>Početni ugao kruga:</translation>
     </message>
     <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">Odaberite početni ugao kruga iz grafičkog prikaza</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">Ako je ovo označeno, koristi se navedena fiksna udaljenost između oznaka. U suprotnom, udaljenost se izračunava na osnovu dužine entiteta i broja oznaka.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="284"/>
         <source>Fixed </source>
         <translation>Fiksno</translation>
     </message>
     <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">Broj oznaka između ivica izabranog entiteta.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="158"/>
         <source>Count:</source>
         <translation>Broj:</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">Ugao između oznake i izabranog entiteta.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SnapOptionsWidgetsHolder</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">Одређује број сегмената линија који ће се генерисати за сваку криву.</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Ако није означено, оригинална крива ће бити уклоњена, у супротном ће остати.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Задржи оригинал</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Ако је означено, тренутни атрибути ће се користити за креиране објекте, у супротном ће се користити оригинални атрибути.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Користи тренутне атрибуте</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Ако је означено, креирани објекти ће бити смештени на тренутни слој, у супротном ће бити смештени у оригиналне слојеве.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Користи тренутни слој</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">Ако је означено, могуће је одредити прилагођени број сегмената линија. У супротном, користиће се вредност из подешавања за тренутни цртеж.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">Број прилагођених сегмената</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">Ако је поље означено, сегменти линија ће бити део полилиније. У супротном, биће појединачне линије</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">У полилинију</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Ако је поље означено, креирани објекти ће бити смештени на тренутни слој, у супротном ће бити смештени у оригиналне слојеве.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Користи тренутни слој</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">Број средњих тачака сегмента полилиније које ће бити додате кривој.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">Дефинише степен криве</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Ако није означено, оригинална полилинија ће бити уклоњена, у супротном ће остати.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Задржи оригинал</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">Средње тачке:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Ако је означено, тренутна подешавања ће се користити за креиране објекте, у супротном - оригинална подешавања.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Користи тренутна подешавања</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Степен:</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">Ако је означено, врхови полилиније се сматрају тачкама сплајна и креираће се сплајн кроз тачке. У супротном, сматрају се контролним тачкама и креираће се обичан сплајн.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">Врхови су тачке сплајна</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplinePointsPropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Геометрија</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Затворено</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="vanished">Ако је изабрано, користиће се тачке сплајна</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="vanished">Тачке криве</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="vanished">Ако је изабрано, користе се контролне тачке</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">Контролне тачке</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">Тачке на кривој</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplinePropertiesEditingWidget</name>
-    <message>
-        <source>Spline Properties Editor</source>
-        <translation type="vanished">Уређивач својстава криве</translation>
-    </message>
-    <message>
-        <source>Edit properties of a spline entity, including degree, closed state, control points, and knot vector</source>
-        <translation type="vanished">Уредите својства криве, укључујући степен, затворено стање, контролне тачке и вектор чворова</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Геометрија</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Степен:</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="vanished">Степен који се користи за апроксимацију криве</translation>
-    </message>
-    <message>
-        <source>Spline Degree ComboBox</source>
-        <translation type="vanished">Комбо-кутија за степен криве</translation>
-    </message>
-    <message>
-        <source>Select the degree of the spline curve</source>
-        <translation type="vanished">Odaberite stepen splajn krivulje</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="vanished">Određuje da li splajn definiše zatvorenu konturu</translation>
-    </message>
-    <message>
-        <source>Closed Spline CheckBox</source>
-        <translation type="vanished">Potvrdni okvir za zatvoreni splajn</translation>
-    </message>
-    <message>
-        <source>Toggle whether the spline forms a closed contour</source>
-        <translation type="vanished">Prebacite da li splajn formira zatvorenu konturu</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Zatvoreno</translation>
-    </message>
-    <message>
-        <source>Control Points:</source>
-        <translation type="vanished">Kontrolne tačke:</translation>
-    </message>
-    <message>
-        <source>Control points with coordinates and weights</source>
-        <translation type="vanished">Kontrolne tačke sa koordinatama i težinama</translation>
-    </message>
-    <message>
-        <source>Control Points Table</source>
-        <translation type="vanished">Tabela kontrolnih tačaka</translation>
-    </message>
-    <message>
-        <source>Edit control points coordinates and weights for the spline</source>
-        <translation type="vanished">Uredite koordinate i težine kontrolnih tačaka za splajn</translation>
-    </message>
-    <message>
-        <source>#</source>
-        <translation type="vanished">#</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Weight</source>
-        <translation type="vanished">Тежина</translation>
-    </message>
-    <message>
-        <source>Knot values control the spline’s curve shape (non-decreasing sequence)</source>
-        <translation type="vanished">Вредности чворова контролишу облик криве сплајна (неопадајући низ)</translation>
-    </message>
-    <message>
-        <source>Knot Vector Table</source>
-        <translation type="vanished">Табела векторa чворова</translation>
-    </message>
-    <message>
-        <source>Edit knot values for the spline (must be non-decreasing)</source>
-        <translation type="vanished">Уредите вредности чворова за сплајн (мора бити неопадајући низ)</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Вредност</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation type="vanished">Add</translation>
-    </message>
-    <message>
-        <source>Add a new control point to the spline</source>
-        <translation type="vanished">Додајте нову контролну тачку сплајну</translation>
-    </message>
-    <message>
-        <source>Add Control Point Button</source>
-        <translation type="vanished">Дугме за додавање контролне тачке</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Уклони</translation>
-    </message>
-    <message>
-        <source>Remove the selected control point from the spline</source>
-        <translation type="vanished">Уклоните изабрану контролну тачку са криве</translation>
-    </message>
-    <message>
-        <source>Remove Control Point Button</source>
-        <translation type="vanished">Дугме за уклањање контролне тачке</translation>
     </message>
 </context>
 <context>
@@ -13365,17 +3381,9 @@ p, li { white-space: pre-wrap; }
         <translation>Form</translation>
     </message>
     <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">Ако је поље означено, спољне ивице ће бити заобљене.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="56"/>
         <source>Radius Outer</source>
         <translation>Спољни радијус</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">Ако је поље означено, креираће се симетрична звезда.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="86"/>
@@ -13383,25 +3391,9 @@ p, li { white-space: pre-wrap; }
         <translation>Симетрична</translation>
     </message>
     <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">Ако је поље означено, звезда ће бити нацртана као полилинија.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="49"/>
         <source>Polyline</source>
         <translation>Полилинија</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">Broj zraka.</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">Poluprečnik za unutrašnje ivice.</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">Ako je označeno, unutrašnje ivice će biti zaobljene.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="26"/>
@@ -13413,463 +3405,13 @@ p, li { white-space: pre-wrap; }
         <source>Number:</source>
         <translation>Broj:</translation>
     </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">Poluprečnik za spoljašnje zrake (ivice).</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">Odaberite spoljašnji poluprečnik sa crteža.</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">Odaberite unutrašnji poluprečnik sa crteža.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ToolbarFactory</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-    <message>
-        <source>Toolbar: %1</source>
-        <translation type="vanished">Алатка: %1</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="vanished">Poravnajte selekciju</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">File</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Edit</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Poredak</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">View</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Područja za prikucivanje</translation>
-    </message>
-    <message>
-        <source>Creators</source>
-        <translation type="vanished">Autori</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="vanished">Postavke</translation>
-    </message>
-    <message>
-        <source>Entity&apos;s Layer</source>
-        <translation type="vanished">Sloj entiteta</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="vanished">Opcije alata</translation>
-    </message>
-    <message>
-        <source>Info Cursor</source>
-        <translation type="vanished">Инфо курсор</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Line</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Тачка</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Полигон</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Круг</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">Сплин</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Елипса</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Полилинија</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Избор</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Димензија</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Остало</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Измени</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>Categories</source>
-        <translation type="vanished">Категорије</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">Линије</translation>
-    </message>
-    <message>
-        <source>Points</source>
-        <translation type="vanished">Тачке</translation>
-    </message>
-    <message>
-        <source>Circles</source>
-        <translation type="vanished">Кругови</translation>
-    </message>
-    <message>
-        <source>Arcs</source>
-        <translation type="vanished">Arcs</translation>
-    </message>
-    <message>
-        <source>Splines</source>
-        <translation type="vanished">Сплине</translation>
-    </message>
-    <message>
-        <source>Polygons</source>
-        <translation type="vanished">Полигони</translation>
-    </message>
-    <message>
-        <source>Ellipses</source>
-        <translation type="vanished">Елипсе</translation>
-    </message>
-    <message>
-        <source>PolyLines</source>
-        <translation type="vanished">Полилиније</translation>
-    </message>
-    <message>
-        <source>Dimensions</source>
-        <translation type="vanished">Димензије</translation>
-    </message>
-    <message>
-        <source>Measure</source>
-        <translation type="vanished">Мерење</translation>
-    </message>
-    <message>
-        <source>Named Views</source>
-        <translation type="vanished">Именовани прикази</translation>
-    </message>
-    <message>
-        <source>UCS</source>
-        <translation type="vanished">UCS</translation>
-    </message>
-    <message>
-        <source>Workspaces</source>
-        <translation type="vanished">Радне површине</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSListModel</name>
-    <message>
-        <source>Ortho</source>
-        <translation type="vanished">Орто</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Left</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Desno</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Top</translation>
-    </message>
-    <message>
-        <source>&lt;No name&gt;</source>
-        <translation type="vanished">&lt;Bez naziva&gt;</translation>
-    </message>
-    <message>
-        <source>Name: </source>
-        <translation type="vanished">Naziv:</translation>
-    </message>
-    <message>
-        <source>Origin X: </source>
-        <translation type="vanished">Početna X koordinata:</translation>
-    </message>
-    <message>
-        <source>Origin Y: </source>
-        <translation type="vanished">Početna Y koordinata:</translation>
-    </message>
-    <message>
-        <source>Angle: </source>
-        <translation type="vanished">Ugao:</translation>
-    </message>
-    <message>
-        <source>Grid: </source>
-        <translation type="vanished">Mreža:</translation>
-    </message>
-    <message>
-        <source>UCS: </source>
-        <translation type="vanished">UKS:</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation type="vanished">Yes</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation type="vanished">No</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSListWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Create new user coordinates system.</source>
-        <translation type="vanished">Креира нови систем корисничких координата.</translation>
-    </message>
-    <message>
-        <source>Restores selected user coordinates system.</source>
-        <translation type="vanished">Враћа изабрани систем корисничких координата.</translation>
-    </message>
-    <message>
-        <source>Preview of coordinate system origin and angle.</source>
-        <translation type="vanished">Преглед почетка и угла координатног система.</translation>
-    </message>
-    <message>
-        <source>Saves currently used coordinate system (it is usefull if UCS comes from saved view)</source>
-        <translation type="vanished">Сачувава тренутно коришћени координатни систем (корисно ако је УКС добијен из сачуваног приказа).</translation>
-    </message>
-    <message>
-        <source>Set UCS by ordinate dimension</source>
-        <translation type="vanished">Подешава УКС према ординалној димензији.</translation>
-    </message>
-    <message>
-        <source>Edit selected user coordinates name. No-name UCS are temporary and are not saved.</source>
-        <translation type="vanished">Мења име изабраног система корисничких координата. УКС без имена су привремени и не сачувавају се.</translation>
-    </message>
-    <message>
-        <source>Removes selected user coordinates system.</source>
-        <translation type="vanished">Уклања изабрани систем корисничких координата.</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">Подешавања</translation>
-    </message>
-    <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">Филтрирање корисничких координата по имену</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Филтер...</translation>
-    </message>
-    <message>
-        <source>&lt;No name&gt;</source>
-        <translation type="vanished">&lt;Нема имена&gt;</translation>
-    </message>
-    <message>
-        <source>Delete All UCS</source>
-        <translation type="vanished">Обриши све УКС-ове</translation>
-    </message>
-    <message>
-        <source>Are you sure to delete ALL UCS?
- Warning: this action can NOT be undone!</source>
-        <translation type="vanished">Да ли сте сигурни да желите да избришете СВЕ УКС-ове?
- Упозорење: ова радња се не може поништити!</translation>
-    </message>
-    <message>
-        <source>Delete UCS</source>
-        <translation type="vanished">Обриши УКС</translation>
-    </message>
-    <message>
-        <source>Are you sure to delete UCS
- &quot;%1&quot;?
- Warning: this action can NOT be undone!</source>
-        <translation type="vanished">Да ли сте сигурни да желите да избришете УКС &quot;%1&quot;?
- Упозорење: ова радња се не може поништити!</translation>
-    </message>
-    <message>
-        <source>Delete UCSs</source>
-        <translation type="vanished">Обриши УКС-ове</translation>
-    </message>
-    <message>
-        <source>Are you sure to delete UCS %1?
-Warning: this action can NOT be undone!</source>
-        <translation type="vanished">Да ли сте сигурни да желите да избришете УКС %1?
- Упозорење: ова радња се не може поништити!</translation>
-    </message>
-    <message>
-        <source>Rename UCS</source>
-        <translation type="vanished">Preimenuj UCS</translation>
-    </message>
-    <message>
-        <source>UCS name:</source>
-        <translation type="vanished">Naziv UCS:</translation>
-    </message>
-    <message>
-        <source>UCS with provided name already exists, select another one</source>
-        <translation type="vanished">UCS sa navedenim imenom već postoji, izaberite drugo.</translation>
-    </message>
-    <message>
-        <source>&amp;Save UCS</source>
-        <translation type="vanished">Sačuvaj UCS</translation>
-    </message>
-    <message>
-        <source>&amp;Update UCS</source>
-        <translation type="vanished">Ažuriraj UCS</translation>
-    </message>
-    <message>
-        <source>R&amp;emove Selected UCSs</source>
-        <translation type="vanished">Ukloni izabrane UCS-ove</translation>
-    </message>
-    <message>
-        <source>&amp;Apply UCS</source>
-        <translation type="vanished">Primeni UCS</translation>
-    </message>
-    <message>
-        <source>&amp;Preview UCS</source>
-        <translation type="vanished">Pregled UCS</translation>
-    </message>
-    <message>
-        <source>&amp;Rename UCS</source>
-        <translation type="vanished">Preimenuj UCS</translation>
-    </message>
-    <message>
-        <source>R&amp;emove UCS</source>
-        <translation type="vanished">Ukloni UCS</translation>
-    </message>
-    <message>
-        <source>Remove A&amp;ll UCSs</source>
-        <translation type="vanished">Ukloni sve UCS-ove</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Одређује да ли је угао X-осе дефинисан унешеном вредношћу или положајем миша</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Free</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угао:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">Угао X-осе новог координатног система</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Изаберите угао са цртежа</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSStateWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Type of current coordinate system</source>
-        <translation type="vanished">Тип тренутног координатног система</translation>
-    </message>
-    <message>
-        <source>Name of selected coordinate system</source>
-        <translation type="vanished">Назив изабраног координатног система</translation>
-    </message>
-    <message>
-        <source>Coordinates</source>
-        <translation type="vanished">Координате</translation>
-    </message>
-    <message>
-        <source>Position of origin and angle of current UCS&apos;s in world coordinates.</source>
-        <translation type="vanished">Положај почетка и угао тренутне УКС у светским координатама.</translation>
-    </message>
 </context>
 <context>
     <name>LC_WidgetFactory</name>
     <message>
-        <source>Line</source>
-        <translation type="vanished">Line</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Тачка</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Полигон</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Круг</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">Сплин</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Елипса</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Полилинија</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="633"/>
         <source>Select</source>
         <translation>Izaberi</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Dimenzija</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Ostalo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="647"/>
@@ -13877,69 +3419,9 @@ Warning: this action can NOT be undone!</source>
         <translation>Izmeni</translation>
     </message>
     <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Red</translation>
-    </message>
-    <message>
-        <source>Pens Palette</source>
-        <translation type="vanished">Paleta olovaka</translation>
-    </message>
-    <message>
-        <source>Pens</source>
-        <translation type="vanished">Pens</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Slojevi</translation>
-    </message>
-    <message>
-        <source>Named Views</source>
-        <translation type="vanished">Nazvani prikazi</translation>
-    </message>
-    <message>
-        <source>Views</source>
-        <translation type="vanished">Prikaži</translation>
-    </message>
-    <message>
-        <source>User Coordinate Systems</source>
-        <translation type="vanished">Sistemi korisničkih koordinata</translation>
-    </message>
-    <message>
-        <source>UCSs</source>
-        <translation type="vanished">UCSs</translation>
-    </message>
-    <message>
-        <source>Layers Tree</source>
-        <translation type="vanished">Stablo slojeva</translation>
-    </message>
-    <message>
-        <source>Entity Info</source>
-        <translation type="vanished">Informacije o entitetu</translation>
-    </message>
-    <message>
-        <source>Blocks</source>
-        <translation type="vanished">Blokovi</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="378"/>
         <source>Library Browser</source>
         <translation>Pregledač biblioteke</translation>
-    </message>
-    <message>
-        <source>Library</source>
-        <translation type="vanished">Biblioteka</translation>
-    </message>
-    <message>
-        <source>Command Line</source>
-        <translation type="vanished">Komandna linija</translation>
-    </message>
-    <message>
-        <source>Cmd</source>
-        <translation type="vanished">Cmd</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="390"/>
@@ -13991,59 +3473,6 @@ Warning: this action can NOT be undone!</source>
         <source>Measure</source>
         <translation>Измери</translation>
     </message>
-    <message>
-        <source>Dock</source>
-        <comment>Dock the command widget to the main window</comment>
-        <translation type="vanished">Dock</translation>
-    </message>
-    <message>
-        <source>Pen Wizard</source>
-        <translation type="vanished">Čarobnjak za olovku</translation>
-    </message>
-    <message>
-        <source>PenWiz</source>
-        <translation type="vanished">ČarobnjakOlovke</translation>
-    </message>
-    <message>
-        <source>Toolbar: %1</source>
-        <translation type="vanished">Алатна трака: %1</translation>
-    </message>
-    <message>
-        <source>Grid Status</source>
-        <translation type="vanished">Статус мреже</translation>
-    </message>
-    <message>
-        <source>Coordinates</source>
-        <translation type="vanished">Координате</translation>
-    </message>
-    <message>
-        <source>Relative Zero</source>
-        <translation type="vanished">Релативна нула</translation>
-    </message>
-    <message>
-        <source>Mouse</source>
-        <translation type="vanished">Миш</translation>
-    </message>
-    <message>
-        <source>Selection Info</source>
-        <translation type="vanished">Информације о избору</translation>
-    </message>
-    <message>
-        <source>Active Layer</source>
-        <translation type="vanished">Активан слој</translation>
-    </message>
-    <message>
-        <source>UCS Status</source>
-        <translation type="vanished">Статус УКС</translation>
-    </message>
-    <message>
-        <source>Angles Basis</source>
-        <translation type="vanished">Основа углова</translation>
-    </message>
-    <message>
-        <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
-        <translation type="vanished">Тренутна величина мреже/мета-мреже. Кликните да бисте променили величину мреже.</translation>
-    </message>
 </context>
 <context>
     <name>LC_WidgetOptionsDialog</name>
@@ -14053,17 +3482,9 @@ Warning: this action can NOT be undone!</source>
         <translation>Опције видгета</translation>
     </message>
     <message>
-        <source>General Styling</source>
-        <translation type="vanished">Општи стил</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="147"/>
         <source>Style Sheet</source>
         <translation>Табела стилова</translation>
-    </message>
-    <message>
-        <source>If enabled, specific style of UI may be applied</source>
-        <translation type="vanished">Ако је омогућено, може се применити специфичан стил корисничког интерфејса</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="44"/>
@@ -14101,118 +3522,14 @@ Warning: this action can NOT be undone!</source>
         <translation>Алатна трака</translation>
     </message>
     <message>
-        <source>If checked, buttons for picking values from drawing will be flat</source>
-        <translation type="vanished">Ако је означено, дугмад за одабир вредности из цртежа биће равна.</translation>
-    </message>
-    <message>
-        <source>Flat pick values buttons</source>
-        <translation type="vanished">Равна дугмад за одабир вредности</translation>
-    </message>
-    <message>
-        <source>Side length in pixels</source>
-        <translation type="vanished">Дужина странице у пикселима</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="57"/>
         <source>Icon Size</source>
         <translation>Величина икона</translation>
     </message>
     <message>
-        <source>Icons Styling</source>
-        <translation type="vanished">Стилизовање икона</translation>
-    </message>
-    <message>
-        <source>Click to select color</source>
-        <translation type="vanished">Кликните да бисте одабрали боју</translation>
-    </message>
-    <message>
-        <source>Color for accent elements (originally green)</source>
-        <translation type="vanished">Боја за акцентне елементе (првобитно зелена)</translation>
-    </message>
-    <message>
-        <source>Back Color</source>
-        <translation type="vanished">Боја позадине</translation>
-    </message>
-    <message>
-        <source>External Icons Directory:</source>
-        <translation type="vanished">Директоријум за екстерне иконе:</translation>
-    </message>
-    <message>
-        <source>Color for main elements (originally black)</source>
-        <translation type="vanished">Боја за главне елементе (оригинално црна)</translation>
-    </message>
-    <message>
-        <source>Color for filled background (originally white)</source>
-        <translation type="vanished">Боја за попуњену позадину (оригинално бела)</translation>
-    </message>
-    <message>
-        <source>Main Color:</source>
-        <translation type="vanished">Главна боја:</translation>
-    </message>
-    <message>
-        <source>Defines location of custom user-provided icons.</source>
-        <translation type="vanished">Дефинише локацију прилагођених икона које је корисник прописао.</translation>
-    </message>
-    <message>
-        <source>Saved Icons Style:</source>
-        <translation type="vanished">Сачувани стил икона:</translation>
-    </message>
-    <message>
-        <source>Save Style</source>
-        <translation type="vanished">Сачувај стил</translation>
-    </message>
-    <message>
-        <source>Remove Style</source>
-        <translation type="vanished">Уклони стил</translation>
-    </message>
-    <message>
-        <source>Advanced Setup ...</source>
-        <translation type="vanished">Напредне поставке...</translation>
-    </message>
-    <message>
-        <source>Accent Color:</source>
-        <translation type="vanished">Акцентна боја:</translation>
-    </message>
-    <message>
-        <source>General Docking</source>
-        <translation type="vanished">Opšte postavljanje prikaza</translation>
-    </message>
-    <message>
-        <source>If selected, title bar for docked dock widgets will be vertical. Otherwise, it will be horizontal.</source>
-        <translation type="vanished">Ako je izabrano, traka sa naslovima prikačenih prikaza biće vertikalna. U suprotnom, biće horizontalna.</translation>
-    </message>
-    <message>
-        <source>Tile bar is vertical (except CAD widgets)</source>
-        <translation type="vanished">Traka sa naslovima je vertikalna (osim CAD prikaza)</translation>
-    </message>
-    <message>
-        <source>If not checked, dock areas can only contain a single row (horizontal or vertical) of dock widgets. If checked, the area occupied by a dock widget can be split in either direction to contain more dock widgets.</source>
-        <translation type="vanished">Ako nije označeno, oblasti za prikačene prikaze mogu sadržati samo jedan red (horizontalni ili vertikalni) prikaza. Ako je označeno, oblast koju zauzima prikačeni prikaz može biti podeljena u bilo kom smeru kako bi sadržala više prikaza.</translation>
-    </message>
-    <message>
-        <source>Allow nested docking</source>
-        <translation type="vanished">Dozvoli ugnježdeno prikačivanje</translation>
-    </message>
-    <message>
-        <source>If checked, the two vertical dock areas on the sides of the main window show their tabs vertically. </source>
-        <translation type="vanished">Ako je označeno, dve vertikalne oblasti za prikačene prikaze sa strana glavnog prozora prikazuju svoje kartice vertikalno.</translation>
-    </message>
-    <message>
-        <source>Vertical tabs</source>
-        <translation type="vanished">Vertikalne kartice</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="176"/>
         <source>Statusbar</source>
         <translation>Statusna traka</translation>
-    </message>
-    <message>
-        <source>lClassicStatusBarOnly</source>
-        <translation type="vanished">Samo klasična statusna traka</translation>
-    </message>
-    <message>
-        <source>For &quot;classic&quot; statusbar only. </source>
-        <translation type="vanished">Za „klasičnu“ statusnu traku.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="192"/>
@@ -14223,92 +3540,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="182"/>
         <source>Height</source>
         <translation>Висина</translation>
-    </message>
-    <message>
-        <source>Dock Widgets</source>
-        <translation type="vanished">Виџети за прикључивање</translation>
-    </message>
-    <message>
-        <source>Flat Buttons</source>
-        <translation type="vanished">Равни дугмићи</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">CAD виџети</translation>
-    </message>
-    <message>
-        <source>Number of columns for actions in left toolbar.</source>
-        <translation type="vanished">Број колона за акције у левој траци алатки.</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">Број колона:</translation>
-    </message>
-    <message>
-        <source>Save Icons Style</source>
-        <translation type="vanished">Сачувај стил икона</translation>
-    </message>
-    <message>
-        <source>Enter name of icons style:</source>
-        <translation type="vanished">Унесите назив стила икона:</translation>
-    </message>
-    <message>
-        <source>Remove Icons Style</source>
-        <translation type="vanished">Уклони стил икона</translation>
-    </message>
-    <message>
-        <source>Select style to remove:</source>
-        <translation type="vanished">Изаберите стил за уклањање:</translation>
-    </message>
-    <message>
-        <source>Select External Icons Folder</source>
-        <translation type="vanished">Изаберите фолдер за екстерне иконе</translation>
-    </message>
-    <message>
-        <source>Select Color</source>
-        <translation type="vanished">Изаберите боју</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="vanished">Подешавања</translation>
-    </message>
-    <message>
-        <source>Icons overrides directory changed. Please restart the application to apply.</source>
-        <translation type="vanished">Директоријум за преписивање икона је промењен. Молимо вас да поново покренете апликацију да би се промене примениле.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_WorkspacesInvoker</name>
-    <message>
-        <source>New Workspace</source>
-        <translation type="vanished">Нови радни простор</translation>
-    </message>
-    <message>
-        <source>Name of workspace to save:</source>
-        <translation type="vanished">Назив радног простора који треба сачувати:</translation>
-    </message>
-    <message>
-        <source>Remove Workspace</source>
-        <translation type="vanished">Уклоните радни простор</translation>
-    </message>
-    <message>
-        <source>Select workspace to remove:</source>
-        <translation type="vanished">Изаберите радни простор за уклањање:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_WorkspacesManager</name>
-    <message>
-        <source>Saving Workspaces</source>
-        <translation type="vanished">Сачувавање радних простора</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open workspaces file for writing. Workspaces were not exported. File: </source>
-        <translation type="vanished">Не могу да отворим датотеку простора за писање. Простори нису извезени. Датотека:</translation>
-    </message>
-    <message>
-        <source>Workspaces file does not exists.</source>
-        <translation type="vanished">Датотека простора не постоји.</translation>
     </message>
 </context>
 <context>
@@ -14361,14 +3592,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="59"/>
         <source>Spacing:</source>
         <translation>Razmak:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Broj kopija</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">Odaberite razmak sa crteža</translation>
     </message>
 </context>
 <context>
@@ -15180,10 +4403,6 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Назив тренутно активног слоја&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
-    <message>
-        <source>Name of Current Active Layer</source>
-        <translation type="vanished">Naziv trenutnog aktivnog sloja</translation>
-    </message>
 </context>
 <context>
     <name>QG_BlockDialog</name>
@@ -15196,10 +4415,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_blockdialog.ui" line="43"/>
         <source>Block Name:</source>
         <translation>Naziv bloka:</translation>
-    </message>
-    <message>
-        <source>Name of the block</source>
-        <translation type="vanished">Naziv bloka</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_blockdialog.cpp" line="78"/>
@@ -15357,14 +4572,6 @@ in a separate window</source>
         <translation>Тамноцрвена</translation>
     </message>
     <message>
-        <source>Orange</source>
-        <translation type="vanished">Наранџаста</translation>
-    </message>
-    <message>
-        <source>Dark Orange</source>
-        <translation type="vanished">Tamno narandžasta</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="120"/>
         <source>Yellow</source>
         <translation>Žuta</translation>
@@ -15480,14 +4687,6 @@ in a separate window</source>
         <translation>Командна линија</translation>
     </message>
     <message>
-        <source>Enter your command here</source>
-        <translation type="vanished">Унесите своју команду овде</translation>
-    </message>
-    <message>
-        <source>Click to see more options</source>
-        <translation type="vanished">Кликните да бисте видели више опција</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
         <source>...</source>
         <translation>...</translation>
@@ -15510,17 +4709,9 @@ in a separate window</source>
         <translation>Dock</translation>
     </message>
     <message>
-        <source>Enter Command:</source>
-        <translation type="vanished">Унесите команду:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="210"/>
         <source>Unknown command: %1</source>
         <translation>Непозната команда: %1</translation>
-    </message>
-    <message>
-        <source>Command Alias File: %1</source>
-        <translation type="vanished">Датотека са алијасима команди: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="254"/>
@@ -15555,22 +4746,6 @@ in a separate window</source>
         <source>Coordinates</source>
         <translation>Координате</translation>
     </message>
-    <message>
-        <source>Absolute Coordinates (Cartesian)</source>
-        <translation type="vanished">Апсолутне координате (Картезијански)</translation>
-    </message>
-    <message>
-        <source>Absolute Cordinates (Polar)</source>
-        <translation type="vanished">Апсолутне координате (Поларни)</translation>
-    </message>
-    <message>
-        <source>Relative Coordinates (Cartesian)</source>
-        <translation type="vanished">Релативне координате (Картезијански)</translation>
-    </message>
-    <message>
-        <source>Relative Coordinates (Polar)</source>
-        <translation type="vanished">Релативне координате (Поларни)</translation>
-    </message>
 </context>
 <context>
     <name>QG_DimOptions</name>
@@ -15594,25 +4769,9 @@ in a separate window</source>
         <translation>Ознака димензије:</translation>
     </message>
     <message>
-        <source>Superscript</source>
-        <translation type="vanished">Горњи индекс</translation>
-    </message>
-    <message>
-        <source>Raw text:</source>
-        <translation type="vanished">Необрађени текст:</translation>
-    </message>
-    <message>
-        <source>Symbol before dimensional text</source>
-        <translation type="vanished">Симбол пре текста димензије</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="133"/>
         <source>Insert:</source>
         <translation>Уметни:</translation>
-    </message>
-    <message>
-        <source>Subscript</source>
-        <translation type="vanished">Доњи индекс</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="57"/>
@@ -15620,21 +4779,9 @@ in a separate window</source>
         <translation>Ознака:</translation>
     </message>
     <message>
-        <source>Format of the dimension text, &lt;&gt; can be used as a placeholder for the dimension measurement value</source>
-        <translation type="vanished">Формат текста димензије, може се користити `&lt;&gt;` као замена за вредност мерења димензије</translation>
-    </message>
-    <message>
-        <source>Symbol to insert</source>
-        <translation type="vanished">Симбол за уметање</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="150"/>
         <source>⌀ (Diameter)</source>
         <translation>⌀ (пречник)</translation>
-    </message>
-    <message>
-        <source>R (Radial)</source>
-        <translation type="vanished">R (radijalno)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="93"/>
@@ -15741,14 +4888,6 @@ in a separate window</source>
         <translation>Sloj:</translation>
     </message>
     <message>
-        <source>Layer to apply</source>
-        <translation type="vanished">Sloj za primenu</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Atributi linije</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
@@ -15759,10 +4898,6 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
         <source>Apply attributes Block-deep</source>
         <translation>Primeni atribute na celom bloku</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
     </message>
 </context>
 <context>
@@ -15905,10 +5040,6 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
         <translation>Šablon</translation>
     </message>
     <message>
-        <source>Scale factor for hatch pattern</source>
-        <translation type="vanished">Faktor skale za šablon šrafure</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="34"/>
         <source>Angle:</source>
         <translation>Ugao:</translation>
@@ -15919,30 +5050,14 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
         <translation>Skala:</translation>
     </message>
     <message>
-        <source>Rotation angle for the hatch</source>
-        <translation type="vanished">Угао ротације за шарање</translation>
-    </message>
-    <message>
-        <source>If checked, solid will will be used instead of pattern hatch</source>
-        <translation type="vanished">Ако је означено, уместо шаре користиће се пуна површина</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="57"/>
         <source>Solid Fill</source>
         <translation>Пуна површина</translation>
     </message>
     <message>
-        <source>Pattern of hatch</source>
-        <translation type="vanished">Шара</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="67"/>
         <source>Preview</source>
         <translation>Преглед</translation>
-    </message>
-    <message>
-        <source>If enabled, preview of hatch pattern will be shown below</source>
-        <translation type="vanished">Ако је омогућено, преглед шаре биће приказан испод</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="73"/>
@@ -15953,10 +5068,6 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="86"/>
         <source>Area</source>
         <translation>Area</translation>
-    </message>
-    <message>
-        <source>Hatched area</source>
-        <translation type="vanished">Површина са шаром</translation>
     </message>
 </context>
 <context>
@@ -16033,10 +5144,6 @@ Ovo rekurzivno modifikuje sve entitete samog bloka.</translation>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="14"/>
         <source>Welcome</source>
         <translation>Добродошли</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Добродошли у LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Молимо вас да одаберете јединицу мере коју желите да користите за нове цртеже и жељени језик за кориснички интерфејс и команде.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Ове поставке можете променити касније.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="64"/>
@@ -16186,10 +5293,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Слој:</translation>
     </message>
     <message>
-        <source>Layer of MText</source>
-        <translation type="vanished">Слој MText-а</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="104"/>
         <source>Font Settings</source>
         <translation>Подешавања фонта</translation>
@@ -16198,10 +5301,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="113"/>
         <source>&amp;Line spacing:</source>
         <translation>Размак између редова:</translation>
-    </message>
-    <message>
-        <source>If checked, default line spacing will be used</source>
-        <translation type="vanished">Ако је означено, користиће се подразумевани размак између редова</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="132"/>
@@ -16214,26 +5313,14 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Alt+D</translation>
     </message>
     <message>
-        <source>Height of line</source>
-        <translation type="vanished">Visina reda</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="223"/>
         <source>&amp;Height:</source>
         <translation>Visina:</translation>
     </message>
     <message>
-        <source>Specific line spacing factor is used</source>
-        <translation type="vanished">Koristi se određeni faktor razmaka između redova</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="246"/>
         <source>Font:</source>
         <translation>Font:</translation>
-    </message>
-    <message>
-        <source>Font to use</source>
-        <translation type="vanished">Font koji se koristi</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="298"/>
@@ -16291,26 +5378,14 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Угао</translation>
     </message>
     <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Угао ротације</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="645"/>
         <source>Text Direction</source>
         <translation>Смер текста</translation>
     </message>
     <message>
-        <source>Left to right text direction</source>
-        <translation type="vanished">Tekst od leva na desno</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="657"/>
         <source>Left to right</source>
         <translation>Od leva na desno</translation>
-    </message>
-    <message>
-        <source>Right to left text direction</source>
-        <translation type="vanished">Tekst od desna na levo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="670"/>
@@ -16353,17 +5428,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Налепи</translation>
     </message>
     <message>
-        <source>Text lines to insert</source>
-        <translation type="vanished">Текстови за уметање</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="834"/>
         <source>Insert Symbol</source>
         <translation>Уметни симбол</translation>
-    </message>
-    <message>
-        <source>Symbol to insert</source>
-        <translation type="vanished">Симбол за уметање</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="847"/>
@@ -16421,14 +5488,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Фунта (£)</translation>
     </message>
     <message>
-        <source>Yen / Yuan (¥)</source>
-        <translation type="vanished">Јен / Јуан (¥)</translation>
-    </message>
-    <message>
-        <source>Euro (€)</source>
-        <translation type="vanished">Еуро (€)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="907"/>
         <source>Times (×)</source>
         <translation>Пута (×)</translation>
@@ -16452,10 +5511,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="939"/>
         <source>Char:</source>
         <translation>Карактер:</translation>
-    </message>
-    <message>
-        <source>Codepage to use for characted selection</source>
-        <translation type="vanished">Кодирање које се користи за избор карактера</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="902"/>
@@ -17002,18 +6057,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
         <translation>[100000-10FFFD] </translation>
     </message>
-    <message>
-        <source>Selection of character to insert</source>
-        <translation type="vanished">Избор карактера за уметање</translation>
-    </message>
-    <message>
-        <source>Selected character preview. Click to insert to text.</source>
-        <translation type="vanished">Преглед изабраног карактера. Кликните да бисте га уметали у текст.</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgMirror</name>
@@ -17153,10 +6196,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>&amp;Multiple Copies</source>
         <translation>&amp;Више примерака</translation>
     </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Više kopija</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgOptionsDrawing</name>
@@ -17176,21 +6215,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Format</translation>
     </message>
     <message>
-        <source>Paper format</source>
-        <translation type="vanished">Format papira</translation>
-    </message>
-    <message>
-        <source>Width of paper</source>
-        <translation type="vanished">Širina papira</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="66"/>
         <source>&amp;Height:</source>
         <translation>&amp;Visina:</translation>
-    </message>
-    <message>
-        <source>Height of paper</source>
-        <translation type="vanished">Visina papira</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="82"/>
@@ -17203,17 +6230,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Orijentacija</translation>
     </message>
     <message>
-        <source>Landscape paper orientation</source>
-        <translation type="vanished">Horizontalni format papira</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="108"/>
         <source>&amp;Landscape</source>
         <translation>&amp;Horizontalni</translation>
-    </message>
-    <message>
-        <source>Portrait paper orientation</source>
-        <translation type="vanished">Vertikalni format papira</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="115"/>
@@ -17263,17 +6282,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Horizontalno:</translation>
     </message>
     <message>
-        <source>Number of pages by horizontal</source>
-        <translation type="vanished">Broj stranica po horizontalnoj osi</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="263"/>
         <source>Vertically:</source>
         <translation>Vertikalno:</translation>
-    </message>
-    <message>
-        <source>Number of pages by vertical</source>
-        <translation type="vanished">Broj stranica po vertikalnoj osi</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="285"/>
@@ -17281,10 +6292,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="546"/>
         <source>Preview</source>
         <translation>Pregled</translation>
-    </message>
-    <message>
-        <source>Preview of page and margins</source>
-        <translation type="vanished">Pregled stranice i margina</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="326"/>
@@ -17300,10 +6307,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="338"/>
         <source>&amp;Main drawing unit:</source>
         <translation>&amp;Glavna jedinica za crtanje:</translation>
-    </message>
-    <message>
-        <source>Units of measurements to use in drawing </source>
-        <translation type="vanished">Jedinice merenja koje se koriste u crtanju</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="377"/>
@@ -17346,34 +6349,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>угаоно</translation>
     </message>
     <message>
-        <source>Angles Basis</source>
-        <translation type="vanished">База углова</translation>
-    </message>
-    <message>
-        <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation type="vanished">Нула као базна вредност угла у односу на тренутни кориснички координатни систем. Утиче на унос поларних координата и прилагођавање углова. 0,0 је 3 сата.</translation>
-    </message>
-    <message>
-        <source>Zero base angle:</source>
-        <translation type="vanished">Početni ugao:</translation>
-    </message>
-    <message>
-        <source>degrees.</source>
-        <translation type="vanished">stepeni.</translation>
-    </message>
-    <message>
-        <source>Positive direction:</source>
-        <translation type="vanished">Pozitivan smer:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise, 90 degrees is north.</source>
-        <translation type="vanished">Suprotan smeru kazaljke na satu, 90 stepeni je sever.</translation>
-    </message>
-    <message>
-        <source>Clockwise, 90 degrees is sourth.</source>
-        <translation type="vanished">Smer kazaljke na satu, 90 stepeni je jug.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="570"/>
         <source>&amp;Grid</source>
         <translation>&amp;Mreža</translation>
@@ -17382,22 +6357,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="582"/>
         <source>Grid Settings</source>
         <translation>Podešavanja mreže</translation>
-    </message>
-    <message>
-        <source>Right isometric grid</source>
-        <translation type="vanished">Desna izometrijska mreža</translation>
-    </message>
-    <message>
-        <source>Isometric Right</source>
-        <translation type="vanished">Izometrijska desna</translation>
-    </message>
-    <message>
-        <source>Left isometric grid</source>
-        <translation type="vanished">Leva izometrijska mreža</translation>
-    </message>
-    <message>
-        <source>Isometric Left</source>
-        <translation type="vanished">Izometrijska projekcija, leva strana</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="595"/>
@@ -17410,49 +6369,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Ortogonalna mreža</translation>
     </message>
     <message>
-        <source>If checked, grid will be shown for this drawing</source>
-        <translation type="vanished">Ako je ovo polje označeno, mreža će se prikazivati za ovaj crtež</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="588"/>
         <source>Show Grid</source>
         <translation>Prikaži mrežu</translation>
-    </message>
-    <message>
-        <source>Top isometric grid</source>
-        <translation type="vanished">Gornja izometrijska mreža</translation>
-    </message>
-    <message>
-        <source>Isometric Top</source>
-        <translation type="vanished">Izometrijska projekcija, gornja strana</translation>
-    </message>
-    <message>
-        <source>Application Settings</source>
-        <translation type="vanished">Podešavanja aplikacije</translation>
-    </message>
-    <message>
-        <source>Draw Grid:</source>
-        <translation type="vanished">Prikaz mreže:</translation>
-    </message>
-    <message>
-        <source>Unitless Grid:</source>
-        <translation type="vanished">Mreža bez jedinica:</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">Текстуална етикета</translation>
-    </message>
-    <message>
-        <source>Automatically Scale Grid:</source>
-        <translation type="vanished">Аутоматски прилагођавај величину мреже:</translation>
-    </message>
-    <message>
-        <source>Draw Meta Grid:</source>
-        <translation type="vanished">Цртај мета-мрежу:</translation>
-    </message>
-    <message>
-        <source>Grid Spacing</source>
-        <translation type="vanished">Размак мреже</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="741"/>
@@ -17465,10 +6384,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Размак по Y оси:</translation>
     </message>
     <message>
-        <source>Select or enter grid spacing value by X axis</source>
-        <translation type="vanished">Изаберите или унесите вредност размака мреже за X осу</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="761"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="803"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="253"/>
@@ -17477,14 +6392,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="557"/>
         <source>auto</source>
         <translation>auto</translation>
-    </message>
-    <message>
-        <source>Select or input grid spacing value by Y axis</source>
-        <translation type="vanished">Изаберите или унесите вредност размака мреже за Y осу</translation>
-    </message>
-    <message>
-        <source>Select or enter values for grid spacing (they will affect Grid drawing and Snap to Grid):</source>
-        <translation type="vanished">Изаберите или унесите вредности за размак мреже (утицаће на цртање мреже и прилагођавање на мрежу):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="608"/>
@@ -17726,26 +6633,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&amp;Сплајнови</translation>
     </message>
     <message>
-        <source>Dimensions</source>
-        <translation type="vanished">Dimenzije</translation>
-    </message>
-    <message>
-        <source>Styles</source>
-        <translation type="vanished">Stilovi</translation>
-    </message>
-    <message>
-        <source>New style creation</source>
-        <translation type="vanished">Kreiranje novog stila</translation>
-    </message>
-    <message>
-        <source>Remove Style</source>
-        <translation type="vanished">Ukloni stil</translation>
-    </message>
-    <message>
-        <source>Edit Style</source>
-        <translation type="vanished">Izmeni stil</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1733"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1777"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1809"/>
@@ -17770,85 +6657,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>...</translation>
     </message>
     <message>
-        <source>Rename Style</source>
-        <translation type="vanished">Preimenuj stil</translation>
-    </message>
-    <message>
-        <source>Marks style as active one. Active style will be used during creation of dimensions.</source>
-        <translation type="vanished">Obeležava stil kao aktivni. Aktivni stil će se koristiti prilikom kreiranja dimenzija.</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Izvoz</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Uvoz</translation>
-    </message>
-    <message>
-        <source>Active Style</source>
-        <translation type="vanished">Aktivni stil</translation>
-    </message>
-    <message>
-        <source>Style Name:</source>
-        <translation type="vanished">Име стила:</translation>
-    </message>
-    <message>
-        <source>If checked, used non-default arrow blocks will be added during drawing&apos;s saving. Embedding arrow blocks is needed for drawings that are later opened in AutoCAD.  This check may be unset if all editing is performed in LibreCAD. </source>
-        <translation type="vanished">Ако је поље означено, приликом чувања цртежа додаће се нестандардни блокови стрелица. Уграђивање блокова стрелица потребно је за цртеже који се касније отварају у AutoCAD-у. Ово поље може бити неозначено ако се сва уређивања извршавају у LibreCAD-у.</translation>
-    </message>
-    <message>
-        <source>Embed arrows blocks on save</source>
-        <translation type="vanished">Угради блокове стрелица приликом чувања</translation>
-    </message>
-    <message>
-        <source>&amp;Splines and Lines</source>
-        <translation type="vanished">&amp;Сплине и линије</translation>
-    </message>
-    <message>
-        <source>Splines</source>
-        <translation type="vanished">Сплине</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
         <source>Number of line segments per spline patch:</source>
         <translation>Број сегмената линија по сплину:</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">Линије</translation>
-    </message>
-    <message>
-        <source>Line Cap:</source>
-        <translation type="vanished">Стил краја линије:</translation>
-    </message>
-    <message>
-        <source>End cap for lines</source>
-        <translation type="vanished">Крај линије</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">None</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Круг</translation>
-    </message>
-    <message>
-        <source>Square</source>
-        <translation type="vanished">Квадрат</translation>
-    </message>
-    <message>
-        <source>Line Join:</source>
-        <translation type="vanished">Стид линија:</translation>
-    </message>
-    <message>
-        <source>Mode of lines joining in polylines or paths</source>
-        <translation type="vanished">Начин спајања линија у полилинијама или путањама</translation>
-    </message>
-    <message>
-        <source>Flat</source>
-        <translation type="vanished">Flat</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1683"/>
@@ -17872,17 +6683,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Јединице цртежа</translation>
     </message>
     <message>
-        <source>If selected, size will be calculated as percentage of current screen size</source>
-        <translation type="vanished">Ако је изабрано, величина ће се израчунати као проценат тренутне величине екрана</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2629"/>
         <source>Size relative to screen</source>
         <translation>Величина у односу на екран</translation>
-    </message>
-    <message>
-        <source>Size will be defined in drawing units of current drawing</source>
-        <translation type="vanished">Величина ће бити дефинисана у јединицама текућег цртежа</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2642"/>
@@ -17893,254 +6696,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2669"/>
         <source>(0 =&gt; 5% relative to screen size)</source>
         <translation>(0 =&gt; 5% у односу на величину екрана)</translation>
-    </message>
-    <message>
-        <source>Enter value for points size</source>
-        <translation type="vanished">Унесите вредност за величину тачака</translation>
-    </message>
-    <message>
-        <source>Metadata</source>
-        <translation type="vanished">Метаподаци</translation>
-    </message>
-    <message>
-        <source>Specifies the title of the drawing.</source>
-        <translation type="vanished">Опредељује наслов цртежа.</translation>
-    </message>
-    <message>
-        <source>Keywords:</source>
-        <translation type="vanished">Кључне речи:</translation>
-    </message>
-    <message>
-        <source>Comments:</source>
-        <translation type="vanished">Коментари:</translation>
-    </message>
-    <message>
-        <source>Title:</source>
-        <translation type="vanished">Наслов:</translation>
-    </message>
-    <message>
-        <source>Specifies the subject of the drawing.</source>
-        <translation type="vanished">Određuje temu crteža.</translation>
-    </message>
-    <message>
-        <source>Specifies the author of the drawing.</source>
-        <translation type="vanished">Određuje autora crteža.</translation>
-    </message>
-    <message>
-        <source>Specifies drawing-specific keywords.</source>
-        <translation type="vanished">Određuje ključne reči specifične za crtež.</translation>
-    </message>
-    <message>
-        <source>Subject:</source>
-        <translation type="vanished">Tema:</translation>
-    </message>
-    <message>
-        <source>Author:</source>
-        <translation type="vanished">Autor:</translation>
-    </message>
-    <message>
-        <source>Provides a space to add comments to the drawing.</source>
-        <translation type="vanished">Omogućava dodavanje komentara crtežu.</translation>
-    </message>
-    <message>
-        <source>User Data</source>
-        <translation type="vanished">Korisnički podaci</translation>
-    </message>
-    <message>
-        <source>Custom Properties</source>
-        <translation type="vanished">Prilagođena svojstva</translation>
-    </message>
-    <message>
-        <source>Add New</source>
-        <translation type="vanished">Dodaj novo</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Izbriši</translation>
-    </message>
-    <message>
-        <source>Floating point variables</source>
-        <translation type="vanished">Varijable sa pokretnom tačkom</translation>
-    </message>
-    <message>
-        <source>$USERR2</source>
-        <translation type="vanished">$USERR2</translation>
-    </message>
-    <message>
-        <source>$USERR5</source>
-        <translation type="vanished">$USERR5</translation>
-    </message>
-    <message>
-        <source>$USERR3</source>
-        <translation type="vanished">$USERR3</translation>
-    </message>
-    <message>
-        <source>$USERR4</source>
-        <translation type="vanished">$USERR4</translation>
-    </message>
-    <message>
-        <source>$USERR1</source>
-        <translation type="vanished">$USERR1</translation>
-    </message>
-    <message>
-        <source> Integer variables</source>
-        <translation type="vanished">Celobrojne varijable</translation>
-    </message>
-    <message>
-        <source>$USERI4</source>
-        <translation type="vanished">$USERI4</translation>
-    </message>
-    <message>
-        <source>$USERI2</source>
-        <translation type="vanished">$USERI2</translation>
-    </message>
-    <message>
-        <source>$USERI1</source>
-        <translation type="vanished">$USERI1</translation>
-    </message>
-    <message>
-        <source>$USERI3</source>
-        <translation type="vanished">$USERI3</translation>
-    </message>
-    <message>
-        <source>$USERI5</source>
-        <translation type="vanished">$USERI5</translation>
-    </message>
-    <message>
-        <source>Variables</source>
-        <translation type="vanished">Променљиве</translation>
-    </message>
-    <message>
-        <source>Drawing&apos;s Variables</source>
-        <translation type="vanished">Променљиве цртежа</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Note:&lt;/b&gt; changes of settings made during this invocation of the dialog may be not reflected.</source>
-        <translation type="vanished">&lt;b&gt;Напомена:&lt;/b&gt; промене подешавања извршене током овог покретања дијалога можда неће бити примењене.</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Name</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Code</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">Type</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Вредност</translation>
-    </message>
-    <message>
-        <source>Delete Custom Property</source>
-        <translation type="vanished">Избриши прилагођено својство</translation>
-    </message>
-    <message>
-        <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation type="vanished">Da li ste sigurni da želite da obrišete svojstvo [%1]?</translation>
-    </message>
-    <message>
-        <source>Drawing Options</source>
-        <translation type="vanished">Opcije crtanja</translation>
-    </message>
-    <message>
-        <source>Settings were changed. Are you sure you&apos;d like to skip saving changes (so they will not be saved)?</source>
-        <translation type="vanished">Postavke su izmenjene. Da li ste sigurni da želite da preskočite čuvanje izmena (tako da se ne sačuvaju)?</translation>
-    </message>
-    <message>
-        <source>&amp;Set as Active</source>
-        <translation type="vanished">Postavi kao aktivno</translation>
-    </message>
-    <message>
-        <source>&amp;Create Style</source>
-        <translation type="vanished">Kreiraj stil</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Style</source>
-        <translation type="vanished">Izmeni stil</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Style</source>
-        <translation type="vanished">Preimenuj stil</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Style</source>
-        <translation type="vanished">Obriši stil</translation>
-    </message>
-    <message>
-        <source>E&amp;xport Styles</source>
-        <translation type="vanished">Izvezi stilove</translation>
-    </message>
-    <message>
-        <source>&amp;Import Styles</source>
-        <translation type="vanished">Uvezi stilove</translation>
-    </message>
-    <message>
-        <source>Style to Create - </source>
-        <translation type="vanished">Стил за креирање -</translation>
-    </message>
-    <message>
-        <source>Dimension style editing - </source>
-        <translation type="vanished">Уређивање стила димензија -</translation>
-    </message>
-    <message>
-        <source>Rename Dimension Style</source>
-        <translation type="vanished">Преименуј стил димензија</translation>
-    </message>
-    <message>
-        <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation type="vanished">Унесите ново, јединствено име за стил димензија (било: „%1“):</translation>
-    </message>
-    <message>
-        <source>Removing Dimension Style</source>
-        <translation type="vanished">Уклањање стила димензија</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete last dimension style. At least one should be present! </source>
-        <translation type="vanished">Не можете избрисати последњи стил димензија. Најмање један стил мора постојати!</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete dimension style as it&apos;s children is used in drawing. Only unused style may be deleted.</source>
-        <translation type="vanished">Не можете избрисати стил димензија јер се његови подстилови користе у цртежу. Може се избрисати само неискоришћени стил.</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation type="vanished">Да ли сте сигурни да желите да уклоните стил димензија „%1“ заједно са подстиловима?</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation type="vanished">Да ли сте сигурни да желите да уклоните стил димензија „%1“?</translation>
-    </message>
-    <message>
-        <source>ON</source>
-        <translation type="vanished">ON</translation>
-    </message>
-    <message>
-        <source>OFF</source>
-        <translation type="vanished">OFF</translation>
-    </message>
-    <message>
-        <source>VOID</source>
-        <translation type="vanished">VOID</translation>
-    </message>
-    <message>
-        <source>INT</source>
-        <translation type="vanished">INT</translation>
-    </message>
-    <message>
-        <source>DOUBLE</source>
-        <translation type="vanished">ДВОСТРУКИ</translation>
-    </message>
-    <message>
-        <source>STRING</source>
-        <translation type="vanished">НИЗ</translation>
-    </message>
-    <message>
-        <source>VECTOR</source>
-        <translation type="vanished">ВЕКТОР</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="494"/>
@@ -18227,133 +6782,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Postavke aplikacije</translation>
     </message>
     <message>
-        <source>&amp;Graphic View</source>
-        <translation type="vanished">Grafički prikaz</translation>
-    </message>
-    <message>
-        <source>Background and Selection</source>
-        <translation type="vanished">Pozadina i izbor</translation>
-    </message>
-    <message>
-        <source>Color for drawing background</source>
-        <translation type="vanished">Boja za pozadinu crteža</translation>
-    </message>
-    <message>
-        <source>Click to select color</source>
-        <translation type="vanished">Kliknite za odabir boje</translation>
-    </message>
-    <message>
-        <source>Color for selected entities</source>
-        <translation type="vanished">Boja za izabrane objekte</translation>
-    </message>
-    <message>
-        <source>S&amp;elected Entity Color:</source>
-        <translation type="vanished">Boja izabranih objekata:</translation>
-    </message>
-    <message>
-        <source>Backgr&amp;ound Color:</source>
-        <translation type="vanished">Boja pozadine:</translation>
-    </message>
-    <message>
-        <source>Overlay Selection Box</source>
-        <translation type="vanished">Prekrivajuća kutija za izbor</translation>
-    </message>
-    <message>
-        <source>Inverted Line Color:</source>
-        <translation type="vanished">Окренута боја линије:</translation>
-    </message>
-    <message>
-        <source>Color of line for overlay selection box if box is inverted (from right to left)</source>
-        <translation type="vanished">Боја линије за оквир прекривања ако је оквир окренут (од десна ка лево)</translation>
-    </message>
-    <message>
-        <source>Inverted Fill Color:</source>
-        <translation type="vanished">Окренута боја попуњавања:</translation>
-    </message>
-    <message>
-        <source>Color for filling inverted overlay selection box</source>
-        <translation type="vanished">Боја попуњавања за окренути оквир прекривања</translation>
-    </message>
-    <message>
-        <source>Fill Color:</source>
-        <translation type="vanished">Боја попуњавања:</translation>
-    </message>
-    <message>
-        <source>Fill color for overlay selection box</source>
-        <translation type="vanished">Боја попуњавања за оквир прекривања</translation>
-    </message>
-    <message>
-        <source>Line Color:</source>
-        <translation type="vanished">Боја линије:</translation>
-    </message>
-    <message>
-        <source>Color for line for overlay box</source>
-        <translation type="vanished">Боја линије за оквир прекривања</translation>
-    </message>
-    <message>
-        <source>Smaller value - higher transparency of overlay</source>
-        <translation type="vanished">Мања вредност - већа транспарентност прекривања</translation>
-    </message>
-    <message>
-        <source>Transparency:</source>
-        <translation type="vanished">Транспарентност:</translation>
-    </message>
-    <message>
-        <source>Transparency for overlay selection box. Smaller value - more transparent.</source>
-        <translation type="vanished">Провидност за оквир за избор прекривања. Мања вредност - већа провидност.</translation>
-    </message>
-    <message>
-        <source>Draft Mode Marker</source>
-        <translation type="vanished">Ознака режима нацрта</translation>
-    </message>
-    <message>
-        <source>Font:</source>
-        <translation type="vanished">Фонт:</translation>
-    </message>
-    <message>
-        <source>If selected, in draft mode text label will be drawin in view corners</source>
-        <translation type="vanished">Ако је изабрано, у режиму нацрта, текстуална ознака ће се цртати у угловима приказа.</translation>
-    </message>
-    <message>
-        <source>Show Draft mode marker</source>
-        <translation type="vanished">Прикажи ознаку режима нацрта</translation>
-    </message>
-    <message>
-        <source>Font that should be used for draft mode marker</source>
-        <translation type="vanished">Фонт који треба да се користи за ознаку режима нацрта</translation>
-    </message>
-    <message>
-        <source>Marker Color:</source>
-        <translation type="vanished">Боја ознаке:</translation>
-    </message>
-    <message>
-        <source>Font size that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation type="vanished">Величина фонта која треба да се користи за цртање назива осе у координатном систему нуле.</translation>
-    </message>
-    <message>
-        <source> pt</source>
-        <translation type="vanished">pt</translation>
-    </message>
-    <message>
-        <source>Font size:</source>
-        <translation type="vanished">Величина фонта:</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="vanished">Опште</translation>
-    </message>
-    <message>
-        <source>Defines whether scrollbar should be shown in graphic view</source>
-        <translation type="vanished">Опредељује да ли треба да се приказује трака за померање у графичком приказу.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="192"/>
         <source>Scrollbars</source>
         <translation>Траке за померање</translation>
-    </message>
-    <message>
-        <source>If checked,  objects will be painted smoother due to anti-aliasing</source>
-        <translation type="vanished">Ако је означено, објекти ће се глатко приказивати захваљујући анти-алиасингу.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
@@ -18371,18 +6802,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Окрени хоризонтални смер померања</translation>
     </message>
     <message>
-        <source>First time only pan</source>
-        <translation type="vanished">Померање само при првом клику</translation>
-    </message>
-    <message>
-        <source>On mouse wheel zoom, pan to the middle of the window.</source>
-        <translation type="vanished">При зумирању помоћу точкића миша, помера се до средине прозора.</translation>
-    </message>
-    <message>
-        <source>Pan on wheel zoom</source>
-        <translation type="vanished">Померање при зумирању</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1053"/>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
         <translation>Obrće smer pomeraња kada se koristi točak miša sa pritiskom na taster Ctrl.</translation>
@@ -18391,14 +6810,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1056"/>
         <source>Invert vertical scrolling direction</source>
         <translation>Obrće smer vertikalnog pomeraња.</translation>
-    </message>
-    <message>
-        <source>If disabled, more sequental painting algorithm is used that may deliver better antialising results</source>
-        <translation type="vanished">Ako je onemogućeno, koristi se algoritam za sekvencijalno crtanje koji može da pruži bolje rezultate antialiasinga.</translation>
-    </message>
-    <message>
-        <source>Use Buffered (classic) rendering</source>
-        <translation type="vanished">Koristi baferovano (klasično) renderovanje.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1063"/>
@@ -18411,25 +6822,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Obrće smer zumiranja.</translation>
     </message>
     <message>
-        <source>If selected, drawing will be panned automatically if mouse is near drawing view boundaries</source>
-        <translation type="vanished">Ako je izabrano, crtanje će se automatski pomerati ako je miš blizu ivica oblasti za crtanje.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
         <source>Auto-panning</source>
         <translation>Automatsko pomeraње.</translation>
-    </message>
-    <message>
-        <source>Controls how quickly the scroll wheel will zoom in &amp; out. Higher values - faster zoom.</source>
-        <translation type="vanished">Kontroliše koliko brzo točak za pomeraње zumira.</translation>
-    </message>
-    <message>
-        <source>Default zoom factor:</source>
-        <translation type="vanished">Podrazumevani faktor zumiranja:</translation>
-    </message>
-    <message>
-        <source>Entity Handle</source>
-        <translation type="vanished">Ручка ентитета</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="378"/>
@@ -18442,69 +6837,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&amp;Боја почетне ручке:</translation>
     </message>
     <message>
-        <source>Color for start handle of entity</source>
-        <translation type="vanished">Боја почетне ручке ентитета</translation>
-    </message>
-    <message>
-        <source>Color of end handle for entity</source>
-        <translation type="vanished">Боја крајње ручке ентитета</translation>
-    </message>
-    <message>
-        <source>Handle Size:</source>
-        <translation type="vanished">Величина ручке:</translation>
-    </message>
-    <message>
-        <source>Color of non-endpoint handle of entity</source>
-        <translation type="vanished">Боја ручке која није крајња тачка ентитета</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="767"/>
         <source>&amp;Handle Color:</source>
         <translation>&amp;Боја ручке:</translation>
-    </message>
-    <message>
-        <source>Size of square that is highlights entities reference points (endpoints etc.)</source>
-        <translation type="vanished">Величина квадрата који истиче референтне тачке ентитета (крајње тачке итд.)</translation>
-    </message>
-    <message>
-        <source> px</source>
-        <translation type="vanished">px</translation>
-    </message>
-    <message>
-        <source>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</source>
-        <translation type="vanished">Ako je omogućeno, rukohvati entiteta se ističu kada se miš premešta iznad njih (potrebno je da bude omogućena opcija „ističi entitete kada se miš premešta iznad njih“).</translation>
-    </message>
-    <message>
-        <source>Show entity handles on mouse hover</source>
-        <translation type="vanished">Prikaži rukohvate entiteta kada se miš premešta iznad njih.</translation>
-    </message>
-    <message>
-        <source>Grid</source>
-        <translation type="vanished">Grid</translation>
-    </message>
-    <message>
-        <source>Grid General</source>
-        <translation type="vanished">Opšte postavke mreže</translation>
-    </message>
-    <message>
-        <source>If checked, grid wil be drawn</source>
-        <translation type="vanished">Ako je označeno, mreža će biti nacrtana.</translation>
-    </message>
-    <message>
-        <source>Draw grid</source>
-        <translation type="vanished">Nacrtaj mrežu</translation>
-    </message>
-    <message>
-        <source>If checked, metagrid will be drawn as part of grid drawing.</source>
-        <translation type="vanished">Ako je označeno, meta-mreža će biti nacrtana kao deo crtanja mreže.</translation>
-    </message>
-    <message>
-        <source>Draw meta-grid</source>
-        <translation type="vanished">Nacrtaj meta-mrežu</translation>
-    </message>
-    <message>
-        <source>If checked, the grid will be scalled automatically</source>
-        <translation type="vanished">Ako je označeno, mreža će se automatski skalirati.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="255"/>
@@ -18517,73 +6852,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Alt+U</translation>
     </message>
     <message>
-        <source>If unchecked, vertical line will not be drawn for &quot;Top&quot; isometric view</source>
-        <translation type="vanished">Ако није означено, вертикална линија неће бити нацртана за изометријски приказ „Одозго“</translation>
-    </message>
-    <message>
-        <source>Draw vertical lines for &quot;Top&quot; isometric grid</source>
-        <translation type="vanished">Нацртајте вертикалне линије за изометријску мрежу „Одозго“</translation>
-    </message>
-    <message>
-        <source>If checked, grid will not be drawn within view pan by mouse operation</source>
-        <translation type="vanished">Ако је означено, мрежа неће бити нацртана током померања приказа мишем</translation>
-    </message>
-    <message>
-        <source>Don&apos;t draw grid on panning</source>
-        <translation type="vanished">Не нацртавајте мрежу при померању</translation>
-    </message>
-    <message>
-        <source>Type of grid to be drawn</source>
-        <translation type="vanished">Тип мреже која ће се нацртати</translation>
-    </message>
-    <message>
-        <source>Points</source>
-        <translation type="vanished">Тачке</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">Линије</translation>
-    </message>
-    <message>
-        <source>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</source>
-        <translation type="vanished">Ако је означено, линије мета-мреже ће се нацртати изнад мреже. Једноставна мрежа је бржа, али визуелно мање привлачна.</translation>
-    </message>
-    <message>
-        <source>Simple grid rendering</source>
-        <translation type="vanished">Једноставно приказивање мреже</translation>
-    </message>
-    <message>
-        <source>If checked, grid will not be adjusted to current units of drawing</source>
-        <translation type="vanished">Ako je ovo označeno, mreža se neće prilagođavati trenutnim jedinicama crtanja.</translation>
-    </message>
-    <message>
-        <source>Unitless grid</source>
-        <translation type="vanished">Mreža bez jedinica</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="322"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
         <translation>Minimalni razmak mreže (p&amp;x):</translation>
-    </message>
-    <message>
-        <source>&amp;Grid type:</source>
-        <translation type="vanished">&amp;Tip mreže:</translation>
-    </message>
-    <message>
-        <source>Minimal spacing between grid until grid rescale</source>
-        <translation type="vanished">Minimalni razmak između linija mreže pre ponovnog skaliranja.</translation>
-    </message>
-    <message>
-        <source>Decimal meta-grid every:</source>
-        <translation type="vanished">Decimalna meta-mreža svakih:</translation>
-    </message>
-    <message>
-        <source>Controls the frequency of major grid lines compared to minor grid lines.</source>
-        <translation type="vanished">Kontroliše frekvenciju glavnih linija mreže u odnosu na manje linije mreže.</translation>
-    </message>
-    <message>
-        <source>Points Grid</source>
-        <translation type="vanished">Mreža sa tačkama</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="398"/>
@@ -18591,201 +6862,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Boja &amp;mreže:</translation>
     </message>
     <message>
-        <source>Color for grid points</source>
-        <translation type="vanished">Boja za tačke mreže</translation>
-    </message>
-    <message>
-        <source>Meta-grid</source>
-        <translation type="vanished">Мета-мрежа</translation>
-    </message>
-    <message>
-        <source>Type of Meta Grid line if grid is drawn as points</source>
-        <translation type="vanished">Тип линија мета-мреже ако се мрежа приказује као тачке</translation>
-    </message>
-    <message>
-        <source>Width of Meta Grid line if grid is drawn by points</source>
-        <translation type="vanished">Ширина линија мета-мреже ако се мрежа приказује као тачке</translation>
-    </message>
-    <message>
-        <source>Line Type: </source>
-        <translation type="vanished">Тип линије:</translation>
-    </message>
-    <message>
-        <source>Line Width:</source>
-        <translation type="vanished">Ширина линије:</translation>
-    </message>
-    <message>
-        <source>Color for Meta Grid lines if grid drawn by points</source>
-        <translation type="vanished">Боја линија мета-мреже ако се мрежа приказује као тачке</translation>
-    </message>
-    <message>
-        <source>&amp;Meta-grid Color:</source>
-        <translation type="vanished">&amp;Боја мета-мреже:</translation>
-    </message>
-    <message>
-        <source>Lines Grid</source>
-        <translation type="vanished">Мрежа линија</translation>
-    </message>
-    <message>
-        <source>Type of Meta Grid lines if grid is drawn by lines</source>
-        <translation type="vanished">Тип линија мета-мреже ако се мрежа приказује као линије</translation>
-    </message>
-    <message>
-        <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation type="vanished">Ширина линија мета-мреже ако се мрежа приказује као линије</translation>
-    </message>
-    <message>
-        <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation type="vanished">Боја мета-мреже ако је мрежа нацртана линијама</translation>
-    </message>
-    <message>
-        <source>Width of grid lines</source>
-        <translation type="vanished">Ширина линија мреже</translation>
-    </message>
-    <message>
-        <source>Line type for grid lines</source>
-        <translation type="vanished">Тип линија за линије мреже</translation>
-    </message>
-    <message>
-        <source>Color for grid lines</source>
-        <translation type="vanished">Боја линија мреже</translation>
-    </message>
-    <message>
-        <source>Line Type:</source>
-        <translation type="vanished">Тип линије:</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">Snap</translation>
-    </message>
-    <message>
-        <source>Angle Snap</source>
-        <translation type="vanished">Привлачење угла</translation>
-    </message>
-    <message>
-        <source>deg</source>
-        <translation type="vanished">deg</translation>
-    </message>
-    <message>
-        <source>Angle between steps for Angle Snap (which is usually by corresponding actions if SHIFT is pressed)</source>
-        <translation type="vanished">Угао између корака за привлачење угла (што је обично повезано са одговарајућим акцијама када је притиснут тастер SHIFT)</translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="vanished">1</translation>
-    </message>
-    <message>
-        <source>3</source>
-        <translation type="vanished">3</translation>
-    </message>
-    <message>
-        <source>5</source>
-        <translation type="vanished">5</translation>
-    </message>
-    <message>
-        <source>10</source>
-        <translation type="vanished">10</translation>
-    </message>
-    <message>
-        <source>15</source>
-        <translation type="vanished">15</translation>
-    </message>
-    <message>
-        <source>18</source>
-        <translation type="vanished">18</translation>
-    </message>
-    <message>
-        <source>22.5</source>
-        <translation type="vanished">22.5</translation>
-    </message>
-    <message>
-        <source>30</source>
-        <translation type="vanished">30</translation>
-    </message>
-    <message>
-        <source>45</source>
-        <translation type="vanished">45</translation>
-    </message>
-    <message>
-        <source>90</source>
-        <translation type="vanished">90</translation>
-    </message>
-    <message>
-        <source>Angle snap single step</source>
-        <translation type="vanished">Korak za podešavanje ugla</translation>
-    </message>
-    <message>
-        <source>Mark Radius:</source>
-        <translation type="vanished">Poluprečnik markera:</translation>
-    </message>
-    <message>
-        <source>Radius of arc within angle snap mark.</source>
-        <translation type="vanished">Poluprečnik luka unutar ugla za koji se vrši automatsko poravnanje.</translation>
-    </message>
-    <message>
-        <source>Behavior</source>
-        <translation type="vanished">Ponašanje</translation>
-    </message>
-    <message>
-        <source>If checked, cursor will be hidden during snapping</source>
-        <translation type="vanished">Ako je ovo polje označeno, kursor će biti sakriven tokom automatskog poravnanja.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
         <source>Hide cursor when snapping</source>
         <translation>Sakrij kursor tokom automatskog poravnanja</translation>
-    </message>
-    <message>
-        <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
-        <translation type="vanished">Ako je ovo polje označeno, opcije automatskog poravnanja (središte, udaljenost) biće prikazane u alatnoj traci za automatsko poravnanje, umesto u alatnoj traci sa svojstvima alata.</translation>
-    </message>
-    <message>
-        <source>Show snap options in Snap Selection Toolbar</source>
-        <translation type="vanished">Prikaži opcije automatskog poravnanja u alatnoj traci za izbor sa automatskim poravnanjem</translation>
-    </message>
-    <message>
-        <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation type="vanished">Ako je ovo polje označeno, opcija „Poravnaj na mrežu“ biće ignorisana ako mreža nije prikazana.</translation>
-    </message>
-    <message>
-        <source>Ignore &quot;Snap to Grid&quot; if grid is not drawn</source>
-        <translation type="vanished">Ignoriši „Poravnaj na mrežu“ ako mreža nije prikazana</translation>
-    </message>
-    <message>
-        <source>Snap Marker</source>
-        <translation type="vanished">Marker za automatsko poravnanje</translation>
-    </message>
-    <message>
-        <source>Type of line to draw snap indicator</source>
-        <translation type="vanished">Tip linije za koju se prikazuje indikator podudaranja</translation>
-    </message>
-    <message>
-        <source>Snap Indicator lines</source>
-        <translation type="vanished">Linije indikatora podudaranja</translation>
-    </message>
-    <message>
-        <source>Type of snap indicator shape</source>
-        <translation type="vanished">Tip oblika indikatora podudaranja</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Krug</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Tačka</translation>
-    </message>
-    <message>
-        <source>Square</source>
-        <translation type="vanished">Kvadrat</translation>
-    </message>
-    <message>
-        <source>Gap</source>
-        <translation type="vanished">Gap</translation>
-    </message>
-    <message>
-        <source>If checked, snap indicator will be shown</source>
-        <translation type="vanished">Ako je označeno, indikator podudaranja će biti prikazan</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="278"/>
@@ -18793,261 +6872,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Alt+S</translation>
     </message>
     <message>
-        <source>Snap Indicator Color:</source>
-        <translation type="vanished">Boja indikatora podudaranja:</translation>
-    </message>
-    <message>
-        <source>If checked, a shap for snap will be drawn</source>
-        <translation type="vanished">Ako je ovo označeno, biće nacrtan oblik za indikator podudaranja.</translation>
-    </message>
-    <message>
-        <source>Snap Indicator shape</source>
-        <translation type="vanished">Oblik indikatora podudaranja</translation>
-    </message>
-    <message>
-        <source>Type of snap lines indicator</source>
-        <translation type="vanished">Tip indikatora linija podudaranja</translation>
-    </message>
-    <message>
-        <source>Adaptive</source>
-        <translation type="vanished">Adaptivni</translation>
-    </message>
-    <message>
-        <source>Crosshair</source>
-        <translation type="vanished">Nišan</translation>
-    </message>
-    <message>
-        <source>Spiderweb</source>
-        <translation type="vanished">Paučina</translation>
-    </message>
-    <message>
-        <source>Color for snap indicator shape</source>
-        <translation type="vanished">Boja oblika indikatora podudaranja</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="799"/>
         <source>#1E90FF</source>
         <translation>#1E90FF</translation>
-    </message>
-    <message>
-        <source>Color for snap lines indicator</source>
-        <translation type="vanished">Boja indikatora linija podudaranja</translation>
-    </message>
-    <message>
-        <source>Line Width</source>
-        <translation type="vanished">Širina linije</translation>
-    </message>
-    <message>
-        <source>Width of line for snap indicator</source>
-        <translation type="vanished">Širina linije za indikator podudaranja</translation>
-    </message>
-    <message>
-        <source>Advanced Snap Fine-tuning settings</source>
-        <translation type="vanished">Napredna podešavanja za fino podešavanje podudaranja</translation>
-    </message>
-    <message>
-        <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
-        <translation type="vanished">Prekidač za udaljenost „slobodnog podudaranja“ entiteta:</translation>
-    </message>
-    <message>
-        <source>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</source>
-        <translation type="vanished">Podudaranje sa entitetom će se aktivirati ako je omogućeno i ako je udaljenost između kursora i tačke podudaranja veća od specificirane vrednosti.</translation>
-    </message>
-    <message>
-        <source> drawing units</source>
-        <translation type="vanished">jedinice za crtanje</translation>
-    </message>
-    <message>
-        <source>Distance in screen coordinates that is used for catching entities </source>
-        <translation type="vanished">Udaljenost u koordinatama ekrana koja se koristi za hvatanje entiteta</translation>
-    </message>
-    <message>
-        <source>Min grid cell snap factor:</source>
-        <translation type="vanished">Minimalni faktor podudaranja sa ćelijom mreže:</translation>
-    </message>
-    <message>
-        <source>Snap distance (in pixels) for catching entities.</source>
-        <translation type="vanished">Udaljenost podudaranja (u pikselima) za hvatanje entiteta.</translation>
-    </message>
-    <message>
-        <source>Catch entities Snap Distance:</source>
-        <translation type="vanished">Udaljenost podudaranja za hvatanje entiteta:</translation>
-    </message>
-    <message>
-        <source>Grid cell factor used for snap to grid.</source>
-        <translation type="vanished">Faktor ćelije mreže koji se koristi za podudaranje sa mrežom.</translation>
-    </message>
-    <message>
-        <source>Coordinate System</source>
-        <translation type="vanished">Координатни систем</translation>
-    </message>
-    <message>
-        <source>Color of the marker</source>
-        <translation type="vanished">Боја маркера</translation>
-    </message>
-    <message>
-        <source>Angles Basis Marker</source>
-        <translation type="vanished">Маркер за основе угла</translation>
-    </message>
-    <message>
-        <source>Defines where to draw angle basis marker</source>
-        <translation type="vanished">Опредељује где ће се цртати маркер за основе угла</translation>
-    </message>
-    <message>
-        <source>Always</source>
-        <translation type="vanished">Увек</translation>
-    </message>
-    <message>
-        <source>Only for non-defaults</source>
-        <translation type="vanished">Само за не-подразумеване вредности</translation>
-    </message>
-    <message>
-        <source>If enabled, angles basis marker will be shown in the orign of coordinates system</source>
-        <translation type="vanished">Ако је омогућено, маркер за основе угла ће се приказивати у координатном систему</translation>
-    </message>
-    <message>
-        <source>Show angles basis marker</source>
-        <translation type="vanished">Прикажи маркер за основе угла</translation>
-    </message>
-    <message>
-        <source>Base Angle Ray Color:</source>
-        <translation type="vanished">Боја основе угла:</translation>
-    </message>
-    <message>
-        <source>#017CFF</source>
-        <translation type="vanished">#017CFF</translation>
-    </message>
-    <message>
-        <source>Color of the ray that displays zero angle position</source>
-        <translation type="vanished">Боја зрака која приказује позицију нуле угла</translation>
-    </message>
-    <message>
-        <source>#00FFFF</source>
-        <translation type="vanished">#00FFFF</translation>
-    </message>
-    <message>
-        <source>Axis Lines</source>
-        <translation type="vanished">Линије осе</translation>
-    </message>
-    <message>
-        <source>Color for X axis</source>
-        <translation type="vanished">Боја за X осу</translation>
-    </message>
-    <message>
-        <source>Size of Axis Lines drawn in absolute zero point</source>
-        <translation type="vanished">Величина линија осе које се цртају у апсолутној нултој тачки</translation>
-    </message>
-    <message>
-        <source>Defines how to draw extended X axis</source>
-        <translation type="vanished">Дефинише како се црта проширена X оса</translation>
-    </message>
-    <message>
-        <source>Whole Area</source>
-        <translation type="vanished">Цела област</translation>
-    </message>
-    <message>
-        <source>Positive Values Area</source>
-        <translation type="vanished">Област позитивних вредности</translation>
-    </message>
-    <message>
-        <source>Negative Values Area</source>
-        <translation type="vanished">Област негативних вредности</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">None</translation>
-    </message>
-    <message>
-        <source>Y-Axis Color:</source>
-        <translation type="vanished">Боја Y-осе:</translation>
-    </message>
-    <message>
-        <source>Y-Axis Extension</source>
-        <translation type="vanished">Продужетак Y-осе</translation>
-    </message>
-    <message>
-        <source>X-Axis Extension</source>
-        <translation type="vanished">Продужетак X-осе</translation>
-    </message>
-    <message>
-        <source>If checked, axises will be inifinite lines</source>
-        <translation type="vanished">Ако је означено, осе ће бити бесконачне линије</translation>
-    </message>
-    <message>
-        <source>Extend axis lines</source>
-        <translation type="vanished">Продужи осе</translation>
-    </message>
-    <message>
-        <source>X-Axis Color:</source>
-        <translation type="vanished">Боја X-осе:</translation>
-    </message>
-    <message>
-        <source>Defines how to draw extended Y axis</source>
-        <translation type="vanished">Дефинише како се црта продужена Y-оса</translation>
-    </message>
-    <message>
-        <source>Short Axis Size</source>
-        <translation type="vanished">Величина кратке осе</translation>
-    </message>
-    <message>
-        <source>Color for Y axis</source>
-        <translation type="vanished">Боја за Y-осу</translation>
-    </message>
-    <message>
-        <source>Coordinates Zero Marker</source>
-        <translation type="vanished">Маркер координата нуле</translation>
-    </message>
-    <message>
-        <source>Marker Size</source>
-        <translation type="vanished">Величина маркера</translation>
-    </message>
-    <message>
-        <source>Font that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation type="vanished">Фонт који треба да се користи за исцртавање назива осе у координатном систему нуле.</translation>
-    </message>
-    <message>
-        <source>Size of axis of coordinate system&apos;s zero marker</source>
-        <translation type="vanished">Величина осе координатног система маркера нуле</translation>
-    </message>
-    <message>
-        <source>If selected and view is in user coordinate system, the marker for coodinate system will be shown in zero point of world coordinates system. </source>
-        <translation type="vanished">Ако је изабрано и приказ је у корисничком координатном систему, маркер за координатни систем ће бити приказан у нултој тачки светског координатног система.</translation>
-    </message>
-    <message>
-        <source>Show WCS zero marker</source>
-        <translation type="vanished">Прикажи маркер нуле СКС</translation>
-    </message>
-    <message>
-        <source>If selected, marker for coodinate system will be shown in zero point of current user coordinates system. </source>
-        <translation type="vanished">Ако је изабрано, маркер за координатни систем ће бити приказан у нултој тачки тренутног корисничког координатног система.</translation>
-    </message>
-    <message>
-        <source>Show UCS zero marker</source>
-        <translation type="vanished">Прикажи маркер нуле ККС</translation>
-    </message>
-    <message>
-        <source>Relative Zero Marker</source>
-        <translation type="vanished">Релативни маркер нуле</translation>
-    </message>
-    <message>
-        <source>Marker Radius:</source>
-        <translation type="vanished">Радијус маркера:</translation>
-    </message>
-    <message>
-        <source>Radius of relative zero marker</source>
-        <translation type="vanished">Радијус релативног маркера нуле</translation>
-    </message>
-    <message>
-        <source>Color of relative zero marker</source>
-        <translation type="vanished">Боја релативне нуле</translation>
-    </message>
-    <message>
-        <source>If checked, relative zero marker will not be drawn</source>
-        <translation type="vanished">Ако је поље означено, маркер релативне нуле неће бити приказан</translation>
-    </message>
-    <message>
-        <source>Hide marker</source>
-        <translation type="vanished">Сакриј маркер</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -19055,253 +6882,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Alt+Z</translation>
     </message>
     <message>
-        <source>&amp;Preview</source>
-        <translation type="vanished">&amp;Преглед</translation>
-    </message>
-    <message>
-        <source>Highlight</source>
-        <translation type="vanished">Истакни</translation>
-    </message>
-    <message>
-        <source>&amp;Highlighted entity Color:</source>
-        <translation type="vanished">&amp;Боја истакнуте јединице:</translation>
-    </message>
-    <message>
-        <source>Color for highlighted entities</source>
-        <translation type="vanished">Боја за истакнуте јединице</translation>
-    </message>
-    <message>
-        <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
-        <translation type="vanished">Ако је изабрано, јединица ће бити истакнута у режиму „Нацрт“ користећи ширину линије јединице уместо 1 пx</translation>
-    </message>
-    <message>
-        <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
-        <translation type="vanished">Истакни са ширином линије на екрану у режиму „Нацрт“</translation>
-    </message>
-    <message>
-        <source>Visualize the entity under the mouse cursor</source>
-        <translation type="vanished">Vizualizuj entitet ispod kursora miša</translation>
-    </message>
-    <message>
-        <source>Highlight entities on mouse hover</source>
-        <translation type="vanished">Istakni entitete kada se miš nalazi iznad njih</translation>
-    </message>
-    <message>
-        <source>Explanatory Reference Point Size</source>
-        <translation type="vanished">Veličina referentne tačke za objašnjenje</translation>
-    </message>
-    <message>
-        <source>Size of reference points</source>
-        <translation type="vanished">Veličina referentnih tačaka</translation>
-    </message>
-    <message>
-        <source>Dwg Units</source>
-        <translation type="vanished">Jedinice crteža</translation>
-    </message>
-    <message>
-        <source>Size relative to screen</source>
-        <translation type="vanished">Veličina u odnosu na ekran</translation>
-    </message>
-    <message>
-        <source>Size in drawing units</source>
-        <translation type="vanished">Veličina u jedinicama crteža</translation>
-    </message>
-    <message>
-        <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation type="vanished">(0 =&gt; 5% u odnosu na veličinu ekrana)</translation>
-    </message>
-    <message>
-        <source>Explanatory Reference Point Style</source>
-        <translation type="vanished">Stil referentne tačke za objašnjenje</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="vanished">Преглед</translation>
-    </message>
-    <message>
-        <source>If checked, more informative and explaining preview will be drawn for operations</source>
-        <translation type="vanished">Ако је поље означено, приказаће се информативнији и детаљнији преглед операција.</translation>
-    </message>
-    <message>
-        <source>Show operation&apos;s preview explanatory entities </source>
-        <translation type="vanished">Прикажи објашњења за елементе прегледа операције</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
         <source>N&amp;umber of preview entities:</source>
         <translation>Број елемената прегледа:</translation>
-    </message>
-    <message>
-        <source>If more entities in preview than specified, rect will be drawn instead of entities.</source>
-        <translation type="vanished">Ако је у прегледу више елемената него што је наведено, уместо елемената ће се приказати правоугаоник.</translation>
-    </message>
-    <message>
-        <source>Color for selected preview reference entiites</source>
-        <translation type="vanished">Боја за изабране референтне елементе прегледа</translation>
-    </message>
-    <message>
-        <source>Active preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation type="vanished">Боја за активни објашњени елемент прегледа:</translation>
-    </message>
-    <message>
-        <source>Color for preview reference entities</source>
-        <translation type="vanished">Боја за референтне елементе прегледа</translation>
-    </message>
-    <message>
-        <source>Preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation type="vanished">Боја за објашњени елемент прегледа:</translation>
-    </message>
-    <message>
-        <source>Info Cursor</source>
-        <translation type="vanished">Информациони курсор</translation>
-    </message>
-    <message>
-        <source>Informational Cursor Overlay </source>
-        <translation type="vanished">Informativni preklapajući pokazivač</translation>
-    </message>
-    <message>
-        <source>Appearance</source>
-        <translation type="vanished">Izgled</translation>
-    </message>
-    <message>
-        <source>Font that should be used for drawing elements of informational cursor.</source>
-        <translation type="vanished">Font koji se koristi za crtanje elemenata informativnog pokazivača.</translation>
-    </message>
-    <message>
-        <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
-        <translation type="vanished">Ako je ovo polje označeno, komponente koordinata će biti nacrtane u jednom redu. U suprotnom, svaka komponenta će biti u svom redu.</translation>
-    </message>
-    <message>
-        <source>Draw coordinates in one line</source>
-        <translation type="vanished">Crtajte koordinate u jednom redu</translation>
-    </message>
-    <message>
-        <source>If checked, labels for coordinate components will be shown. Otherwise, standard form of coordinates will be displayed.</source>
-        <translation type="vanished">Ako je ovo polje označeno, prikazaće se oznake za komponente koordinata. U suprotnom, prikazaće se standardni oblik koordinata.</translation>
-    </message>
-    <message>
-        <source>Show labels for coordinates</source>
-        <translation type="vanished">Prikaži oznake za koordinate</translation>
-    </message>
-    <message>
-        <source>Font size, in points</source>
-        <translation type="vanished">Veličina fonta, u tačkama</translation>
-    </message>
-    <message>
-        <source>Offset of labels from the cursor point.</source>
-        <translation type="vanished">Odmik oznaka od tačke pokazivača.</translation>
-    </message>
-    <message>
-        <source>Cursor position offset:</source>
-        <translation type="vanished">Odmik položaja pokazivača:</translation>
-    </message>
-    <message>
-        <source>If checked, informational cursor will be enabled and shown where applicable.</source>
-        <translation type="vanished">Ako je označeno, informativni pokazivač će biti omogućen i prikazan kada je primenljivo.</translation>
-    </message>
-    <message>
-        <source>Enable Informational Cursor</source>
-        <translation type="vanished">Omogući informativni pokazivač</translation>
-    </message>
-    <message>
-        <source>Operations Preview</source>
-        <translation type="vanished">Pregled operacija</translation>
-    </message>
-    <message>
-        <source>Show properties for entity that will be created</source>
-        <translation type="vanished">Prikaži svojstva entiteta koji će biti kreiran</translation>
-    </message>
-    <message>
-        <source>Show properties for entity that is edited by handles</source>
-        <translation type="vanished">Prikaži svojstva entiteta koji se uređuje pomoću kontrolnih tačaka</translation>
-    </message>
-    <message>
-        <source>Content</source>
-        <translation type="vanished">Sadržaj</translation>
-    </message>
-    <message>
-        <source>If checked, show relative coordinate</source>
-        <translation type="vanished">Ako je označeno, prikaži relativne koordinate</translation>
-    </message>
-    <message>
-        <source>Show relative coordinate</source>
-        <translation type="vanished">Prikaži relativne koordinate</translation>
-    </message>
-    <message>
-        <source>If checked, absolute position of snap point will be shown.</source>
-        <translation type="vanished">Ako je označeno, biće prikazana apsolutna pozicija tačke za koju se vrši prilagođavanje.</translation>
-    </message>
-    <message>
-        <source>Show absolute coordinate</source>
-        <translation type="vanished">Prikaži apsolutne koordinate</translation>
-    </message>
-    <message>
-        <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation type="vanished">Ako je ovo polje označeno, relativna udaljenost i ugao od relativne nulte tačke do tačke prianjanja biće prikazani.</translation>
-    </message>
-    <message>
-        <source>Show relative distance and angle</source>
-        <translation type="vanished">[&apos;Prikaži relativnu udaljenost i ugao&apos;, &apos;Prikaži relativne udaljenosti i uglove&apos;, &apos;Prikaži relativne udaljenosti i uglove&apos;]</translation>
-    </message>
-    <message>
-        <source>If checked, the prompt of the active command will be shown.</source>
-        <translation type="vanished">Ako je ovo polje označeno, prikazivaće se uputstvo za aktivnu komandu.</translation>
-    </message>
-    <message>
-        <source>Show active command prompt</source>
-        <translation type="vanished">Prikaži uputstvo za aktivnu komandu</translation>
-    </message>
-    <message>
-        <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
-        <translation type="vanished">Ako je ovo polje označeno, informacije o tipu prianjanja i ograničenjima biće prikazane za tačku prianjanja (ako postoji).</translation>
-    </message>
-    <message>
-        <source>Show snap info /restriction</source>
-        <translation type="vanished">Prikaži informacije o prianjanju / ograničenjima</translation>
-    </message>
-    <message>
-        <source>Color for absolute snap coordinates.</source>
-        <translation type="vanished">Boja za apsolutne koordinate prianjanja.</translation>
-    </message>
-    <message>
-        <source>Color for snap type/restriction</source>
-        <translation type="vanished">Boja za tip prianjanja / ograničenje</translation>
-    </message>
-    <message>
-        <source>Color for relative distance and angle</source>
-        <translation type="vanished">Boja za relativnu udaljenost i ugao</translation>
-    </message>
-    <message>
-        <source>Color for the command prompt</source>
-        <translation type="vanished">Boja za uputstvo komande</translation>
-    </message>
-    <message>
-        <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
-        <translation type="vanished">Ako je postavljeno i aktivan je korisnički koordinatni sistem, apsolutne koordinate u svetskom koordinatnom sistemu će takođe biti prikazane.</translation>
-    </message>
-    <message>
-        <source>Show world coordinates if in user coordinate system</source>
-        <translation type="vanished">Prikaži svetske koordinate ako je aktivan korisnički koordinatni sistem.</translation>
-    </message>
-    <message>
-        <source>If checked, name of active command will be shown before command prompt</source>
-        <translation type="vanished">Ako je označeno, ime aktivne komande će se prikazati pre komandne linije.</translation>
-    </message>
-    <message>
-        <source>Show active command name</source>
-        <translation type="vanished">Prikaži ime aktivne komande.</translation>
-    </message>
-    <message>
-        <source>If checked, short overview properties of the entity&apos;s that is catched for selection will be shown. </source>
-        <translation type="vanished">Ako je označeno, kratak pregled svojstava entiteta koji je selektovan će se prikazati.</translation>
-    </message>
-    <message>
-        <source>Show properties of catched entity</source>
-        <translation type="vanished">Prikaži svojstva selektovanog entiteta.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="978"/>
@@ -19319,29 +6902,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kada je omogućeno, aktiviranje sloja će modifikovati sve selektovane entitete i prebaciti ih na taj novi sloj. Da biste promenili sloj više entiteta: prvo selektujte potrebne entitete; zatim aktivirajte sloj u widgetu slojeva. Ovo će modifikovati sve selektovane entitete tako da pripadaju novom sloju.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>Modify layer of selected entities, at layer activation</source>
-        <translation type="vanished">Modifikuj sloj selektovanih entiteta pri aktiviranju sloja.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1270"/>
         <source>Automatically zoom drawing when opening</source>
         <translation>Automatski zumiraj crtež pri otvaranju</translation>
-    </message>
-    <message>
-        <source>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </source>
-        <translation type="vanished">Ako je izabrano, entiteti će ostati izabrani nakon završetka operacija modifikacije. U suprotnom, neće biti izabrani.</translation>
-    </message>
-    <message>
-        <source>Keep modified entities selected</source>
-        <translation type="vanished">Zadrži izabrane modifikovane entitete</translation>
-    </message>
-    <message>
-        <source>If checked, it will be possible to enter value of angle in decimal degrees only. Otherwise, angles in surveyor, radiant, imperial degrees and bearing formats are allowed for input.  </source>
-        <translation type="vanished">Ako je označeno, biće moguće uneti vrednost ugla samo u decimalnim stepenima. U suprotnom, dozvoljeni su uglovi u formatima stepeni, radijani, imperijalni stepeni i azimut.</translation>
-    </message>
-    <message>
-        <source>Allow angles input in decimal degrees only</source>
-        <translation type="vanished">Dozvoli unos uglova samo u decimalnim stepenima</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="46"/>
@@ -19464,85 +7027,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Промените слој изабраних ентитета, на  активацији слоја</translation>
     </message>
     <message>
-        <source>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</source>
-        <translation type="vanished">Ako je omogućeno, moguće je koristiti tastere za: zumiranje pomoću +/- tastera, pomicanje pomoću tastera sa strelicama, pomeranje pozicije izabranih entiteta pomoću tastera sa strelicama i modifikatora SHIFT/CTRL.</translation>
-    </message>
-    <message>
-        <source>Enable scroll and position adjustment via keyboard</source>
-        <translation type="vanished">Omogući podešavanje pozicije i skrolovanja pomoću tastature</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="996"/>
         <source>Program Defaults</source>
         <translation>Podrazumevane postavke programa</translation>
-    </message>
-    <message>
-        <source>If selected, controls for picking values from drawing are available in Tool Options toolbar, allowing to pick length and angle values from drawing. </source>
-        <translation type="vanished">Ako je izabrano, kontrolni elementi za odabir vrednosti sa crteža biće dostupni u alatnoj traci Opcije alata, omogućavajući odabir dužine i ugla sa crteža.</translation>
-    </message>
-    <message>
-        <source>Tool options toolbar includes pick values controls</source>
-        <translation type="vanished">Alatna traka sa opcijama alata uključuje kontrolne elemente za odabir vrednosti</translation>
-    </message>
-    <message>
-        <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
-        <translation type="vanished">Ako je izabrano, biće kreirana zasebna stavka menija za svaku grupu komandi povezanih sa entitetima. U suprotnom, ove komande će biti pod istom stavkom menija.</translation>
-    </message>
-    <message>
-        <source>Separate menu per entity</source>
-        <translation type="vanished">Zasebna stavka menija za svaki entitet</translation>
-    </message>
-    <message>
-        <source>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</source>
-        <translation type="vanished">Ako je omogućeno, interni ID entiteta će biti prikazan u dijalogu svojstava i widgetu Informacije o entitetu.</translation>
-    </message>
-    <message>
-        <source>Show internal IDs of entities</source>
-        <translation type="vanished">Prikaži interne ID-ove entiteta</translation>
-    </message>
-    <message>
-        <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
-        <translation type="vanished">Ako je označeno, prečica sa tastature će biti prikazana u savetu za akciju</translation>
-    </message>
-    <message>
-        <source>Show keyboard shortcuts in actions tooltips</source>
-        <translation type="vanished">Prikaži prečice sa tastature u savetima za akcije</translation>
-    </message>
-    <message>
-        <source>If selected, menu will include top-level items for drawing tools. Otherwise, they will under the same menu item. </source>
-        <translation type="vanished">Ako je izabrano, meni će sadržati stavke najvišeg nivoa za alate za crtanje. U suprotnom, biće grupisani pod istom stavkom menija.</translation>
-    </message>
-    <message>
-        <source>Expand &quot;Tools&quot; commands in menu</source>
-        <translation type="vanished">Proširi komande „Alati“ u meniju</translation>
-    </message>
-    <message>
-        <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
-        <translation type="vanished">Ako je označeno, dugme za zatvaranje će se prikazivati u karticama za crteže ako su crteži u režimu kartica.</translation>
-    </message>
-    <message>
-        <source>Show Close button on drawings tabs</source>
-        <translation type="vanished">Prikaži dugme za zatvaranje na karticama crteža</translation>
-    </message>
-    <message>
-        <source>If checked, the icon for current action will be shown in options toolbar before action&apos;s options</source>
-        <translation type="vanished">Ako je označeno, ikona za trenutnu akciju biće prikazana u alatnoj traci opcija pre opcija akcije.</translation>
-    </message>
-    <message>
-        <source>Show current command icon in options toolbar</source>
-        <translation type="vanished">Prikaži ikonu trenutne komande u alatnoj traci opcija</translation>
-    </message>
-    <message>
-        <source>Active Tab</source>
-        <translation type="vanished">Aktivna kartica</translation>
-    </message>
-    <message>
-        <source>If checked, dialogs will be positioned and resized to position/size of last invocation.</source>
-        <translation type="vanished">Ako je označeno, dijalozi će se pozicionirati i promeniti veličina na poziciju/veličinu poslednjeg poziva.</translation>
-    </message>
-    <message>
-        <source>Persistent dialogs location and size</source>
-        <translation type="vanished">Trajna lokacija i veličina dijaloških prozora</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1036"/>
@@ -19550,45 +7037,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Ne koristi nativni dijalog za otvaranje datoteka operativnog sistema</translation>
     </message>
     <message>
-        <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
-        <translation type="vanished">Ako je ovo označeno, svaka promena zumiranja ili pomeranja pricrtavanja označiće pricrtavanje kao izmenjeno. U suprotnom, promena prikaza neće uticati na status izmenjenosti pricrtavanja.</translation>
-    </message>
-    <message>
-        <source>Changing view only modifies drawing</source>
-        <translation type="vanished">Promena prikaza samo menja pricrtavanje</translation>
-    </message>
-    <message>
-        <source>If checked, location of dialog will not be saved, but size will</source>
-        <translation type="vanished">Ako je ovo označeno, lokacija dijaloga neće biti sačuvana, ali će veličina biti.</translation>
-    </message>
-    <message>
-        <source>Persist dialog size only</source>
-        <translation type="vanished">Sačuvaj samo veličinu dijaloga</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1193"/>
         <source>Defaults for new drawings</source>
         <translation>Podrazumevane vrednosti za nova pricrtavanja</translation>
-    </message>
-    <message>
-        <source>Angles Positive Direction:</source>
-        <translation type="vanished">Pozitivan smer uglova:</translation>
-    </message>
-    <message>
-        <source>Zero base angle:</source>
-        <translation type="vanished">Početni ugao:</translation>
-    </message>
-    <message>
-        <source>Orthogonal Grid</source>
-        <translation type="vanished">Ortogonalna mreža</translation>
-    </message>
-    <message>
-        <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation type="vanished">Početni ugao u odnosu na trenutni korisnički koordinatni sistem. Utiče na unos polarnih koordinata, prilagođavanje uglu. 0,0 je 15:00.</translation>
-    </message>
-    <message>
-        <source>Drawing units</source>
-        <translation type="vanished">Jedinice pricrtavanja</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1205"/>
@@ -19596,77 +7047,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&amp;Jedinica:</translation>
     </message>
     <message>
-        <source>degrees.</source>
-        <translation type="vanished">stepeni.</translation>
-    </message>
-    <message>
-        <source>RIght Isometric Grid</source>
-        <translation type="vanished">Desna izometrijska mreža</translation>
-    </message>
-    <message>
-        <source>Left  Isometric Grid</source>
-        <translation type="vanished">Leva izometrijska mreža</translation>
-    </message>
-    <message>
-        <source>Top Isometric Grid</source>
-        <translation type="vanished">Gornja izometrijska mreža</translation>
-    </message>
-    <message>
-        <source>Counterclockwise, 90 degrees is north.</source>
-        <translation type="vanished">U smeru suprotnom od kazaljke na satu, 90 stepeni je sever.</translation>
-    </message>
-    <message>
-        <source>Clockwise, 90 degrees is sourth.</source>
-        <translation type="vanished">U smeru kazaljke na satu, 90 stepeni je jug.</translation>
-    </message>
-    <message>
-        <source>If checked, new drawing will be created with grid disabled</source>
-        <translation type="vanished">Ako je ovo polje označeno, novi crtež će biti kreiran bez aktivirane mreže.</translation>
-    </message>
-    <message>
-        <source>Grid is Off </source>
-        <translation type="vanished">Mreža je isključena</translation>
-    </message>
-    <message>
-        <source>Auto-Save Drawings</source>
-        <translation type="vanished">Automatsko čuvanje crteža</translation>
-    </message>
-    <message>
-        <source>#</source>
-        <translation type="vanished">#</translation>
-    </message>
-    <message>
-        <source>~</source>
-        <translation type="vanished">~</translation>
-    </message>
-    <message>
-        <source>_</source>
-        <translation type="vanished">_</translation>
-    </message>
-    <message>
-        <source>__</source>
-        <translation type="vanished">__</translation>
-    </message>
-    <message>
-        <source>lcauto_</source>
-        <translation type="vanished">lcauto_</translation>
-    </message>
-    <message>
-        <source>autosaved_</source>
-        <translation type="vanished">automatski sačuvano_</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>Vreme između automatskog čuvanja dokumenta u minutima.</translation>
-    </message>
-    <message>
-        <source> minutes</source>
-        <translation type="vanished">minuta</translation>
-    </message>
-    <message>
-        <source>Auto-save file name prefix:</source>
-        <translation type="vanished">Prefiks imena datoteke za automatsko čuvanje:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1002"/>
@@ -19674,45 +7057,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Kada je ovo uključeno, LibreCAD će automatski generisati rezervnu kopiju trenutnog crteža.</translation>
     </message>
     <message>
-        <source>Auto save backup each</source>
-        <translation type="vanished">Automatski čuvajte rezervnu kopiju svakih</translation>
-    </message>
-    <message>
-        <source>Backup file name suffix:</source>
-        <translation type="vanished">Naziv datoteke za rezervnu kopiju:</translation>
-    </message>
-    <message>
-        <source>$$</source>
-        <translation type="vanished">$$</translation>
-    </message>
-    <message>
-        <source>_backup</source>
-        <translation type="vanished">_backup</translation>
-    </message>
-    <message>
-        <source>_bak</source>
-        <translation type="vanished">_bak</translation>
-    </message>
-    <message>
-        <source>.bak</source>
-        <translation type="vanished">.bak</translation>
-    </message>
-    <message>
-        <source>.backup</source>
-        <translation type="vanished">.backup</translation>
-    </message>
-    <message>
-        <source>.lcb</source>
-        <translation type="vanished">.lcb</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1130"/>
         <source>Startup</source>
         <translation>Pokretanje</translation>
-    </message>
-    <message>
-        <source>If checked, toolbars with commands will be enabled. </source>
-        <translation type="vanished">Ako je ovo polje označeno, alatne trake sa komandama biće omogućene.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1171"/>
@@ -19720,17 +7067,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Omogući CAD alatne trake</translation>
     </message>
     <message>
-        <source>Controls default mode for drawings</source>
-        <translation type="vanished">Postavlja podrazumevani režim za crteže</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
         <source>Start in tab mode</source>
         <translation>Pokreni u režimu sa tabovima</translation>
-    </message>
-    <message>
-        <source>Defines whether splash screen will be shown on startup</source>
-        <translation type="vanished">Određuje da li će se prikazati početni ekran pri pokretanju</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1136"/>
@@ -19738,17 +7077,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Prikaži ekran za učitavanje</translation>
     </message>
     <message>
-        <source>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </source>
-        <translation type="vanished">Ako je označeno, omogućiće se dokovane widget-e sa komandama za levu bočnu traku. U suprotnom, biće onemogućeni.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1164"/>
         <source>Enable CAD dockwidgets</source>
         <translation>Omogući CAD dokovane widget-e</translation>
-    </message>
-    <message>
-        <source>If set, previously opened files during previous closing of the application will be re-opened.</source>
-        <translation type="vanished">Ako je postavljeno, prethodno otvoreni fajlovi tokom prethodnog zatvaranja aplikacije biće ponovo otvoreni.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1157"/>
@@ -19756,65 +7087,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Otvori poslednje otvorene fajlove</translation>
     </message>
     <message>
-        <source>If enabled, drop-down menus may become floating</source>
-        <translation type="vanished">Ako je omogućeno, padajući meniji mogu postati plutajući</translation>
-    </message>
-    <message>
-        <source>Allow menus detaching</source>
-        <translation type="vanished">Dozvoli odvajanje menija</translation>
-    </message>
-    <message>
-        <source>If checked, after start the main window will be maximized</source>
-        <translation type="vanished">Ako je označeno, nakon pokretanja glavni prozor će biti maksimizovan</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1150"/>
         <source>Start with main window maximized</source>
         <translation>Pokreni sa maksimizovanim glavnim prozorom</translation>
-    </message>
-    <message>
-        <source>If unchecked, individual widgets of statusbar are toolbars</source>
-        <translation type="vanished">Ako nije označeno, pojedinačni widgeti statusne trake su alatne trake</translation>
-    </message>
-    <message>
-        <source>Use &quot;classic&quot; statusbar</source>
-        <translation type="vanished">Koristi „klasičnu“ statusnu traku</translation>
-    </message>
-    <message>
-        <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
-        <translation type="vanished">Ako je označeno, poruke o akcijama će se takođe prikazivati u donjoj statusnoj traci</translation>
-    </message>
-    <message>
-        <source>Duplicate prompt messages of actions in statusbar</source>
-        <translation type="vanished">Dupliraj poruke o akcijama u statusnoj traci</translation>
-    </message>
-    <message>
-        <source>If enabled, tooltips toolbar&apos;s name will be shown</source>
-        <translation type="vanished">Ako je omogućeno, prikazivaće se nazivi alatnih traka u balonima pomoći</translation>
-    </message>
-    <message>
-        <source>Show tooltips for toolbars</source>
-        <translation type="vanished">Prikazuj balone pomoći za alatne trake</translation>
-    </message>
-    <message>
-        <source>New Versions</source>
-        <translation type="vanished">Nove verzije</translation>
-    </message>
-    <message>
-        <source>Check GitHub for new releases of LibreCAD on program startup</source>
-        <translation type="vanished">Pri pokretanju programa, proverite GitHub za nove verzije LibreCAD-a</translation>
-    </message>
-    <message>
-        <source>Check for new versions on startup</source>
-        <translation type="vanished">Pri pokretanju, proverite da li postoje nove verzije</translation>
-    </message>
-    <message>
-        <source>If checked, pre-release versions will be ignored</source>
-        <translation type="vanished">Ako je ovo označeno, verzije u fazi testiranja će biti ignorisane</translation>
-    </message>
-    <message>
-        <source>Ignore pre-release versions</source>
-        <translation type="vanished">Ignoriši verzije u fazi testiranja</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="58"/>
@@ -19822,17 +7097,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Jezik</translation>
     </message>
     <message>
-        <source>Language to use for GUI and messages</source>
-        <translation type="vanished">Jezik koji će se koristiti za korisnički interfejs i poruke</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="64"/>
         <source>&amp;GUI Language:</source>
         <translation>&amp;Jezik korisničkog interfejsa:</translation>
-    </message>
-    <message>
-        <source>Languages for commands in Cmd Widget</source>
-        <translation type="vanished">Jezici za komande u Cmd widget-u</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="80"/>
@@ -19845,17 +7112,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Obriši podešavanja</translation>
     </message>
     <message>
-        <source>Restores program geometry/layout to original state</source>
-        <translation type="vanished">Vraća geometriju/raspored programa u prvobitno stanje</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1104"/>
         <source>Layout</source>
         <translation>Raspored</translation>
-    </message>
-    <message>
-        <source>Restores the program settings to its original state</source>
-        <translation type="vanished">Vraća podešavanja programa u prvobitno stanje</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1120"/>
@@ -19868,34 +7127,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&amp;Putevi</translation>
     </message>
     <message>
-        <source>Exchange</source>
-        <translation type="vanished">Razmena</translation>
-    </message>
-    <message>
-        <source>Exports settings to the file.</source>
-        <translation type="vanished">Izvozi podešavanja u datoteku.</translation>
-    </message>
-    <message>
-        <source>Export settings to file</source>
-        <translation type="vanished">Izvoz podešavanja u datoteku</translation>
-    </message>
-    <message>
-        <source>Imports application&apos;s preferences from external file</source>
-        <translation type="vanished">Uvozi preferencije aplikacije iz eksterne datoteke</translation>
-    </message>
-    <message>
-        <source>Import settings from file</source>
-        <translation type="vanished">Uvoz podešavanja iz datoteke</translation>
-    </message>
-    <message>
-        <source>Paths</source>
-        <translation type="vanished">Путеви</translation>
-    </message>
-    <message>
-        <source>Click to select file</source>
-        <translation type="vanished">Кликните да одаберете датотеку</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
         <source>Variable File:</source>
         <translation>Датотека са променљивима:</translation>
@@ -19906,25 +7137,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Фолдер библиотеке делова. ДХФ датотеке са симболима морају се налазити у поддиректоријумима овог фолдера. Имена поддиректоријума ће се приказивати у прегледачу библиотеке.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;(Мени: Виџети &gt; Док виџети &gt; Прегледач библиотеке)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>Click to select directory</source>
-        <translation type="vanished">Кликните да одаберете директоријум</translation>
-    </message>
-    <message>
-        <source>Path to file with variables</source>
-        <translation type="vanished">Путања до датотеке са променљивима</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
         <translation>Шаре за попуњавање:</translation>
-    </message>
-    <message>
-        <source>Path to folder with fonts</source>
-        <translation type="vanished">Путања до фолдера са фонтовима</translation>
-    </message>
-    <message>
-        <source>Path to folder with hatch patterns</source>
-        <translation type="vanished">Путања до фолдера са шарама за попуњавање</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -19937,10 +7152,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Библиотеке делова:</translation>
     </message>
     <message>
-        <source>Path to folder with translation files</source>
-        <translation type="vanished">Путања до фасцикле са преводним датотекама</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="922"/>
         <source>Translations:</source>
         <translation>Преводи:</translation>
@@ -19949,170 +7160,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="867"/>
         <source>Template:</source>
         <translation>Шаблон:</translation>
-    </message>
-    <message>
-        <source>Other settings locations</source>
-        <translation type="vanished">Остале локације подешавања</translation>
-    </message>
-    <message>
-        <source>Directory where various settings are located (shortcuts, workspaces, pens etc.)</source>
-        <translation type="vanished">Директоријум у коме се налазе разна подешавања (пречице, радни простори, оловке итд.)</translation>
-    </message>
-    <message>
-        <source>Renderer</source>
-        <translation type="vanished">Рендерер</translation>
-    </message>
-    <message>
-        <source>Operations</source>
-        <translation type="vanished">Операције</translation>
-    </message>
-    <message>
-        <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
-        <translation type="vanished">Ако је омогућено, током операције померања, објекти ТЕКСТ и МТЕКСТ ће се схематски приказивати</translation>
-    </message>
-    <message>
-        <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
-        <translation type="vanished">Ако је изабрано, уместо слова текста, приказиваће се основне линије текста током померања (слично режиму нацрта).</translation>
-    </message>
-    <message>
-        <source>Draw text as draft within paning operations</source>
-        <translation type="vanished">Crta tekst kao skicu tokom operacija pomeranja</translation>
-    </message>
-    <message>
-        <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
-        <translation type="vanished">Ako je izabrano, umesto slova teksta, u pregled će se crtati osnovne linije teksta (slično režimu skice).</translation>
-    </message>
-    <message>
-        <source>Draw text as draft in preview</source>
-        <translation type="vanished">Crta tekst kao skicu u pregledu</translation>
-    </message>
-    <message>
-        <source>Defines how arcs are rendered in UI. </source>
-        <translation type="vanished">Definiše način prikazivanja lukova u korisničkom interfejsu.</translation>
-    </message>
-    <message>
-        <source>Arcs Rendering Method</source>
-        <translation type="vanished">Metod prikazivanja lukova</translation>
-    </message>
-    <message>
-        <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation type="vanished">Ako je ovo označeno, lukovi se crtaju pomoću interpolacije linijskih segmenata. Ovo eliminiše artefakte pricrtavanja u blizini krajnjih tačaka, ali može dovesti do manje glatkog crtanja lukova. Nema grešaka pricrtavanja u blizini krajnjih tačaka pri velikom zumiranju.</translation>
-    </message>
-    <message>
-        <source>Interpolate by line segments</source>
-        <translation type="vanished">Interpolacija linijskim segmentima</translation>
-    </message>
-    <message>
-        <source>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</source>
-        <translation type="vanished">Ako je izabran ovaj metod, lukovi se crtaju pomoću metoda QT biblioteke. Pri velikom zumiranju, lukovi mogu biti prikazani sa greškama u blizini krajnjih tačaka.</translation>
-    </message>
-    <message>
-        <source>Qt-native drawing method (unexact near endpoints)</source>
-        <translation type="vanished">Metod crtanja koji koristi QT biblioteku (nije precizan u blizini krajnjih tačaka)</translation>
-    </message>
-    <message>
-        <source>Single segment angle</source>
-        <translation type="vanished">Ugao pojedinačnog segmenta</translation>
-    </message>
-    <message>
-        <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
-        <translation type="vanished">Ako je izabrano, ugao segmenta linearne interpolacije se izračunava kako bi se osiguralo da je rezultatni sagita (visina segmenta luka) manja od zadate vrednosti.</translation>
-    </message>
-    <message>
-        <source>Determine segments by max sagitta</source>
-        <translation type="vanished">Odredite segmente pomoću maksimalne sagite</translation>
-    </message>
-    <message>
-        <source>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</source>
-        <translation type="vanished">Ako je izabrano, koristi se fiksni ugao segmenta linearne interpolacije. Manji ugao daje glađi luk, ali je sporiji.</translation>
-    </message>
-    <message>
-        <source>Use fixed segment angle value</source>
-        <translation type="vanished">Koristite fiksnu vrednost ugla segmenta</translation>
-    </message>
-    <message>
-        <source>Value of fixed segment&apos;s angle</source>
-        <translation type="vanished">Vrednost fiksnog ugla segmenta</translation>
-    </message>
-    <message>
-        <source> degrees</source>
-        <translation type="vanished">stepeni</translation>
-    </message>
-    <message>
-        <source>Maximal distance betwen arc and segment interpolation line</source>
-        <translation type="vanished">Maksimalna udaljenost između luka i linije linearne interpolacije segmenta</translation>
-    </message>
-    <message>
-        <source>If selected, the same rendering settings will be applied also to circles.</source>
-        <translation type="vanished">Ako je izabrano, ista podešavanja renderovanja će se primeniti i na krugove.</translation>
-    </message>
-    <message>
-        <source>Render circles in the same way as arcs.</source>
-        <translation type="vanished">Renderujte krugove na isti način kao i lukove.</translation>
-    </message>
-    <message>
-        <source>Rendering Minimums</source>
-        <translation type="vanished">Minimalna podešavanja renderovanja</translation>
-    </message>
-    <message>
-        <source>Line length:</source>
-        <translation type="vanished">Дужина линије:</translation>
-    </message>
-    <message>
-        <source>If screen size for major ellipse axis is less than value, ellipse is drawn as point</source>
-        <translation type="vanished">Ако је величина елипсе на екрану мања од ове вредности, елипса се црта као тачка.</translation>
-    </message>
-    <message>
-        <source>If screen length of line is less than value, the line is drawn as point</source>
-        <translation type="vanished">Ако је дужина линије на екрану мања од ове вредности, линија се црта као тачка.</translation>
-    </message>
-    <message>
-        <source>If screen radius of arc is less than value, arc is drawn as point</source>
-        <translation type="vanished">Ако је полупречник лука на екрану мањи од ове вредности, лук се црта као тачка.</translation>
-    </message>
-    <message>
-        <source>Height of text line:</source>
-        <translation type="vanished">Висина линије текста:</translation>
-    </message>
-    <message>
-        <source>If screen radius of circle is less than value, circle is drawn as point</source>
-        <translation type="vanished">Ако је полупречник круга на екрану мањи од ове вредности, круг се црта као тачка.</translation>
-    </message>
-    <message>
-        <source>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</source>
-        <translation type="vanished">Ако је величина мање осе елипсе на екрану мања од ове вредности, елипса се црта као линија.</translation>
-    </message>
-    <message>
-        <source>Arc Radius:</source>
-        <translation type="vanished">Полупречник лука:</translation>
-    </message>
-    <message>
-        <source>Ellipse Minor Axis:</source>
-        <translation type="vanished">Мања оса елипсе:</translation>
-    </message>
-    <message>
-        <source>Ellipse Major Axis:</source>
-        <translation type="vanished">Већа оса елипсе:</translation>
-    </message>
-    <message>
-        <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
-        <translation type="vanished">Ако је висина текста на екрану мања од наведене вредности у пикселима, уместо текста ће се приказати замена.</translation>
-    </message>
-    <message>
-        <source>Circle Radius:</source>
-        <translation type="vanished">Полупречник круга:</translation>
-    </message>
-    <message>
-        <source>Fonts Files</source>
-        <translation type="vanished">Фајлови фонтова</translation>
-    </message>
-    <message>
-        <source>Amount of letters columns:</source>
-        <translation type="vanished">Број колона слова:</translation>
-    </message>
-    <message>
-        <source>Contains the number of columns in one row for rendering font letter blocks. If 0 - all letters in one row. </source>
-        <translation type="vanished">Ово одређује број колона у једном реду за приказивање блокова слова фонта. Ако је 0, сва слова ће бити у једном реду.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="327"/>
@@ -20125,10 +7172,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Молимо вас да поново покренете апликацију како би се све промене примениле.</translation>
     </message>
     <message>
-        <source>Select Color</source>
-        <translation type="vanished">Изаберите боју</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="409"/>
         <source>Clear settings</source>
         <translation>Обриши подешавања</translation>
@@ -20137,26 +7180,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="410"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
         <translation>Ово ће такође укључивати прилагођене меније и траке са алаткама. Да ли желите да наставите?</translation>
-    </message>
-    <message>
-        <source>You must restart LibreCAD to see the changes.</source>
-        <translation type="vanished">Morate ponovo pokrenuti LibreCAD da bi se promene primenile.</translation>
-    </message>
-    <message>
-        <source>Select Fonts Folder</source>
-        <translation type="vanished">Izaberite folder sa fontovima</translation>
-    </message>
-    <message>
-        <source>Select Translations Folder</source>
-        <translation type="vanished">Izaberite folder sa prevodima</translation>
-    </message>
-    <message>
-        <source>Select Hatch Patterns Folder</source>
-        <translation type="vanished">Izaberite folder sa šablonima za iscrtavanje</translation>
-    </message>
-    <message>
-        <source>Select Other Settings Folder</source>
-        <translation type="vanished">Izaberite folder sa ostalim podešavanjima</translation>
     </message>
 </context>
 <context>
@@ -20624,17 +7647,9 @@ so default step value required for baking</source>
         <translation>Nalepi</translation>
     </message>
     <message>
-        <source>Text to insert</source>
-        <translation type="vanished">Tekst za ubacivanje</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="175"/>
         <source>Layer:</source>
         <translation>Слој:</translation>
-    </message>
-    <message>
-        <source>Layer of text</source>
-        <translation type="vanished">Слој текста</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="234"/>
@@ -20642,30 +7657,14 @@ so default step value required for baking</source>
         <translation>Подешавања фонта</translation>
     </message>
     <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">Косина текста</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Угао ротације</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="269"/>
         <source>Angle:</source>
         <translation>Угао:</translation>
     </message>
     <message>
-        <source>Width factor</source>
-        <translation type="vanished">Фактор ширине</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="328"/>
         <source>Width factor:</source>
         <translation>Фактор ширине:</translation>
-    </message>
-    <message>
-        <source>Height of text</source>
-        <translation type="vanished">Висина текста</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="256"/>
@@ -20698,10 +7697,6 @@ so default step value required for baking</source>
         <translation>Доњи центар</translation>
     </message>
     <message>
-        <source>Aligned</source>
-        <translation type="vanished">Поравнато</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="784"/>
         <source>A&amp;ligned</source>
         <translation>Поравн&amp;ато</translation>
@@ -20732,10 +7727,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="681"/>
         <source>Top Left</source>
         <translation>Горњи леви</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Средина</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="794"/>
@@ -20781,10 +7772,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="825"/>
         <source>Insert Symbol</source>
         <translation>Убаци симбол</translation>
-    </message>
-    <message>
-        <source>Symbol to insert</source>
-        <translation type="vanished">Симбол за уметање</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
@@ -20842,14 +7829,6 @@ so default step value required for baking</source>
         <translation>Funta (£)</translation>
     </message>
     <message>
-        <source>Yen / Yuan (¥)</source>
-        <translation type="vanished">Jen / Juan (¥)</translation>
-    </message>
-    <message>
-        <source>Euro (€)</source>
-        <translation type="vanished">Evro (€)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="898"/>
         <source>Times (×)</source>
         <translation>Putom (×)</translation>
@@ -20863,10 +7842,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="914"/>
         <source>Insert Unicode</source>
         <translation>Umetni Unicode</translation>
-    </message>
-    <message>
-        <source>Codepage selection for selecting character</source>
-        <translation type="vanished">Izbor kodne stranice za odabir karaktera</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="893"/>
@@ -21419,21 +8394,9 @@ so default step value required for baking</source>
         <translation>Страна:</translation>
     </message>
     <message>
-        <source>Selected character preview. Click to insert to text.</source>
-        <translation type="vanished">Преглед одабраног карактера. Кликните да бисте додали у текст.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="930"/>
         <source>Char:</source>
         <translation>Карактер:</translation>
-    </message>
-    <message>
-        <source>Selection of character to insert</source>
-        <translation type="vanished">Избор карактера за уметање</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
     </message>
 </context>
 <context>
@@ -21994,14 +8957,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Напомена о акцијама левог/десног дугмета миша</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Откажи</translation>
-    </message>
-    <message>
-        <source>Current Action:</source>
-        <translation type="vanished">Тренутна акција:</translation>
-    </message>
 </context>
 <context>
     <name>QG_PenToolBar</name>
@@ -22027,21 +8982,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_polylineoptions.cpp" line="103"/>
         <source>wrong action type</source>
         <translation>погрешни тип акције</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">Неважећа скала</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">Фактор скале папира већи од максималног односа за штампу</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">Faktor skaliranja papira je manji od minimalnog omjera za štampu.</translation>
     </message>
 </context>
 <context>
@@ -22094,14 +9034,6 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Укупна дужина одабраних ентитета&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Number of selected entities</source>
-        <translation type="vanished">Broj izabranih elemenata</translation>
-    </message>
-    <message>
-        <source>Total length of selected entities</source>
-        <translation type="vanished">Ukupna dužina izabranih elemenata</translation>
     </message>
 </context>
 <context>
@@ -22202,18 +9134,6 @@ p, li { white-space: pre-wrap; }
         <translation>otključano</translation>
     </message>
     <message>
-        <source>Coordinate system: %1</source>
-        <translation type="vanished">Координатни систем: %1</translation>
-    </message>
-    <message>
-        <source>User</source>
-        <translation type="vanished">User</translation>
-    </message>
-    <message>
-        <source>World</source>
-        <translation type="vanished">Свет</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
         <translation>Snap</translation>
@@ -22301,18 +9221,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
         <source>Line type:</source>
         <translation>Тип линије:</translation>
-    </message>
-    <message>
-        <source>Color of line</source>
-        <translation type="vanished">Боја линије</translation>
-    </message>
-    <message>
-        <source>Width of line</source>
-        <translation type="vanished">Ширина линије</translation>
-    </message>
-    <message>
-        <source>Type of line</source>
-        <translation type="vanished">Тип линије</translation>
     </message>
 </context>
 <context>
@@ -22478,12 +9386,6 @@ Please specify a different value.</source>
         <translation>Uklonite prazne slojeve</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Pronađeni su slojevi bez entiteta, ali su filtrirani i nevidljivi.
-Očistite masku filtriranja i ponovite.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="978"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -22547,14 +9449,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 Ako odgovorite potvrdno, entiteti sa perima „Po sloju“ će izgledati na novom sloju isto kao i na prethodnim slojevima, a vrednost „Po sloju“ biće zamenjena rešenim perima.
 
 Ako odgovorite odrično, vrednosti „Po sloju“ će ostati, pa će pero ciljnog sloja definisati pero za takve entitete.</translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Da li želite da zamenite vrednost „Po sloju“ vrednostima izvornih slojeva?
-Ako odaberete „Da“, entiteti sa perima „Po sloju“ će izgledati na novom sloju isto kao i na prethodnim slojevima, a vrednost „Po sloju“ će biti zamenjena rešenim perima.
-Ako odaberete „Ne“, vrednosti „Po sloju“ će ostati, tako da će pero ciljnog sloja definisati pero za te entitete.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1826"/>
@@ -22642,14 +9536,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Molimo, izaberite samo jedan entitet da biste preuzeli postavke olovke.</translation>
     </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">Čuvanje podataka o olovkama</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Nije moguće sačuvati podatke o olovkama u navedenoj datoteci. Da li želite da navedete ispravnu putanju do datoteke?</translation>
-    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -22663,22 +9549,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
         <translation>R</translation>
-    </message>
-    <message>
-        <source>cnlayer</source>
-        <translation type="vanished">cnlayer</translation>
-    </message>
-    <message>
-        <source>cnly</source>
-        <translation type="vanished">cnly</translation>
-    </message>
-    <message>
-        <source>cslayer</source>
-        <translation type="vanished">cslayer</translation>
-    </message>
-    <message>
-        <source>csly</source>
-        <translation type="vanished">csly</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="153"/>
@@ -22897,26 +9767,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <translation>cx</translation>
     </message>
     <message>
-        <source>bbox</source>
-        <comment>draw bound box</comment>
-        <translation type="vanished">bbox</translation>
-    </message>
-    <message>
-        <source>bb</source>
-        <comment>draw bound box</comment>
-        <translation type="vanished">bb</translation>
-    </message>
-    <message>
-        <source>midline</source>
-        <comment>draw middle line</comment>
-        <translation type="vanished">средња линија</translation>
-    </message>
-    <message>
-        <source>ml</source>
-        <comment>draw mid line</comment>
-        <translation type="vanished">ml</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="249"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
@@ -22927,16 +9777,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <source>lpoints</source>
         <comment>draw line of points</comment>
         <translation>lpoints</translation>
-    </message>
-    <message>
-        <source>midpoint</source>
-        <comment>draw middle points</comment>
-        <translation type="vanished">средња тачка</translation>
-    </message>
-    <message>
-        <source>mpoint</source>
-        <comment>draw middle of points</comment>
-        <translation type="vanished">тачка</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="255"/>
@@ -22961,36 +9801,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <source>dup</source>
         <comment>duplicate entity</comment>
         <translation>dup</translation>
-    </message>
-    <message>
-        <source>align</source>
-        <comment>align entities</comment>
-        <translation type="vanished">поравнај</translation>
-    </message>
-    <message>
-        <source>al</source>
-        <comment>align entities</comment>
-        <translation type="vanished">al</translation>
-    </message>
-    <message>
-        <source>align1</source>
-        <comment>align entities</comment>
-        <translation type="vanished">поравнај1</translation>
-    </message>
-    <message>
-        <source>al1</source>
-        <comment>align entities</comment>
-        <translation type="vanished">порав.1</translation>
-    </message>
-    <message>
-        <source>alignref</source>
-        <comment>align references</comment>
-        <translation type="vanished">поравнање</translation>
-    </message>
-    <message>
-        <source>alr</source>
-        <comment>align references</comment>
-        <translation type="vanished">alr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="267"/>
@@ -23033,11 +9843,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <source>linepar</source>
         <comment>create parallel</comment>
         <translation>paralelna linija</translation>
-    </message>
-    <message>
-        <source>parallel</source>
-        <comment>create parallel</comment>
-        <translation type="vanished">paralelno</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="286"/>
@@ -23206,16 +10011,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
         <translation>полигонски центар</translation>
-    </message>
-    <message>
-        <source>polygonvv</source>
-        <comment>polygon vertex vertex</comment>
-        <translation type="vanished">полигонски центар</translation>
-    </message>
-    <message>
-        <source>pvv</source>
-        <comment>polygon vertex vertex</comment>
-        <translation type="vanished">pvv</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="354"/>
@@ -23422,46 +10217,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <translation>at</translation>
     </message>
     <message>
-        <source>arc2p3</source>
-        <comment>draw 2pt arc radius</comment>
-        <translation type="vanished">арк2п3</translation>
-    </message>
-    <message>
-        <source>a2r</source>
-        <comment>draw 2pt arc radius</comment>
-        <translation type="vanished">a2r</translation>
-    </message>
-    <message>
-        <source>arc2pl</source>
-        <comment>draw 2pt arc length</comment>
-        <translation type="vanished">арк2pl</translation>
-    </message>
-    <message>
-        <source>a2l</source>
-        <comment>draw 2pt arc length</comment>
-        <translation type="vanished">a2l</translation>
-    </message>
-    <message>
-        <source>arc2ph</source>
-        <comment>draw 2pt arc height</comment>
-        <translation type="vanished">арк2ph</translation>
-    </message>
-    <message>
-        <source>a2h</source>
-        <comment>draw 2pt arc height</comment>
-        <translation type="vanished">a2h</translation>
-    </message>
-    <message>
-        <source>arc2pa</source>
-        <comment>draw 2pt arc angle</comment>
-        <translation type="vanished">арк2pa</translation>
-    </message>
-    <message>
-        <source>a2a</source>
-        <comment>draw 2pt arc angle</comment>
-        <translation type="vanished">a2a</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="446"/>
         <source>spline</source>
         <comment>draw spline</comment>
@@ -23508,16 +10263,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <source>ae</source>
         <comment>arc ellipse</comment>
         <translation>ae</translation>
-    </message>
-    <message>
-        <source>arcellc1ax</source>
-        <comment>arc ellipse 1 point</comment>
-        <translation type="vanished">арцеллц1акс</translation>
-    </message>
-    <message>
-        <source>ae1</source>
-        <comment>arc ellipse 1 point</comment>
-        <translation type="vanished">ae1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="466"/>
@@ -23572,16 +10317,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <source>ea</source>
         <comment>ellipse axis</comment>
         <translation>ea</translation>
-    </message>
-    <message>
-        <source>ellipsec1p</source>
-        <comment>ellipse 1 point</comment>
-        <translation type="vanished">elipsa1p</translation>
-    </message>
-    <message>
-        <source>ea1</source>
-        <comment>ellipse 1 point</comment>
-        <translation type="vanished">ea1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="493"/>
@@ -23655,11 +10390,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <source>angleline</source>
         <comment>draw angle from line</comment>
         <translation>linija ugla</translation>
-    </message>
-    <message>
-        <source>aline</source>
-        <comment>draw angle from line</comment>
-        <translation type="vanished">alinija</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="532"/>
@@ -23770,16 +10500,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <translation>pj</translation>
     </message>
     <message>
-        <source>dual</source>
-        <comment>create dual geometries</comment>
-        <translation type="vanished">dual</translation>
-    </message>
-    <message>
-        <source>du</source>
-        <comment>create dual geometries</comment>
-        <translation type="vanished">du</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="589"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
@@ -23844,26 +10564,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <source>dl</source>
         <comment>dimension - linear</comment>
         <translation>dl</translation>
-    </message>
-    <message>
-        <source>dimord</source>
-        <comment>dimension - ordinate</comment>
-        <translation type="vanished">dimord</translation>
-    </message>
-    <message>
-        <source>do</source>
-        <comment>dimension - ordinate</comment>
-        <translation type="vanished">do</translation>
-    </message>
-    <message>
-        <source>dimordrebase</source>
-        <comment>dimension - ordinate</comment>
-        <translation type="vanished">dimordrebase</translation>
-    </message>
-    <message>
-        <source>dor</source>
-        <comment>dimension - ordinate</comment>
-        <translation type="vanished">dor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="623"/>
@@ -24106,11 +10806,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <translation>modoffset</translation>
     </message>
     <message>
-        <source>offset</source>
-        <comment>modify - offset</comment>
-        <translation type="vanished">pomak</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="733"/>
         <source>mo</source>
         <comment>modify - offset</comment>
@@ -24151,16 +10846,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <source>fi</source>
         <comment>modify - fillet</comment>
         <translation>fi</translation>
-    </message>
-    <message>
-        <source>fillet</source>
-        <comment>modify - fillet</comment>
-        <translation type="vanished">zaobljeni ugao</translation>
-    </message>
-    <message>
-        <source>bevel</source>
-        <comment>modify - fillet</comment>
-        <translation type="vanished">kosina</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="752"/>
@@ -24713,26 +11398,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <translation>Прихваћен код тастера: %1</translation>
     </message>
     <message>
-        <source>zoomin</source>
-        <comment>zoom - in</comment>
-        <translation type="vanished">zumiraj</translation>
-    </message>
-    <message>
-        <source>zi</source>
-        <comment>zoom - in</comment>
-        <translation type="vanished">zi</translation>
-    </message>
-    <message>
-        <source>zoomout</source>
-        <comment>zoom - out</comment>
-        <translation type="vanished">smanji zum</translation>
-    </message>
-    <message>
-        <source>zo</source>
-        <comment>zoom - out</comment>
-        <translation type="vanished">zo</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="999"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
@@ -24787,14 +11452,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <translation>ugao</translation>
     </message>
     <message>
-        <source>angle1</source>
-        <translation type="vanished">угао1</translation>
-    </message>
-    <message>
-        <source>angle2</source>
-        <translation type="vanished">угао2</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1064"/>
         <source>dpi</source>
         <translation>dpi</translation>
@@ -24804,10 +11461,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1168"/>
         <source>close</source>
         <translation>затвори</translation>
-    </message>
-    <message>
-        <source>chordlen</source>
-        <translation type="vanished">дужина тетиве</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1067"/>
@@ -25192,11 +11845,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <translation>ce</translation>
     </message>
     <message>
-        <source>cl</source>
-        <comment>chordlen</comment>
-        <translation type="vanished">cl</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
         <source>c</source>
         <comment>close</comment>
@@ -25410,11 +12058,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <translation>redo</translation>
     </message>
     <message>
-        <source>r</source>
-        <comment>redo redo cycle</comment>
-        <translation type="vanished">r</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1230"/>
         <source>back</source>
         <translation>back</translation>
@@ -25456,29 +12099,9 @@ Molimo, navedite drugačiju vrednost.</translation>
         <translation>: дуплирана команда: %1 већ користи %2</translation>
     </message>
     <message>
-        <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation type="vanished">не могу да променим значење команди. Одустао сам од поновне употребе команде %1 за значење %2</translation>
-    </message>
-    <message>
-        <source>requesting alias(%1) for unknown command(%2): ignored</source>
-        <translation type="vanished">захтевам алијас (%1) за непознату команду (%2): игнорисано</translation>
-    </message>
-    <message>
-        <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
-        <translation type="vanished">поново користим постојећи алијас: било %1=%2, промењено у %1=%3</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1363"/>
         <source>RS_Commands:: command not found: %1</source>
         <translation>RS_Commands:: команда није пронађена: %1</translation>
-    </message>
-    <message>
-        <source>keycode: %1 (%2)</source>
-        <translation type="vanished">код тастера: %1 (%2)</translation>
-    </message>
-    <message>
-        <source>invalid keycode: %1</source>
-        <translation type="vanished">неважећи код тастера: %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1417"/>
@@ -25489,22 +12112,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1456"/>
         <source>Available commands:</source>
         <translation>Доступне команде:</translation>
-    </message>
-    <message>
-        <source>Angle Snap</source>
-        <translation type="vanished">Прилагођавање угла</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="vanished">Слободно прилагођавање</translation>
-    </message>
-    <message>
-        <source>Use Mirrored Angle</source>
-        <translation type="vanished">Користите огледани угао</translation>
-    </message>
-    <message>
-        <source>Snap to Relative Zero</source>
-        <translation type="vanished">Прилагођавање на релативну нулу</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1623"/>
@@ -25520,14 +12127,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
         <translation>Шара:: грешка при учитавању шаре: %1</translation>
-    </message>
-    <message>
-        <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation type="vanished">Неважећа скала за штампање %1. Не може се прилагодити преглед штампе страници</translation>
-    </message>
-    <message>
-        <source>WCS</source>
-        <translation type="vanished">WCS</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
@@ -26075,14 +12674,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <translation>Недефинисана грешка</translation>
     </message>
     <message>
-        <source>Export to PDF</source>
-        <translation type="vanished">Извоз у PDF</translation>
-    </message>
-    <message>
-        <source>PDF files (*.pdf);;All files (*.*)</source>
-        <translation type="vanished">PDF датотеке (*.pdf);;Све датотеке (*.*)</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="67"/>
         <source>usage: </source>
         <translation>Употреба:</translation>
@@ -26206,18 +12797,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <location filename="../src/main/main.cpp" line="325"/>
         <source>Loading...</source>
         <translation>Učitavanje...</translation>
-    </message>
-    <message>
-        <source>Release Candidate</source>
-        <translation type="vanished">Kandidat za izdanje.</translation>
-    </message>
-    <message>
-        <source>BETA</source>
-        <translation type="vanished">BETA</translation>
-    </message>
-    <message>
-        <source>ALPHA</source>
-        <translation type="vanished">ALPHA</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="261"/>
@@ -26390,46 +12969,6 @@ Molimo, navedite drugačiju vrednost.</translation>
         <translation>2,11 mm</translation>
     </message>
     <message>
-        <source>Left-</source>
-        <translation type="vanished">Levo-</translation>
-    </message>
-    <message>
-        <source>Middle-</source>
-        <translation type="vanished">Sredina-</translation>
-    </message>
-    <message>
-        <source>Right-</source>
-        <translation type="vanished">Desno-</translation>
-    </message>
-    <message>
-        <source>Forward-</source>
-        <translation type="vanished">Napred-</translation>
-    </message>
-    <message>
-        <source>Back-</source>
-        <translation type="vanished">Nazad-</translation>
-    </message>
-    <message>
-        <source>Task-</source>
-        <translation type="vanished">Zadatak-</translation>
-    </message>
-    <message>
-        <source>Click</source>
-        <translation type="vanished">Klik</translation>
-    </message>
-    <message>
-        <source>Double-Click</source>
-        <translation type="vanished">Dupli klik</translation>
-    </message>
-    <message>
-        <source>Any</source>
-        <translation type="vanished">Any</translation>
-    </message>
-    <message>
-        <source>Either</source>
-        <translation type="vanished">Bilo jedno od</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="64"/>
         <source>Block</source>
         <translation>Блок</translation>
@@ -26527,78 +13066,14 @@ Molimo, navedite drugačiju vrednost.</translation>
         <translation>Krug</translation>
     </message>
     <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="77"/>
         <source>Polyline</source>
         <translation>Polilinija</translation>
     </message>
     <message>
-        <source>Spline</source>
-        <translation type="vanished">Splajn</translation>
-    </message>
-    <message>
-        <source>Spline by Points</source>
-        <translation type="vanished">[&apos;Splajn definisan tačkama&apos;, &apos;Splajnovi definisani tačkama&apos;, &apos;Splajnovi definisani tačkama&apos;]</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="68"/>
         <source>Ellipse</source>
         <translation>Elipsa</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Tačka</translation>
-    </message>
-    <message>
-        <source>Parabola</source>
-        <translation type="vanished">Parabola</translation>
-    </message>
-    <message>
-        <source>Image</source>
-        <translation type="vanished">Slika</translation>
-    </message>
-    <message>
-        <source>Hatch</source>
-        <translation type="vanished">Šrafura</translation>
-    </message>
-    <message>
-        <source>Insert</source>
-        <translation type="vanished">Ubaci</translation>
-    </message>
-    <message>
-        <source>Dim. Linear</source>
-        <translation type="vanished">Dim. linearna</translation>
-    </message>
-    <message>
-        <source>Dim. Aligned</source>
-        <translation type="vanished">Dim. poravnata</translation>
-    </message>
-    <message>
-        <source>Dim. Diametric</source>
-        <translation type="vanished">Dim. dijametralna</translation>
-    </message>
-    <message>
-        <source>Dim. Radial</source>
-        <translation type="vanished">Dim. radijalna</translation>
-    </message>
-    <message>
-        <source>Dim. Arc</source>
-        <translation type="vanished">Димензија. Лук</translation>
-    </message>
-    <message>
-        <source>Dim. Ordinate</source>
-        <translation type="vanished">Димензија. Ордината</translation>
-    </message>
-    <message>
-        <source>Leader</source>
-        <translation type="vanished">Водећа линија</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">None</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="59"/>
@@ -26802,14 +13277,6 @@ Do you want to replace it?</source>
         <translation>Format datoteke sa oznakama</translation>
     </message>
     <message>
-        <source>[Override]</source>
-        <translation type="vanished">[Override] </translation>
-    </message>
-    <message>
-        <source>Calculator: </source>
-        <translation type="vanished">Kalkulator:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="120"/>
         <source>You must input a distance first.</source>
         <translation>Prvo morate uneti udaljenost.</translation>
@@ -26916,14 +13383,6 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">Изаберите да бисте креирали блок (Притисните Enter да бисте завршили)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Изаберите контуру</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionblockscreate.cpp" line="149"/>
         <source>Specify reference point</source>
         <translation>Одредите референтну тачку</translation>
@@ -26932,17 +13391,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/rs_actionblockscreate.cpp" line="150"/>
         <source>Cancel</source>
         <translation>Откажи</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">Изаберите да бисте раставили контејнер (Притисните Enter да бисте завршили)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">Изаберите и раставите</translation>
     </message>
 </context>
 <context>
@@ -27026,126 +13474,6 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDefault</name>
     <message>
-        <source>Offset</source>
-        <translation type="vanished">Odmak</translation>
-    </message>
-    <message>
-        <source>New Position</source>
-        <translation type="vanished">Нова позиција</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">Копирај офсет</translation>
-    </message>
-    <message>
-        <source>Move Offset</source>
-        <translation type="vanished">Помери офсет</translation>
-    </message>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">Деселекција</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">Селекција</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">објекти</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">који се преклапају са оквиром</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">који се налазе у оквиру</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Line</translation>
-    </message>
-    <message>
-        <source>Length: </source>
-        <translation type="vanished">Дужина:</translation>
-    </message>
-    <message>
-        <source>Angle: </source>
-        <translation type="vanished">Угао:</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Полупречник:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Центар:</translation>
-    </message>
-    <message>
-        <source>Angle Length:</source>
-        <translation type="vanished">Дужина угла:</translation>
-    </message>
-    <message>
-        <source>Chord Length:</source>
-        <translation type="vanished">Дужина тетиве:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Висина:</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Круг</translation>
-    </message>
-    <message>
-        <source>Set new position</source>
-        <translation type="vanished">Постави нову позицију</translation>
-    </message>
-    <message>
-        <source>Create a copy</source>
-        <translation type="vanished">Направи копију</translation>
-    </message>
-    <message>
-        <source>Lengthen Line</source>
-        <translation type="vanished">Produži liniju</translation>
-    </message>
-    <message>
-        <source>Lengthen/Scale</source>
-        <translation type="vanished">Produži/Skaliraj</translation>
-    </message>
-    <message>
-        <source>Lengthen Chord</source>
-        <translation type="vanished">Produži akord</translation>
-    </message>
-    <message>
-        <source>Move in Previous segment direction</source>
-        <translation type="vanished">Pomeri u smeru prethodnog segmenta</translation>
-    </message>
-    <message>
-        <source>Move in Next segment direction</source>
-        <translation type="vanished">Pomeri u smeru sledećeg segmenta</translation>
-    </message>
-    <message>
-        <source>Set new ref position</source>
-        <translation type="vanished">Postavi novu referentnu poziciju</translation>
-    </message>
-    <message>
-        <source>Zoom, pan or select entity</source>
-        <translation type="vanished">Zumiraj, pomeraj ili izaberi entitet</translation>
-    </message>
-    <message>
-        <source>Scroll Horizontally / Select Contour</source>
-        <translation type="vanished">Horizontalno pomeranje / Izaberi konturu</translation>
-    </message>
-    <message>
-        <source>Pan / Scroll Vertically / Select Child entities</source>
-        <translation type="vanished">Vertikalno pomeranje / Izaberi podređene entitete</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondefault.cpp" line="500"/>
         <source>Choose second edge</source>
         <translation>Izaberi drugi rub</translation>
@@ -27154,14 +13482,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondefault.cpp" line="501"/>
         <source>Back</source>
         <translation>Back</translation>
-    </message>
-    <message>
-        <source>Select/Deselect entities</source>
-        <translation type="vanished">Izaberite/Otkazite selekciju entiteta</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">Izaberite preklapajuće entitete</translation>
     </message>
 </context>
 <context>
@@ -27324,17 +13644,9 @@ This block cannot be inserted.</source>
         <translation>Унесите угао котне линије:</translation>
     </message>
     <message>
-        <source>Switch Direction</source>
-        <translation type="vanished">Promeni smer</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="293"/>
         <source>Specify dimension line location</source>
         <translation>Odredite položaj dimenzione linije</translation>
-    </message>
-    <message>
-        <source>Snap to Adjacent Dim</source>
-        <translation type="vanished">Poveži sa susednom dimenzijom</translation>
     </message>
 </context>
 <context>
@@ -27373,10 +13685,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">Dužina tetive mora biti različita od nule</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="261"/>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="273"/>
@@ -27426,34 +13734,14 @@ This block cannot be inserted.</source>
         <translation>Одредите дужину жице:</translation>
     </message>
     <message>
-        <source>Specify start point</source>
-        <translation type="vanished">Odredite početnu tačku</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="343"/>
         <source>Specify start angle:</source>
         <translation>Odredite početni ugao:</translation>
     </message>
     <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">Odredite krajnji ugao ili [ugao/dužina tetive]</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternativni luk</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="351"/>
         <source>Specify included angle:</source>
         <translation>Odredite uključeni ugao:</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">Odredite dužinu tetive (negativna za alternativnu tačku):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">Koristite alternativnu tačku luka</translation>
     </message>
 </context>
 <context>
@@ -27489,10 +13777,6 @@ This block cannot be inserted.</source>
         <source>Specify endpoint</source>
         <translation>Одредите крајњу тачку</translation>
     </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Odredite treću tačku</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawArcTangential</name>
@@ -27518,17 +13802,9 @@ This block cannot be inserted.</source>
         <translation>Back</translation>
     </message>
     <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">Alternativni luk</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="235"/>
         <source>Specify end point</source>
         <translation>Odredite krajnju tačku</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">Alternativni luk</translation>
     </message>
 </context>
 <context>
@@ -27800,10 +14076,6 @@ This block cannot be inserted.</source>
         <translation>Odredite liniju/luk/krug</translation>
     </message>
     <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">Odredite drugu liniju/luk/krug</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="334"/>
         <source>Cancel</source>
         <translation>Откажи</translation>
@@ -27833,10 +14105,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">Nema zajedničke kružnice koja je tangenta na izabrane objekte</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="463"/>
         <source>Specify the first line/arc/circle</source>
@@ -28119,14 +14387,6 @@ This block cannot be inserted.</source>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
         <translation>Nevalidna površina šrafure. Proverite da li odabrane entitete formiraju jednu ili više zatvorenih kontura.</translation>
     </message>
-    <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">Izaberite područje za šrafiranje (Pritisnite Enter da biste dovršili)</translation>
-    </message>
-    <message>
-        <source>Hatch immediately after selection</source>
-        <translation type="vanished">Šrafirajte odmah nakon selekcije</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>
@@ -28226,10 +14486,6 @@ This block cannot be inserted.</source>
         <translation>Откажи</translation>
     </message>
     <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">Alternativni smer</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="305"/>
         <source>Enter angle:</source>
         <translation>Unesite ugao:</translation>
@@ -28248,10 +14504,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">Biće kreirano entiteta</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="236"/>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="253"/>
@@ -28351,10 +14603,6 @@ This block cannot be inserted.</source>
         <translation>Back</translation>
     </message>
     <message>
-        <source>Alternate Point</source>
-        <translation type="vanished">Alternativna tačka</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="189"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Izaberite krug, luk ili elipsu</translation>
@@ -28362,10 +14610,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">biće kreirano</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallel.cpp" line="125"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
@@ -28395,12 +14639,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">Biće kreirano entiteta.
-Biće kreirana entiteta.
-Biće kreirano entiteta.</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
         <source>Select entity</source>
@@ -28508,26 +14746,6 @@ Biće kreirano entiteta.</translation>
 <context>
     <name>RS_ActionDrawLineRectangle</name>
     <message>
-        <source>To be created:</source>
-        <translation type="vanished">Треба креирати:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">Правоугаоник</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Ширина:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Висина:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Центар:</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawlinerectangle.cpp" line="155"/>
         <source>Specify first corner</source>
         <translation>Наведите први угао</translation>
@@ -28576,14 +14794,6 @@ Biće kreirano entiteta.</translation>
         <source>Back</source>
         <translation>Back</translation>
     </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Odredite ugao</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">Odredite dužinu</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
@@ -28601,10 +14811,6 @@ Biće kreirano entiteta.</translation>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
         <source>Back</source>
         <translation>Back</translation>
-    </message>
-    <message>
-        <source>Alternate Point</source>
-        <translation type="vanished">Alternativna tačka</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="185"/>
@@ -28737,10 +14943,6 @@ Biće kreirano entiteta.</translation>
         <translation>Откажи</translation>
     </message>
     <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternativni luk</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="694"/>
         <source>Specify next point or [%1]</source>
         <translation>[&apos;Odredite sledeću tačku ili [%1]&apos;, &apos;Odredite sledeću tačku ili [%1]&apos;, &apos;Odredite sledeću tačku ili [%1]&apos;]</translation>
@@ -28804,10 +15006,6 @@ Biće kreirano entiteta.</translation>
 <context>
     <name>RS_ActionDrawText</name>
     <message>
-        <source>Text: </source>
-        <translation type="vanished">Tekst:</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="281"/>
         <source>Specify insertion point</source>
         <translation>Odredite tačku ubacivanja</translation>
@@ -28848,49 +15046,6 @@ Biće kreirano entiteta.</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">Izaberite da biste izrezali (Enter za potvrdu)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Izaberite konturu</translation>
-    </message>
-    <message>
-        <source>Set point after selection</source>
-        <translation type="vanished">Postavite tačku nakon selekcije</translation>
-    </message>
-    <message>
-        <source>Cut right after selection</source>
-        <translation type="vanished">Izrežite odmah nakon selekcije</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">Izaberite da biste kopirali (Enter za potvrdu)</translation>
-    </message>
-    <message>
-        <source>Copy right after selection</source>
-        <translation type="vanished">Kopirajte odmah nakon selekcije</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Odredite referentnu tačku</translation>
-    </message>
-    <message>
-        <source>Paste Immediately</source>
-        <translation type="vanished">Odmah zalepi</translation>
-    </message>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="vanished">Postavi referentnu tačku za lepljenje</translation>
-    </message>
-    <message>
-        <source>Paste Multiple</source>
-        <translation type="vanished">Zalepi više puta</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditPaste</name>
     <message>
         <location filename="../src/actions/rs_actioneditpaste.cpp" line="120"/>
@@ -28919,31 +15074,6 @@ Biće kreirano entiteta.</translation>
 <context>
     <name>RS_ActionInfoAngle</name>
     <message>
-        <source>Angle: %1
-Complementary: %2
-Supplementary: %3
-Alternative: %4
-</source>
-        <translation type="vanished">Ugao: %1
-Komplementarni: %2
-Suplementarni: %3
-Alternativni: %4</translation>
-    </message>
-    <message>
-        <source>Angle: %1
-Complementary: %2
-Supplementary: %3
-Alternative: %4
-Intersection: (%5 , %6)
-Intersection :@(%7, %8)</source>
-        <translation type="vanished">Ugao: %1
-Komplementarni: %2
-Suplementarni: %3
-Alternativni: %4
-Presek: (%5 , %6)
-Presek: @(%7, %8)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="94"/>
         <source>Angle: %1</source>
         <translation>Угао: %1</translation>
@@ -28969,65 +15099,9 @@ Presek: @(%7, %8)</translation>
         <translation>Back</translation>
     </message>
     <message>
-        <source>Single Line Mode</source>
-        <translation type="vanished">Režim jedne linije</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="144"/>
         <source>Specify second line</source>
         <translation>Navedite drugi red</translation>
-    </message>
-    <message>
-        <source>Restart with first line selection</source>
-        <translation type="vanished">Ponovo pokrenite sa prvim odabranim redom</translation>
-    </message>
-    <message>
-        <source>Angle Info</source>
-        <translation type="vanished">Informacije o uglu</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Ugao:</translation>
-    </message>
-    <message>
-        <source>Complementary:</source>
-        <translation type="vanished">Komplementarni:</translation>
-    </message>
-    <message>
-        <source>Supplementary:</source>
-        <translation type="vanished">Suplementarni:</translation>
-    </message>
-    <message>
-        <source>Alternative: </source>
-        <translation type="vanished">Alternativni:</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">Linija od:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">Linija do:</translation>
-    </message>
-    <message>
-        <source>Line Angle 1:</source>
-        <translation type="vanished">Ugao linije 1:</translation>
-    </message>
-    <message>
-        <source>Line Angle 2:</source>
-        <translation type="vanished">Угао линије 2:</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Пресек:</translation>
-    </message>
-    <message>
-        <source>Line 1 Angle:</source>
-        <translation type="vanished">Угао линије 1:</translation>
-    </message>
-    <message>
-        <source>Line 2 Angle:</source>
-        <translation type="vanished">Угао линије 2:</translation>
     </message>
 </context>
 <context>
@@ -29053,14 +15127,6 @@ Presek: @(%7, %8)</translation>
         <translation>Тачка %1/%2</translation>
     </message>
     <message>
-        <source>Closing Point: %1</source>
-        <translation type="vanished">Завршна тачка: %1</translation>
-    </message>
-    <message>
-        <source>Point: %1</source>
-        <translation type="vanished">Тачка: %1</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="165"/>
         <source>Specify first point of polygon</source>
         <translation>Одредите прву тачку полигона</translation>
@@ -29076,41 +15142,9 @@ Presek: @(%7, %8)</translation>
         <source>Specify next point of polygon</source>
         <translation>Одредите следећу тачку полигона</translation>
     </message>
-    <message>
-        <source>Specify point and complete</source>
-        <translation type="vanished">Odredite tačku i dovršite</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionInfoDist</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Start: (%6 , %7)
-End: (%8 , %9)</source>
-        <translation type="vanished">[&apos;Udaljenost: %1\nKartezijanske koordinate: (%2 , %3)\nPolarni koordinatni sistem: (%4 &lt; %5)\nPočetak: (%6 , %7)\nKraj: (%8 , %9)&apos;, &apos;Udaljenost: %1\nKartezijanske koordinate: (%2 , %3)\nPolarni koordinatni sistem: (%4 &lt; %5)\nPočetak: (%6 , %7)\nKraj: (%8 , %9)&apos;, &apos;Udaljenost: %1\nKartezijanske koordinate: (%2 , %3)\nPolarni koordinatni sistem: (%4 &lt; %5)\nPočetak: (%6 , %7)\nKraj: (%8 , %9)&apos;]</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Udaljenost:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Ugao:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">Od:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">Do:</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="80"/>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
@@ -29136,25 +15170,9 @@ End: (%8 , %9)</source>
         <source>Back</source>
         <translation>Back</translation>
     </message>
-    <message>
-        <source>Don&apos;t move relative zero</source>
-        <translation type="vanished">Ne pomerajte relativnu nulu</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">Udaljenost: %1
-Kartezijanske koordinate: (%2 , %3)
-Polarne koordinate: (%4 &lt; %5)
-Tačka na entitetu: (%6 , %7)
-Tačka: (%8 , %9)</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="73"/>
         <source>Distance: %1</source>
@@ -29176,37 +15194,9 @@ Tačka: (%8 , %9)</translation>
         <translation>Back</translation>
     </message>
     <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">Ne prilagođavajte se podređenim entitetima u kontejneru</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="160"/>
         <source>Specify point</source>
         <translation>Odredite tačku</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">Relativna tačka se nalazi na entitetu</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Udaljenost:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Ugao:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">Od:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">Do:</translation>
     </message>
 </context>
 <context>
@@ -29243,45 +15233,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/actions/rs_actioninfototallength.cpp" line="61"/>
         <source>At least one of the selected entities cannot be measured.</source>
         <translation>Najmanje jedan od izabranih objekata ne može biti izmeren.</translation>
-    </message>
-    <message>
-        <source>Selected:</source>
-        <translation type="vanished">Izabrano:</translation>
-    </message>
-    <message>
-        <source>Total Length:</source>
-        <translation type="vanished">Ukupna dužina:</translation>
-    </message>
-    <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">Izaberite da biste izmerili ukupnu dužinu (Enter za završetak)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Izaberite konturu</translation>
-    </message>
-    <message>
-        <source>Select and finish</source>
-        <translation type="vanished">Izaberite i završite</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionInterface</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Back</translation>
-    </message>
-    <message>
-        <source>SHIFT:</source>
-        <translation type="vanished">SHIFT:</translation>
-    </message>
-    <message>
-        <source>CTRL:</source>
-        <translation type="vanished">CTRL:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Otkaži</translation>
     </message>
 </context>
 <context>
@@ -29332,58 +15283,7 @@ Tačka: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">Izaberite da biste izmenili atribute (pritisnite Enter da biste dovršili)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Izaberite konturu</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">Izmenite atribute odmah nakon izbora</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">Izabrane linije su paralelne</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">Izabrane linije nisu podređene istoj poliliniji</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Presek:</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Tačka 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Tačka 2:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">Izabran nevažeći objekat (ne može se obrezati).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">Izabran nevažeći objekat (nije atomski).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">Nevažeća entitet je izabran (ne može se obraditi zajedno sa prvim entitetom).</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="191"/>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="204"/>
@@ -29426,14 +15326,6 @@ Tačka: (%8 , %9)</translation>
 <context>
     <name>RS_ActionModifyCut</name>
     <message>
-        <source>Divide</source>
-        <translation type="vanished">Podeli</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">Na:</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="103"/>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="116"/>
         <source>No Entity found.</source>
@@ -29460,10 +15352,6 @@ Tačka: (%8 , %9)</translation>
         <translation>Back</translation>
     </message>
     <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">Tačka preseka ne sme biti krajnja tačka entiteta.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="145"/>
         <source>Specify entity to cut</source>
         <translation>Odaberite entitet koji želite da isečete.</translation>
@@ -29477,21 +15365,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="149"/>
         <source>Specify cutting point</source>
         <translation>Odaberite tačku preseka.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">Odaberite elemente za brisanje (pritisnite Enter da biste potvrdili).</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Odaberite konturu.</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">Obrišite odmah nakon odabira.</translation>
     </message>
 </context>
 <context>
@@ -29584,58 +15457,7 @@ Tačka: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">Izaberite tekst koji želite da razdvojite (pritisnite Enter da biste dovršili)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">Razdvojite odmah nakon izbora</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Ogledalo</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угао:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">Угао (алтернативно):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">Линија од:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">Линија до:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">Изаберите за огледање (Притисните Enter да бисте завршили)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Изаберите контуру</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">Одредите линију огледања</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">Окрените вертикално</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">Окрените хоризонтално</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="161"/>
         <source>Specify first point of mirror line</source>
@@ -29659,14 +15481,6 @@ Tačka: (%8 , %9)</translation>
 </context>
 <context>
     <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">Kopiraj ofset</translation>
-    </message>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">Ofset za pomeranje</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="150"/>
         <source>Invalid number of copies, use %1 </source>
@@ -29692,45 +15506,9 @@ Tačka: (%8 , %9)</translation>
         <source>Back</source>
         <translation>Back</translation>
     </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">Napravite kopiju</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">Izaberite element za pomeranje (pritisnite Enter da biste završili)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Izaberite konturu</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">Pomerite odmah nakon selekcije</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">Pomeranje sa rotacijom</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">Акција: Измени, помери, ротирај</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">Акција: Измени, помери, ротирај</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Офсет</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угао</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="177"/>
         <source>Not a valid expression</source>
@@ -29762,29 +15540,9 @@ Tačka: (%8 , %9)</translation>
         <source>Enter rotation angle:</source>
         <translation>Унесите угао ротације:</translation>
     </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">Изаберите да бисте померали и ротирали (Притисните Enter да бисте завршили)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Изаберите контуру</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">Pomeri i rotiraj odmah nakon selekcije</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">Odmak</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Udaljenost:</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Specify direction of offset</source>
@@ -29795,92 +15553,13 @@ Tačka: (%8 , %9)</translation>
         <source>Back</source>
         <translation>Back</translation>
     </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">Odredite referentnu tačku za smer odmaka</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">Izaberite liniju, poliliniju, krug ili luk da biste kreirali odmak (Pritisnite Enter da biste završili)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Izaberite konturu</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">Odmak odmah nakon selekcije</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">Izaberite da biste poništili smer (Pritisnite Enter da biste završili)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Izaberite konturu</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">Odmah poništi nakon izbora</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
-        <source>Rotation</source>
-        <translation type="vanished">Rotacija</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Ugao:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Referentna tačka:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">Centralna tačka:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Odmak:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Početna tačka:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Ciljna tačka:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">Drugi ugao:</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">Izaberite za rotiranje (Enter za potvrdu)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Izaberite konturu</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">Rotirajte odmah nakon izbora</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="149"/>
         <source>Specify reference point</source>
         <translation>Odredite referentnu tačku</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Poravnajte sa centrom izabranog objekta</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="144"/>
@@ -29899,45 +15578,9 @@ Tačka: (%8 , %9)</translation>
         <source>Specify target point to rotate to</source>
         <translation>Odredite ciljnu tačku za rotaciju</translation>
     </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">Odredite ciljnu tačku za rotaciju oko referentne tačke</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">Rotiranje dva puta</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">Centar 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">Ugao 1:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">Центар 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">Угао 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">Одаберите за ротацију око две осе (Притисните Enter да бисте потврдили)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Одаберите контуру</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">Ротирајте око две осе одмах након избора</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate2.cpp" line="148"/>
         <source>Specify absolute reference point</source>
@@ -29961,18 +15604,6 @@ Tačka: (%8 , %9)</translation>
 </context>
 <context>
     <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Заобли</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Тачка 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Тачка 2:</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="319"/>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="332"/>
@@ -30009,34 +15640,6 @@ Tačka: (%8 , %9)</translation>
 <context>
     <name>RS_ActionModifyScale</name>
     <message>
-        <source>Scale</source>
-        <translation type="vanished">Skaliraj</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Centar:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Početna tačka:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Ciljna tačka:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Odmak:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">Skaliraj po X:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">Skaliraj po Y osi:</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="238"/>
         <source>Specify scale center</source>
         <translation>Odredi centar za skaliranje</translation>
@@ -30054,61 +15657,13 @@ Tačka: (%8 , %9)</translation>
         <translation>Одаберите референтну тачку</translation>
     </message>
     <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Podesi tako da se prilagodi centru selekcije</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">Odredi početnu tačku</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="247"/>
         <source>Specify target point</source>
         <translation>Odredi ciljnu tačku</translation>
     </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">Slobodno prilagođavanje</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">Izaberi za skaliranje (Enter za potvrdu)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Izaberi konturu</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">Skaliraj odmah nakon selekcije</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">Istezanje</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">Почетни угао:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">Крајњи угао:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Референтна тачка:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Циљна тачка:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Офсет:</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="175"/>
         <source>Specify first corner</source>
@@ -30145,22 +15700,6 @@ Tačka: (%8 , %9)</translation>
 <context>
     <name>RS_ActionModifyTrim</name>
     <message>
-        <source>Trim Two</source>
-        <translation type="vanished">Исеци две стране</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Пресек:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">Пресек 2:</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="177"/>
         <source>Select first trim entity</source>
         <translation>Изаберите прву геометрију за обрезивање</translation>
@@ -30196,10 +15735,6 @@ Tačka: (%8 , %9)</translation>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
-        <source>No entity found.</source>
-        <translation type="vanished">Није пронађена ниједна геометрија.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="101"/>
         <source>No entity found. </source>
         <translation>Нема пронађених ентитета. </translation>
@@ -30229,10 +15764,6 @@ Tačka: (%8 , %9)</translation>
         <source>Back</source>
         <translation>Back</translation>
     </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">Izaberite liniju/luk za skraćivanje ILI unesite dužinu:</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionOrder</name>
@@ -30245,18 +15776,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/actions/rs_actionorder.cpp" line="151"/>
         <source>Cancel</source>
         <translation>Откажи</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">Izaberite entitete (Pritisnite Enter da biste završili)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Izaberite konturu</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">Odredite odmah nakon selekcije</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="150"/>
@@ -30329,10 +15848,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="119"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
         <translation>Kliknite negde blizu početka ili kraja postojeće polilinije.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Unesite broj polilinija</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="191"/>
@@ -30437,14 +15952,6 @@ Tačka: (%8 , %9)</translation>
         <translation>Tačka koju brišete je nevažeća.</translation>
     </message>
     <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">Nije pronađena nijedna polilinija.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">Mora da postoji najmanje dva segmenta polilinije između odabranih tačaka.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
         <source>Specify polyline to delete between two nodes</source>
         <translation>Odredite poliliniju koju želite da izbrišete između dve tačke.</translation>
@@ -30536,14 +16043,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
         <source>Entity must be a polyline.</source>
         <translation>Јединица мора бити полилинија.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">Први сегмент треба да буде на изабраној полилињији.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">Други сегмент треба да буде на изабраној полилињији и да није исти као први.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
@@ -30640,22 +16139,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="272"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
         <translation>RS_ActionPrintPreview::fit(): Nevalidna veličina papira</translation>
-    </message>
-    <message>
-        <source>Limit of pages has been exceeded.</source>
-        <translation type="vanished">Dostignut je limit broja stranica.</translation>
-    </message>
-    <message>
-        <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
-        <translation type="vanished">Povucite levim tasterom miša da biste postavili papir ili srednjim tasterom da biste pomerili sliku</translation>
-    </message>
-    <message>
-        <source>Move Horizontally</source>
-        <translation type="vanished">Horizontalno pomeranje</translation>
-    </message>
-    <message>
-        <source>Move Vertically</source>
-        <translation type="vanished">Vertikalno pomeranje</translation>
     </message>
 </context>
 <context>
@@ -30785,10 +16268,6 @@ Tačka: (%8 , %9)</translation>
         <source>Entity must be an Atomic Entity.</source>
         <translation>Entitet mora biti atomski entitet.</translation>
     </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Odredite entitet za selekciju</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionSelectIntersected</name>
@@ -30808,59 +16287,13 @@ Tačka: (%8 , %9)</translation>
         <translation>Back</translation>
     </message>
     <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">Izaberite entitet koji se preseka</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">Izaberite podređene entitete</translation>
-    </message>
-    <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="143"/>
         <source>Choose second point of intersection line</source>
         <translation>Odaberite drugu tačku preseka</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">Odredite entitet sa željenim slojem</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Odredite entitet za selekciju</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Izaberite konturu</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">Deaktiviranje selekcije</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">Selekcija</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">entiteta</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">koji se preklapaju sa poljem</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">koji se nalaze unutar polja</translation>
-    </message>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="181"/>
         <source>Click and drag for the selection window</source>
@@ -30880,22 +16313,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="184"/>
         <source>Back</source>
         <translation>Back</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">Uklonite selekciju entiteta</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">Izaberite entitete</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">Izaberite presečne elemente</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">Uklonite izabrane presečne elemente</translation>
     </message>
 </context>
 <context>
@@ -31004,77 +16421,6 @@ Tačka: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_Snapper</name>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikalno</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontalno</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">Ortogonalno</translation>
-    </message>
-    <message>
-        <source>Grid</source>
-        <translation type="vanished">Grid</translation>
-    </message>
-    <message>
-        <source>Entity</source>
-        <translation type="vanished">Entitet</translation>
-    </message>
-    <message>
-        <source>Endpoint</source>
-        <translation type="vanished">Kraja</translation>
-    </message>
-    <message>
-        <source>Intersection</source>
-        <translation type="vanished">Presjek</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Sredina</translation>
-    </message>
-    <message>
-        <source>Distance</source>
-        <translation type="vanished">Udaljenost</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation type="vanished">Centar</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Ugao</translation>
-    </message>
-    <message>
-        <source>Angle Relative</source>
-        <translation type="vanished">Relativni ugao</translation>
-    </message>
-    <message>
-        <source>Angle (on Entity)</source>
-        <translation type="vanished">Ugao (na entitetu)</translation>
-    </message>
-    <message>
-        <source>Dist: </source>
-        <translation type="vanished">Udaljenost:</translation>
-    </message>
-    <message>
-        <source>Angle: </source>
-        <translation type="vanished">Ugao:</translation>
-    </message>
-    <message>
-        <source>dX: </source>
-        <translation type="vanished">dX:</translation>
-    </message>
-    <message>
-        <source>dY: </source>
-        <translation type="vanished">dY:</translation>
-    </message>
-</context>
-<context>
     <name>TextFileViewer</name>
     <message>
         <location filename="../src/ui/generic/textfileviewer.ui" line="14"/>
@@ -31118,32 +16464,16 @@ Tačka: (%8 , %9)</translation>
         <translation>Ukupan ugao tangencijalnog luka</translation>
     </message>
     <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Odaberite poluprečnik iz crteža</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">Ako je izabrano, kreira se tangencijalni luk sa navedenim poluprečnikom</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
         <translation>Poluprečnik</translation>
     </message>
     <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">Ako je izabrano, kreira se luk sa navedenim uglom</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="120"/>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
         <translation>Ugao</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Odaberite ugao sa crteža</translation>
     </message>
 </context>
 <context>
@@ -31169,25 +16499,9 @@ Tačka: (%8 , %9)</translation>
         <translation>Dužina 1:</translation>
     </message>
     <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Dužina zakošenja u X pravcu.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">Odaberite prvu dužinu sa crteža</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="92"/>
         <source>Length 2:</source>
         <translation>Dužina 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Dužina zakošenja u Y pravcu.</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">Odaberite drugu dužinu sa crteža</translation>
     </message>
 </context>
 <context>
@@ -31201,14 +16515,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="50"/>
         <source>Radius:</source>
         <translation>Полупречник:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Полупречник круга</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Изаберите полупречник са цртежа</translation>
     </message>
 </context>
 <context>
@@ -31233,10 +16539,6 @@ Tačka: (%8 , %9)</translation>
         <source>Radius of tangential circle</source>
         <translation>Полупречник тангенцијалног круга</translation>
     </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Изаберите полупречник са цртежа</translation>
-    </message>
 </context>
 <context>
     <name>Ui_DimLinearOptions</name>
@@ -31259,29 +16561,9 @@ Tačka: (%8 , %9)</translation>
         <translation>Опције димензије</translation>
     </message>
     <message>
-        <source>Style:</source>
-        <translation type="vanished">Стил:</translation>
-    </message>
-    <message>
-        <source>Dimension style</source>
-        <translation type="vanished">Стил димензије</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="62"/>
         <source>Label:</source>
         <translation>Ознака:</translation>
-    </message>
-    <message>
-        <source>Prefix character</source>
-        <translation type="vanished">Префиксни знак</translation>
-    </message>
-    <message>
-        <source>User-specified dimension&apos;s label. Enter value or either &quot;&lt;&gt;&quot; or just leave empty for automatic measurement.</source>
-        <translation type="vanished">Ознака димензије коју је одредио корисник. Унесите вредност или „&lt;&gt;” или оставите празно за аутоматско мерење.</translation>
-    </message>
-    <message>
-        <source>Suffix symbol</source>
-        <translation type="vanished">Суфиксни симбол</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="109"/>
@@ -31319,54 +16601,6 @@ Tačka: (%8 , %9)</translation>
         <source>...</source>
         <translation>...</translation>
     </message>
-    <message>
-        <source>Tolerance - Upper Limit</source>
-        <translation type="vanished">Tolerancija - Gornja granica</translation>
-    </message>
-    <message>
-        <source>Tolerance - Lower Limit</source>
-        <translation type="vanished">Tolerancija - Donja granica</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Ugao:</translation>
-    </message>
-    <message>
-        <source>Dimension angle</source>
-        <translation type="vanished">Ugao dimenzije</translation>
-    </message>
-    <message>
-        <source>Horizontal Dimension</source>
-        <translation type="vanished">Horizontalna dimenzija</translation>
-    </message>
-    <message>
-        <source>Vertical Dimension</source>
-        <translation type="vanished">Vertikalna dimenzija</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Udaljenost:</translation>
-    </message>
-    <message>
-        <source>Distance between dimensions in baseline</source>
-        <translation type="vanished">Растојање између димензија у основној линији</translation>
-    </message>
-    <message>
-        <source>If checked, distance between dimenions is defined by mouse</source>
-        <translation type="vanished">Ако је поље означено, растојање између димензија се дефинише помоћу миша</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Free</translation>
-    </message>
-    <message>
-        <source>Angle for dimension</source>
-        <translation type="vanished">Угао за димензију</translation>
-    </message>
-    <message>
-        <source>If checked, angle for dimension is defined by mouse</source>
-        <translation type="vanished">Ако је поље означено, угао за димензију се дефинише помоћу миша</translation>
-    </message>
 </context>
 <context>
     <name>Ui_ImageOptions</name>
@@ -31396,21 +16630,9 @@ Tačka: (%8 , %9)</translation>
         <translation>DPI</translation>
     </message>
     <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Изаберите угао из цртежа</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Фактор скалирања:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="86"/>
         <source>Scale Factor</source>
         <translation>Faktor skaliranja</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">DPI:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="100"/>
@@ -31426,17 +16648,9 @@ Tačka: (%8 , %9)</translation>
         <translation>Opcije ubacivanja</translation>
     </message>
     <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">Odaberite razmak između redova sa crteža</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="210"/>
         <source>Number of Rows</source>
         <translation>Broj redova</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">Odaberite razmak između kolona sa crteža</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="128"/>
@@ -31447,10 +16661,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="106"/>
         <source>Factor:</source>
         <translation>Faktor:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Odaberite ugao sa crteža</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="163"/>
@@ -31515,10 +16725,6 @@ Tačka: (%8 , %9)</translation>
         <source>Rotation Angle</source>
         <translation>Угао ротације</translation>
     </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Изаберите угао са цртежа</translation>
-    </message>
 </context>
 <context>
     <name>Ui_LineAngleOptions</name>
@@ -31531,10 +16737,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
         <source>Snap Point:</source>
         <translation>Тачка привлачења:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">Изаберите угао линије са цртежа</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="65"/>
@@ -31557,18 +16759,6 @@ Tačka: (%8 , %9)</translation>
         <translation>Дужина линије</translation>
     </message>
     <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">Ako je izabrano, linija će biti ortogonalna na osu uglova. U suprotnom, biće ortogonalna na osu ekrana.</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">Na osu uglova</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">Tačka na kreiranoj liniji koja će biti postavljena na tačku ubacivanja.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
         <source>Start</source>
         <translation>Početak</translation>
@@ -31582,10 +16772,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="180"/>
         <source>End</source>
         <translation>End</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">Odredite dužinu linije iz crteža.</translation>
     </message>
 </context>
 <context>
@@ -31604,10 +16790,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="66"/>
         <source>Length of bisector</source>
         <translation>Dužina linije koja deli ugao</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">Odaberite dužinu linije sa crteža</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="73"/>
@@ -31671,17 +16853,9 @@ Tačka: (%8 , %9)</translation>
         <translation>Smer:</translation>
     </message>
     <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">Horizontalna linija</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="160"/>
         <source>X</source>
         <translation>X</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">Linija do proizvoljne tačke</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="297"/>
@@ -31689,21 +16863,9 @@ Tačka: (%8 , %9)</translation>
         <translation>Tačka</translation>
     </message>
     <message>
-        <source>Vertical line</source>
-        <translation type="vanished">Vertikalna linija</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="122"/>
         <source>Y</source>
         <translation>Y</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Ugao linije</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">Linija definisana ugлом</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="141"/>
@@ -31741,27 +16903,14 @@ Tačka: (%8 , %9)</translation>
         <translation>Затвори</translation>
     </message>
     <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">Ако је поље означено, угао је релативан на претходни сегмент</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="195"/>
         <source>Rel</source>
         <translation>Rel</translation>
     </message>
     <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">Направи полилинија од сегмената линија</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="103"/>
         <source>Polyline</source>
         <translation>Polilinija</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Odaberite ugao sa crteža</translation>
     </message>
 </context>
 <context>
@@ -31782,10 +16931,6 @@ Tačka: (%8 , %9)</translation>
         <translation>Udaljenost od originalnog objekta</translation>
     </message>
     <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Odaberite udaljenost sa crteža</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="85"/>
         <source>Number:</source>
         <translation>Broj:</translation>
@@ -31802,14 +16947,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="32"/>
         <source>Line Parallel Through Options</source>
         <translation>Opcije paralelne linije kroz objekat</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">Ako je ovo označeno, paralele će biti kreirane sa obe strane objekta</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Симетрично</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="66"/>
@@ -31848,22 +16985,6 @@ Tačka: (%8 , %9)</translation>
         <translation>Опције полигона</translation>
     </message>
     <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">Ако је одабрано, референтне тачке су за теме полигона. У супротном, оне су за средишњу тачку ивица.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">Теме до тема</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">Ако је одабрано, теме полигона ће бити заобљене.</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">Радијус</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="66"/>
         <source>Number of edges</source>
         <translation>Број ивица</translation>
@@ -31872,22 +16993,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="56"/>
         <source>Number:</source>
         <translation>Број:</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">Poluprečnik za zaobljavanje temena.</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">Ako je ovo polje označeno, poligon će biti nacrtan kao polilinija. U suprotnom, kreiraće se pojedinačne entitete.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilinija</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Odaberite poluprečnik iz crteža.</translation>
     </message>
 </context>
 <context>
@@ -31908,10 +17013,6 @@ Tačka: (%8 , %9)</translation>
         <translation>Ugao linije</translation>
     </message>
     <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Odaberite ugao iz crteža.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="85"/>
         <source>Length:</source>
         <translation>Dužina:</translation>
@@ -31920,10 +17021,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="101"/>
         <source>Length of line</source>
         <translation>Dužina linije</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Odaberite dužinu sa crteža</translation>
     </message>
 </context>
 <context>
@@ -31939,21 +17036,9 @@ Tačka: (%8 , %9)</translation>
         <translation>Tekst:</translation>
     </message>
     <message>
-        <source>Text to insert</source>
-        <translation type="vanished">Tekst za ubacivanje</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_mtextoptions.ui" line="91"/>
         <source>Angle:</source>
         <translation>Ugao:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Ugao rotacije</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Odaberite ugao sa crteža</translation>
     </message>
 </context>
 <context>
@@ -31973,58 +17058,6 @@ Tačka: (%8 , %9)</translation>
         <source>Offset from original entity</source>
         <translation>Размак од оригиналног ентитета</translation>
     </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Broj kopija.</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Ako je označeno, biće kreirano više kopija.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Više kopija</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Ako je označeno, kreirani entiteti će biti postavljeni u trenutni sloj, u suprotnom će biti u originalnim slojevima.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Koristi trenutni sloj</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">Ako je označeno, koristiće se fiksna udaljenost za pomak, u suprotnom će se definisati pomoću miša.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Fiksna udaljenost</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Ako je označeno, trenutni atributi će biti primenjeni na kreirane entitete, u suprotnom će se koristiti originalni atributi.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Koristi trenutne atribute</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Ako je označeno, originalni entiteti će ostati, u suprotnom će biti uklonjeni.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Sačuvaj originale</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">Udaljenost pomaka od originalnog entiteta</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">Изаберите растојање из цртежа</translation>
-    </message>
 </context>
 <context>
     <name>Ui_MoveRotateOptions</name>
@@ -32034,69 +17067,9 @@ Tačka: (%8 , %9)</translation>
         <translation>Опције померања и ротације</translation>
     </message>
     <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Ако је поље означено, тренутни атрибути ће се применити на креиране објекте, у супротном ће се користити оригинални атрибути.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Користи тренутне атрибуте</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Број копија</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Ако је поље означено, оригинални објекти ће остати, у супротном ће бити уклоњени.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Задржи оригиналне објекте</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">Ако је поље означено, све копије ће бити ротиране за исти угао. У супротном, угао ће бити пропорционалан броју сваке копије.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">Исти угао за копије</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="50"/>
         <source>Angle:</source>
         <translation>Угао:</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">Ako je označeno, ugao rotacije se definiše pomoću miša. U suprotnom, koristi se navedena vrednost.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Free</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">Ako je označeno, kreirani entiteti će biti postavljeni u trenutni sloj, u suprotnom će biti u originalnim slojevima.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Koristi trenutni sloj</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">Ugao rotacije.</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Ako je označeno, kreiraće se više kopija.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Više kopija</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Odaberi ugao sa crteža</translation>
     </message>
 </context>
 <context>
@@ -32107,30 +17080,14 @@ Tačka: (%8 , %9)</translation>
         <translation>Opcije polilinije</translation>
     </message>
     <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">Povezuje krajeve polilinije, čime se kreira zatvoreni kontur</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="53"/>
         <source>Close</source>
         <translation>Затвори</translation>
     </message>
     <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">Поништи последњу акцију</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="60"/>
         <source>Undo</source>
         <translation>Undo</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">Тип сегмента:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">Опредељује који сегмент полилиније треба да се креира</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
@@ -32148,29 +17105,9 @@ Tačka: (%8 , %9)</translation>
         <translation>Радијус тангенте</translation>
     </message>
     <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">Угао тангенте</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="95"/>
         <source>Angle</source>
         <translation>Угао</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">Тангентни лук</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">Тангентни лук са фиксираним радијусом</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">Тангентни лук са фиксираним углом</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">Лук са углом</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="103"/>
@@ -32178,25 +17115,9 @@ Tačka: (%8 , %9)</translation>
         <translation>Радијус:</translation>
     </message>
     <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Радијус лука</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Изаберите радијус са цртежа</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="126"/>
         <source>Angle:</source>
         <translation>Угао:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">Угао лука</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Изаберите угао са цртежа</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="204"/>
@@ -32215,26 +17136,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="20"/>
         <source>Print Preview Options</source>
         <translation>Opcije za pregled štampanja</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">Horizontalna orijentacija</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">Horizontalna orijentacija papira</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">Vertikalna orijentacija papira</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">Postavke za crtanje</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Skala:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="56"/>
@@ -32272,42 +17173,6 @@ Tačka: (%8 , %9)</translation>
         <translation>Уклопи на страну</translation>
     </message>
     <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">Страница у средини површине за цртање</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">Зумирај до области за штампање</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">Прилагоди на 1 страницу</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">Ако је омогућено, простор за папир ће укључивати наведени број страница организованих у колонама и редовима</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">Штампање у облику плочица</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">Број редова страница:</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">Број колона страница</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">Странице, колоне:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">Број редова страница</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
         <source>Calculate number of pages needed to contain the drawing</source>
         <translation>Израчунајте број страница потребних да би се садржао цртеж</translation>
@@ -32335,14 +17200,6 @@ Tačka: (%8 , %9)</translation>
         <source>Radius:</source>
         <translation>Радијус:</translation>
     </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">Радијус заобљавања</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Изаберите радијус из цртежа</translation>
-    </message>
 </context>
 <context>
     <name>Ui_SnapDistOptions</name>
@@ -32356,18 +17213,6 @@ Tačka: (%8 , %9)</translation>
         <source>Distance:</source>
         <translation>Растојање:</translation>
     </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Растојање привлачења:</translation>
-    </message>
-    <message>
-        <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="vanished">Растојање тачке привлачења од првобитно одређене тачке привлачења</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing.</source>
-        <translation type="vanished">Одаберите растојање из цртежа.</translation>
-    </message>
 </context>
 <context>
     <name>Ui_SnapMiddleOptions</name>
@@ -32380,10 +17225,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
         <source>Middle Points:</source>
         <translation>Средње тачке:</translation>
-    </message>
-    <message>
-        <source>Snap Middle Points:</source>
-        <translation type="vanished">Опције за привлачење средњих тачака:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="63"/>
@@ -32404,21 +17245,9 @@ Tačka: (%8 , %9)</translation>
         <translation>Степен:</translation>
     </message>
     <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">Степен сплајна који се користи за апроксимацију између тачака</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">Ако је изабрано, креира се затворени сплајн</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="91"/>
         <source>Closed</source>
         <translation>Затворено</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">Поништи претходну тачку</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="104"/>
@@ -32443,14 +17272,6 @@ Tačka: (%8 , %9)</translation>
         <source>Angle:</source>
         <translation>Угао:</translation>
     </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Угао ротације</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Изаберите угао са цртежа</translation>
-    </message>
 </context>
 <context>
     <name>Ui_TrimAmountOptions</name>
@@ -32470,10 +17291,6 @@ Tačka: (%8 , %9)</translation>
         <translation>Dužina unosa se koristi kao ukupna dužina nakon skraćivanja, umesto kao povećanje dužine.</translation>
     </message>
     <message>
-        <source>Total</source>
-        <translation type="vanished">Ukupno</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="56"/>
         <source>Length:</source>
         <translation>Dužina:</translation>
@@ -32482,18 +17299,6 @@ Tačka: (%8 , %9)</translation>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="78"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
         <translation>Udaljenost. Negativne vrednosti za skraćivanje, pozitivne vrednosti za produžavanje. Negativni znak se zanemaruje prilikom skraćivanja do konačne ukupne dužine.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Odaberite dužinu sa crteža</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">Ako je označeno, skraćivanje/produžavanje se vrši sa obe strane linije.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Simetrično</translation>
     </message>
 </context>
 <context>

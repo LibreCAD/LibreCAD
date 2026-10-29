@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Enquadramento</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Insira um nome e pressione +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Salvar</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Enquadramento</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Salvar</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ ou [%2]</translation>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Especifique a distância (ângulo %1 graus)
-ou [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Especifique a distância (ângulo %1 graus)
 ou [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ ou [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Adicionar ou remover ação</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,37 +2493,6 @@ ou [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>n</source>
-        <translation type="vanished">n</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">Camada</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">Tipo de linha</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">radius</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Fechado</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2737,10 +2643,6 @@ ou [%2]</translation>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>Mostrar dica de ferramenta para itens da tabela</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">Arquivo de pênsis:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2955,24 +2857,6 @@ ou [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Remover pênsis</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Paleta de pênsil</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">A localização do arquivo de pênsis foi alterada, reinicie o aplicativo para usar o novo arquivo.
-Observação: se você salvar o pênsil pelo editor sem reiniciar, os pênsis atuais da paleta serão salvos no novo arquivo e o conteúdo existente será substituído.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">O local do arquivo de canetas foi alterado. Reinicie o aplicativo para usar o novo arquivo de canetas.
-
-Observe que, se você salvar uma caneta por meio do editor sem reiniciar, as canetas atuais da paleta serão salvas no novo arquivo, sobrescrevendo o conteúdo existente.</translation>
     </message>
 </context>
 <context>
@@ -3791,10 +3675,6 @@ Observe que, se você salvar uma caneta por meio do editor sem reiniciar, as can
         <translation>Ladrilho &amp;horizontalmente</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">Criando novo arquivo...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Bloco &apos;%1&apos;</translation>
@@ -3808,10 +3688,6 @@ Observe que, se você salvar uma caneta por meio do editor sem reiniciar, as can
         <location filename="../src/main/qc_applicationwindow.cpp" line="1744"/>
         <source>New Drawing created.</source>
         <translation>Novo desenho criado.</translation>
-    </message>
-    <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">Abrindo arquivo recente...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1806"/>
@@ -3828,21 +3704,9 @@ Favor verificar as permissões.</translation>
         <translation>Documento carregado: </translation>
     </message>
     <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">Abortou ao abrir</translation>
-    </message>
-    <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">Salvando desenho...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>Desenho salvo: %1</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">Salvando desenho automaticamente...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -3861,21 +3725,9 @@ Favor verificar as permissões.
 Salvamento automático desabilitado.</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Exportando desenho...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
         <source>Exported: %1</source>
         <translation>Exportado: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Exportando...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Exportação completa</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
@@ -3883,21 +3735,9 @@ Salvamento automático desabilitado.</translation>
         <translation>Exportação falhou!</translation>
     </message>
     <message>
-        <source>Printing...</source>
-        <translation type="vanished">Imprimindo...</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">Impressão completa</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2768"/>
         <source>Print preview for %1</source>
         <translation>Pré-visualizar impressão para %1</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">Saindo do aplicativo...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="688"/>
@@ -4208,10 +4048,6 @@ Favor checar se o arquivo existe e suas permissões.</translation>
         <translation>Desenhos</translation>
     </message>
     <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">Salvando Desenho: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>Salvar cancelado</translation>
@@ -4403,11 +4239,6 @@ Favor checar se o arquivo existe e suas permissões.</translation>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">abortar</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4747,11 +4578,6 @@ em uma janela separada</translation>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>Histórico e saída do comando</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">abortar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7359,41 +7185,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Variáveis de desenho</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Variável</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Código</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Valor</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -8449,10 +8240,6 @@ so default step value required for baking</source>
         <translation>Nenhum texto foi fornecido novamente ainda.</translation>
     </message>
     <message>
-        <source>Close</source>
-        <translation type="vanished">Fechar</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
         <translation>Descartar tudo</translation>
@@ -9267,117 +9054,9 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_WidthBox</name>
     <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Inalterado -</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Padrão</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Por bloco</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="247"/>
         <source>By Layer</source>
         <translation>Por camada</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0.05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0.09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0,13 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0.15mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0,18 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0,25 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0,35 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0,50 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0,70 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1,40 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11mm</translation>
     </message>
 </context>
 <context>
@@ -9533,12 +9212,6 @@ Por favor, especifique um valor diferente.</translation>
         <translation>Remover camadas vazias</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Camada(s) sem entidades encontradas, mas estão filtradas e não são visíveis.
-Limpe a máscara de filtro e repita.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>Nenhuma camada sem entidades encontrada, nada para remover.</translation>
@@ -9584,14 +9257,6 @@ Por favor, especifique um nome diferente.</translation>
         <translation>Duplicar Seleção</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Substituir o valor &quot;Por Camada&quot; pelos valores das camadas de origem?
-Se Sim, as entidades com canetas &quot;Por Camada&quot; aparecerão na nova camada exatamente como nas camadas anteriores, e o valor &quot;Por Camada&quot; será substituído pelas canetas resolvidas.
-Se Não, os valores &quot;Por Camada&quot; permanecerão, e a caneta da camada de destino definirá a caneta para essas entidades.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9602,14 +9267,6 @@ Se Não, os valores &quot;Por Camada&quot; permanecerão, e a caneta da camada d
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>Valor inválido fornecido para a cor %1.
-Por favor, especifique um valor diferente.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">Caminho inválido para o arquivo de canetas.
-%1
 Por favor, especifique um valor diferente.</translation>
     </message>
     <message>
@@ -9684,14 +9341,6 @@ Por favor, especifique um valor diferente.</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Por favor, selecione apenas uma entidade para escolher as configurações da caneta.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">Salvando Dados das Canetas</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Não foi possível salvar os dados das canetas no arquivo de canetas especificado. Deseja especificar o caminho correto para o arquivo?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11273,16 +10922,6 @@ Deseja substituí-lo?</translation>
         <translation>Código da tecla aceito: %1</translation>
     </message>
     <message>
-        <source>cal</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">calculate</translation>
-    </message>
-    <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
@@ -11444,10 +11083,6 @@ Deseja substituí-lo?</translation>
         <location filename="../src/ui/qg_commandedit.cpp" line="138"/>
         <source>You must input a distance first.</source>
         <translation>É preciso informar uma distância primeiro.</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
@@ -12727,11 +12362,6 @@ Deseja substituí-lo?</translation>
         <translation type="unfinished">Tamanho do papel (Largura x Altura) em mm.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Tamanho do papel (Largura x Altura) em mm.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13418,16 +13048,6 @@ Deseja substituí-lo?</translation>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>Cor do Usuário</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">calcular</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -15020,14 +14640,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="283"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
-    </message>
-    <message>
-        <source>Select first circle or ellipse</source>
-        <translation type="vanished">Selecione primeiro o círculo ou elipse</translation>
-    </message>
-    <message>
-        <source>Select second circle or ellipse</source>
-        <translation type="vanished">Selecione segundo o círculo ou elipse</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
@@ -17545,77 +17157,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>Atualizar</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Dividir</translation>
-    </message>
-    <message>
-        <source>n</source>
-        <translation type="vanished">n</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">Camada</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">Tipo de linha</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">radius</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Fechado</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Camadas</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Escala:</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>SplinePoints</source>
-        <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="vanished">PontosSpline</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Camada:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Altura:</translation>
     </message>
 </context>
 </TS>

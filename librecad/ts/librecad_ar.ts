@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">إطار</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">أدخل اسمًا ثم اضغط +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">حفظ</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">إطار</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">حفظ</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ or [%2]</source>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>حدد المسافة (الزاوية %1 درجة)
-أو [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">حدد المسافة (الزاوية %1 درجة)
 أو [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">إضافة أو إزالة إجراء</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,17 +2493,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">نوع الخط</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">طول</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2717,10 +2643,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>إظهار التلميح لعناصر الجدول</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">ملف الأقلام:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2935,24 +2857,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>حذف الأقلام</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">لوحة الأقلام</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">تم تغيير موقع ملف الأقلام، يرجى إعادة تشغيل التطبيق حتى يتم استخدام ملف الأقلام الجديد.
-يرجى ملاحظة أنه إذا قمت بحفظ القلم عبر المحرر دون إعادة التشغيل، سيتم حفظ الأقلام الحالية من اللوحة في الملف الجديد وبالتالي سيتم تجاوز المحتوى الموجود فيه.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">تم تغيير موقع ملف الأقلام، يرجى إعادة تشغيل التطبيق لاستخدام ملف الأقلام الجديد.
-
-يرجى ملاحظة أنه إذا قمت بحفظ القلم عبر المحرر دون إعادة التشغيل، فسيتم حفظ الأقلام الحالية من اللوحة في الملف الجديد، وبالتالي سيتم استبدال المحتوى الحالي فيه.</translation>
     </message>
 </context>
 <context>
@@ -3731,34 +3635,14 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>تجانب أفقيًا</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">إنشاء ملف جديد ...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>مستند غير مسمى %1</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">فتح الملف الأخير ...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>المستند المحمل: </translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">تم إلغاء الفتح</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">يطبع...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">الخروج من التطبيق ...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
@@ -3781,17 +3665,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>أنشاء رسم جديد.</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">حفظ الرسم ...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>الرسم المحفوظ: %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">تصدير الرسم...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3799,21 +3675,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>تم التصدير: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">جارٍ التصدير...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">أكتمل التصدير</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>فشل التصدير!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">اكتملت الطباعة</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3838,10 +3702,6 @@ Please check the permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>متعدّد خطوط</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">حفظ تلقائي للرسم...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4188,10 +4048,6 @@ Please check its existence and permissions.</source>
         <translation>رسومات</translation>
     </message>
     <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">جارٍ حفظ الرسم: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>تم إلغاء الحفظ</translation>
@@ -4383,11 +4239,6 @@ Please check its existence and permissions.</source>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">خروج</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4727,11 +4578,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>سجل الأوامر والمخرجات</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7343,41 +7189,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">متغيرات الرسم</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">متغير</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">كود</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">قيمة</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -9410,12 +9221,6 @@ Please specify a different value.</source>
         <translation>إزالة الطبقات الفارغة</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">تم العثور على طبقة (أو طبقات) بدون كيانات، ولكنها مُصفّاة وغير مرئية.
-امسح قناع التصفية وكرر.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>لم يتم العثور على طبقات بدون كيانات، لا يوجد شيء لإزالته.</translation>
@@ -9461,14 +9266,6 @@ Please specify a different name.</source>
         <translation>تكرار التحديد</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">هل تريد استبدال قيمة &quot;حسب الطبقة&quot; بقيم الطبقات المصدر؟
-إذا كانت الإجابة نعم - ستبدو الكيانات ذات أقلام &quot;حسب الطبقة&quot; على الطبقة الجديدة تمامًا كما كانت على الطبقات السابقة، وسيتم استبدال قيمة &quot;حسب الطبقة&quot; بأقلام محددة.
-إذا كانت الإجابة لا - ستبقى قيم &quot;حسب الطبقة&quot;، وبالتالي سيحدد قلم الطبقة الهدف القلم لهذه الكيانات.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9479,14 +9276,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>تم تقديم قيمة غير صالحة للون %1. يرجى تحديد قيمة مختلفة.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">مسار غير صالح لملف الأقلام.
-%1 
-يرجى تحديد قيمة مختلفة.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
@@ -9560,14 +9349,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>يرجى تحديد كيان واحد فقط لتحديد إعدادات القلم.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">حفظ بيانات الأقلام</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">تعذر حفظ بيانات الأقلام في ملف الأقلام المحدد. هل ترغب في تحديد المسار الصحيح للملف؟</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11312,10 +11093,6 @@ Do you want to replace it?</source>
         <translation>يجب إدخال المسافة أولاً.</translation>
     </message>
     <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>وضع الآلة الحاسبة: تشغيل</translation>
@@ -12593,11 +12370,6 @@ Do you want to replace it?</source>
         <translation type="unfinished">حجم الورق (العرض × الارتفاع) بالمليمتر.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">حجم الورق (العرض × الارتفاع) بالمليمتر.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13284,16 +13056,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>لون المستخدم</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">حساب</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -17403,75 +17165,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>تحديث</translation>
-    </message>
-</context>
-<context>
-    <name>dibPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">نوع الخط</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">طول</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Geardlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">التحجيم:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="vanished">متعدّد خطوط</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">طبقة:</translation>
     </message>
 </context>
 </TS>

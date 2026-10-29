@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Markoa</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Sartu izen bat eta egin +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Gorde</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Markoa</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Gorde</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -307,12 +257,6 @@ edo [%2]</translation>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Zehaztu distantzia (angelua %1 gradu)
-edo [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Zehaztu distantzia (angelua %1 gradu)
 edo [%2]</translation>
     </message>
 </context>
@@ -1727,13 +1671,6 @@ edo [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Gehitu edo kendu ekintza</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2555,13 +2492,6 @@ edo [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Itxia</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2712,10 +2642,6 @@ edo [%2]</translation>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>Erakutsi tresna-aholkua taula-elementuentzat</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">Arkatzen fitxategia:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2930,24 +2856,6 @@ edo [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Kendu arkatza</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Arkatzen paleta</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Arkatzen fitxategiaren kokapena aldatu da, mesedez berrabiarazi aplikazioa arkatz-fitxategi berria erabiltzeko.
-Kontuan izan arkatz editore bidez gorde eta berrabiarazi gabe uzten baduzu, paletako uneko arkatza fitxategi berrian gordeko dela eta beraz edukia gainidatziko dela.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Arkatzen fitxategia aldatu da, mesedez berrabiarazi aplikazioa, beraz, arkatza-fitxategi berria erabiliko da.
-
-Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatza-sorta berriaren fitxategian gorde egingo da, eta horrek aurreko edukiari gainetik idatziko dio.</translation>
     </message>
 </context>
 <context>
@@ -3726,10 +3634,6 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
         <translation>&amp;Lerrokatze horizontala</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">Fitxategi berri bat sortzen...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>izengabeko fitxategia %1</translation>
@@ -3738,18 +3642,6 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>Fitxategia kargatzen:</translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">Eragiketa bertan behera utzi da</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">Inprimatzen...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">Aplikaziotik aterazen...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
@@ -3772,17 +3664,9 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
         <translation>Irudi berria sortua</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">Irudia gordetzen...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>Irudia gordeta: %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Irudia esportatzen...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3790,21 +3674,9 @@ Gogoratu, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatz
         <translation>Esportatuta: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Esportatzen...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Esportazioa bukatua</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>Esportazioan huts!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">Inprimaketa bukatua</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3829,10 +3701,6 @@ Baimenak ikusi.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>&amp;Polilinea</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">Irudia automatikoki gordetzen...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4069,10 +3937,6 @@ Ikus ea dagoen eta baimenak.</translation>
         <translation>Pen</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">Duela gutxiko fitxategia irekitzen...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
         <source>Dock Areas</source>
         <translation>Dokatzeko eremuak</translation>
@@ -4181,10 +4045,6 @@ Ikus ea dagoen eta baimenak.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="872"/>
         <source>&amp;Drawings</source>
         <translation>&amp;Irudiak</translation>
-    </message>
-    <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">Marrazkia gordetzen: %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
@@ -4378,11 +4238,6 @@ Ikus ea dagoen eta baimenak.</translation>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">atzera</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4722,11 +4577,6 @@ beste lehio batean</translation>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>Erabilitako komanduen zerrenda eta irteerak</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">atzera</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7334,41 +7184,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Marrazki aldagaiak</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Aldagaia</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Kodea</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Balioa</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Utzi</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -9233,10 +9048,6 @@ p, li { white-space: pre-wrap; }
         <source>By Layer</source>
         <translation>Por Camada</translation>
     </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Geruzen bitartez</translation>
-    </message>
 </context>
 <context>
     <name>QMessageBox</name>
@@ -9389,11 +9200,6 @@ Please specify a different value.</source>
         <translation>Geruza hutsak kendu</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">One or more layers without entities were found, but they are filtered and not visible. Clear the filtering mask and repeat.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>No layers without entities were found. Nothing to remove.</translation>
@@ -9436,14 +9242,6 @@ Please specify a different name.</source>
         <translation>Duplicar selección</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">¿Reemplazar el valor &quot;Por Capa&quot; por los valores de las capas de origen?
-Si Sí - las entidades con plumas &quot;Por Capa&quot; se verán en la nueva capa exactamente como en las capas anteriores y el valor &quot;Por Capa&quot; será reemplazado por plumas resueltas.
-Si No - los valores &quot;Por Capa&quot; se mantienen y la pluma de la capa de destino definirá la pluma para dichas entidades.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9454,12 +9252,6 @@ Si No - los valores &quot;Por Capa&quot; se mantienen y la pluma de la capa de d
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>Valor no válido proporcionado para el color %1. Por favor, especifique un valor diferente.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">Ruta no válida para el archivo de plumas. %1. Por favor, especifique un valor diferente.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
@@ -9533,14 +9325,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Bitte wählen Sie nur eine Entität, um die Stifteinstellung festzulegen.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">Stifteinstellungen speichern</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Die Stifteinstellungen konnten nicht in die angegebene Stiftdatei gespeichert werden. Möchten Sie den korrekten Pfad zur Datei angeben?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11285,10 +11069,6 @@ Möchten Sie ihn überschreiben?</translation>
         <translation>Sie müssen zuerst einen Abstand eingeben.</translation>
     </message>
     <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>Modo Calculadora: Ativo</translation>
@@ -12566,11 +12346,6 @@ Möchten Sie ihn überschreiben?</translation>
         <translation type="unfinished">Paperaren tamaina (Zabalera x Altuera) mm-tan.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Paperaren tamaina (Zabalera x Altuera) mm-tan.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13257,16 +13032,6 @@ Möchten Sie ihn überschreiben?</translation>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>Color de usuario</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">calcular</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -17376,83 +17141,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>Eguneratu</translation>
-    </message>
-</context>
-<context>
-    <name>dibPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Utzi</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Itxia</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Utzi</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Geardlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Utzi</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Utzi</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Eskala:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Utzi</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Utzi</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="vanished">Polilinea</translation>
-    </message>
-    <message>
-        <source>SplinePoints</source>
-        <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="vanished">SplinePuntuak</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Geruza:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Altuera:</translation>
     </message>
 </context>
 </TS>

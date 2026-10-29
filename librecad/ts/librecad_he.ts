@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">מסגרת</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">הכנס שם ולחץ על +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">שמור</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">מסגרת</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">שמור</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ or [%2]</source>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>ציין מרחק (זווית %1 מעלות)
-או [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">ציין מרחק (זווית %1 מעלות)
 או [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">הוסף או הסר פעולה</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,13 +2493,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">סגור</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2713,10 +2643,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>הצג חלון מידע עבור פריטי טבלה</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">קובץ עטים:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2931,24 +2857,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;הסר עטים</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">פלטת עטים</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">מיקום קובץ העטים שונה, אנא הפעל מחדש את האפליקציה כדי להשתמש בקובץ עטים חדש.
-שימו לב שאם תשמרו עט דרך העורך ללא הפעלה מחדש, העטים הנוכחיים מהפלטה יישמרו בקובץ החדש ולכן התוכן הקיים יוחלף.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">מיקום קובץ העטים שונה, אנא הפעל מחדש את היישום כדי להשתמש בקובץ העטים החדש.
-
-שימו לב שאם תשמרו עט באמצעות העורך מבלי להפעיל מחדש, העטים הנוכחיים מהפלטה יישמרו בקובץ החדש, ולכן התוכן הקיים בו יוחלף.</translation>
     </message>
 </context>
 <context>
@@ -3727,10 +3635,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>אריח &amp;אופקי</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">יצירת קובץ חדש...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>מסמך ללא שם %1</translation>
@@ -3739,18 +3643,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>מסמך טעון: </translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">פתיחה בוטלה</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">מדפיס...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">יוצא מהישום...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
@@ -3773,17 +3665,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>סרטוט חדש נוצר.</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">שומר סרטוט...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>סרטוט שמור: %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">מיצא סרטוט...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3791,21 +3675,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>יוצא: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">מיצא...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">יצוא הושלם</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>יצוא נכשל!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">הדפסה הושלמה</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3830,10 +3702,6 @@ Please check the permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>&amp;פוליליין</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">שומר ציור אוטומטית...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4070,10 +3938,6 @@ Please check its existence and permissions.</source>
         <translation>Pen</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">פותח קובץ אחרון...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
         <source>Dock Areas</source>
         <translation>אזורי עגינה</translation>
@@ -4182,10 +4046,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="872"/>
         <source>&amp;Drawings</source>
         <translation>&amp;ציורים</translation>
-    </message>
-    <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">שומר ציור: %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
@@ -4379,11 +4239,6 @@ Please check its existence and permissions.</source>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">מילוט</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4718,11 +4573,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>היסטוריית פקודות ופלט</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">מילוט</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7326,41 +7176,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">משתני ציור</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">משתנה</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">קוד</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">ערך</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ביטול</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -9388,12 +9203,6 @@ Please specify a different value.</source>
         <translation>הסרת שכבות ריקות</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">נמצאה שכבה/שכבות ללא ישויות, אך הן מסוננות ואינן נראות.
-נקה את מסכת הסינון וחזור.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>לא נמצאו שכבות ללא ישויות, אין מה להסיר.</translation>
@@ -9438,14 +9247,6 @@ Please specify a different name.</source>
         <translation>שכפול בחירה</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">להחליף את ערך &quot;לפי שכבה&quot; בערכי שכבות המקור?
-אם כן - ישויות עם עטים &quot;לפי שכבה&quot; ייראו בשכבה החדשה בדיוק כפי שהיו בשכבות הקודמות, וערך &quot;לפי שכבה&quot; יוחלף בעטים שנקבעו.
-אם לא - ערכי &quot;לפי שכבה&quot; נשארים, ולכן עט של השכבה הממוקדת יגדיר את העט עבור ישויות אלו.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9456,14 +9257,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>סופק ערך לא תקין עבור צבע %1.
-אנא ציין ערך אחר.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">נתיב לא תקין לקובץ עטים.
-%1 
 אנא ציין ערך אחר.</translation>
     </message>
     <message>
@@ -9538,14 +9331,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>אנא בחר ישות אחת בלבד כדי לבחירת הגדרת עט.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">שמירת נתוני עטים</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">לא ניתן לשמור את נתוני העטים לקובץ העטים שצוין. האם תרצה לציין נתיב נכון לקובץ?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11290,10 +11075,6 @@ Do you want to replace it?</source>
         <translation>יש להזין מרחק קודם.</translation>
     </message>
     <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>מצב מחשבון: מופעל</translation>
@@ -12571,11 +12352,6 @@ Do you want to replace it?</source>
         <translation type="unfinished">גודל נייר (רוחב x גובה) במילימטרים.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">גודל נייר (רוחב x גובה) במילימטרים.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13262,16 +13038,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>צבע משתמש</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">לחשב</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -17381,62 +17147,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>עדכן</translation>
-    </message>
-</context>
-<context>
-    <name>dibPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ביטול</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">סגור</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ביטול</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Geardlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ביטול</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ביטול</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ביטול</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ביטול</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">שכבה:</translation>
     </message>
 </context>
 </TS>

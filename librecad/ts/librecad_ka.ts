@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">კადრი</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">შეიყვანეთ სახელი და დააჭირეთ +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">შენახვა</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">კადრი</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">შენახვა</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ or [%2]</source>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>მიუთითეთ მანძილი (კუთხე %1 გრადუსი)
-ან [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">მიუთითეთ მანძილი (კუთხე %1 გრადუსი)
 ან [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">დამატება ან წაშლა ქმედება</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,45 +2493,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>n</source>
-        <translation type="vanished">n</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">ფენა</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">ხაზის ტიპი</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">ხანგრძლივობა</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">რადიუსი</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">სახელი</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">დახურულია</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2745,10 +2643,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>ცხრილის ელემენტებზე ინსტრუმენტის მინიშნების ჩვენება</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">პენების ფაილი:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2963,24 +2857,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;პენების წაშლა</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">პენის პალიტრა</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">პენების ფაილის მდებარეობა შეიცვალა, გთხოვთ გადატვირთოთ პროგრამა ახალი ფაილის გამოსაყენებლად.
-გაითვალისწინეთ: თუ რედაქტორით შეინახავთ პენს გადატვირთვის გარეშე, პალიტრის მიმდინარე პენები შეინახება ახალ ფაილში და არსებული შიგთავსი გადაიწერება.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">რუჩკების ფაილის მდებარეობა შეიცვალა, გთხოვთ, პროგრამა გადატვირთოთ, რათა გამოიყენოთ ახალი რუჩკების ფაილი.
-
-გთხოვთ, გაითვალისწინოთ, რომ თუ რუჩკას რედაქტორის საშუალებით გადაიტანთ, პროგრამის გადატვირთვის გარეშე, პალიტრაში არსებული რუჩკები გადაიწერება ახალ ფაილში და, შესაბამისად, მისი არსებული შინაარსი ჩაანაცვლებს.</translation>
     </message>
 </context>
 <context>
@@ -3759,10 +3635,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>ფილები &amp;ჰორიზონტალურად</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">ახალი ფაილის შექმნა...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>უსახელო დოკუმენტი %1</translation>
@@ -3771,18 +3643,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>ჩატვირთულია დოკუმენტი: </translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">გახსნა შეწყვეტილია</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">დაბეჭდვა...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">პროგრამიდან გამოსვლა...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
@@ -3805,17 +3665,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>ახალი ნახატი შექმნილია.</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">ნახატის შენახვა...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>შენახული ნახატი: %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">ნახატის ექსპორტი...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3823,21 +3675,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>ექსპორტირებული: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">გატანა…</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">ექსპორტი დასრულებულია</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>გატანის შეცდომა!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">დაბეჭდვა დასრულდა</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3862,10 +3702,6 @@ Please check the permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>&amp;პოლიხაზი</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">ნახატის ავტო-შენახვა...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4102,10 +3938,6 @@ Please check its existence and permissions.</source>
         <translation>Pen</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">ბოლო ფაილის გახსნა...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
         <source>Dock Areas</source>
         <translation>დოკის ზონები</translation>
@@ -4214,10 +4046,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="872"/>
         <source>&amp;Drawings</source>
         <translation>&amp;ნახაზები</translation>
-    </message>
-    <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">ნახაზის შენახვა: %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
@@ -4411,11 +4239,6 @@ Please check its existence and permissions.</source>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">escape</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4754,11 +4577,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>ბრძანების ისტორია და გამომავალი</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">escape</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7364,41 +7182,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">ჩარჩოს ცვლადები</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">ცვლადი</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">კოდი</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">მნიშვნელობა</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -8454,14 +8237,6 @@ so default step value required for baking</source>
         <translation>კიდევაც არ არის მოწოდებული ტექსტი.</translation>
     </message>
     <message>
-        <source>Close All</source>
-        <translation type="vanished">ყველას დახურვა</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">დახურვა</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
         <translation>ყველაფრის გაუქმება</translation>
@@ -9272,110 +9047,6 @@ p, li { white-space: pre-wrap; }
         <source>By Layer</source>
         <translation>ფენით</translation>
     </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">ბლოკით</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">ნაგულისხმევი</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00მმ</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0.05მმ</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0.09მმ</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0.13მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0.15მმ</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0.18მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20მმ</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0.25მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30მმ</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0.35მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40მმ</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0.50მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53მმ</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60მმ</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0.70მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80მმ</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90მმ</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1.00მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06მმ</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20მმ</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1.40მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58მმ</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2.00მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11მმ</translation>
-    </message>
 </context>
 <context>
     <name>QMessageBox</name>
@@ -9531,12 +9202,6 @@ Please specify a different value.</source>
         <translation>ამოიღეთ ცარიელი ფენები</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">მოიძებნა ფენა(ები) ობიექტების გარეშე, მაგრამ ისინი გაფილტრულია და არ არის ხილადი.
-გააუქეთ ფილტრის ნიღაბი და გაიმეოროთ.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>არ მოიძებნა ობიექტების გარეშე ფენა(ები), არაფრის ამოღება არ არის.</translation>
@@ -9581,14 +9246,6 @@ Please specify a different name.</source>
         <translation>სელექციის დუბლირება</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">შეცვალოთ &quot;ფენის მიხედვით&quot; მნიშვნელობა წყარო ფენების მნიშვნელობებზე?
-თუ პასუხი არის &quot;დიახ&quot; - &quot;ფენის მიხედვით&quot; მქონე ობიექტები ახალ ფენაზე გამოიყურებიან ისე, როგორც წინა ფენებზე და &quot;ფენის მიხედვით&quot; მნიშვნელობა შეიცვლება და მას რეალური ფერები დაემატება.
-თუ პასუხი არის &quot;არა&quot; - &quot;ფენის მიხედვით&quot; მნიშვნელობა დარჩება და, შესაბამისად, მიზნობრივი ფენის ფერი განსაზღვრავს ასეთ ობიექტების ფერს.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9600,13 +9257,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 Please specify a different value.</source>
         <translation>არასწორი მნიშვნელობა მითითებულია %1 ფერისთვის.
 გთხოვთ, მიუთითეთ სხვა მნიშვნელობა.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">არასწორი გზა მითითებულია ფერების ფაილისთვის.
-%1 გთხოვთ, მიუთითეთ სხვა მნიშვნელობა.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
@@ -9680,14 +9330,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>გთხოვთ, აირჩიეთ მხოლოდ ერთი ელემენტი, რათა დააყენოთ კალმის პარამეტრები.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">კალმის მონაცემების შენახვა</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">კალმის მონაცემების შენახვა მითითებულ ფაილში ვერ მოხერხდა. გსურთ, მიუთითოთ სწორი გზა ფაილამდე?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11239,16 +10881,6 @@ Do you want to replace it?</source>
         <translation>ხელმისაწვდომი ბრძანებები:</translation>
     </message>
     <message>
-        <source>cal</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">კალ</translation>
-    </message>
-    <message>
-        <source>calculate</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">გამოთვლა</translation>
-    </message>
-    <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
@@ -11440,10 +11072,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/qg_commandedit.cpp" line="138"/>
         <source>You must input a distance first.</source>
         <translation>მომხსენებელი, ჯერ ჩაწერეთ მანძილი.</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
@@ -12723,11 +12351,6 @@ Do you want to replace it?</source>
         <translation type="unfinished">ქაღალდის ზომა (სიგანე x სიმაღლე) მმ-ში.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">ქაღალდის ზომა (სიგანე x სიმაღლე) მმ-ში.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13414,16 +13037,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>მომხმარებლის ფერი</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">გამოთვლა</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -17533,123 +17146,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>განახლება</translation>
-    </message>
-</context>
-<context>
-    <name>dibPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">გაყოფა</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">შეცდომა</translation>
-    </message>
-    <message>
-        <source>n</source>
-        <translation type="vanished">n</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">ფენა</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">ხაზის ტიპი</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">ხანგრძლივობა</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">რადიუსი</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">დახურულია</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">ფენები</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Geardlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">მასშტაბი:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="vanished">პოლიხაზი</translation>
-    </message>
-    <message>
-        <source>SplinePoints</source>
-        <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="vanished">სპლაინისწერტილები</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">ფენა:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">სიმაღლე:</translation>
     </message>
 </context>
 </TS>

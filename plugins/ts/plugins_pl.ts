@@ -62,15 +62,6 @@ Ok to accept and start alignment.</source>
         <translation>Kliknij opcje, aby ustawić/usunąć, OK, aby zaakceptować i rozpocząć wyrównywanie.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Jeśli zaznaczono opcję „Zachowaj oryginalne obiekty”, funkcja wyrównywania skopiuje, a nie przesunie wybrane obiekty.
-Jeśli zaznaczono opcję „Najpierw określ punkty odniesienia”, funkcja wyrównywania poprosi o podanie punktów wyrównywania w następującej kolejności: pierwszy punkt odniesienia, drugi punkt odniesienia, pierwszy punkt docelowy, drugi punkt docelowy.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
         <translation>pierwszy punkt bazowy:</translation>

@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Rahmen</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Geben Sie einen Namen ein und drücken Sie dann +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Speichern</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Rahmen</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Speichern</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ oder [%2]</translation>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Abstand angeben (Winkel %1°)
-oder [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Abstand angeben (Winkel %1°)
 oder [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ oder [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Aktion hinzufügen oder entfernen</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2556,41 +2493,6 @@ oder [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_List</name>
-    <message>
-        <source>n</source>
-        <translation type="vanished">an</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">Ebene</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">Linientyp</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">länge</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">radius</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Name</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
@@ -2741,10 +2643,6 @@ oder [%2]</translation>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
         <translation>Tooltip für Tabellenelemente anzeigen</translation>
-    </message>
-    <message>
-        <source>Pens file:</source>
-        <translation type="vanished">Stift-Datei:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2959,24 +2857,6 @@ oder [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Stifte entfernen</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Stift-Palette</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Der Speicherort der Stift-Datei hat sich geändert. Bitte starten Sie die Anwendung neu, damit die neue Stift-Datei verwendet wird.
-Hinweis: Wenn Sie den Stift über den Editor speichern, ohne neu zu starten, werden die aktuellen Stifte aus der Palette in der neuen Datei gespeichert und der bestehende Inhalt wird überschrieben.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Der Pfad zur Stiftdatei wurde geändert. Bitte starten Sie die Anwendung neu, damit die neue Stiftdatei verwendet wird.
-
-Bitte beachten Sie: Wenn Sie einen Stift über den Editor speichern, ohne die Anwendung neu zu starten, werden die aktuellen Stifte aus der Palette in der neuen Datei gespeichert, wodurch der vorhandene Inhalt überschrieben wird.</translation>
     </message>
 </context>
 <context>
@@ -3760,34 +3640,14 @@ Bitte beachten Sie: Wenn Sie einen Stift über den Editor speichern, ohne die An
         <translation>&amp;Horizontal anordnen</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">Erstelle neue Datei...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>Unbenanntes Dokument %1</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">Kürzlich benutzte Dateien...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>Geladenes Dokument: </translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">Öffnen abgebrochen</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">Drucken...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">Anwendung beenden...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="424"/>
@@ -3835,17 +3695,9 @@ Bitte beachten Sie: Wenn Sie einen Stift über den Editor speichern, ohne die An
         <translation>Neue Zeichnung erstellt.</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">Speichere Zeichnung...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>Gespeicherte Zeichnung: %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Exportiere Zeichnung...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3853,21 +3705,9 @@ Bitte beachten Sie: Wenn Sie einen Stift über den Editor speichern, ohne die An
         <translation>Exportiert: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Exportiere...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Export abgeschlossen</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>Export fehlgeschlagen!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">Drucken abgeschlossen</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3892,10 +3732,6 @@ nicht &#xa0;öffnen, bitte Berechtigungen prüfen.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>&amp;Polylinie</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">automatisches Speichern der Zeichnung...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4212,10 +4048,6 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
         <translation>&amp;Fenster</translation>
     </message>
     <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">Zeichnung speichern: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>Speichern abbrechen</translation>
@@ -4407,11 +4239,6 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">escape</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4751,11 +4578,6 @@ Fenster editieren</translation>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>Befehlsverlauf und Ausgabe</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">Beenden</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7366,41 +7188,6 @@ weshalb für das Backen ein Standard-Schrittwert erforderlich ist.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Zeichnungsvariablen</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Variable</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Code</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Wert</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Abbrechen</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -8456,10 +8243,6 @@ weshalb für das Backen ein Standard-Schrittwert erforderlich ist.</translation>
         <translation>Immer noch kein Text vorhanden.</translation>
     </message>
     <message>
-        <source>Close</source>
-        <translation type="vanished">Schließen</translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
         <translation>Alle verwerfen</translation>
@@ -9274,114 +9057,6 @@ p, li { white-space: pre-wrap; }
         <source>By Layer</source>
         <translation>wie Ebene</translation>
     </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">wie Block</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Standard</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0.05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0.09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0,13 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0.15 mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0,18 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0,25 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0,35 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0,50 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0,70 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90 mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20 mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1,40 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58 mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11mm</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Unverändert -</translation>
-    </message>
 </context>
 <context>
     <name>QMessageBox</name>
@@ -9536,12 +9211,6 @@ Please specify a different value.</source>
         <translation>Leere Layer entfernen</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Layer ohne Entitäten gefunden, die jedoch gefiltert und nicht sichtbar sind.
-Filtermaske löschen und wiederholen.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>Es wurden keine Layer ohne Entitäten gefunden, nichts zu entfernen.</translation>
@@ -9586,14 +9255,6 @@ Please specify a different name.</source>
         <translation>Auswahl duplizieren</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Ersetzen des Wertes „Nach Schicht“ durch die Werte der Quellschichten?
-Wenn Ja – Objekte mit „Nach Schicht“-Stiften erscheinen auf der neuen Schicht genau wie auf den vorherigen Schichten, und der „Nach Schicht“-Wert wird durch aufgelöste Stifte ersetzt.
-Wenn Nein – die „Nach Schicht“-Werte bleiben erhalten, und der Stift der Zielschicht definiert den Stift für solche Objekte.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9604,14 +9265,6 @@ Wenn Nein – die „Nach Schicht“-Werte bleiben erhalten, und der Stift der Z
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>Ungültiger Wert für die Farbe %1.
-Please specify a different value.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">Ungültiger Pfad zur Stiftdatei.
-%1 
 Please specify a different value.</translation>
     </message>
     <message>
@@ -9686,14 +9339,6 @@ Please specify a different value.</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Bitte wählen Sie nur eine Entität aus, um die Stifteinstellung zu bestimmen.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">Speichern der Stiftdaten</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Es konnte nicht versucht, die Stiftdaten in die angegebene Stiftdatei zu speichern. Möchten Sie den korrekten Pfad zur Datei angeben?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11245,16 +10890,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <translation>Verfügbare Befehle:</translation>
     </message>
     <message>
-        <source>cal</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">ber</translation>
-    </message>
-    <message>
-        <source>calculate</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">berechne</translation>
-    </message>
-    <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
@@ -11446,10 +11081,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <location filename="../src/ui/qg_commandedit.cpp" line="138"/>
         <source>You must input a distance first.</source>
         <translation>Bitte zuerst einen Abstand eingeben.</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
@@ -12729,11 +12360,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <translation type="unfinished">Papiergröße (Breite x Höhe) in mm.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Papiergröße (Breite x Höhe) in mm.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13420,16 +13046,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>Benutzerfarbe</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">berechnen</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -15022,14 +14638,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="291"/>
         <source>Back</source>
         <translation>Back</translation>
-    </message>
-    <message>
-        <source>Select first circle or ellipse</source>
-        <translation type="vanished">Ersten Kreis oder Ellipse auswählen</translation>
-    </message>
-    <message>
-        <source>Select second circle or ellipse</source>
-        <translation type="vanished">Zweiten Kreis oder Ellipse auswählen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
@@ -17547,115 +17155,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
-    </message>
-</context>
-<context>
-    <name>dibPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Abbrechen</translation>
-    </message>
-</context>
-<context>
-    <name>divide</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Trennung</translation>
-    </message>
-    <message>
-        <source>n</source>
-        <translation type="vanished">an</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">Ebene</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="vanished">Linientyp</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="vanished">länge</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="vanished">radius</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Ebenen</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Abbrechen</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Geardlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Abbrechen</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Abbrechen</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Faktor:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Abbrechen</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Abbrechen</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="vanished">Polylinie</translation>
-    </message>
-    <message>
-        <source>SplinePoints</source>
-        <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="vanished">Spline Punkte</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Höhe:</translation>
     </message>
 </context>
 </TS>

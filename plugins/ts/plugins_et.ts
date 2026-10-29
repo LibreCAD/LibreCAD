@@ -63,18 +63,6 @@ Ok to accept and start alignment.</source>
 Ok, et nõustuda ja alustada joondamist.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Kui on märgitud „Hoia originaalobjekte,
-Align kopeerib, mitte ei liiguta valitud objekte.
-Kui kontrollitakse „Kõigepealt täpsustada baaspunktid,
-Joondamine küsib joonduspunkte järjekorras
-Esimene baas, teine baas, esimene sihtmärk, teine sihtmärk.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
         <translation>esimene baaspunkt:</translation>

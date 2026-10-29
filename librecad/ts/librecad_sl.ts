@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Okvir</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Vnesite ime in pritisnite +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Shrani</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Okvir</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Shrani</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ ali [%2]</translation>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Določite razdaljo (kot %1 stopinj)
-ali [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Določite razdaljo (kot %1 stopinj)
 ali [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ ali [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Dodaj ali odstrani akcijo</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2708,10 +2645,6 @@ ali [%2]</translation>
         <translation>Prikaži namig za postavke tabele</translation>
     </message>
     <message>
-        <source>Pens file:</source>
-        <translation type="vanished">Datoteka stilov:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
         <source>Show colorn name as</source>
         <translation>Prikaži ime barve kot</translation>
@@ -2924,24 +2857,6 @@ ali [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Odstrani stile</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Paleta stilov</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Lokacija datoteke stilov se je spremenila, prosimo ponovno zaženite aplikacijo, da se uporabi nova datoteka stilov.
-Opomba: če shranite stil prek urejevalnika brez ponovnega zagona, bodo trenutni stili iz palete shranjeni v novo datoteko in obstoječa vsebina bo prepisana.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Lokacija datoteke s peresi je spremenjena, prosimo, znova zaženite aplikacijo, da se uporabijo nove datoteke s peresi.
-
-Upoštevajte, da če boste peres shranili preko urejevalnika brez ponovnega zagona, se trenutne perse iz palete shranijo v novo datoteko in s tem se prepiše obstoječa vsebina.</translation>
     </message>
 </context>
 <context>
@@ -3720,34 +3635,14 @@ Upoštevajte, da če boste peres shranili preko urejevalnika brez ponovnega zago
         <translation>Razpostavi &amp;vodoravno</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">Izdelujem novo datoteko...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>neimenovana datoteka %1</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">Odpiram zadnjo datoteko...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>Naložena datoteka:</translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">Odpiranje preklicano</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">Tiskanje...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">Zapiram program...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
@@ -3770,17 +3665,9 @@ Upoštevajte, da če boste peres shranili preko urejevalnika brez ponovnega zago
         <translation>Nova risba ustvarjena</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">Shranjujem risbo...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>Shranjena risba %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Izvažam risbo...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3788,21 +3675,9 @@ Upoštevajte, da če boste peres shranili preko urejevalnika brez ponovnega zago
         <translation>Izvoženo: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Izvažam...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Izvoz dokončan</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>Izvoz ni uspel!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">Tiskanje dokončano</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3827,10 +3702,6 @@ Prosim, preverite dovoljenja.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>&amp;Lomljenka</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">Samodejno shranjujem risbo</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4176,10 +4047,6 @@ Preverite njeno obstojnost in dovoljenja.</translation>
         <translation>&amp;Risbe</translation>
     </message>
     <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">Shranjevanje risbe: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>Shranjevanje preklicano</translation>
@@ -4371,11 +4238,6 @@ Preverite njeno obstojnost in dovoljenja.</translation>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">izhod</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4715,11 +4577,6 @@ v ločenem oknu</translation>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>Zgodovina ukazov in izhod</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">escape</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7325,41 +7182,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Spremenljivke risbe</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Spremenljivka</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Koda</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Vrednost</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Prekliči</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -9383,12 +9205,6 @@ Prosimo, navedite drugačno vrednost.</translation>
         <translation>Odstrani prazne plasti</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Našli so se plasti brez entitet, vendar so filtrane in nevidne.
-Počistite masko filtrov in ponovite.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>Niso bile najdene plasti brez entitet, zato ni nič za odstraniti.</translation>
@@ -9434,12 +9250,6 @@ Prosimo, navedite drugačno ime.</translation>
         <translation>Podvoji izbor</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Ali ste prepričani, da želite nadaljevati?</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9450,14 +9260,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>Navedena je neveljavna vrednost za barvo %1.
-Prosimo, navedite drugačno vrednost.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">Navedena je neveljavna pot do datoteke s peresi.
-%1
 Prosimo, navedite drugačno vrednost.</translation>
     </message>
     <message>
@@ -9532,14 +9334,6 @@ Prosimo, navedite drugačno vrednost.</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Izberite samo eno entiteto, da nastavite lastnosti svinčnika.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">Shranjevanje podatkov o svinčnikih</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Ni mogoče shraniti podatkov o svinčnikih v določeno datoteko. Ali želite navesti pravilno pot do datoteke?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11284,10 +11078,6 @@ Ali ga želite nadomestiti?</translation>
         <translation>Najprej vnesite razdaljo.</translation>
     </message>
     <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>Način kalkulatorja: Vklopljen</translation>
@@ -12565,11 +12355,6 @@ Ali ga želite nadomestiti?</translation>
         <translation type="unfinished">Velikost papirja (širina x višina) v mm.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Velikost papirja (širina x višina) v mm.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13256,16 +13041,6 @@ Ali ga želite nadomestiti?</translation>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>Uporabniška barva</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">izračunaj</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -17375,66 +17150,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>Posodobi</translation>
-    </message>
-</context>
-<context>
-    <name>dibPunto</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Prekliči</translation>
-    </message>
-</context>
-<context>
-    <name>dividedlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Prekliči</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Geardlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Prekliči</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Prekliči</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Merilo:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Prekliči</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Prekliči</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Plast:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Višina:</translation>
     </message>
 </context>
 </TS>

@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">กรอบ</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">ป้อนชื่อแล้วกด +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">บันทึก</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">กรอบ</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">บันทึก</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ or [%2]</source>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>ระบุระยะทาง (มุม %1 องศา)
-หรือ [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">ระบุระยะทาง (มุม %1 องศา)
 หรือ [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">เพิ่มหรือลบการกระทำ</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2708,10 +2645,6 @@ or [%2]</source>
         <translation>แสดงคำแนะนำเครื่องมือสำหรับรายการในตาราง</translation>
     </message>
     <message>
-        <source>Pens file:</source>
-        <translation type="vanished">ไฟล์ปากกา:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
         <source>Show colorn name as</source>
         <translation>แสดงชื่อสีเป็น</translation>
@@ -2924,24 +2857,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;ลบปากกา</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">พาเลตปากกา</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">ตำแหน่งไฟล์ปากกาเปลี่ยนไป โปรดรีสตาร์ทแอปพลิเคชันเพื่อใช้ไฟล์ปากกาใหม่
-โปรดทราบว่าหากคุณบันทึกปากกาผ่านตัวแก้ไขโดยไม่รีสตาร์ท ปากกาปัจจุบันจากพาเลตจะถูกบันทึกในไฟล์ใหม่และเนื้อหาที่มีอยู่จะถูกแทนที่</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">ตำแหน่งไฟล์ปากกาได้เปลี่ยนไป โปรดเริ่มโปรแกรมใหม่เพื่อให้ใช้ไฟล์ปากกาใหม่
-
-โปรดทราบว่าหากคุณบันทึกปากกาผ่านตัวแก้ไขโดยไม่ต้องเริ่มโปรแกรมใหม่ ปากกาปัจจุบันจากพาเลตจะถูกบันทึกในไฟล์ใหม่ และเนื้อหาเดิมในไฟล์นั้นจะถูกเขียนทับ</translation>
     </message>
 </context>
 <context>
@@ -3720,10 +3635,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>ปูแผ่หน้าต่าง&amp;นอน</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">กำลังสร้างแฟ้มใหม่...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>เอกสารไม่มีชื่อ %1</translation>
@@ -3732,18 +3643,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>โหลดเอกสาร: </translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">ล้มเลิกการเปิด</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">กำลังพิมพ์...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">กำลังออกจากแอปพลิเคชัน...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
@@ -3766,17 +3665,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>สร้างงานเขียนแบบแผ่นใหม่แล้ว</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">กำลังบันทึกงานเขียนแบบ...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>บันทึกงานเขียนแบบแล้ว: %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">กำลังส่งออกงานเขียนแบบ...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3784,21 +3675,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>ส่งออกแล้ว: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">กำลังส่งออก...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">ส่งออกเสร็จสมบูรณ์</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>ส่งออกไม่สำเร็จ!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">พิมพ์เสร็จสมบูรณ์</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3823,10 +3702,6 @@ Please check the permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>เส้นตรงหลายข&amp;ยัก</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">กำลังบันทึกงานเขียนแบบโดยอัตโนมัติ...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4063,10 +3938,6 @@ Please check its existence and permissions.</source>
         <translation>Pen</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">กำลังเปิดไฟล์ล่าสุด...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
         <source>Dock Areas</source>
         <translation>พื้นที่เทียบท่า</translation>
@@ -4175,10 +4046,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="872"/>
         <source>&amp;Drawings</source>
         <translation>&amp;งานเขียนแบบ</translation>
-    </message>
-    <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">กำลังบันทึกงานเขียนแบบ: %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
@@ -4372,11 +4239,6 @@ Please check its existence and permissions.</source>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">ยกเลิก</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4716,11 +4578,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>ประวัติคำสั่งและผลลัพธ์</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">ยกเลิก</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7324,41 +7181,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">ตัวแปรการวาด</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">ตัวแปร</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">โค้ด</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">ค่า</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ยกเลิก</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -9372,11 +9194,6 @@ Please specify a different value.</source>
         <translation>ลบเลเยอร์ที่ว่างเปล่า</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">พบเลเยอร์ที่ไม่มีเอนทิตี แต่ถูกกรองและไม่แสดง.\n\nล้างหน้ากากการกรองและลองใหม่อีกครั้ง</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>ไม่พบเลเยอร์ที่ไม่มีเอนทิตี ไม่มีอะไรให้ลบ</translation>
@@ -9419,12 +9236,6 @@ Please specify a different name.</source>
         <translation>ทำซ้ำการเลือก</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">แทนที่ค่า &quot;ตามเลเยอร์&quot; ด้วยค่าเลเยอร์ต้นทางหรือไม่?\n\nหากใช่ - เอนทิตีที่มีลักษณะเส้น &quot;ตามเลเยอร์&quot; จะแสดงบนเลเยอร์ใหม่เหมือนกับเลเยอร์ก่อนหน้า และค่า &quot;ตามเลเยอร์&quot; จะถูกแทนที่ด้วยลักษณะเส้นที่แก้ไขแล้ว\n\nหากไม่ใช่ - ค่า &quot;ตามเลเยอร์&quot; จะยังคงอยู่ และลักษณะเส้นของเลเยอร์เป้าหมายจะกำหนดลักษณะเส้นสำหรับเอนทิตีเหล่านั้น</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9435,12 +9246,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>ระบุค่าที่ไม่ถูกต้องสำหรับสี %1\nโปรดระบุค่าอื่น</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">ระบุเส้นทางไปยังไฟล์ลักษณะเส้นไม่ถูกต้อง\n%1\nโปรดระบุค่าอื่น</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
@@ -9514,14 +9319,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>โปรดเลือกเอนทิตีเพียงเอนทิตีเดียวเพื่อตั้งค่าปากกา</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">กำลังบันทึกข้อมูลปากกา</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">ไม่สามารถบันทึกข้อมูลปากกาไปยังไฟล์ที่ระบุได้ คุณต้องการระบุเส้นทางที่ถูกต้องไปยังไฟล์หรือไม่</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11265,10 +11062,6 @@ Do you want to replace it?</source>
         <translation>คุณต้องป้อนระยะทางก่อน</translation>
     </message>
     <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>โหมดเครื่องคิดเลข: เปิด</translation>
@@ -12546,11 +12339,6 @@ Do you want to replace it?</source>
         <translation type="unfinished">ขนาดกระดาษ (กว้าง x สูง) เป็นมิลลิเมตร</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">ขนาดกระดาษ (กว้าง x สูง) เป็นมิลลิเมตร</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13237,16 +13025,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>สีที่ผู้ใช้กำหนด</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">คำนวณ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -17358,14 +17136,6 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>อัปเดต</translation>
-    </message>
-</context>
-<context>
-    <name>plotDialog</name>
-    <message>
-        <source>Polyline</source>
-        <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="vanished">เส้นตรงหลายขยัก</translation>
     </message>
 </context>
 </TS>

@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">சட்டகம்</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">பெயரை உள்ளிட்டு + அழுத்தவும்</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">சேமி</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">சட்டகம்</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">சேமி</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ or [%2]</source>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>தூரத்தை குறிப்பிடு (கோணம் %1 டிகிரி)
-அல்லது [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">தூரத்தை குறிப்பிடு (கோணம் %1 டிகிரி)
 அல்லது [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">செயல் சேர்க்கவும் அல்லது நீக்கவும்</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2708,10 +2645,6 @@ or [%2]</source>
         <translation>அட்டவணை உருப்படிகளுக்கு கருவி உதவி காட்டு</translation>
     </message>
     <message>
-        <source>Pens file:</source>
-        <translation type="vanished">பென் கோப்பு:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
         <source>Show colorn name as</source>
         <translation>வண்ண பெயரை இவ்வாறு காட்டு</translation>
@@ -2924,24 +2857,6 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;பென்களை நீக்கு</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">பென் பாலெட்</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">பென் கோப்பின் இருப்பிடம் மாற்றப்பட்டுள்ளது, புதிய பென் கோப்பைப் பயன்படுத்த பயன்பாட்டை மறுதொடக்கம் செய்யவும்.
-குறிப்பு: எடிட்டர் வழியாக பென்னை மறுதொடக்கம் இல்லாமல் சேமித்தால், பாலெட்டிலிருந்து தற்போதைய பென்கள் புதிய கோப்பில் சேமிக்கப்படும் மற்றும் அதன் இருக்கும் உள்ளடக்கம் மேலெழுதப்படும்.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">பேனா கோப்பின் இருப்பிடம் மாற்றப்பட்டது, புதிய பேனா கோப்பைப் பயன்படுத்த பயன்பாட்டை மறுதொடக்கம் செய்யவும்.
-
-மறுதொடக்கம் இல்லாமல் எடிட்டர் மூலம் பேனாவைச் சேமித்தால், தற்போதைய பேனாக்கள் புதிய கோப்பில் சேமிக்கப்படும், இதனால் ஏற்கனவே உள்ள உள்ளடக்கம் மேலெழுதப்படும் என்பதை நினைவில் கொள்ளவும்.</translation>
     </message>
 </context>
 <context>
@@ -3720,10 +3635,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>பலகை &amp;கிடைமட்டமாக</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">புதிய கோப்பை உருவாக்குகிறது...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>பெயரிடப்படாத ஆவணம் %1</translation>
@@ -3732,18 +3643,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>ஏற்றப்பட்ட ஆவணம்: </translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">திறப்பு நிறுத்தப்பட்டது</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="vanished">அச்சிடுகிறது...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">பயன்பாட்டிலிருந்து வெளியேறுகிறது...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
@@ -3766,17 +3665,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>புதிய வரைபடம் உருவாக்கப்பட்டது.</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">வரைபடத்தை சேமிக்கிறது...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>சேமிக்கப்பட்ட வரைபடம்: %1</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">வரைபடத்தை ஏற்றுமதி செய்கிறது...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3784,21 +3675,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>ஏற்றுமதி செய்யப்பட்டது: %1</translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">ஏற்றுமதி செய்கிறது...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">ஏற்றுமதி முடிந்தது</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>ஏற்றுமதி தோல்வியுற்றது!</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="vanished">அச்சு முடிந்தது</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3823,10 +3702,6 @@ Please check the permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>&amp;பாலிலைன்</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">தானியங்கி சேமிப்பு வரைபடம்...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4063,10 +3938,6 @@ Please check its existence and permissions.</source>
         <translation>Pen</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">சமீபத்திய கோப்பைத் திறக்கிறது...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
         <source>Dock Areas</source>
         <translation>பொருத்து பகுதிகள்</translation>
@@ -4175,10 +4046,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="872"/>
         <source>&amp;Drawings</source>
         <translation>&amp;வரைபடங்கள்</translation>
-    </message>
-    <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">வரைபடத்தை சேமிக்கிறது: %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
@@ -4372,11 +4239,6 @@ Please check its existence and permissions.</source>
 </context>
 <context>
     <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">தப்பித்தல்</translation>
-    </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
@@ -4715,11 +4577,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
         <translation>கட்டளை வரலாறு மற்றும் வெளியீடு</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">வெளியேறு</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -7327,41 +7184,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">வரைபட மாறிகள்</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">மாறி</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">குறியீடு</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">மதிப்பு</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">திரும்பப் பெற</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -9379,12 +9201,6 @@ Please specify a different value.</source>
         <translation>காலியான அடுக்குகளை நீக்கு</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">உள்ளடக்கங்கள் இல்லாத அடுக்குகள் காணப்பட்டன, ஆனால் அவை வடிகட்டப்பட்டு தெரியவில்லை.
-வடிகட்டி முகமூடியை அழித்து மீண்டும் செய்யவும்.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>உள்ளடக்கங்கள் இல்லாத அடுக்குகள் எதுவும் இல்லை, எனவே நீக்க எதுவும் இல்லை.</translation>
@@ -9427,14 +9243,6 @@ Please specify a different name.</source>
         <translation>தேர்ந்தெடுத்ததை நகல் எடு</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">&quot;அடுக்கு மூலம்&quot; மதிப்பை மூல அடுக்குகளின் மதிப்புகளாக மாற்ற வேண்டுமா?
-ஆம் எனில் - &quot;அடுக்கு மூலம்&quot; பேனாக்களைக் கொண்ட கூறுகள் புதிய அடுக்கில் முந்தைய அடுக்குகளில் இருந்ததைப் போலவே தோன்றும், மேலும் &quot;அடுக்கு மூலம்&quot; மதிப்பு தீர்க்கப்பட்ட பேனாக்களால் மாற்றப்படும்.
-இல்லை எனில் - &quot;அடுக்கு மூலம்&quot; மதிப்புகள் அப்படியே இருக்கும், எனவே இலக்கு அடுக்கின் பேனா, அத்தகைய கூறுகளுக்கான பேனாவை வரையறுக்கும்.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
@@ -9446,13 +9254,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 Please specify a different value.</source>
         <translation>%1 நிறத்திற்கான தவறான மதிப்பு வழங்கப்பட்டது.
 வேறு மதிப்பை குறிப்பிடவும்.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">பேனா கோப்பிற்கான தவறான பாதை.
-%1 வேறு மதிப்பை குறிப்பிடவும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
@@ -9526,14 +9327,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>பேனா அமைப்பைத் தேர்ந்தெடுக்க ஒரு பொருளை மட்டும் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">பேனா தரவைச் சேமிக்கிறது</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">குறிப்பிட்ட பேனா கோப்பில் பேனா தரவைச் சேமிக்க முடியவில்லை. கோப்பிற்கான சரியான பாதையை நீங்கள் குறிப்பிட விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -11278,10 +11071,6 @@ Do you want to replace it?</source>
         <translation>முதலில் ஒரு தூரத்தை உள்ளிட வேண்டும்.</translation>
     </message>
     <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>கணிப்பான் முறை: இயக்கப்பட்டது</translation>
@@ -12559,11 +12348,6 @@ Do you want to replace it?</source>
         <translation type="unfinished">தாள் அளவு (அகலம் x உயரம்) மி.மீ-இல்.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">தாள் அளவு (அகலம் x உயரம்) மி.மீ-இல்.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13250,16 +13034,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
         <translation>பயனர் நிறம்</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">கணக்கிடு</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>

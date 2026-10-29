@@ -84,18 +84,6 @@ Ok to accept and start alignment.</source>
 Ok pieņemt un sākt saskaņošanu.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Ja pārbauda &apos;Saglabāt oriģinālos objektus&apos;,
-Izlīdzināt pārkopēs, nevis pārvietos iezīmētos objektus.
-Ja atzīmēts &apos;Norādīt bāzes punktus vispirms&apos;,
-Izlīdzināt veicinās saskaņošanas punktiem secībā
-pirmā bāze, otrā bāze, pirmais mērķis, otrais mērķis.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="60"/>
         <source>If &apos;Keep original objects&apos; is checked,
 Align will copy rather than move the selected objects.

@@ -63,18 +63,6 @@ Ok to accept and start alignment.</source>
 V redu, sprejmem in začnem z usklajevanjem.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Če se preveri &apos;Obdrži originalne predmete&apos;,
-Poravnaj bo namesto premika izbrane predmete.
-Če se preveri &apos;navedite najprej osnovne točke&apos;,
-Uskladitev bo omogočila uskladitev točk v vrstnem redu
-prva baza, druga baza, prva tarča, druga tarča.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
         <translation>prva bazna točka:</translation>

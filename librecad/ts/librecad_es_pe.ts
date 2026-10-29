@@ -39,56 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Marco</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Ingrese un nombre y luego presione +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Guardar</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Marco</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Guardar</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -308,12 +258,6 @@ o [%2]</translation>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Especificar distancia (ángulo %1 grados)
-o [%2]</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Especificar distancia (ángulo %1 grados)
 o [%2]</translation>
     </message>
 </context>
@@ -1728,13 +1672,6 @@ o [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Agregar o quitar acción</translation>
-    </message>
-</context>
-<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2708,10 +2645,6 @@ o [%2]</translation>
         <translation>Mostrar tooltip para elementos de tabla</translation>
     </message>
     <message>
-        <source>Pens file:</source>
-        <translation type="vanished">Archivo de lápices:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
         <source>Show colorn name as</source>
         <translation>Mostrar nombre de color como</translation>
@@ -2924,24 +2857,6 @@ o [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>Eliminar plumas</translation>
-    </message>
-    <message>
-        <source>Pen palette</source>
-        <translation type="vanished">Paleta de plumas</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">La ubicación del archivo de plumas ha cambiado, reinicie la aplicación para usar el nuevo archivo de plumas.
-
-Tenga en cuenta que, si guarda una pluma a través del editor sin reiniciar, las plumas actuales de la paleta se guardarán en el nuevo archivo y, por lo tanto, se sobrescribirá el contenido existente.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">La ubicación del archivo de plumas ha cambiado. Por favor, reinicie la aplicación para utilizar el nuevo archivo de plumas.
-Tenga en cuenta que si guarda una pluma a través del editor sin reiniciar, las plumas actuales de la paleta se guardarán en el nuevo archivo y, por lo tanto, su contenido existente será sobrescrito.</translation>
     </message>
 </context>
 <context>
@@ -3659,14 +3574,6 @@ Tenga en cuenta que si guarda una pluma a través del editor sin reiniciar, las 
         <translation>Archivos recientes</translation>
     </message>
     <message>
-        <source>Saving drawing...</source>
-        <translation type="vanished">Guardando dibujo...</translation>
-    </message>
-    <message>
-        <source>Saving drawing: %1</source>
-        <translation type="vanished">Guardando dibujo: %1</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>Guardado cancelado</translation>
@@ -3809,10 +3716,6 @@ Tenga en cuenta que si guarda una pluma a través del editor sin reiniciar, las 
         <translation>No se puede aplicar la configuración de página del dibujo.</translation>
     </message>
     <message>
-        <source>Creating new file...</source>
-        <translation type="vanished">Creando nuevo archivo...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Bloque &apos;%1&apos;</translation>
@@ -3869,17 +3772,9 @@ Please check its existence and permissions.</source>
         <translation>El archivo &apos;%1&apos; no existe. Apertura abortada.</translation>
     </message>
     <message>
-        <source>Opening aborted</source>
-        <translation type="vanished">Apertura abortada.</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2075"/>
         <source>Save All cancelled</source>
         <translation>Guardar todo cancelado.</translation>
-    </message>
-    <message>
-        <source>Auto-saving drawing...</source>
-        <translation type="vanished">Guardando automáticamente el dibujo...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -3900,10 +3795,6 @@ Auto-save disabled.</source>
         <translation>Falló el guardado automático.</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Exportando dibujo...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2164"/>
         <source>Export as</source>
         <translation>Exportar como</translation>
@@ -3912,14 +3803,6 @@ Auto-save disabled.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
         <source>Exported: %1</source>
         <translation>Exportado: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Exportando...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Exportación completa</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
@@ -3937,26 +3820,14 @@ Auto-save disabled.</source>
         <translation>Por favor, ajuste la escala y la posición en la vista previa de impresión primero.</translation>
     </message>
     <message>
-        <source>Printing...</source>
-        <translation type="vanished">Imprimiendo...</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2500"/>
         <source>Export as PDF</source>
         <translation>Exportar como PDF</translation>
     </message>
     <message>
-        <source>Printing complete</source>
-        <translation type="vanished">Impresión completa</translation>
-    </message>
-    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2768"/>
         <source>Print preview for %1</source>
         <translation>Vista previa de impresión para %1</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="vanished">Saliendo de la aplicación...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3047"/>
@@ -4033,10 +3904,6 @@ Auto-save disabled.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3312"/>
         <source>Dockwidgets</source>
         <translation>Widgets de acoplamiento</translation>
-    </message>
-    <message>
-        <source>Opening recent file...</source>
-        <translation type="vanished">Abriendo archivo reciente...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -4377,11 +4244,6 @@ Auto-save disabled.</source>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation>Barra espaciadora: modo de ajuste temporalmente establecido en ajuste libre</translation>
     </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">escape</translation>
-    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
@@ -4717,11 +4579,6 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="210"/>
         <source>Unknown command: %1</source>
         <translation>Comando desconocido: %1</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="vanished">Escape</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
@@ -7314,41 +7171,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Variables de dibujo</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Variable</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Código</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Valor</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -9285,12 +9107,6 @@ Please specify a different value.</source>
         <translation>Eliminar capas vacías</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Se encontraron capa(s) sin entidades, pero están filtradas y no son visibles.
-Borre la máscara de filtrado y repita.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -9357,14 +9173,6 @@ Si es Sí, las entidades con plumas &quot;Por capa&quot; se verán en la nueva c
 Si es No, los valores &quot;Por capa&quot; permanecerán, y por lo tanto, la pluma de la capa de destino definirá la pluma para dichas entidades.</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">¿Reemplazar el valor &quot;Por Capa&quot; por los valores de las capas de origen?
-Si Sí - las entidades con plumas &quot;Por Capa&quot; se verán en la nueva capa exactamente como en las capas anteriores y el valor &quot;Por Capa&quot; será reemplazado por las plumas resueltas.
-Si No - los valores &quot;Por Capa&quot; se mantienen y por lo tanto la pluma de la capa de destino definirá la pluma para dichas entidades.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="310"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="322"/>
@@ -9416,14 +9224,6 @@ Si No - los valores &quot;Por Capa&quot; se mantienen y por lo tanto la pluma de
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>Valor no válido proporcionado para el color %1.
-Por favor, especifique un valor diferente.</translation>
-    </message>
-    <message>
-        <source>Invalid path to pens file.
-%1 
-Please specify a different value.</source>
-        <translation type="vanished">Ruta no válida para el archivo de plumas.
-%1 
 Por favor, especifique un valor diferente.</translation>
     </message>
     <message>
@@ -9498,14 +9298,6 @@ Por favor, especifique un valor diferente.</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Por favor, seleccione solo una entidad para elegir la configuración de la pluma.</translation>
-    </message>
-    <message>
-        <source>Saving Pens Data</source>
-        <translation type="vanished">Guardando datos de plumas</translation>
-    </message>
-    <message>
-        <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">No se pudo guardar los datos de plumas en el archivo de plumas especificado. ¿Desea especificar la ruta correcta del archivo?</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
@@ -12755,11 +12547,6 @@ Esta acción NO se puede deshacer.</translation>
         <translation type="unfinished">Tamaño del papel (Ancho x Alto) en mm.</translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Tamaño del papel (Ancho x Alto) en mm.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
@@ -13052,20 +12839,6 @@ Esta acción NO se puede deshacer.</translation>
         <location filename="../src/ui/qg_commandedit.cpp" line="216"/>
         <source>Calculator error for input: </source>
         <translation>Error de calculadora para la entrada:</translation>
-    </message>
-    <message>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">calcular</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <translation type="vanished">cal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
