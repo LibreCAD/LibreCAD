@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, W79's complete staged macOS CMake install, and W86's relocated-install preview-cache and creation/repeat routing checks are qualified in focused Release/ASan or offscreen lanes; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88's current-source preview-cache portability and creation/repeat routing checks are qualified in focused Release/ASan or offscreen lanes; W88 also makes hatch-pattern import reject partial files without a modal dialog; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -3976,9 +3976,11 @@ not make parsing or rendering itself nonblocking.
 Reports are `/private/tmp/offset-W74-console-{import,svg}-{release,asan}.xml`.
 Remaining direct import sites were classified: the console helper's ordinary
 format fallback, document-storage open/template loading, recursive XREF
-fallback, hatch-pattern loading, and the bundled dimension-style preview. Audit
-these individually before changing them; user-facing DXF/DWG open/template and
-recursive-XREF paths are the next likely staged-import candidates. Visible
+fallback, hatch-pattern loading, and the bundled dimension-style preview. W88
+closes hatch-pattern failure propagation and suppresses its inappropriate
+modal import error; user-facing DXF/DWG open/template and recursive-XREF paths
+remain the likely staged-import candidates. The bundled dimension-style preview
+and all other import sites still need explicit caller-policy review. Visible
 desktop acceptance, installed-helper deployment, Windows runtime, and final
 acceptance remain open.
 
@@ -4323,3 +4325,36 @@ ASan used `detect_leaks=0`; this is not leak validation. Reports are in
 `/private/tmp/offset-W87-strict-{queue,budget}-{release,asan}.xml`. W87 closes
 this concrete allocation issue only; A-core/A-strict shared accounting,
 provider callbacks, lifetime, and cross-entry audits remain open.
+
+## 50. W88 Current-Source Preview, Creation/Repeat and Pattern Import
+
+Product/test commit `b12e26d7f` makes `RS_Pattern::loadPattern()` honor the
+`RS_FileIO::fileImport()` result. Pattern files are internal library input, so
+the call now supplies a noninteractive error callback rather than attempting
+to create a modal `QMessageBox` from headless or non-GUI callers. A malformed
+DXF is rejected before any imported entities can become hatch preview cache;
+valid files still populate ordinary line/arc/ellipse display geometry. The
+new hostile-file case checks both outcomes and an empty cache after partial
+import failure.
+
+Rebuilt the current source in the W77 Release and ASan CMake trees, then
+requalified fresh-process cache transport, worker-client preview-cache
+rebinding/merge, and offscreen Modify Offset creation/repeat GUI publication.
+The targeted current-source results are:
+
+| W88 lane | JUnit cases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Hatch-pattern partial/valid import, Release, `/private/tmp/offset-W88-pattern-release.xml` | 1 / 100 | PASS; errors=0, failures=0, skipped=0 | `333b93ba1d5d31a386b90915e028cb85eb6f11c4b21fd712ad445ccbaa23122d` |
+| Hatch-pattern partial/valid import, ASan, `/private/tmp/offset-W88-pattern-asan.xml` | 1 / 100 | PASS; errors=0, failures=0, skipped=0 | `35fa7935866b339a672da829866190097e8233fa641f4447c4ac339eb1efe0f2` |
+| Fresh-helper preview cache, Release, `/private/tmp/offset-W88-cache-process-release.xml` | 1 / 208 | PASS; errors=0, failures=0, skipped=0 | `a0af9f810d8db511b41cfcca33f769df7f2f9f8de7d35811903b29151759e44f` |
+| Fresh-helper preview cache, ASan, `/private/tmp/offset-W88-cache-process-asan.xml` | 1 / 271 | PASS; errors=0, failures=0, skipped=0 | `51720188571385e5295b63b6f2b98865c02258b331fcf8ab161edc7844ea6316` |
+| Worker-client cache portability, Release, `/private/tmp/offset-W88-cache-client-release.xml` | 2 / 715 | PASS; errors=0, failures=0, skipped=0 | `fcd1a7da8b61998ca1099dd35e74c86b93021cd7ac751259ef8de359d0841155` |
+| Worker-client cache portability, ASan, `/private/tmp/offset-W88-cache-client-asan.xml` | 2 / 993 | PASS; errors=0, failures=0, skipped=0 | `bc7f247fe3333fbe8cddc5c8d23163607677ce796625cb9f1ac1024efa02eb7d` |
+| Creation/repeat GUI routing, Release, `/private/tmp/offset-W88-creation-release.xml` | 13 / 318 | PASS; errors=0, failures=0, skipped=0 | `e25c4160e4f79c93c7a884de7843c2447468db19c2f1370db6924735dcaac351` |
+| Creation/repeat GUI routing, ASan, `/private/tmp/offset-W88-creation-asan.xml` | 13 / 318 | PASS; errors=0, failures=0, skipped=0 | `11fa4876a53341c8f5ceca03d3ab10a24825f138400cd38d22aa2994016412ef` |
+
+ASan used `detect_leaks=0`; these runs do not establish leak validation. This
+is current-source macOS CMake/offscreen evidence, not visible desktop
+interaction, Windows/Linux runtime qualification, relocated-install retesting
+at this head, or final W0-W2 acceptance. Remaining import callers and the
+broader budget/source audit are still open.
