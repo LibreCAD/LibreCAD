@@ -3119,17 +3119,20 @@ evidence for native rename/share behavior. W51 captures drawing identity before
 identity through finalization, so an identity observed only after a pathname
 replacement is not accepted as the imported source. This is conservative if
 the path changes before the reader opens it; the source-save guard then requires
-Save As. It does not bind parser bytes to an opened descriptor. Audit direct
-synchronous, console and nested-XREF callers and decide/test their identity and
-snapshot contracts without silently weakening editable imports. Investigate the recorded ASan template failure under
+Save As. W52 now binds direct parser bytes to the already-open file descriptor,
+including console and recursive XREF imports through this filter. The read is
+still synchronous, and separately opened host/XREF files are not one atomic
+multi-file snapshot. Obtain Windows compile/runtime evidence for QFile handle
+identity and rename behavior; add direct nested-XREF mutation coverage before
+closing that contract. Investigate the recorded ASan template failure under
 load, and exercise a genuine partial DWG through the GUI dialog. W35 fixes the
 observed W33 teardown assertion; retain its
 forced-destruction regression while auditing other close/dialog reentrancy.
 W36/W37 handle observed switches and later staged requests; also audit
 same-window interaction, reentrant/visible startup focus and failure behavior.
 W31/W32 drawing-open/template publication and W33 GUI queue bounds are
-implemented; do not repeat them as absent. Design and test direct synchronous,
-console and nested-XREF contracts without silently weakening editable imports.
+implemented; do not repeat them as absent. Complete cross-file XREF mutation
+coverage without weakening editable imports.
 Qualify remaining platform faults without weakening the existing worker tests.
 W16-W19 cache portability and local creation/repeat GUI
 routing are qualified; do not restart them as absent. The ordinary DWG2007 correction and fresh broad
@@ -3392,7 +3395,40 @@ subsequent save leaves replacement bytes intact and requests Save As.
 
 JUnit receipt: `/private/tmp/offset-W51-documents-import.xml`, SHA256
 `8d019add1baef0393755fbbe244b6aba7ccda8319d2a86d36983a2a1874eaf45`.
-This is a caller-level source-stamping fix, not descriptor-bound parsing: the
-ordinary DXF/DWG filter, console callers and nested XREFs still read paths, and
-their full snapshot/identity contract remains open. No ASan, Windows, or
-visible-GUI validation is claimed.
+This is a caller-level source-stamping fix; descriptor-bound parsing is recorded
+in W52 below. No ASan, Windows, or visible-GUI validation is claimed.
+
+## 14. W52 Descriptor-Bound Direct Imports
+
+Commit `df9bbff40` routes ordinary `RS_FilterDXFRW::fileImport` reads through a
+seekable 64 KiB `QFile` stream buffer instead of reopening the pathname inside
+libdxfrw. It captures file identity before open, verifies the native handle
+against that identity where supported, and checks the opened handle again after
+parsing. Read errors or detectable in-place changes fail with a source-changed
+diagnostic. Path replacement cannot redirect the parser to the replacement
+file after open; the DWG regression now verifies the original version was
+parsed and the changed identity caused rejection. Direct synchronous/console
+imports and recursive XREFs that use this filter inherit the per-file behavior.
+
+Current macOS Release/offscreen validation, all zero errors/failures/skips:
+
+| W52 suite | Testcases | JUnit `tests` | Result |
+|---|---:|---:|---|
+| Source identity and opened-path replacement | 4 | 124 | PASS |
+| Document import/finalization | 11 | 153 | PASS |
+| DXF round trips | 162 | 5880 | PASS |
+| DWG round trips | 28 | 2658 | PASS |
+
+JUnit receipts are in `/private/tmp`:
+
+| W52 artifact | SHA256 |
+|---|---|
+| `offset-W52-source-identity.xml` | `351a264818067e3d28da739d1e87a024c3bb4d18c8aab0707d163ac25937614a` |
+| `offset-W52-documents-import.xml` | `61f8b547f18b3b501634025f861702c1baef02a86fd56e3a68b6f6686012831f` |
+| `offset-W52-dxf-roundtrip.xml` | `be61fd73575069d405c4f1d12f47ebf2a33aee37cecef561e8fc8d933d55d3a9` |
+| `offset-W52-dwg-roundtrip.xml` | `53f26a7e83c34bc777171d46a7358c861163bb42c0450933c6f91a40d0ccc4ad` |
+
+This is per-file descriptor binding, not an atomic snapshot spanning the host
+drawing and its separately opened XREF dependencies. Parsing still runs on the
+calling thread. Windows native handle/rename behavior, ASan, deployed packaging
+and visible GUI/failure acceptance remain unqualified.
