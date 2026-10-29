@@ -508,7 +508,7 @@ member order, enum and count admission. Request values do not confer editability
 | TrimCache2 | `[cache,cutter,pick,trimLimits]`; stored-cache Trim and cache operand preparation | Exact stored cache only; parent attributes/owner/metadata stay outside child. Preserve all sections, roots and work records in the reply. |
 | TrimConic3 | `[cache,conic,conicPick,cachePick-or-null,trimLimits]`; conic complement and Trim Two | One original contact session and shared budget; prepare both operands before one parent undo/publication. |
 | CheckThrough4 | `[cache,definition,worldTolerance,point,checkLimits]`; unchanged-definition Through grip/dialog edits | Membership-only receipt; no generation, C rerun, returned curve or native admission. The exact raw input remains bound through parent completion. |
-| Produce5 | `[source,context,bounds,coordinate,fallback-or-null,distance,copies,asOffsetCurve,preview,batchLimits]`; shared ellipse/raw-native-cache copy series | Complete source diagnostics, exact per-copy output groups and definition/proposal binding. Parent uses private completion, preserves attribute policy and measures its own display expansion. Preview-cache portability and GUI routing remain open. |
+| Produce5 | `[source,context,bounds,coordinate,fallback-or-null,distance,copies,asOffsetCurve,preview,batchLimits]`; shared ellipse/raw-native-cache copy series | Complete source diagnostics, exact per-copy output groups and definition/proposal binding. Parent uses private completion, preserves attribute policy and measures its own display expansion. W16-W19 subsequently qualified portable preview caches and local creation/repeat routing; platform and deployed acceptance remain open. |
 | CachedProduce6 | `[Produce5-body,ordinaryPreviewSnapshot]`; snapshot `[revision,otherEntries,cleared,entries]` | W17 qualifies pointer-free cache handoff across fresh processes. Response `[Produce5-payload,updatedSnapshot,reusedCopies]` binds sorted copy ordinals and their remaining output budgets. Cache hits consume no new producer effort; native adoption/rebase checks remain mandatory. Existing operation0-5 layouts are unchanged. |
 
 Cutters are owned Segment/Arc/Circle/Ellipse/Spline values. Every spline member,
@@ -587,8 +587,8 @@ Finish W0-W2 in these bounded sub-slices before claiming GUI isolation:
    Do not use nested GUI event loops as a substitute for asynchronous ownership.
 3. Retain the now-qualified same-invocation ordinary fallback (W9) and complete
    typed Produce source series/private materialization (W12), including actual
-   adoption work and per-copy binding. Before creation/repeat GUI routing, implement
-   preview-cache portability and qualify budget/side/eviction parity. Native
+   adoption work and per-copy binding. Preserve the W16-W19 preview-cache
+   portability, budget/side/eviction parity and creation/repeat GUI routing. Native
    SeveralPieces/representation/C refusals must never trigger same-input regeneration
    with fresh limits. The existing original-definition rebase followed by a
    DIFFERENT actual stored-cache fallback must retain its remaining allowance.
@@ -1782,9 +1782,9 @@ writer interoperability were not freshly qualified by this review follow-up.
 All four PR review findings are closed within their stated scope. PR #3193 also
 now documents ordinary ellipse/parabola/bounded-hyperbola/spline/spline-points
 support versus ellipse-only editable definitions. Keep the PR draft: this does
-not complete #2961 or the entire roadmap. The next product work remains preview-
-cache portability/parity before creation/repeat routing, then the remaining4.2
-caller/import work and final acceptance below.
+not complete #2961 or the entire roadmap. The subsequent W16-W19 slices below
+completed local preview-cache portability and creation/repeat routing; the
+remaining 4.2 caller/import work and final acceptance are still open.
 
 Creation/repeat continuation W16:
 `7bfe70ac2` implements pointer-free, owned ordinary preview-cache snapshots.
@@ -1890,10 +1890,10 @@ binds54 qualified XML/log files and two final build logs, SHA256
 `d83ba2aa4bbf74df5a21c1e48a8fc5327c3234b6f65268a2fa6e74b8ee6c145a`.
 Development/probe reports are not final qualification.
 
-W16/W17 complete preview-cache value/process portability, not creation/repeat GUI
-routing. Next implement W18 ordered preparation/publication and W19 GUI ownership
-and cancellation as specified above. Retain ordinary-only behavior and all
-existing option/geometry/selection/undo assertions.
+W16/W17 completed preview-cache value/process portability. The subsequent W18/W19
+slices below completed local ordered preparation/publication and GUI ownership
+and cancellation. Retain ordinary-only behavior and all existing
+option/geometry/selection/undo assertions during remaining integration.
 
 Ordered preparation continuation W18a:
 `c213a6c2a` adds `LC_OffsetBatchPreparation` around the existing modification
@@ -2820,6 +2820,18 @@ Creation/repeat status after these review follow-ups:
    publication. Preserve actual display-expansion charging and these regressions
    during remaining caller integration; this closes local creation/repeat routing,
    not platform/deployed/visible acceptance.
+
+Current working-tree recheck: on `ba67b7599` with unrelated uncommitted DWG stream
+changes present, the Release source-preparation, creation-action and creation-
+publication targets rebuilt and passed offscreen. Discovery matched every test
+identity, with no failures or skips: respectively 82 declarations / 88 JUnit
+entries / 83527 assertions, 85 / 132 / 90217, and 18 / 19 / 414. Local temporary
+JUnit reports `/private/tmp/offset-{source,creation,publication}-current.xml`
+have SHA256 `31731e23e828adff980815d47c5f56a27edf9ef2311cc64e026f70a2bf14ea79`,
+`bfdbafc0cb12c4df9a34756ac379132206aaaf0a2e3de28736cc327b2ef0d5cd`, and
+`1eee2f42f8cdda06059d9294804b8fe539d9d4f838a0bae76db055e4da8490df` respectively.
+This is not a clean-commit, ASan, visible-GUI, deployed, or cross-platform run;
+the earlier W16-W19 qualifications and their limitations remain authoritative.
 
 Then continue other import callers and cross-platform fault qualification in4.2 order.
 Full current-source application/deployed builds, complete file/version matrix,
