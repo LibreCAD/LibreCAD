@@ -316,7 +316,7 @@ candidate except the explicitly proposed native-worker tags.
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; audit/retest | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; audit/retest | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; audit/retest | native edit/grip/transform TUs |
-| G | Eligible creation, repeated offset and bounded ordinary fallback/reporting | E2,U1,W2 | shared preparation `ef40eecad`, typed Produce `558c3bba2`, W16/W17 cache and W18/W19 GUI/publication qualified through `f035d983e`; final platform/visible acceptance remains | creation/repeat/modification TUs, `[creation-worker]`, `[creation-publication]`, `[creation-sources]` and existing Offset tests |
+| G | Eligible creation, repeated offset and bounded ordinary fallback/reporting | E2,U1,W2 | shared preparation `ef40eecad`, typed Produce `558c3bba2`, W16/W17 cache and W18/W19 GUI/publication qualified through `f035d983e`; current-source W67a/W67b Release+ASan requalification; final platform/visible acceptance remains | creation/repeat/modification TUs, `[creation-worker]`, `[creation-publication]`, `[creation-sources]` and existing Offset tests |
 | F1 | Shared typed schema, raw-carrier eligibility, ownership and byte limits | E1 | candidate `305042903`; audit/retest | `lc_offsetcurvexdata_tests.cpp`, `lc_offsetcurvecarrier_tests.cpp` |
 | F2 | Actual DXF/DWG SPLINE writer/adoption and transactional errors | F1,G | candidate `32597762b`, `7e46b2de8`; audit/retest | offset adapter/persistence/hostile-file TUs |
 | F3 | Version/read/write/conversion, clipboard, independent fixtures and output inspection | F2 | candidate `79ae1930b`; fixtures present, rerun scope required | `[lc-offsetcurve][g-matrix]`, explicit per-row evidence |
@@ -3703,3 +3703,23 @@ ASan used `detect_leaks=0`, not leak validation.
 |---|---|
 | `/private/tmp/offset-W66-cache-budget-release.xml` | `a496740a62bb4db96bdfa6931862a6e64929cbd1c7e41b1770389d6570939288` |
 | `/private/tmp/offset-W66-cache-budget-asan.xml` | `8e377fca524fb73b55bade949b8c7b9e52adbedfc0615b82dca975457bcb044d` |
+
+## 26. W67a Current-Source Preview-Cache Portability Requalification
+
+Rebuilt and reran the value-cache and fresh-helper transport suites against the
+current product tree in macOS Release and ASan configurations. Source preparation
+passes 88 JUnit cases / 83,527 assertions; the real helper-process suite passes
+4 cases / 2,696 Release assertions and 3,090 ASan assertions. All six runs have
+zero errors, failures or skips. These cover owned pointer-free snapshots,
+source rebinding, cache hit/refusal and budget behavior, and process-portable
+cached Produce, including native adoption still requiring its normal checks.
+ASan used `detect_leaks=0`; it is not a leak check. This is focused current-source
+requalification, not cross-platform runtime, deployed-helper, or visible GUI
+acceptance. The creation/repeat GUI action is a separate W67b slice.
+
+| W67a artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W67-source-release.xml` | `d373871dbc1e6484a338123f208f90ed4e0d636304c591f6944de2df40a8c74d` |
+| `/private/tmp/offset-W67-worker-process-release.xml` | `f1d122253ec9528a0e5ba947efe94315c8e857d6d5b6f997967523a7df76bfed` |
+| `/private/tmp/offset-W67-source-asan.xml` | `6f808536a2abf8a663b16c29d8aebe7ae24f5edbbd4ffc7dda0bd0e1a7288762` |
+| `/private/tmp/offset-W67-worker-process-asan.xml` | `d6684555cc075829ab117853e033bdddf26957d1008e12133b45de898459470d` |
