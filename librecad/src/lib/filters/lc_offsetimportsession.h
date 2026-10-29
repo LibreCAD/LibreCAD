@@ -62,8 +62,8 @@ private:
 };
 
 /** Owns an unpublished drawing until every staged offset carrier is resolved.
- * Parsing is still synchronous on the owning thread; native cache validation is
- * asynchronous. Cancellation suppresses delivery and destroys the private graph.
+ * Source capture yields between bounded reads; parsing is still synchronous on
+ * the owning thread. Cancellation suppresses delivery and destroys the private graph.
  */
 class LC_OffsetImportSession final : public QObject {
 public:
@@ -104,6 +104,8 @@ private:
     friend struct LC_GuiImportTestAccess;
     struct Work;
     void parse(const std::shared_ptr<Work>&);
+    void captureSource(const std::shared_ptr<Work>&);
+    void parseSnapshot(const std::shared_ptr<Work>&);
     void resolvePartial(const std::shared_ptr<Work>&, bool accepted);
     void beginValidation(const std::shared_ptr<Work>&);
     void advance(const std::shared_ptr<Work>&);
@@ -115,5 +117,6 @@ private:
     qint64 m_generation = 0, m_request = 0;
     // Private deterministic read-boundary seam; never set by product inputs.
     std::function<void()> m_testAfterRead;
+    std::function<void()> m_testAfterSnapshotChunk;
 };
 #endif

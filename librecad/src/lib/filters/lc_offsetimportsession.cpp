@@ -4,13 +4,17 @@
 #include "rs_filterdxfrw.h"
 #include "rs_fileio.h"
 #include "rs_block.h"
+#include <QByteArray>
 #include <QCoreApplication>
+#include <QFile>
 #include <QFileInfo>
 #include <QPointer>
 #include <QThread>
 #include <algorithm>
+#include <istream>
 #include <limits>
 #include <set>
+#include <streambuf>
 #include <stdexcept>
 #include <utility>
 #include <vector>
@@ -76,11 +80,40 @@ struct LC_OffsetImportSession::Work {
     std::unique_ptr<RS_Graphic> graphic;
     std::shared_ptr<LC_OffsetImportBudget> budget;
     LC_OffsetImportSourceStamp sourceStamp;
+    QFile source;
+    QByteArray snapshot;
     std::vector<ImportCandidate> candidates;
 };
 
 namespace {
 constexpr std::size_t ImportGraphLimit = std::size_t{1} << 20;
+constexpr qint64 ImportSnapshotLimit = qint64{256} * 1024 * 1024;
+constexpr qint64 ImportSnapshotChunk = qint64{256} * 1024;
+
+class SnapshotStreamBuffer final : public std::streambuf {
+public:
+    explicit SnapshotStreamBuffer(QByteArray& bytes) : begin(bytes.data()), size(bytes.size()) {
+        setg(begin, begin, begin + size);
+    }
+protected:
+    pos_type seekoff(off_type offset, std::ios_base::seekdir direction,
+                     std::ios_base::openmode mode) override {
+        if (!(mode & std::ios_base::in) || (mode & std::ios_base::out)) return pos_type(off_type(-1));
+        const off_type origin = direction == std::ios_base::beg ? 0 :
+            direction == std::ios_base::cur ? gptr() - eback() :
+            direction == std::ios_base::end ? size : -1;
+        if (origin < 0 || offset < -origin || offset > size - origin) return pos_type(off_type(-1));
+        const auto position = origin + offset;
+        setg(begin, begin + position, begin + size);
+        return pos_type(position);
+    }
+    pos_type seekpos(pos_type position, std::ios_base::openmode mode) override {
+        return seekoff(off_type(position), std::ios_base::beg, mode);
+    }
+private:
+    char* begin;
+    off_type size;
+};
 
 bool supportedImportType(RS2::FormatType type) {
     switch (type) {
@@ -195,13 +228,65 @@ void LC_OffsetImportSession::parse(const std::shared_ptr<Work>& work) {
     if (m_work != work) return;
     const QPointer<LC_OffsetImportSession> alive(this);
     try {
+        const auto type = work->type == RS2::FormatUnknown ? RS_FileIO::detectFormat(work->file, false) : work->type;
+        if (!supportedImportType(type)) { work->error = tr("Unsupported offset import format"); finish(work, Status::ReadFailed); return; }
+        work->type = type;
+        work->sourceStamp = LC_OffsetImportSourceStamp::capture(work->file);
+        work->source.setFileName(work->file);
+        if (!work->source.open(QIODevice::ReadOnly) || work->source.isSequential()) {
+            work->error = tr("The source file could not be opened for a bounded import.");
+            finish(work, Status::ReadFailed); return;
+        }
+        if (work->source.size() > ImportSnapshotLimit) {
+            work->error = tr("The source file exceeds the 256 MiB staged import size limit.");
+            finish(work, Status::ResourceLimit); return;
+        }
+        QTimer::singleShot(0, this, [alive, work] { if (alive) alive->captureSource(work); });
+    } catch (...) { if (alive && m_work == work) finish(work, Status::ResourceLimit); }
+}
+
+void LC_OffsetImportSession::captureSource(const std::shared_ptr<Work>& work) {
+    if (m_work != work) return;
+    const QPointer<LC_OffsetImportSession> alive(this);
+    try {
+        const QByteArray chunk = work->source.read(ImportSnapshotChunk);
+        if (work->source.error() != QFileDevice::NoError || (chunk.isEmpty() && !work->source.atEnd())) {
+            work->error = tr("The source file could not be read completely.");
+            finish(work, Status::ReadFailed); return;
+        }
+        if (chunk.size() > ImportSnapshotLimit - work->snapshot.size()) {
+            work->error = tr("The source file exceeds the 256 MiB staged import size limit.");
+            finish(work, Status::ResourceLimit); return;
+        }
+        work->snapshot.append(chunk);
+        if (m_testAfterSnapshotChunk) {
+            auto hook = std::move(m_testAfterSnapshotChunk); m_testAfterSnapshotChunk = {}; hook();
+            if (!alive || m_work != work) return;
+        }
+        if (!work->source.atEnd()) {
+            QTimer::singleShot(0, this, [alive, work] { if (alive) alive->captureSource(work); });
+            return;
+        }
+        work->source.close();
+        if (work->sourceStamp.valid && !work->sourceStamp.matches(work->file)) {
+            work->error = tr("The source file changed while it was being read; the drawing was not opened.");
+            finish(work, Status::SourceChanged); return;
+        }
+        parseSnapshot(work);
+    } catch (...) { if (alive && m_work == work) finish(work, Status::ResourceLimit); }
+}
+
+void LC_OffsetImportSession::parseSnapshot(const std::shared_ptr<Work>& work) {
+    if (m_work != work) return;
+    const QPointer<LC_OffsetImportSession> alive(this);
+    try {
         RS_FilterDXFRW filter; filter.m_deferOffsetAdmission = true; filter.m_offsetImportBudget = work->budget;
         filter.setDxfTextEncoding(work->encoding);
-        const auto type = work->type == RS2::FormatUnknown ? RS_FileIO::detectFormat(work->file) : work->type;
-        if (!supportedImportType(type)) { work->error = tr("Unsupported offset import format"); finish(work, Status::ReadFailed); return; }
-        work->sourceStamp = LC_OffsetImportSourceStamp::capture(work->file);
-        work->graphic->setFormatType(type);
-        const bool read = filter.fileImport(*work->graphic, work->file, type);
+        work->graphic->setFormatType(work->type);
+        SnapshotStreamBuffer buffer(work->snapshot);
+        std::istream input(&buffer);
+        const bool read = filter.fileImportStream(*work->graphic, work->file, work->type, input);
+        work->snapshot.clear();
         if (!alive || m_work != work) return;
         if (m_testAfterRead) {
             auto hook = std::move(m_testAfterRead); m_testAfterRead = {}; hook();

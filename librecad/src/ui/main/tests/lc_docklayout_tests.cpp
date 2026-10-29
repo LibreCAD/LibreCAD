@@ -415,7 +415,10 @@ TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][dock-window
         file.close();
 
         window.openFile(fileName);
-        settle(0);
+        QElapsedTimer elapsed; elapsed.start();
+        while (LC_DockLayoutTestAccess::pendingImports(window)) {
+            REQUIRE(elapsed.elapsed() < 35000); settle(10);
+        }
         auto* mdi = window.getCurrentMDIWindow();
         REQUIRE(mdi != nullptr);
         auto* graphic = mdi->getGraphic();

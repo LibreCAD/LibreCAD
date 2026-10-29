@@ -12,6 +12,7 @@
 #include "intern/dwg_dxf_output_transaction.h"
 #include <QElapsedTimer>
 #include <QEventLoop>
+#include <QFile>
 #include <QProcess>
 #include <QThread>
 #ifdef Q_OS_UNIX
@@ -52,6 +53,9 @@ class LC_OffsetImportSessionTestAccess {
 public:
     static LC_OffsetWorkerClient& worker(LC_OffsetImportSession& session) { return session.m_worker; }
     static QTimer& deadline(LC_OffsetImportSession& session) { return session.m_deadline; }
+    static void afterSnapshotChunk(LC_OffsetImportSession& session, std::function<void()> hook) {
+        session.m_testAfterSnapshotChunk = std::move(hook);
+    }
 };
 
 namespace {
@@ -823,6 +827,66 @@ TEST_CASE("Staged offset import cancels without delivering a private drawing",
     while (elapsed.elapsed() < 100) { QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
     CHECK_FALSE(delivered);
 }
+
+TEST_CASE("Staged offset source capture yields cancels and detects changes",
+          "[lc-offsetcurve][import-session][snapshot]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-snapshot");
+    const auto path = directory.file("input.dxf");
+    f::put(path, f::ascii(f::raw(3)) + std::string(600000, '\n'));
+    const int scenario = GENERATE(0, 1, 2, 3); CAPTURE(scenario);
+    LC_OffsetImportSession session; std::optional<LC_OffsetImportSession::Outcome> outcome;
+    bool hookCalled = false, heartbeat = false;
+    LC_OffsetImportSessionTestAccess::afterSnapshotChunk(session, [&] {
+        hookCalled = true;
+        if (scenario == 0) QTimer::singleShot(0, [&] { heartbeat = true; });
+        else if (scenario == 1) session.cancel();
+        else if (scenario == 2) {
+            QFile file(QString::fromStdString(path.string())); REQUIRE(file.open(QIODevice::Append));
+            REQUIRE(file.write("changed", 7) == 7); file.close();
+        } else {
+            std::filesystem::rename(path, directory.file("original.dxf"));
+            f::put(path, "0\nEOF\n");
+        }
+    });
+    REQUIRE(session.start(QString::fromStdString(path.string()), format(Lane::Ascii),
+        RS2::DxfTextEncoding::Declared, false, [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!hookCalled || session.busy()) {
+        REQUIRE(elapsed.elapsed() < 35000);
+        QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1);
+    }
+    REQUIRE(hookCalled);
+    if (scenario == 0) {
+        REQUIRE(outcome); CHECK(heartbeat); REQUIRE(outcome->status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome->graphic); CHECK(f::native(*outcome->graphic, 3) != nullptr);
+    }
+    else if (scenario == 1) {
+        CHECK_FALSE(outcome);
+        auto retry = stagedImport(path, Lane::Ascii);
+        REQUIRE(retry.status == LC_OffsetImportSession::Status::Complete); REQUIRE(retry.graphic);
+        CHECK(f::native(*retry.graphic, 3) != nullptr);
+    }
+    else {
+        REQUIRE(outcome); CHECK(outcome->status == LC_OffsetImportSession::Status::SourceChanged);
+        CHECK_FALSE(outcome->graphic);
+    }
+}
+
+#ifdef Q_OS_UNIX
+TEST_CASE("Staged offset source capture refuses oversized input",
+          "[lc-offsetcurve][import-session][snapshot][limit]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-snapshot-limit");
+    const auto path = directory.file("large.dxf"); f::put(path, "0\nEOF\n");
+    REQUIRE(::truncate(path.c_str(), 256LL * 1024 * 1024 + 1) == 0);
+    LC_OffsetImportSession session; std::optional<LC_OffsetImportSession::Outcome> outcome;
+    REQUIRE(session.start(QString::fromStdString(path.string()), format(Lane::Ascii),
+        RS2::DxfTextEncoding::Declared, false, [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!outcome) { REQUIRE(elapsed.elapsed() < 5000); QCoreApplication::processEvents(QEventLoop::AllEvents); }
+    CHECK(outcome->status == LC_OffsetImportSession::Status::ResourceLimit);
+    CHECK_FALSE(outcome->graphic); CHECK_FALSE(outcome->error.isEmpty());
+}
+#endif
 
 TEST_CASE("Staged offset import handles a killed helper without exposing its carrier",
           "[lc-offsetcurve][import-session][worker][fault]") {
