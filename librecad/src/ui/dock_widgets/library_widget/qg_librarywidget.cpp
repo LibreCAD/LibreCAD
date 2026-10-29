@@ -148,7 +148,7 @@ void QG_LibraryWidget::insert() {
         if (m_actionHandler != nullptr) {
             const std::shared_ptr<RS_ActionInterface> a = m_actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
             if (a) {
-                const auto* action = static_cast<LC_ActionBlockLibraryInsert*>(a.get());
+                auto* action = static_cast<LC_ActionBlockLibraryInsert*>(a.get());
                 action->setFile(std::move(dxfPath));
             }
             else {

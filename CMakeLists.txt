@@ -2805,6 +2805,7 @@ if (BUILD_TESTS)
         librecad/src/actions/drawing/modify/tests/lc_action_modify_move_tests.cpp
         librecad/src/actions/drawing/draw/curve/tests/lc_actiondrawdualtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_offset_tests.cpp
+        librecad/src/actions/dock_widgets/library/tests/lc_action_block_library_insert_import_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_offsetcurve_enable_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_offsetcurve_source_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_offsetcurve_restoreoriginal_tests.cpp
@@ -3616,6 +3617,7 @@ if (BUILD_TESTS)
     target_sources(librecad_offset_creation_action_tests PRIVATE
         librecad/src/actions/drawing/modify/tests/lc_offsetcurve_enable_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_offsetmatrixtests.cpp
+        librecad/src/actions/dock_widgets/library/tests/lc_action_block_library_insert_import_tests.cpp
         ${LIBRECAD_RES})
     set_target_properties(librecad_offset_creation_action_tests PROPERTIES AUTORCC ON)
     add_dependencies(librecad_offset_creation_action_tests librecad_offset_test_helper)
