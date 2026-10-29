@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, and W107 requalifies budget-core primitives without closing A-core; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, C-check cusp and topology/failure inventory, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, and W107/W111 requalify budget-core/strict-query slices without closing A-core/A-strict; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, C-check cusp and topology/failure inventory, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -304,7 +304,7 @@ candidate except the explicitly proposed native-worker tags.
 |---|---|---|---|---|
 | S0 | Pin/reconcile candidate, main and feature; baseline/discovery; fix DWG enum classification and add R2007 execution | - | recovered; parser and ordinary R2007 slices qualified below; geometry/type/target qualification remains | `[curve-offset]`, `[lc-offsetcurve]`, `[entity-coverage]`, actual target/version inventory |
 | A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; `27f9c5239` fixes demonstrated compound admissions; `91dcde3c4` preserves ordered contact-control debit semantics; W107 requalifies budget-core primitives with no new gap; broader audit remains open | `[lc-offsetcurve][budget-core]` |
-| A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; W64 focused strict-budget Release/ASan requalification; W87 fixes depth-ceiling-based queue over-allocation; broader audit remains open | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
+| A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; W64 focused strict-budget Release/ASan requalification; W87 fixes depth-ceiling-based queue over-allocation; W111 current-source requalification; broader audit remains open | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
 | A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; W65 focused reference-accounting Release/ASan requalification; paired graph audit remains open | `[lc-offsetcurve][reference-accounting]` |
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66 focused cache-budget Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][cache-budget-accounting]` |
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; W97 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | geometry terminal/occurrence case inventory |
@@ -4985,3 +4985,24 @@ acceptance; those remain open under W0-W2 and final R.
 Reports: `/private/tmp/offset-W110-preview-creation-release.xml` and
 `/private/tmp/offset-W110-preview-creation-asan.xml`. ASan used
 `detect_leaks=0`; this is not leak validation.
+
+## 73. W111 Current-Source Strict-Query Budget Requalification
+
+Rebuilt the current CMake Release and ASan test targets, then reran
+`[strict-budget]` at source head `079c525ef`. Both lanes passed 21 cases / 898
+assertions with zero errors, failures or skips. Source review followed strict
+preflight and mutation ordering for callback dispatch, generated records,
+candidate/pair admission, retained root contraction, and output scratch. It also
+checked depth arithmetic at `UINT_MAX`, balanced-tree capacity multiplication,
+`ptrdiff_t` iterator limits, and exit-ledger behavior when provider callbacks
+throw. No new defect was demonstrated. This does not close A-strict's broader
+cross-entry or allocation-failure audit, nor A-core/A-reference/A-cache.
+
+| W111 lane | JUnit cases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Strict-query budget, Release | 21 / 898 | PASS; 0 errors, 0 failures, 0 skips | `e6052e4ec03cba27dbc26efcc36a726e60d5684521d4e71a1756702dc451e382` |
+| Strict-query budget, ASan | 21 / 898 | PASS; 0 errors, 0 failures, 0 skips | `3c1d039d5aa7f0bc16c669c01f1af19bd35e655902cff0df1fed9d36838c638d` |
+
+Reports: `/private/tmp/offset-W111-strict-budget-release.xml` and
+`/private/tmp/offset-W111-strict-budget-asan.xml`. ASan used `detect_leaks=0`;
+this is not leak validation.
