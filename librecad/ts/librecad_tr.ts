@@ -22698,7 +22698,7 @@ Lütfen farklı bir değer belirtin.</translation>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="145"/>
         <source>&amp;Submit Error</source>
-        <translation>&amp;Hata Bildir</translation>
+        <translation>H&amp;ata Bildir</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="146"/>
@@ -22732,63 +22732,63 @@ Lütfen farklı bir değer belirtin.</translation>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="213"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="247"/>
         <source>Poin&amp;t</source>
-        <translation>&amp;Nokta</translation>
+        <translation>N&amp;okta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="182"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="214"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="248"/>
         <source>&amp;Circle</source>
-        <translation>Çe&amp;mber</translation>
+        <translation>Ç&amp;ember</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="186"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="215"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="250"/>
         <source>&amp;Arc</source>
-        <translation>&amp;Yay</translation>
+        <translation>Y&amp;ay</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="190"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="217"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="252"/>
         <source>Poly&amp;gon</source>
-        <translation>Çok&amp;gen</translation>
+        <translation>Ço&amp;kgen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="194"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="219"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="254"/>
         <source>Splin&amp;e</source>
-        <translation>&amp;Eğri</translation>
+        <translation>Eğr&amp;i</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="198"/>
         <source>Ellip&amp;se</source>
-        <translation>E&amp;lips</translation>
+        <translation>Eli&amp;ps</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="202"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="221"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="258"/>
         <source>&amp;Polyline</source>
-        <translation>Ç&amp;oklu Çizgi</translation>
+        <translation>Çokl&amp;u Çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="206"/>
         <source>&amp;Other</source>
-        <translation>&amp;Diğer</translation>
+        <translation>Di&amp;ğer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="211"/>
         <source>&amp;Draw</source>
-        <translation>Çi&amp;z</translation>
+        <translation>Ç&amp;iz</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="220"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="256"/>
         <source>&amp;Ellipse</source>
-        <translation>&amp;Elips</translation>
+        <translation>Eli&amp;ps</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="223"/>
@@ -22800,13 +22800,13 @@ Lütfen farklı bir değer belirtin.</translation>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="228"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="267"/>
         <source>&amp;Modify</source>
-        <translation>&amp;Değiştir</translation>
+        <translation>Değişti&amp;r</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="230"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="270"/>
         <source>&amp;Order</source>
-        <translation>&amp;Sıralama</translation>
+        <translation>Sıra&amp;lama</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="234"/>
@@ -22892,7 +22892,7 @@ Lütfen farklı bir değer belirtin.</translation>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="458"/>
         <source>CAD Wid&amp;gets</source>
-        <translation>CAD &amp;Panelleri</translation>
+        <translation>CA&amp;D Panelleri</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="483"/>
