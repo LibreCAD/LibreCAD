@@ -12488,6 +12488,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         QFile::remove(backupPath);
         return false;
       }
+      if (m_testBeforeDwgStageRename) {
+        auto hook = std::move(m_testBeforeDwgStageRename);
+        m_testBeforeDwgStageRename = {};
+        hook(stagedOutputPath);
+      }
       if (QFile::rename(stagedOutputPath, file)) {
         QFile::remove(backupPath);
         return true;

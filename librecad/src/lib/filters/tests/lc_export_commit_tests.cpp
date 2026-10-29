@@ -56,6 +56,10 @@ public:
                                     std::function<void()> hook) {
         filter.m_testBeforeDwgStagedPublish = std::move(hook);
     }
+    static void beforeStageRename(RS_FilterDXFRW& filter,
+                                  std::function<void(const QString&)> hook) {
+        filter.m_testBeforeDwgStageRename = std::move(hook);
+    }
 };
 #endif
 
@@ -375,6 +379,38 @@ TEST_CASE("DWG outer publication guard observes changes after low-level staging"
     CHECK(hookCalls == 1);
     CHECK(replacementGood);
     CHECK(sameBytes(file, "external replacement after low-level write"));
+    CHECK(out.entries() == std::vector<std::string>{"drawing.dwg"});
+}
+
+TEST_CASE("DWG outer publication restores the backup when staged rename fails",
+          "[dwg][filter][export-commit][rename-rollback]") {
+    lc::test::ensureSettings();
+    const lc::test::QuietLog quiet;
+    const lc::test::OutputDirectory out("dwg_stage_rename_rollback");
+    const auto file = out.file("drawing.dwg");
+    const std::string original = putExistingContent(file);
+    REQUIRE_FALSE(original.empty());
+
+    RS_Graphic graphic;
+    fill(graphic, 1);
+    graphic.setSourceFileIdentity(
+        LC_FileIdentity::capture(lc::test::toQString(file)));
+    REQUIRE(graphic.sourceFileIdentity().valid);
+
+    unsigned hookCalls = 0;
+    bool removedStage = false;
+    RS_FilterDXFRW filter;
+    DwgOutputPublicationTestAccess::beforeStageRename(
+        filter, [&](const QString& stagedOutputPath) {
+            ++hookCalls;
+            removedStage = QFile::remove(stagedOutputPath);
+        });
+
+    CHECK_FALSE(filter.fileExport(graphic, lc::test::toQString(file),
+                                  RS2::FormatDWG2018));
+    CHECK(hookCalls == 1);
+    CHECK(removedStage);
+    CHECK(sameBytes(file, original));
     CHECK(out.entries() == std::vector<std::string>{"drawing.dwg"});
 }
 #endif

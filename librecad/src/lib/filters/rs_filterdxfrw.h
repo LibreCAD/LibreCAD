@@ -3159,6 +3159,7 @@ private:
 #ifdef DWGSUPPORT
   std::function<void()> m_testBeforeDwgOpen;
   std::function<void()> m_testBeforeDwgStagedPublish;
+  std::function<void(const QString&)> m_testBeforeDwgStageRename;
 #endif
   QString m_offsetInputCodePage = QStringLiteral("ANSI_1252");
   struct OffsetXDataContext {
