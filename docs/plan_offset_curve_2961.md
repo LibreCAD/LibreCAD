@@ -2945,7 +2945,7 @@ parity. Local temporary reports in `/private/tmp`:
 The Windows handle checks still depend on filesystem identity/timestamp
 semantics and are not an atomic transaction. Nested XREFs, save/check-to-use,
 destination publication, large-file policy and Windows runtime validation remain
-open.
+open at W44; W46 below closes nested-XREF byte capture for staged imports only.
 
 W45 current-source cache/create requalification at `838bfeca8` revisited the
 requested preview-cache portability and creation/repeat routing. No product gap
@@ -2978,6 +2978,36 @@ ASan run, cross-platform runtime result, visible interactive GUI session, or
 deployed-helper proof. Keep W16-W19 implemented; do not restart them as missing.
 Windows runtime validation and the separate W0-W2/import/final acceptance gates
 remain open.
+
+W46 staged nested-XREF snapshots `759bf4b7f` use the captured host's logical path
+to resolve each referenced drawing, then read each distinct dependency into an
+owned seekable byte buffer. DXF and DWG children parse from those captured bytes,
+not a second pathname open; canonical-path duplicates reuse the same snapshot.
+The staged import shares one 256 MiB host-plus-XREF byte budget and caps distinct
+XREF files at 64. Missing, unreadable, changed-during-capture, changed-before-
+publication, and over-budget dependencies fail closed. After parsing, byte
+buffers are released while source stamps remain for final validation. Ordinary
+non-staged imports retain their existing path-based XREF behavior.
+
+A fresh macOS Release CMake build with `DWGSUPPORT` succeeded for
+`librecad_offset_hostilefile_tests`. The fixed-path helper was staged beside the
+test executable for this run because this CMake test target is emitted at the
+build root while the product helper is inside the app bundle. The XREF-filtered
+run passed 6 cases / 2908 assertions; the complete hostile-file suite passed
+63 cases / 56954 assertions. The assertion count includes scheduling-dependent
+worker-process checks. Saved logs under `/private/tmp`:
+
+| W46 artifact | SHA256 |
+| --- | --- |
+| `offset-W46-xref-release.log` | `a855c2c05ac2401ae8ede45d0bd64368f4a99332243c9743f97f58e0cc7166a1` |
+| `offset-W46-hostile-release.log` | `27f8fad958d779c361cf644e69c16c63defac9095ca23ca1462d47b6ceef0e2a` |
+
+This does not make the entire dependency graph an atomic point-in-time snapshot:
+each source is captured and checked independently, and identity/timestamp checks
+are not a filesystem transaction. The recursive parse remains synchronous.
+Direct synchronous/console imports still use the legacy path-based contract;
+Windows runtime validation, save/check-to-use and destination publication remain
+open. Do not claim cross-platform or ASan qualification from this Release run.
 
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
@@ -3039,11 +3069,12 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   review scoped commits, preserve reproducible evidence and close every required gap.
 
 **Next concrete action on implementation resume:** obtain a Windows compile and
-runtime run for W44 before claiming platform parity; then build on W42-W44 host
-capture/native identity to design nested-XREF admission and large-file policy.
-Do not treat mutable XREFs as snapshotted. Investigate the recorded ASan template
-failure under load, strengthen remaining source-save and non-atomic autosave alias
-checks, and exercise a genuine partial DWG
+runtime run for W44 before claiming platform parity. W46 already bounds and
+snapshots nested XREF bytes for staged imports; do not repeat that implementation.
+Continue with source-save/check-to-use and destination-publication alias/race
+coverage, then audit direct synchronous and console XREF callers without silently
+weakening their behavior. Investigate the recorded ASan template failure under
+load, and exercise a genuine partial DWG
 through the GUI dialog. W35 fixes the observed W33 teardown assertion; retain its
 forced-destruction regression while auditing other close/dialog reentrancy.
 W36/W37 handle observed switches and later staged requests; also audit
