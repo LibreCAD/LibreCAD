@@ -5881,3 +5881,29 @@ installation, physical visible interaction, or Windows/Linux runtime result.
 
 Remote cross-platform CI, installed/deployed helper acceptance, visible UI,
 external public synchronous API use, and final W0-W2/R gates remain open.
+
+## 107. W149 Current-Head Broad Release Requalification
+
+At source head `d739b5a33` (no product-source changes since W145), rebuilt the
+application and the main/DXF/DWG test targets in the existing Release build.
+The full declaration-order suite passed 5,054 of 5,129 cases, with 75 optional
+fixture/environment skips and 10,377,016 passing assertions; there were no
+failures. The DXF fast lane passed 798 of 801 cases, with three absent optional
+SHAPE/ODA-output fixture skips and 84,477 assertions. The DWG fast lane passed
+1,021 of 1,025 cases, with four absent optional associative/DataStorage/
+visualstyle fixture skips and 362,995 assertions. These selectors exclude
+slow, corpus and external groups as recorded in their commands; the run is not
+a claim that skipped external fixture coverage passed.
+
+| W149 lane | Result | SHA256 |
+|---|---|---|
+| Full main suite, declaration order | PASS; 5,054 / 5,129, 75 skipped; 10,377,016 assertions | `ddebbf9cbc017a7c3ff586d64bee736f5aeb749ce352f0488c83b00f24cc125b` |
+| DXF fast lane | PASS; 798 / 801, 3 skipped; 84,477 assertions | `0b25bb8042ed4ddb83928b2fa6194edc7ddd1fae0513470e75c960b7db3f0440` |
+| DWG fast lane | PASS; 1,021 / 1,025, 4 skipped; 362,995 assertions | `6b0a989e10c2d689d54a2c383ac11bd230d9e83421f0f22cee85bd99c01d9923` |
+
+Logs: `/private/tmp/offset-W149-full-release.log`,
+`/private/tmp/offset-W149-dxf-fast.log`, and
+`/private/tmp/offset-W149-dwg-fast.log`. The separate randomized-order alias
+test investigation is recorded in W150-W151. Remote CI, installed-helper
+deployment, physical visible interaction, public external synchronous API
+callers, and final W0-W2/R acceptance remain open.
