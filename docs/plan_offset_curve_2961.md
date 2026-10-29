@@ -3114,8 +3114,14 @@ preflight but not atomic publication. W49a-W49c add a transaction guard, per-cal
 DXF/DWG APIs, and source-identity checks at filter publication boundaries.
 These narrow but cannot eliminate the check-to-rename window. A deterministic
 backup-restore failure test now passes on macOS; obtain Windows compile/runtime
-evidence for native rename/share behavior. Audit direct synchronous and console
-XREF callers without silently weakening their behavior. Investigate the recorded ASan template failure under
+evidence for native rename/share behavior. W51 captures drawing identity before
+`LC_DocumentsStorage` starts its ordinary path-based import and preserves that
+identity through finalization, so an identity observed only after a pathname
+replacement is not accepted as the imported source. This is conservative if
+the path changes before the reader opens it; the source-save guard then requires
+Save As. It does not bind parser bytes to an opened descriptor. Audit direct
+synchronous, console and nested-XREF callers and decide/test their identity and
+snapshot contracts without silently weakening editable imports. Investigate the recorded ASan template failure under
 load, and exercise a genuine partial DWG through the GUI dialog. W35 fixes the
 observed W33 teardown assertion; retain its
 forced-destruction regression while auditing other close/dialog reentrancy.
@@ -3364,3 +3370,29 @@ This is current-source macOS Release/offscreen evidence, not a refreshed ASan,
 visible interactive, deployed-bundle, or cross-platform run. Prior W48 ASan
 receipts remain as recorded; W49 changed only publication/filter code, not the
 preview-cache or creation/repeat implementation.
+
+## 13. W51 Pre-Import Source Identity
+
+Commit `d7bfcd33c` captures `LC_FileIdentity` at the start of
+`LC_DocumentsStorage::loadGraphic`, before `RS_FileIO` begins parsing, and
+retains that identity through `finalizeLoadedGraphic` when it still refers to
+the requested logical path. Other callers that do not supply an earlier
+identity keep the previous finalization behavior. If the path is replaced
+during import, finalization no longer stamps the replacement as the source;
+the existing save guard requires Save As rather than overwriting that
+replacement. Capturing before open is intentionally conservative if a source
+is replaced before the filter opens it.
+
+The Release build incrementally rebuilt `librecad_tests`. Offscreen
+`[documentsstorage][import]` passed 11 JUnit testcases / 153 assertions with
+zero errors, failures or skips. The focused `[documentsstorage][import][source-change]`
+run passed 7 testcases / 103 assertions. The new regression retains the
+pre-import file identity across pathname replacement and verifies that a
+subsequent save leaves replacement bytes intact and requests Save As.
+
+JUnit receipt: `/private/tmp/offset-W51-documents-import.xml`, SHA256
+`8d019add1baef0393755fbbe244b6aba7ccda8319d2a86d36983a2a1874eaf45`.
+This is a caller-level source-stamping fix, not descriptor-bound parsing: the
+ordinary DXF/DWG filter, console callers and nested XREFs still read paths, and
+their full snapshot/identity contract remains open. No ASan, Windows, or
+visible-GUI validation is claimed.
