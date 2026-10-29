@@ -2717,6 +2717,49 @@ the broader plan are not claimed. Evidence root is unchanged:
 | `offset-W38-final-hostile-asan.xml` | `cad1bb61d2f464d72cae8ad0aada641d16d596fdb8da76cbba36554d921ca618` |
 | `offset-W38-final-storage-release.xml` | `cbe71a7680c30f505c3d78e02ce8d92d2046fc203e143fe150f157c1afe144b3` |
 
+Single-stream DXF read W39 (`dd862d48d`):
+The DXF reader now detects ASCII, R12 binary or newer binary and parses through
+the same open stream instead of closing and reopening the pathname after the
+probe. A caller-owned seekable binary-stream entry point reads from its current
+position and resets parser state between reads. ASCII CRLF and newline-less
+records continue to be handled by the existing ASCII reader. A private test
+hook reproduced a pathname swap after probing: the old code read the replacement
+or selected the wrong binary parser. The new reader keeps the opened file;
+tests cover both original and replacement formats, R12/R2018, nonzero stream
+positions, and nonseekable input. The replacement test is POSIX-only and does
+not establish Windows file-sharing behavior.
+
+This is a prerequisite for, not an implementation of, an immutable snapshot:
+the staged import still reads the source path, concurrent in-place writes can
+change its bytes, and source metadata checks do not prove content identity.
+XREF resolution still uses the original host path and nested references have
+their own read/ownership questions. DWG has a buffer reader but its filter
+separately probes the pathname for version metadata; audit and unify that path
+before claiming a consistent snapshot. Bound snapshot memory/I/O, cancellation,
+source-change detection, external references and save policy remain open.
+
+Fresh Release application, full-test executable, helper and qmake6 libdxfrw
+archive builds pass; this is not a full qmake application link. Release and
+ASan (`detect_leaks=0`) focused reader reports cover four declarations / four
+entries, 94 assertions and no skips. Both complete DXF fast reports cover all
+799 discovered declarations / 1094 entries, 84209 assertions, zero errors or
+failures and four external-fixture skips. The complete hostile-file target
+covers all 48 declarations / 53 entries with no skips (53503 / 54450 assertions,
+including polling). Discovery identities were checked. Windows, visible UI,
+leak checking and the broader roadmap are not qualified. Evidence root is
+unchanged:
+
+| W39 artifact | SHA256 |
+| --- | --- |
+| `offset-W39-final-reader-release.xml` | `b322743d02c555e5550c470471099bf70f23b35c575a936b16f77f4ed260c871` |
+| `offset-W39-final-reader-asan.xml` | `5ee050d736eb499d5363c279680c5c70b64dd0ad9e1d9707f97f1d2aa6931fe1` |
+| `offset-W39-final-dxf-release.xml` | `870cef12976b4e775fe5d072dd3b8ae8bd0284df5f08a08d354b968560af3c8c` |
+| `offset-W39-final-dxf-asan.xml` | `8af4df182b0f81347696c1aa0b06fbc555e4cbaa0ddcadcfe74ca19fb9e49053` |
+| `offset-W39-final-hostile-release.xml` | `67f98086caf7c53632fa3042b92fcb56bf7af89286385720c4352322b563dbbc` |
+| `offset-W39-final-hostile-asan.xml` | `b8bf8859753bc9d86d88f940df69585ad34ef971a9f20f1d6561906b40224d43` |
+| `offset-W39-reader-discovery.xml` | `ca26a168cb2a4cb64d0d4b7050b210c8223be43a85f8f292902c7620b2cc94ab` |
+| `offset-W39-dxf-discovery.xml` | `b44f9015385b91af16058352d76cefa6bb6e60bf6585316166c8eeae3a7e55cb` |
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
