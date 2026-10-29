@@ -4443,6 +4443,15 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
   if (file.startsWith(QLatin1Char(':')))
     return fileImportImpl(g, file, type, nullptr);
 
+  const bool ownsImportContext = !m_directImportContext;
+  if (ownsImportContext)
+    m_directImportContext = std::make_shared<DirectImportContext>();
+  const auto importContext = m_directImportContext;
+  const auto resetImportContext = qScopeGuard([this, ownsImportContext] {
+    if (ownsImportContext)
+      m_directImportContext.reset();
+  });
+
   const LC_FileIdentity sourceIdentity = LC_FileIdentity::capture(file);
   QFile inputFile(file);
   if (!sourceIdentity.valid || !inputFile.open(QIODevice::ReadOnly) ||
@@ -4453,16 +4462,30 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
 #if defined(Q_OS_UNIX) || defined(Q_OS_WIN)
   if (sourceIdentity.native.valid &&
       !sourceIdentity.matchesDescriptor(inputFile.handle())) {
+    importContext->sourceChanged = true;
+    m_sourceChangedDuringRead = true;
     m_errorCode = DRW::BAD_OPEN;
     return false;
   }
 #endif
+  importContext->sources.push_back({file, sourceIdentity});
   QFileInputBuffer buffer(inputFile);
   std::istream stream(&buffer);
   const bool imported = fileImportImpl(g, file, type, &stream);
   if (inputFile.error() != QFileDevice::NoError ||
       (sourceIdentity.native.valid &&
        !sourceIdentity.matchesDescriptor(inputFile.handle()))) {
+    importContext->sourceChanged = true;
+  }
+  if (ownsImportContext) {
+    for (const auto &source : importContext->sources) {
+      if (!source.identity.matches(source.path)) {
+        importContext->sourceChanged = true;
+        break;
+      }
+    }
+  }
+  if (importContext->sourceChanged) {
     m_sourceChangedDuringRead = true;
     m_errorCode = DRW::BAD_READ_FILE_HEADER;
     return false;
@@ -5274,6 +5297,10 @@ bool RS_FilterDXFRW::embedXref(RS_Block *block, const QString &xrefPath,
   xrefFilter.m_deferOffsetAdmission = m_deferOffsetAdmission;
   xrefFilter.m_offsetImportBudget = m_offsetImportBudget;
   xrefFilter.m_xrefSnapshotProvider = m_xrefSnapshotProvider;
+  xrefFilter.m_directImportContext = m_directImportContext;
+#ifdef DWGSUPPORT
+  xrefFilter.m_testBeforeDwgOpen = m_testBeforeDwgOpen;
+#endif
   xrefFilter.m_xrefStack = m_xrefStack; // propagate cycle guard
   const bool isDwg =
       resolved.endsWith(QStringLiteral(".dwg"), Qt::CaseInsensitive);

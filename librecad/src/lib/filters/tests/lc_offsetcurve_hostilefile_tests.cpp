@@ -400,6 +400,83 @@ TEST_CASE("DWG path import reads the already-open drawing after path replacement
         CHECK(filter.lastError().contains(QStringLiteral("changed while it was being read")));
     }
 }
+
+TEST_CASE("Direct host import refuses an XREF replaced after it was opened",
+          "[lc-offsetcurve][import-session][xref][source-identity]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-direct-xref-source-change");
+    const auto host = directory.file("host.dxf");
+    const auto external = directory.file("external.dwg");
+    const auto replacement = directory.file("replacement.dwg");
+    const auto original = directory.file("opened-original.dwg");
+    writeXrefHost(host, {{"REF", "external.dwg"}});
+    writeInput(external, Lane::Eed18, f::raw(3));
+    writeInput(replacement, Lane::Eed2000, f::raw(3));
+
+    std::error_code error;
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_FilterDXFRW filter;
+    LC_DwgReadVersionTestAccess::beforeOpen(filter, [&] {
+        std::filesystem::rename(external, original, error); REQUIRE_FALSE(error);
+        std::filesystem::rename(replacement, external, error); REQUIRE_FALSE(error);
+    });
+
+    CHECK_FALSE(filter.fileImport(graphic, QString::fromStdString(host.string()),
+                                  RS2::FormatDXFRW2018));
+    CHECK(std::filesystem::exists(original));
+    CHECK(filter.lastError().contains(QStringLiteral("changed while it was being read")));
+}
+
+TEST_CASE("Direct host import embeds an unchanged XREF from its opened source",
+          "[lc-offsetcurve][import-session][xref][source-identity]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-direct-xref-stable");
+    const auto host = directory.file("host.dxf");
+    const auto external = directory.file("external.dwg");
+    writeXrefHost(host, {{"REF", "external.dwg"}});
+    writeInput(external, Lane::Eed18, f::raw(3));
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(host.string()),
+                              RS2::FormatDXFRW2018));
+    const auto *block = graphic.findBlock("REF");
+    REQUIRE(block);
+    REQUIRE(block->count() == 1);
+    CHECK(dynamic_cast<const LC_OffsetCurve *>(block->entityAt(0)) != nullptr);
+}
+
+TEST_CASE("Direct host import revalidates earlier XREFs after later dependencies",
+          "[lc-offsetcurve][import-session][xref][source-identity]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-direct-xref-cross-change");
+    const auto host = directory.file("host.dxf");
+    const auto first = directory.file("first.dwg");
+    const auto second = directory.file("second.dwg");
+    const auto replacement = directory.file("replacement.dwg");
+    const auto openedFirst = directory.file("opened-first.dwg");
+    writeXrefHost(host, {{"FIRST", "first.dwg"}, {"SECOND", "second.dwg"}});
+    writeInput(first, Lane::Eed18, f::raw(3));
+    writeInput(second, Lane::Eed18, f::raw(3));
+    writeInput(replacement, Lane::Eed2000, f::raw(3));
+
+    std::error_code error;
+    int openedXrefs = 0;
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_FilterDXFRW filter;
+    LC_DwgReadVersionTestAccess::beforeOpen(filter, [&] {
+        if (++openedXrefs == 2) {
+            std::filesystem::rename(first, openedFirst, error); REQUIRE_FALSE(error);
+            std::filesystem::rename(replacement, first, error); REQUIRE_FALSE(error);
+        }
+    });
+
+    CHECK_FALSE(filter.fileImport(graphic, QString::fromStdString(host.string()),
+                                  RS2::FormatDXFRW2018));
+    CHECK(openedXrefs == 2);
+    CHECK(std::filesystem::exists(openedFirst));
+    CHECK(filter.lastError().contains(QStringLiteral("changed while it was being read")));
+}
 #endif
 
 #ifdef DWGSUPPORT

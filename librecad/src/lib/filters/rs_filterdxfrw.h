@@ -3130,6 +3130,15 @@ private:
   QString m_activeOutputPath;
   LC_FileIdentity m_activeOutputSourceIdentity;
   bool m_activeOutputTargetsSource = false;
+  struct DirectImportContext {
+    struct Source {
+      QString path;
+      LC_FileIdentity identity;
+    };
+    std::vector<Source> sources;
+    bool sourceChanged = false;
+  };
+  std::shared_ptr<DirectImportContext> m_directImportContext;
   /** File name. Used to find out the full path of images. */
   QString m_file;
   /** Pointer to current entity container (either block or graphic) */
