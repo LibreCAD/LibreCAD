@@ -2515,6 +2515,51 @@ The red probe is retained alongside the final evidence. Reports are
 | storage | `2f20b3a80a9a2049e96d1b29ec4dfe966d561ebf43b46d2267adbc2fedd74ab9` | `146400da206b4a9fecf04a8b330cd8ef18f198d4acf3c48e3454e047d21117e0` |
 | hostile | `181f855144b9933c1c2ffeb6ac09e6464563353fc099393bd9844cd78e513333` | `522c0ea4da97ebe022a37f192989724ee47ed1877b3f7967a727bea31dfa7065` |
 
+W34 staged-source checks `b9882d7a1` records a filesystem metadata stamp at
+the start of parsing: canonical path, size, modification time, and metadata-change
+and birth times when available. An observed change at the read boundary refuses
+publication. A change or unverifiable stamp after parsing marks a GUI-opened
+drawing modified and format-unknown, reports the reason, and requires Save As;
+the pre-read modification time remains the ordinary Save baseline. Template
+imports report an unverified source but remain untitled. Autosave now refuses a
+path that identifies the current source, including existing hard/symbolic links
+and a dangling symbolic link; unresolved link chains are refused conservatively.
+
+This is **not a content-identity or atomic-write proof**. Indistinguishable or
+unavailable filesystem metadata can miss a change, and an alias can be swapped
+between the autosave check and write. A user can explicitly choose the source in
+Save As and confirm overwrite. Stronger source identity and atomic destination
+validation remain open; do not treat the metadata checks as a complete solution.
+
+Fresh Release application/full-test/helper and focused Release/ASan builds pass.
+All discovered identities execute with zero errors/failures; extra cases are
+named sections:
+
+| Suite | Declarations | Cases | Assertions Release / ASan | Skips |
+| --- | ---: | ---: | ---: | ---: |
+| GUI source change | 3 | 3 | 79 / 95 | 0 |
+| dock-window | 44 | 48 | 728 / 878 | 7 |
+| documents storage | 33 | 56 | 1241 / 1241 | 1 |
+| hostile file | 48 | 53 | 53511 / 54340 | 0 |
+
+Tests cover modification after parsing during a real helper, a same-size edit
+with restored mtime detected by metadata-change time on this filesystem, the
+read-boundary refusal using a private one-shot test hook, Save As rather than
+ordinary Save, and autosave through identical, hard-link, symbolic-link and
+dangling-link paths. The read-boundary hook is not a naturally concurrent parser
+race; the metadata-time and link tests may skip on unsupported filesystems.
+Seven GUI cases require a larger offscreen screen; the storage skip is the
+existing JWW writer case. ASan uses `detect_leaks=0`. Four qmake6 objects compile,
+not a full link. In the evidence root, reports are
+`offset-W34-final2-{source,gui,storage,hostile}-{release,asan}.xml`:
+
+| Suite | Release SHA256 | ASan SHA256 |
+| --- | --- | --- |
+| source | `6ac627b949c541986964950b9c4b6cde5b89ebebc0e10878cf31cba641a2d0e3` | `72f0bc7afb6abcebada37392f5e55b7ea854adcadebf2b8cd94d8ccaf6263f52` |
+| dock-window | `f0512c80e1af8b16400df2564a37f17d9f696f6f66f0ac6957f95f38762bb835` | `1851cc4e46c02c87b8e5555e3493cf82f8a0c980268adcdd22b12f22673e2269` |
+| storage | `c3e61b18784788bbf240dcf68acf2574e665a09984f450c951e7f95e0357fbf0` | `e81d2f2ead1a4c97855a055bd17d0dcc75ac74221c3e323e7ad57f9501d8e3c2` |
+| hostile | `33303b5126423b4fb0fe9215cdd6e64b0e34839ac134dedb7e0b4dca0f588307` | `4898d6e343e9783b01baa52bd4803f659ceba83bffda63ab7b701589da04a277` |
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -2562,9 +2607,9 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** protect against source-file
-changes while validation is pending, investigate the W33 forced-destruction
-singleton assertion, and exercise a genuine partial DWG through the GUI dialog.
+**Next concrete action on implementation resume:** investigate the W33 forced-
+destruction singleton assertion, strengthen W34's metadata-only source and
+non-atomic autosave alias checks, and exercise a genuine partial DWG through the GUI dialog.
 Audit close/dialog reentrancy and startup selection versus later user action.
 W31/W32 drawing-open/template publication and W33 GUI queue bounds are
 implemented; do not repeat them as absent. Design and test direct synchronous,
