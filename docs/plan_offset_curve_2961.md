@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W170, superseding W169 below): implementation slices A-core
+Current status (W172, superseding W171 and earlier below): implementation slices A-core
 through T3 and the local A-core through C-check audit are closed. Direct
 synchronous `fileImport`, stream, and byte filter imports validate offset
 carriers through the worker. W158-W160 requalify qmake6 and staged installed
@@ -36,16 +36,20 @@ handling; W169 freshly builds the complete app with qmake6 and CMake, exercises
 the bundled helper, and passes the full local Node validation suite (412/412).
 W170 fixes three Windows ARM64 qualification failures: explicit CBOR test
 nesting, native pipe handles in the fault fixture, and CRLF-tolerant
-geometry-witness matching. Focused local CMake tests pass 3/3; an exact-head
-cross-platform rerun is required. W0-W2 and E/U/G/F/O/T/R remain open for
-Windows/Linux runtime, package/deployment, full visible UI, external-CAD
-acceptance, and final integration.
+geometry-witness matching. W171 regenerated the current-source DWG matrix:
+LibreDWG 0.14 semantically parsed 24/24 outputs across AC1015-AC1032, including
+original and edited degree-1/degree-3 cases. ACadSharp parsed 20/24; its four
+AC1021 failures remain a pre-entity negative-ComprLen reader exception, while
+those same current AC1021 outputs pass LibreDWG. W172 regenerated 34
+current-source DXFs: ACadSharp parsed all 32 modern ASCII/binary spline rows
+with valid knot layouts; both R12 rows parsed as the expected geometry-only
+POLYLINE representation. Focused local Release and ASan checks and the
+6,381-case headless suite pass. Exact-head Windows x64/ARM64/Linux DWG/DXF/helper
+CI, broader cross-platform and package/deployment acceptance, full visible UI,
+external-CAD visual acceptance, and final W0-W2/R integration remain open.
 W164 independently parsed the actual W163 AC1032 DXF output with ACadSharp,
-preserving both owned markers and valid spline knot layouts. On the retained
-W134 DWG matrix outputs, LibreDWG read 24/24; ACadSharp read 20/24, with the four
-AC1021 files failing at its known negative-ComprLen header exception. The DWG
-matrix files predate the current product source pin, so current-head external
-DWG acceptance remains open.
+preserving both owned markers and valid spline knot layouts. W171 supersedes
+the retained W134 matrix evidence with a fresh current-source DWG matrix.
 W165 converted the current-source W163 DXF through ODA File Converter 27.1.0.0
 to AC1032 DWG; both LibreDWG and ACadSharp parsed the output and recovered both
 owned markers. ACadSharp's `HasValidKnotCount` is false for its 88-control closed
@@ -68,7 +72,9 @@ qualifications recorded in W1-W169. W156 closes local routing for the public
 synchronous file/stream/byte filter APIs. Exact-head platform/format CI,
 deployed-package checks, full visible UI, external-CAD interoperability, and
 final W0-W2/R integration remain open.
-Latest recorded slice: W170 records Windows ARM64 qualification-fixture fixes
+Latest recorded slice: W172 records the current-source DXF matrix and ACadSharp
+results; W171 records fresh current-source DWG generation and independent-reader
+results; W170 records Windows ARM64 qualification-fixture fixes
 and the pending exact-head rerun; W169 records fresh qmake6/CMake app builds, bundled helper
 exchange, and full local validation; W168 records Windows worker/wire CI
 remediation; W165 records ODA conversion and independent readers; W164
@@ -87,7 +93,7 @@ reconciliation. W152 records the ASan cache-check fault sweep. W151 classifies
 five randomized command-alias failures as inherited baseline behavior. W149's
 broad local Release lanes and W148's qmake6 qualification remain recorded.
 Remote/platform CI, full deployed-package acceptance, visible interaction,
-external-CAD checks and final W0-W2/R acceptance remain open.
+external-CAD visual acceptance and final W0-W2/R acceptance remain open.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -3181,29 +3187,40 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   Release and focused ASan direct-API selectors, broad Release format lanes, and
   qmake6 builds of both changed filter objects pass locally. Finish Windows/native
   cross-platform failure coverage, deployed-helper acceptance, and final
-  caller/adoption/failure acceptance. Reuse the qualified geometry-entry
+  caller/adoption/failure acceptance. W170 passes the targeted local Debug,
+  Release and ASan worker fixture suites. W171/W172 freshly qualify current-source
+  DWG/DXF matrices with LibreDWG and ACadSharp; exact-head Windows x64/ARM64/Linux
+  format/helper workflows `40971000486` are still running. Reuse the qualified geometry-entry
   W157 extends the DWG/DXF matrix to build and execute `[sync-api]` on Linux and
   Windows x64/ARM64; those new-head checks must finish before cross-platform
   qualification. Reuse the qualified geometry-entry timeout/helper/client/reply
   modules; do not redo them as absent. Keep Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
   DXF/DWG, source and trim implementation with any new worker/publication changes.
+  W171/W172 close fresh current-source external semantic-reader matrices for the
+  direct DWG and DXF writer paths; ACadSharp's AC1021 pre-entity exception is
+  recorded separately. Visible CAD interaction, full platform/package coverage,
+  and final integrated acceptance remain open.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   including Windows, visible GUI acceptance and remaining platform/package acceptance; W79
   now covers a complete staged macOS CMake install. W149-W151 record broad local
   Release results and classify the five randomized alias assertions as the same
   inherited behavior on a fresh `origin/master` build; do not attribute them to
-  the offset changes. Review scoped commits, preserve reproducible evidence and
-  close every required gap.
+  the offset changes. W170 adds targeted current-source Debug/Release/ASan worker
+  fixtures and a full 6,381-case headless Release pass; W171/W172 add fresh
+  current-source cross-reader DWG/DXF matrix results. The exact-head Windows,
+  Linux format/helper workflows and Pixi/CodeQL checks are pending at this
+  checkpoint. Review scoped commits, preserve reproducible evidence and close
+  every required gap.
 
 **Next concrete action on implementation resume:** follow all checks on the
 current PR head through completion; address any Windows/Linux worker, direct-
 import, or staged-helper failure; then close remaining W0-W2 deployment and
 failure gates, requalify E/U/G/F/O/T on the exact source, and complete R's
-visible-GUI, external-CAD, platform/package and final closeout rows. Treat the
-ACadSharp AC1021 result as a reader limitation only where its negative-
-`ComprLen` throw is reproduced; do not count conversion as direct AC1021 reader
-acceptance.
+visible-GUI, external-CAD, platform/package and final closeout rows. Current
+AC1021 DWG output has passed direct semantic inspection with LibreDWG; the pinned
+ACadSharp `ComprLen` exception remains a tool-specific limitation and must not
+be represented as a LibreCAD failure or as direct ACadSharp acceptance.
 The W145 Windows include correction has local validation only. W55 now records a fresh full macOS qmake6 app/bundle
 build plus a worker-protocol smoke using the helper beside the bundled executable;
 W79 separately records a complete staged macOS CMake install and offscreen
@@ -6694,15 +6711,95 @@ LF and CRLF. No product behavior changed in this slice.
 
 | W170 validation | Result |
 |---|---|
-| Local CMake Debug build: wire, fault fixture/test, geometry timeout fixture/test | PASS |
-| Focused CTest: `offset_worker_wire`, `offset_worker_fault`, `offset_worker_geometry_timeout` | PASS; 3/3, 19.89s |
+| Focused CMake Debug CTest: `offset_worker_wire`, `offset_worker_fault`, `offset_worker_geometry_timeout` | PASS; 3/3, 19.89s |
+| Focused CMake Release CTest, same selectors | PASS; 3/3, 9.52s |
+| Focused CMake ASan CTest, same selectors (`ASAN_OPTIONS=detect_leaks=0`) | PASS; 3/3, 12.21s |
+| Fresh current-source headless Release application suite | PASS; 6,381 JUnit cases, 0 failures/errors, 75 optional-fixture/legacy-path skips |
+| Roadmap parser/inventory regression | PASS; 5/5 |
 | `git diff --check` | PASS |
 | Code commit | `4e107daba` (`fix offset worker Windows test fixtures`) |
-| Exact-head Windows x64/ARM64 and Linux rerun | Pending after push; required before closing W168/W170 cross-platform gate |
+| Exact-head Windows x64/ARM64 and Linux rerun | Workflow `40971000486` queued/running; required before closing W168/W170 cross-platform gate |
 | Visible LibreCAD app control | Still unavailable: app-specific CUA approval remains denied despite the user's approval action; no alternate UI path used |
 
-W170 closes only the local test-fixture remediation. Recheck the exact pushed
-head's format/helper workflow, especially ARM64, before considering it fixed.
+The code and plan commits are `4e107daba` and `091686cd7`; the latter triggered
+exact-head workflow `40971000486` (DWG/DXF verification), `40971000241` (Pixi
+builds), `40971000319` (Text foundations), and `40971000501` (CodeQL). At this
+checkpoint the DWG/DXF Linux, Windows x64 and ARM64 jobs are queued/running; no
+post-fix conclusion is available. W170 closes the local test-fixture
+remediation only. Recheck the exact pushed head's format/helper workflow,
+especially ARM64, before considering it fixed.
 The full visible workflow, signed/deployed package acceptance, current-source
 external-CAD checks (including AC1021's reader limitation), and final W0-W2/R
 acceptance remain open.
+
+## 129. W171 Current-Source DWG Matrix and Independent Readers
+
+Regenerated the bounded DWG matrix from the current checkout's Release
+`librecad_tests` binary into `/private/tmp/offset-W171-current-dwg`, then
+preserved the result under
+`/Users/dli/dev/LibreCAD/tmp/offset-2961-native-20261026/W171-current-dwg/`.
+The 24 files span AC1015, AC1018, AC1021, AC1024, AC1027, and AC1032, with
+initial degree-1/degree-3 and edited second-save rows. The writer selectors
+passed with 5,822 and 5,414 assertions respectively.
+
+LibreDWG `dwgread 0.14` parsed all 24 outputs and the JSON semantic validator
+found exactly one SPLINE per drawing, the `LC_OFFSET_CURVE` marker, expected
+physical version, open/nonperiodic flags, and expected NURBS degree/control/knot
+counts (degree 1: 1/2/4; degree 3: 3/4/8). ACadSharp at
+`3a52a52047e84670759c1f9ad3916ec3ce85ff56` parsed 20/24 with valid knot counts.
+Its four AC1021 cases stop in `DwgReader.readFileHeaderAC21` at the known
+negative-ComprLen `NotImplementedException`, before entity decoding. The same
+four current-source AC1021 outputs pass the independent LibreDWG semantic
+check; this closes the direct AC1021 acceptance row for LibreDWG, not the
+ACadSharp-specific reader gap.
+
+| W171 evidence | Result |
+|---|---|
+| Current-source DWG writer matrix | PASS; 24 files, six versions, initial and edited degree-1/degree-3 cases |
+| LibreDWG semantic read | PASS; 24/24; SPLINE marker, versions and NURBS layouts validated |
+| ACadSharp semantic read | PASS; 20/24; four AC1021 cases hit its pre-entity header limitation |
+| DWG SHA manifest | `dwg-manifest.sha256`; SHA256 `0f33599eb00176fd48336eedcbb1bacbe9f00ac7b4d0e5946485783d8a574273` |
+| LibreDWG JSONL summary | SHA256 `5ca6a4a5b7b8f97b38f852c87dade3aa916b57405ff751d3537511b15994fe96` |
+| ACadSharp summary | SHA256 `5edd9bf46baa9e759898af0c065e7acf51d48a6a91d10c5f480ac5de959000e1` |
+| Writer logs | Initial `3434eb96d64ed56910fec0c6d6685f6a37ae7fb63a17fcbd8566db8ed19c09a2`; edited `40fe5a38427830083efeaba7480dcffad97c7ae1fe00cd28a956e9f426f33e24` |
+
+This replaces the pre-current-source W134 DWG evidence. It is independent
+semantic-reader validation, not external CAD rendering or signed-package
+acceptance. Exact-head platform CI and full W0-W2/R acceptance remain open.
+
+## 130. W172 Current-Source DXF Matrix and ACadSharp
+
+Regenerated DXF output from the current checkout's Release test binary into
+`/private/tmp/offset-W172-current-dxf`, preserving the outputs and reader logs
+under `/Users/dli/dev/LibreCAD/tmp/offset-2961-native-20261026/W172-current-dxf/`.
+The matrix contains 34 files: 28 modern ASCII DXFs across R14 through R2018
+(degree 1/3, initial and edited), four binary DXF codec rows (R14 and R2018,
+degree 1/3), and two R12 geometry-only POLYLINE downgrades. The modern writer
+and edited writer selectors passed with 8,180 and 6,620 assertions; the R12
+selector passed.
+
+ACadSharp at `3a52a52047e84670759c1f9ad3916ec3ce85ff56` parsed all 32 modern
+ASCII/binary spline-marker rows, each with the marker preserved and a valid
+knot layout. It parsed both R12 rows as one ordinary entity each with no native
+SPLINE marker, matching the deliberate geometry-only compatibility
+representation. The summary validator reports `PASS=32 R12_geometry_only=2
+invalid=0`.
+
+| W172 evidence | Result |
+|---|---|
+| Modern DXF writer matrix | PASS; 8,180 assertions |
+| Edited DXF writer matrix | PASS; 6,620 assertions |
+| R12 writer/read matrix | PASS; geometry-only representation |
+| ACadSharp semantic read | PASS; 32/32 modern native spline rows; 2/2 R12 geometry-only rows |
+| DXF SHA manifest | `dxf-manifest.sha256`; SHA256 `9fffd2ab828892146a4a68919097fdcf0e5be4ccaa18ab6740553acb4f90c40a` |
+| ACadSharp summary | SHA256 `c2d19756eb141ab7aa46e2eecfd9eacf7bce429e6a4b5aa7ae68a1fd88dc523a` |
+| Writer logs | Modern `09f67eb2644824c9008b023beb9aaff6a1c5c5067d87ee24029a6252d4783f13`; edited `7cb6bd9c6fa770c970f8b0ca9b5b00a6cd165f18b48d60c9a6098cf381c8ae68`; R12 `10f1c8015f6ebb182d003cc5d8b5f1caf436bc1e29bbb356c22a3ac0fe24e992` |
+
+The exact-head workflow set triggered by plan commit `091686cd7` remains the
+remote qualification for W170's Windows x64/ARM64/Linux helper and format
+lanes. At the last check, workflow `40971000486` was building these lanes;
+workflow `40971000319` passed Headless OFF/ON, while Pixi `40971000241` and
+CodeQL `40971000501` were still running. Recheck these results before closing
+the cross-platform gate. Visible CAD interaction remains unavailable because
+CUA still reports app-specific approval denied after the user approved it; no
+alternate UI-control path was used.
