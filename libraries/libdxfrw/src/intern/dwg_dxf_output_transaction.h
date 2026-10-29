@@ -26,12 +26,15 @@
 
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <ios>
+#include <memory>
+#include <ostream>
 #include <string>
 
-/// Owns the temporary output and publishes it only after a complete flush.
-/// The destination is never opened with truncation, so a failed write cannot
-/// destroy the previous file.
+/// Writes through an exclusively created temporary file and publishes after
+/// a complete flush. Stage identity checks detect replacement at the checked
+/// boundaries, but do not make pathname verification and rename atomic.
 class DwgDxfOutputTransaction final {
 public:
     DwgDxfOutputTransaction(const std::string& target,
@@ -47,16 +50,20 @@ public:
     /// Verification runs synchronously and must not change the staged file.
     /// Rejection or an exception aborts the transaction, preserving the target.
     /// The verifier is responsible for semantic and reread validation; this
-    /// class provides only the owned-stage publication boundary.
+    /// Path replacement between identity checks and publication remains a
+    /// race; this class is not a security boundary against directory mutation.
     using StagedFileVerifier = bool (*)(const std::filesystem::path&, void*);
     bool commitVerified(StagedFileVerifier verifier, void* context);
     void abort() noexcept;
 
-    [[nodiscard]] bool isOpen() const noexcept { return m_stream.is_open(); }
-    std::ofstream& stream() noexcept { return m_stream; }
+    [[nodiscard]] bool isOpen() const noexcept { return m_open; }
+    std::ostream& stream() noexcept { return m_stream; }
 
 private:
+    friend struct LC_OutputTransactionTestAccess;
+    struct Stage;
     bool createExclusiveTemporary();
+    bool stageMatchesPath() const noexcept;
     bool publish();
     bool finishWrite();
     bool finishPublish();
@@ -64,9 +71,12 @@ private:
     std::filesystem::path m_target;
     std::filesystem::path m_temporary;
     std::ios::openmode m_mode;
-    std::ofstream m_stream;
+    std::unique_ptr<Stage> m_stage;
+    std::ostream m_stream {nullptr};
+    bool m_open {false};
     bool m_committed {false};
     bool m_finalizing {false};
+    std::function<void(const std::filesystem::path&)> m_testAfterCreate;
 };
 
 #endif // DWG_DXF_OUTPUT_TRANSACTION_H

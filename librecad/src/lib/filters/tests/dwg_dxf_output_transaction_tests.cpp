@@ -9,6 +9,16 @@
 #include <chrono>
 #include <iterator>
 #include <stdexcept>
+#ifndef _WIN32
+#include <sys/resource.h>
+#endif
+
+struct LC_OutputTransactionTestAccess {
+    static void afterCreate(DwgDxfOutputTransaction& output,
+                            std::function<void(const std::filesystem::path&)> hook) {
+        output.m_testAfterCreate = std::move(hook);
+    }
+};
 
 namespace {
 std::string read(const std::filesystem::path &path) {
@@ -160,3 +170,83 @@ TEST_CASE("An abandoned owned stage leaves the destination unchanged","[stage][l
     {DwgDxfOutputTransaction output(fixture.target.string(),std::ios::binary);write(output);CHECK(fixture.files()==2);}
     CHECK(read(fixture.target)=="old destination");CHECK(fixture.files()==1);
 }
+
+TEST_CASE("Owned stage supports output position and patching", "[stage][seek]") {
+    for (const auto mode : {std::ios::openmode(0), std::ios::binary}) {
+        Fixture fixture; DwgDxfOutputTransaction output(fixture.target.string(), mode);
+        REQUIRE(output.open());
+        output.stream() << "0123456789";
+        const auto end = output.stream().tellp(); REQUIRE(end == std::streampos(10));
+        output.stream().seekp(3); output.stream() << "ABC";
+        output.stream().seekp(end); output.stream() << "tail";
+        REQUIRE(output.stream().good()); REQUIRE(output.commit());
+        CHECK(read(fixture.target) == "012ABC6789tail");
+    }
+}
+
+TEST_CASE("A stage setup exception closes and removes the private file", "[stage][failure]") {
+    Fixture fixture; DwgDxfOutputTransaction output(fixture.target.string(), std::ios::binary);
+    LC_OutputTransactionTestAccess::afterCreate(output, [](const std::filesystem::path&) {
+        throw std::runtime_error("stage setup failure");
+    });
+    CHECK_FALSE(output.open()); CHECK_FALSE(output.isOpen());
+    CHECK(read(fixture.target) == "old destination"); CHECK(fixture.files() == 1);
+}
+
+#ifndef _WIN32
+TEST_CASE("Descriptor exhaustion refuses publication and preserves the destination", "[stage][failure][descriptor]") {
+    Fixture fixture; DwgDxfOutputTransaction output(fixture.target.string(), std::ios::binary);
+    write(output);
+    struct LimitGuard {
+        rlimit original{};
+        bool changed = false;
+        ~LimitGuard() { if (changed) setrlimit(RLIMIT_NOFILE, &original); }
+    } guard;
+    REQUIRE(getrlimit(RLIMIT_NOFILE, &guard.original) == 0);
+    auto restricted = guard.original; restricted.rlim_cur = 0;
+    REQUIRE(setrlimit(RLIMIT_NOFILE, &restricted) == 0); guard.changed = true;
+    const bool committed = output.commit();
+    REQUIRE(setrlimit(RLIMIT_NOFILE, &guard.original) == 0); guard.changed = false;
+    CHECK_FALSE(committed); CHECK_FALSE(output.isOpen());
+    CHECK(read(fixture.target) == "old destination"); CHECK(fixture.files() == 1);
+}
+
+TEST_CASE("Replacing the stage after exclusive creation cannot truncate the destination", "[stage][race]") {
+    Fixture fixture; DwgDxfOutputTransaction output(fixture.target.string(), std::ios::binary);
+    bool swapped = false;
+    LC_OutputTransactionTestAccess::afterCreate(output, [&](const std::filesystem::path& stage) {
+        std::error_code error;
+        const bool removed = std::filesystem::remove(stage, error);
+        REQUIRE(removed); REQUIRE_FALSE(error);
+        std::filesystem::create_symlink(fixture.target, stage, error);
+        REQUIRE_FALSE(error); swapped = true;
+    });
+    REQUIRE(output.open()); REQUIRE(swapped);
+    CHECK(read(fixture.target) == "old destination");
+    output.stream() << "new complete drawing";
+    CHECK(output.stream().good());
+    CHECK_FALSE(output.commit());
+    CHECK(read(fixture.target) == "old destination");
+}
+
+TEST_CASE("Replacing the stage during verification refuses publication", "[stage][race][verification]") {
+    Fixture fixture; DwgDxfOutputTransaction output(fixture.target.string(), std::ios::binary);
+    write(output);
+    struct Swap {
+        std::filesystem::path target, stage;
+        bool replaced = false;
+        static bool verify(const std::filesystem::path& path, void* data) {
+            auto& self = *static_cast<Swap*>(data);
+            self.stage = path;
+            std::error_code error;
+            if (!std::filesystem::remove(path, error) || error) return false;
+            std::filesystem::create_symlink(self.target, path, error);
+            self.replaced = !error;
+            return self.replaced;
+        }
+    } swap{fixture.target, {}, false};
+    CHECK_FALSE(output.commitVerified(&Swap::verify, &swap));
+    REQUIRE(swap.replaced); CHECK(std::filesystem::is_symlink(swap.stage));
+    CHECK(read(fixture.target) == "old destination");
+}
+#endif

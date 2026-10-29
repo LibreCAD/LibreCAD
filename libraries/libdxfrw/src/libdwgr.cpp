@@ -1249,7 +1249,7 @@ bool dwgRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
         error = DRW::BAD_OPEN;
         return false;
     }
-    std::ofstream& filestr = output.stream();
+    std::ostream& filestr = output.stream();
 
     // Let the caller populate the header vars first.  Mirror of
     // dxfRW::write at libdxfrw.cpp:152-153.  The iface is allowed to

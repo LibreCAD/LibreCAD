@@ -1487,7 +1487,7 @@ bool dxfRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
         error = DRW::BAD_OPEN;
         return false;
     }
-    std::ofstream& filestr = output.stream();
+    std::ostream& filestr = output.stream();
     const auto failWrite = [&]() {
         writer.reset();
         output.abort();
