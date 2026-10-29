@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, and W79's complete staged macOS CMake install are qualified in focused Release/ASan lanes; W80 fixes atomic compound budget admission with focused Release/ASan evidence; remaining budget audit, other import callers, Windows and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, and W79's complete staged macOS CMake install are qualified in focused Release/ASan lanes; W80 fixes atomic compound budget admission with focused Release/ASan evidence; W81 adds bounded Linux/Windows worker CI, locally validated on macOS; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -312,7 +312,7 @@ candidate except the explicitly proposed native-worker tags.
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a` plus later search; audit/retest | `[lc-offsetcurve][cache-topology-chain]` |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; finish caller/fallback/import ownership freeze before routing | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; full app/deployed-package gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
-| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit and scoped action faults and geometry-entry timeout receipts qualified locally; import and final gates open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
+| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit and scoped action faults and geometry-entry timeout receipts qualified locally; W81 adds Linux/Windows CMake worker CI; cross-platform CI, import and final gates remain open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; audit/retest | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; audit/retest | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; audit/retest | native edit/grip/transform TUs |
@@ -4187,3 +4187,24 @@ and lifetime audit remains open.
 ASan used `detect_leaks=0`, so this is not leak validation. The source change
 does not close A-core/A-strict/A-reference/A-cache as a whole or the roadmap's
 cross-platform and final acceptance gates.
+
+## 44. W81 Cross-Platform Worker CI Lane
+
+At workflow commit `a44fff463`, enabled opt-in offset-worker test registration
+for the bounded DWG/DXF CMake jobs on Linux and Windows, and added the helper,
+wire/request/result/kernel/process/client/fault/geometry-timeout, and
+creation-action targets to both builds. The jobs run the registered worker
+CTest set and the offscreen `[lc-offsetcurve][creation-worker]` selector.
+
+Local macOS CMake Release validation of the same target and execution set passed:
+
+| W81 lane | Result | SHA256 |
+|---|---|---|
+| Worker CTest, `/private/tmp/offset-W81-worker-ctest.xml` | PASS; 9/9, failures=0 | `99876d3c4efadc9d3651a94f4c80071f8284fe828c2f5b1785e2bcaf61ed2feb` |
+| Creation/repeat, `/private/tmp/offset-W81-creation-worker.xml` | PASS; 318 assertions, errors=0, failures=0, skipped=0 | `8764979364dfea0f7b140a5e47f7ba8687d5704a02fd32a5befb2dd99ebac9ce` |
+| Workflow YAML parse and `git diff --check` | PASS | n/a |
+
+This local run validates current CMake target names and commands on macOS; it
+does not substitute for Linux/Windows runtime validation. The PR Actions run
+for this workflow revision is pending and must pass before claiming those
+platforms qualified.
