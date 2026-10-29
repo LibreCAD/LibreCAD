@@ -423,10 +423,28 @@ int sweepReferenceGraph(std::size_t& totalInjectionPoints) {
     };
     return sweepStage("reference-six-pair-four-critical-graph", operation, complete, totalInjectionPoints);
 }
+
+int sweepReferenceEvents(std::size_t& totalInjectionPoints) {
+    namespace geo = LC_EllipseOffsetGeometry;
+    const RS_EllipseData source{RS_Vector{0, 0}, RS_Vector{100, 0}, .5,
+        M_PI / 18, 35 * M_PI / 18, false};
+    const auto operation = [&](geo::WorkBudget& budget) {
+        return geo::analyseReferenceEvents(source, -49.5, 1e-5, budget);
+    };
+    const auto complete = [](const geo::ReferenceEventResult& result) {
+        return result.status == LC_IntersectionStatus::Ok && result.analysis &&
+            result.analysis->pairs().size() == 6 && result.analysis->criticals().size() == 4;
+    };
+    return sweepStage("reference-six-pair-four-critical-events", operation, complete, totalInjectionPoints);
+}
 }
 
 int main(const int argc, char** argv) {
     namespace geo = LC_EllipseOffsetGeometry;
+    if (argc == 2 && std::strcmp(argv[1], "--reference-events") == 0) {
+        std::size_t injectionPoints = 0;
+        return sweepReferenceEvents(injectionPoints);
+    }
     if (argc == 2 && std::strcmp(argv[1], "--reference-components") == 0) {
         std::size_t injectionPoints = 0;
         return sweepReferenceGraph(injectionPoints);
@@ -508,6 +526,7 @@ int main(const int argc, char** argv) {
     if (const int result = sweepRefusal(cusp.cache, cusp.definition, "hidden-cusp-endpoint",
         LC_OffsetCheckResult::Reason::OffCurve, 1e-5, injectionPoints)) { return result; }
     if (const int result = sweepReferenceGraph(injectionPoints)) { return result; }
+    if (const int result = sweepReferenceEvents(injectionPoints)) { return result; }
     std::printf("allocation_failure_sweep_all_fixtures_recovered=1 injection_points=%zu\n", injectionPoints);
     std::fflush(stdout);
     return 0;
