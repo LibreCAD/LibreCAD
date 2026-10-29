@@ -110,10 +110,9 @@ public:
     enum class DashSpace { Model, Screen };
     void updateDashOffset(const RS_Entity* e);
     void clearDashOffset() {m_currenPatternOffset = 0.0;}
-    double currentDashOffset(DashSpace dashSpace) const;
-    double currentDashOffset() const {return currentDashOffset(m_lastPenDashSpace);}
+    double currentDashOffset(DashSpace dashSpace = DashSpace::Model) const;
     // Whether the pen setPen() last built carries a dash pattern.
-    bool penHasDashPattern() const {return m_lastPenDashed;}
+    bool penHasDashPattern() const {return m_lastUsedPen.style() == Qt::CustomDashLine;}
 
     void drawEntityArc(RS_Arc* arc);
     void drawEntityPolyline(const RS_Polyline *polyline);
@@ -438,9 +437,6 @@ protected:
     RS2::LineType m_lastDashLineType = RS2::SolidLine;
     double m_lastDashScreenWidth = 0.;
     double m_lastDashDeviceScale = 0.;
-    // What setPen(const RS_Pen&) last built, so the phase check needs no readback.
-    bool m_lastPenDashed = false;
-    DashSpace m_lastPenDashSpace = DashSpace::Model;
     double m_cachedDpmm = 0.;
     double m_minCircleDrawingRadius = 2.0;
     double m_minArcDrawingRadius = 0.8;

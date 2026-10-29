@@ -101,6 +101,45 @@ public:
     using LC_GraphicViewportRenderer::updateGraphicRelatedSettings;
 };
 
+enum class Rendering { Drawing, Draft, Preview, Print };
+
+struct RenderHarness {
+    std::unique_ptr<LC_GraphicViewportRenderer> renderer;
+    std::function<void(RS_Entity*)> setPen;
+
+    RenderHarness(Rendering mode, LC_GraphicViewport& viewport, RS_Painter& painter, QPaintDevice& device,
+                  RS_Graphic* graphic = nullptr, bool whiteBackground = false) {
+        const auto setup = [&](auto& r) {
+            if (whiteBackground) r->setBackground(RS_Color(Qt::white));
+            if (graphic) r->updateGraphicRelatedSettings(graphic);
+            r->setupPainter(&painter);
+        };
+        if (mode == Rendering::Drawing || mode == Rendering::Draft) {
+            auto view = std::make_unique<LineTypeViewRenderer>(&viewport, &device);
+            setup(view);
+            setPen = [&painter, view = view.get(), mode](RS_Entity* e) {
+                if (mode == Rendering::Draft) view->setPenForDraftEntity(&painter, e, false);
+                else view->setPenForEntity(&painter, e, false);
+            };
+            renderer = std::move(view);
+        } else if (mode == Rendering::Preview) {
+            auto preview = std::make_unique<LineTypePreviewRenderer>(&viewport, &device);
+            setup(preview);
+            setPen = [&painter, preview = preview.get()](RS_Entity* e) {
+                preview->setPenForPrintingEntity(&painter, e);
+            };
+            renderer = std::move(preview);
+        } else {
+            auto print = std::make_unique<LineTypePrintRenderer>(&viewport, &painter);
+            setup(print);
+            setPen = [&painter, print = print.get()](RS_Entity* e) {
+                print->setPenForPrintingEntity(&painter, e);
+            };
+            renderer = std::move(print);
+        }
+    }
+};
+
 } // namespace
 
 TEST_CASE("NoPen is not a patterned pen", "[gui][pen][linetype]") {
@@ -113,31 +152,13 @@ TEST_CASE("NoPen is not a patterned pen", "[gui][pen][linetype]") {
     RS_Line line{RS_Vector{0., 0.}, RS_Vector{10., 0.}};
     line.setPen(lineTypePen(RS2::NoPen));
 
-    std::unique_ptr<LC_GraphicViewportRenderer> renderer;
-    SECTION("drawing") {
-        auto view = std::make_unique<LineTypeViewRenderer>(&viewport, &image);
-        view->setupPainter(&painter);
-        view->setPenForEntity(&painter, &line, false);
-        renderer = std::move(view);
-    }
-    SECTION("draft") {
-        auto view = std::make_unique<LineTypeViewRenderer>(&viewport, &image);
-        view->setupPainter(&painter);
-        view->setPenForDraftEntity(&painter, &line, false);
-        renderer = std::move(view);
-    }
-    SECTION("print preview") {
-        auto preview = std::make_unique<LineTypePreviewRenderer>(&viewport, &image);
-        preview->setupPainter(&painter);
-        preview->setPenForPrintingEntity(&painter, &line);
-        renderer = std::move(preview);
-    }
-    SECTION("print and image export") {
-        auto print = std::make_unique<LineTypePrintRenderer>(&viewport, &painter);
-        print->setupPainter(&painter);
-        print->setPenForPrintingEntity(&painter, &line);
-        renderer = std::move(print);
-    }
+    Rendering mode = Rendering::Drawing;
+    SECTION("drawing") { mode = Rendering::Drawing; }
+    SECTION("draft") { mode = Rendering::Draft; }
+    SECTION("print preview") { mode = Rendering::Preview; }
+    SECTION("print and image export") { mode = Rendering::Print; }
+    RenderHarness renderer(mode, viewport, painter, image);
+    renderer.setPen(&line);
 
     REQUIRE_FALSE(painter.penHasDashPattern());
 
@@ -146,6 +167,22 @@ TEST_CASE("NoPen is not a patterned pen", "[gui][pen][linetype]") {
 
     CHECK_FALSE(painter.penHasDashPattern());
     CHECK(painter.currentDashOffset() == Catch::Approx(0.0));
+}
+
+TEST_CASE("An unknown pattern falls back to a solid pen", "[gui][pen][linetype]") {
+    (void)lc::test::application();
+    QImage image(64, 64, QImage::Format_RGB32);
+    RS_Painter painter(&image);
+    RS_Line line{RS_Vector{0., 0.}, RS_Vector{10., 0.}};
+    painter.setPen(lineTypePen(RS2::DashLine));
+    REQUIRE(painter.penHasDashPattern());
+    painter.setPen(lineTypePen(RS2::LineTypeUnchanged));
+    CHECK_FALSE(painter.penHasDashPattern());
+    CHECK(painter.pen().style() == Qt::SolidLine);
+    painter.updateDashOffset(&line);
+    CHECK(painter.currentDashOffset() == Catch::Approx(0.0));
+    painter.setPen(lineTypePen(RS2::DashLine));
+    CHECK(painter.penHasDashPattern());
 }
 
 TEST_CASE("A solid line between dashed ones does not advance the dash phase",
@@ -164,45 +201,24 @@ TEST_CASE("A solid line between dashed ones does not advance the dash phase",
     RS_Line last{RS_Vector{0., 20.}, RS_Vector{5., 20.}};
     last.setPen(lineTypePen(RS2::DashLine));
 
-    std::unique_ptr<LC_GraphicViewportRenderer> renderer;
-    std::function<void(RS_Entity*)> setPenFor;
-    SECTION("drawing") {
-        auto view = std::make_unique<LineTypeViewRenderer>(&viewport, &image);
-        view->setupPainter(&painter);
-        setPenFor = [&painter, view = view.get()](RS_Entity* e) {
-            view->setPenForEntity(&painter, e, false);
-        };
-        renderer = std::move(view);
-    }
-    SECTION("print preview") {
-        auto preview = std::make_unique<LineTypePreviewRenderer>(&viewport, &image);
-        preview->setupPainter(&painter);
-        setPenFor = [&painter, preview = preview.get()](RS_Entity* e) {
-            preview->setPenForPrintingEntity(&painter, e);
-        };
-        renderer = std::move(preview);
-    }
-    SECTION("print and image export") {
-        auto print = std::make_unique<LineTypePrintRenderer>(&viewport, &painter);
-        print->setupPainter(&painter);
-        setPenFor = [&painter, print = print.get()](RS_Entity* e) {
-            print->setPenForPrintingEntity(&painter, e);
-        };
-        renderer = std::move(print);
-    }
+    Rendering mode = Rendering::Drawing;
+    SECTION("drawing") { mode = Rendering::Drawing; }
+    SECTION("print preview") { mode = Rendering::Preview; }
+    SECTION("print and image export") { mode = Rendering::Print; }
+    RenderHarness renderer(mode, viewport, painter, image);
 
-    setPenFor(&first);
+    renderer.setPen(&first);
     CHECK(painter.penHasDashPattern());
     painter.updateDashOffset(&first);
     CHECK(painter.currentDashOffset() == Catch::Approx(10.0));
 
-    setPenFor(&middle);
+    renderer.setPen(&middle);
     CHECK_FALSE(painter.penHasDashPattern());
     CHECK(painter.pen().style() == Qt::SolidLine);
     painter.updateDashOffset(&middle);
     CHECK(painter.currentDashOffset() == Catch::Approx(10.0));
 
-    setPenFor(&last);
+    renderer.setPen(&last);
     CHECK(painter.penHasDashPattern());
     painter.updateDashOffset(&last);
     CHECK(painter.currentDashOffset() == Catch::Approx(15.0));
@@ -224,43 +240,19 @@ TEST_CASE("The dimension scale does not scale the dash phase", "[gui][pen][linet
     RS_Line line{RS_Vector{0., 0.}, RS_Vector{10., 0.}};
     line.setPen(lineTypePen(RS2::DashLine));
 
-    std::unique_ptr<LC_GraphicViewportRenderer> renderer;
-    std::function<void()> setPenFor;
-    SECTION("drawing") {
-        auto view = std::make_unique<LineTypeViewRenderer>(&viewport, &image);
-        view->updateGraphicRelatedSettings(&graphic);
-        view->setupPainter(&painter);
-        setPenFor = [&painter, &line, view = view.get()] {
-            view->setPenForEntity(&painter, &line, false);
-        };
-        renderer = std::move(view);
-    }
-    SECTION("print preview") {
-        auto preview = std::make_unique<LineTypePreviewRenderer>(&viewport, &image);
-        preview->updateGraphicRelatedSettings(&graphic);
-        preview->setupPainter(&painter);
-        setPenFor = [&painter, &line, preview = preview.get()] {
-            preview->setPenForPrintingEntity(&painter, &line);
-        };
-        renderer = std::move(preview);
-    }
-    SECTION("print and image export") {
-        auto print = std::make_unique<LineTypePrintRenderer>(&viewport, &painter);
-        print->updateGraphicRelatedSettings(&graphic);
-        print->setupPainter(&painter);
-        setPenFor = [&painter, &line, print = print.get()] {
-            print->setPenForPrintingEntity(&painter, &line);
-        };
-        renderer = std::move(print);
-    }
+    Rendering mode = Rendering::Drawing;
+    SECTION("drawing") { mode = Rendering::Drawing; }
+    SECTION("print preview") { mode = Rendering::Preview; }
+    SECTION("print and image export") { mode = Rendering::Print; }
+    RenderHarness renderer(mode, viewport, painter, image, &graphic);
 
-    setPenFor();
+    renderer.setPen(&line);
     painter.updateDashOffset(&line);
     CHECK(painter.currentDashOffset() == Catch::Approx(10.0));
 
     // Install the running phase; the pen carries it into a QPen whose offset
     // and pattern the painter scale by the same factor k.
-    setPenFor();
+    renderer.setPen(&line);
     REQUIRE(painter.penHasDashPattern());
     const QPen installed = painter.pen();
     REQUIRE_FALSE(installed.dashPattern().isEmpty());
@@ -319,7 +311,7 @@ TEST_CASE("A selected entity advances the dash phase in device millimetres",
     painter.updateDashOffset(&line);
     const double expected =
         10.0 * std::abs(painter.toGuiDX(1.0)) / painter.getDpmmCached();
-    CHECK(painter.currentDashOffset() == Catch::Approx(expected));
+    CHECK(painter.currentDashOffset(RS_Painter::DashSpace::Screen) == Catch::Approx(expected));
 }
 
 TEST_CASE("Dash phase remains consistent when selection changes its units", "[gui][pen][linetype]") {
@@ -370,7 +362,6 @@ TEST_CASE("A split dashed line renders like a continuous line", "[gui][pen][line
     (void)lc::test::application();
     const double dimensionScale = GENERATE(1.0, 2.0);
     const double zoom = GENERATE(1.0, 2.0);
-    enum class Rendering { Drawing, Draft, Preview, Print };
     Rendering rendering = Rendering::Drawing;
     SECTION("drawing") { rendering = Rendering::Drawing; }
     SECTION("draft") { rendering = Rendering::Draft; }
@@ -387,45 +378,15 @@ TEST_CASE("A split dashed line renders like a continuous line", "[gui][pen][line
         viewport.setDocument(&graphic);
         viewport.setOffsetAndFactor(0, 0, zoom);
         RS_Painter painter(&image);
-        std::unique_ptr<LC_GraphicViewportRenderer> renderer;
-        std::function<void(RS_Line*)> setPenFor;
-        if (rendering == Rendering::Drawing || rendering == Rendering::Draft) {
-            auto view = std::make_unique<LineTypeViewRenderer>(&viewport, &image);
-            view->setBackground(RS_Color(Qt::white));
-            view->updateGraphicRelatedSettings(&graphic);
-            view->setupPainter(&painter);
-            setPenFor = [&painter, view = view.get(), rendering](RS_Line* line) {
-                if (rendering == Rendering::Draft) view->setPenForDraftEntity(&painter, line, false);
-                else view->setPenForEntity(&painter, line, false);
-            };
-            renderer = std::move(view);
-        } else if (rendering == Rendering::Preview) {
-            auto preview = std::make_unique<LineTypePreviewRenderer>(&viewport, &image);
-            preview->setBackground(RS_Color(Qt::white));
-            preview->updateGraphicRelatedSettings(&graphic);
-            preview->setupPainter(&painter);
-            setPenFor = [&painter, preview = preview.get()](RS_Line* line) {
-                preview->setPenForPrintingEntity(&painter, line);
-            };
-            renderer = std::move(preview);
-        } else {
-            auto print = std::make_unique<LineTypePrintRenderer>(&viewport, &painter);
-            print->setBackground(RS_Color(Qt::white));
-            print->updateGraphicRelatedSettings(&graphic);
-            print->setupPainter(&painter);
-            setPenFor = [&painter, print = print.get()](RS_Line* line) {
-                print->setPenForPrintingEntity(&painter, line);
-            };
-            renderer = std::move(print);
-        }
+        RenderHarness renderer(rendering, viewport, painter, image, &graphic, true);
         RS_Line first{RS_Vector{5., 20.}, RS_Vector{split ? 42. : 125., 20.}};
         RS_Line second{RS_Vector{42., 20.}, RS_Vector{125., 20.}};
         first.setPen(lineTypePen(RS2::DashLine));
         second.setPen(lineTypePen(RS2::DashLine));
-        setPenFor(&first);
+        renderer.setPen(&first);
         first.draw(&painter);
         if (split) {
-            setPenFor(&second);
+            renderer.setPen(&second);
             second.draw(&painter);
         }
         painter.end();

@@ -1612,8 +1612,6 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
     m_lastUsedPen.setWidthF(screenWidth);
     m_lastUsedPen.setJoinStyle(m_penJoinStyle);
     m_lastUsedPen.setCapStyle(m_penCapStyle);
-    m_lastPenDashed = (style == Qt::CustomDashLine);
-    m_lastPenDashSpace = dashSpace;
 
     QPen devicePen = m_lastUsedPen;
     // A painter that could not begin on its device, as on a view squashed to
@@ -1810,7 +1808,7 @@ double RS_Painter::currentDashOffset(const DashSpace dashSpace) const {
 }
 
 void RS_Painter::updateDashOffset(const RS_Entity* e) {
-    if (!m_lastPenDashed) return;
+    if (!penHasDashPattern()) return;
 
     // Track the rendered length in logical pixels so model and screen patterns can share it.
     double length = e->getLength() * std::abs(toGuiDX(1.0));
