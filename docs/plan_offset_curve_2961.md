@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, and W79's complete staged macOS CMake install are qualified in focused Release/ASan lanes; W80 fixes atomic compound budget admission with focused Release/ASan evidence; W81 adds bounded Linux/Windows worker CI and W82 removes the PR path filter after the current 377-file PR failed to surface that workflow; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, and W79's complete staged macOS CMake install are qualified in focused Release/ASan lanes; W80 fixes atomic compound budget admission with focused Release/ASan evidence; W81 adds bounded Linux/Windows worker CI; W82 removes the PR path filter and W83 adds feature-branch push triggering after no PR run appeared; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -312,7 +312,7 @@ candidate except the explicitly proposed native-worker tags.
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a` plus later search; audit/retest | `[lc-offsetcurve][cache-topology-chain]` |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; finish caller/fallback/import ownership freeze before routing | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; full app/deployed-package gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
-| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit and scoped action faults and geometry-entry timeout receipts qualified locally; W81 adds Linux/Windows CMake worker CI; W82 makes its PR trigger unconditional; cross-platform CI, import and final gates remain open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
+| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit and scoped action faults and geometry-entry timeout receipts qualified locally; W81 adds Linux/Windows CMake worker CI; W82 removes PR path filtering and W83 adds scoped feature-branch push triggering; current cross-platform run, import and final gates remain open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; audit/retest | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; audit/retest | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; audit/retest | native edit/grip/transform TUs |
@@ -4217,13 +4217,35 @@ the DWG/DXF verification workflow; the narrower path filter for pushes to
 `32ff9857b98c130123a03028a48bddff4f683b03` contained no DWG/DXF verification
 run, despite the PR reporting 377 changed files and the workflow's current
 source/test paths being in scope. Its latest DWG/DXF run was a manual dispatch
-for older source `8e4213399cbe889b3ebc43f27c319d4671d4b177`. The unconditional PR
-trigger ensures the newly added W81 worker tests are actually scheduled for
-this large PR; successful scheduling and Linux/Windows execution are still
-pending after push.
+for older source `8e4213399cbe889b3ebc43f27c319d4671d4b177`. The unconditional
+PR trigger alone did not schedule a verification run for the new head: the
+Actions inventory after push showed only Pixi Builds for
+`32ff9857b98c130123a03028a48bddff4f683b03`. W83 below adds an explicit
+feature-branch push trigger; scheduling and Linux/Windows execution remain
+pending until that run is observed.
 
 | W82 validation | Result |
 |---|---|
 | `actionlint .github/workflows/dwg-dxf-verify.yml` | PASS |
 | Ruby YAML parse | PASS |
 | `git diff --check` | PASS |
+
+## 46. W83 Feature-Branch Verification Trigger
+
+At workflow commit `4345678fa`, added `codex/**` to the existing path-filtered
+push branches. This gives the current feature branch an explicit push trigger
+for the changed workflow file while retaining the narrow DWG/DXF path list for
+master and feature-branch pushes. The concurrency key now uses the PR head
+branch when available and otherwise the push ref name, so a push run and a PR
+run for the same branch supersede one another rather than duplicating the full
+matrix.
+
+| W83 validation | Result |
+|---|---|
+| `actionlint .github/workflows/dwg-dxf-verify.yml` | PASS |
+| Ruby YAML parse | PASS |
+| `git diff --check` | PASS |
+
+The current-head workflow run is not yet observed; this configuration change
+must be pushed, then the launched run's Linux and Windows jobs must be checked
+before W2 cross-platform qualification can advance.
