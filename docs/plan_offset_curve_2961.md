@@ -36,7 +36,8 @@ filter APIs. Remote worker CI, Windows failure coverage, deployed-package checks
 visible UI, external-CAD interoperability, and final current-source integration
 remain open.**
 Latest recorded slice: W156 routes synchronous file/stream/byte filter imports
-through bounded worker validation and records current Release evidence. W155
+through bounded worker validation and records Release, focused ASan, and qmake6
+changed-object evidence. W155
 rechecks the shared-budget/counter-transfer chain; W154 adds staged installed-
 helper CI and local macOS relocation evidence. W153 closes source/target
 reconciliation. W152 records the ASan cache-check fault sweep. W151 classifies
@@ -3134,7 +3135,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   sharing import-budget state with XREF child filters and restoring deferred INSERT
   expansion. The caller remains synchronous through a bounded nested event loop;
   GUI open/templates retain their asynchronous staged session. Current-source
-  Release direct-API and broad format lanes pass locally. Finish Windows/native
+  Release and focused ASan direct-API selectors, broad Release format lanes, and
+  qmake6 builds of both changed filter objects pass locally. Finish Windows/native
   cross-platform failure coverage, deployed-helper acceptance, and final
   caller/adoption/failure acceptance. Reuse the qualified geometry-entry
   timeout/helper/client/reply modules; do not redo them as absent. Keep Node runner
@@ -3149,11 +3151,11 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   the offset changes. Review scoped commits, preserve reproducible evidence and
   close every required gap.
 
-**Next concrete action on implementation resume:** complete the current-source
-ASan direct-import selector if its focused build finishes; then push W156 and
-follow the new PR-head Linux and Windows x64/ARM64 installed-helper checks.
-Address platform/runtime failures before the remaining W0-W2 deployment gates
-and final E/U/G/F/O/T integration.
+**Next concrete action on implementation resume:** follow current PR-head Linux
+and Windows x64/ARM64 installed-helper checks through completion, then address
+any platform/runtime failure before the remaining W0-W2 deployment gates and
+final E/U/G/F/O/T integration. W156 is pushed; Text Foundations has passed, and
+CodeQL, DWG/DXF verification, and Pixi builds are still running on its head.
 The W145 Windows include correction has local validation only. W55 now records a fresh full macOS qmake6 app/bundle
 build plus a worker-protocol smoke using the helper beside the bundled executable;
 W79 separately records a complete staged macOS CMake install and offscreen
@@ -6178,15 +6180,19 @@ Fresh macOS CMake Release build and focused checks passed:
 | DXF fast | 798 passed, 4 existing fixture skips; 84,477 assertions |
 | DWG fast | 1,033 passed, 37 existing fixture skips; 363,699 assertions |
 
-`git diff --check` passed. A focused ASan build was started in
-`/private/tmp/offset-W77-asan`, but that cache required a cold 998-step app/test
-build and had not completed at this checkpoint; no ASan result is claimed for
-W156. PR #3193 head `0b2630a83fb1754fa18adf646e3743545efb8e78` had Text
-foundations passing, with CodeQL, DWG/DXF verification, and Pixi builds still
-in progress when checked. The roadmap parser/inventory regression passed 99/99,
-with all 71 original classifications and 93 executable obligations intact, no
-pending declarations, and no production mismatch. W156's commits must be pushed
-before new remote checks can qualify this change.
+The `[sync-api]` selector also passed under ASan with 219 assertions
+(`ASAN_OPTIONS=detect_leaks=0`). qmake6 compiled the changed
+`rs_filterdxfrw.cpp` and `lc_offsetimportsession.cpp` objects. The full qmake6
+top-level build was stopped after its stale build tree began recompiling a broad
+set of unrelated library and UI objects; no full qmake link is claimed. The
+roadmap parser/inventory regression passed 99/99, with all 71 original
+classifications and 93 executable obligations intact, no pending declarations,
+and no production mismatch. `git diff --check` passed.
+
+Commits `763d3f695` and `1a7b3c933` are pushed. On PR head
+`1a7b3c93348a13e126ae7aeab13653c76e8fd8e0`, Text Foundations passed; CodeQL,
+DWG/DXF verification (Linux, Windows x64, and Windows ARM64), and Pixi builds
+were still in progress when checked. These are pending, not yet qualification.
 
 This closes the in-repository synchronous filter entry-point routing gap, not
 Windows runtime/failure coverage, full deployed-package acceptance, visible UI,
