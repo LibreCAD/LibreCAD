@@ -3113,10 +3113,9 @@ snapshots nested XREF bytes for staged imports; W47 adds source identity
 preflight but not atomic publication. W49a-W49c add a transaction guard, per-call
 DXF/DWG APIs, and source-identity checks at filter publication boundaries.
 These narrow but cannot eliminate the check-to-rename window. Still add a
-deterministic test for mutation between successful low-level DWG publication
-and the outer backup/rename, and exercise backup restoration/failed rename on
-Windows. Then audit direct synchronous and console XREF callers without
-silently weakening their behavior. Investigate the recorded ASan template failure under
+deterministic backup-restore test for a failed staged rename, then obtain
+Windows compile/runtime evidence. Audit direct synchronous and console XREF
+callers without silently weakening their behavior. Investigate the recorded ASan template failure under
 load, and exercise a genuine partial DWG through the GUI dialog. W35 fixes the
 observed W33 teardown assertion; retain its
 forced-destruction regression while auditing other close/dialog reentrancy.
@@ -3318,7 +3317,14 @@ either link.
 | Release build: `librecad_tests` | passed |
 | `git diff --check` | passed |
 
-The outer DWG recheck is present but not fault-injected after a successful
-low-level publish; that specific timing and backup restoration after a rename
-failure remain open. The identity guard cannot atomically bind the final
-pathname check to replacement. No ASan, Windows, or visible GUI run is claimed.
+W49d `b69f20671` adds a one-shot private fault hook immediately after a
+successful low-level DWG stage publish and before the outer destination check.
+The real export test replaces the source at that point, confirms the outer
+check rejects before backup, preserves the external bytes, and leaves no stage
+or backup artifact. It passes 1 case / 7 assertions in the Release
+`librecad_tests [outer-publish]` run.
+
+The identity guard cannot atomically bind the final pathname check to
+replacement. A deterministic failure after the existing target has moved to
+backup, backup restoration verification, and Windows runtime remain open. No
+ASan, Windows, or visible GUI run is claimed.
