@@ -21,6 +21,13 @@
 #ifdef Q_OS_UNIX
 #include <sys/stat.h>
 #endif
+#ifdef Q_OS_WIN
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <io.h>
+#include <windows.h>
+#endif
 
 bool LC_OffsetImportSourceStamp::NativeState::operator==(const NativeState& other) const noexcept {
     return valid && other.valid && device == other.device && inode == other.inode && size == other.size &&
@@ -49,6 +56,49 @@ LC_OffsetImportSourceStamp::NativeState nativeState(const struct stat& info) noe
 }
 #endif
 
+#ifdef Q_OS_WIN
+namespace {
+LC_OffsetImportSourceStamp::NativeState nativeState(HANDLE handle) noexcept {
+    LC_OffsetImportSourceStamp::NativeState state;
+    BY_HANDLE_FILE_INFORMATION info{};
+    FILE_BASIC_INFO basic{};
+    if (handle == INVALID_HANDLE_VALUE || !GetFileInformationByHandle(handle, &info) ||
+        (info.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ||
+        !GetFileInformationByHandleEx(handle, FileBasicInfo, &basic, static_cast<DWORD>(sizeof(basic)))) return state;
+    const quint64 fileSize = (quint64(info.nFileSizeHigh) << 32) | info.nFileSizeLow;
+    if (fileSize > quint64(std::numeric_limits<qint64>::max())) return state;
+    state.valid = true;
+    state.device = info.dwVolumeSerialNumber;
+    state.inode = (quint64(info.nFileIndexHigh) << 32) | info.nFileIndexLow;
+    state.size = qint64(fileSize);
+    // FILE_BASIC_INFO times are 100 ns ticks since 1601; normalize to Unix time.
+    constexpr qint64 WindowsEpochTicks = 116444736000000000LL;
+    constexpr qint64 TicksPerSecond = 10000000LL;
+    const auto splitTime = [=](qint64 ticks, qint64& seconds, qint64& nanos) {
+        ticks -= WindowsEpochTicks;
+        seconds = ticks / TicksPerSecond;
+        qint64 remainder = ticks % TicksPerSecond;
+        if (remainder < 0) { --seconds; remainder += TicksPerSecond; }
+        nanos = remainder * 100;
+    };
+    splitTime(basic.LastWriteTime.QuadPart, state.modifiedSeconds, state.modifiedNanos);
+    splitTime(basic.ChangeTime.QuadPart, state.changedSeconds, state.changedNanos);
+    return state;
+}
+
+LC_OffsetImportSourceStamp::NativeState nativePathState(const QString& path) {
+    const std::wstring name = path.toStdWString();
+    const HANDLE handle = CreateFileW(name.c_str(), FILE_READ_ATTRIBUTES,
+        FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING,
+        FILE_FLAG_BACKUP_SEMANTICS, nullptr);
+    if (handle == INVALID_HANDLE_VALUE) return {};
+    const auto state = nativeState(handle);
+    CloseHandle(handle);
+    return state;
+}
+}
+#endif
+
 LC_OffsetImportSourceStamp LC_OffsetImportSourceStamp::capture(const QString& file) {
     QFileInfo info(file);
     LC_OffsetImportSourceStamp stamp;
@@ -62,6 +112,9 @@ LC_OffsetImportSourceStamp LC_OffsetImportSourceStamp::capture(const QString& fi
     struct stat native{};
     const auto encoded = QFile::encodeName(file);
     if (::stat(encoded.constData(), &native) == 0) stamp.native = nativeState(native);
+#endif
+#ifdef Q_OS_WIN
+    stamp.native = nativePathState(file);
 #endif
     stamp.valid = !stamp.canonicalPath.isEmpty() && stamp.size >= 0 && stamp.modified.isValid();
     return stamp;
@@ -78,6 +131,10 @@ bool LC_OffsetImportSourceStamp::matchesDescriptor(int descriptor) const noexcep
 #ifdef Q_OS_UNIX
     struct stat info{};
     return descriptor >= 0 && ::fstat(descriptor, &info) == 0 && native == nativeState(info);
+#elif defined(Q_OS_WIN)
+    if (descriptor < 0) return false;
+    const auto raw = _get_osfhandle(descriptor);
+    return raw != -1 && native == nativeState(reinterpret_cast<HANDLE>(raw));
 #else
     Q_UNUSED(descriptor);
     return false;
@@ -278,7 +335,7 @@ void LC_OffsetImportSession::parse(const std::shared_ptr<Work>& work) {
         if (!supportedImportType(type)) { work->error = tr("Unsupported offset import format"); finish(work, Status::ReadFailed); return; }
         work->type = type;
         work->sourceStamp = LC_OffsetImportSourceStamp::capture(work->file);
-#ifdef Q_OS_UNIX
+#if defined(Q_OS_UNIX) || defined(Q_OS_WIN)
         if (!work->file.startsWith(QLatin1String(":/")) &&
             (!work->sourceStamp.valid || !work->sourceStamp.native.valid)) {
             work->error = tr("The source file identity could not be verified.");
@@ -294,7 +351,7 @@ void LC_OffsetImportSession::parse(const std::shared_ptr<Work>& work) {
             work->error = tr("The source file could not be opened for a bounded import.");
             finish(work, Status::ReadFailed); return;
         }
-#ifdef Q_OS_UNIX
+#if defined(Q_OS_UNIX) || defined(Q_OS_WIN)
         if (work->sourceStamp.native.valid && !work->sourceStamp.matchesDescriptor(work->source.handle())) {
             work->error = tr("The source file changed while it was being opened; the drawing was not opened.");
             finish(work, Status::SourceChanged); return;
@@ -337,7 +394,7 @@ void LC_OffsetImportSession::captureSource(const std::shared_ptr<Work>& work) {
         }
         if (work->snapshot.size() != work->expectedSize ||
             (work->sourceStamp.valid && !work->sourceStamp.matches(work->file))
-#ifdef Q_OS_UNIX
+#if defined(Q_OS_UNIX) || defined(Q_OS_WIN)
             || (work->sourceStamp.native.valid && !work->sourceStamp.matchesDescriptor(work->source.handle()))
 #endif
         ) {
@@ -365,7 +422,7 @@ void LC_OffsetImportSession::parseSnapshot(const std::shared_ptr<Work>& work) {
             if (!alive || m_work != work) return;
         }
         if ((work->sourceStamp.valid && !work->sourceStamp.matches(work->file))
-#ifdef Q_OS_UNIX
+#if defined(Q_OS_UNIX) || defined(Q_OS_WIN)
             || (work->sourceStamp.native.valid && !work->sourceStamp.matchesDescriptor(work->source.handle()))
 #endif
         ) {

@@ -879,6 +879,41 @@ TEST_CASE("Staged offset source capture yields cancels and detects changes",
     }
 }
 
+#ifdef Q_OS_WIN
+TEST_CASE("Windows staged source identity binds its open handle",
+          "[lc-offsetcurve][import-session][snapshot][identity]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-win-identity");
+    const auto path = directory.file("input.dxf"); writeInput(path, Lane::Ascii, f::raw(3));
+    const auto stamp = LC_OffsetImportSourceStamp::capture(QString::fromStdString(path.string()));
+    REQUIRE(stamp.valid); REQUIRE(stamp.native.valid);
+    QFile file(QString::fromStdString(path.string())); REQUIRE(file.open(QIODevice::ReadWrite));
+    REQUIRE(stamp.matchesDescriptor(file.handle()));
+    REQUIRE(file.write("X", 1) == 1); REQUIRE(file.flush());
+    CHECK_FALSE(stamp.matchesDescriptor(file.handle()));
+    CHECK_FALSE(stamp.matches(QString::fromStdString(path.string())));
+}
+
+TEST_CASE("Windows staged source replacement before open is refused",
+          "[lc-offsetcurve][import-session][snapshot][identity]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-win-swap");
+    const auto path = directory.file("input.dxf"), previous = directory.file("previous.dxf");
+    writeInput(path, Lane::Ascii, f::raw(3));
+    const auto original = lc::test::fileBytes(path);
+    LC_OffsetImportSession session; std::optional<LC_OffsetImportSession::Outcome> outcome;
+    bool parsed = false;
+    LC_OffsetImportSessionTestAccess::beforeSourceOpen(session, [&] {
+        std::filesystem::rename(path, previous); f::put(path, original);
+    });
+    LC_OffsetImportSessionTestAccess::afterRead(session, [&] { parsed = true; });
+    REQUIRE(session.start(QString::fromStdString(path.string()), format(Lane::Ascii),
+        RS2::DxfTextEncoding::Declared, false, [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!outcome) { REQUIRE(elapsed.elapsed() < 5000); QCoreApplication::processEvents(QEventLoop::AllEvents); }
+    CHECK(outcome->status == LC_OffsetImportSession::Status::SourceChanged);
+    CHECK_FALSE(outcome->graphic); CHECK_FALSE(parsed);
+}
+#endif
+
 #ifdef Q_OS_UNIX
 TEST_CASE("Staged source identity binds path and open descriptor",
           "[lc-offsetcurve][import-session][snapshot][identity]") {
