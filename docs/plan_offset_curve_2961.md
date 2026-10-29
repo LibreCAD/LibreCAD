@@ -3124,8 +3124,10 @@ including console and recursive XREF imports through this filter. The read is
 still synchronous. W53 revalidates all opened host/XREF identities after the
 root import, including mutations to an earlier dependency while later XREFs
 load; this is not an atomic multi-file snapshot. Obtain Windows compile/runtime
-evidence for QFile handle identity and rename behavior. Investigate the recorded ASan template failure under
-load, and exercise a genuine partial DWG through the GUI dialog. W35 fixes the
+evidence for QFile handle identity and rename behavior. W54's current-source
+serial ASan rerun did not reproduce the template assertion, but the concurrent
+run cause remains unknown. Exercise a genuine partial DWG through the GUI
+dialog. W35 fixes the
 observed W33 teardown assertion; retain its
 forced-destruction regression while auditing other close/dialog reentrancy.
 W36/W37 handle observed switches and later staged requests; also audit
@@ -3458,3 +3460,25 @@ JUnit receipts are in `/private/tmp`:
 | `offset-W53-staged-xref.xml` | `f8924e401e99ae14390ee6c002adb6b755304b32afa604c5c8f8c524fba32f5b` |
 
 No Windows, ASan, visible GUI, or multi-file atomicity claim is made.
+
+## 16. W54 Current-Source ASan Requalification
+
+Rebuilt the ASan `librecad_tests` target against W52/W53. The historical
+native-template assertion did not recur in the serial `[dock-window]` run or
+the combined serial run covering dock/template, source identity, direct/staged
+XREF and document-import paths. The combined run passed 93 JUnit testcases /
+4538 assertions with zero errors or failures. Seven screen-size-dependent dock
+layout cases were explicitly skipped. The import/source selection separately
+passed 28 testcases / 3360 assertions with no skips. ASan used
+`detect_leaks=0`; this is not a leak check. The earlier concurrent-run failure
+remains unexplained because this requalification was serialized.
+
+| W54 artifact | SHA256 |
+|---|---|
+| `offset-W53-dock-asan.xml` | `ad14ef8ae555ba85e0557a67957986dc94156e5d90ac471701926fddb80e004f` |
+| `offset-W53-import-asan.xml` | `b66ad2cd31fb9cd34f0992ef06bbc9378ce0e8a46176ad5750c07bd2922cf0c3` |
+| `offset-W53-serial-asan.xml` | `b6ba83d11a0ca6c849558a884afa24cb424cb09c4e2db53b066142f764a25d85` |
+
+These are current-source macOS sanitizer results, not Windows, concurrent-load,
+leak, visible-GUI, or full-suite acceptance. The original concurrent assertion
+still needs a controlled reproduction/root-cause before it can be closed.
