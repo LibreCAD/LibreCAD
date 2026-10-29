@@ -3622,7 +3622,7 @@ TEST_CASE("Reference provider metadata obeys exact one less and pre spent shared
 }
 
 TEST_CASE("Reference provider failed entered stages retain only actual admitted pair work",
-          "[lc-offsetcurve][geometry][reference-providers]") {
+          "[lc-offsetcurve][geometry][reference-providers][budget-core]") {
     const auto data = basis(10.0, 0.5, 0.0, 2.0);
     geo::WorkBudget measure;
     REQUIRE(geo::analyseCriticalRetained(data, 1.0, measure).status == LC_IntersectionStatus::Ok);
@@ -3641,11 +3641,33 @@ TEST_CASE("Reference provider failed entered stages retain only actual admitted 
         const auto result = geo::prepareReferenceProviders(data, 1.0, budget);
         CHECK(result.status == LC_IntersectionStatus::LimitExceeded);
         checkNoProviders(result, budget);
-        const std::size_t admittedV = allowed == 0 ? 3 : allowed <= 4 ? 4 : allowed <= 8 ? 5 : 5 + s;
-        CHECK(result.work.vertices == before.vertices + admittedV);
-        CHECK(result.work.distancePairs == before.distancePairs + allowed);
-        CHECK(result.work.deepest == before.deepest);
-        CHECK(result.work.cacheSpans == before.cacheSpans);
+        auto expected = before;
+        auto remaining = allowed;
+        const auto admit = [&](const std::size_t vertices, const std::size_t pairs) {
+            if (pairs > remaining) { return false; }
+            remaining -= pairs;
+            expected.vertices += vertices;
+            expected.distancePairs += pairs;
+            return true;
+        };
+        bool completePrefix = admit(3, 1);
+        for (std::size_t cap = 0; completePrefix && cap < 2; ++cap) {
+            completePrefix = admit(1, 1);
+            for (std::size_t check = 0; completePrefix && check < 3; ++check) {
+                if (remaining == 0) { completePrefix = false; break; }
+                --remaining;
+                ++expected.distancePairs;
+            }
+        }
+        if (completePrefix) {
+            expected.vertices += s;
+            for (std::size_t segment = 0; segment < s; ++segment) {
+                if (remaining == 0) { break; }
+                --remaining;
+                ++expected.distancePairs;
+            }
+        }
+        checkWork(result.work, expected);
     }
     for (const std::size_t allowed : {std::size_t{2}, std::size_t{3}, std::size_t{4}, std::size_t{4} + s}) {
         LC_OffsetCheckLimits limits;
@@ -3663,7 +3685,7 @@ TEST_CASE("Reference provider failed entered stages retain only actual admitted 
 }
 
 TEST_CASE("Reference collapsed omission verification is admitted after trusted critical analysis",
-          "[lc-offsetcurve][geometry][reference-providers]") {
+          "[lc-offsetcurve][geometry][reference-providers][budget-core]") {
     auto data = basis(5.0, 1.0);
     data.majorP = {3.0, 4.0};
     geo::WorkBudget base;
@@ -3678,7 +3700,7 @@ TEST_CASE("Reference collapsed omission verification is admitted after trusted c
     CHECK(result.status == LC_IntersectionStatus::LimitExceeded);
     CHECK(result.reason == geo::ReferencePreparationReason::None);
     checkNoProviders(result, budget);
-    CHECK(result.work.vertices == base.consumed().vertices + 3);
+    checkWork(result.work, base.consumed());
     CHECK(result.work.distancePairs == base.consumed().distancePairs);
 }
 
@@ -4324,7 +4346,8 @@ TEST_CASE("Contact failed item pair and depth admission retains the exact entere
             const auto failed = geo::prepareReferenceContactProviders(data, 1.0, budget);
             CHECK(failed.status == LC_IntersectionStatus::LimitExceeded);
             checkNoProviders(failed, budget);
-            CHECK(failed.work.vertices == old.work.vertices + entered + (pairs ? 1 : 0));
+            const bool itemAdmittedBeforePair = pairs && !stages[entered].depth;
+            CHECK(failed.work.vertices == old.work.vertices + entered + (itemAdmittedBeforePair ? 1 : 0));
             CHECK(failed.work.distancePairs == old.work.distancePairs + entered);
             CHECK(failed.work.deepest == observed); // An admitted item with a failed pair is not examined.
             if (stages[entered].depth) { observed = std::max(observed, *stages[entered].depth); }

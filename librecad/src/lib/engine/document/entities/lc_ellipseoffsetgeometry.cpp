@@ -494,13 +494,12 @@ CacheLayoutResult inspectCacheLayout(const RS_SplineData& cache, WorkBudget& bud
     if (!counts || cache.type != RS_SplineData::SplineType::ClampedOpen || !cache.fitPoints.empty() ||
         cache.savedOpenType != RS_SplineData::SplineType::ClampedOpen || !cache.savedOpenKnots.empty() ||
         cache.knotslist.size() != counts->knots || cache.weights.size() != counts->controls) { return finish(); }
-    // Both counters are admitted before either is spent. Count/array checks above inspect no elements.
-    if (counts->spans > budget.remainingPieces() || counts->controls > budget.remainingVertices() ||
-        counts->spans > result.spans.max_size()) {
+    // Count/array checks above inspect no elements; admit both budgets together before traversal.
+    if (counts->spans > result.spans.max_size()) {
         budget.latchLimitExceeded(); result.status = CacheLayoutStatus::LimitExceeded;
         return finish();
     }
-    if (!budget.consumePieces(counts->spans) || !budget.consumeVertices(counts->controls)) {
+    if (!budget.adoptWork({counts->spans, counts->controls})) {
         result.status = CacheLayoutStatus::LimitExceeded;
         return finish();
     }
@@ -1654,7 +1653,7 @@ public:
         }
         if (!reserveAdditional(records, occurrences.size(), m_budget)) { return finish(); }
         // Extra retained records are admitted only after their publication capacity is prepared.
-        if (!m_budget.consumeVertices(fixed + occurrences.size()) || !m_budget.consumePairs(1)) {
+        if (!m_budget.adoptWork({0, fixed + occurrences.size(), 1})) {
             return finish();
         }
         out.status = LC_IntersectionStatus::AmbiguousTopology;
@@ -2642,7 +2641,7 @@ ReferenceProviderPreparation ReferenceProviderBuilder::run(
         propagate(opposite);
         return finish();
     }
-    if (!budget.consumeVertices(3) || !budget.consumePairs(1)) { return finish(); }
+    if (!budget.adoptWork({0, 3, 1})) { return finish(); }
     const Rational mx = exactDouble(basis.majorP.x);
     const Rational my = exactDouble(basis.majorP.y);
     const Rational d = exactDouble(signedDistance);
@@ -2677,7 +2676,7 @@ ReferenceProviderPreparation ReferenceProviderBuilder::run(
     out.status = LC_IntersectionStatus::AmbiguousTopology;
     out.reason = ReferencePreparationReason::UnresolvedGeometry;
     for (std::size_t cap = 0; cap < capCount; ++cap) {
-        if (!budget.consumeVertices(1) || !budget.consumePairs(1)) { return finish(); }
+        if (!budget.adoptWork({0, 1, 1})) { return finish(); }
         impl->cutters[cap].emplace();
         if (!impl->cutters[cap]->prepare(impl->adapters[0]->frame(), signedDistance, cap == 0)) { return finish(); }
         for (const double t : {0.0, 0.5, 1.0}) {
@@ -2821,7 +2820,7 @@ LC_IntersectionStatus ReferenceProviderBuilder::prepareContacts(
                 return LC_IntersectionStatus::AmbiguousTopology;
             }
             for (unsigned depth = 0;; ++depth) {
-                if (!budget.consumeVertices(1) || !budget.consumePairs(1)) { return LC_IntersectionStatus::LimitExceeded; }
+                if (!budget.adoptWork({0, 1, 1})) { return LC_IntersectionStatus::LimitExceeded; }
                 if (!budget.checkDepth(depth)) { return LC_IntersectionStatus::LimitExceeded; }
                 LC_CurveJetBounds span;
                 if (!source.boundSourceJet(from, to, span)) { return LC_IntersectionStatus::AmbiguousTopology; }
@@ -2917,7 +2916,7 @@ public:
         const auto sourceSweep = sweep(basis);
         if (components && distance < 0.0 && basis.ratio > 0.0 && basis.ratio < 1.0 &&
             frame(basis) && sourceSweep && sourceSweep->whole) {
-            if (!budget.consumeVertices(1) || !budget.consumePairs(1)) {
+            if (!budget.adoptWork({0, 1, 1})) {
                 out.status = LC_IntersectionStatus::LimitExceeded;
                 return finish();
             }
@@ -2983,7 +2982,7 @@ public:
                 ? ReferenceEventReason::ProofContradiction : ReferenceEventReason::UnresolvedGeometry;
             return finish();
         }
-        if (!budget.consumeVertices(1) || !budget.consumePairs(1)) {
+        if (!budget.adoptWork({0, 1, 1})) {
             out.status = LC_IntersectionStatus::LimitExceeded;
             return finish();
         }
