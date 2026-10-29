@@ -34,6 +34,7 @@
 #include "qg_actionhandler.h"
 #include "rs_actioninterface.h"
 #include "rs_dimension.h"
+#include "rs_debug.h"
 #include "rs_fileio.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
@@ -128,18 +129,39 @@ void LC_DimStylePreviewGraphicView::copyBlocks(RS_Graphic* originalGraphic, LC_P
 }
 
 LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::init(QWidget* parent,RS_Graphic* originalGraphic, const RS2::EntityType dimensionType) {
+    return init(parent, originalGraphic, dimensionType, QStringLiteral(":/dxf/dim_sample.dxf"));
+}
+
+LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::init(QWidget* parent, RS_Graphic* originalGraphic,
+                                                                    const RS2::EntityType dimensionType,
+                                                                    const QString& sampleFileName) {
     const auto graphic = new LC_PreviewGraphic();
     graphic->initForNewDocument();
     copyBlocks(originalGraphic, graphic);
 
-    const bool loaded = RS_FileIO::instance()->fileImport(*graphic, ":/dxf/dim_sample.dxf", RS2::FormatUnknown);
+    bool reported = false;
+    const bool loaded = RS_FileIO::instance()->fileImport(
+        *graphic, sampleFileName, RS2::FormatUnknown,
+        [&reported, &sampleFileName](bool, const QString& error) {
+            reported = true;
+            RS_DEBUG->print(RS_Debug::D_WARNING, "Dimension style preview import failed for '%s': %s",
+                            sampleFileName.toUtf8().constData(), error.toUtf8().constData());
+            return false;
+        });
     if (loaded) {
         LC_DimStylePreviewGraphicView* result = createAndSetupView(parent, graphic, originalGraphic, true);
         result->hideNonRelevantLayers(dimensionType);
         return result;
     }
 
-    // Keep the settings dialog usable when the optional sample is unavailable.
+    if (!reported) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "Dimension style preview sample is unavailable: %s",
+                        sampleFileName.toUtf8().constData());
+    }
+    graphic->initForNewDocument();
+    copyBlocks(originalGraphic, graphic);
+
+    // Keep the settings dialog usable without showing a modal error or partial sample.
     LC_DimStylePreviewGraphicView* result = createAndSetupView(parent, graphic, originalGraphic, true);
     result->hideNonRelevantLayers(dimensionType);
     return result;
