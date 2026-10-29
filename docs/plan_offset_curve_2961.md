@@ -3006,9 +3006,10 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** build on W42/W43 host capture
-and POSIX identity checks to design nested-XREF admission and large-file policy;
-do not treat mutable XREFs as snapshotted. Investigate the recorded ASan template
+**Next concrete action on implementation resume:** obtain a Windows compile and
+runtime run for W44 before claiming platform parity; then build on W42-W44 host
+capture/native identity to design nested-XREF admission and large-file policy.
+Do not treat mutable XREFs as snapshotted. Investigate the recorded ASan template
 failure under load, strengthen remaining source-save and non-atomic autosave alias
 checks, and exercise a genuine partial DWG
 through the GUI dialog. W35 fixes the observed W33 teardown assertion; retain its
