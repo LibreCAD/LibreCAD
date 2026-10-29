@@ -4493,5 +4493,41 @@ Reports and SHA256:
 | `/private/tmp/offset-W92-creation-asan.xml` | `e1cd8834475952a008dbf122d65d3e2a610fe84670767028ed4b2ee6912bb4e9` |
 
 W92 is a verification checkpoint, not a new implementation slice. Continue with
-the remaining budget and caller-policy audit, including the pattern-DXF import
-noted above, then finish cross-platform/deployed and visible-GUI acceptance.
+the remaining budget and caller-policy audit; pattern-DXF display-cache import
+is closed by W93. Then finish cross-platform/deployed and visible-GUI
+acceptance.
+
+## 55. W93 Hatch-Pattern Cache-Only Import Policy
+
+Product/test commit `0bf107649` adds an explicit `RS_FileIO` offset-import
+policy. Normal callers retain `ValidateNative`; internal pattern loading opts
+into `DisplayCacheOnly`. For a recognized offset-carrier spline, the DXFRW
+filter creates an ordinary `RS_Spline` from the validated display-cache
+payload and strips the owned native marker without invoking synchronous native
+admission. Malformed carrier cache still follows the established ordinary
+spline fallback. Nested XREF filters inherit the caller policy. Hatch pattern
+loading now keeps ordinary splines alongside lines, arcs, and ellipses while
+continuing to reject partial DXF imports without a modal error callback.
+
+This closes the identified hatch-pattern caller bypass: pattern preview is
+display-only and no longer performs native offset validation on the GUI path.
+It does not change default drawing import or make cache-only geometry eligible
+for native offset operations.
+
+| W93 lane | Result | SHA256 |
+|---|---|---|
+| Hostile-file/pattern selector, Release, `/private/tmp/offset-W93-hostile-release.xml` | 1 / 71 assertions; PASS, errors=0, failures=0, skipped=0 | `f92cbe916a3adbd739c0285b4494501c30239a1dc0ed4be50f8f14ad712850bd` |
+| Hostile-file/pattern selector, ASan, `/private/tmp/offset-W93-hostile-asan.xml` | 1 / 71 assertions; PASS, errors=0, failures=0, skipped=0 | `d6f27b319ff9af37fb420711b8adb508c57dd9c3fe414ebb2deced42d1427078` |
+| CMake Release app and hostile-file test targets | PASS | n/a |
+| qmake6 full app and plugin build (`make -j4`) | PASS, exit 0 | n/a |
+
+The hostile-file selector was run as `[lc-offsetcurve][hostile]`; it verifies
+that the same fixture remains a native offset in ordinary drawing import, but
+is imported as a plain spline cache in hatch-pattern loading, with no owned
+marker. The intentionally missing partial-DXF fixture logs the expected import
+failure. ASan used `detect_leaks=0`, so this is not leak validation. Build
+warnings were pre-existing missing-field-initializer warnings. This is
+macOS/offscreen and qmake6 build evidence, not visible desktop testing or
+Windows/Linux runtime qualification. Remaining GUI/import caller audit,
+broader source/budget audit, installed-helper portability, and final W0-W2
+acceptance remain open.
