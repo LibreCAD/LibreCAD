@@ -2632,6 +2632,48 @@ source is treated as a later selection. Audit these cases, nested/reentrant
 activation and actual visible keyboard/mouse behavior before declaring the
 broader startup-intent contract complete.
 
+Startup request ordering W37 (`8ef22d799`):
+When a saved startup target is pending, each later accepted staged drawing or
+template request receives a monotonic selection token, retained through the
+bounded queue. A successful request becomes the selected window only if no
+newer request or observed window switch has superseded it. Old startup imports
+and older user requests cannot take focus back when they finish later; a live
+window is still checked before restoration. Serial exhaustion clears the startup
+restoration policy rather than wrapping to an old request. Failed or rejected
+imports do not publish a drawing; this is not a claim about all failure-policy
+or user-intent cases.
+
+Release and ASan (`detect_leaks=0`) startup reports cover five declarations /
+15 JUnit entries with zero errors/failures/skips (352 / 379 assertions, including
+polling). Coverage includes new drawings and templates, a slow native request
+overtaken by another request or observed switch, verified native admission,
+queued request selection and a later switch while queued. A real helper is
+stopped before numeric work in the out-of-order cases; the queue case uses
+ordinary files and the real four-active limit. Earlier multi-suspended-helper
+probes are not acceptance evidence because production timeouts could yield
+fallback. Both final dock-window reports cover all 49 discovered declarations /
+64 entries, zero errors/failures and seven small-screen skips (1016 / 1164
+assertions). Fresh Release application, full-test executable and helper builds
+passed; the changed qmake6 object compiled, not a full qmake link. The final
+test-source change after that application build only extends tests; focused
+test targets were rebuilt in both configurations. Evidence root is unchanged:
+
+| W37 artifact | SHA256 |
+| --- | --- |
+| `offset-W37-final-startup-release.xml` | `a4a5fdcff857609aeaaa8d06d25ebf4d264af4cf241717c3161df933c0d5ad32` |
+| `offset-W37-final-startup-asan.xml` | `f06a3d72d7d060935a8cc87ab713362ec241b655de1b5e9834babf0757a486b5` |
+| `offset-W37-final-gui-release.xml` | `1cf87795385f51ec9b38fc6c31352a72a4807f62cd48d4ba011a1d32f6e78628` |
+| `offset-W37-final-gui-asan.xml` | `105da3a96a7a4561529f6968f267809863e699bf21b5f66d5bde846aaf4e3a5b` |
+| `offset-W37-gui-discovery.xml` | `797412160ec2fff6ac714f8db9a69671ed735b8289984d1a3bc091398ced2197` |
+
+The source-protection audit remains open: an import snapshot must preserve the
+original host path for XREF resolution, and source stamps alone do not bind the
+bytes parsed. DXF output uses a staged rename, but the output transaction closes
+its exclusively created temporary descriptor and reopens by pathname; exclusive
+creation by itself does not protect that reopen or an altered parent path.
+Design a bounded, cross-platform identity and publication contract, including
+its failure policy, before treating either race as fixed.
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -2683,8 +2725,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 source and non-atomic autosave alias checks, and exercise a genuine partial DWG
 through the GUI dialog. W35 fixes the observed W33 teardown assertion; retain its
 forced-destruction regression while auditing other close/dialog reentrancy.
-W36 handles observed switches to another live window; also audit same-window
-interaction, newly requested opens and reentrant/visible startup focus behavior.
+W36/W37 handle observed switches and later staged requests; also audit
+same-window interaction, reentrant/visible startup focus and failure behavior.
 W31/W32 drawing-open/template publication and W33 GUI queue bounds are
 implemented; do not repeat them as absent. Design and test direct synchronous,
 console and nested-XREF contracts without silently weakening editable imports.
