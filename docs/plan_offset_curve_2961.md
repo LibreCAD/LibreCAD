@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88's current-source preview-cache portability and creation/repeat routing checks are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports and W89 makes dimension-style preview failures noninteractive and clears partial sample content; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports and W89 makes dimension-style preview failures noninteractive and clears partial sample content; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -4386,3 +4386,26 @@ sample and hatch preview paths.
 ASan used `detect_leaks=0`. This is current-source macOS CMake/offscreen
 coverage, not visible dialog interaction or cross-platform/final acceptance.
 Other storage/import callers and the broader budget/source audit remain open.
+
+## 52. W90 Current-Head Preview Cache and Creation/Repeat
+
+Rebuilt the process/client cache and Modify Offset creation-action targets from
+the post-W89 source at `6014d7882`, then reran the focused portability and GUI
+selectors in CMake Release and ASan. These are qualification-only results: no
+new product gap was found in the already implemented W16-W19 cache transport,
+merge/eviction, preview reuse, creation/repeat publication, or fallback paths.
+
+| W90 lane | JUnit cases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Fresh-helper preview cache, Release, `/private/tmp/offset-W90-cache-process-release.xml` | 1 / 208 | PASS; errors=0, failures=0, skipped=0 | `632f3a0de8df2b111938b0b13ac26c2695d8f92e399558d44dbcc3daddf6e1d9` |
+| Fresh-helper preview cache, ASan, `/private/tmp/offset-W90-cache-process-asan.xml` | 1 / 264 | PASS; errors=0, failures=0, skipped=0 | `c3115265df2d66ce87b660ebfc007ddc3af990d1a0c798963e644227862a9e76` |
+| Worker-client cache portability, Release, `/private/tmp/offset-W90-cache-client-release.xml` | 2 / 665 | PASS; errors=0, failures=0, skipped=0 | `095bf6fcf8b002199c272a1665287aad96754a442fb0f186a789e23257f4c9dc` |
+| Worker-client cache portability, ASan, `/private/tmp/offset-W90-cache-client-asan.xml` | 2 / 1013 | PASS; errors=0, failures=0, skipped=0 | `29c0c43391c2bfebcd5f1d8cbb6e96b1c27c74e120223fe64176d969e5fb4215` |
+| Creation/repeat GUI routing, Release, `/private/tmp/offset-W90-creation-release.xml` | 13 / 318 | PASS; errors=0, failures=0, skipped=0 | `850f18e782afb55ec9ea72ee81e3119ea22a33f82c942446316aea4010b9ebb0` |
+| Creation/repeat GUI routing, ASan, `/private/tmp/offset-W90-creation-asan.xml` | 13 / 318 | PASS; errors=0, failures=0, skipped=0 | `a586eb6f63f72c84b53d4e2301ce68b9019e16fee56909a56f07004e73a0e277` |
+
+ASan used `detect_leaks=0`; this does not establish leak validation. The GUI
+selector ran with `QT_QPA_PLATFORM=offscreen`. This evidence does not close
+visible desktop interaction, Windows/Linux runtime, installed/relocated helper
+retesting at this head, remaining import ownership, the broader budget/source
+audit, or final W0-W2 acceptance.
