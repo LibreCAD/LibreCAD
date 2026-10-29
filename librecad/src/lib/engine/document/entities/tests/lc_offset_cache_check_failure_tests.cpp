@@ -9,6 +9,8 @@
 #include "lc_ellipseoffsetgeometry.h"
 #include "rs_spline.h"
 
+#include <algorithm>
+#include <array>
 #include <cstddef>
 #include <cstdio>
 #include <cstdlib>
@@ -77,30 +79,51 @@ void operator delete[](void* memory, std::size_t, std::align_val_t alignment) no
     ::operator delete(memory, alignment);
 }
 
-int main() {
-    namespace geo = LC_EllipseOffsetGeometry;
+namespace {
+struct Fixture {
+    RS_SplineData cache;
+    LC_EllipseOffsetDefinition definition;
+};
+
+Fixture cubicFixture(const bool reversed) {
     const RS_EllipseData source{RS_Vector{0, 0}, RS_Vector{1, 0}, 1.0, .25, .2501, false};
+    Fixture fixture;
+    fixture.definition.basis = source;
+    fixture.definition.distance = 1.0;
+    fixture.definition.relTolerance = .01;
+    fixture.definition.cacheReversed = reversed;
+
+    auto& cache = fixture.cache;
+    cache.degree = 3;
+    cache.knotslist = {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2};
+    const auto point = [](const double angle) { return RS_Vector{2 * std::cos(angle), 2 * std::sin(angle)}; };
+    const auto tangent = [](const double angle) { return RS_Vector{-2 * std::sin(angle), 2 * std::cos(angle)}; };
+    const std::array<double, 3> angles{{source.angle1, .5 * (source.angle1 + source.angle2), source.angle2}};
+    cache.controlPoints.push_back(point(angles[0]));
+    for (std::size_t span = 0; span < 2; ++span) {
+        const auto first = cache.controlPoints.back();
+        const auto last = point(angles[span + 1]);
+        const double step = (angles[span + 1] - angles[span]) / 3;
+        const std::array<RS_Vector, 4> controls{{first, first + tangent(angles[span]) * step,
+            last - tangent(angles[span + 1]) * step, last}};
+        cache.controlPoints.insert(cache.controlPoints.end(), controls.begin() + 1, controls.end());
+    }
+    cache.weights.assign(cache.controlPoints.size(), 1.0);
+    if (reversed) { std::reverse(cache.controlPoints.begin(), cache.controlPoints.end()); }
+    return fixture;
+}
+
+int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definition,
+          const char* label, std::size_t& totalInjectionPoints) {
+    namespace geo = LC_EllipseOffsetGeometry;
+    const auto& source = definition.basis;
     const auto frame = geo::ReferenceFrame::create(source, 1.0);
     if (!frame) { return 2; }
 
-    LC_CurveJet first, last;
-    if (!frame->offsetJet(0, first) || !frame->offsetJet(frame->parameterEnd(), last)) { return 3; }
-    const auto world = [&](const RS_Vector& point) {
-        return RS_Vector{source.center.x + frame->scale() * point.x,
-                         source.center.y + frame->scale() * point.y};
-    };
-    RS_SplineData cache{1, false};
-    cache.controlPoints = {world(first.point), world(last.point)};
-    cache.weights = {1.0, 1.0};
-    cache.knotslist = {0.0, 0.0, 1.0, 1.0};
-
-    LC_EllipseOffsetDefinition definition;
-    definition.basis = source;
-    definition.distance = 1.0;
-    definition.relTolerance = .01;
-
     geo::WorkBudget baselineBudget;
+    failAt = 0;
     allocationCount = 0;
+    injected = false;
     armed = true;
     LC_OffsetCheckResult baseline;
     try {
@@ -155,7 +178,37 @@ int main() {
         }
     }
 
-    std::printf("allocation_failure_sweep_recovered=1 injection_points=%zu vertices=%zu\n",
-                completeAllocationCount, baseline.work.vertices);
+    totalInjectionPoints += completeAllocationCount;
+    std::printf("allocation_failure_sweep_recovered=1 fixture=%s injection_points=%zu vertices=%zu\n",
+                label, completeAllocationCount, baseline.work.vertices);
+    return 0;
+}
+}
+
+int main() {
+    namespace geo = LC_EllipseOffsetGeometry;
+    const RS_EllipseData source{RS_Vector{0, 0}, RS_Vector{1, 0}, 1.0, .25, .2501, false};
+    const auto frame = geo::ReferenceFrame::create(source, 1.0);
+    if (!frame) { return 2; }
+    LC_CurveJet first, last;
+    if (!frame->offsetJet(0, first) || !frame->offsetJet(frame->parameterEnd(), last)) { return 3; }
+    const auto world = [&](const RS_Vector& point) {
+        return RS_Vector{source.center.x + frame->scale() * point.x,
+                         source.center.y + frame->scale() * point.y};
+    };
+    RS_SplineData lineCache{1, false};
+    lineCache.controlPoints = {world(first.point), world(last.point)};
+    lineCache.weights = {1.0, 1.0}; lineCache.knotslist = {0.0, 0.0, 1.0, 1.0};
+    LC_EllipseOffsetDefinition lineDefinition;
+    lineDefinition.basis = source; lineDefinition.distance = 1.0; lineDefinition.relTolerance = .01;
+
+    std::size_t injectionPoints = 0;
+    if (const int result = sweep(lineCache, lineDefinition, "single-line", injectionPoints)) { return result; }
+    for (const bool reversed : {false, true}) {
+        auto cubic = cubicFixture(reversed);
+        if (const int result = sweep(cubic.cache, cubic.definition,
+            reversed ? "two-span-cubic-reversed" : "two-span-cubic", injectionPoints)) { return result; }
+    }
+    std::printf("allocation_failure_sweep_all_fixtures_recovered=1 injection_points=%zu\n", injectionPoints);
     return 0;
 }
