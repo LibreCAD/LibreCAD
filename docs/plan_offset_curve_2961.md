@@ -3110,11 +3110,14 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 **Next concrete action on implementation resume:** obtain a Windows compile and
 runtime run for W44 before claiming platform parity. W46 already bounds and
 snapshots nested XREF bytes for staged imports; W47 adds source identity
-preflight but not atomic publication. Do not repeat either implementation.
-Design destination publication so same-source identity is revalidated at the
-actual replacement boundary, with fault-injected path swaps, aliases, backup,
-and failed-rename cases; then audit direct synchronous and console XREF callers
-without silently weakening their behavior. Investigate the recorded ASan template failure under
+preflight but not atomic publication. W49a adds a transaction-level publication
+guard and race regression, but it is not yet connected to the DXF/DWG writer or
+LibreCAD's source-identity policy. Continue W49 with explicit per-call writer
+guard APIs, then wire the filter at low-level and outer DWG publish boundaries
+and test source replacement/aliases/backup/failed-rename behavior. This narrows
+the check-to-use window but cannot make path identity plus cross-platform rename
+atomic. Then audit direct synchronous and console XREF callers without silently
+weakening their behavior. Investigate the recorded ASan template failure under
 load, and exercise a genuine partial DWG through the GUI dialog. W35 fixes the
 observed W33 teardown assertion; retain its
 forced-destruction regression while auditing other close/dialog reentrancy.
@@ -3252,3 +3255,31 @@ compile/runtime, installed-bundle execution, qmake6 deployment, and visible GUI
 acceptance remain open. Continue with the existing W44 cross-platform gate and
 the W47 destination-publication/source-path-race work; do not reopen W16-W19 as
 missing implementation.
+
+## 11. W49 Destination Publication Guard
+
+W49a `844199ab5` adds an optional callback to
+`DwgDxfOutputTransaction::commit` and `commitVerified`. Publication checks the
+staged-file identity, calls the guard immediately before replacement, and
+checks the staged identity again. A guard rejection or exception aborts and
+removes only the private stage. The regression mutates the destination during
+staged-file verification, then proves the publication guard rejects the stage,
+preserves the external replacement, and leaves no temporary file.
+
+This is transaction-level coverage only. It does not remove the filesystem
+check-to-rename race, bind a pathname identity atomically to replacement, or
+yet protect LibreCAD exports; those require the explicit libdxfrw writer APIs
+and `RS_FilterDXFRW` integration in W49b/W49c.
+
+| W49a validation | Result |
+|---|---|
+| `librecad_output_transaction_tests` | 15 cases, 137 assertions passed |
+| `libdxfrw_verified_write_tests` | 4 cases, 299 assertions passed |
+| Release build: `librecad_tests` and both focused test binaries | passed |
+| `git diff --check` | passed |
+
+The command `ctest -R ...` found no registered CTest cases in this build; the
+two Catch2 executables were run directly. No ASan, Windows, or visible GUI run
+is claimed. Next: add explicit per-call guarded DXF/DWG writer entry points and
+exercise guard invocation/rejection on real staged native writes; then integrate
+source identity checks into LibreCAD's DXF and DWG final publication boundaries.
