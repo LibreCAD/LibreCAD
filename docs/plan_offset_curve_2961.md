@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports and W89 makes dimension-style preview failures noninteractive and clears partial sample content; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports and W89 makes dimension-style preview failures noninteractive and clears partial sample content; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -3888,10 +3888,13 @@ as an additive callback API with a synchronous compatibility adapter. The
 LibreCAD implementation stages supported DXF/DWG imports through
 `LC_OffsetImportSession`, checks the source stamp and active view/document
 identity before publication, and allows at most one active staged import per
-view. Non-DXF/DWG formats and existing callers of the legacy synchronous
-`addBlockfromFromdisk` retain their prior blocking behavior. No in-tree
-production call site currently invokes the new API, so this is an available
-route for plugins, not a claim that every plugin caller has migrated.
+view. W91 also routes the legacy synchronous `addBlockfromFromdisk` contract
+through this staged path for supported formats; it waits for completion to
+return the block name, so it remains blocking and new plugins should use the
+async API. Non-DXF/DWG formats retain their existing synchronous importer. No
+in-tree production call site currently invokes the async API directly, so it
+remains an available nonblocking route for plugins rather than evidence that
+all external plugin callers have migrated.
 
 Focused `[plugins][offsetcurve][block-import]` tests pass in Release and ASan
 (5 cases / 33 assertions in each report), covering legacy behavior, async
@@ -4409,3 +4412,34 @@ selector ran with `QT_QPA_PLATFORM=offscreen`. This evidence does not close
 visible desktop interaction, Windows/Linux runtime, installed/relocated helper
 retesting at this head, remaining import ownership, the broader budget/source
 audit, or final W0-W2 acceptance.
+
+## 53. W91 Legacy Plugin Block-Import Worker Routing
+
+Product/test commit `e06b1b676` closes the known native-worker bypass in
+`Doc_plugin_interface::addBlockfromFromdisk`: when the detected format is a
+supported DXF/DWG, the legacy synchronous API now delegates to the existing
+staged plugin-import route and waits for its owned completion before returning
+the block name. The session remains parented to the view, and the staged path
+continues to validate the source stamp and confirm the same document/graphic
+before publication. View destruction quits the compatibility wait without a
+late block publication. Other-format imports keep their prior synchronous
+path, with a `QPointer` view snapshot preventing publication if a modal import
+error allowed the active context to change.
+
+The regression asserts that the compatibility call processes event-loop
+heartbeats while the native worker validates the imported offset, and that a
+scheduled document switch returns no block and mutates neither drawing. The
+existing async native-import, queue-limit, cancellation and stale-document
+cases remain in the same selector.
+
+| W91 lane | JUnit cases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Plugin block import, Release, `/private/tmp/offset-W91-plugin-block-release.xml` | 6 / 38 | PASS; errors=0, failures=0, skipped=0 | `442c907dfb7e26f213e6b2bcc5f51189dc9cdf48bb4a5de3e0c9c8c88808e9ef` |
+| Plugin block import, ASan, `/private/tmp/offset-W91-plugin-block-asan.xml` | 6 / 38 | PASS; errors=0, failures=0, skipped=0 | `2a093dc8c703e254d87a4eed666b70a829ba537350bbb1a05d17e2ebc130bbe9` |
+
+ASan used `detect_leaks=0`; no leak-validation claim is made. This is a
+macOS/offscreen compatibility-path check, not proof that the synchronous API
+is responsive or that external plugins have migrated to the async entry point.
+Windows/Linux runtime, installed-helper retesting at this head, remaining
+import ownership, broader budget/source audit and final W0-W2 acceptance remain
+open.
