@@ -35,9 +35,10 @@ W1-W155. W156 closes local routing for the public synchronous file/stream/byte
 filter APIs. Remote worker CI, Windows failure coverage, deployed-package checks,
 visible UI, external-CAD interoperability, and final current-source integration
 remain open.**
-Latest recorded slice: W156 routes synchronous file/stream/byte filter imports
-through bounded worker validation and records Release, focused ASan, and qmake6
-changed-object evidence. W155
+Latest recorded slice: W157 adds the synchronous import selector to Linux and
+Windows x64/ARM64 CI; W156 routes file/stream/byte filter imports through bounded
+worker validation and records Release, focused ASan, and qmake6 changed-object
+evidence. W155
 rechecks the shared-budget/counter-transfer chain; W154 adds staged installed-
 helper CI and local macOS relocation evidence. W153 closes source/target
 reconciliation. W152 records the ASan cache-check fault sweep. W151 classifies
@@ -3139,8 +3140,10 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   qmake6 builds of both changed filter objects pass locally. Finish Windows/native
   cross-platform failure coverage, deployed-helper acceptance, and final
   caller/adoption/failure acceptance. Reuse the qualified geometry-entry
-  timeout/helper/client/reply modules; do not redo them as absent. Keep Node runner
-  scope separate.
+  W157 extends the DWG/DXF matrix to build and execute `[sync-api]` on Linux and
+  Windows x64/ARM64; those new-head checks must finish before cross-platform
+  qualification. Reuse the qualified geometry-entry timeout/helper/client/reply
+  modules; do not redo them as absent. Keep Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
   DXF/DWG, source and trim implementation with any new worker/publication changes.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
@@ -3151,11 +3154,10 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   the offset changes. Review scoped commits, preserve reproducible evidence and
   close every required gap.
 
-**Next concrete action on implementation resume:** follow current PR-head Linux
-and Windows x64/ARM64 installed-helper checks through completion, then address
-any platform/runtime failure before the remaining W0-W2 deployment gates and
-final E/U/G/F/O/T integration. W156 is pushed; Text Foundations has passed, and
-CodeQL, DWG/DXF verification, and Pixi builds are still running on its head.
+**Next concrete action on implementation resume:** push W157 and follow the new
+PR-head Linux and Windows x64/ARM64 direct-import plus installed-helper checks
+through completion, then address any platform/runtime failure before the
+remaining W0-W2 deployment gates and final E/U/G/F/O/T integration.
 The W145 Windows include correction has local validation only. W55 now records a fresh full macOS qmake6 app/bundle
 build plus a worker-protocol smoke using the helper beside the bundled executable;
 W79 separately records a complete staged macOS CMake install and offscreen
@@ -6197,3 +6199,14 @@ were still in progress when checked. These are pending, not yet qualification.
 This closes the in-repository synchronous filter entry-point routing gap, not
 Windows runtime/failure coverage, full deployed-package acceptance, visible UI,
 external-CAD interoperability, or final W0-W2/E/U/G/F/O/T/R acceptance.
+
+## 115. W157 Cross-Platform Synchronous Import Regression
+
+Commit `311f75033` adds `librecad_offset_adapter_tests` to the DWG/DXF CI build
+and runs its `[sync-api]` selector on Linux plus Windows x64 and ARM64. This
+executes the public file, caller-owned stream, and byte-array worker bridge on
+each platform rather than only compiling the filter through the grouped format
+tests. It also validates the worker helper dependency added in W156. `actionlint`
+and `git diff --check` pass locally. W157's new remote jobs remain pending until
+the pushed PR-head workflows finish; earlier DWG/DXF runs do not qualify this
+new selector.
