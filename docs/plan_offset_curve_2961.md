@@ -3759,6 +3759,8 @@ The complete offscreen creation-action target passes 133 JUnit cases and
 The focused library-insert case also passes in both configurations. ASan ran
 with `detect_leaks=0`; this is not leak validation. This is local test-harness
 coverage, not visible desktop, installed-package, or Windows runtime validation.
+The full `librecad_tests` target also builds, and its focused library-insert run
+passes in Release.
 The library thumbnail renderer and synchronous plugin import API remain separate
 call paths; CLI, hatch-pattern, and preview-only import callers also need explicit
 classification before claiming all GUI/import routing is complete.
@@ -3769,3 +3771,4 @@ classification before claiming all GUI/import routing is complete.
 | `/private/tmp/offset-W68-library-insert-asan.xml` | `2420dfdb67968fbb5f1d6c78c95afc8ae431dc986036bceccf2d09c727bf5595` |
 | `/private/tmp/offset-W68-creation-release.xml` | `a23fcc834b33969f4bd200d85137ed3971abbd4140ce2fc4def33d433e49c6b5` |
 | `/private/tmp/offset-W68-creation-asan.xml` | `09d209d31a5fac1d54891fb643cf1648be346cbe95cc20da0fcc4caafc618804` |
+| `/private/tmp/offset-W68-library-insert-full-release.xml` | `055d0b1153f4c5a2bdb3d9e4167659f262159a332d73196b34a6a81b288c77a5` |
