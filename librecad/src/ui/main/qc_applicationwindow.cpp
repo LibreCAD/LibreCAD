@@ -1791,18 +1791,49 @@ void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatTy
 
 void QC_ApplicationWindow::cancelPendingImports() {
     const auto pending = std::exchange(m_pendingImports, {});
+    m_queuedImports.clear();
     m_restoreActiveFile.clear();
     for (const auto& session : pending) {
         if (session) { session->cancel(); delete session.data(); }
     }
 }
 
+bool QC_ApplicationWindow::hasPendingImports() const {
+    return !m_pendingImports.isEmpty() || !m_queuedImports.isEmpty();
+}
+
 void QC_ApplicationWindow::restoreActiveFileAfterPendingImports(const QString& fileName) {
-    m_restoreActiveFile = m_pendingImports.isEmpty() ? QString{} : fileName;
+    m_restoreActiveFile = hasPendingImports() ? fileName : QString{};
     activateWindowWithFile(fileName);
 }
 
 bool QC_ApplicationWindow::beginStagedImport(const QString& fileName, RS2::FormatType type,
+                                              RS2::DxfTextEncoding encoding, bool asTemplate) {
+    if (!m_queuedImports.isEmpty() || m_pendingImports.size() >= MaxActiveImports) {
+        if (m_queuedImports.size() >= MaxQueuedImports) {
+            m_commandWidget->appendHistory(tr("Too many pending imports; '%1' was not opened.").arg(fileName));
+            return false;
+        }
+        m_queuedImports.append({fileName, type, encoding, asTemplate});
+        showStatusMessage(tr("Queued import: ") + fileName, 2000);
+        const QPointer<QC_ApplicationWindow> window(this);
+        QTimer::singleShot(0, this, [window] { if (window) window->startQueuedImports(); });
+        return true;
+    }
+    return startStagedImport(fileName, type, encoding, asTemplate);
+}
+
+void QC_ApplicationWindow::startQueuedImports() {
+    const QPointer<QC_ApplicationWindow> window(this);
+    while (m_pendingImports.size() < MaxActiveImports && !m_queuedImports.isEmpty()) {
+        const auto request = m_queuedImports.takeFirst();
+        startStagedImport(request.fileName, request.type, request.encoding, request.asTemplate);
+        if (!window) return;
+    }
+    if (!hasPendingImports()) m_restoreActiveFile.clear();
+}
+
+bool QC_ApplicationWindow::startStagedImport(const QString& fileName, RS2::FormatType type,
                                               RS2::DxfTextEncoding encoding, bool asTemplate) {
     if (!asTemplate && m_openedFiles.contains(fileName))
         showStatusMessage(tr("Warning: File already opened : ") + fileName, 2000);
@@ -1833,13 +1864,14 @@ bool QC_ApplicationWindow::beginStagedImport(const QString& fileName, RS2::Forma
             if (!window || !pending) return;
             window->m_pendingImports.removeAll(pending);
             pending->deleteLater();
+            QTimer::singleShot(0, window, [window] { if (window) window->startQueuedImports(); });
             if (outcome.status != LC_OffsetImportSession::Status::Complete || !outcome.graphic) {
                 if (outcome.status != LC_OffsetImportSession::Status::ReadFailed) {
                     auto* box = new QMessageBox(QMessageBox::Critical, QObject::tr("Error"), outcome.error,
                                                 QMessageBox::Ok, window);
                     box->setAttribute(Qt::WA_DeleteOnClose); box->open();
                 }
-                if (window->m_pendingImports.isEmpty()) window->m_restoreActiveFile.clear();
+                if (!window->hasPendingImports()) window->m_restoreActiveFile.clear();
                 return;
             }
             QPointer<QC_MDIWindow> mdi;
@@ -1863,7 +1895,7 @@ bool QC_ApplicationWindow::beginStagedImport(const QString& fileName, RS2::Forma
                 if (window && mdi) window->doClose(mdi);
                 if (window) window->m_commandWidget->appendHistory(QObject::tr("Could not complete the imported drawing."));
             }
-            if (window && window->m_pendingImports.isEmpty()) window->m_restoreActiveFile.clear();
+            if (window && !window->hasPendingImports()) window->m_restoreActiveFile.clear();
         });
     if (!started) {
         m_pendingImports.removeAll(pending);

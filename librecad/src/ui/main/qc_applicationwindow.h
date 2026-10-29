@@ -401,6 +401,9 @@ protected:
     void updateWidgetsAsDocumentLoaded(const QC_MDIWindow* w);
     void completeOpenedDrawing(QC_MDIWindow* w, const QString& fileName, bool legacyUtf8);
     bool beginStagedImport(const QString& fileName, RS2::FormatType type, RS2::DxfTextEncoding encoding, bool asTemplate);
+    bool startStagedImport(const QString& fileName, RS2::FormatType type, RS2::DxfTextEncoding encoding, bool asTemplate);
+    void startQueuedImports();
+    bool hasPendingImports() const;
     void cancelPendingImports();
     QC_MDIWindow* createDrawingWindow(RS_Document* doc, const QString& expectedFileName,
                                       std::unique_ptr<RS_Graphic> owned);
@@ -540,7 +543,16 @@ protected:
     QList<QAction*> m_recentFilesActionList;
 
     QStringList m_openedFiles;
+    struct QueuedImport {
+        QString fileName;
+        RS2::FormatType type;
+        RS2::DxfTextEncoding encoding;
+        bool asTemplate;
+    };
+    static constexpr int MaxActiveImports = 4;
+    static constexpr int MaxQueuedImports = 64;
     QList<QPointer<LC_OffsetImportSession>> m_pendingImports;
+    QList<QueuedImport> m_queuedImports;
     QString m_restoreActiveFile;
     QList<QAction*> m_actionsToDisableInPrintPreviewList;
 

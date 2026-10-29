@@ -76,10 +76,24 @@ struct LC_DockLayoutTestAccess {
         return count;
     }
     static int drawingCount(QC_ApplicationWindow& window) { return window.findChildren<QC_MDIWindow*>().size(); }
-    static int pendingImports(QC_ApplicationWindow& window) { return window.m_pendingImports.size(); }
+    static int pendingImports(QC_ApplicationWindow& window) { return window.m_pendingImports.size() + window.m_queuedImports.size(); }
+    static int activeImports(QC_ApplicationWindow& window) { return window.m_pendingImports.size(); }
+    static int queuedImports(QC_ApplicationWindow& window) { return window.m_queuedImports.size(); }
+    static int maxActiveImports() { return QC_ApplicationWindow::MaxActiveImports; }
+    static int maxQueuedImports() { return QC_ApplicationWindow::MaxQueuedImports; }
+    static QString queuedFile(QC_ApplicationWindow& window, int index) { return window.m_queuedImports.at(index).fileName; }
+    static bool queuedTemplate(QC_ApplicationWindow& window, int index) { return window.m_queuedImports.at(index).asTemplate; }
     static void cancelImports(QC_ApplicationWindow& window) { window.cancelPendingImports(); }
     static bool newTemplate(QC_ApplicationWindow& window, const QString& file) { return window.newDrawingFromTemplate(file); }
     static bool tracksOpenedFile(QC_ApplicationWindow& window, const QString& file) { return window.m_openedFiles.contains(file); }
+    static void closeDrawings(QC_ApplicationWindow& window) {
+        const auto drawings = window.findChildren<QC_MDIWindow*>();
+        for (auto* drawing : drawings) {
+            drawing->setSaveOnClosePolicy(QC_MDIWindow::DONT_SAVE);
+            window.doClose(drawing);
+        }
+        QApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    }
     static LC_OffsetImportSession* pendingImport(QC_ApplicationWindow& window) {
         return window.m_pendingImports.isEmpty() ? nullptr : window.m_pendingImports.first().data();
     }
@@ -489,6 +503,78 @@ TEST_CASE("Startup restores the active file after asynchronous opens", "[.gui][d
     window.openFile(other);
     while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
     REQUIRE(window.getCurrentMDIWindow()); CHECK(window.getCurrentMDIWindow()->getFileName() == other);
+}
+
+TEST_CASE("Staged GUI imports are bounded and queued work completes", "[.gui][dock-window][offset-import][queue]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString root = QString(LIBRECAD_SOURCE_DIR) + "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    const QString line = root + "dxf-binary-R2018-line-control.dxf";
+    const QString native = root + "dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFileInfo::exists(line)); REQUIRE(QFileInfo::exists(native));
+    for (int i = 0; i < LC_DockLayoutTestAccess::maxActiveImports(); ++i) window.openFile(line);
+    window.openFile(native); REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, native));
+    CHECK(LC_DockLayoutTestAccess::activeImports(window) == LC_DockLayoutTestAccess::maxActiveImports());
+    CHECK(LC_DockLayoutTestAccess::queuedImports(window) == 2);
+    CHECK(LC_DockLayoutTestAccess::queuedFile(window, 0) == native);
+    CHECK_FALSE(LC_DockLayoutTestAccess::queuedTemplate(window, 0));
+    CHECK(LC_DockLayoutTestAccess::queuedFile(window, 1) == native);
+    CHECK(LC_DockLayoutTestAccess::queuedTemplate(window, 1));
+    window.restoreActiveFileAfterPendingImports(line);
+    int peak = LC_DockLayoutTestAccess::activeImports(window);
+    QTimer monitor; monitor.setInterval(1);
+    QObject::connect(&monitor, &QTimer::timeout, [&] { peak = std::max(peak, LC_DockLayoutTestAccess::activeImports(window)); });
+    monitor.start(); QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 60000); settle(10); }
+    monitor.stop();
+    CHECK(peak <= LC_DockLayoutTestAccess::maxActiveImports());
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial + LC_DockLayoutTestAccess::maxActiveImports() + 2);
+    REQUIRE(window.getCurrentMDIWindow()); CHECK(window.getCurrentMDIWindow()->getFileName() == line);
+    LC_DockLayoutTestAccess::closeDrawings(window);
+}
+
+TEST_CASE("Staged GUI import queue reports overflow and cancellation clears it", "[.gui][dock-window][offset-import][queue]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFileInfo::exists(fileName));
+    for (int i = 0; i < LC_DockLayoutTestAccess::maxActiveImports() + LC_DockLayoutTestAccess::maxQueuedImports() + 1; ++i)
+        window.openFile(fileName);
+    CHECK(LC_DockLayoutTestAccess::activeImports(window) == LC_DockLayoutTestAccess::maxActiveImports());
+    CHECK(LC_DockLayoutTestAccess::queuedImports(window) == LC_DockLayoutTestAccess::maxQueuedImports());
+    bool reported = false;
+    for (const auto* history : window.findChildren<QTextEdit*>())
+        reported |= history->toPlainText().contains("Too many pending imports");
+    CHECK(reported);
+    LC_DockLayoutTestAccess::cancelImports(window); settle(25);
+    CHECK(LC_DockLayoutTestAccess::pendingImports(window) == 0);
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+}
+
+TEST_CASE("A queued import failure does not strand later requests", "[.gui][dock-window][offset-import][queue]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString line = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-line-control.dxf";
+    REQUIRE(QFileInfo::exists(line)); const QString broken = directory.filePath("broken.dxf"); QFile file(broken);
+    REQUIRE(file.open(QIODevice::WriteOnly));
+    const QByteArray bytes = "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1032\n0\nENDSEC\n"
+        "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n"
+        "0\nLINE\n8\n0\n10\n0.0\n";
+    REQUIRE(file.write(bytes) == bytes.size()); file.close();
+    for (int i = 0; i < LC_DockLayoutTestAccess::maxActiveImports(); ++i) window.openFile(line);
+    window.openFile(broken); window.openFile(line);
+    REQUIRE(LC_DockLayoutTestAccess::queuedImports(window) == 2);
+    QElapsedTimer elapsed; elapsed.start(); QPointer<QMessageBox> box;
+    while (!box) {
+        REQUIRE(elapsed.elapsed() < 30000); settle(10);
+        for (auto* candidate : window.findChildren<QMessageBox*>()) if (candidate->isVisible()) { box = candidate; break; }
+    }
+    box->done(QMessageBox::Ok);
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 60000); settle(10); }
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial + LC_DockLayoutTestAccess::maxActiveImports() + 1);
+    LC_DockLayoutTestAccess::closeDrawings(window);
 }
 
 #ifdef Q_OS_UNIX
