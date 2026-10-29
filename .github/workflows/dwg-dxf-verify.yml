@@ -53,31 +53,8 @@ on:
       - 'scripts/dwg-fast-check.sh'
   pull_request:
     branches: [master]
-    paths:
-      - '.github/workflows/dwg-dxf-verify.yml'
-      - 'CMakeLists.txt'
-      - 'libraries/libdxfrw/**'
-      - 'librecad/src/lib/filters/**'
-      - 'librecad/src/lib/engine/undo/**'
-      - 'librecad/src/lib/engine/rs.h'
-      - 'librecad/src/lib/engine/document/entities/rs_entity.*'
-      - 'librecad/src/lib/engine/document/entities/rs_mtext.*'
-      - 'librecad/src/lib/engine/document/entities/rs_text.*'
-      - 'librecad/src/lib/engine/document/entities/rs_insert.*'
-      - 'librecad/src/lib/engine/document/entities/lc_text*'
-      - 'librecad/src/lib/engine/document/container/rs_entitycontainer.*'
-      - 'librecad/src/lib/engine/document/entities/tests/**'
-      - 'librecad/src/lib/engine/document/fonts/**'
-      - 'librecad/src/test/**'
-      - 'librecad/src/main/console_dxf2png.*'
-      - 'librecad/src/main/tests/lc_consolesvgexporttests.cpp'
-      - 'librecad/src/lib/gui/render/headless/lc_printviewportrenderer.*'
-      - 'librecad/src/lib/gui/render/rs_painter.*'
-      - 'librecad/src/lib/gui/render/widget/lc_graphicviewrenderer.*'
-      - 'librecad/src/lib/gui/grid/lc_gridsystem.*'
-      - 'librecad/src/lib/gui/tests/rs_painter_tests.cpp'
-      - 'librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp'
-      - 'scripts/dwg-fast-check.sh'
+    # Large feature PRs can exceed GitHub's path-filter comparison window.
+    # Keep the PR gate unconditional so those branches still qualify DWG/DXF.
   workflow_dispatch:
 
 # A newer push to the same branch or pull request supersedes a run still in progress.
