@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W162, superseding W161 below): S0 source/target reconciliation
+Current status (W163, superseding W162 below): S0 source/target reconciliation
 and the local A-core through C-check audit are closed. Direct synchronous
 `fileImport`, stream, and byte filter imports validate offset carriers through
 the worker in the current source. W158 requalifies the qmake6 app/helper bundle;
@@ -38,13 +38,18 @@ retains all eight spline entities and their owned schema marker. Direct AC1021
 ACadSharp acceptance remains unqualified. W0-W2,
 E/U/G/F/O/T and R remain open for cross-platform, package, visible UI,
 external-CAD, and final integration acceptance.
+W163 records one focused macOS qmake6 UI check: an ellipse offset preview and
+commit, properties, Undo/Redo, and AC1032 DXF save/reopen. This is partial
+evidence only; the full visible interaction matrix and its screenshot/display/
+DPR receipts remain open.
 Status: **W0-W2 is partially implemented; worker, geometry, creation/repeat, trim,
 GUI open/template, and DXF/DWG paths have scoped local qualifications recorded in
 W1-W160. W156 closes local routing for the public synchronous file/stream/byte
 filter APIs. Current-head worker CI, Windows failure coverage, deployed-package
 checks, visible UI, external-CAD interoperability, and final integration remain
 open.**
-Latest recorded slice: W162 records direct LibreDWG semantic inspection of the
+Latest recorded slice: W163 records a focused macOS qmake6 ellipse UI/save/reopen
+check; W162 records direct LibreDWG semantic inspection of the
 13 AC1021 files; W161 records direct/converted ACadSharp triage; W160
 requalifies the current-source staged install helper with Release and ASan
 clients; W159 requalifies cache portability and GUI
@@ -6366,3 +6371,28 @@ remaining visible CAD application and end-to-end DWG acceptance rows.
 | LibreDWG JSON semantic summary, `/private/tmp/offset-W161-libredwg-semantic-summary.tsv` | eight SPLINEs retain schema marker and valid degree/control/knot cardinalities / `f7efdc1f0f118329f0ca943a420c3c86370b156ecb18b4e58ab135d539b6dfa1` |
 | Roadmap parser/inventory, `/private/tmp/offset-W162-plan-inventory.log` | PASS; 99 / 99, 93 executable obligations, zero pending/mismatches / `e72525f4decfb8de0506aec9749dab1dff59389ba2ffc7393f87dcc130b7a0a7` |
 | LibreDWG tool | `dwgread 0.14`; original files all have `AC1021` signature |
+
+## 121. W163 Focused macOS qmake6 UI and DXF Save/Reopen Check
+
+On the current PR-head qmake6 application, created a temporary ellipse in a
+fresh drawing, preselected it, and ran Editable Offset Curve. The red dashed
+preview appeared; committing produced a selectable editable offset. Its
+property sheet exposed the expected distance and ellipse geometry. Undo removed
+the offset and Redo restored it. Saved as DXF 2018 and reopened that output; the
+visible curves returned, and the file contains `$ACADVER=AC1032` plus the
+`LC_OFFSET_CURVE` schema marker. The saved distance was restored to 10 before
+the DXF save.
+
+This is one focused interaction receipt, not completion of the visible UI lane.
+No screenshot was retained and display/DPR were not measured. Context menus,
+compact options, drag/Escape behavior, locked/stale peers, Update/Restore, Trim,
+layer/selection combinations, and Restore Undo/Redo Save/Open remain unqualified.
+The follow-up isolated-app launch was denied by the UI tool, so no additional
+interaction was attempted.
+
+| W163 artifact | SHA256 / result |
+|---|---|
+| DXF 2018 save/reopen, `/private/tmp/offset-W160-G-matrix-outputs/offset-W163-ui-check.dxf` | visible reopen succeeded; `AC1032`, `LC_OFFSET_CURVE` present / `d58e9d13b280f8f3b2fcb46ef276a0b251955ad8441fde811edcbbdd61d317a9` |
+| LibreCAD source under test | PR head `84fe54790859ce998cd022515d3d26a4167fd6cb`; qmake6 Qt 6.12.0 app |
+| Roadmap parser/inventory test, `node --test scripts/offset-curve-validation/test-refusal-inventory.js` | PASS; 99 / 99; 93 executable obligations, zero pending declarations, no mismatches |
+| Remaining visible UI acceptance | open; screenshot, display/DPR, and full interaction matrix not captured |
