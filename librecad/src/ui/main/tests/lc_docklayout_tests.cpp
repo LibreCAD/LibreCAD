@@ -979,3 +979,107 @@ TEST_CASE("Hidden dock sizes survive workspace and settings restoration", "[.gui
     CHECK(restored.dock("dock_line")->size() == lineSize);
     CHECK(restored.dock("dock_circle")->size() == circleSize);
 }
+
+TEST_CASE("Dock sizes survive reopening in a smaller window", "[.gui][dock-window][3185]") {
+    DockFixture fixture;
+    fixture.isolate();
+    auto& window = fixture.window;
+    LC_DockLayoutTestAccess::showLeftPair(window);
+    window.resize(796, 550);
+    settle();
+    auto* line = window.findChild<QDockWidget*>("dock_line");
+    auto* circle = window.findChild<QDockWidget*>("dock_circle");
+    REQUIRE(line != nullptr);
+    REQUIRE(circle != nullptr);
+    window.resizeDocks({line}, {260}, Qt::Horizontal);
+    window.resizeDocks({line, circle}, {140, 360}, Qt::Vertical);
+    settle();
+    const QSize lineSize = line->size();
+    const QSize circleSize = circle->size();
+    window.toggleLeftDockArea(false);
+    settle();
+    const QVariantMap savedSizes = window.dockAreaSizes();
+    window.resize(420, 400);
+    settle();
+    window.toggleLeftDockArea(true);
+    settle();
+    CHECK(window.dockAreaSizes() == savedSizes);
+    SECTION("Area stays open") {}
+    SECTION("Area is hidden again before the window grows") {
+        window.toggleLeftDockArea(false);
+        settle();
+        CHECK(window.dockAreaSizes() == savedSizes);
+    }
+    window.resize(796, 550);
+    settle();
+    if (!window.dockAreaRequested(Qt::LeftDockWidgetArea)) {
+        window.toggleLeftDockArea(true);
+        settle();
+    }
+    CHECK_FALSE(line->isHidden());
+    CHECK_FALSE(circle->isHidden());
+    CHECK(line->size() == lineSize);
+    CHECK(circle->size() == circleSize);
+    CHECK(window.dockAreaSizes().isEmpty());
+}
+
+TEST_CASE("Restoring dock sizes preserves changes in another area", "[.gui][dock-window][3185]") {
+    requireScreen(QSize(1600, 900));
+    DockFixture fixture;
+    fixture.isolate();
+    auto& window = fixture.window;
+    LC_DockLayoutTestAccess::showLeftPair(window);
+    auto* right = fixture.addDock("test_right_size");
+    window.requestDockVisible(right);
+    window.resize(1600, 900);
+    settle();
+    window.toggleLeftDockArea(false);
+    settle();
+    window.resizeDocks({right}, {480}, Qt::Horizontal);
+    settle();
+    const int width = right->width();
+    window.toggleLeftDockArea(true);
+    settle();
+    CHECK(right->width() == width);
+}
+
+TEST_CASE("Pending dock sizes survive restarting in a smaller window", "[.gui][dock-window][3185]") {
+    LC_DockLayoutTestAccess::Workspace workspace;
+    QSize lineSize, circleSize;
+    {
+        DockFixture fixture;
+        fixture.isolate();
+        auto& window = fixture.window;
+        LC_DockLayoutTestAccess::showLeftPair(window);
+        window.resize(796, 550);
+        settle();
+        auto* line = window.findChild<QDockWidget*>("dock_line");
+        auto* circle = window.findChild<QDockWidget*>("dock_circle");
+        REQUIRE(line != nullptr);
+        REQUIRE(circle != nullptr);
+        window.resizeDocks({line}, {260}, Qt::Horizontal);
+        window.resizeDocks({line, circle}, {140, 360}, Qt::Vertical);
+        settle();
+        lineSize = line->size();
+        circleSize = circle->size();
+        window.toggleLeftDockArea(false);
+        window.resize(420, 400);
+        settle();
+        window.toggleLeftDockArea(true);
+        settle();
+        const auto saved = LC_DockLayoutTestAccess::capture();
+        workspace = LC_DockLayoutTestAccess::settingsRoundTrip(saved);
+        CHECK(workspace.dockAreaSizes == saved.dockAreaSizes);
+        CHECK(LC_DockLayoutTestAccess::fileRoundTrip(saved, false).dockAreaSizes == saved.dockAreaSizes);
+        workspace.showMainMenu = false;
+        workspace.showStatusBar = false;
+    }
+    FirstStart restored;
+    LC_DockLayoutTestAccess::restoreWorkspace(workspace, restored.window);
+    restored.window.show();
+    settle();
+    restored.window.resize(796, 550);
+    settle();
+    CHECK(restored.dock("dock_line")->size() == lineSize);
+    CHECK(restored.dock("dock_circle")->size() == circleSize);
+}
