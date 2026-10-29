@@ -12459,6 +12459,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // supported platform. Preserve the old file while committing the
     // completed staged output, and restore it if the commit fails.
     const auto commitStagedOutput = [&]() {
+      if (m_testBeforeDwgStagedPublish) {
+        auto hook = std::move(m_testBeforeDwgStagedPublish);
+        m_testBeforeDwgStagedPublish = {};
+        hook();
+      }
       if (!verifyOutputTargetForPublication())
         return false;
       if (!QFileInfo::exists(file))

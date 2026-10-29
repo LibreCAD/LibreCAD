@@ -49,6 +49,16 @@
 #include "rs_line.h"
 #include "rs_point.h"
 
+#ifdef DWGSUPPORT
+class DwgOutputPublicationTestAccess {
+public:
+    static void beforeStagedPublish(RS_FilterDXFRW& filter,
+                                    std::function<void()> hook) {
+        filter.m_testBeforeDwgStagedPublish = std::move(hook);
+    }
+};
+#endif
+
 namespace {
 
 struct Target {
@@ -330,3 +340,41 @@ TEST_CASE("DXF and DWG publication guards reject changed source paths and aliase
         }
     }
 }
+
+#ifdef DWGSUPPORT
+TEST_CASE("DWG outer publication guard observes changes after low-level staging",
+          "[dwg][filter][source-identity][outer-publish]") {
+    lc::test::ensureSettings();
+    const lc::test::QuietLog quiet;
+    const lc::test::OutputDirectory out("dwg_outer_publish_guard");
+    const auto file = out.file("drawing.dwg");
+    {
+        std::ofstream original(file, std::ios::binary);
+        original << "original source snapshot";
+        REQUIRE(original.good());
+    }
+
+    RS_Graphic graphic;
+    fill(graphic, 1);
+    graphic.setSourceFileIdentity(
+        LC_FileIdentity::capture(lc::test::toQString(file)));
+    REQUIRE(graphic.sourceFileIdentity().valid);
+
+    unsigned hookCalls = 0;
+    bool replacementGood = false;
+    RS_FilterDXFRW filter;
+    DwgOutputPublicationTestAccess::beforeStagedPublish(filter, [&] {
+        ++hookCalls;
+        std::ofstream replacement(file, std::ios::binary | std::ios::trunc);
+        replacement << "external replacement after low-level write";
+        replacementGood = replacement.good();
+    });
+
+    CHECK_FALSE(filter.fileExport(graphic, lc::test::toQString(file),
+                                  RS2::FormatDWG2018));
+    CHECK(hookCalls == 1);
+    CHECK(replacementGood);
+    CHECK(sameBytes(file, "external replacement after low-level write"));
+    CHECK(out.entries() == std::vector<std::string>{"drawing.dwg"});
+}
+#endif

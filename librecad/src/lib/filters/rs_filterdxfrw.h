@@ -85,6 +85,7 @@ struct DRW_AcisBrep;
 
 #ifdef DWGSUPPORT
 class DwgWriteFailureTestAccess;
+class DwgOutputPublicationTestAccess;
 
 /**
  * DWG-only identity state. Keeping these maps together makes their export
@@ -1976,6 +1977,7 @@ class RS_FilterDXFRW : public RS_FilterInterface,
   friend class LC_OffsetImportSession;
 #ifdef DWGSUPPORT
   friend class DwgWriteFailureTestAccess;
+  friend class DwgOutputPublicationTestAccess;
   friend class LC_DwgReadVersionTestAccess;
 #endif
 public:
@@ -3156,6 +3158,7 @@ private:
   DRW::Version m_offsetInputVersion = DRW::UNKNOWNV;
 #ifdef DWGSUPPORT
   std::function<void()> m_testBeforeDwgOpen;
+  std::function<void()> m_testBeforeDwgStagedPublish;
 #endif
   QString m_offsetInputCodePage = QStringLiteral("ANSI_1252");
   struct OffsetXDataContext {
