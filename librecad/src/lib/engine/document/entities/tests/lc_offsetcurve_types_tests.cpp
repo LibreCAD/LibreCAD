@@ -11,6 +11,10 @@
 #include <cmath>
 #include <memory>
 #include <vector>
+#include <QCoreApplication>
+#include <QElapsedTimer>
+#include <QEventLoop>
+#include <QThread>
 
 #include "lc_action_modify_trim.h"
 #include "lc_action_select_intersected.h"
@@ -218,6 +222,16 @@ public:
     using LC_ActionModifyTrim::m_trimEntity;
     using LC_ActionModifyTrim::previewTrim;
     using LC_ActionModifyTrim::setLimitEntity;
+    bool waitForTrim() const {
+        QElapsedTimer elapsed;
+        elapsed.start();
+        while (hasPendingNativeTrim()) {
+            if (elapsed.elapsed() >= 35000) return false;
+            QCoreApplication::processEvents(QEventLoop::AllEvents);
+            QThread::msleep(1);
+        }
+        return true;
+    }
     void click(const RS_Vector& p) {
         const auto event = lc::test::eventAt(p.x, p.y);
         onMouseLeftButtonRelease(getStatus(), &event);
@@ -464,6 +478,7 @@ TEST_CASE("F Trim context maps native owners and generated chords while preview 
         bool invalid = true;
         action.previewTrim(target, limit, {2, 0}, {0, .25}, invalid);
         REQUIRE_FALSE(invalid);
+        REQUIRE(action.waitForTrim());
         REQUIRE(action.m_preview->count() == 1);
         const auto* fragment = action.m_preview->entityAt(0);
         REQUIRE(fragment);
@@ -510,6 +525,7 @@ TEST_CASE("F actual Trim clicks cut an ordinary line at the whole native limit w
     REQUIRE(action.getStatus() == TrimProbe<>::ChooseTrimEntity);
     REQUIRE(action.m_limitEntity == curve);
     action.click({0, 3});
+    REQUIRE(action.waitForTrim());
     REQUIRE(line->isDeleted());
     REQUIRE(drawing.graphic.count() == 3);
     const auto* trimmed = drawing.graphic.last();
