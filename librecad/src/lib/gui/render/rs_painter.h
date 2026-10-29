@@ -107,9 +107,11 @@ public:
      *  the viewport background.  Returns a default-constructed color if no
      *  renderer is attached (e.g. during headless tests). */
     RS_Color getBackgroundColor() const;
+    enum class DashSpace { Model, Screen };
     void updateDashOffset(const RS_Entity* e);
     void clearDashOffset() {m_currenPatternOffset = 0.0;}
-    double currentDashOffset() const {return m_currenPatternOffset;}
+    double currentDashOffset(DashSpace dashSpace) const;
+    double currentDashOffset() const {return currentDashOffset(m_lastPenDashSpace);}
     // Whether the pen setPen() last built carries a dash pattern.
     bool penHasDashPattern() const {return m_lastPenDashed;}
 
@@ -202,7 +204,6 @@ public:
 //    void drawHandle(const RS_Vector& p, const RS_Color& c, int size=-1);
 
     RS_Pen getPen() const;
-    enum class DashSpace { Model, Screen };
     void setPen(const RS_Pen& pen);
     void setPen(const RS_Pen& pen, DashSpace dashSpace);
     void setPen(const RS_Color& color);
@@ -454,7 +455,7 @@ protected:
 
     double m_minRenderableTextHeightInPx = 1;
 
-    double m_currenPatternOffset = 0.0;
+    double m_currenPatternOffset = 0.0; // logical pixels along the rendered path
 
     int m_screenPointsSize = 0;
     int m_pointsMode = 0;

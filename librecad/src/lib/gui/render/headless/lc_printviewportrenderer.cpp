@@ -85,7 +85,7 @@ void LC_PrintViewportRenderer::setPenForPrintingEntity(RS_Painter *painter, RS_E
     // Getting pen from entity (or layer)
     RS_Pen pen = e->getPenResolved();
 
-    double patternOffset = painter->currentDashOffset();
+    double patternOffset = painter->currentDashOffset(RS_Painter::DashSpace::Model);
     if (m_lastPaintEntityPen.isSameAs(pen, patternOffset, m_lastPaintedPattern)) {
         return;
     }
