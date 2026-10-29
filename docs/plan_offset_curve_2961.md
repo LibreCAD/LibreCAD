@@ -3794,3 +3794,37 @@ visible desktop, installed-package, Windows runtime or full-suite qualification.
 | `/private/tmp/offset-W69-library-insert-asan.xml` | `8d09d4ba7e82cac10ba0caf75f1d09eb3d6e51c563cd05fd19b7f64107864a44` |
 | `/private/tmp/offset-W69-creation-release.xml` | `e606b0febe0fb4288013ba3a22b74c733742d4e24cdfa7113a03e8001c3c4fe4` |
 | `/private/tmp/offset-W69-creation-asan.xml` | `354bbeaedd3cdbb549d9234f9d9de0074cd50d1f5c896bc06621bf49148a88da` |
+
+## 30. W70 Staged Library Thumbnail Generation
+
+Missing or stale library thumbnails no longer cause `updatePreview()` to parse
+every drawing synchronously while populating the icon model. It shows the
+placeholder immediately, queues one staged import at a time, renders only after
+the source stamp and import outcome are accepted, then updates the persistent
+model index. A directory change cancels the active request and invalidates old
+indices, so a late thumbnail cannot replace the current selection. Existing
+current thumbnails continue to load directly from cache.
+
+The widget-level regression switches directories while the first session is
+active, verifies its output is suppressed, then checks that the selected
+directory produces a readable 64x64 PNG and updates the model icon. The focused
+test passes with 23 assertions in both Release and ASan through both the
+creation-action and full `librecad_tests` executables. The complete creation
+action suite passes 134 JUnit cases / 90,260 assertions in both configurations.
+The full LibreCAD application and both test targets link in Release and ASan.
+ASan used `detect_leaks=0`; this is not leak validation.
+
+The staged source capture yields and each request is independently validated,
+but DXF parsing and image rendering still execute on the Qt thread. This reduces
+model-population blocking and batches work between event-loop turns; it does not
+make an individual parse nonblocking. This is offscreen macOS coverage, not
+visible desktop, installed-package, Windows runtime, or full-suite acceptance.
+
+| W70 artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W70-thumbnail-release.xml` | `9467110aa5c3457e3f9080c821aac8e2bc57669443296205e13f4fc1514a6abc` |
+| `/private/tmp/offset-W70-thumbnail-asan.xml` | `e99c9488c56b3ab356da8da0d9705618bc320d4c6683e8ad47e03f23b5f2df7a` |
+| `/private/tmp/offset-W70-thumbnail-full-release.xml` | `cac101fc2ec0091060056537d05d6311a1799965b156aef8da2e2c80bc3add4d` |
+| `/private/tmp/offset-W70-thumbnail-full-asan.xml` | `de97b270749cd8f78cabb1df043db6e37ea3fb341d00ff80c86f35ca988ecc11` |
+| `/private/tmp/offset-W70-creation-release.xml` | `214472cc9af6ee3e15e7a3bdc4ac36869ead14e6f14590281ed1195c938246f9` |
+| `/private/tmp/offset-W70-creation-asan.xml` | `bad218f3af3207266a376c59b36a201d23145d5491a0fad700d552d349010e4c` |
