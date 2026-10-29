@@ -2972,6 +2972,27 @@ TEST_CASE("strict-core seed and split admissions precede queue mutation",
     }
 }
 
+TEST_CASE("strict queue capacity follows admitted work instead of configured depth ceilings",
+          "[lc-offsetcurve][geometry][cache-budget-accounting][strict-budget]") {
+    auto options = strictOptions();
+    options.maxLeafDepth = std::numeric_limits<unsigned>::max();
+    options.maxDepth = std::numeric_limits<unsigned>::max();
+    options.maxGeneratedItems = std::numeric_limits<std::size_t>::max();
+    options.maxBoxPairs = std::numeric_limits<std::size_t>::max();
+    options.maxOrderingComparisons = std::numeric_limits<std::size_t>::max();
+
+    const auto result = findIntersections(AnalyticLines{{1, 0}, {0, 1}}, options);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    REQUIRE(result.intersections.size() == 1);
+    CHECK(result.intersections.front().point.x == Approx(0.0).margin(1e-12));
+    CHECK(result.intersections.front().point.y == Approx(0.0).margin(1e-12));
+    CHECK(result.work.deepestPreparation == 0);
+    CHECK(result.work.deepestPairRefinement == 0);
+    CHECK(result.work.generatedItems < 64);
+    CHECK(result.work.totalBoxPairs < 64);
+    checkStrictWork(result, options);
+}
+
 TEST_CASE("strict-core validation, pair work, ordering comparisons and output scratch are bounded",
           "[lc-offsetcurve][geometry][cache-budget-accounting][strict-budget]") {
     using Shape = StrictBudgetCurves::Shape;

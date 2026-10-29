@@ -1323,21 +1323,6 @@ private:
         }
         return true;
     }
-    template<typename T>
-    bool reserveQueue(std::vector<T>& pending, const unsigned depth, const bool pairs,
-                      const std::size_t reservedItems) {
-        const auto remaining = m_options.maxGeneratedItems - m_work.generatedItems;
-        if (reservedItems > remaining) { return fail(LC_IntersectionStatus::LimitExceeded); }
-        // DFS retains at most one sibling per level; every split consumes two items.
-        // Preparation reserves the still-mandatory segment seeds separately and has no pair debit.
-        auto splits = std::min<std::size_t>(depth, (remaining - reservedItems) / 2);
-        if (pairs) { splits = std::min(splits, m_options.maxBoxPairs - m_work.totalBoxPairs); }
-        if (splits == std::numeric_limits<std::size_t>::max() || splits + 1 > pending.max_size()) {
-            return fail(LC_IntersectionStatus::LimitExceeded);
-        }
-        pending.reserve(splits + 1);
-        return true;
-    }
     template<typename T, typename Less>
     bool heapSort(std::vector<T>& values, const std::size_t first, const std::size_t last, Less less) {
         const auto size = last - first;
@@ -1453,7 +1438,7 @@ private:
             struct Pending { LC_Interval parameter; unsigned depth; };
             const auto& source = m_segments[segment];
             std::vector<Pending> pending;
-            if (!reserveQueue(pending, m_options.maxLeafDepth, false, m_remainingSeeds) || !generate(1, false)) {
+            if (!reserveAdditional(pending, 1) || !generate(1, false)) {
                 return false;
             }
             --m_remainingSeeds;
@@ -1507,8 +1492,7 @@ private:
                 if (!(item.parameter.lo() < middle && middle < item.parameter.hi())) {
                     return fail(LC_IntersectionStatus::AmbiguousTopology);
                 }
-                if (std::size_t{2} > pending.max_size() - pending.size() || pending.size() + 2 > pending.capacity() ||
-                    !generate(2)) {
+                if (!canGenerate(2) || !reserveAdditional(pending, 2) || !generate(2)) {
                     return fail(LC_IntersectionStatus::LimitExceeded);
                 }
                 pending.push_back({LC_Interval::hull(middle, item.parameter.hi()), item.depth + 1});
@@ -1867,8 +1851,7 @@ private:
     }
     bool solve(const LC_IntersectionDomain& initial, const std::size_t first, const std::size_t last) {
         std::vector<Cell> pending;
-        if (!canConsume() || !canGenerate(1) || !reserveQueue(pending, m_options.maxDepth, true, 1) ||
-            !generate(1)) { return false; }
+        if (!canConsume() || !canGenerate(1) || !reserveAdditional(pending, 1) || !generate(1)) { return false; }
         pending.push_back({initial, 0});
         while (!pending.empty()) {
             if (!consume(m_work.refinementBoxPairs)) {
@@ -1942,8 +1925,9 @@ private:
             if (!(parameter.lo() < middle && middle < parameter.hi())) {
                 return fail(LC_IntersectionStatus::AmbiguousTopology);
             }
-            if (std::size_t{2} > pending.max_size() - pending.size() || pending.size() + 2 > pending.capacity() ||
-                !generate(2)) { return fail(LC_IntersectionStatus::LimitExceeded); }
+            if (!canGenerate(2) || !reserveAdditional(pending, 2) || !generate(2)) {
+                return fail(LC_IntersectionStatus::LimitExceeded);
+            }
             Cell left{cell.box, cell.depth + 1};
             Cell right{cell.box, cell.depth + 1};
             (first ? left.box.parameterA : left.box.parameterB) = LC_Interval::hull(parameter.lo(), middle);
