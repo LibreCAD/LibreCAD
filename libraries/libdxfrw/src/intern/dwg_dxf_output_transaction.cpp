@@ -35,6 +35,9 @@
 #  include <fcntl.h>
 #  include <io.h>
 #  include <sys/stat.h>
+#  ifndef NOMINMAX
+#    define NOMINMAX
+#  endif
 #  include <windows.h>
 #else
 #  include <fcntl.h>

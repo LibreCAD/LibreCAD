@@ -4083,3 +4083,24 @@ discovery is `/private/tmp/offset-W77-creation-discovery.xml`. ASan used
 offscreen caller qualification, not visible desktop, Windows runtime,
 installed-helper deployment or final acceptance. No creation/repeat product gap
 was found in this slice.
+
+## 40. W78a Windows `max` Macro Portability
+
+Manual workflow run `40840320048` against `c3972e4069d47902d620df10870f3a2bd92c59b5`
+found a real MSVC compile failure in
+`libraries/libdxfrw/src/intern/dwg_dxf_output_transaction.cpp`: Windows' `max`
+macro expanded `std::numeric_limits<std::size_t>::max()` at line 118. Added the
+same guarded `NOMINMAX` convention already used by the application and file
+identity implementation before including `windows.h`.
+
+The focused CMake Release hostile-output regression was rebuilt from the patched
+source and passes one JUnit testcase / 692 assertions with zero errors,
+failures or skips; strict `xmllint --noout` validation also passes. This Linux
+result does not exercise the Windows preprocessor branch. The Windows x64 job in
+run `40840320048` therefore remains a failed pre-fix result, and the new source
+must be pushed and rerun before recording Windows compile/runtime qualification.
+Windows ARM64 and the workflow's Linux fast lane have not yet completed.
+
+| W78a artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W78-output-transaction-release.xml` | `6500f10caa7cd2d79027e2ebb3470feacdaf2f2feb82ff3229d9de0368cae3dc` |
