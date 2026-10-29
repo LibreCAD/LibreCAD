@@ -149,6 +149,7 @@ void LC_WorkspacesManager::fillBySettings(LC_Workspace &workspace){
         workspace.windowY = LC_GET_INT("WindowY", 32);
 
         workspace.widgetsState = LC_GET_STR("StateOfWidgets", "");
+        workspace.dockAreaSizes = QJsonDocument::fromJson(LC_GET_STR("DockAreaSizes", "").toUtf8()).object().toVariantMap();
         const QByteArray dockVisibilityJson = LC_GET_STR("DockVisibility", "").toUtf8();
         const QJsonDocument dockVisibility = QJsonDocument::fromJson(dockVisibilityJson);
         if (dockVisibility.isObject()) {
@@ -183,6 +184,7 @@ void LC_WorkspacesManager::fillByState(LC_Workspace &workspace){
     const QString stateB64 = appWin.dockLayoutStateForSaving().toBase64(QByteArray::Base64Encoding);
     workspace.geometry = geometryB64;
     workspace.widgetsState = stateB64;
+    workspace.dockAreaSizes = appWin.dockAreaSizes();
     workspace.dockVisibility = appWin.requestedDockVisibility();
     workspace.hasDockVisibility = true;
     workspace.windowHeight = appWin.height();
@@ -216,6 +218,7 @@ void LC_WorkspacesManager::applyToSettings(const LC_Workspace &workspace){
         LC_SET("WindowY", workspace.windowY);
         LC_SET("WindowX", workspace.windowX);
         LC_SET("StateOfWidgets",workspace.widgetsState);
+        LC_SET("DockAreaSizes", QString::fromUtf8(QJsonDocument(QJsonObject::fromVariantMap(workspace.dockAreaSizes)).toJson(QJsonDocument::Compact)));
         QJsonObject dockVisibility;
         for (auto it = workspace.dockVisibility.cbegin(); it != workspace.dockVisibility.cend(); ++it)
             dockVisibility.insert(it.key(), it.value());
@@ -276,6 +279,7 @@ void LC_WorkspacesManager::restoreGeometryAndState(const LC_Workspace &workspace
                                  {int(Qt::BottomDockWidgetArea), workspace.dockAreaBottomActive},
                                  {int(Qt::NoDockWidgetArea), workspace.docAreaFloatingActive}};
     appWin.restoreDockLayout(workspace.dockVisibility, workspace.hasDockVisibility, areas, widgetsState);
+    appWin.setDockAreaSizes(workspace.dockAreaSizes);
 
     const auto& tbAreas = appWin.getToolbarAreaToggleActions();
     tbAreas.left->setChecked(workspace.tbAreaLeftActive);
@@ -376,6 +380,7 @@ void LC_WorkspacesManager::loadWorkspaces(){
 
                                 p->geometry = wsObj["geometry"].toString();
                                 p->widgetsState = wsObj["widgetState"].toString();
+                                p->dockAreaSizes = wsObj["dockAreaSizes"].toObject().toVariantMap();
                                 p->windowX = wsObj["winX"].toInt();
                                 p->windowY = wsObj["winY"].toInt();
                                 p->windowWidth = wsObj["winWidth"].toInt();
@@ -458,6 +463,7 @@ void LC_WorkspacesManager::saveWorkspaces(QWidget* parent){
                 wsObj.insert("id", QJsonValue::fromVariant(p->id));
                 wsObj.insert("geometry", QJsonValue::fromVariant(p->geometry));
                 wsObj.insert("widgetState", QJsonValue::fromVariant(p->widgetsState));
+                if (!p->dockAreaSizes.isEmpty()) wsObj.insert("dockAreaSizes", QJsonObject::fromVariantMap(p->dockAreaSizes));
                 if (p->hasDockVisibility) {
                     QJsonObject dockVisibility;
                     for (auto it = p->dockVisibility.cbegin(); it != p->dockVisibility.cend(); ++it)

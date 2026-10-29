@@ -53,6 +53,7 @@ protected:
         int windowX{0};
         int windowY{0};
         QString widgetsState;
+        QVariantMap dockAreaSizes;
         QMap<QString, bool> dockVisibility;
         bool hasDockVisibility{false};
 

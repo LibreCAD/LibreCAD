@@ -280,6 +280,9 @@ QMap<QString, bool> QC_ApplicationWindow::requestedDockVisibility() const {
     return m_requestedDockVisibility;
 }
 
+QVariantMap QC_ApplicationWindow::dockAreaSizes() const { return m_dockAreaSizes; }
+void QC_ApplicationWindow::setDockAreaSizes(const QVariantMap& sizes) { m_dockAreaSizes = sizes; }
+
 bool QC_ApplicationWindow::dockAreaRequested(Qt::DockWidgetArea area) const {
     return m_requestedDockAreas.value(int(area), true);
 }
@@ -324,6 +327,16 @@ void QC_ApplicationWindow::restoreDockLayout(const QMap<QString, bool>& requeste
 }
 
 void QC_ApplicationWindow::setDockAreaRequested(Qt::DockWidgetArea area, bool state) {
+    const QString areaKey = QString::number(int(area));
+    if (!state && dockAreaRequested(area)) {
+        QVariantMap sizes;
+        for (QDockWidget* dock : findChildren<QDockWidget*>()) {
+            if (!dock->isFloating() && dockWidgetArea(dock) == area && !dock->isHidden()
+                && rect().intersects(dock->geometry()) && !dock->objectName().isEmpty())
+                sizes.insert(dock->objectName(), QVariantList{dock->width(), dock->height()});
+        }
+        if (!sizes.isEmpty()) m_dockAreaSizes.insert(areaKey, sizes);
+    }
     m_requestedDockAreas[int(area)] = state;
     if (!state && !m_priorityDockName.isEmpty()) {
         if (QDockWidget* priority = findChild<QDockWidget*>(m_priorityDockName);
@@ -339,6 +352,28 @@ void QC_ApplicationWindow::setDockAreaRequested(Qt::DockWidgetArea area, bool st
         }
     }
     applyRequestedDockVisibility();
+    if (state) {
+        QList<QDockWidget*> docks;
+        QList<int> widths, heights;
+        QSet<QString> groups;
+        const QVariantMap sizes = m_dockAreaSizes.take(areaKey).toMap();
+        for (auto it = sizes.cbegin(); it != sizes.cend(); ++it) {
+            QDockWidget* dock = findChild<QDockWidget*>(it.key());
+            const QVariantList size = it.value().toList();
+            if (!dock || dock->isFloating() || dockWidgetArea(dock) != area || dock->isHidden()
+                || size.size() != 2 || size[0].toInt() <= 0 || size[1].toInt() <= 0) continue;
+            const QString group = dockGroupKey(dock);
+            if (groups.contains(group)) continue;
+            groups.insert(group);
+            docks.append(dock);
+            widths.append(size[0].toInt());
+            heights.append(size[1].toInt());
+        }
+        if (!docks.isEmpty()) {
+            resizeDocks(docks, widths, Qt::Horizontal);
+            resizeDocks(docks, heights, Qt::Vertical);
+        }
+    }
     updateDockAreaActions();
     scheduleDockFit();
 }
@@ -367,7 +402,10 @@ void QC_ApplicationWindow::requestDockVisible(QDockWidget* dock) {
     m_requestedDockVisibility[dock->objectName()] = true;
     m_priorityDockName = dock->objectName();
     if (dock->isFloating()) m_floatingDocksRequested = true;
-    else m_requestedDockAreas[int(dockWidgetArea(dock))] = true;
+    else if (!dockAreaRequested(dockWidgetArea(dock))) {
+        setDockAreaRequested(dockWidgetArea(dock), true);
+        m_priorityDockName = dock->objectName();
+    }
     restoreCollapsedGroup(dockGroupKey(dock));
     applyRequestedDockVisibility();
     dock->raise();
