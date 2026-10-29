@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, and W79's complete staged macOS CMake install are qualified in focused Release/ASan lanes; W80 and W84 fix distinct atomic compound budget admissions with focused Release/ASan evidence; W81 adds bounded Linux/Windows worker CI; W82/W83 make its PR and feature-branch triggers reliable; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, and W79's complete staged macOS CMake install are qualified in focused Release/ASan lanes; W80 fixes demonstrated compound admissions, while W85 preserves the explicitly staged contact-control accounting after review corrected W84; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, other import callers, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -303,7 +303,7 @@ candidate except the explicitly proposed native-worker tags.
 | ID | Owns / concrete deliverable | Depends on | Current state | Acceptance selector or artifact |
 |---|---|---|---|---|
 | S0 | Pin/reconcile candidate, main and feature; baseline/discovery; fix DWG enum classification and add R2007 execution | - | recovered; parser and ordinary R2007 slices qualified below; geometry/type/target qualification remains | `[curve-offset]`, `[lc-offsetcurve]`, `[entity-coverage]`, actual target/version inventory |
-| A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; `27f9c5239` and `38ffc230f` fix two compound admission sites with focused Release/ASan pass; broader audit remains open | `[lc-offsetcurve][budget-core]` |
+| A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; `27f9c5239` fixes demonstrated compound admissions; `91dcde3c4` preserves ordered contact-control debit semantics; broader audit remains open | `[lc-offsetcurve][budget-core]` |
 | A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; W64 focused strict-budget Release/ASan requalification; broad audit remains open | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
 | A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; W65 focused reference-accounting Release/ASan requalification; paired graph audit remains open | `[lc-offsetcurve][reference-accounting]` |
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66 focused cache-budget Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][cache-budget-accounting]` |
@@ -4252,20 +4252,25 @@ and both Windows jobs had started, with dependency/setup steps still in
 progress. Pushing W84 will supersede that older-head run; verify the replacement
 run and its Linux and Windows conclusions before advancing W2 qualification.
 
-## 47. W84 Atomic Contact-Control Admission
+## 47. W84/W85 Contact-Control Admission Review
 
-At source commit `38ffc230f`, made the initial contact-control reservation in
-`prepareContacts()` atomic. Previously a denied first distance-pair check could
-leave a vertex debit even though the ledger/control record was created only
-after both reservations. The exact-prefix regression now distinguishes this
-initial compound admission from later per-record stages, where the vertex is
-actually materialized before its pair check and must remain charged on refusal.
+W84 (`38ffc230f`) tentatively changed the initial contact-control vertex/pair
+reservation to be atomic. A post-commit review found this contradicted the
+pre-existing exact-prefix contract: the test comment explicitly states that the
+contact-control item is admitted before its pair. This is an intentional
+ordered work stage, not a compound reservation, so W84's claimed product fix
+was withdrawn. W85 (`91dcde3c4`) restores the sequential debit order and retains
+the `[budget-core]` test tag so this boundary is included in focused runs.
 
-| W84 lane | JUnit cases / assertions | Result | SHA256 |
+| W85 lane | JUnit cases / assertions | Result | SHA256 |
 |---|---:|---|---|
-| Budget-core Release, `/private/tmp/offset-W84-budget-core-release.xml` | 5 / 4554 | PASS; errors=0, failures=0, skipped=0 | `8a1834dfdae301cb6ed3e25c0f05fa51d9cfa27d87007e2ae7036b1429445978` |
-| Budget-core ASan, `/private/tmp/offset-W84-budget-core-asan.xml` | 5 / 4554 | PASS; errors=0, failures=0, skipped=0 | `ad21a3414ea6a4be894addd6ec1175508dd2aee5cb8af42a9c6832999b000848` |
+| Budget-core Release, `/private/tmp/offset-W85-budget-core-release.xml` | 5 / 4554 | PASS; errors=0, failures=0, skipped=0 | `e7cc30429b3f28b9e56f4b33859d68e9143839e3a0f80cf7e672992e1f964f89` |
+| Budget-core ASan, `/private/tmp/offset-W85-budget-core-asan.xml` | 5 / 4554 | PASS; errors=0, failures=0, skipped=0 | `5bb575e2dd28bbe9f015b7746ca46495696fed51121ea8f89e3a14e9ff113891` |
 
-ASan used `detect_leaks=0`. This closes only the demonstrated control-stage
-partial debit; the full A-core source and allocation-failure audit remains
-open.
+ASan used `detect_leaks=0`. The earlier W84 reports (4,554 assertions each)
+passed for the altered expectation but do not establish a defect; they are
+superseded by W85's source-semantics review. At this checkpoint, PR Actions run
+`40848899453` was building Linux on older head
+`a4c62eb66b9dabf3b2b6d822a17c7f57e0fdc175`; both Windows jobs were still in Qt
+setup. Pushing W85 supersedes that run, so inspect the replacement run before
+claiming cross-platform qualification. The full A-core audit remains open.
