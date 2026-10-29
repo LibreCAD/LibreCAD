@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, and an additive staged plugin block-import API are qualified in focused Release/ASan lanes; W79 adds a complete staged macOS CMake install with adjacent-helper and creation/repeat checks; other import callers, Windows and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, an additive staged plugin block-import API, and W79's complete staged macOS CMake install are qualified in focused Release/ASan lanes; W80 fixes atomic compound budget admission with focused Release/ASan evidence; remaining budget audit, other import callers, Windows and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -303,7 +303,7 @@ candidate except the explicitly proposed native-worker tags.
 | ID | Owns / concrete deliverable | Depends on | Current state | Acceptance selector or artifact |
 |---|---|---|---|---|
 | S0 | Pin/reconcile candidate, main and feature; baseline/discovery; fix DWG enum classification and add R2007 execution | - | recovered; parser and ordinary R2007 slices qualified below; geometry/type/target qualification remains | `[curve-offset]`, `[lc-offsetcurve]`, `[entity-coverage]`, actual target/version inventory |
-| A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; W63 focused budget-core Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][budget-core]` |
+| A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; `27f9c5239` fixes compound admission atomicity with focused Release/ASan pass; broader audit remains open | `[lc-offsetcurve][budget-core]` |
 | A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; W64 focused strict-budget Release/ASan requalification; broad audit remains open | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
 | A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; W65 focused reference-accounting Release/ASan requalification; paired graph audit remains open | `[lc-offsetcurve][reference-accounting]` |
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66 focused cache-budget Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][cache-budget-accounting]` |
@@ -4167,3 +4167,23 @@ This is staged-package offscreen coverage, not visible desktop interaction or
 cross-platform acceptance. Actions run `40842072529` has passed Linux
 `VerifyDwgDxfFast`; Windows x64 and ARM64 remain in progress. Do not close W0-W2
 or final platform gates from this macOS result alone.
+
+## 43. W80 Atomic Compound Budget Admission
+
+At source commit `27f9c5239`, changed compound geometry-budget reservations to
+use one atomic `adoptWork` call instead of sequentially debiting vertices,
+pairs, or cache spans. The fix covers cache-layout inspection, reference
+provider/event admission, and retained ambiguity records. Regressions assert
+that a failed compound reservation retains no partial debit and that work from
+already-entered stages remains an exact prefix. This closes that specific
+accounting defect; the rest of A-core's shared-budget ownership, sticky-status,
+and lifetime audit remains open.
+
+| W80 lane | JUnit cases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Budget-core Release, `/private/tmp/offset-W80-budget-core-release.xml` | 4 / 4278 | PASS; errors=0, failures=0, skipped=0 | `abe61497e7994511134e79a26f26f5aceac47bf31a719eb2a02676b962efc503` |
+| Budget-core ASan, `/private/tmp/offset-W80-budget-core-asan.xml` | 4 / 4278 | PASS; errors=0, failures=0, skipped=0 | `472af545897ba877b3340d9b117592019bf837c5c4f56f9a2d5015ae5fc23aba` |
+
+ASan used `detect_leaks=0`, so this is not leak validation. The source change
+does not close A-core/A-strict/A-reference/A-cache as a whole or the roadmap's
+cross-platform and final acceptance gates.
