@@ -303,7 +303,7 @@ candidate except the explicitly proposed native-worker tags.
 | ID | Owns / concrete deliverable | Depends on | Current state | Acceptance selector or artifact |
 |---|---|---|---|---|
 | S0 | Pin/reconcile candidate, main and feature; baseline/discovery; fix DWG enum classification and add R2007 execution | - | recovered; parser and ordinary R2007 slices qualified below; geometry/type/target qualification remains | `[curve-offset]`, `[lc-offsetcurve]`, `[entity-coverage]`, actual target/version inventory |
-| A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; audit/retest | `[lc-offsetcurve][budget-core]` |
+| A-core | Atomic shared admissions, frozen results, sticky status and ownership/lifetime | S0 | candidate `0eb2a0cfa`; W63 focused budget-core Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][budget-core]` |
 | A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; audit/retest | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
 | A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; audit/retest | `[lc-offsetcurve][reference-accounting]` |
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; audit/retest | `[lc-offsetcurve][cache-budget-accounting]` |
@@ -3636,3 +3636,19 @@ remain open for R acceptance.
 | `/private/tmp/offset-W62-commands-seed1.xml` | `5be463d531081975b243d6b3352b8b2a00246065973f4da5529e43fbf33a222a` |
 | `/private/tmp/offset-W62-commands-seed2.xml` | `cd3b1561c4fd3224c83e452cf7440588b0fd107a57761b2f48d0f768c98e2062` |
 | `/private/tmp/offset-W62-commands-seed3.xml` | `9b9eb1fb55794a33117b47f00287747f14a380995ec7465d2a521ca64b0ad141` |
+
+## 22. W63 Shared-Budget Core Requalification
+
+Re-ran the focused `[lc-offsetcurve][budget-core]` selection against the current
+tree with the Release runner and the ASan runner. Both runs passed the two
+sticky-refusal/shared-budget cases (3,942 JUnit assertions) with zero errors,
+failures or skips; both reports pass strict `xmllint --noout`. These cases
+exercise pre-spent exact-cap adoption, alias-safe counter snapshots and
+terminal latches without refunding admitted work. This is focused requalification,
+not completion of the required A-core source audit or A-strict/A-reference/A-cache.
+ASan used `detect_leaks=0`, so it is not a leak check.
+
+| W63 artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W63-budget-core-release.xml` | `4ced959a310c99e22f06fe12a475b44ea95823b1d48a18cb4b41577010855084` |
+| `/private/tmp/offset-W63-budget-core-asan.xml` | `dc5607f1c217a13fa714fa74844c214f53410bb14bb162d8f1d39d0e71c23cd7` |
