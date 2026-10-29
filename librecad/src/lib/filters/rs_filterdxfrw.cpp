@@ -5295,6 +5295,7 @@ bool RS_FilterDXFRW::embedXref(RS_Block *block, const QString &xrefPath,
   RS_Graphic ext;
   RS_FilterDXFRW xrefFilter;
   xrefFilter.m_deferOffsetAdmission = m_deferOffsetAdmission;
+  xrefFilter.m_offsetCurveCacheOnlyImport = m_offsetCurveCacheOnlyImport;
   xrefFilter.m_offsetImportBudget = m_offsetImportBudget;
   xrefFilter.m_xrefSnapshotProvider = m_xrefSnapshotProvider;
   xrefFilter.m_directImportContext = m_directImportContext;
@@ -8521,6 +8522,14 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
   if (context && parsed.status == xd::Status::Schema1 && parsed.definition &&
       parsed.remaining && parsed.knownCandidates == 1 && data->eType == DRW::SPLINE) {
     const auto raw = LC_OffsetCurveCarrier::fromRawSpline(*data);
+    if (m_offsetCurveCacheOnlyImport) {
+      auto display = raw
+          ? std::make_unique<RS_Spline>(m_currentContainer, *raw.data)
+          : makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
+      applyImportedSplineAttributes(display.get(), data, remaining);
+      m_currentContainer->addEntity(display.release());
+      return;
+    }
     if (raw) {
       const auto &definition = parsed.definition->geometry;
       const RS_Ellipse source{nullptr, definition.basis};

@@ -1223,7 +1223,7 @@ TEST_CASE("Staged offset import asks for partial-read acceptance without reparsi
     }
 }
 
-TEST_CASE("Hatch pattern import rejects partial DXF and keeps valid native preview geometry",
+TEST_CASE("Hatch pattern import rejects partial DXF and keeps ordinary native display cache",
           "[lc-offsetcurve][hatch-pattern][hostile]") {
     Setup setup;
     lc::test::OutputDirectory directory("offset-pattern-import");
@@ -1231,14 +1231,25 @@ TEST_CASE("Hatch pattern import rejects partial DXF and keeps valid native previ
 
     const auto validPath = directory.file("valid.dxf");
     f::put(validPath, complete);
+    RS_Graphic drawing;
+    REQUIRE(lc::test::importDrawing(drawing, validPath, RS2::FormatDXFRW2018));
+    REQUIRE(f::native(drawing, 3));
+
     RS_Pattern valid(lc::test::toQString(validPath));
     REQUIRE(valid.loadPattern());
     CHECK_FALSE(valid.empty());
+    bool keptSpline = false;
     for (const auto* entity : valid) {
         REQUIRE(entity);
         CHECK((entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntityArc ||
-               entity->rtti() == RS2::EntityEllipse));
+               entity->rtti() == RS2::EntityEllipse || entity->rtti() == RS2::EntitySpline));
+        if (entity->rtti() == RS2::EntitySpline) {
+            keptSpline = true;
+            CHECK(dynamic_cast<const LC_OffsetCurve*>(entity) == nullptr);
+            CHECK(f::markerCount(entity->getDrwExtData()) == 0);
+        }
     }
+    CHECK(keptSpline);
 
     auto partialBytes = complete;
     const auto end = partialBytes.rfind("0\nENDSEC\n0\nEOF\n");

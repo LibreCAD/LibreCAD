@@ -2041,6 +2041,8 @@ public:
   // Import:
   bool fileImport(RS_Graphic &g, const QString &file,
                   RS2::FormatType type) override;
+  /** Keep recognized native offset splines as plain display-cache geometry. */
+  void setOffsetCurveCacheOnlyImport(bool enabled) noexcept { m_offsetCurveCacheOnlyImport = enabled; }
   /// Read caller-owned bytes while resolving external references relative to
   /// the original logical filename. The stream must be seekable and binary.
   bool fileImportStream(RS_Graphic &g, const QString &logicalFile,
@@ -3144,6 +3146,7 @@ private:
   /** Pointer to current entity container (either block or graphic) */
   RS_EntityContainer *m_currentContainer = nullptr;
   bool m_deferOffsetAdmission = false;
+  bool m_offsetCurveCacheOnlyImport = false;
   std::shared_ptr<LC_OffsetImportBudget> m_offsetImportBudget;
   static void refreshDeferredOffsetInserts(RS_Graphic &graphic);
   /** MLINESTYLE cache: name → style data. Populated by addMLineStyle as

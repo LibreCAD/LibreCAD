@@ -203,7 +203,8 @@ RS_Entity* RS_Pattern::clone() const {
 
 /**
  * Loads the given pattern file into this pattern.
- * Lines, arcs and ellipses are retained; native curves use displayed lines.
+ * Lines, arcs, ellipses and splines are retained. Native offset carriers are
+ * imported as ordinary cache geometry and never synchronously validated here.
  * Other ordinary entity types keep their existing unsupported status.
  *
  */
@@ -244,7 +245,9 @@ bool RS_Pattern::loadPattern() {
 
     RS_Graphic gr;
     if (!RS_FileIO::instance()->fileImport(gr, path, RS2::FormatUnknown,
-                                           [](bool, const QString&) { return false; })) {
+                                           [](bool, const QString&) { return false; },
+                                           RS2::DxfTextEncoding::Declared,
+                                           RS_FileIO::OffsetCurveImportPolicy::DisplayCacheOnly)) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Pattern: Pattern import failed: %s", path.toLatin1().data());
         return false;
     }
@@ -257,7 +260,8 @@ bool RS_Pattern::loadPattern() {
             }
             continue;
         }
-        if (e != nullptr && (e->rtti() == RS2::EntityLine || e->rtti() == RS2::EntityArc || e->rtti() == RS2::EntityEllipse)) {
+        if (e != nullptr && (e->rtti() == RS2::EntityLine || e->rtti() == RS2::EntityArc ||
+                             e->rtti() == RS2::EntityEllipse || e->rtti() == RS2::EntitySpline)) {
             const RS_Layer* layer = e->getLayer();
             RS_Entity* clone = e->clone();
             clone->reparent(this);
