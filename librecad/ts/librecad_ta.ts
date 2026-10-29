@@ -39,150 +39,11 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">சட்டகம்</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="obsolete">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="obsolete">&lt;</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">சேமி</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">சட்டகம்</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">சேமி</translation>
-    </message>
-</context>
-<context>
-    <name>DlgParabola</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">வடிவியல்</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">கட்டுப்பாட்டு புள்ளிகள்</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">வடிவியல்</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="obsolete">தேர்ந்தெடுக்கப்பட்டால், ஸ்ப்லைன் புள்ளிகள் பயன்படுத்தப்படும்</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="obsolete">ஸ்ப்லைன் புள்ளிகள்</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="obsolete">தேர்ந்தெடுக்கப்பட்டால், கட்டுப்பாட்டு புள்ளிகள் பயன்படுத்தப்படும்</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">கட்டுப்பாட்டு புள்ளிகள்</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
         <translation>தொடக்க புள்ளியை தூரம் அல்லது புள்ளி நிலையில் மட்டுமே அமைக்க முடியும்</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">உருவாக்க வேண்டியது:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">செவ்வகம்</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">அகலம்:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">உயரம்:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">நடுக்கம்:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">தவறான கோணம்</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">தவறான ஆரம்</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">தவறான மதிப்பு</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">செருகும் புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">கோணத்தை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">அளவை குறிப்பிடவும் (அகலம், உயரம்)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">மூலைகளின் வகையை குறிப்பிடவும்
-[நேரான|வளைவு|சாய்வு]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">மூலை சாய்வு நீளத்தை குறிப்பிடவும் (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">மூலை ஆரத்தை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">விளிம்பு பயன்முறையை குறிப்பிடவும்
-[இரண்டும்|கிடைமட்ட|செங்குத்து]</translation>
     </message>
 </context>
 <context>
@@ -429,73 +290,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">படிவம்</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">வளைவின் உயரம் (கோடு மற்றும் மேல் வளைவு புள்ளிக்கு இடையிலான தூரம்)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">உயரம்:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">எதிர்திசை</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">வளைவின் ஆரம்</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ஆரம்:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">சுற்றுமுகம்</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">வளைவின் மையக் கோணம்</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">வளைவின் நீளம்</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">நீளம்:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து ஆரத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து உயரத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -707,10 +501,6 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">வரம்பு பெட்டிக்கான பொருட்களைத் தேர்ந்தெடுக்கவும் (முடிக்க Enter அழுத்தவும்)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation type="unfinished"></translation>
@@ -765,31 +555,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">ஆரம்=%1 தேர்ந்தெடுக்கப்பட்ட புள்ளிகளுக்கு மிகச் சிறியது
-புள்ளிகளுக்கிடையிலான தூரம்=%2 விட்டத்தை விட பெரியது=%3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">இரண்டு சாத்தியமான வட்ட மையங்களிலிருந்து தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">முதல் புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">இரண்டாவது புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">வட்ட மையத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -1038,13 +803,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">வட்டம், வளைவு அல்லது நீள்வட்டத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1088,10 +846,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>மையத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">மையம் குறிப்பிடப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1486,154 +1240,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">முதல் புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">இரண்டாவது புள்ளியை குறிப்பிடவும்
-அல்லது [எண்|x|y|கோணம்|p|விளிம்புகள்|தூரம்]</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">இரண்டாவது புள்ளியை குறிப்பிடவும்
-அல்லது [எண்]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">கோட்டின் திசையை குறிப்பிடவும்
-[x|y|கோணம்|p|தூரம்]</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">கோட்டின் திசை கோணத்தை குறிப்பிடவும்
-அல்லது [x|y|p|எண்|விளிம்புகள்|தூரம்]</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">விளிம்பு புள்ளிகள் பயன்முறையை குறிப்பிடவும்
-[எதுவுமில்லை|தொடக்க|முடிவு|இரண்டும்|தூரம்]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">புள்ளிகளுக்கிடையே நிலையான தூரத்தை குறிப்பிடவும்
-அல்லது[x|y|p|எண்|விளிம்புகள்]</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">தூரத்தை குறிப்பிடவும் (%1)
-அல்லது [%2]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">பின்வாங்கு</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">தூரத்தை குறிப்பிடவும் (கோணம் %1 பாகை)
-அல்லது [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">புள்ளிகளின் எண்ணிக்கையை குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">இரண்டாவது மூலையை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">இரண்டாவது தொடுகோட்டை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">முதல் மூலையை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">முதல் தொடுகோட்டை குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">செல்லுபடியாகும் எண் அல்ல. 1..9999 ஐ முயற்சிக்கவும்</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">வட்டமாக்கல் ஆரத்தின் தவறான மதிப்பு</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">செல்லுபடியாகும் வெளிப்பாடு அல்ல</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">எண்ணை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">வட்டமாக்கல் ஆரத்தை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">மையத்தை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">உருவாக்க வேண்டியது:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">மையம்:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">தொடக்க கோணம்:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ஆரம்:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">உள் ஆரம்:</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">பலகோணம்</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">ஒரு தொடுகோட்டை குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1874,29 +1480,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/text/lc_action_draw_mtext.cpp" line="198"/>
         <source>Enter text:</source>
         <translation type="unfinished">உரையை உள்ளிடவும்:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">செல்லுபடியாகும் வெளிப்பாடு அல்ல</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">முதல் பொருளைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">இரண்டாவது பொருளைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">மாற்று முனைகள்</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">விலக்கல் மதிப்பை உள்ளிடவும்</translation>
     </message>
 </context>
 <context>
@@ -4021,10 +3604,6 @@ or [%2]</source>
         <translation>தூண்டல்</translation>
     </message>
     <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">கட்டத்தில் ஒட்டு</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>நடு ஒட்டு கைமுறை</translation>
@@ -4425,26 +4004,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>Widget Options</source>
         <translation>விட்ஜெட் விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">இடது</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">வலது</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">மேல்</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">கீழ்</translation>
-    </message>
-    <message>
-        <source>Floating</source>
-        <translation type="vanished">மிதக்கும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
@@ -5207,10 +4766,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">சீரமைக்க வேண்டிய பொருட்களைத் தேர்ந்தெடுக்கவும் (முடிக்க Enter ஐ அழுத்தவும்)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>தேர்ந்தெடுத்து சீரமைக்கவும்</translation>
@@ -5242,10 +4797,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
         <translation>அளவு:</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">சீரமைக்க தேர்ந்தெடுக்கவும் (முடிக்க Enter ஐ அழுத்தவும்)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -6239,13 +5790,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">எந்தவொரு பொருளும் தேர்ந்தெடுக்கப்படவில்லை!</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionModifyStretch</name>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="118"/>
@@ -7219,18 +6763,6 @@ Point: (%8 , %9)</source>
         <translation>வழங்கப்பட்ட கோப்பைப் படிக்க முடியவில்லை - அது உள்ளதா மற்றும் அதிலிருந்து படிக்க அனுமதி உள்ளதா என்பதைச் சரிபார்க்கவும்.</translation>
     </message>
     <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">குறுக்குவழி மேப்பிங் இறக்குமதி செய்யப்படவில்லை.
- வழங்கப்பட்ட கோப்பு உள்ளது, இருப்பினும் அதில் LibreCAD குறுக்குவழி மேப்பிங் இல்லை.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">குறுக்குவழி மேப்பிங் இறக்குமதி செய்யப்படவில்லை. 
- கோப்பை செயலாக்கும்போது XML பாகுபடுத்தல் பிழை ஏற்பட்டது.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
         <translation>குறுக்குவழி மேப்பிங் வெற்றிகரமாக சேமிக்கப்பட்டது.</translation>
@@ -7239,12 +6771,6 @@ XML parsing error occurred during file processing.</source>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
         <translation>கொடுக்கப்பட்ட கோப்பில் எழுத முடியவில்லை - அதில் எழுத அனுமதி உள்ளதா என்று சரிபார்க்கவும்.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">குறுக்குவழி மேப்பிங் இறக்குமதி செய்யப்படவில்லை. 
-XML உருவாக்கும்போது சில பிழைகள் ஏற்பட்டன.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -8639,74 +8165,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், அசல் வளைவு நீக்கப்படும்</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">வளைவை மாற்றவும்</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">உருவாக்கப்பட்ட வட்டம் வைக்கப்பட வேண்டிய அடுக்கு</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">செயலில் உள்ளது</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">அசல்</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">செயலில் உள்ளது</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">மூல</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">மூல தீர்வு</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து ஆஃப்செட் மதிப்பைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">பேனா:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">உருவாக்கப்பட்ட வட்டத்திற்குப் பயன்படுத்த வேண்டிய பேனா</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">வட்டத்தின் ஆரம் மற்றும் வளைவின் ஆரம் ஆகியவற்றின் டெல்டா</translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">ஆரம் மாற்றம்:</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -9001,69 +8459,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>கருவிப்பட்டை: %1 (தனிப்பயன்)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">படிவம்</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">வகை</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">குறுக்கின் கிடைமட்ட அளவு</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து X மதிப்பைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">குறுக்கின் அளவுகளை எவ்வாறு பயன்படுத்துவது என்பதை இது வரையறுக்கிறது</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">நீட்சி</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">மொத்த நீளம்</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">சதவீதம்</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து Y மதிப்பைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">குறுக்கின் செங்குத்து அளவு</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">மையத்தைச் சுற்றி குறுக்கின் சுழற்சி கோணம்</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
     </message>
 </context>
 <context>
@@ -9427,45 +8822,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="obsolete">ஆர்டினேட் பரிமாணம்</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">பரிமாணத்தின் அடுக்கு</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">பேனா பண்புகள்</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">வடிவியல்</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="obsolete">ஆர்டினேட்</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">பேனா</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -9527,11 +8883,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
         <translation>அடிப்படை இடைவெளி:</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">அடிப்படை அளவீட்டின் அளவீட்டு கோடுகளுக்கு இடையிலான இடைவெளியை அமைக்கிறது. ஒரு தூரத்தை உள்ளிடவும். அடிப்படை அளவீடுகள் பற்றிய தகவலுக்கு, DIMBASELINE ஐப் பார்க்கவும். (DIMDLI அமைப்பு மாறி)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -11178,10 +10529,6 @@ Are you sure you are going to discard changes?</source>
         <source>Hatch Properties</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">பண்புகள்?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -11738,14 +11085,6 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">அட்டவணை உருப்படிகளுக்கான காட்சி விவரங்களுடன் கூடிய கருவி உதவிக்குறிப்பு</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டால், காட்சி ஒருங்கிணைப்பு அமைப்பின் விவரங்களைக் கொண்ட நெடுவரிசை காட்டப்படும்.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="85"/>
         <source>If checked, type of grid for saved view will be shown.</source>
         <translation>இந்த பெட்டி சரிபார்க்கப்பட்டால், சேமிக்கப்பட்ட காட்சியின் கட்டத்தின் வகை காட்டப்படும்.</translation>
@@ -11771,17 +11110,9 @@ Are you sure you are going to discard changes?</source>
         <translation>இந்த பெட்டி சரிபார்க்கப்பட்டால், காட்சியின் விவரங்களைக் கொண்ட நெடுவரிசை அட்டவணையில் காட்டப்படும்.</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">காட்சி விவரங்கள் நெடுவரிசை</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>செயல்பாடுகள்</translation>
-    </message>
-    <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">அட்டவணை உருப்படியில் இருமுறை கிளிக் செய்தால்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
@@ -11812,10 +11143,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="194"/>
         <source>If enabled, click on the view table item will restore view. Otherwise, view should be restored explicitly.</source>
         <translation>இது இயக்கப்பட்டிருந்தால், காட்சி அட்டவணையில் உள்ள உருப்படியைக் கிளிக் செய்தால் காட்சி மீட்டமைக்கப்படும். இல்லையெனில், காட்சியை வெளிப்படையாக மீட்டெடுக்க வேண்டும்.</translation>
-    </message>
-    <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">அட்டவணை உருப்படியின் மூலம் ஒரு கிளிக்கில் காட்சியை மீட்டமை</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
@@ -12121,17 +11448,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation>பெயர் தனித்துவமாக இல்லை. தனித்துவமான பெயரை உள்ளிடவும்.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">பேனா</translation>
-    </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="obsolete">பரவளையத்தின் கட்டுப்பாட்டு புள்ளிகள் ஒரே நேர்கோட்டில் இருக்கக்கூடாது</translation>
     </message>
 </context>
 <context>
@@ -12547,13 +11863,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DlgSplinePoints</name>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">பேனா</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgTolerance</name>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="14"/>
@@ -12685,10 +11994,6 @@ Are you sure you are going to discard changes?</source>
         <translation>சரிபார்க்கப்பட்டால், UCS க்கான கட்டத்தின் வகையைக் கொண்ட நெடுவரிசை காட்டப்படும்.</translation>
     </message>
     <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்டால், காட்சியைக் நீக்கும்போது உறுதிப்படுத்தல் உரையாடல் காட்டப்படும். இல்லையெனில், காட்சி அமைதியாக நீக்கப்படும்.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
         <source>Ask for confirmation before UCS removal</source>
         <translation>UCS நீக்குவதற்கு முன் உறுதிப்படுத்தல் கேட்கவும்</translation>
@@ -12752,10 +12057,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="249"/>
         <source>Defines amount of blinks of UCS marker for UCS highlighting.</source>
         <translation>யு.சி.எஸ் குறிப்பான்களின் ஒளிரும் எண்ணிக்கையை இது வரையறுக்கிறது.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">அட்டவணையில் ஒரு முறை கிளிக் செய்வதன் மூலம் யு.சி.எஸ் மீட்டமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
@@ -13212,45 +12513,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">படிவம்</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">இடைவெளி:</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், முழுத் தேர்வுக்கும் ஒரு எல்லை பெட்டி உருவாக்கப்படும். இல்லையெனில், ஒவ்வொரு தனிப்பட்ட பொருளுக்கும் உருவாக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">தேர்வை குழுவாகக் கருது</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து இடைவெளியைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்டால், எல்லை பெட்டிக்கான மூலை புள்ளிகள் மட்டுமே வரையப்படும். இல்லையெனில், விளிம்பு கோடுகள் வரையப்படும்.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">மூலை புள்ளிகள் மட்டும்</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்டால், எல்லை பெட்டி ஒரு பலகோட்டு கோடாக வரையப்படும்</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">பலகோட்டு கோடு</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13344,86 +12606,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">அசல் பொருளில் இருந்து நகல் பொருளின் செங்குத்து இடைவெளி</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">அசல் பொருளில் இருந்து நகல் பொருளின் கிடைமட்ட இடைவெளி</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து X இடைவெளியை தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">பேனா:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், நகல் அசல் பொருளின் ஒருங்கிணைப்புகளில் வைக்கப்படும்</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">இடத்தில்</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து Y தூரத்தில் நகர்த்தவும்</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">உருவாக்கப்பட்ட நகலுக்கு பயன்படுத்த வேண்டிய பேனா</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">செயலில் உள்ளது</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">மூல</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">மூல தீர்வு</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">நகல் வைக்கப்பட வேண்டிய அடுக்கு</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">செயலில் உள்ளது</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">மூல</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">Y திசைவிலகல்:</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">X திசைவிலகல்:</translation>
     </message>
 </context>
 <context>
@@ -13605,69 +12787,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">சிறிய ஆரம்:</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">பெரிய ஆரத்திற்கான கோணத்தின் மதிப்பு</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், பெரிய ஆரத்திற்கான கோணத்தை குறிப்பிடலாம்</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">அடிப்படை கோணம்:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">எதிர் கடிகார திசை</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து முக்கிய செயல்களைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், சுட்டியின் மூலம் பெரிய ஆரத்தின் கோணம் குறிப்பிடப்படும்.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">இலவசம்</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">நீள்வட்டத்தின் பெரிய ஆரத்தின் நீளம்</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து சிறிய ஆரத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">பெரிய ஆரம்:</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">நீள்வட்டத்தின் சிறிய ஆரத்தின் நீளம்</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">வலஞ்சுழியாக</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13806,21 +12925,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">வட்ட வில் விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">வலஞ்சுழியாக</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">எதிர்-வலஞ்சுழியாக</translation>
     </message>
 </context>
 <context>
@@ -14711,30 +13815,6 @@ Are you sure you are going to discard changes?</source>
         <source>Eccentricity:</source>
         <translation>மையவிலகல்:</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">செல்லாத அதிபரவளைய வரையறை</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">குவியங்கள் வேறுபட்டதாக இருக்க வேண்டும்</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">செல்லாத மைய ஆயத்தொலைவுகள்</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">பெரிய ஆரம் நேர்மறையாக இருக்க வேண்டும்</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">செல்லாத சுழற்சி கோணம்</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">விகிதம் அல்லது சிறிய ஆரம் நேர்மறையாக இருக்க வேண்டும்</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -14906,10 +13986,6 @@ Are you sure you are going to discard changes?</source>
         <translation>அகலம்:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">படத்தின் அகலம்</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>வரைபடத்திலிருந்து அகல மதிப்பைத் தேர்ந்தெடுக்கவும்</translation>
@@ -14920,21 +13996,9 @@ Are you sure you are going to discard changes?</source>
         <translation>உயரம்:</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">படத்தின் உயரம்</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>வரைபடத்திலிருந்து உயர மதிப்பைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">அளவு:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">அளவிடுதல் காரணி</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -14946,10 +14010,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>கோணம்:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">சுழற்சி கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -14981,22 +14041,6 @@ Are you sure you are going to discard changes?</source>
         <source>Select an image file</source>
         <translation>படக் கோப்பைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">அளவு (px):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">படத்தின் அளவு பிக்சல்களில்</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">தீர்மானம் (ஒரு அங்குலத்திற்கு புள்ளிகள்)</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -15009,21 +14053,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">படிவம்</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், புள்ளி எப்போதும் தேர்ந்தெடுக்கப்பட்ட பொருளுக்குள் இருக்கும்</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">பொருளில் ஒட்டு</translation>
     </message>
 </context>
 <context>
@@ -15401,14 +14430,6 @@ Are you sure you are going to discard changes?</source>
         <translation>அடுக்கின் உள் பெயரை படிநிலை பெயர்களாகப் பிரிக்கப் பயன்படுத்தப்படும் பிரிப்பான்</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">அடுக்கு நிலை பெயர் பிரிப்பான்</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">இரண்டாம் நிலை அடுக்கு பின்னொட்டுகள்</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15439,10 +14460,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>அடுக்கு பெயரில், அந்த அடுக்கு மாற்று நிலை அடுக்கு என்பதைக் குறிக்கும் பின்னொட்டு.</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">பெயர் நகல்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15585,17 +14602,9 @@ Are you sure you are going to discard changes?</source>
         <translation>பல்வேறு நிற அமைப்புகள்</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">வண்ணங்கள்</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>அடுக்கு மரத்தில் தேர்ந்தெடுக்கப்பட்ட உருப்படிகளுக்கான பின்னணி நிறம்.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">லேயர் மரக் காட்சியில் உள்ள பிரிப்பு கோடுகளுக்கான நிறம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15634,10 +14643,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>மெய்நிகர் அடுக்கின் பின்னணி நிறம்</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">மூன்று காட்சி உருப்படிகளின் பிரிப்பான் கட்டம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15693,10 +14698,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>மாற்று நிலை அடுக்கு</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">வலை</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16186,118 +15187,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">படிவம்</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், கோட்டின் நீளம் அமைப்பிற்கு பதிலாக சுட்டியின் நிலையால் வரையறுக்கப்படுகிறது</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">இலவசம்</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து ஸ்னாப் தூரத்தை தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தை தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">சந்திப்பு புள்ளியிலிருந்து டிக் ஸ்னாப் புள்ளியின் ஆஃப்செட்</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து நீளத்தை தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து ஆஃப்செட்டைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், அசல் பொருள் குறுக்குவெட்டுப் புள்ளியால் பிரிக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">பிரி</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ஆஃப்செட்:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">குறிப்பிட்ட கோடு ஸ்னாப் புள்ளியிலிருந்து குறுக்குவெட்டுப் புள்ளியின் தூரம்</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">உருவாக்கப்பட்ட கோட்டின் எந்தப் பகுதி குறுக்குவெட்டுப் புள்ளியில் ஸ்னாப் செய்யப்படும் என்பதை இது வரையறுக்கிறது</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">ஆரம்பம்</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">நடு</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">முடிவு</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">டிக் ஸ்னாப்:</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">வரி கோடு பிடிப்பு:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">கோட்டின் நீளம்</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், கோணம் தேர்ந்தெடுக்கப்பட்ட பொருளின் கோணத்திற்கு ஏற்ப இருக்கும்</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">உறவினர்</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">நீளம்:</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">உருவாக்கப்பட்ட கோடு மற்றும் மூலப் பொருளுக்கு இடையே உள்ள வெட்டும் புள்ளியின் நிலையைக் குறிக்கும் புள்ளி (மூலக் கோட்டிற்குள்)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">கட்டற்ற</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">பிடிப்பு தூரம்:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">கோட்டின் கோணம்</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16604,93 +15493,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation type="unfinished">உருவாக்க வேண்டிய இருபாகுப் பிரிப்பிகளின் எண்ணிக்கை</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">படிவம்</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">அளவு:</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">இறுதி நகர்வு:</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">வெட்டும் புள்ளியிலிருந்து உருவாக்கப்பட்ட கோட்டிற்கான நகர்வு</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">உருவாக்கப்பட்ட கோட்டிற்கான ஸ்னாப் புள்ளி</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">ஆரம்பம்</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">நடு</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">இறுதி</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">நீளம்:</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">உருவாக்கப்பட்ட கோட்டின் நிலையான நீளம்</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">சமன் செய்தல்:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து விலகலைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">உருவாக்கப்பட்ட கோடு வெட்டும் புள்ளியில் உருவாக்கப்பட வேண்டுமா அல்லது நிலையான நீளம் கொண்டதாக இருக்க வேண்டுமா என்பதை இது வரையறுக்கிறது</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">வெட்டும் புள்ளிக்கு</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">நிலையான நீளம்</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட கோடு தேர்ந்தெடுக்கப்பட்ட கோட்டிற்கு செங்குத்தாக இருக்கும்</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">செங்குத்து</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">மூலக் கோடு மற்றும் உருவாக்கப்பட்ட கோடு ஆகியவற்றுக்கு இடையேயான கோணம்</translation>
     </message>
 </context>
 <context>
@@ -17076,81 +15878,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டால், தனித்தனி கோடுகளுக்கு பதிலாக ஒரு பலகோடு உருவாக்கப்படும்</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">பலகோடு உருவாக்கு</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">கோட்டிற்கான கொள்கை இரண்டாவது முறையாகத் தேர்ந்தெடுக்கப்பட்டது</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">நீட்டி/சுருக்கு</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">பகுதியைச் சேர்</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">மாற்றம் இல்லை</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">கோடு 1:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">கோடு 2:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">முதலில் தேர்ந்தெடுக்கப்பட்ட கோடுகளை இணைப்பதற்கான கொள்கை</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">உருவாக்கப்பட்ட பொருட்களுக்கு பேனா எவ்வாறு பயன்படுத்தப்பட வேண்டும் என்பதை வரையறுக்கிறது</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">செயலில் உள்ள பேனா</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">கோடு 1</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">கோடு 2</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">இரண்டு கோடுகளும்</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">பண்புகள்:</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், அசல் கோடுகள் நீக்கப்படும்</translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">அசல் கோடுகளை நீக்கு</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17532,85 +16259,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">படிவம்</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">வரிகளின் விளிம்புகளில் (ஆரம்ப/இறுதி புள்ளிகள்) புள்ளிகள் எவ்வாறு உருவாக்கப்பட வேண்டும் என்பதைக் கட்டுப்படுத்துகிறது.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">எதுவுமில்லை</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">இரண்டும்</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">ஆரம்பம்</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">இறுதி</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து தூரத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">உருவாக்க வேண்டிய புள்ளிகளின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">விளிம்பு புள்ளிகள்:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">அனைத்து புள்ளிகளும் வரியின் ஆரம்பம்/இறுதி புள்ளிகளுக்கு இடையில் பொருந்துமா அல்லது வரியின் நீளம் புள்ளிகளின் எண்ணிக்கை மற்றும் புள்ளிகளுக்கு இடையிலான தூரத்தின் அடிப்படையில் கணக்கிடப்படுமா என்பதை இது குறிப்பிடுகிறது.</translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">கோடுகளைச் சரிசெய்தல்</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">புள்ளிகளுக்கு இடையிலான தூரம்.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், புள்ளிகளின் கோடு குறிப்பிட்ட கோணத்துடன் வரையப்படும்.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">புள்ளிகளின் எண்ணிக்கை:</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், புள்ளிகளுக்கு இடையே நிலையான குறிப்பிட்ட தூரம் பயன்படுத்தப்படும். இல்லையெனில், தூரம் கணக்கிடப்படும்.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">நிலையான தூரம்</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">கோட்டின் கோணம்</translation>
     </message>
 </context>
 <context>
@@ -21860,433 +20508,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">உதவி</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">இணைய ஆவணங்கள்</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">விக்கி</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">பயனர் கையேடு</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">கட்டளைகள்</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">பாணி தாள்கள்</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">விட்ஜெட்கள்</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">பற்றி</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">மன்றம்</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">சுலிப் அரட்டை</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">சமர்ப்பிக்கும்போது ஏற்பட்ட பிழை</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">ஒரு அம்சத்திற்கான கோரிக்கை</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">வெளியீடுகள் பக்கம்</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">நன்கொடை</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">வரி</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">புள்ளி</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">வட்டம்</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">வில்</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">பல கோணம்</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">வளைவு</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">நீள்வட்டம்</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">பல கோடுகள்</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">மற்றவை</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">வரை</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">நீள்வட்டம்</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">மற்றவை</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">மாற்று</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">வரிசைப்படுத்து</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">அளவுகள்</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">தகவல்</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp;கருவிகள்</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;தேர்ந்தெடு</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">அள&amp;வு</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;கோப்பு</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">சமீபத்திய கோப்புகள்</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">இறக்குமதி</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">ஏற்றுமதி</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp;திருத்து</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;காட்சி</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">&amp;காட்சிகள் மீட்டமை</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">&amp;செருகுநிரல்கள்</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">&amp;பணித்தளம்</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">டாக்கிங் பகுதிகள்</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">CAD விட்ஜெட்கள்</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">&amp;வரைபடங்கள்</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">சூழல்</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">கருவிப்பட்டைகள்</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">விட்ஜெட்கள்</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">CAD விட்ஜெட்கள்</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">CAD கருவிப்பட்டைகள்</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">தேர்ந்தெடு</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">சமீபத்தியவை</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">மாற்று</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">மேலும் மாற்றுக</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">வரை</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">கோடு</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">பல கோடுகள்</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">புள்ளி</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">வட்டம்</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">வளைவு</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">பல கோணம்</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">பல கோடு/வளைவு</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">நீள்வட்டம்</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">மற்றவை</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">அளவுகளைச் சேர்</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">சீரமை</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">வரைதல் வரிசை</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">அடுக்குகள்</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">தகவல்</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">திருத்து</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">பெயரிடப்பட்ட காட்சிகள்</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">பண்புகளைத் திருத்து</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">பொதுவானதை மாற்றுக</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">கோட்டை மாற்றுக</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">கோடு வரையவும்</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">வட்டத்தை வரையவும்</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">மற்றொன்றை வரையவும்</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">வட்டத்தை மாற்றுக</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">வளைவை மாற்றவும்</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">பாலிலைன் மாற்றவும்</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">ஸ்ப்லைன் மாற்றவும்</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">ஸ்ப்லைன் புள்ளிகளை மாற்றவும்</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">உரையை மாற்றவும்</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">எம்டெக்ஸ்டை மாற்றவும்</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">தொகுதியைத் திருத்தவும்</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">வரிசை</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;கருவிப்பட்டைகள்</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">&amp;CAD கருவிப்பட்டைகள்</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">&amp;பணி இடங்கள்</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">&amp;அடுக்கு முறை</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">&amp;சாளர முறை</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp;அமைப்பு</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">வட்டமானது</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">முக்கோணமானது</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">வடக்கு</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">தெற்கு</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">கிழக்கு</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">மேற்கு</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">வரிசைப்படுத்து</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">முழுத்திரை</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">வரிசையாக அடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">சதுர வடிவில் அடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">செங்குத்தாக அடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">கிடைமட்டமாக அடுக்கவும்</translation>
-    </message>
-</context>
-<context>
     <name>LC_MenuFactoryBase</name>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
@@ -22902,21 +21123,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">படிவம்</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">இடைவெளி:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து இடைவெளியைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23053,197 +21259,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், தற்போதைய பண்புகள் பிரதிபலிக்கும் உறுப்புகளுக்குப் பயன்படுத்தப்படும், இல்லையெனில் - அசல் பண்புகள் பயன்படுத்தப்படும்.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">தற்போதைய பண்புகளைப் பயன்படுத்தவும்</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">இந்த பெட்டி தேர்வு செய்யப்படாவிட்டால், அசல் கூறுகள் நீக்கப்படும், இல்லையெனில் அவை அப்படியே இருக்கும்.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">அசல் கூறுகளை அப்படியே வைக்கவும்</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், பிரதிபலித்த கூறுகள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">தற்போதைய அடுக்கைப் பயன்படுத்தவும்</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், தேவைப்பட்டால் கூறுகள் அளவிடப்படும். இல்லையெனில், அவை வெறுமனே நிலைநிறுத்தப்பட்டு சுழற்றப்படும்.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">அளவிடு</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், குறுக்குவெட்டு புள்ளிகளுக்கு இடையே உள்ள பிரிவுகள் நீக்கப்படும். தேர்வு செய்யப்படாவிட்டால், கூறு குறுக்குவெட்டு புள்ளிகளில் பிரிக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">பிரிவுகளை நீக்கு</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், தேர்ந்தெடுக்கப்பட்ட பிரிவு நீக்கப்படும். இல்லையெனில், தேர்ந்தெடுக்கப்பட்ட பிரிவு அப்படியே இருக்கும், மீதமுள்ள பிரிவுகள் நீக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">தேர்ந்தெடுத்ததை நீக்கு</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">இடைவெளி தூரம்:</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">இடைவெளியின் முனைப்புள்ளியை, கோட்டின் முனைப்புள்ளியுடன் இணைக்கவும்</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">கோடு இணைப்பு:</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">இடைவெளி அளவு:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">கோட்டில் இடைவெளியின் முனைப்புள்ளி</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">இலவசம்</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">இடைவெளி இணைப்பு:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">தொடங்கு</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">நடு</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">முடிவு</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">இலவசம்</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">ஆரம்பம்</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">நடு</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">முடிவு</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து இடைவெளி அளவைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">ஸ்னாப் புள்ளியிலிருந்து தூரம்</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து ஸ்னாப் தூரத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">இடைவெளி அளவு, இலவசமாக இல்லாவிட்டால்</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், இடைவெளியின் அளவு சுட்டியால் தீர்மானிக்கப்படும்.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், தேர்ந்தெடுக்கப்பட்ட கோட்டு உறுப்பைப் பயன்படுத்தி பிரதிபலிப்பு செய்யப்படும்.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்ட கோட்டிற்கு பிரதிபலிப்பு</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">சரிபார்க்கப்படாவிட்டால், அசல் கூறுகள் நீக்கப்படும், இல்லையெனில் அவை அப்படியே இருக்கும்.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">அசல் கூறுகளை அப்படியே வைத்திரு</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், பிரதிபலிப்பு செய்யப்பட்ட கூறுகளுக்கு தற்போதைய பண்புகள் பயன்படுத்தப்படும், இல்லையெனில் அசல் பண்புகள் பயன்படுத்தப்படும்.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், பிரதிபலிப்பு செய்யப்பட்ட கூறுகள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">தற்போதைய அடுக்கைப் பயன்படுத்து</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23289,234 +21304,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">சுழற்சி விருப்பங்களை நகர்த்து</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், சுழற்சி காரணியை மவுஸ் மூலம் சுதந்திரமாகத் தேர்ந்தெடுக்கலாம்.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">சுதந்திரம்</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், புதிய உருப்படிகள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் இருக்கும்.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">தற்போதைய அடுக்கைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், குறிப்பு புள்ளி சுழற்றப்படும், ஆனால் உருப்படி இரண்டாவது கோணத்தால் மட்டுமே சுழற்றப்படும், இல்லையெனில் கோணங்கள் கூட்டப்படும்.</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">முழுமையானது</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">சுழற்சி மையப் புள்ளியைச் சுற்றி உருப்படியை சுழற்ற வேண்டிய கோணம்</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், தற்போதைய பண்புகள் உருவாக்கப்பட்ட உருப்படிகளுக்குப் பயன்படுத்தப்படும், இல்லையெனில் அசல் பண்புகள் பயன்படுத்தப்படும்.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், இரண்டாவது சுழற்சி குறிப்பு புள்ளியைச் சுற்றி இருக்கும்</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">இரண்டு முறை சுழற்று</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">குறிப்பு புள்ளியைச் சுற்றி கூடுதல் சுழற்சிக்கான கோணம்</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து சுழற்சி கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், அசல் கூறுகள் அப்படியே இருக்கும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">அசல் கூறுகளை அப்படியே வைத்திரு</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், பல நகல்கள் உருவாக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">பல நகல்கள்</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">சுழற்சி கோணம்:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">கோணம் உள்ளிடப்பட்ட மதிப்பு அல்லது சுட்டி நிலையால் தீர்மானிக்கப்படுகிறதா என்பதை இது குறிப்பிடுகிறது</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">வரைபடத்தில் இருந்து இரண்டாவது சுழற்சி கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">நகல்களின் எண்ணிக்கை</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">நகர்த்து சுழற்சி விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், பல நகல்கள் உருவாக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">பல நகல்கள்</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், X மற்றும் Y அச்சுகளுக்கு ஒரே அளவிடுதல் காரணி பயன்படுத்தப்படும்.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">சமச்சீர்</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், அசல் கூறுகள் அப்படியே இருக்கும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">அசல் வடிவத்தை அப்படியே வைத்திரு</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">நகல்களின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், உருவாக்கப்பட்ட பொருட்களுக்கு தற்போதைய பண்புகள் பயன்படுத்தப்படும், இல்லையெனில் அசல் பண்புகள் பயன்படுத்தப்படும்.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">Y அச்சிற்கான அளவுகோல் காரணி</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">அளவுகோல் காரணி:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும். இல்லையெனில், அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">தற்போதைய அடுக்கைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், காரணி மவுஸைப் பயன்படுத்தி சுதந்திரமாகத் தேர்ந்தெடுக்கப்படும். இல்லையெனில், குறிப்பிடப்பட்ட காரணி மதிப்புகள் பயன்படுத்தப்படும்.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">சுதந்திரமாக</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">X அச்சிற்கான அளவுகோல் காரணி</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், அசல் கூறுகள் அப்படியே இருக்கும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">அசல் கூறுகளை அப்படியே வைத்திரு</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட கூறுகள் தற்போதைய அடுக்கில் வைக்கப்படும். இல்லையெனில், அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">தற்போதைய அடுக்கைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">நகல்களின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், தற்போதைய பண்புகள் உருவாக்கப்பட்ட கூறுகளுக்குப் பயன்படுத்தப்படும், இல்லையெனில் அசல் பண்புகள் பயன்படுத்தப்படும்.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், அசல் கூறுகள் அப்படியே இருக்கும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">அசல் கூறுகளை அப்படியே வைத்திரு</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், பல நகல்கள் உருவாக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">பல நகல்கள்</translation>
     </message>
 </context>
 <context>
@@ -23832,14 +21619,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>LC_NamedViewsListWidget</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">பெயரின் அடிப்படையில் காட்சிகளை வடிகட்டுதல்</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">வடிகட்டு...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24274,45 +22053,6 @@ Warning: this action can NOT be undone!</source>
         <source>Control Points</source>
         <translation>கட்டுப்பாட்டு புள்ளிகள்</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">பரவளையத்தின் கட்டுப்பாட்டு புள்ளிகள் ஒரே நேர்கோட்டில் இருக்கக்கூடாது</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">படிவம்</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்டால், ஒட்டும்போது செருகும் புள்ளியாகப் பயன்படுத்தப்படும் புள்ளி நீக்கப்படும். இல்லையெனில், அது அப்படியே இருக்கும்.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">புள்ளியை நீக்கு</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">அளவு காரணி</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">ஒட்டப்பட்ட பொருட்களுக்கான அளவு காரணி</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">ஒட்டப்பட்ட பொருட்களுக்கான சுழற்சி கோணம்</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24388,89 +22128,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">ஒட்டப்பட்ட பொருட்களுக்கான சுழற்சி கோணம்</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">வரிசைகளில் உள்ள பொருட்களின் செருகும் புள்ளிகளுக்கு இடையிலான இடைவெளி.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து X-ஐப் பயன்படுத்தி வரிசை இடைவெளியைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">அளவு காரணி</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து வரிசை கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">அணிக்கு சுழற்சி கோணம்.</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">அணியின் வரிசைகளின் எண்ணிக்கை.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து Y அச்சில் அணியின் இடைவெளியைத் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், ஒவ்வொரு ஒட்டுதலுக்கும் மற்றும் முழு அணிக்கும் ஒரே சுழற்சி கோணம் பயன்படுத்தப்படும். இல்லையெனில், வெவ்வேறு கோணங்கள் பயன்படுத்தப்படும்.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">ஒரே கோணங்கள்</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">இடைவெளி:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">அணியின் நிரல்களின் எண்ணிக்கை.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், ஒட்டுதலின்போது நகல்களின் அணிகள் உருவாக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">அணி</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">வரிசை கோணம்:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">ஒட்டப்பட்ட பொருட்களுக்கான அளவுகோல் காரணி</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">நிரல்களில் உள்ள பொருட்களின் செருகும் புள்ளிகளுக்கு இடையிலான இடைவெளி.</translation>
     </message>
 </context>
 <context>
@@ -25092,17 +22749,9 @@ Warning: this action can NOT be undone!</source>
         <translation>கோட்டு அகலத்தின் பெயர்</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">நிறங்கள்</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>தற்போது பென் அட்டவணையில் திருத்தப்படும் பென் உறுப்புக்கான பின்னணி நிறம்</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">பென் பட்டியலுக்கான கட்டத்தின் நிறம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25124,10 +22773,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>செயலில் உள்ள பேனாவுக்கான முழு அட்டவணை வரிசையும் தடித்ததாக இருக்கும்</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">கட்ட நிறம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25220,17 +22865,9 @@ Warning: this action can NOT be undone!</source>
         <translation>முடிந்தவரை இயல்பான பெயரைப் பயன்படுத்தவும்</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்டால், பேனா தொடர்பான செயல்பாடுகளின் ஒரு பகுதியாக கூடுதல் செய்திகள் காட்டப்படும்</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>பேனா மூலம் தேர்ந்தெடுக்கக்கூடிய எந்தவொரு பொருளும் இல்லையென்றால், தகவல் செய்தியைக் காட்டவும்</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">அட்டவணை உருப்படியில் இருமுறை கிளிக் செய்தால்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25453,12 +23090,6 @@ Warning: this action can NOT be undone!</source>
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">பேனா கோப்பின் இருப்பிடம் மாற்றப்பட்டுள்ளது, புதிய பேனா கோப்பைப் பயன்படுத்த பயன்பாட்டை மறுதொடக்கம் செய்யவும்.
-பேனாவை எடிட்டர் மூலம் மறுதொடக்கம் இல்லாமல் சேமித்தால், தற்போதைய பேனாக்கள் புதிய கோப்பில் சேமிக்கப்படும், இதனால் அதன் ஏற்கனவே உள்ள உள்ளடக்கம் மேலெழுதப்படும் என்பதை நினைவில் கொள்ளவும்.</translation>
-    </message>
 </context>
 <context>
     <name>LC_PointPickButton</name>
@@ -25504,37 +23135,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>வரைபடத்திலிருந்து நிலையைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">படிவம்</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">லட்டீஸ் Y திசையில் உள்ள புள்ளிகளின் எண்ணிக்கை (லட்டீஸ் வரிசைகளின் எண்ணிக்கை)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">வரிசைகளின் எண்ணிக்கை:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">நிரல்களின் எண்ணிக்கை:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">X லட்டீஸ் திசையில் உள்ள புள்ளிகளின் எண்ணிக்கை (லட்டீஸ் நிரல்களின் எண்ணிக்கை)</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்டால், லட்டீஸின் கடைசி புள்ளி, முதல் புள்ளியின் நிலைக்கு ஏற்ப சரிசெய்யப்படும், இதனால் லட்டீஸ் ஒரு செவ்வகம் அல்லது நாற்கரமாக இருக்கும்</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">கடைசி புள்ளியை முதல் புள்ளியுடன் சரிசெய்</translation>
     </message>
 </context>
 <context>
@@ -32801,10 +30401,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>விட்டம்</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">சுற்றளவு</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="740"/>
@@ -33789,10 +31385,6 @@ p, li { white-space: pre-wrap; }
         <translation>உருப்படி தகவல்</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;தேர்ந்தெடுக்கப்பட்டால், பலகோணத்தின் ஒரு பகுதியாக இருக்கும் கோடுகள் மற்றும் வளைவுகள் பற்றிய கூடுதல் விரிவான தகவல்கள் &apos;உருப்படி தகவல்&apos; விட்ஜெட்டில் காட்டப்படும்.&lt;br/&gt;இல்லையெனில், உச்சி/வளைவுகள் பற்றிய தகவல்கள் மட்டுமே காட்டப்படும்.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
@@ -33841,205 +31433,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>புள்ளிகளை சிறப்பித்துக் காட்டும் பேனா.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">விளிம்புகள்:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், ஸ்னாப் புள்ளி மூலைகளின் ஆரத்தால் மாற்றியமைக்கப்பட வேண்டும் என்று குறிப்பிடுகிறது.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">ஸ்னாப் மாற்றம்</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">Y திசையில் பெவல் மூலையின் நீளம்.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">செவ்வகத்தின் எந்த விளிம்புகள் வரையப்பட வேண்டும் என்பதை இது வரையறுக்கிறது (இதனால் செவ்வகத்திற்கு பதிலாக இரண்டு இணையான கோடுகளை உருவாக்க முடியும்).</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">இரண்டும்</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">செங்குத்து</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">கிடைமட்ட</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">செவ்வகத்தின் அகலம்</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">செவ்வகத்தின் மூலைகள் எவ்வாறு வரையப்பட வேண்டும் என்பதைக் கட்டுப்படுத்துகிறது.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">நேராக</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">வட்டமாக</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">சாய்வாக</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், செவ்வகம் குறிப்பிட்ட கோணத்தில் சுழற்றப்படும்.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">அடிப்படை கோணம்:</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், குறிப்பிடப்பட்ட உயரம் மற்றும் செவ்வகத்தின் அகலம், மூலைகளை வட்டமாக்குவதற்கான வளைவுகளின் மையங்களுக்கு இடையிலான தூரத்தை வரையறுக்கிறது. இல்லையெனில், இந்த மதிப்புகள் செவ்வகத்தின் வெளிப்புற அளவை வரையறுக்கும்.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">உள்ளே இருக்கும் அளவு</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Y நீளம்:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டால், செவ்வகம் தனிப்பட்ட பிரிவுகளுக்கு பதிலாக ஒரு பலகோணமாக உருவாக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">பல கோடு</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">சமநிலை:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">உயரம்:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ஆரம்:</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">X திசையில் உள்ள சாய்வு மூலைகளின் நீளம்.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">X நீளம்:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">செவ்வகத்தின் உயரம்</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">வட்டமான மூலைகளின் ஆரம்.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">செருகும் புள்ளியில் வைக்கப்படும் செவ்வகத்தின் புள்ளி.</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">மேல்-இடது</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">மேல்</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">மேல்-வலது</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">இடது</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">நடு</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">வலது</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">கீழ்-இடது</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">கீழ்</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">கீழ்-வலது</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து சுழற்சி கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">வரைபடத்திலிருந்து வட்டமான மூலைகளின் ஆரத்தைத் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">சுழற்சி கோணம்</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து செவ்வகத்தின் உயரத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து செவ்வகத்தின் அகலத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">அகலம்:</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">மூலைகள்:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">X திசையில் உள்ள சாய்வான மூலைகளின் நீளத்தை வரைபடத்திலிருந்து தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">Y திசையில் உள்ள சாய்வான மூலைகளின் நீளத்தை வரைபடத்திலிருந்து தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், கோணம் சுட்டியின் நிலையால் குறிப்பிடப்படும். இல்லையெனில், குறிப்பிடப்பட்ட மதிப்பு பயன்படுத்தப்படும்.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">இலவசம்</translation>
     </message>
 </context>
 <context>
@@ -34409,153 +31802,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">செவ்வகத்தின் எந்த விளிம்புகள் வரையப்பட வேண்டும் என்பதை இது வரையறுக்கிறது (இதனால் செவ்வகத்திற்கு பதிலாக இரண்டு இணையான கோடுகளை மட்டுமே உருவாக்க முடியும்).</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">இரண்டும்</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">செங்குத்து</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">கிடைமட்டம்</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">செவ்வகத்தின் எந்த புள்ளி தொடக்க புள்ளியின் நிலையில் வைக்கப்பட வேண்டும் என்பதை இது வரையறுக்கிறது.</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">மூலை</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">நடு-செங்குத்து</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">செங்குத்து மையப்புள்ளி</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">மையம்</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து செவ்வகத்தின் சுழற்சி கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">வரைபடத்திலிருந்து வட்டமான மூலைகளின் ஆரத்தைத் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">மூலைகள்:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">செவ்வகத்தின் எந்தப் புள்ளியை இறுதிப் புள்ளியாக வைக்க வேண்டும் என்பதை இது வரையறுக்கிறது.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">வரைபடத்திலிருந்து X திசையில் உள்ள பெவல் நீளத்தைத் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">விளிம்புகள்:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">வரைபடத்திலிருந்து Y திசையில் உள்ள பெவல் நீளத்தைத் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">ஆரம்ப ஸ்னாப்:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Y திசையில் உள்ள பெவல் நீளம்.</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், ஸ்னாப் புள்ளிகள் மூலைகளின் ஆரம் மூலம் மாற்றப்பட வேண்டும் என்று குறிப்பிடுகிறது.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">ஸ்னாப் மாற்றம்</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">நீளம் X:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ஆரம்:</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், செவ்வகத்திற்கான சுழற்சி கோணத்தைக் குறிப்பிட அனுமதிக்கிறது.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">அடிப்படை கோணம்:</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">செவ்வகத்தின் சுழற்சி கோணம்.</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">இறுதி ஸ்னாப்:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">செவ்வகத்தின் மூலைகள் எவ்வாறு வரையப்பட வேண்டும் என்பதை வரையறுக்கிறது.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">நேராக</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">வட்டமாக</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">சாய்வாக</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">வட்டமான மூலைகளின் ஆரம்.</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">நீளம் Y:</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டால், முழு செவ்வகமும் ஒரு பலகோணமாக வரையப்படும்.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">பல கோடு</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">X திசையில் சாய்வின் நீளம்.</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -34813,145 +32059,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation type="unfinished">வரைபடத்திலிருந்து Y திசையில் உள்ள பெவல் நீளத்தைத் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">நாற்கரத்தின் உள் கோணம்.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், நாற்கரத்தின் உள் கோணம் குறிப்பிட்ட மதிப்புக்கு சரிசெய்யப்படும்.</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">சரிசெய்யப்பட்ட உள் கோணம்:</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">செவ்வகத்தின் அடிப்படை கோணம்.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">நீளம் X:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">X திசையில் சாய்வின் நீளம்.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">செவ்வகத்தின் மூலைகள் எவ்வாறு வரையப்பட வேண்டும் என்பதை இது வரையறுக்கிறது.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">நேராக</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">வட்டமாக</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">சாய்வாக</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">மூலைகள்:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், ஸ்னாப் புள்ளிகள் மூலைகளின் ஆரத்தால் மாற்றப்பட வேண்டும் என்று குறிப்பிடுகிறது.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">ஸ்னாப் மாற்றம்</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">நீளம் Y:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Y திசையில் உள்ள பெவல் நீளம்.</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">வட்டமான மூலைகளின் ஆரம்.</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ஆரம்:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், வடிவம் ஒரு பலகோணமாக உருவாக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">பல கோடு</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">வரைபடத்திலிருந்து நாற்கரத்தின் உள் கோணத்தைத் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">விளிம்புகள்:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">வரைபடத்திலிருந்து வட்டமான மூலைகளின் ஆரத்தைத் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">வரைபடத்திலிருந்து X திசையில் உள்ள பெவல் நீளத்தைத் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">வரைபடத்திலிருந்து Y திசையில் உள்ள பெவல் நீளத்தைத் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">செவ்வகத்தின் எந்த விளிம்புகள் வரையப்பட வேண்டும் என்பதை இது வரையறுக்கிறது (இதனால் செவ்வகத்திற்கு பதிலாக இரண்டு இணையான கோடுகளை மட்டுமே உருவாக்க முடியும்).</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">இரண்டும்</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">செங்குத்து</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">கிடைமட்ட</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து செவ்வகத்தின் அடிப்படை கோணத்தைத் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், செவ்வகம் குறிப்பிட்ட அடிப்படை கோணத்திற்கு சுழற்றப்படும். இல்லையெனில், செவ்வகத்தின் முதல் மற்றும் இரண்டாவது புள்ளிகளுக்கு இடையிலான கோணத்தால் அடிப்படை கோணம் வரையறுக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">நிலையான அடிப்படை கோணம்:</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், செவ்வகத்திற்கு பதிலாக நாற்கரம் உருவாக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">நாற்கரம்</translation>
     </message>
 </context>
 <context>
@@ -35600,100 +32707,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">மன்னிக்கவும், புதிய பதிப்பைச் சரிபார்க்கும்போது சில நெட்வொர்க் பிழை ஏற்பட்டது.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">சேவையகத்திலிருந்து பெறப்பட்ட பதிலைப் பாகுபடுத்த முடியவில்லை</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">சுழற்று விருப்பங்களை நகர்த்து</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">நகல்கள் தற்போதைய அடுக்கில் அல்லது அசல் அடுக்கில் செருகப்பட வேண்டுமா என்பதை இது குறிப்பிடுகிறது</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">தற்போதைய அடுக்கைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">இரண்டாம் கோணத்தை சரிசெய்து, கோணங்களின் கூட்டுத்தொகை (ஒப்பீட்டு சுழற்சி கோணம்) 0 ஆக இருக்குமாறு செய்யுங்கள். இந்த அமைப்பில், உருப்படி நகர்த்தப்படும், ஆனால் சுழற்றப்படாது.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">கோணங்கள் பிரதிபலிக்கப்பட்டன</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து முதன்மை கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">தற்போதைய அல்லது அசல் வரைபட பண்புகளைப் பயன்படுத்த வேண்டுமா என்பதை இது வரையறுக்கிறது</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து இரண்டாம் கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">முழுமையான குறிப்பு புள்ளியில் சுழற்சிக்கான கோணம்</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், பல நகல்கள் உருவாக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">பல நகல்கள்</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">உருவாக்க வேண்டிய நகல்களின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">இரண்டாம் கோணம்:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், அனைத்து நகல்களுக்கும் ஒரே கோணம் பயன்படுத்தப்படும். இல்லையெனில், நகல்களின் எண்ணிக்கைக்கு ஏற்ப அது விகிதாசாரமாக அதிகரிக்கும்.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">நகல்களுக்கு ஒரே இரண்டாம் கோணம்</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், அசல் கூறுகள் அப்படியே இருக்கும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">அசல் கூறுகளை அப்படியே வைத்திரு</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">முதன்மை கோணம்:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">இரண்டாம் குறிப்பு புள்ளியின் மீது சுழற்ற வேண்டிய கோணம்</translation>
     </message>
 </context>
 <context>
@@ -36688,141 +33701,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">வட்டத்தின் தொடக்கக் கோணம்:</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">வட்டத்திலிருந்து டிக் குறிகள் தொடங்கும் தொடக்கக் கோணம்.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">இடைவெளி:</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">டிக் ஸ்னாப் புள்ளியின் இடைவெளி, வெட்டும் புள்ளிக்கு.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து தூரத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">தூரம்:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">குறியீடுகளுக்கு இடையிலான தூரம்.</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், தேர்ந்தெடுக்கப்பட்ட பொருள் குறியீடு வெட்டும் புள்ளிகளால் பிரிக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">பிரி</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து குறியீடு இடைவெளியைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">குறியீட்டின் நீளம்.</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து குறியீடு கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">குறியீடு ஸ்னாப்:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து குறியீடு நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து தொடக்க வட்டக் கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">குறியீடு மற்றும் தேர்ந்தெடுக்கப்பட்ட பொருளுக்கு இடையிலான கோணம்.</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், டிக் கோணம் தேர்ந்தெடுக்கப்பட்ட பொருளுடன் தொடர்புடையதாக இருக்கும், இல்லையெனில் அது முழுமையான கோணமாக இருக்கும்.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">தொடர்புடையது</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">டிக் நீளம்:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">டிக் எந்தப் புள்ளியைத் தேர்ந்தெடுத்த பொருளுடன் வெட்டும் புள்ளியில் வைக்க வேண்டும் என்பதை இது வரையறுக்கிறது.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">ஆரம்பம்</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">நடு</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">முடிவு</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், டிக்ஸ்களுக்கு இடையே குறிப்பிடப்பட்ட நிலையான தூரம் பயன்படுத்தப்படும். இல்லையெனில், தூரம் தேர்ந்தெடுக்கப்பட்ட பொருளின் நீளம் மற்றும் டிக்ஸ்களின் எண்ணிக்கையின் அடிப்படையில் கணக்கிடப்படும்.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">நிலையானது</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்ட பொருளின் விளிம்புகளுக்கு இடையே உள்ள டிக்ஸ்களின் எண்ணிக்கை.</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">எண்ணிக்கை:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">உருவின் விளிம்புகளில் உள்ள குறிகாட்டிகள் எவ்வாறு வைக்கப்பட வேண்டும் என்பதை இது வரையறுக்கிறது.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">எதுவுமில்லை</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">இரண்டும்</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">விளிம்பு குறியீடு:</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37142,57 +34020,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">படிவம்</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">ஒவ்வொரு ஸ்ப்லைன் பொருத்தம் பலகோணத்திற்கும் உருவாக்கப்பட வேண்டிய கோட்டுப் பிரிவுகளின் எண்ணிக்கையை இது வரையறுக்கிறது.</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்படவில்லை எனில், அசல் ஸ்ப்லைன் நீக்கப்படும், இல்லையெனில் அது அப்படியே இருக்கும்.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">அசல் ஸ்ப்லைனை அப்படியே வைத்திரு</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட பொருள்களுக்கு தற்போதைய பண்புகள் பயன்படுத்தப்படும், இல்லையெனில் - அசல் பண்புகள் பயன்படுத்தப்படும்.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட பொருள்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">தற்போதைய அடுக்கைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், கோட்டுப் பிரிவுகளின் தனிப்பயன் எண்ணிக்கையை குறிப்பிட முடியும். இல்லையெனில், தற்போதைய வரைபடத்திற்கான அமைப்புகளிலிருந்து மதிப்பு பயன்படுத்தப்படும்.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">தனிப்பயன் பிரிவுகளின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், கோட்டுப் பிரிவுகள் பலகோணக் கோட்டின் ஒரு பகுதியாக இருக்கும். இல்லையெனில், அவை தனித்தனி கோடுகளாக இருக்கும்.</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">பலகோணக் கோடாக</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -37316,61 +34143,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
         <translation type="unfinished">பலகோணக் கோடாக</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">வடிவம்</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட பொருள்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">பயனர் தற்போதைய அடுக்கு</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">ஸ்ப்லைனில் சேர்க்கப்படும் பாலிலைன் பிரிவின் நடுப்புள்ளிகளின் எண்ணிக்கை.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">ஸ்ப்லைனின் அளவை வரையறுக்கிறது</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">சரிபார்க்கப்படாவிட்டால், அசல் பாலிலைன் நீக்கப்படும், இல்லையெனில் அது அப்படியே இருக்கும்.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">அளவு:</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">அசல் வடிவத்தை அப்படியே வைத்திரு</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">நடுப்புள்ளிகள்:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட பொருள்களுக்கு தற்போதைய பண்புகள் பயன்படுத்தப்படும், இல்லையெனில் அசல் பண்புகள் பயன்படுத்தப்படும்.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், பாலிலைன் உச்சிகள் ஸ்ப்லைன் புள்ளிகளாகக் கருதப்பட்டு, புள்ளிகள் மூலம் ஸ்ப்லைன் உருவாக்கப்படும். இல்லையெனில், அவை கட்டுப்பாட்டு புள்ளிகளாகக் கருதப்பட்டு சாதாரண ஸ்ப்லைன் உருவாக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">உச்சிகள் ஸ்ப்லைன் புள்ளிகள்</translation>
     </message>
 </context>
 <context>
@@ -37774,69 +34546,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>ஸ்ப்லைனை தோராயமாக்கப் பயன்படுத்தப்படும் அளவு</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">படிவம்</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், சமச்சீர் நட்சத்திரம் உருவாக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">சமச்சீர்</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">உள் விளிம்புகளுக்கான ஆரம்.</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">எண்ணிக்கை:</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து வெளிப்புற ஆரத்தை தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து உள் ஆரத்தை தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">கதிர்களின் எண்ணிக்கை.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், வெளிப்புற விளிம்புகள் வளைவாக இருக்கும்.</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">ஆரம் வெளிப்புறம்</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், உள் விளிம்புகள் வளைவாக இருக்கும்.</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">ஆரம் உள்</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், நட்சத்திரம் ஒரு பலகோட்டு கோடாக வரையப்படும்.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">பலகோட்டு கோடு</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">வெளிப்புற கதிர்களுக்கான ஆரம் (விளிம்புகள்).</translation>
     </message>
 </context>
 <context>
@@ -38727,14 +35436,6 @@ p, li { white-space: pre-wrap; }
         <translation>அமைப்புகள்</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">பெயரின் மூலம் பயனர் ஆயத்தொலைவுகளை வடிகட்டுகிறது</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">வடிகட்டி...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>&lt;பெயர் இல்லை&gt;</translation>
@@ -38834,33 +35535,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>அனைத்து UCSகளையும் நீக்கு</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">படிவம்</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">புதிய ஆயத்தொகுப்பு அமைப்பின் X-அச்சு கோணம்</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">எக்ஸ்-அச்சு கோணம் உள்ளிடப்பட்ட மதிப்பு அல்லது சுட்டியின் நிலையால் வரையறுக்கப்படுகிறதா என்பதை இது குறிப்பிடுகிறது.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">இலவசம்</translation>
     </message>
 </context>
 <context>
@@ -39473,33 +36147,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.cpp" line="63"/>
         <source>remove 0&quot;</source>
         <translation>0-வை நீக்கு</translation>
-    </message>
-</context>
-<context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">கோட்டுச் சார்பு கோண விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">இடைவெளி:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">மூலக் கோட்டிலிருந்து உள்ள தூரம்</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">நகல்கள்:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">நகல்களின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து இடைவெளியைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -40180,69 +36827,6 @@ Please check its existence and permissions.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">பேனா பண்புகள்</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">வடிவியல்</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">வட்டத்தின் மையத்தின் X ஆயத்தொலைவு</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">வட்டத்தின் மையத்தின் Y ஆயத்தொலைவு</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="obsolete">வட்டம் தலைகீழாக (வலது திசையில்) இருக்க வேண்டுமா என்பதை வரையறுக்கிறது</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">தலைகீழாக</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">மையம் (y):</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="obsolete">தொடக்கக் கோணம்:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">ஆரம்:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="obsolete">வட்டத்தின் தொடக்கக் கோணம்</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="obsolete">வட்டத்தின் இறுதி கோணம்</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="obsolete">முடிவு கோணம்:</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">மையம் (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">பேனா</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
@@ -40280,190 +36864,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
         <translation>பேனா</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">வட்டம்</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">வடிவியல்</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">ஆரம்:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="obsolete">வட்டத்தின் ஆரம்</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">மையம் (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">வட்டத்தின் மையத்தின் Y ஆயத்தொலைவு</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">மையம் (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">வட்டத்தின் மையத்தின் X ஆயத்தொலைவு</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">பேனா</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">நேரியல் பரிமாணம்</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">பரிமாணத்தின் அடுக்கு</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">பேனா பண்புகள்</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">வடிவியல்</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="obsolete">பரிமாணத்தின் சுழற்சி கோணம்</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">பேனா</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">பரிமாணத்தின் அடுக்கு</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">பேனா பண்புகள்</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">பேனா</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">நீள்வட்டம்</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">வடிவியல்</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="obsolete">நீள்வட்டத்தின் பெரிய அச்சிற்கான சுழற்சி கோணம், டிகிரியில்</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="obsolete">வளைவு தலைகீழாக உள்ளதா என்பதை வரையறுக்கிறது</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">தலைகீழாக</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">மையம் (y):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="obsolete">நீள்வட்ட வளைவின் முடிவு கோணம், டிகிரி</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">வட்டத்தின் மையத்தின் Y ஆயத்தொலைவு</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="obsolete">நீள்வட்டத்தின் முக்கிய அச்சின் ஆரம்</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="obsolete">டிகிரியில்</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="obsolete">ஆரம்ப கோணம்(°):</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="obsolete">சுழற்சி(°):</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="obsolete">நீள்வட்டத்தின் சிறிய அச்சின் ஆரம்</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="obsolete">முடிவு கோணம் (°):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="obsolete">நீள்வட்ட வளைவின் ஆரம்ப கோணம், டிகிரியில்</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="obsolete">முக்கிய:</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="obsolete">சிறு:</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="obsolete">நீள்வட்டத்தின் மையத்தின் X ஆயத்தொலைவு</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">மையம் (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">பேனா</translation>
     </message>
 </context>
 <context>
@@ -40540,81 +36940,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <source>Image</source>
-        <translation type="obsolete">படம்</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">வடிவியல்</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="obsolete">உயரம்:</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="obsolete">படத்தின் அகலம்</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="obsolete">செருகும் புள்ளியின் X ஆயத்தொலைவு</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="obsolete">தீர்மானம் (ஒரு அங்குலத்திற்கு புள்ளிகள்)</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="obsolete">படக் கோப்பிற்கான பாதை</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="obsolete">அளவிடுதல் காரணி</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="obsolete">அளவு (px):</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">சுழற்சி கோணம்</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="obsolete">அளவு:</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="obsolete">படத்தின் அளவு பிக்சல்களில்</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="obsolete">அகலம்:</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="obsolete">படத்தின் உயரம்</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="obsolete">படக் கோப்பைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">பேனா</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="32"/>
@@ -40637,151 +36962,9 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>GUI மொழி:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;LibreCAD-க்கு வருக&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;புதிய வரைபடங்களுக்கு நீங்கள் பயன்படுத்த விரும்பும் அலகு மற்றும் UI மற்றும் கட்டளைகளுக்கான உங்கள் விருப்பமான மொழியைத் தேர்ந்தெடுக்கவும்.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;இந்த அமைப்புகளை நீங்கள் பின்னர் மாற்றலாம்.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
         <translation>கட்டளை மொழி:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <source>Insert</source>
-        <translation type="obsolete">செருகு</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">வடிவியல்</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="obsolete">செருகும் புள்ளி (y):</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="obsolete">செருகும் புள்ளி (x):</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="obsolete">நகல்களுக்கான வரிசைகளின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">சுழற்சி கோணம்</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="obsolete">நிரல்களுக்கு இடையேயான இடைவெளி</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="obsolete">அச்சு X இல் அளவிடுதல் காரணி</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="obsolete">செருகும் புள்ளியின் X ஆயத்தொலைவு</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="obsolete">வரிசைகளுக்கு இடையிலான இடைவெளி</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="obsolete">நகல்களுக்கான நிரல்களின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="obsolete">அச்சு Y இல் அளவிடுதல் காரணி</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="obsolete">அச்சு Y:</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="obsolete">வரிசைகள்:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="obsolete">வரி இடைவெளி:</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="obsolete">நிரல்கள்:</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="obsolete">அச்சு X:</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="obsolete">நிரல் இடைவெளி:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">பேனா</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">கோடு</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">வடிவியல்</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="obsolete">இறுதி புள்ளி (x):</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="obsolete">இறுதி புள்ளி X ஆயத்தொலைவு</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="obsolete">இறுதி புள்ளி Y ஆயத்தொலைவு</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="obsolete">இறுதி புள்ளி (y):</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="obsolete">ஆரம்ப புள்ளி (y):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="obsolete">ஆரம்ப புள்ளி Y ஆயத்தொலைவு</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="obsolete">ஆரம்ப புள்ளி (x):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="obsolete">ஆரம்ப புள்ளி X ஆயத்தொலைவு</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">பேனா</translation>
     </message>
 </context>
 <context>
@@ -40952,10 +37135,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>குறியீட்டைச் செருகவும்</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">குறியீடு செருகல்</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
         <source>Degree (°)</source>
         <translation>டிகிரி (°)</translation>
@@ -41004,10 +37183,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>பவுண்டு (£)</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">யென் (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -41643,115 +37818,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
         <translation>பேனா</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <source>Mirroring Options</source>
-        <translation type="vanished">பிரதிபலிப்பு விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">நகல்களின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">மூலத்தை &amp;நீக்கு</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">மூலத்தை &amp;வைத்திரு</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">தற்போதைய &amp;பண்புகளைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">தற்போதைய &amp;அடுக்குப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">நகல்களின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">மூலத்தை &amp;நீக்கு</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">மூலத்தை &amp;வைத்திரு</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;பல நகல்கள்</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">தற்போதைய &amp;பண்புகளைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">தற்போதைய அடுக்கைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Move/Copy Options</source>
-        <translation type="vanished">நகர்த்து/நகல் விருப்பங்கள்</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <source>Move/Rotate Options</source>
-        <translation type="vanished">நகர்த்து/சுழற்று விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">நகல்களின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">கோணம் (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">தற்போதைய அடுக்கைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">அசல் நகலை நீக்கு</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">அசல் நகலை வைத்திரு</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">பல நகல்கள்</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="vanished">Ctrl+S</translation>
     </message>
 </context>
 <context>
@@ -44768,10 +40834,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>ஒப்பீட்டு பூஜ்ஜிய குறிப்பான்</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">நடத்தை</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
         <translation>வரையப்பட வேண்டிய கட்டத்தின் வகை</translation>
@@ -45819,235 +41881,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Code</source>
-        <translation type="obsolete">குறியீடு</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">மதிப்பு</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">ரத்து செய்</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">புள்ளி</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">வடிவியல்</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="obsolete">நிலை (y):</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="obsolete">Y ஆயத்தொலைவு மூலம் புள்ளியின் நிலை</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="obsolete">நிலை (x):</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="obsolete">X ஆயத்தொலைவு மூலம் புள்ளியின் நிலை</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">பேனா</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">வடிவியல்</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="obsolete">பாலிலைன் ஒரு மூடிய கோடாக இருக்கிறதா என்பதை வரையறுக்கிறது</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">பேனா</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation type="vanished">சுழற்சி விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">நகல்களின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">அசல் நகலை நீக்கு</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">அசல் நகலை வைத்துக்கொள்</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="vanished">பல நகல்கள்:</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">கோணம் (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">தற்போதைய அடுக்கைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <source>Rotate Two Options</source>
-        <translation type="vanished">இரண்டு விருப்பங்களை சுழற்று</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">நகல்களின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;அசல் நகலை நீக்கு</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;அசல் நகலை வைத்துக்கொள்</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;பல நகல்கள்</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;a):</source>
-        <translation type="vanished">கோணம் (&amp;a):</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;b):</source>
-        <translation type="vanished">கோணம் (&amp;b):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">தற்போதைய &amp;பண்புகளைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">தற்போதைய &amp;அடுக்குப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <source>Scaling Options</source>
-        <translation type="vanished">அளவிடுதல் விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">நகல்களின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">தற்போதைய &amp;பண்புகளைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">தற்போதைய &amp;அடுக்குப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;மையத்தைச் சுற்றி ஒரு குறிப்புப் புள்ளி மற்றும் இலக்கு புள்ளியைப் பயன்படுத்தி அளவிடுதல் விகிதங்களைக் கண்டறியவும்.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;அசல் நகலை நீக்கு</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;அசல் நகலை வைத்துக்கொள்</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;பல நகல்கள்</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="vanished">x மற்றும் y திசைகளில் ஒரே காரணியைப் பயன்படுத்தி அளவிடு</translation>
-    </message>
-    <message>
-        <source>Isotropic Scaling</source>
-        <translation type="vanished">சமச்சீர் அளவிடுதல்</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">அடுக்கு:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">வடிவியல்</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="obsolete">ஸ்ப்லைன் ஒரு மூடிய வடிவத்தை வரையறுக்கிறதா என்பதை இது வரையறுக்கிறது</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="obsolete">ஸ்ப்லைனை தோராயமாக்கப் பயன்படுத்தப்படும் அளவு</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">பேனா</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="20"/>
@@ -46195,10 +42028,6 @@ so default step value required for baking</source>
         <translation>பவுண்டு (£)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">யென் (¥)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Times (×)</source>
         <translation>பெருக்கல் (×)</translation>
@@ -46242,10 +42071,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>உரையின் அடுக்கு</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">உரையின் சாய்வு</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -46853,10 +42678,6 @@ so default step value required for baking</source>
         <translation>கோணம்:</translation>
     </message>
     <message>
-        <source>Oblique:</source>
-        <translation type="vanished">சாய்வு:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
         <source>Width factor:</source>
         <translation>அகல காரணி:</translation>
@@ -47370,21 +43191,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">தவறான அளவு வழங்கப்பட்டது</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">அதிகபட்ச அச்சிடும் விகிதத்தை விட பெரிய காகித அளவு காரணி</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">குறைந்தபட்ச அச்சிடும் விகிதத்தை விட சிறிய காகித அளவு காரணி</translation>
-    </message>
-</context>
-<context>
     <name>QG_RecentFiles</name>
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="183"/>
@@ -47653,12 +43459,6 @@ Please specify a different value.</source>
         <translation>வெற்று அடுக்குகளை நீக்கு</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">உருப்படிகள் இல்லாத அடுக்கு(கள்) காணப்பட்டது, ஆனால் அவை வடிகட்டப்பட்டு தெரியவில்லை.
-வடிகட்டி முகமூடியை அழித்து மீண்டும் செய்யவும்.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -47720,14 +43520,6 @@ If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly 
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">&quot;அடுக்கு மூலம்&quot; மதிப்பை மூல அடுக்குகளின் மதிப்புகளுடன் மாற்றவா?
-ஆம் எனில் - &quot;அடுக்கு மூலம்&quot; பேனாக்களைக் கொண்ட கூறுகள் புதிய அடுக்கில் முன்பு இருந்த அடுக்குகளில் இருந்ததைப் போலவே தோன்றும், மேலும் &quot;அடுக்கு மூலம்&quot; மதிப்பு தீர்க்கப்பட்ட பேனாக்களால் மாற்றப்படும்.
-இல்லை எனில் - &quot;அடுக்கு மூலம்&quot; மதிப்புகள் அப்படியே இருக்கும், இதனால் இலக்கு அடுக்கின் பேனா, அத்தகைய கூறுகளுக்கான பேனாவை வரையறுக்கும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -48045,10 +43837,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="799"/>
         <source>Tagged Image File Format</source>
         <translation>குறிப்பிடப்பட்ட படக் கோப்பு வடிவம்</translation>
-    </message>
-    <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">பழைய வரைபட பரிமாற்றம் %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="471"/>
@@ -49554,11 +45342,6 @@ Do you want to replace it?</source>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>ந.பு.</translation>
-    </message>
-    <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">வட்டத்தை வில் மூலம் வரையவும்</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -51084,26 +46867,6 @@ Do you want to replace it?</source>
         <translation>பயன்பாடு:</translation>
     </message>
     <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished">[options] [விருப்பங்கள்] &lt;dxf_கோப்புகள்&gt;</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished">*.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">அனைத்து dxf கோப்புகளையும் அதே பெயரில் pdf கோப்புகளாக அச்சிடுகிறது.</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished">-o some.pdf *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">அனைத்து dxf கோப்புகளையும் &apos;some.pdf&apos; கோப்பில் அச்சிடுகிறது.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
         <source> [options] &lt;%1_files&gt;</source>
         <translation type="unfinished"></translation>
@@ -51179,16 +46942,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">தாளின் அளவு (அகலம் x உயரம்) மி.மீ-இல்.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">வெளியீட்டுத் தெளிவுத்திறன் (டிபிஐ).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>வெளியீட்டு அளவு. எ.கா.: 0.01 (1:100 அளவிற்கு).</translation>
@@ -51234,14 +46987,6 @@ Do you want to replace it?</source>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">&lt;dxf_files&gt;</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">உள்ளீட்டு DXF கோப்பு(கள்)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -51775,11 +47520,6 @@ Do you want to replace it?</source>
         <translation>DXF/DWG கோப்பு தலைப்பைப் படிப்பதில் பிழை</translation>
     </message>
     <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">DXF/DWG தலைப்பு தரவைப் படிப்பதில் பிழை</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
@@ -51826,10 +47566,6 @@ Do you want to replace it?</source>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG குறியீட்டைப் படிப்பதில் பிழை</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">dwg கோப்பு பதிப்பு %1 திறக்கப்பட்டது.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -52278,10 +48014,6 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">தொகுதியை உருவாக்கத் தேர்ந்தெடுக்கவும் (முடிக்க Enter ஐ அழுத்தவும்)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
         <translation>வடிவத்தைத் தேர்ந்தெடுக்கவும்</translation>
@@ -52295,66 +48027,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>குறிப்பு புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">கண்டெய்னரை வெடிக்கத் தேர்ந்தெடுக்கவும் (முடிக்க Enter ஐ அழுத்தவும்)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">தேர்ந்தெடுத்து வெடிக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">செல்லுபடியாகும் வெளிப்பாடு அல்ல</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">குறிப்பு புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">கோணத்தை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">காரணியை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">நிரல்களை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">வரிசைகளை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">நிரல் இடைவெளியை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">வரிசை இடைவெளியை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">தற்போதைய தொகுதியின் உட்புறத்தில் ஒரு தொகுதியைச் செருக முடியாது.</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished">தற்போதைய தொகுதியின் உட்புறத்தில் செருகப்பட்ட தொகுதி:</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">இந்த தொகுதியைச் செருக முடியாது.</translation>
     </message>
 </context>
 <context>
@@ -52606,270 +48278,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">நாண் நீளம் பூஜ்ஜியமாக இருக்கக்கூடாது</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">செல்லுபடியாகாத கோவை</translation>
-    </message>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">செல்லுபடியாகாத நாண் நீளம்</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">மையத்தை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">ஆரம் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">ஆரம்ப புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">ஆரம்ப கோணத்தைக் குறிப்பிடவும்:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">இறுதி கோணம் அல்லது [கோணம்/ஆர்க் நீளம்] ஆகியவற்றைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">மாற்று ஆர்க்</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">உள்ளடக்கப்பட்ட கோணத்தைக் குறிப்பிடவும்:</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">ஆர்க் நீளத்தைக் குறிப்பிடவும் (மாற்று புள்ளிக்கு எதிர்மறையாக இருக்க வேண்டும்):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">மாற்று ஆர்க் புள்ளியைப் பயன்படுத்தவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">தவறான ஆர்க் தரவு.</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">இரண்டாவது புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">மூன்றாவது புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">தொடக்கப் புள்ளியை அல்லது [மையத்தை] குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">அடிப்படை உருப்படியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">முடிவு கோணத்தை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">மாற்று வில்</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">முடிவு புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">மாற்று வில்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">செல்லாத கோவை</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">மையத்தை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">வட்டத்தின் மீதுள்ள புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">செல்லாத வட்டத் தரவு.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">முதல் புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">இரண்டாவது புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">செல்லாத வட்டத் தரவு.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">முதல் புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">இரண்டாவது புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">மூன்றாவது புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">செல்லாத கோவை</translation>
-    </message>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">வட்டத்தின் மையத்தைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">வட்டத்தின் ஆரத்தைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">ஆரம்=%1 செல்லாது (கோவை)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">ஆரம் %1 தவறானது (எதிர்மறை)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">ஆரம் %1 தவறானது (பூஜ்ஜியம்)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">முதல் கோட்டை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">இரண்டாவது கோட்டை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">மூன்றாவது கோட்டை குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">தொடு வட்டத்தின் முதல் புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">தொடு வட்டத்தின் இரண்டாவது புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">தொடு வட்டத்தின் மையத்தை தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">ஒரு கோடு/வளைவு/வட்டத்தை குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">முதல் கோடு/வளைவு/வட்டத்தை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">இரண்டாவது கோடு/வில்/வட்டத்தை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">தொடு வட்டத்தின் மையத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">&apos;%1&apos; ஆரத்திற்கான பொதுவான தொடு வட்டம் இல்லை</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">ஒரு கோடு/வில்/வட்டத்தைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">மற்றொரு கோடு/வில்/வட்டத்தைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">தொடு வட்டத்தின் மீது ஒரு புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">தொடு வட்டத்தின் மையத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">தொடு வட்டத்தின் மையத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">முதல் கோடு/வில்/வட்டத்தைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்ட பொருள்களுக்கு பொதுவான தொடு வட்டம் இல்லை</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">இரண்டாவது கோடு/வளைவு/வட்டத்தைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">மூன்றாவது கோடு/வளைவு/வட்டத்தைக் குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
@@ -53064,125 +48472,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">ஹேட்ச் செய்ய தேர்ந்தெடுக்கவும் (முடிக்க Enter ஐ அழுத்தவும்)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
         <translation>தேர்ந்தெடுத்த பிறகு உடனடியாக ஹேட்ச் செய்யவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">இது சரியான வெளிப்பாடு அல்ல</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">குறிப்பு புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">கோணத்தை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">காரணியை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">டிபிஐ-ஐ உள்ளிடவும்:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">முதல் புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">அடுத்த புள்ளியைக் குறிப்பிடவும் அல்லது [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">அடுத்த புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">கோடுகளின் வரிசையை முடிக்க முடியாது: போதுமான உறுப்புகள் இன்னும் வரையறுக்கப்படவில்லை, அல்லது ஏற்கனவே முடிக்கப்பட்டது.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">செயலைத் திரும்பப் பெற முடியாது: வரலாற்றின் ஆரம்பம் எட்டப்பட்டது</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">செயலை மீண்டும் செய்ய முடியாது: வரலாற்றின் முடிவு எட்டப்பட்டது</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">செல்லுபடியாகும் வெளிப்பாடு அல்ல</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">நிலையை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">மாற்று திசை</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">கோணத்தை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">நீளத்தை உள்ளிடவும்:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">உருவாக்கப்படும் கூறுகள்</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">செல்லுபடியாகும் வெளிப்பாடு அல்ல</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">முதல் கோட்டைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">இரண்டாவது கோட்டைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">இருசமக் கோட்டின் நீளத்தை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">இருசமக் கோடுகளின் எண்ணிக்கையை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">ரேடியல் கோடு வரம்பிற்குள் இல்லை:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">கோடு வரைய கிளிக் செய்து இழுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -53215,74 +48507,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>வட்டம், வில் அல்லது நீள்வட்டத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">உருவாக்கப்படும் கூறுகள்</translation>
-    </message>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">தூரம் &lt;%1&gt; ஐக் குறிப்பிடவும் அல்லது ஒரு உறுப்பைத் தேர்ந்தெடுக்கவும் அல்லது [%2]</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">எண்ணை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">செல்லாத கோவை</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">செல்லாத எண். 1 முதல் 99 வரை முயற்சிக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">உருவாக்கப்படும் கூறுகள்</translation>
-    </message>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">கூறைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">செல்லும் புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">எண்:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">செல்லாத எண். 1 முதல் 99 வரை முயற்சிக்கவும்</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">செல்லாத கோவை</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">ஒரு மூலையை குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">முதல் மூலையை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">இரண்டாவது மூலையை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -53324,29 +48548,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">செல்லாத கோவை</translation>
-    </message>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">அடிப்படை பொருளைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">நிலையை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">கோணத்தை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">நீளத்தை குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53384,17 +48585,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">செருகும் புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">உரையை உள்ளிடவும்:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
@@ -53403,108 +48593,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">முதல் புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">மாற்று வளைவு</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">அடுத்த புள்ளியைக் குறிப்பிடவும் அல்லது [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">அடுத்த புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">கோடுகளின் வரிசையை முடிக்க முடியவில்லை: போதுமான கூறுகள் இன்னும் வரையறுக்கப்படவில்லை.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">செயலைத் திரும்பப் பெற முடியவில்லை: போதுமான கூறுகள் இன்னும் வரையறுக்கப்படவில்லை.</translation>
-    </message>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">முடிவுப் புள்ளியின் x-ஐ உள்ளிடவும்</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">பாலிலைன்களின் எண்ணிக்கையை உள்ளிடவும்</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">f(x) என்ற சமன்பாட்டை உள்ளிடவும்</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">ஆரம்ப புள்ளியின் x மதிப்பை உள்ளிடவும்</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">உள்ளிடப்பட்ட x மதிப்பு தவறானது.</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">உள்ளிடப்பட்ட படி அளவு தவறானது.</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">உள்ளிடப்பட்ட x மதிப்பு தவறானது.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">முதல் கட்டுப்பாட்டு புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">அடுத்த கட்டுப்பாட்டு புள்ளியை அல்லது [%1] ஐ குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">அடுத்த கட்டுப்பாட்டு புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">செயலைத் திரும்பப் பெற முடியாது: போதுமான அளவு கூறுகள் வரையறுக்கப்படவில்லை.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">உரை:</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">செருகும் புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">உரையை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">இரண்டாவது புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">வெட்டத் தேர்ந்தெடுக்கவும் (முடிக்க Enter ஐ அழுத்தவும்)</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -53523,10 +48612,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>தேர்ந்தெடுத்த உடனேயே வெட்டவும்</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">நகலெடுக்கத் தேர்ந்தெடுக்கவும் (முடிக்க Enter ஐ அழுத்தவும்)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -53564,17 +48649,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Paste Multiple</source>
         <translation>பலமுறை ஒட்டவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">செயல்படுத்த எதுவும் இல்லை!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">மீண்டும் செய்ய எதுவும் இல்லை!</translation>
     </message>
 </context>
 <context>
@@ -53795,57 +48869,6 @@ End: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">தூரம்: %1
-கார்ட்டீசியன்: (%2 , %3)
-துருவ: (%4 &lt; %5)
-உருவில் உள்ள புள்ளி: (%6 , %7)
-புள்ளி: (%8 , %9)</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">உருவைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">கண்டெய்னரில் உள்ள துணை உருவுகளில் ஒட்ட வேண்டாம்</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">தொடர்புடைய புள்ளி உருவில் உள்ளது</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">தகவல்</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">தூரம்:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">இருந்து:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">க்கு:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -53891,10 +48914,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">மொத்த நீளத்தை அளவிட தேர்ந்தெடுக்கவும் (முடிக்க Enter ஐ அழுத்தவும்)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="74"/>
         <source>Select contour</source>
         <translation>எல்லையைத் தேர்ந்தெடுக்கவும்</translation>
@@ -53926,906 +48945,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>ரத்து செய்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">செல்லுபடியாகும் வெளிப்பாடு அல்ல</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">குறிப்பு புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">கோணத்தை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">காரணியை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">&apos;%1&apos; கோப்பை திறக்க முடியவில்லை</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">அம்சங்களை மாற்றியமைக்க தேர்ந்தெடுக்கவும் (முடிக்க Enter ஐ அழுத்தவும்)</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">தேர்ந்தெடுத்த பிறகு உடனடியாக அம்சங்களை மாற்றியமைக்கவும்</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">வடிவத்தை தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்ட கோடுகள் இணையாக உள்ளன</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்ட கோடுகள் ஒரே பலகோணத்தின் குழந்தைகளாக இல்லை</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">வெட்டு</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">வெட்டும் புள்ளி:</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">புள்ளி 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">புள்ளி 2:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">செல்லாத பொருள் தேர்ந்தெடுக்கப்பட்டது (வெட்ட முடியாதது).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்ட பொருள் செல்லுபடியாகவில்லை (அணு அல்லாதது).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்ட பொருள் செல்லுபடியாகவில்லை (முதல் பொருளுடன் வெட்ட முடியாதது).</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">இது சரியான வெளிப்பாடு அல்ல.</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">முதலில் ஒரு பொருளைத் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">இரண்டாவது பொருளைத் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">நீளம் 1-ஐ உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">நீளம் 2-ஐ உள்ளிடவும்:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">பிரி</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">இங்கு:</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">எந்த பொருளும் கிடைக்கவில்லை.</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">வெட்டும் புள்ளி, ஒரு பொருளின் இறுதிப் புள்ளியாக இருக்கக்கூடாது.</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">வெட்ட வேண்டிய பொருளைக் குறிப்பிடவும்.</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">வெட்டும் புள்ளியைக் குறிப்பிடவும்.</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">பொருள் ஒரு கோடு, வில், வட்டம், நீள்வட்டம் அல்லது இடைச்செருகல் ஸ்ப்லைன் ஆக இருக்க வேண்டும்.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">நீக்க தேர்ந்தெடுக்கவும் (முடிக்க Enter ஐ அழுத்தவும்).</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">தேர்ந்தெடுத்த பிறகு உடனடியாக நீக்கவும்.</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">வளைவு கோட்டைத் தேர்ந்தெடுக்கவும்.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">ஒரு பலகோணத்தில் முதல் வெட்டுப் புள்ளியைக் குறிப்பிடவும்.</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">அதே பலகோணத்தில் இரண்டாவது வெட்டுப் புள்ளியைக் குறிப்பிடவும்.</translation>
-    </message>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">பொருள்கள் ஒரே பலகோணத்தில் இல்லை.</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">இரண்டாவது பொருளின் பெற்றோர் ஒரு பலகோடு அல்ல</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">முதல் பொருளின் பெற்றோர் ஒரு பலகோடு அல்ல</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">இரண்டாவது பொருளின் பெற்றோர் null ஆகும்</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்ட பொருட்களில் ஒன்று null ஆகும்</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">முதல் பொருளின் பெற்றோர் null ஆகும்</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">முதல் பொருள் null ஆகும்</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">இரண்டாவது பொருள் null ஆகும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">மாற்றியமைக்க பொருளின் மீது கிளிக் செய்யவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">உரையை பிரிக்க தேர்ந்தெடுக்கவும் (முடிக்க Enter ஐ அழுத்தவும்)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">தேர்ந்தெடுத்தவுடன் உடனடியாக பிரிக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">கண்ணாடி பிம்பம்</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">கோணம் (மாற்று):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">கோடு ஆரம்பம்:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">கோடு முடிவு:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">கண்ணாடி பிம்பத்திற்கு தேர்ந்தெடுக்கவும் (முடிக்க Enter ஐ அழுத்தவும்)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">வடிவத்தை தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">கண்ணாடி பிம்பக் கோட்டை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">செங்குத்தாக புரட்டவும்</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">கிடைமட்டமாக புரட்டவும்</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">கண்ணாடி கோட்டின் முதல் புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">கண்ணாடி கோட்டின் இரண்டாவது புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">நகர்த்தும் தூரம்</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">நகலெடுக்கும் தூரம்</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">குறிப்பு புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">ஒரு நகலை உருவாக்கவும்</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">நகர்த்த தேர்ந்தெடுக்கவும் (முடிக்க Enter ஐ அழுத்தவும்)</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">தேர்ந்தெடுத்தவுடன் உடனடியாக நகர்த்தவும்</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">வடிவத்தை தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">இலக்கு புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">செல்லாத வெளிப்பாடு</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">குறிப்பு புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">நகர்த்துவதற்கும் சுழற்றுவதற்கும் தேர்ந்தெடுக்கவும் (முடிக்க Enter ஐ அழுத்தவும்)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">தேர்ந்தெடுத்தவுடன் உடனடியாக நகர்த்தி சுழற்றவும்</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">வடிவத்தை தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">இலக்கு புள்ளியைக் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">சுழற்சியுடன் நகர்த்துகிறது</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">மூலம்:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">இலக்கு:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">இடைவெளி:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">சுழற்சி கோணத்தை உள்ளிடவும்:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">இடைவெளி</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">தூரம்:</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">இடைவெளியின் திசையை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">இடைவெளியின் திசைக்கான குறிப்பு புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">இடைவெளியை உருவாக்க ஒரு கோடு, பல கோடுகள், வட்டம் அல்லது வளைவைத் தேர்ந்தெடுக்கவும் (முடிக்க உள்ளிடவும்)</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">தேர்ந்தெடுத்த உடனேயே இடைவெளியை உருவாக்கவும்</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">வடிவத்தை தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">திசையை மாற்றியமைக்க தேர்ந்தெடுக்கவும் (முடிக்க உள்ளிடவும்)</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">தேர்ந்தெடுத்த பிறகு உடனடியாக மாற்றவும்</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">வடிவத்தை தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">குறிப்பு புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">சுழற்ற தேர்ந்தெடுக்கவும் (முடிக்க Enter அழுத்தவும்)</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">சுழற்சி</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">மூல புள்ளி:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">இலக்கு புள்ளி:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">விலக்கல்:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">குறிப்பு புள்ளி:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">மையப் புள்ளி:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">இரண்டாவது கோணம்:</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">தேர்வுக்குப் பின் உடனடியாக சுழற்றவும்</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">வெளிப்புறத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">தேர்வின் மையத்திற்கு ஒட்டு</translation>
-    </message>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">சுழற்சி மையத்தை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">சுழற்றுவதற்கான இலக்கு புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">குறிப்பு புள்ளியைச் சுற்றி சுழற்சிக்கான இலக்கு புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">இரண்டு முறை சுழற்றுதல்</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">மையம் 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">கோணம் 1:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">மையம் 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">கோணம் 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">இரண்டு அச்சு சுழற்சிக்கு தேர்ந்தெடுக்கவும் (முடிக்க Enter அழுத்தவும்)</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">தேர்வுக்குப் பின் உடனடியாக 2 அச்சு சுழற்றவும்</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">வெளிப்புறத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">தனிப்பட்ட குறிப்பு புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">உறவு குறிப்பு புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">வட்டமாக்கு</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">புள்ளி 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">புள்ளி 2:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">செல்லுபடியாகும் வெளிப்பாடு அல்ல</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">இரண்டாவது பொருளை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">ஆரத்தை உள்ளிடவும்:</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">முதல் பொருளை குறிப்பிடவும் அல்லது ஆரத்தை உள்ளிடவும் &lt;%1&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">அளவு மாற்று</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">மையம்:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">மூல புள்ளி:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">இலக்கு புள்ளி:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">விலக்கல்:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">X ஆல் அளவு மாற்று:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">Y ஆல் அளவு மாற்று:</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">அளவு மாற்று மையத்தை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">தேர்வின் மையத்திற்கு ஒட்டு</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">மூல புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">இலக்கு புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">சுதந்திர ஒட்டு</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">அளவு மாற்ற தேர்ந்தெடுக்கவும் (முடிக்க Enter அழுத்தவும்)</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">தேர்வுக்குப் பின் உடனடியாக அளவு மாற்று</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">வெளிப்புறத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">நீட்டு</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">தொடக்க மூலை:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">முடிவு மூலை:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">குறிப்பு புள்ளி:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">இலக்கு புள்ளி:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">விலக்கல்:</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">முதல் மூலையை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">இரண்டாவது மூலையை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">குறிப்பு புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">இலக்கு புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">வெட்டு</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">இரண்டை வெட்டு</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">குறுக்கீடு:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">குறுக்கீடு 2:</translation>
-    </message>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">முதல் வெட்டு பொருளைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">வரம்பு பொருளைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">இரண்டாவது வெட்டு பொருளைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">வெட்ட வேண்டிய பொருளைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">பொருள் கிடைக்கவில்லை.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்ட பொருள் அணு பொருள் அல்ல அல்லது வெட்ட முடியாது.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">செல்லுபடியாகும் வெளிப்பாடு அல்ல</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">வெட்ட வேண்டிய கோடு/வளைவைத் தேர்ந்தெடுக்கவும் அல்லது நீள மதிப்பை உள்ளிடவும்:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">பொருள் கிடைக்கவில்லை.</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">பொருட்களைத் தேர்ந்தெடுக்கவும் (முடிக்க Enter அழுத்தவும்)</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">தேர்வுக்குப் பின் உடனடியாக வரிசைப்படுத்து</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">வெளிப்புறத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">வரிசைப்படுத்த பொருளைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">பொருள் கிடைக்கவில்லை.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">சேர்க்கும் புள்ளி செல்லாது.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">சேர்க்கும் புள்ளி பொருளில் இல்லை.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">முனைகளைச் சேர்க்க பலகோட்டை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">சேர்க்கும் முனையின் புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">பொருள் கிடைக்கவில்லை.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">இருக்கும் பலகோட்டின் தொடக்கம் அல்லது முடிவுக்கு அருகில் எங்காவது கிளிக் செய்யவும்.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">பலகோடுகளின் எண்ணிக்கையை உள்ளிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">பலகோட்டை தொடக்கம் அல்லது முடிவுப் புள்ளிக்கு அருகில் குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">மூடிய பலகோட்டில் முனைகளை இணைக்க முடியாது.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">பின்வாங்க முடியாது: இன்னும் போதுமான பொருட்கள் வரையறுக்கப்படவில்லை.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">பொருள் கிடைக்கவில்லை.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">முனையை நீக்க பலகோட்டை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">நீக்கும் முனையின் புள்ளியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">நீக்கும் புள்ளி செல்லாது.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">நீக்கும் புள்ளி பொருளில் இல்லை.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">பொருள் கிடைக்கவில்லை.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">நீக்கும் புள்ளி பொருளில் இல்லை.</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">பலகோடு கிடைக்கவில்லை.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்ட புள்ளிகளுக்கு இடையில் குறைந்தது இரண்டு பலகோடு பகுதிகள் இருக்க வேண்டும்.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">இரண்டு முனைகளுக்கு இடையில் நீக்க பலகோட்டை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">முதல் முனையை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">இரண்டாவது முனையை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">நீக்கும் புள்ளி செல்லாது.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">பொருள் கிடைக்கவில்லை.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">அசல் பலகோட்டைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">பொருள் கிடைக்கவில்லை.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">அசல் பலகோட்டில் உள்ள பகுதிகளில் ஒன்றைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">பொருள் மூடிய பலகோடாக இருக்க முடியாது.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">பலகோடு உருவாக்கப்பட்டது</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">பொருள் கிடைக்கவில்லை.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">முதல் பகுதி தேர்ந்தெடுக்கப்பட்ட பலகோட்டில் இருக்க வேண்டும்.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">இரண்டாவது பகுதி தேர்ந்தெடுக்கப்பட்ட பலகோட்டில் இருக்க வேண்டும் மற்றும் முதல் ஒன்றுக்கு சமமாக இருக்கக் கூடாது.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">வெட்ட வேண்டிய பலகோட்டை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">முதல் பகுதியை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">இரண்டாவது பகுதியை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -54902,113 +49021,11 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="obsolete">எந்தவொரு பொருளும் தேர்ந்தெடுக்கப்படவில்லை!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectBase</name>
     <message>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">பொருள் அணு பொருளாக இருக்க வேண்டும்.</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">தேர்ந்தெடுக்க பொருளை குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">குறுக்கீட்டுக் கோட்டின் முதல் புள்ளியைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">குறுக்கிடும் பொருளைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">குழந்தை பொருட்களைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">குறுக்கீட்டுக் கோட்டின் இரண்டாவது புள்ளியைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">விரும்பிய அடுக்குடன் பொருளை குறிப்பிடவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">தேர்ந்தெடுக்க பொருளை குறிப்பிடவும்</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">வெளிப்புறத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">தேர்வுநீக்குதல்</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">தேர்ந்தெடுத்தல்</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">பொருட்கள்</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">பெட்டியுடன் குறுக்கிடும்</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">பெட்டிக்குள் உள்ள</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">இரண்டாவது விளிம்பைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">குறுக்கிடும் பொருட்களைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">பொருட்களைத் தேர்வுநீக்கவும்</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">பொருட்களைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">குறுக்கிடும் பொருட்களைத் தேர்வுநீக்கவும்</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">தேர்வு சாளரத்திற்கு கிளிக் செய்து இழுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -55316,150 +49333,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">வளைவு விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">எதிர்திசை</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">சுற்றுமுகம்</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">தொடுகோடு வளைவு விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்டால், குறிப்பிட்ட ஆரத்துடன் தொடுகோடு வளைவு உருவாக்கப்படும்</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">தொடுகோடு வளைவின் ஆரம்</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்டால், குறிப்பிட்ட கோணத்துடன் வளைவு உருவாக்கப்படும்</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">தொடுகோடு வளைவின் மொத்த உள் கோணம்</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து ஆரத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">ஆரம்</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">கோணம்</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">சாய்வு விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">இரண்டு பொருட்களையும் சாய்வுக்கு வெட்ட சரிபார்க்கவும்</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">வெட்டு</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">நீளம் 1:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">X திசையில் சாய்வின் நீளம்.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து முதல் நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">நீளம் 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Y திசையில் சாய்வின் நீளம்.</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து இரண்டாவது நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">வட்ட விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ஆரம்:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">வட்டத்தின் ஆரம்</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து ஆரத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">வட்ட தொடுகோடு2 விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;வரைய வேண்டிய தொடுகோடு வட்டத்தின் ஆரம்&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ஆரம்:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">தொடுகோடு வட்டத்தின் ஆரம்</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து ஆரத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">கோணம்:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -55596,845 +49469,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">செருகல் விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">சுழற்சி கோணம்</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">அளவு காரணி:</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">DPI:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">அளவு காரணி</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">படத்தின் DPI</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">செருகல் விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">சுழற்சி கோணம்</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">காரணி:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">அளவு காரணி</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">வரிசை:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">நெடுவரிசைகளின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">வரிசைகளின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து வரிசை இடைவெளியைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து நெடுவரிசை இடைவெளியைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">இடைவெளி:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">நெடுவரிசை இடைவெளி</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">வரிசை இடைவெளி</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">நூலக செருகல் விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">சுழற்சி கோணம்</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">காரணி:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">அளவு காரணி</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">கோடு கோண விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">உருவாக்கப்பட்ட கோட்டில் செருகும் புள்ளியில் வைக்கப்படும் புள்ளி</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">கோடு கோணம்</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">நீளம்:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">கோட்டின் நீளம்</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">ஒட்டு புள்ளி:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோடு கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">தொடக்கம்</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">நடு</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">முடிவு</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோடு நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்டால், கோடு கோண அடிப்படையின் அச்சுக்கு லம்பமாக இருக்கும். இல்லையெனில் - திரை அச்சுக்கு</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">கோண அடிப்படைக்கு</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">கோடு இருபாகுப் பிரிப்பி விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">நீளம்:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">இருபாகுப் பிரிப்பியின் நீளம்</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோடு நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">எண்ணிக்கை:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">உருவாக்க வேண்டிய இருபாகுப் பிரிப்பிகளின் எண்ணிக்கை</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">கோடு விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">வரையப்பட்ட கோடுகளிலிருந்து மூடிய வெளிப்புறத்தை உருவாக்கவும்</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">மூடு</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">கடைசி கோடு வரைதலை பின்வாங்கவும்</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">பின்வாங்கு</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">கடைசி கோடு வரைதலை மீண்டும் செய்யவும்</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">மீண்டும் செய்</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">கோடு விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">திசை:</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">கோடு பகுதிகளிலிருந்து பலகோட்டை உருவாக்குகிறது</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">பலகோடு</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">செங்குத்துக் கோடு</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">குறிப்பிட்ட கோணத்தால் கோடு</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">கோணம்</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">கிடைமட்டக் கோடு</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், கோணம் முந்தைய பகுதியுடன் உறவுடையது</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">உறவு</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">கடைசி கோடு வரைதலை பின்வாங்கவும்</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">பின்வாங்கு</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">வரையப்பட்ட கோடுகளிலிருந்து மூடிய வெளிப்புறத்தை உருவாக்கவும்</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">மூடு</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">கடைசி கோடு வரைதலை மீண்டும் செய்யவும்</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">மீண்டும் செய்</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">கோட்டின் கோணம்</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">தன்னிச்சையான புள்ளிக்கு கோடு</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">புள்ளி</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">இணை கோடு விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">தூரம்:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">அசல் பொருளுக்கு தூரம்</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து தூரத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">எண்ணிக்கை:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">உருவாக்க வேண்டிய இணைகளின் எண்ணிக்கை</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">புள்ளி வழியாக இணை கோடு விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், பொருளின் இருபக்கங்களிலும் இணைகள் உருவாக்கப்படும்</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">சமச்சீர்</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">எண்ணிக்கை:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">உருவாக்க வேண்டிய இணைகளின் எண்ணிக்கை</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">பலகோண விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">விளிம்புகளின் எண்ணிக்கை</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">பலகோண விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">எண்ணிக்கை:</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், பலகோணத்தின் உச்சிகள் வட்டமாக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">ஆரம்</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், பலகோணம் பலகோடாக வரையப்படும். இல்லையெனில், தனிப்பட்ட பொருட்கள் உருவாக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">பலகோடு</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து ஆரத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">விளிம்புகளின் எண்ணிக்கை</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">உச்சி சாய்வுக்கான வட்டமாக்கல் ஆரம்.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்டால், குறிப்பு புள்ளிகள் பலகோணத்தின் உச்சிகளுக்கு. இல்லையெனில், விளிம்புகளின் நடு புள்ளிகளுக்கு.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">உச்சி முதல் உச்சி</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">கோடு உறவு கோண விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">கோடு கோணம்</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">நீளம்:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">கோட்டின் நீளம்</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">உரை விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">உரை:</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">செருக வேண்டிய உரை</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">சுழற்சி கோணம்</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">மாற்ற விலக்கல் விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">அசல் பொருளிலிருந்து விலக்கலுக்கான தூரம்</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் இருக்கும்.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">தற்போதைய அடுக்கைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">நகல்களின் எண்ணிக்கை.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், அசல் பொருட்கள் தக்கவைக்கப்படும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">அசல்களைத் தக்கவைக்கவும்</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், விலக்கலின் தூரத்தின் நிலையான மதிப்புகள் பயன்படுத்தப்படும், இல்லையெனில் அது சுட்டியால் வரையறுக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">நிலையான தூரம்</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், தற்போதைய பண்புகள் உருவாக்கப்பட்ட பொருட்களுக்கு பயன்படுத்தப்படும், இல்லையெனில் அசல் பண்புகள் பயன்படுத்தப்படும்.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து தூரத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், பல நகல்கள் உருவாக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">பல நகல்கள்</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">நகர்த்து சுழற்று விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், தற்போதைய பண்புகள் உருவாக்கப்பட்ட பொருட்களுக்கு பயன்படுத்தப்படும், இல்லையெனில் அசல் பண்புகள் பயன்படுத்தப்படும்.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், பல நகல்கள் உருவாக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">பல நகல்கள்</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், அனைத்து நகல்களும் அதே கோணத்தால் சுழற்றப்படும். இல்லையெனில், கோணம் ஒவ்வொரு நகலின் எண்ணிக்கைக்கு ஏற்ப இருக்கும்.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">நகல்களுக்கு அதே கோணம்</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">சுழற்சி கோணம்.</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">நகல்களின் எண்ணிக்கை.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், சுழற்சி கோணம் சுட்டியால் வரையறுக்கப்படும். இல்லையெனில், குறிப்பிட்ட மதிப்பு பயன்படுத்தப்படும்.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">சுதந்திரம்</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் இருக்கும்.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">தற்போதைய அடுக்கைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், அசல் பொருட்கள் தக்கவைக்கப்படும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">அசல்களைத் தக்கவைக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">பலகோடு விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">பலகோட்டின் முனைகளை இணைத்து மூடிய வெளிப்புறத்தை உருவாக்குகிறது</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">மூடு</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">முந்தைய உச்சிக்கு பின்வாங்கு</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">பின்வாங்கு</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">பகுதி வகை:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">பலகோட்டின் எந்த பகுதியை உருவாக்க வேண்டும் என வரையறுக்கிறது</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">கோடு</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">தொடுகோடு</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">தொடுகோடு ஆரம்</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">தொடுகோடு கோணம்</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">கோணம்</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">தொடுகோடு வளைவு</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">நிலையான ஆரத்துடன் தொடுகோடு வளைவு</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">நிலையான கோணத்துடன் தொடுகோடு வளைவு</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">கோணத்துடன் வளைவு</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ஆரம்:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">வளைவின் ஆரம்</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து ஆரத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">வளைவின் கோணம்</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">எதிர்திசை</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">சுற்றுமுகம்</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">அச்சு முன்பார்வை விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">நிலப்பரப்பு திசை</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">வரைபட அமைப்புகள்</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">அளவு:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;அச்சு அளவு : வரைபட அளவு&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;அச்சு அளவு தற்போதைய மதிப்பில் பூட்டப்பட்டுள்ளது&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">நிலையான</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">கருப்பு / வெள்ளை பயன்முறையை மாற்று</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">கோடு அகலத்திற்கு அச்சு அளவைப் பயன்படுத்து</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">காகிதத்தின் நிலப்பரப்பு திசை</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">காகிதத்தின் நேர்த்தி திசை</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">வரைபடத்தின் மையத்தில் பக்கம்</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">அச்சு பகுதிக்கு பெரிதாக்கு</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">1 பக்கத்திற்கு பொருத்து</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">இயக்கப்பட்டால், காகித இடம் நெடுவரிசைகள் மற்றும் வரிசைகளில் ஒழுங்கமைக்கப்பட்ட குறிப்பிட்ட அளவு பக்கங்களை உள்ளடக்கும்</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">ஓடு அச்சு</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">பக்க வரிசைகள்::</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">பக்க நெடுவரிசைகளின் அளவு</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">பக்க நெடுவரிசைகள்:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">பக்க வரிசைகளின் அளவு</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">வரைபடத்தை கொண்டிருக்க தேவையான பக்கங்களின் எண்ணிக்கையை கணக்கிடு</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">வட்டமாக்கல் விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">இரண்டு விளிம்புகளையும் வட்டமாக்கலுக்கு வெட்ட சரிபார்க்கவும்</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">வெட்டு</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ஆரம்:</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">வட்டமாக்கல் ஆரம்</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து ஆரத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56473,99 +49507,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>சமதூர பிரிவு புள்ளிகளின் எண்ணிக்கை</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">பிணைப்பு விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">படி:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">புள்ளிகளுக்கு இடையிலான தோராயத்திற்கு பயன்படுத்தப்படும் பிணைப்பின் படி</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">தேர்ந்தெடுக்கப்பட்டால், மூடிய பிணைப்பு உருவாக்கப்படும்</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">மூடிய</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">முந்தைய புள்ளியை பின்வாங்கு</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">பின்வாங்கு</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">உரை விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">உரை:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">கோணம்:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">சுழற்சி கோணம்</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">வெட்டு அளவு விருப்பங்கள்</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">தூரம். வெட்டுவதற்கு எதிர்மறை மதிப்புகள், நீட்டுவதற்கு நேர்மறை மதிப்புகள்.</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">மொத்தம்</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">நீளம்:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">தூரம். வெட்டுவதற்கு எதிர்மறை மதிப்புகள், நீட்டுவதற்கு நேர்மறை மதிப்புகள். இறுதி மொத்த நீளத்திற்கு வெட்டும்போது எதிர்மறை அடையாளம் புறக்கணிக்கப்படும்.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">வரைபடத்திலிருந்து நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">சரிபார்க்கப்பட்டால், கோட்டின் இருபக்கங்களுக்கும் வெட்டு/நீட்டம் செய்யப்படும்.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">சமச்சீர்</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">உள்ளீட்டு நீளம் நீளம் அதிகரிப்பதற்கு பதிலாக வெட்டுக்குப் பின் மொத்த நீளமாகப் பயன்படுத்தப்படும்</translation>
     </message>
 </context>
 </TS>

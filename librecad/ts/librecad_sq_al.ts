@@ -39,166 +39,11 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Korniza</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="obsolete">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="obsolete">&lt;</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Ruaj</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Korniza</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Ruaj</translation>
-    </message>
-</context>
-<context>
-    <name>DlgParabola</name>
-    <message>
-        <source>Parabola</source>
-        <translation type="obsolete">Parabola</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Nivel:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Gjeometria</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">Pika në Spline</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">Pikat e kontrollit</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Nivel:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Gjeometria</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Mbyllur</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="obsolete">Nëse zgjidhen, përdoren pikat e spline</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="obsolete">Pika</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="obsolete">Nëse zgjidhen pikat e kontrollit</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">Pikat e kontrollit</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">Pika në Spline</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
         <translation>Fillimi pikë në pikë</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Për tu krijuar:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">Reptangle</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Gjerësia:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Lartësia:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Në qendër:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">Angëll i pavlefshëm</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">E pavlefshme</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">Firmë e pavlefshme</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Përcakto pikë</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Përcakto këndin</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">Madhësia</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">Lloji
-[Gjarsholes]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">Specifiko</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">Përcakto modalitetin
-[Dyshequar]</translation>
     </message>
 </context>
 <context>
@@ -445,73 +290,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">Nga sipër pikë</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Lartësia:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Në drejtim të kundërt</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Rreziku i harkut</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radus:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Orar</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">Këndi qendror i harkut</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">Gjatësia e harkut</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Gjatësia:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">Lartësia</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Gjatësia nga</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -723,10 +501,6 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">Zgjidh për</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation type="unfinished"></translation>
@@ -781,31 +555,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished">Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">është për
-distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">Zgjidh nga dy qendra të mundshme rrethore</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">Zgjidh qendër rrethore</translation>
     </message>
 </context>
 <context>
@@ -1054,13 +803,6 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1104,10 +846,6 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>Zgjidh qëndra</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">Nuk është përcaktuar asnjë qendër.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1502,154 +1240,6 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">E Para Pikë</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">Përcakto pikë
-ose</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">Përcakto pikë
-ose [numra]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">Specifiko drejtimin e rreshtit
-[xywalk-Yellk)</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">Specifiko këndin e rreshtit
-ose</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">Modaliteti
-[NONOstart·end-200-0 distance]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">Përcakto distancën fikse midis pikave
-ose [xeyقpق Numerges]</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">Specifiko distancën (%1)
-ose [%2]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Mbrapa</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Nga
-ose [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">Specifiko pikët</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Specifiko këndin e dytë</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">Sekondë</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">Para së gjithash</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Jo një numër i vlefshëm. Provo 1.9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">Vlerë e pavlefshme e rrezes së rrumbullakët</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Shto numër:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">Shto</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Në</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Për tu krijuar:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Në qendër:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">Fillimi:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radus:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">Radus Inner:</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Poligon</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">A</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1890,29 +1480,6 @@ ose [%2]</translation>
         <location filename="../src/actions/drawing/draw/text/lc_action_draw_mtext.cpp" line="198"/>
         <source>Enter text:</source>
         <translation type="unfinished">Shkruaj tekstin</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Zgjidh i pari</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Zgjidh i dyti</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">Fundi</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">Shto</translation>
     </message>
 </context>
 <context>
@@ -3510,26 +3077,6 @@ ose [%2]</translation>
         <translation>Mundësitë</translation>
     </message>
     <message>
-        <source>Left</source>
-        <translation type="vanished">Majtas</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Djathtas</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Për</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Poshtë</translation>
-    </message>
-    <message>
-        <source>Floating</source>
-        <translation type="vanished">Pluskues</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
         <source>Reload Style Sheet</source>
         <translation>Rilexo Stili</translation>
@@ -4156,10 +3703,6 @@ ose [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="432"/>
         <source>Prompt</source>
         <translation>Paralajmërim</translation>
-    </message>
-    <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">Input në rrjet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
@@ -5223,10 +4766,6 @@ Pikë</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>Zgjidh dhe rreshto</translation>
@@ -5258,10 +4797,6 @@ Pikë</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
         <translation>Shkalla:</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">Zgjidh nga</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -6255,13 +5790,6 @@ Pikë</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Nuk është zgjedhur asnjë njësi!</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionModifyStretch</name>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="118"/>
@@ -7235,18 +6763,6 @@ Pikë</translation>
         <translation>J është dhe nga.</translation>
     </message>
     <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">Hartat e shkurtëra nuk u importuan.
-File i ofruar ekziston, sidoqoftë nuk përmban grafikun e shkurtesave LibreCAD.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">Hartat e shkurtëra nuk u importuan.
-Gabim analizimi XML ndodhi gjatë proçesimit të file.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
         <translation>Hartat e shkurtëra u shpëtuan me sukses.</translation>
@@ -7255,12 +6771,6 @@ Gabim analizimi XML ndodhi gjatë proçesimit të file.</translation>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
         <translation>I pamundur shkrimi tek file i dhënë - të lutem kontrollo që lejohet t&apos;i shkruash.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">Hartat e shkurtëra nuk u importuan.
-Gjatë brezit XML u ndesh një gabim.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -8655,74 +8165,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     </message>
 </context>
 <context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">Nëse kontrollohet, harku origjinal do të hiqet</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">Zëvendëso</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">Niveli</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktiv</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Origjinale</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktiv</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Origjinale</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Grindje origjinale</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Pen:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">Pen për tu aplikuar për të krijuar rrethin</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Nivel:</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">Delta e rrezes së rrethit drejt rrezes së harkut</translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">Shift me rreze:</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -9017,69 +8459,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>Paneli i instrumentëve: %1 (e personalizuar)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">Lloji</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">Horizontal nga</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">Zgjidh nga</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">Përcakton si të zbatohen dimensionet e kryqit</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">Prapashtesa</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">Gjatësia e përgjithshme</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">Përqindja</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">Zgjidh nga</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">Dimensionet vertikale të kryqit</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">Këndi rotation për kalimin rreth qendrës</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
     </message>
 </context>
 <context>
@@ -9443,45 +8822,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="obsolete">Dimensioni ordinat</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Nivel:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Nga</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Butet</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Gjeometria</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="obsolete">Ordinate</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -9543,11 +8883,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
         <translation>Hapësirë bazë:</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">Vendos hapësirën midis vijave dimensionale të një dimensioni bazë. Hyni në distancë. Për informacion rreth dimensioneve bazë, shih DIMBAELINE. Sistemi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -11194,10 +10529,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <source>Hatch Properties</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">Pronësitë?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -11719,10 +11050,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <translation>UCS</translation>
     </message>
     <message>
-        <source>If checked, type of grid for saved view will be shown</source>
-        <translation type="vanished">Nëse kontrollohet, lloji i rrjetit për paraqitjen e ruajtur do të shfaqet</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
         <translation>Lloji i ikonës</translation>
@@ -11731,18 +11058,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Type icon column</source>
         <translation>Ikona e ikonës</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation type="vanished">Nëse kontrollohet, kollona me detajet e sistemit bashkërendues të paraqitjes do të shfaqet</translation>
-    </message>
-    <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">Tooltip me detajet e pamjes për elementët e tabelës</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">Nëse është zgjedhur, kolona me detajet e sistemit koordinativ të pamjes do të shfaqet.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
@@ -11785,10 +11100,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <translation>Nëse kontrollohet, kollona me pamje të hollësishme do të shfaqet në tryezë.</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">Verë</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>Operacionet</translation>
@@ -11804,17 +11115,9 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">Në menyrë dopjo-klik tek elementi tabele</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
         <source>Defines which action should be performed on double click on view item of the table.</source>
         <translation>Definon cilën veprim duhet të kryhet kur të klikohet dy herë në elementin e pamjes së tabelës.</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table. </source>
-        <translation type="vanished">Përcakton se cili veprim duhet kryer në një klikim të dyfishtë në paraqitjen e elementit të tabelës.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="158"/>
@@ -11842,10 +11145,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <translation>Nëse aktivizohet, kliko tek elementi i pamjes së parë do të rivendosë paraqitjen. Përndryshe, pamja duhet rivendosur haptazi.</translation>
     </message>
     <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">Rikthe paraqitjen tek kliko tek elementi i vetëm i tabelës</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
         <translation>Nëse shfaq, do të shfaqet për zërin e tabelës një propozim me informacione shtesë rreth paraqitjes.</translation>
@@ -11854,10 +11153,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
         <translation>Nëse kontrollohet dhe gjatë krijimit paraqitja me emër të shkruar ekziston, do të rifreskohet nga një pozicion i ri. Përndryshe do të kërkohet emri unik i pikëpamjes së re.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Nëse zgjedhur, konfermimi dialog do të shfaqet gjatë heqjes së paraqitjes. Përndryshe, pamja do të hiqet në heshtje.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
@@ -12153,17 +11448,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation>Emri nuk është unik. shkruaj emri.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="obsolete">Pikat e kontrollit të Parabolës nuk mund të jenë shumë afër</translation>
     </message>
 </context>
 <context>
@@ -12579,13 +11863,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgSplinePoints</name>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgTolerance</name>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="14"/>
@@ -12667,17 +11944,9 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <translation>Po të jetë e ngarkuar, do të shfaqet një mjet me informacione shtesë rreth UCS për pjesën e tabelës.</translation>
     </message>
     <message>
-        <source>Toolip with UCS details for table items</source>
-        <translation type="vanished">Tolip me detajet e UCS për elementët e tabelës</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
         <source>Type icon column</source>
         <translation>Ikona e ikonës</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation type="vanished">Nëse kontrollohet, kollona me detaje të origjinës dhe këndit të UCS do të shfaqet në tabelë</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -12693,10 +11962,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
         <source>Editing</source>
         <translation>Duke ndryshuar</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Nëse zgjedhur, konfermimi dialog do të shfaqet gjatë heqjes së paraqitjes. Përndryshe, pamja do të hiqet në heshtje.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"/>
@@ -12717,10 +11982,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
         <translation>Nëse është e zgjedhur, kolona me llojin e rrjetës për UCS do të shfaqet.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">Nëse është e zgjedhur, një dritare konfirmimi do të shfaqet kur të fshihet pamja. Përndryshe, pamja do të fshihet në mënyrë të heshtur.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12788,26 +12049,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <translation>Definon numrin e shkëlqimeve të shënuesit të UCS për të theksuar UCS.</translation>
     </message>
     <message>
-        <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation type="vanished">Përcakton se cili veprim duhet kryer në klikim të dyfishtë tek elementi i tabelës.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">Rikthe UCS në një klikim të vetëm nga një element tabele</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation type="vanished">Nëse kontrollohet, kollona me ikonë për llojin e UCS do të shfaqet në tabelë.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation type="vanished">Nëse kontrollohet, kollona me lloj rrjeti për UCS do të shfaqet</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied</source>
-        <translation type="vanished">Përcakton si duhet të përshtatet dritarja e paraqitjes së vizatimit pasi të zbatohet UCS</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
         <source>On double-click on table item</source>
         <translation>Në menyrë dopjo-klik tek elementi tabele</translation>
@@ -12863,10 +12104,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <translation>Vër në dukje UCS</translation>
     </message>
     <message>
-        <source>Defines delay between UCS marker blinks</source>
-        <translation type="vanished">Përcakton shtyrjen në mes të shënuesit UCS</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="216"/>
         <source> ms</source>
         <translation>ms</translation>
@@ -12880,10 +12117,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="242"/>
         <source>Blink Delay:</source>
         <translation>Vonesa</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation type="vanished">Përcakton sasinë e pulseve të shënuesit UCS për vënien në dukje të UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="252"/>
@@ -13280,45 +12513,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Spostimi:</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">Nëse kontrollohet, do të krijohet një kuti për të gjithë zgjedhjen. Përndryshe, ajo do të krijohet për njësitë individuale.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">Zgjedhja</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">Nëse zgjidhet, do të merren vetëm pikat e qoshes për të lidhur kutinë. Përndryshe, do të hiqen vijat.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">Vetëm pikë</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">Nëse zgjidhet, kutia e lidhjes është vizatuar si poliline</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Poliline</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13412,86 +12606,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation type="unfinished">Nga</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Pen:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">Nëse kontrollohet, kopjet do të pozicionohen në koordinatat origjinale</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">Në vend</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Nivel:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">Pen nga apliko nga</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktiv</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Origjinale</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Grindje origjinale</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">Niveli</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktiv</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Origjinale</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">X:</translation>
     </message>
 </context>
 <context>
@@ -13673,69 +12787,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">Rreziku i vogël:</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">Vlera e këndit për rrezen kryesore</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">Nëse kontrollohet, këndi për rrezen kryesore mund të specifikohet</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Bazë</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Në drejtim të kundërt</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">Zgjidh veprime të mëdha nga vizatimi</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">Nëse kontrollohet, këndi kryesor i rrezeve përcaktohet nga miu</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">I lirë</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">Gjatësia e rrezes kryesore të elipsës</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">Majori Radikal:</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">Gjatësia nga</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Orar</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13874,21 +12925,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Mundësitë</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Orar</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Në drejtim të kundërt</translation>
     </message>
 </context>
 <context>
@@ -14779,30 +13815,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <source>Eccentricity:</source>
         <translation>Ekcentrikiteti:</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">Përkufizim i pavlefshëm i hiperbolës</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">Foci duhet të jetë i veçantë</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">Koordinata të gabuara në qendër</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">Rreze e madhe duhet të jetë pozitive</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">Kënd i pavlefshëm rrotullimi</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">Retio ose rrezja e vogël duhet të jetë pozitive</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -14974,10 +13986,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <translation>Gjerësia:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">Gjerësia e figurës</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>Zgjidh</translation>
@@ -14988,21 +13996,9 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <translation>Lartësia:</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">Lartësia e figurës</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>Zgjidh</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Shkalla:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">Skanim</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -15014,10 +14010,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>Angle:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Rrotull</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -15049,22 +14041,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <source>Select an image file</source>
         <translation>Zgjidh një figurë</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">Madhësia (px):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">Madhësia e figurës në pixel</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">Paraqitja</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -15077,21 +14053,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">Nëse kontrollohet, pika do të jetë gjithmonë brenda njësisë së zgjedhur</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">Zgjohuni në tërësi</translation>
     </message>
 </context>
 <context>
@@ -15469,14 +14430,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <translation>Ndarësi që përdoret për të ndarë emrin e brendshëm të shtresës në emra hierarkikë</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">Ndarës emri</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">Forma e dytë</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15507,10 +14460,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>Prapashtesa e emrit të shtresës që përcakton se shtresa është për pozicion alternativ.</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">Emri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15653,17 +14602,9 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <translation>Rregullime të ndryshme të ngjyrave</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Ngjyrat</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>Ngjyra e sfondit për elementët e zgjedhur në pemën e shtresave.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">Ngjyra për rreshta në degëzimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15702,10 +14643,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>Ngjyra e sfondit të shtresës virtuale</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">Treview elementët ndarës</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15761,10 +14698,6 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>Shtresë pozicioni alternativ</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">rrjetë</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16254,118 +15187,6 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">Nëse kontrollohet, gjatësia e rreshtit përcaktohet nga pozicioni i miut në vend që të vendoset</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">I lirë</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Zgjidh nga</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">Nga pikë</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Gjatësia nga</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">Nëse kontrollohet, njësia origjinale do të ndahet me pikë kryqëzimi.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Pjesëtim</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Spostimi:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">Largësia nga pikë</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">Përcakton se cila pjesë e vijës së krijuar do të këputet në pikën e kryqëzimit</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Fillimi</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mesi</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Mbarimi</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">Tik Stak:</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Linja</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Gjatësia e rreshtit</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">Nëse kontrollohet, këndi është relativ me këndin e njësisë së zgjedhur</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Gjatësia:</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">Pikë nga pikë</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">I lirë</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Largësia:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Pamje e rreshtit</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16672,93 +15493,6 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation type="unfinished">Numri nga</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">Madhësia:</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">Mbarimi</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">Pikë për</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Fillimi</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mesi</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Mbarimi</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Gjatësia:</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Snake:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Gjatësia nga</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">Përcakton nëse duhet krijuar një rresht në pikën e kryqëzimit apo duhet të ketë gjatësi fikse</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">Për të intersectuar</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">Gjatësia e fiksuar</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">Nëse kontrollohet, rreshti i krijuar do të jetë ortogonal për rreshtin e zgjedhur</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">Ortogonal</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">Angëll midis vijës origjinale dhe krijimit një</translation>
     </message>
 </context>
 <context>
@@ -17144,81 +15878,6 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">Nëse kontrollohet, poliline do të krijohet në vend të vijave individuale</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">Krijo</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">Politika për rreshtin u zgjodh e dyta</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">Përpjestim</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">Shto</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">Asnjë ndryshim</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">Linja 1:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">Linja 2:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">Politika për bashkimin e rreshtit që u zgjodh e para</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">Përcakton se si duhet aplikuar lapsi për njësitë e krijuara</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">Pen aktiv</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">Linja 1</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">Linja 2</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">Të dyja rreshta</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">Veçoritë:</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">Nëse kontrollohen, rreshtat origjinalë do të hiqen</translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">Hiq</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17600,85 +16259,6 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">Kontrollon se si duhen krijuar pikat në skajet (fillt/fund).</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Asnjë</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Së bashku</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Fillimi</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Mbarimi</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Hapësira nga</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">Pika:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">Specifikon nëse të gjithë pikat duhet të përshtaten midis fillimit/fundit të pikëve të rreshtit apo nëse gjatësia e rreshtit është llogaritur në numrin e pikave dhe distancës midis pikave.</translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">Linja</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">Largësia midis pikave.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">Nëse kontrollohet, rreshti i pikave do të tërhiqet me kënd të caktuar</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">Numri nga:</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">Nëse kontrollohet, do të përdoret distancë fikse midis pikave. Përndryshe, distanca do të llogaritet.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Largësia e fiksuar</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Pamje e rreshtit</translation>
     </message>
 </context>
 <context>
@@ -21928,433 +20508,6 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Ndihmë</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">Dokumentacioni online</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;Wiki</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">Përdoruesi</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">Komandat</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">Fletë stilimi</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">Wid&amp;gets</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Informacione</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp;Forum</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">Chat Zulip</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">&amp;Submit Gabim</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">&amp;Request Fature</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">Faqe</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp;Donat</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Linja</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">Poin&amp;t</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Circle</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">&amp; Arc</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">Poly&amp;gon</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">Splin&amp;e</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">Ellip&amp;se</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Polyline</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">&amp;Tjetër</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">Nxirr</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;Elipse</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">Ot&amp;her</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Ndrysho</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp;Order</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">&amp;Dimensions</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Info</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp; Instrumentë</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;Zgjidh</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">Dime&amp;nsion</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;File</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Files e hapur të fundit</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Importo</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Eksporto</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;Opsione</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp;Ndrysho</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;Shfaq</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">&amp;Views Restaur</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">PI&amp;gins</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">&amp;Punspace</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Fushat e ankorimit</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">Komponentë CAD</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">Dalja</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">Konteksti</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Paneli i instrumentëve</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">&quot;Widget&quot;</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">&quot;Widget&quot;</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">Paneli i instrumentëve</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">E fundit</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Ndrysho</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">Ndrysho më shumë</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Vizato</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Linja</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Poliline</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Rreth</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Poligon</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">Poliline</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Elipse</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Tjetër</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">Shto përmasor</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">Rreshtimi</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">Vizato rendin</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Nivelet</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Informacione</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Ndrysho</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">Mundësitë</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">Paraqitja</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">Ndrysho Pronësitë</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">Ndrysho të përgjithshme</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">Ndrysho Linja</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">Vizato Linja</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">Vizato</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">Vizato të tjera</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">Ndrysho Rrethin</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">Ndrysho Arc</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">Ndrysho</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">Ndrysho</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">Ndrysho</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">Ndrysho tekstin</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">Ndrysho Metech</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">Ndrysho Blloku</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Renditja</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;Panelët e instrumentëve</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">&amp;CAD Paneli i instrumentëve</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">&amp;Punspaces</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Modaliteti Tab</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">&amp; Dritarja</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">C:</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">I rrumbullakët</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">Trianglar</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">Veri</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">Jug</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">Lindje</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">Perëndimore</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp;Arnage</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp;Maximizuar</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;Cascade</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Tile</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Tile &amp;Vertical</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Tile &amp;Horizontalisht</translation>
-    </message>
-</context>
-<context>
     <name>LC_MenuFactoryBase</name>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
@@ -22970,21 +21123,6 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Spostimi:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23121,197 +21259,6 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Nëse kontrollohen, cilësitë e tanishme do të përdoren për njësi pasqyruese, ndryshe - origjinale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Personalitetet aktuale</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Po të jenë të pakontrolluara, njësitë origjinale do të hiqen, përndryshe ato do të mbijetojnë.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mbaje origjinalin</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Po të kontrollohen, njësitë e pasqyruara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresa origjinale.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Përdoruesi Aktual</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">Po të kontrollohen, njësitë do të shkallezohen po të jetë e nevojshme. Përndryshe, ata do të jenë të pozicionuar dhe të rrotulluar.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Shkalla</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">Po të kontrollohen, do të hiqen masat midis pikave të kryqëzimit. Nëse i pakontrolluari - ngulmimi do të ndahet në pika kryqëzimi.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">Hiq</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">Nëse kontrollohet, segmenti i zgjedhur do të hiqet. Përndryshe, segmenti i zgjedhur do të mbijetojë dhe segmentet e mbetura do të hiqen.</translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">Hiq të zgjedhurin</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Largësia:</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">Pikë nga pikë</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Linja</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">Madhësia e Gap:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">Pikë për në</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">I lirë</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">Hendeku:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">Fillimi</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">Mesi</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">Mbarimi</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">I lirë</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">Fillimi</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">Mesi</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">Mbarimi</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">Madhësia</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">Largësia nga pika e menjëhershme</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Zgjidh nga</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">Madhësia e të çarës, nëse nuk është e lirë</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">Nëse kruhet, madhësia e hendekut përcaktohet nga miu</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">Nëse kontrollohet, pasqyra do të kryhet nga njësia e zgjedhur e rreshtit.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">Pasqyro nga rreshti i zgjedhur</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Po të jenë të pakontrolluara, njësitë origjinale do të hiqen, përndryshe ato do të mbijetojnë.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mbaje origjinalin</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Nëse kontrollohen, cilësitë e tanishme do të përdoren për njësi pasqyruese, ndryshe - origjinale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Personalitetet aktuale</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Po të kontrollohen, njësitë e pasqyruara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresa origjinale.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Përdoruesi Aktual</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23357,234 +21304,6 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation type="unfinished">Përdor shtresën aktuale</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Lëvize Mundësitë</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">Zgjedhja falas e faktorit duhet kryer nga miu nëse kontrollohet.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">I lirë</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Po të kontrollohen, të rejat do të vendosen në shtresën aktuale, përndryshe do të jenë në shtresa origjinale.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Përdorimi Aktual</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">Nëse absolutisht, pika e referimit do të rrotullohet por njësia do të rrotullohet vetëm me kënd të dytë, përndryshe këndet do të përmblidhen</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">Plotësim absolut</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">Angëll për ta rrotulluar njësinë rreth pikës qendrore të rrotullimit</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">Po të kontrollohen, atributet aktuale do të zbatohen për njësitë e krijuara, do të përdoren ato origjinale të mençura.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Personalitetet aktuale</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">Nëse kontrollohet, rrotullimi i dytë është rreth pikës së referimit</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">Rrotullo dy herë</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">Angëll për rrotullim shtesë rreth pikës së kundërt</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">Po të kontrollohen, njësitë origjinale do të mbijetojnë, përndryshe ato do të hiqen.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mbaje origjinalin</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">Do të krijohen kopje të shumta po të kontrollohen.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Kopje shumëfishe</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">Ngjyrosja:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Specifikon nëse këndi është përcaktuar nga vlera e dhënë apo nga pozicioni i miut</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">Zgjidh sekondë</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Lëvize Mundësitë</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">Nëse kontrollohen, do të krijohen kopje të shumëfishta.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Kopje shumëfishe</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">Nëse kontrollohet, do të zbatohet i njëjti faktor shkallëzimi për boshtin X dhe Y.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">Izotropik</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Po të kontrollohen, njësitë origjinale do të mbijetojnë, përndryshe ato do të hiqen.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mbaje origjinalin</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Nëse kontrollohen, atributet aktuale do të zbatohen për njësitë e krijuara, përndryshe ato origjinale do të përdoren.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Personalitetet aktuale</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">Shkalla për</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Shkalla:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">Nëse kontrollohen, njësitë e krijuara do të vendosen në shtresën aktuale. Përndryshe, ato do të vendosen në shtresat origjinale.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Përdorimi Aktual</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">Nëse kontrollohet, faktori do të zgjidhet lirisht nga miu. Përndryshe do të përdoren vlera të përcaktuara të faktorëve.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">I lirë</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">Shkalla për X ax</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Po të kontrollohen, njësitë origjinale do të mbijetojnë, përndryshe ato do të hiqen.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">Mbaji origjinalet</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">Nëse kontrollohen, njësitë e krijuara do të vendosen në shtresën aktuale. Përndryshe, ato do të vendosen në shtresa origjinale.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Përdorimi Aktual</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">Po të kontrollohen, atributet aktuale do të aplikohen në njësitë e krijuara, do të përdoren ato origjinale më të përshtatshme.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Personalitetet aktuale</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Po të kontrollohen, njësitë origjinale do të mbijetojnë, përndryshe ato do të hiqen.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mbaje origjinalin</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Nëse kontrollohen, do të krijohen kopje të shumëfishta.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Kopje shumëfishe</translation>
     </message>
 </context>
 <context>
@@ -23900,14 +21619,6 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>...</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">Filtrimi i paraqitjes me emër</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Filtra...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24343,45 +22054,6 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
         <source>Control Points</source>
         <translation>Pikat e kontrollit</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Pikat e kontrollit të Parabolës nuk mund të jenë shumë afër</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">Nëse zgjedhur, njësia e përdorur si pikë hyrje do të eleminohet pas operacionit pas ngjitjes. Përndryshe, do të mbijetojë.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">Hiq pikë</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Shkalla Faktori</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Për</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Për</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24457,89 +22129,6 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Për</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">Hapësira ndërmjet njësive në rreshta.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">Zgjidh nga</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Shkalla Faktori</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">Këndi rottion për grup.</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">Numri i rreshtave.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">Zgjidh nga</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">Nëse kontrollohet, i njëjti kënd rrotullimi përdoret për çdo pastë dhe për çdo grup të tërë. Përndryshe përdoren kënde të ndryshme.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">E njëjta gjë</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Hapësira e ndërmjetme:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">Numrin e kolonave të armuara.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">Nëse kontrollohen, në passë do të krijohen disa kopje.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">Rreshtimi</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">Rreshtimi:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Për</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">Hapësira midis pikave të futjes së njësive në kollona.</translation>
     </message>
 </context>
 <context>
@@ -25161,17 +22750,9 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
         <translation>Linja Emri</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Ngjyrat</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>Ngjyra e sfondit për elementin e shkrimit aktualisht është publikuar në tryezën e stilolapsit</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">Ngjyra e rrjetit për listën e hartave</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25193,10 +22774,6 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>Rreshti i plotë i tabelës është i guximshëm për stilolapsin aktiv</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">Ngjyra</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25289,17 +22866,9 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
         <translation>Emri natyror kur është e mundur</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">Nëse zgjedhur, mesazhet shtesë do të shfaqen si pjesë e veprimeve lidhur me stilolapsin</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>Shfaq mesazh jo nga</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">Në klikim të dyfishtë tek elementi i tabelës</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25522,12 +23091,6 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Lokacioni i fajllit të stilove është ndryshuar, ju lutemi ri-ndizni aplikacionin që fajlli i ri i stileve të përdoret.
-Ju lutemi vini re se nëse ruani stilin përmes redaktorit pa ri-ndezur aplikacionin, stilet aktuale nga paleta do të ruhen në fajllin e ri dhe për rrjedhojë përmbajtja ekzistuese e tij do të zëvendësohet.</translation>
-    </message>
 </context>
 <context>
     <name>LC_PointPickButton</name>
@@ -25573,37 +23136,6 @@ Ju lutemi vini re se nëse ruani stilin përmes redaktorit pa ri-ndezur aplikaci
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>Pozicioni nga</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">Numri nga Y nga rreshta</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">Numri i rreshtave:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">Numërimi i kollonave:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">Numri nga X nga</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">Nëse zgjedhur, pika e fundit e vilave do të përshtatet me pozicionin e pikës së parë, kështu që vila do të jetë drejtt ose kadrong</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">Rregullo pikë i pari</translation>
     </message>
 </context>
 <context>
@@ -32870,10 +30402,6 @@ Ju lutemi vini re se nëse ruani stilin përmes redaktorit pa ri-ndezur aplikaci
         <translation>Diametri</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">Rrethprerje</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="740"/>
@@ -33862,10 +31390,6 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
         <translation>Info</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Nëse zgjedhur, informacione më të hollësishme rreth rreshtave dhe harkut që janë pjesë e polilines do të shfaqen në Entitet Info.&lt;br/&gt; Përndryshe, do të shfaqen vetëm informacione në lidhje me vertexes/bulges.&lt;/p&gt;&lt;/fond&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
@@ -33914,205 +31438,6 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>Shënim</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Edges:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">Nëse kontrollohen, specifikoni se pika e menjëhershme duhet të zhvendoset me rreze qoshesh.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Shift</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">Gjatësia e qoshes bevel për drejtimin Y.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Përcakton cilat skaje të drejtkëndëshit duhen vizatuar (pra është e mundur të krijohen vetëm dy rreshta paralele në vend të drejtkëndëshit)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Së bashku</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikal</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontalisht</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">Gjerësia e drejtkëndëshit</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">Kontrollon se si duhen tërhequr cepat e drejtkëndëshit.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Drejt</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Raundi</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">Nëse kontrollohet, drejtkëndëshi do të rrotullohet në këndin e caktuar.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Bazë</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">Nëse kontrollohet, lartësia dhe gjerësia e drejtkëndëshit përcakton distancën midis qendrave të harkëve për qoshet e rrumbullakëta. Përndryshe, këto vlera përcaktojnë madhësinë e jashtme të katrorit.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">Madhësia e brendshme</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Gjatësia Y:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">Nëse kontrollohet, drejtkëndëshi do të krijohet si poliline në vend të segmenteve individuale.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Poliline</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Snake:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Lartësia:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radus:</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">Gjatësia e qoshes bevel për drejtimin X.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Gjatësia X:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">Lartësia e katrorit</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Rreziku i qosheve të rrumbullakëta.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">Pika drejtkëndore do të vendoset në pikën e futjes.</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">Majtas</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Për</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">Në rregull</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Majtas</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mesi</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Djathtas</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">Poshtë majtas</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Poshtë</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">Poshtë djathtas</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Zgjidh rrezen e qosheve të rrumbullakëta nga vizatimi.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Rrotull</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">Zgjidh nga</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">Zgjidh gjerësia nga</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Gjerësia:</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Qoshjet:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">Zgjidh gjatësinë e qoshes bevel për drejtimin X nga vizatimi.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">Zgjidh gjatësinë e qoshes bevel për drejtimin Y nga vizatimi.</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">Nëse kontrollohet, këndi do të specifikohet nga pozicioni i miut. Përndryshe do të përdoret vlera e specifikuar.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">I lirë</translation>
     </message>
 </context>
 <context>
@@ -34482,153 +31807,6 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Përcakton cilat skaje të drejtkëndëshit duhen vizatuar (pra është e mundur të krijohen vetëm dy rreshta paralele në vend të drejtkëndëshit)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Së bashku</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikal</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontalisht</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">Përcakton se cila pikë drejtkëndësh duhet vendosur në pozicionin fillestar.</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">Në qosh</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">Mid-Vertik</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">Mes-Horizontal</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mesi</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">Zgjidh rrezen e qosheve të rrumbullakëta nga vizatimi.</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Qoshjet:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">Përcakton se cila pikë drejtkëndësh duhet vendosur në pikën e fundit.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Zgjidh gjatësinë e bevelit në drejtimin X nga tërheqja.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Edges:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">Zgjidh gjatësinë e bevelit në drejtimin Y nga vizatimi.</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">Fillimi:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Gjatësia e bevelit në drejtimin Y.</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Nëse kontrollohen, specifikoni se pikat e para duhet të zhvendosen me rreze qoshesh.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Shift</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Gjatësia X:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radus:</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">Nëse kontrollohet, lejon të specifikojë këndin e rrotullimit për drejtkëndësh.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Bazë</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">Këndi i rrotullimit.</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">Fundi Paraqitja:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">Përcakton se si duhen tërhequr cepat e drejtkëndëshit.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Drejt</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Raundi</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">Rreziku i qosheve të rrumbullakëta.</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Gjatësia Y:</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">Nëse kontrollohet, e gjithë drejtkëndëshi do të tërhiqet si poliline.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Poliline</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Gjatësia e bevel në drejtimin X.</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -34886,145 +32064,6 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation type="unfinished">Zgjidh gjatësinë e bevelit në drejtimin Y nga vizatimi.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">Këndi i brendshëm i gurores.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">Nëse kontrollohet, këndi i brendshëm i kadrongut do të rregullohet në vlerën e përcaktuar.</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">Ngjyrosja e fiksuar:</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">Këndi bazë i drejtkëndëshit.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Gjatësia X:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Gjatësia e bevel në drejtimin X.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">Përcakton si duhen tërhequr cepat për drejtkëndëshin.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Drejt</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Raundi</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Qoshjet:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Nëse kontrollohen, specifikoni se pikat e para duhet të zhvendosen me rreze qoshesh.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Shift</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Gjatësia Y:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Gjatësia e bevelit në drejtimin Y.</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Rreziku i qosheve të rrumbullakëta.</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radus:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">Nëse kontrollohet, forma do të krijohet si poliline.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Poliline</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">Zgjidh këndin e brendshëm të kadrongut nga vizatimi.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Edges:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Zgjidh rrezen e qosheve të rrumbullakëta nga vizatimi.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Zgjidh gjatësinë e bevelit në drejtimin X nga tërheqja.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">Zgjidh gjatësinë e bevelit në drejtimin Y nga vizatimi.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Përcakton cilat skaje të drejtkëndëshit duhen vizatuar (pra është e mundur të krijohen vetëm dy rreshta paralele në vend të drejtkëndëshit)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Së bashku</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikal</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontalisht</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">Zgjidh nga</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">Nëse kontrollohet, drejtkëndëshi do të rrotullohet në këndin bazë të përcaktuar. Përndryshe, këndi bazë do të përcaktohet nga këndi midis pikave të para dhe të dyta të drejtkëndëshit.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">Bazë:</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">Po u kontrollua, do të krijohet gurore në vend të drejtkëndëshit.</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">Quadringle</translation>
     </message>
 </context>
 <context>
@@ -35673,100 +32712,6 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">Më vjen keq, u ndesh një gabim në rrjet gjatë kontrollit të versionit të ri.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">I pamundur analizimi i përgjigjes nga serveri</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Lëvize Mundësitë</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">Specifikon se kopjon në niveli</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Përdorimi Aktual</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">Kualiteti i këndit dytësor është 0. Me një njësi të tillë të vendosjes do të lëvizet por nuk do të rrotullohet.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">Anazhet pasqyrohen</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">Përcakton nëse do të zbatohen atributet aktuale apo origjinale të vizatimit</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Personalitetet aktuale</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">Zgjidh sekondë</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">Angëll për rrotullimin mbi pikën absolute të referimit</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Nëse kontrollohen, do të krijohen kopje të shumëfishta.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Kopje shumëfishe</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">Angle Secondary:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">Nëse kontrollohet, i njëjti kënd do të përdoret për të gjitha kopjet. Përndryshe, do të rritet në mënyrë proporcionale me numrin e kopjes.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">Për</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Po të kontrollohen, njësitë origjinale do të mbijetojnë, përndryshe ato do të hiqen.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mbaje origjinalin</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">Prioritey Angle:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">Shto</translation>
     </message>
 </context>
 <context>
@@ -36761,141 +33706,6 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">Fillimi</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">Fillo këndin për rrethin nga i cili do të fillojnë këpushat.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Spostimi:</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">Ndërprerje e dorës së parë drejt pikës së kryqëzimit.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Hapësira nga</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Largësia:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">Largësia midis këpushave.</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">Po të kontrollohen, njësia e zgjedhur do të ndahet nga pikat e kryqëzimit.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Pjesëtim</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">Gjatësia e gudulisjes.</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">Kalo</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">Tik tick:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">Fillo nga</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">Angëllo midis spinës dhe njësisë së zgjedhur.</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">Nëse kontrollohet, këndi i këpusjes lidhet me njësinë e zgjedhur, përndryshe është kënd absolut.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">Gjatësia Tik:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">Përcakton se cila pikë e këpushave duhet vendosur në pikën e kryqëzimit me njësinë e zgjedhur.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Fillimi</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mesi</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Mbarimi</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">Nëse kontrollohet, do të përdoret distancë fikse e specifikuar midis këpushave. Përndryshe, distanca do të llogaritet bazuar në gjatësinë dhe këpushat e njësisë.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">Fiksuar</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">Numëro këpushat midis skajeve të njësisë së zgjedhur.</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">Numërim:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">Devins se si këpushat në skajet e njësisë duhet vendosur.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Asnjë</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Së bashku</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">Edge Tik:</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37215,57 +34025,6 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">Për</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Po të jetë e pakontrolluar, do të hiqet vija origjinale, përndryshe do të mbijetojë.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mbaje origjinalin</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Nëse kontrollohen, cilësitë e tanishme do të përdoren për njësitë e krijuara, përndryshe - ato origjinale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Personalitetet aktuale</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Nëse kontrollohen, njësitë e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresa origjinale.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Përdorimi Aktual</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">Nëse kontrollohet, është e mundur të specifikohet sasia e personalizuar e segmenteve të vijës. Përndryshe, vlera nga rregullimet për vizatimin aktual do të përdoret.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">E personalizuar</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">Nëse kontrollohen, segmentet e vijës do të jenë pjesë e polilines. Përndryshe, do të jenë vija individuale</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">Në Poliline</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -37389,61 +34148,6 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
         <translation type="unfinished">Në Poliline</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Nëse kontrollohen, njësitë e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresa origjinale.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Përdoruesi Aktual</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">Shumicën e pikave të mesit të segmentit poliline që do t&apos;i shtohet slines.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">Përcakton shkallën e boshtit</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Nëse i pakontrolluar, poliline origjinale do të hiqet, përndryshe do të mbijetojë.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Rekord:</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mbaje origjinalin</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">Pikët e mesme:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Nëse kontrollohen, cilësitë e tanishme do të përdoren për njësitë e krijuara, përndryshe - ato origjinale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Personalitetet aktuale</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">Po të kontrollohen, do të krijohen verteksi poliline si pika spiline dhe vija me pikë. Përndryshe, ato konsiderohen si pika kontrolli dhe do të krijohet spiracioni i zakonshëm.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">Verteksi është pikë</translation>
     </message>
 </context>
 <context>
@@ -37847,69 +34551,6 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>Degrene</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">Nëse kontrollohet, ylli simetrik do të krijohet.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Simmetric</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">Radus për anët e brendshme.</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Numri:</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">Zgjidh nga</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">Zgjidh nga</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">Numri i rrezeve.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">Nëse kontrollohen, anët e jashtme do të rrethohen.</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">Jashtë rrezeve</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">Nëse kontrollohen, do të rrethohen anët e brendshme.</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">Brenda rrezeve</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">Nëse kontrollohet, ylli do të tërhiqet si poliline.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Poliline</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">Rrezatues për rrezet e jashtme (degat).</translation>
     </message>
 </context>
 <context>
@@ -38800,14 +35441,6 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
         <translation>Rregullimet</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">Filtrimi i koordinatave të përdoruesit sipas emrit</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Filtra...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>&lt;Pa emër&gt;</translation>
@@ -38908,33 +35541,6 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>Hiq A&amp;ll UCSs</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">Angle X-aksiz i sistemit të ri të koordinimit</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Specifikon nëse këndi X-Aks është përcaktuar nga vlera e dhënë apo nga pozicioni i miut</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">I lirë</translation>
     </message>
 </context>
 <context>
@@ -39547,33 +36153,6 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.cpp" line="63"/>
         <source>remove 0&quot;</source>
         <translation>hiq 0&quot;</translation>
-    </message>
-</context>
-<context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Linja Mundësitë</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Hapësira e ndërmjetme:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">Largësia nga poliline origjinale</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">Kopies:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">Zgjidh nga</translation>
     </message>
 </context>
 <context>
@@ -40254,77 +36833,6 @@ Auto-save të çaktivizuar.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">Arc</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Nivel:</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Butet</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Gjeometria</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">Koordinata X e qendrës së Harkut</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">Koordinata Y e qendrës së Harkut</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="obsolete">Përcakton nëse Arc është kthyer (në drejtim të orës)</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">Invertuar</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">Në qendër (y):</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="obsolete">Rreziku i harkut</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="obsolete">Fillimi Angle:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Radus:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="obsolete">Fillo nga</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="obsolete">Fundi nga</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="obsolete">Fund:</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Në qendër</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
@@ -40362,194 +36870,6 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
         <translation>Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Rreth</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Nivel:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Gjeometria</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Radus:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="obsolete">Rredaus i rrethit</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">Në qendër (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">Koordinata Y e qendrës rrethore</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Në qendër</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">Koordinata X e qendrës rrethore</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">Përmasat lineare</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Nivel:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Nga</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Butet</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Gjeometria</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angle:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="obsolete">Këndi rotation i dimensionit</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Përmasa</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Nga</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Nivel:</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Butet</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Elipse</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Nivel:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Gjeometria</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="obsolete">Këndi rotation për boshtin kryesor të elipsës, gradë</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="obsolete">Përcakton nëse harku kthehet mbrapsht</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">Invertuar</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">Në qendër (y):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="obsolete">Fundi këndi i harkut eliptik, gradë</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">Koordinata Y e qendrës së Harkut</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="obsolete">Rrezatusi i boshtit kryesor të elipsës</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="obsolete">në</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="obsolete">Fillo Anggle°:</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="obsolete">Rrotullimi:</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="obsolete">Rrezatues i boshtit të vogël të elipsës</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="obsolete">Fundi Angle°:</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="obsolete">Fillo këndin e harkut eliptik, gradët</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="obsolete">Major:</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="obsolete">Pak:</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="obsolete">Koordinata X e qendrës së elipsës</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Në qendër</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
     </message>
 </context>
 <context>
@@ -40626,89 +36946,6 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <source>Image</source>
-        <translation type="obsolete">Figura</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Nivel:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Gjeometria</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angle:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="obsolete">Lartësia:</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="obsolete">Gjerësia e figurës</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="obsolete">X nga pikë</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="obsolete">Paraqitja</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="obsolete">Pozicioni nga figurë</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="obsolete">Skanim</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="obsolete">Madhësia (px):</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">Rrotull</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="obsolete">Koordinata Y nga pikë</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="obsolete">Shkalla:</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="obsolete">Madhësia e figurës në pixel</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">DPI</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="obsolete">Gjerësia:</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="obsolete">Lartësia e figurës</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="obsolete">Zgjidh një figurë</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="32"/>
@@ -40731,155 +36968,9 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
         <translation>Gjuha GUI:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p rresht=&quot;center&quot;&gt;&lt;span stilit=&quot; madhësia shkronja:e madhe; shkronja-pesha:,700;&quot;&gt; Mirësevini tek LibreCAD&lt;span&gt;&lt;br/&gt;&gt;&lt;p&gt;&lt;p&gt; Ju lutem zgjidhni njësinë që dëshironi të përdorni për vizatime të reja dhe gjuhën tuaj të preferuar për Uin dhe Komandën.&lt;br/&gt;&lt;p&gt;&lt;p&gt; Mund t&apos;i ndryshoni këto rregullime më vonë.&lt;/p&gt;&lt;/Ond&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
         <translation>Gjuha e komandës:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <source>Insert</source>
-        <translation type="obsolete">Fut</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Nivel:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Gjeometria</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="obsolete">Pikë:</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="obsolete">Fut</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="obsolete">Rreshta për kopjet</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">Rrotull</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="obsolete">Hapësira ndërmjet kollonave</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="obsolete">Nga X ax</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="obsolete">X nga pikë</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="obsolete">Hapësira ndërmjet rreshtave</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="obsolete">Shumicën e kollonave për kopjet</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="obsolete">Nga Y</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="obsolete">Shkalla Y:</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="obsolete">Rreshtat:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angle:</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="obsolete">Koordinata Y nga pikë</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="obsolete">Rreshti:</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="obsolete">Kollona:</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="obsolete">Shkalla X:</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="obsolete">Hapësira e ndërmjetme:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Linja</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Nivel:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Gjeometria</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="obsolete">Fundi pikë</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="obsolete">Pika X</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="obsolete">Pikë Y</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="obsolete">Fundi pikë:</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="obsolete">Fillimi pikë:</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="obsolete">Fillo pikë Y</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="obsolete">Fillimi pikë</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="obsolete">Fillo pikë X</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
     </message>
 </context>
 <context>
@@ -41080,10 +37171,6 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
         <translation>Simboli</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">Simboli Përshkrimi</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="876"/>
         <source>Diameter (⌀)</source>
         <translation>Diametri</translation>
@@ -41137,10 +37224,6 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>Unit-format</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Yen (⇩)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -41741,115 +37824,6 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
         <translation>Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <source>Mirroring Options</source>
-        <translation type="vanished">Pasqyrimi i opcioneve</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Fshi origjinalin</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Ruaj</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Përdor ngjyrat aktuale</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Përdorimi</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Move/Copy Options</source>
-        <translation type="vanished">Lëvize Kopjo Mundësitë</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Fshi origjinalin</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Ruaj</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Multiple Kopies</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Përdor ngjyrat aktuale</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Përdorimi</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <source>Move/Rotate Options</source>
-        <translation type="vanished">Lëvize Mundësitë</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="vanished">Ctrl+S</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">Këndi (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Përdor ngjyrat aktuale</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Përdorimi</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Fshi origjinalin</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Ruaj</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Kopje shumëfishe</translation>
     </message>
 </context>
 <context>
@@ -44708,10 +40682,6 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
         <translation>Shënues relativ zero</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">Sjellja</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
         <translation>Lloji i rrjetit që duhet vizatuar</translation>
@@ -45925,255 +41895,6 @@ për</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Code</source>
-        <translation type="obsolete">Kodi</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Vlera</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Anullo</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Pikë</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Nivel:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Gjeometria</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="obsolete">Pozicioni (y):</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="obsolete">Pozicioni i pikë nga Y</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="obsolete">Pozicioni (x):</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="obsolete">Pozicioni i pikë nga X</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Poliline</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Nivel:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Gjeometria</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="obsolete">Përcakton nëse poliline është e mbyllur</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Mbyllur</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation type="vanished">Mundësitë</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Fshi origjinalin</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Ruaj</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="vanished">&amp;Multiple Kopies:</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">Kënd (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Përdor ngjyrat aktuale</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Përdorimi</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <source>Rotate Two Options</source>
-        <translation type="vanished">Rrotullo dy Mundësitë</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Fshi origjinalin</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Ruaj</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Multiple Kopies</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;a):</source>
-        <translation type="vanished">Kënd (a):</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;b):</source>
-        <translation type="vanished">Kënd (b):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Përdor ngjyrat aktuale</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Përdorimi</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <source>Scaling Options</source>
-        <translation type="vanished">Mundësitë</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="vanished">Shkalla nga në</translation>
-    </message>
-    <message>
-        <source>Isotropic Scaling</source>
-        <translation type="vanished">Skanim izotropik</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Përdor ngjyrat aktuale</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Përdorimi</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Gjej përqindjen e shkallëzimit rreth qendrës nga një pikë referimi dhe një pikë target.&lt;/p&gt;&lt;/fond&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Fshi origjinalin</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Ruaj</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Multiple Kopies</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">Spin</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Nivel:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Gjeometria</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="obsolete">Rekord:</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="obsolete">Përcakton nëse vija përcakton kontourin e mbyllur</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Mbyllur</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="obsolete">Degrene</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="20"/>
@@ -46286,10 +42007,6 @@ për</translation>
         <translation>Angle:</translation>
     </message>
     <message>
-        <source>Oblique:</source>
-        <translation type="vanished">Obelique:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
         <source>Width factor:</source>
         <translation>Gjerësia:</translation>
@@ -46398,10 +42115,6 @@ për</translation>
         <translation>Unit-format</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Yen (⇩)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Times (×)</source>
         <translation>Kohë (klip)</translation>
@@ -46445,10 +42158,6 @@ për</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>Shtresa e tekstit</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">Obliga e tekstit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -47500,21 +43209,6 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     </message>
 </context>
 <context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">Është dhënë një shkallë e pavlefshme</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">Letra</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">Letra</translation>
-    </message>
-</context>
-<context>
     <name>QG_RecentFiles</name>
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="183"/>
@@ -47581,10 +43275,6 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>World</source>
         <translation>Botë</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Bëshkë</translation>
     </message>
 </context>
 <context>
@@ -47787,12 +43477,6 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
         <translation>Hiq shtresat bosh</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Shtresat pa i gjetur njësitë, megjithatë janë të filtruara dhe nuk janë të dukshme.
-Pastro maskën e filtrimit dhe përsërit.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -47854,14 +43538,6 @@ If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly 
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Zëvendësoni vlerën &quot;Për Shtresë&quot; me vlerat e shtresave burimore?
-Nëse Po - entitetet me stilolaps &quot;Për Shtresë&quot; do të duken në shtresën e re pikërisht si në shtresat e mëparshme dhe vlera &quot;Për Shtresë&quot; do të zëvendësohet me stilolapsin e zgjidhur.
-Nëse Jo - vlerat &quot;Për Shtresë&quot; mbeten dhe, për rrjedhojë, stilolapsi i shtresës së synuar do të përcaktojë stilolapsin për këto entitete.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -48160,10 +43836,6 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
 Do you want to replace it?</source>
         <translation>%1 ekziston.
 Dëshiron ta zëvendësosh?</translation>
-    </message>
-    <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">E vjetër Exchange</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="468"/>
@@ -48891,11 +44563,6 @@ Dëshiron ta zëvendësosh?</translation>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>pikë</translation>
-    </message>
-    <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">krik</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -51224,26 +46891,6 @@ Dëshiron ta zëvendësosh?</translation>
         <translation>përdorimi:</translation>
     </message>
     <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished">[options] &lt;dxf files&gt;</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished">*.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">-- printo të gjithë files dxf tek files pdf me të njëjtët emra.</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished">- o some.pdf *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">vo gjithçka j.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
         <source> [options] &lt;%1_files&gt;</source>
         <translation type="unfinished"></translation>
@@ -51319,16 +46966,6 @@ Dëshiron ta zëvendësosh?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Letra madhësia në.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">Zgjidhja e daljes (DPI).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>Shkalla e daljes. E.g.: 0.01 (për 1:100 shkallë).</translation>
@@ -51374,14 +47011,6 @@ Dëshiron ta zëvendësosh?</translation>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">&lt;dxf files&gt;</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">Input DXF</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -51909,11 +47538,6 @@ Dëshiron ta zëvendësosh?</translation>
         <translation>gabim kreu file DXF/DWG</translation>
     </message>
     <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">gabim kreu dara</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
@@ -51960,10 +47584,6 @@ Dëshiron ta zëvendësosh?</translation>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>gabim j</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">Versioni.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -52412,10 +48032,6 @@ Dëshiron ta zëvendësosh?</translation>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">Zgjidh nga bllok</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
         <translation>Zgjidh</translation>
@@ -52429,66 +48045,6 @@ Dëshiron ta zëvendësosh?</translation>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>Specifiko pikë</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">Zgjidh të shpërthejë përmbajtësi (Enter për t&apos;u plotësuar)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">Zgjidh dhe shpërthen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">Blloku nuk mund të përmbajë një futje të vetes.</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished">nga blloku në:</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">Ky bllok nuk mund të futet.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specifiko pikë</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Shto:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Shto</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">Shto kollonat</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">Shto rreshta:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">Shto</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">Shto</translation>
     </message>
 </context>
 <context>
@@ -52740,270 +48296,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">Gjatësia e kordave duhet të jetë jo zero</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">Nuk është një gjatësi e vlefshme kordash</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Në</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Arc alternativ</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">Për:</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">Specifiko</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">Specifiko këndin e fillimit:</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">Specifikon këndin:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">Të dhëna të pavlefshme.</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">Specifiko njësinë bazë</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">Sipër</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">Ngopje</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">Harku i Alternueshëm</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Në</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">Pikë në</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">Të dhëna të pavlefshme rrethi.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">Të dhëna të pavlefshme rrethi.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">është i pavlefshëm</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">është nuk</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">është nuk</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">Përcakto qendrën rrethore</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">Specifiko rrezen e rrethit</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">Specifiko rreshtin e parë</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">Specifiko rreshtin e dytë</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">Specifiko rreshtin e tretë</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">A</translation>
-    </message>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">Pikë në</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">Pikë në</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Zgjidh qendrën e rrethit tangent</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">Jo për</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Specifiko rreshtin e parë/arc/circle</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Specifiko rreshtin e dytë/arc/circle</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Zgjidh qendrën e rrethit tangent</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">A</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">Specifiko një tjetër vijë/arc/circle</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">A pikë në</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Zgjidh qendrën e rrethit tangent</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">Jo për</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Specifiko rreshtin e parë/arc/circle</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Specifiko rreshtin e dytë/arc/circle</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">Specifiko rreshtin e tretë/arc/circle</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Zgjidh qendrën e rrethit tangent</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="170"/>
@@ -53198,125 +48490,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">Zgjidh nga</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
         <translation>Hatch menjëherë mbas zgjedhje</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specifiko pikë</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Shto:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Shto</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">Shto:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Në vazhdim pikë</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Në vazhdim pikë</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">Nuk arrij të mbyll sekuencën e rreshtave: nuk janë përcaktuar ende njësitë e mjaftueshme, ose janë mbyllur tashmë.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">E pamundur hapja e historisë</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">E pamundur riko: u arrit fundi i historisë</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Përcakto pozicionin</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">Drejtimi paraprak</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Shto:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">Shkruaj gjatësinë:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">do të krijohen njësi</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">Linjat e sektorit të numrit nuk janë në:</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">Zgjidh i pari</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">Zgjidh sekondë</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">Shto lartësia:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">Shto nga:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">Dhe</translation>
     </message>
 </context>
 <context>
@@ -53349,74 +48525,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">do të krijohen njësi</translation>
-    </message>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">Specifiko distancën &lt;%1&gt; ose zgjidh njësinë ose [%2]</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Shto numër:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Jo një numër i vlefshëm. Provo 1.99</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">do të krijohen njësi</translation>
-    </message>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">Specifiko</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Numri:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Jo një numër i vlefshëm. Provo 1.99</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">Specifiko një cep</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Specifiko këndin e dytë</translation>
     </message>
 </context>
 <context>
@@ -53458,29 +48566,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Përcakto pozicionin</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Përcakto këndin</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">Specifikon gjatësinë</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53518,17 +48603,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Përcakto pikë</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Shkruaj tekstin</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
@@ -53537,108 +48611,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">Shto fund pikë</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Shto nga</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">Shto</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">Shto pikë</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">X është i pavlefshëm.</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">Madhësia është.</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">Vlera x e futur është e pavlefshme.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Arc alternativ</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Në vazhdim pikë</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Në vazhdim pikë</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">I pamundur mbyllja e sekuencës së rreshtave: nuk janë përcaktuar ende njësitë e mjaftueshme.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Nuk mund të anullohet: Nuk janë përcaktuar ende njësi të mjaftueshme.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">Specifiko pikën tjetër të kontrollit ose [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">Në vazhdim pikë</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Nuk mund të anullohet: Nuk janë përcaktuar ende njësi të mjaftueshme.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">Teksti:</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Përcakto pikë</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Shkruaj tekstin</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">Zgjidh për të prerë (Enter për t&apos;u plotësuar)</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -53657,10 +48630,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>Preje</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">Zgjidh nga kopjo nga</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -53698,24 +48667,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Paste Multiple</source>
         <translation>Ngjite</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="obsolete">Pikë</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">Asgjë për të zhbërë!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">Asgjë të re!</translation>
     </message>
 </context>
 <context>
@@ -53936,57 +48887,6 @@ Fund: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">Largësia: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Pika Për Entity: (%6 , %7)
-Pikë</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">Specifiko njësinë</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">Mos n xirr</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">Pika relative është në njësi</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Informacione</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Largësia:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">Nga:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">Për:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -54032,10 +48932,6 @@ Pikë</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">Zgjidh nga</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="74"/>
         <source>Select contour</source>
         <translation>Zgjidh</translation>
@@ -54067,906 +48963,6 @@ Pikë</translation>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>Anullo</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">Hap</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specifiko pikë</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Shto:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Shto</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">Zgjidh nga ndrysho</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">Ndrysho menjëherë atributet mbas zgjedhjes</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">Linjat e zgjedhura janë paralele</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">Linjat e zgjedhura nuk janë fëmijë të të njëjtit poliline</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Pika 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Pika 2:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">Një njësi e pavlefshme e zgjedhur (jo e dënueshme).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">Njësi e pavlefshme e zgjedhur (jo-atomike).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">Një njësi e pavlefshme e zgjedhur (jo e dënueshme me njësinë e parë).</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Zgjidh i pari</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Zgjidh i dyti</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">Shkruaj gjatësinë 1:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">Shkruaj gjatësinë 2:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Pjesëtim</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">Në:</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nuk u gjet asnjë Entity.</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">Entititeti duhet të jetë një linjë, hark, rreth, elipsë apo spontim interpolimi.</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">Pika e prerjes mund të mos jetë pika e fundit e njësisë.</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">Specifiko njësinë që duhet prerë</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">Zgjidh nga elemino</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">Elemino</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">Jo në të njëjtën linjë.</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">Prindi i njësisë së dytë nuk është një poliline</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">Prindi i njësisë së parë nuk është një poliline</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">Prindi i njësisë së dytë është i pavlefshëm</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">Një nga njësitë e zgjedhura është e pavlefshme</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">Prindi i njësisë së parë është i pavlefshëm</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">Njësia e parë është e pavlefshme</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">Njësia e dytë është e pavlefshme</translation>
-    </message>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">Në a</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">Në</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">Kliko mbi njësinë që duhet ndryshuar</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">Zgjidh nga tekst</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">Shpërf ill menjëherë mbas zgjedhje</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Pasqyrë</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">Këndi (alternativ):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">Linja:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">Linja Për:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">Zgjidh nga pasqyro</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">Përcakto rresht pasqyrë</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">Në qendër Vertikal</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">Në qendër</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">Pikë nga</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">Pikë nga</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">Lëvizja e ndalimit</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">Kopjo</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specifiko pikë</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">Krijo një kopje</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">Zgjidh për të lëvizur (Enter për t&apos;u plotësuar)</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">Lëviz mbas zgjedhur</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specifiko pikë</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">Zgjidh për të lëvizur dhe rrotulluar (Enter për t&apos;u plotësuar)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">Lëviz dhe rrotullo menjëherë mbas zgjedhje</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">Lëviz me rotacion</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">Burimi:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">Objektivi</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Spostimi:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">Shto:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">Spostimi</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Largësia:</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">Pikë nga</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">Zgjidh nga</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">Anullo</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">Zgjidh nga Rikthe</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">Rikthe</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">Përcakto qendrën e rrotullimit</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specifiko pikë</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">Rotation</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Burimi Pikë</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Objektivi Pikë</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Spostimi:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Referime Pikë</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">Në qendër:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">Angle e dytë:</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">Zgjidh nga</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">Rrotullo</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">Pikë për</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">Dy herë</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">Qendra 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">Këndi 1:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">Qendra 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">Këndi 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">Zgjidh dy nga</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">Rrotullo 2 Aksi menjëherë mbas zgjedhjes</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">Përcakto pikë</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">Specifiko pikë</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Raundi</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Pika 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Pika 2:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">I pari</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">Specifiko njësinë e dytë</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">Shto:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Shkalla</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Në qendër:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Burimi Pikë</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Objektivi Pikë</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Spostimi:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">Shkalla nga X:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">Shkalla nga Y:</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">Në</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">Specifiko pikë</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">I lirë</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">Zgjidh nga</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">Shkalla</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">Shtresa</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">Fillimi:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">Fundi:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Referime Pikë</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Objektivi Pikë</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Spostimi:</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Specifiko këndin e dytë</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specifiko pikë</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">Trim Dy</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">Ndërhyrja 2:</translation>
-    </message>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">Zgjidh i pari</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">Zgjidh për</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">Nuk u gjet asnjë njësi.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">Entititeti i zgjedhur nuk është një njësi atomike apo nuk mund të shkurtohet.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Asnjë shprehje e vlefshme</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">Zgjidh vijë/arc për të shkurtuar vlerën e gjatësisë së OSE:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nuk u gjet asnjë Entity.</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">Zgjidh njësitë (Enter në plotësim)</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">Rendit</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">Zgjidh për</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nuk u gjet asnjë Entity.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entititeti duhet të jetë një poliline.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">Pika shtesë është e pavlefshme.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">Pika shtesë nuk është në njësi.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">Shto nyje</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nuk u gjet asnjë Entity.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entititeti duhet të jetë një poliline.</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">Nuk a.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">Kliko diku afër fillimit ose fundit të polilines ekzistuese.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Shto nga</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">Specifiko poliline diku afër fillimit apo fundit pikë</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Nuk mund të anullohet: Nuk janë përcaktuar ende njësi të mjaftueshme.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nuk u gjet asnjë Entity.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entititeti duhet të jetë një poliline.</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Pika e fshirjes është e pavlefshme.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Pika e fshirjes nuk është në njësi.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">Elemino nyje</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Asnjë njësi e gjendur</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Njësia duhet të jetë një polivijë</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Pika e fshirjes nuk është në njësi.</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Pika e fshirjes është e pavlefshme.</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">Nuk u gjet asnjë poliline.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">Së paku dy segmente të polilines duhet të jenë midis pikave të zgjedhura.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">Zgjidh polivijën për të fshirë mes dy nyjeve</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">Zgjidh nyjen e parë</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Asnjë njësi e gjendur.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Njësia duhet të jetë polivijë.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nuk u gjet asnjë Entity.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">Krijohet Poliline</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">Entitetet nuk mund të jenë një poliline e mbyllur.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">Zgjidh një nga segmentet në polilinen origjinale</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nuk u gjet asnjë Entity.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entititeti duhet të jetë një poliline.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">Segmenti i parë duhet të jetë në poliline të zgjedhur.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">Segmenti i dytë duhet të jetë në poliline të zgjedhur dhe jo i barabartë me të parin.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">Nga</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">Specifiko segmentin e parë</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">Specifiko segmentin e dytë</translation>
     </message>
 </context>
 <context>
@@ -55043,113 +49039,11 @@ Pikë</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="obsolete">Nuk është zgjedhur asnjë njësi!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectBase</name>
     <message>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">Entititeti duhet të jetë një Entitet Atomik.</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Specifiko njësinë që duhet zgjedhur</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">Zgjidh pika e parë e rreshtit</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">Pikë nga</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">Dhe niveli</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Specifiko njësinë që duhet zgjedhur</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">Zgjedhja</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">unit-format</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">dhe ata që dallojnë</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">të cilët futen në radhët e armikut, -</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">Kliko dhe zvarrit për dritaren e zgjedhjes</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">Zgjidh i dyti</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">Entitetet e zgjedhura</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">De-seleksionimi</translation>
     </message>
 </context>
 <context>
@@ -55457,150 +49351,6 @@ Pikë</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Mundësitë</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Në drejtim të kundërt</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Orar</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">Mundësitë</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">Nëse zgjedhuri, ark tangental me rreze të caktuar do të krijohet</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">Rrezatusi i harkut tangncial</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">Nëse zgjedhur, rc me kënd të caktuar do të krijohet</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">Këndi i plotë në rritje i harkut tangncial</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Radikal</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Angle</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">Mundësitë</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">Kontrolloni për të shkurtuar të dy njësitë në bevel</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">Gjatësia 1:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Gjatësia e bevel në drejtimin X.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">Zgjidh i pari</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">Gjatësia 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Gjatësia e bevelit në drejtimin Y.</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">Zgjidh sekondë</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">Rreth Mundësitë</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radus:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Rredaus i rrethit</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">Mundësitë</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Rrezatus i rrethit tangncial për të vizatuar&lt;/p&gt;&lt;/person&gt;&lt;/htl&gt;</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radus:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">Rredaus i rrethit tangncial</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angle:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -55737,849 +49487,6 @@ Pikë</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Fut Mundësitë</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Angëllimi</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Shkalla:</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">DPI:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Shkalla Faktori</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">DPI i figurës</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Fut Mundësitë</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Angëllimi</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Faktori:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Shkalla Faktori</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">Rreshtimi:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">Numri i kollonave</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Hapësira e ndërmjetme:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">Hapësira e ndërmjetme</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">Hapësira e ndërmjetme</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">Fut Mundësitë</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Angëllimi</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Faktori:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Shkalla Faktori</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">Linja Mundësitë</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">Pikë në pikë</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Rreshti</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Gjatësia:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Gjatësia e rreshtit</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">Pikë:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Fillimi</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mesi</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Mbarimi</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">Gjatësia e rreshtit nga</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">Nëse zgjedhur, rreshti do të jetë ortogonal në aks të këndeve bazë. Përndryshe - për të shfaqur aksin</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">Në bazën e milingonave</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">Mundësitë</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Gjatësia:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">Gjatësia e bisector</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Numri:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Linja Mundësitë</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Formoni një kontour të mbyllur nga rreshtat e tërhequr</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Mbyll</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Anullo vizatimin e fundit të rreshtit</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Anullo</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Rikthe vizatimin e fundit të rreshtit</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Përsërite</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Linja Mundësitë</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">Drejtimi:</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">Krijon poliline nga segmentet e rreshtit</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Poliline</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">Vertikal</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">Linja nga</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Angle</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">Horizontal</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">Nëse kontrollohet, këndi është relativ me segmentin e mëparshëm</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Anullo vizatimin e fundit të rreshtit</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Anullo</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Formoni një kontour të mbyllur nga rreshtat e tërhequr</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Mbyll</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Rikthe vizatimin e fundit të rreshtit</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Përsërite</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Pamje e rreshtit</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">Linja pikë</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Pikë</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">Linja Mundësitë</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Largësia:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">Largësia nga njësia origjinale</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Hapësira nga</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Numri:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">Linja</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">Nëse kontrollohen, paralelet do të krijohen në të dy anët e njësisë</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Simmetric</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Numri:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Mundësitë</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Numri:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Numri nga</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Mundësitë</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Numri:</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">Nëse kontrollohen, verteksi i poligonit do të rrethohet.</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">Radikal</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">Nëse kontrollohet, poligoni do të tërhiqet si poliline. Përndryshe, do të krijohen njësi të veçanta.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Poliline</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">Numri nga</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">Rreze e rrumbullakët për vertex bevel.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">Nëse zgjidhen, pikat e referimit janë për verteksin e poligonit. Përndryshe, ato janë në mes të skajeve.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">Verteks për Vertex</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Linja Mundësitë</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Rreshti</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Gjatësia:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Gjatësia e rreshtit</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Gjatësia nga</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Opsionet e tekstit</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Teksti:</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">Teksti që duhet shtuar</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Rrotull</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">Ndrysho opsionet e ndërprerjes</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">Për</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Nëse kontrollohen, njësitë e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të jenë në shtresa origjinale.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Përdorimi Aktual</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Numri i kopjeve.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Po të kontrollohen, njësitë origjinale do të mbijetojnë, përndryshe ato do të hiqen.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mbaje origjinalin</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">Nëse kontrollohet, do të përdoren rregullime të distancës së kompresimit, përndryshe do të përcaktohet nga miu.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Largësia e fiksuar</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Nëse kontrollohen, atributet aktuale do të zbatohen për njësitë e krijuara, përndryshe ato origjinale do të përdoren.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Personalitetet aktuale</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">Zgjidh distancë nga vizatimi</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Nëse kontrollohen, do të krijohen kopje të shumëfishta.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Kopje shumëfishe</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Lëvize Mundësitë</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Nëse kontrollohen, atributet aktuale do të zbatohen për njësitë e krijuara, përndryshe ato origjinale do të përdoren.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Personalitetet aktuale</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Nëse kontrollohen, do të krijohen kopje të shumëfishta.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Kopje shumëfishe</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">Po të kontrollohen, të gjitha kopjet do të rrotullohen nga e njëjta zhurmë. Përndryshe, këndi do të jetë proporcional me numrin e çdo kopjeje.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">Për</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">Kënd i kalbur.</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Numri i kopjeve.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">Nëse kontrollohet, këndi i rrotullimit përcaktohet nga miu. Përndryshe përdoret vlera e specifikuar.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">I lirë</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">Nëse kontrollohen, njësitë e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të jenë në shtresa origjinale.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Përdorimi Aktual</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Po të kontrollohen, njësitë origjinale do të mbijetojnë, përndryshe ato do të hiqen.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mbaje origjinalin</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">Mundësitë</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">Nga është</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Mbyll</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">Anullo për vertex e mëparshëm</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Anullo</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">Lloji i sigmentit:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">Përcakton se cili segment i polilines duhet krijuar</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Linja</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">Tangante</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">Tan Radikal</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">Këndi Tangencial</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Angle</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">Harku tangental me rreze fikse</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">Harku tangental me kënd të caktuar</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">Arc me kënd</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radus:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Rreziku i harkut</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">Angle of rc</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">Kundër Orar</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Orar</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">Printo Mundësitë</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">Orientimi</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">Orientimi i letrës</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">Orientimi i letrës</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">Rregullimet e vizatimit</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Shkalla:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt; madhësia</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;oth&gt;Printo Shkalla është bllokuar në vlerën aktuale&lt;/p&gt;&lt;/fond&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">fikse</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">Apliko Shkalla</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">Kavo</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">Faqja në qendër të vizatimit</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">Shkalla e zmadhimit</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">Përshtat 1 faqe</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">Nëse aktivizohet, hapësira prej letre do të përfshijë një sasi të përcaktuar faqesh të organizuara në kollona dhe rreshta</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">Printo</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">Rreshtat e faqeve:</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">Shumicën e shtyllave të faqeve</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">Ngjyrat e faqeve:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">Numri i faqeve në rreshta</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">Nga faqe</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">Opsionet e raundit</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">Kontrollo për të shkurtuar të dy anët nga raundi</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radus:</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">Në rreze rrethues</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56618,99 +49525,6 @@ Pikë</translation>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>Numri nga</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">Mundësitë</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Rekord:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">Shkalla e Splain-it e përdorur për afrim midis pikave</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">Nëse është zgjedhur, është krijuar një linjë e mbyllur</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Mbyllur</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">Anullo pikë</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Anullo</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Opsionet e tekstit</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Teksti:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Rrotull</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Zgjidh</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">Mundësitë</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">Largësia. Vlerat negative për shkurtimin, vlerat pozitive për shtrirjen.</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">Gjithsej</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Gjatësia:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">Largësia. Vlerat negative për shkurtimin, vlerat pozitive për shtrirjen. Shenjat negative shpërfillen kur priten deri në kohëzgjatjen përfundimtare.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Gjatësia nga</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">Nëse kontrollohet, shkurt/ektensioni kryhet për të dy anët e rreshtit.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Simmetric</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">Gjatësia e input është përdorur si gjatësi totale pas shkurtimit, në vend të rritjes së gjatë</translation>
     </message>
 </context>
 </TS>

@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>Klikněte na možnosti pro nastavení/zrušení, potvrďte pro přijetí a spuštění zarovnání.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Pokud je zaškrtnuto políčko „Zachovat původní objekty“, nástroj Zarovnat bude vybrané objekty kopírovat, nikoli přesouvat.
-Pokud je zaškrtnuto políčko „Nejprve určit základní body“, nástroj Zarovnat bude vyžadovat zadání zarovnávacích bodů v pořadí: první základní bod, druhý základní bod, první cílový bod, druhý cílový bod.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>První základní bod:</translation>

@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>Kattintson a beállításokra a be- vagy kikapcsoláshoz, majd kattintson az OK gombra az elfogadáshoz és az igazítás elindításához.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Ha be van jelölve a „Tartsa meg az eredeti objektumokat” lehetőség, az Igazítás funkció másolja, nem pedig mozgatja a kiválasztott objektumokat.
-Ha be van jelölve a „Először adja meg az alappontokat” lehetőség, az Igazítás funkció kérni fogja az igazítási pontokat a következő sorrendben: első alappont, második alappont, első célpont, második célpont.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>első bázispont:</translation>

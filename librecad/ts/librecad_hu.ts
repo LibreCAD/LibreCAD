@@ -39,190 +39,11 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Keret</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Adjon meg egy nevet, majd nyomja meg a + gombot</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Mentés</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Keret</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Mentés</translation>
-    </message>
-</context>
-<context>
-    <name>DlgParabola</name>
-    <message>
-        <source>Parabola</source>
-        <translation type="vanished">Parabola</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometria</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">Pontok a Spline-on</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">Ellenőrzési pontok</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>SplinePoints</source>
-        <translation type="vanished">Splinepontok</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometria</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Zárt</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="vanished">Ha be van jelölve, spline pontokat kell használni</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="vanished">Spline pontok</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="vanished">Ha be van jelölve, ellenőrzési pontokat kell használni</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">Ellenőrzési pontok</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">Pontok a Spline-on</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
         <translation>A kezdőpontot csak távolság vagy pont-állapot segítségével lehet beállítani.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Létrehozandó:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">Négyzet</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Szélesség:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Magasság:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Középpont:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">Érvénytelen szög</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">Érvénytelen sugár</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">Érvénytelen érték</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Adja meg a beillesztési pontot.</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Adja meg a szöget</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">Adja meg a méretet (szélesség, magasság)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">Adja meg a sarkok típusát
-[éles|kerek|átmenetes]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">Adja meg a sarokátmenet hosszát (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">Adja meg a sarok sugárát</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">Adja meg az élek módját
-[mindkettő|vízszintes|függőleges]</translation>
     </message>
 </context>
 <context>
@@ -471,73 +292,6 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Alak</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">Az ív magassága (a húr és az ív legfelső pontja közötti távolság)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Magasság:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Óramutva ellenkező irány</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">Válassza ki a szövegből a szöget</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Ív sugara</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Sugár:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Óramutva járó irány</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">Az ív központi szöge</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szög:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">Az ív hossza</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Hossz:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Válassza ki a szövegből a sugár értéket</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">Válassza ki a magasságot a rajzból</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Húzási hossz</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -749,10 +503,6 @@ Ez a blokk nem illeszthető be.</translation>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">Behajtó doboz kiválasztása (Enter to complete)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation type="unfinished"></translation>
@@ -807,31 +557,6 @@ Ez a blokk nem illeszthető be.</translation>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">A sugár=%1 túl kicsi a kiválasztott pontokhoz.
-A pontok közötti távolság=%2 nagyobb mint az átmérő=%3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">Válassz ki egyet a két lehetséges középpontból</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Add meg az első pontot</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Add meg a második pontot</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">Középpont kiválasztása</translation>
     </message>
 </context>
 <context>
@@ -1080,13 +805,6 @@ A pontok közötti távolság=%2 nagyobb mint az átmérő=%3</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">Kör, ív vagy ellipszis kiválasztása</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1130,10 +848,6 @@ A pontok közötti távolság=%2 nagyobb mint az átmérő=%3</translation>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>A központ kiválasztása</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">A központ nincs megadva.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1528,154 +1242,6 @@ A pontok közötti távolság=%2 nagyobb mint az átmérő=%3</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">Adja meg az első pontot</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">A második pont megadása
-vagy [szám 124; x × 124; y -124; szög 124; p -124; szélesség 124; távolság]</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">A második pont megadása
-vagy [szám]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">A vonal irányának megadása
-[x &apos;124; y&apos; 124; szögletes 124; p &apos;124; távolság]</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">A vonal irányszögének megadása
-vagy [x-124; y-124; p-124; szám-124; szélek 124; távolság]</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">A szélpontok üzemmódja
-[nincs 124; indítás 124; vége 124; mindkettő 124; távolság]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">A pontok közötti állandó távolság megadása
-vagy [x-124; y-124; p-124; szám-124; szélek]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Vissza</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">Távolság megadása (%1)
-vagy [%2]</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Távolság megadása (%1 szög)
-vagy [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">Pontok száma</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Második sarok megadása</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">A második tangens megadása</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Első sarok megadása</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">Adja meg az első tangent</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Nem érvényes szám. Próbáld 1.. 9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">A kerekítési sugár érvénytelen értéke</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nem érvényes kifejezés</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Adja meg a számot:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">Adja meg a kerekítési sugarat:</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">A központ megadása</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Létre kell hozni:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Központ:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">Indítási szög:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radiusz:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">Sugár (belső):</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Poligon</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">Adj meg egy érintőt</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1916,29 +1482,6 @@ vagy [%2]</translation>
         <location filename="../src/actions/drawing/draw/text/lc_action_draw_mtext.cpp" line="198"/>
         <source>Enter text:</source>
         <translation type="unfinished">Írja be a szöveget:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nem érvényes kifejezés</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Első egység kiválasztása</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">A második egység kiválasztása</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">Alternatív végpontok</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">Adja meg az eltolás értékét</translation>
     </message>
 </context>
 <context>
@@ -3793,10 +3336,6 @@ vagy [%2]</translation>
         <translation>Pumpt</translation>
     </message>
     <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">A rácson lévő rész</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>Snap középső kézikönyv</translation>
@@ -4262,26 +3801,6 @@ vagy [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>Widget Options</source>
         <translation>Widget beállítások</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Bal</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Jobb</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Felső</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Alsó</translation>
-    </message>
-    <message>
-        <source>Floating</source>
-        <translation type="vanished">Úszó</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
@@ -5249,10 +4768,6 @@ Pont: (%8,%9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">A beállítandó egységek kiválasztása (Enter to complete)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>Válassza ki és igazítsa ki</translation>
@@ -5284,10 +4799,6 @@ Pont: (%8,%9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
         <translation>Méret:</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">Válassza ki a beállítást (Adja meg a teljes)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -6281,13 +5792,6 @@ Pont: (%8,%9)</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Nincs kiválasztva entitás!</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionModifyStretch</name>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="118"/>
@@ -7261,18 +6765,6 @@ Pont: (%8,%9)</translation>
         <translation>Nem lehet elolvasni a mellékelt fájlt - kérjük, ellenőrizze, hogy létezik-e, és szabad-e olvasni belőle.</translation>
     </message>
     <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">A rövidítéseket nem importálták.
-Feltéve, hogy létezik fájl, de nem tartalmaz LibreCAD rövidítéseket leképezés.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">A rövidítéseket nem importálták.
-A fájlfeldolgozás során történt XML-oldási hiba.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
         <translation>A rövidítéseket sikerült elmenteni.</translation>
@@ -7281,12 +6773,6 @@ A fájlfeldolgozás során történt XML-oldási hiba.</translation>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
         <translation>Nem lehet írni a megadott fájl - kérjük, ellenőrizze, hogy lehet írni.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">A rövidítéseket nem importálták.
-Néhány hiba az XML generáció során történt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -8687,74 +8173,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
     </message>
 </context>
 <context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">Ha be van jelölve, az eredeti ívet el kell távolítani</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">Csere</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">A réteg, amelyre a létrehozott kört kell helyezni</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktív</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Eredeti</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktív</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Eredeti</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Eredeti megoldva</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">Válassza ki az offset értéket a rajzból</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Toll:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">A létrehozott körben használandó toll</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">A kör sugarának deltája az ívsugartól</translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">Sugár eltolás:</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -9049,76 +8467,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>Eszköztár:%1 (egyedi)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szögek:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">Típus</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">A kereszt vízszintes mérete</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">Válassza ki az X értéket a rajzból</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">Meghatározza a keresztméret alkalmazásának módját</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">Kiterjesztés</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">Teljes hossz</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">Százalék</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">Az Y érték kiválasztása rajzból</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">A kereszt függőleges mérete</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">Forgatási szög kereszteződés középen</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Művelet hozzáadása vagy eltávolítása</translation>
     </message>
 </context>
 <context>
@@ -9482,45 +8830,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="vanished">Rendkívüli dimenzió</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">Méretréteg</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Az injekciós toll jellemzői</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometria</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="vanished">Rendezés</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Toll</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -9582,11 +8891,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
         <translation>Kiindulási távolság:</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">A kiindulási dimenzió dimenzióvonalak közötti távolság beállítása. Távolság. A kiindulási méretekre vonatkozó információkat lásd a DIMBASELINE dokumentumban. (DIMDLI rendszerváltozó)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -11235,10 +10539,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <source>Hatch Properties</source>
         <translation>Sraffozási tulajdonságok</translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">Tulajdonságok?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -11760,10 +11060,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <translation>UCS Details oszlop</translation>
     </message>
     <message>
-        <source>If checked, type of grid for saved view will be shown</source>
-        <translation type="vanished">Ha be van jelölve, megjelenik a mentett nézethez tartozó rács típusa</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
         <translation>Grid típusú ikon oszlop</translation>
@@ -11772,18 +11068,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Type icon column</source>
         <translation>Típus ikon oszlop</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation type="vanished">Ha be van jelölve, a nézetkoordináta-rendszer részleteivel rendelkező oszlop látható lesz</translation>
-    </message>
-    <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">Eszköztipp a táblázat elemeinek nézetadataival kapcsolatban</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">Ha be van jelölve, a táblázatban megjelenik az a oszlop, amely a nézet koordináta-rendszerének adatait tartalmazza.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
@@ -11826,10 +11110,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <translation>Ha be van jelölve, a nézeti adatokat tartalmazó oszlop a táblázatban látható.</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">A részletes információk oszlopa</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>Műveletek</translation>
@@ -11845,17 +11125,9 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <translation>Nézet visszaállítása táblázatelem egyszeri kattintásával</translation>
     </message>
     <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">A dupla kattints az asztalra elem</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
         <source>Defines which action should be performed on double click on view item of the table.</source>
         <translation>Meghatározza, hogy milyen műveletet kell végrehajtani, ha a táblázatban egy nézet elemre kétszer kattintanak.</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table. </source>
-        <translation type="vanished">Meghatározza, hogy milyen intézkedést kell végrehajtani, ha dupla kattintás megtekintésére tétel a táblázat.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="158"/>
@@ -11883,10 +11155,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <translation>Ha be van jelölve, kattintson a panorámás táblára. Ellenkező esetben a nézetet kifejezetten vissza kell állítani.</translation>
     </message>
     <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">Visszaállítása nézet egyetlen kattintással asztalonként</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
         <translation>Ha megjelenik, a további kilátással kapcsolatos információkat tartalmazó eszköztipp jelenik meg a táblánál.</translation>
@@ -11895,10 +11163,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
         <translation>Ha be van jelölve, és a létrehozás során már létezik a megadott név nézete, azt új pozícióval frissítjük. Ellenkező esetben az új nézet egyedi nevére lesz szükség.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Ha be van jelölve, a visszaigazoló ablak megjelenik a nézet eltávolításakor. Ellenkező esetben némán eltávolítjuk a kilátást.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
@@ -12194,17 +11458,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation>A név nem egyedi. Adja meg az egyedi nevet.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Toll</translation>
-    </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">A parabola-ellenőrzési pontok nem lehetnek kollineáris</translation>
     </message>
 </context>
 <context>
@@ -12620,13 +11873,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgSplinePoints</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Toll</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgTolerance</name>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="14"/>
@@ -12708,17 +11954,9 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <translation>Ha a csatolt, a tooltipp további információkat UCS jelenik meg az asztali elem.</translation>
     </message>
     <message>
-        <source>Toolip with UCS details for table items</source>
-        <translation type="vanished">Toolip UCS részletekkel asztali elemek</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
         <source>Type icon column</source>
         <translation>Típus ikon oszlop</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation type="vanished">Ha be van jelölve, a táblázatban fel kell tüntetni az UCS eredetére és szögére vonatkozó adatokat tartalmazó oszlopot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -12734,10 +11972,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
         <source>Editing</source>
         <translation>Szerkesztés</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Ha be van jelölve, a visszaigazoló ablak megjelenik a nézet eltávolításakor. Ellenkező esetben némán eltávolítjuk a kilátást.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"/>
@@ -12758,10 +11992,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
         <translation>Ha be van jelölve, a táblázatban megjelenik az a oszlop, amely az UCS-hez tartozó rács típusát jelzi.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">Ha be van jelölve, a nézet törlésekor megjelenik egy megerősítő párbeszédablak. Ellenkező esetben a nézet csendben törlődik.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12829,26 +12059,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <translation>Meghatározza a UCS jelző villogásainak számát a UCS kiemeléséhez.</translation>
     </message>
     <message>
-        <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation type="vanished">Meghatározza, hogy milyen intézkedéseket kell végrehajtani a dupla kattintással a tételt a táblázat.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">Helyreállítani UCS egyetlen kattintással asztalonként</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation type="vanished">Ha ez be van jelölve, az UCS típusára vonatkozó ikont tartalmazó oszlop megjelenik a táblázatban.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation type="vanished">Ha ez be van jelölve, az UCS-hez tartozó rács típusát tartalmazó oszlop látható lesz</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied</source>
-        <translation type="vanished">Meghatározza, hogyan kell beállítani a rajzolási ablak UCS alkalmazása után</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
         <source>On double-click on table item</source>
         <translation>A dupla kattints az asztalra elem</translation>
@@ -12904,10 +12114,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <translation>UCS kiemelés</translation>
     </message>
     <message>
-        <source>Defines delay between UCS marker blinks</source>
-        <translation type="vanished">Határozza meg a UCS marker blinkek közötti késleltetést</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="216"/>
         <source> ms</source>
         <translation>ms</translation>
@@ -12921,10 +12127,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="242"/>
         <source>Blink Delay:</source>
         <translation>Villogási késleltetés:</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation type="vanished">Meghatározza a UCS jelölő pislogásának mennyiségét</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="252"/>
@@ -13321,45 +12523,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offlet:</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">Ha ez be van jelölve, a teljes kiválasztáshoz bekerítő mezőt kell létrehozni. Máskülönben egyedi entitások számára jön létre.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">A csoport kiválasztása</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Pick offset from drawn</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">Ha be van jelölve, csak sarokpontok rajzolhatók a befoglaló mezőhöz. Ellenkező esetben az éleket húzzuk.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">Csak sarokpontok</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">Ha be van jelölve, a kerítés polinként rajzolható</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polin</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13453,86 +12616,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation type="unfinished">Pick offset from drawn</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">Az eredeti gazdálkodó egységtől származó másodlat függőleges kiegyenlítése</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">Az eredeti gazdálkodó egységtől kapott másodlat horizontális beszámítása</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">Pick offset by X from drawn</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Toll:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">Ha be van jelölve, a másolat az eredeti koordinátákon lesz elhelyezve</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">Helyszín</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">A rajzolásból az Y-t kell választani</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">A létrehozott másolatra alkalmazandó toll</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktív</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Eredeti</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Eredeti megoldva</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">Olyan réteg, amelybe a másodlatot kell helyezni</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktív</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Eredeti</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">Y eltolás:</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">X eltolás:</translation>
     </message>
 </context>
 <context>
@@ -13714,69 +12797,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">Kisebb sugárzás:</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">A szög értéke a nagyobb sugárra</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">Ha ez be van jelölve, a fő sugár dőlésszöge megadható</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Bázisszög:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Az óramutató járásával ellentétes irányban</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">Válassza ki a főbb intézkedések rajzolásából</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">Ha be van jelölve, a nagyobb sugarú szöget az egér határozza meg</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Ingyenes</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">Az ellipszis fő sugarának hossza</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">Válassza ki a kisebb sugarat rajzolástól</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">Radius őrnagy:</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">Kisebb ellipszissugár hossza</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Órairányban</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13915,21 +12935,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">A rajzolás szöge</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Arc beállítások</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Órairányban</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Az óramutató járásával ellentétes irányban</translation>
     </message>
 </context>
 <context>
@@ -14820,30 +13825,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <source>Eccentricity:</source>
         <translation>Excentricitás:</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">Érvénytelen hiperbola meghatározás</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">Focinak különböznie kell</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">Érvénytelen középkoordináták</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">A fő sugárnak pozitívnak kell lennie</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">Érvénytelen forgási szög</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">Az aránynak vagy kisebb sugárnak pozitívnak kell lennie</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -15015,10 +13996,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <translation>Szélesség:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">A kép szélessége</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>Válassza ki a szélesség értékét a rajzból</translation>
@@ -15029,21 +14006,9 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <translation>Magasság:</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">A kép magassága</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>Válassza ki a magasságot a rajzból</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Méret:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">Mérési tényező</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -15055,10 +14020,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>Szögek:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Forgatási szög</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -15090,22 +14051,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <source>Select an image file</source>
         <translation>Képfájl kiválasztása</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">Méret (px):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">Képméret pixelben</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">Felbontás (pontok / hüvelyk)</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -15118,21 +14063,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">Ha be van jelölve, a pont mindig a kiválasztott entitáson belül lesz</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">Szervezeti egység</translation>
     </message>
 </context>
 <context>
@@ -15510,14 +14440,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <translation>A réteg belső nevének hierarchikus nevekre osztására szolgáló elválasztó</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">A rétegszintű névelválasztó</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">Másodlagos rétegek</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15548,10 +14470,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>A rétegnév utótagja, amely azt jelzi, hogy a réteg alternatív helyzetű réteg.</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">Duplikáló név</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15694,17 +14612,9 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <translation>Különböző színbeállítások</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Színek</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>A rétegfa kiválasztott elemeinek háttérszíne.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">Szeparátor vonalak színe rétegekre néző fa nézetben</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15743,10 +14653,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>Virtuális réteg háttérszíne</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">Háromoldalú elemek elválasztó rács</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15802,10 +14708,6 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>Alternatív helyzetű réteg</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">rács</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16295,118 +15197,6 @@ Adjon meg másik értéket.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">Ha be van jelölve, a vonal hosszát az egér helyzete határozza meg beállítás helyett</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Ingyenes</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Válassza ki a rajztól való patttávolságot</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">Tikk-patthelyzet a kereszteződésből</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Húzási hossz</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Pick offset from drawn</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">Ha ez be van jelölve, az eredeti entitás kereszteződéssel oszlik meg.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Osztás</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offlet:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">A kereszteződési pont távolsága a megadott vonal patthelyzetétől</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">Meghatározza, hogy a létrehozott vonal melyik része fog elszakadni a metszéspontig</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Kezdés</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Középső</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Vége</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">Rácshoz igazítás:</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Vonalhoz igazítás:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">A vonal hossza</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">Ha be van jelölve, a szög a kiválasztott jogalany szögéhez viszonyítva van</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Hosszúság:</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">Snap pont a létrehozott vonal és a forrás egység metszéspontjához (az eredeti vonalon belül)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">Ingyenes</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szögek:</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Snap távolság:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">A vonal szöge</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16713,93 +15503,6 @@ Adjon meg másik értéket.</translation>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation type="unfinished">A létrehozandó felezők száma</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szögek:</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">Méret:</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">Végeltolódás:</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">Offset a létrehozott vonal a metszéspont</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">Snap pont a létrehozott vonal</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Kezdés</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Középső</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Vége</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Hosszúság:</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">A létrehozott vonal rögzített hossza</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Snap:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Húzási hossz</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Pick offset from drawn</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">Meghatározza, hogy létre kell-e hozni egy vonalat a metszéspontig, vagy rögzített hosszúságú legyen</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">A kereszteződéshez</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">Rögzített hosszúság</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">Ha be van jelölve, akkor a létrehozott vonal ortogonális lesz a kijelölt sorhoz</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">Ortogonál</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">Szögek között eredeti vonal és létrehozott egy</translation>
     </message>
 </context>
 <context>
@@ -17185,81 +15888,6 @@ Adjon meg másik értéket.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">Ha ez be van jelölve, akkor a polirint az egyes vonalak helyett kell létrehozni</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">Polyline létrehozása</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">A második sor politikája</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">Kiterjesztés / beosztás</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">Szakasz hozzáadása</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">Nincs változás</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">Vonal:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">2. vonal:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">Az elsőként kiválasztott vonalcsatlakozás politikája</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">Meghatározza, hogyan kell alkalmazni a tollat a létrehozott szervezetekre</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">Aktív toll:</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">Vonal</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">Vonal</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">Mindkét vonal</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">Attribútumok:</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">Ha be van jelölve, az eredeti sorokat el kell távolítani</translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">Eredeti elemek eltávolítása</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17641,85 +16269,6 @@ Adjon meg másik értéket.</translation>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">Ellenőrzi, hogy a széleken milyen pontokat (start / end pontokat) kell létrehozni.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Nincs</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Mindkettő</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Kezdés</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Vége</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">A rajztól való távolság kiválasztása</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">Létrehozandó pontok száma</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">Végpont:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">Meghatározza, hogy minden pontnak illeszkednie kell-e az indulási / végpontokhoz, vagy hogy a vonal hosszát a pontok száma és a pontok közötti távolság alapján számítják-e ki.</translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">Menetvonal</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">Távolság a pontok között.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">Ha be van jelölve, a pontok vonalát meghatározott szögben kell rajzolni</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szögek:</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">Pontok száma:</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">Ha be van jelölve, a pontok közötti rögzített távolságot kell használni. Különben kiszámítják a távolságot.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Rögzített távolság</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">A vonal szöge</translation>
     </message>
 </context>
 <context>
@@ -21969,433 +20518,6 @@ Adjon meg másik értéket.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp; Súgó</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">Online Dokumentumok</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp; Wiki</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">Felhasználói kézikönyv</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">Parancsok</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">Stíluslapok</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">Wid &amp; gets</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Körülbelül</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">Fórum</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">Zulip &amp; beszélgetés</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">Hiba történt</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">&amp; Kérés funkció</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">Oldal</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">Adományozás</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp; Vonal</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">Poin &amp; t</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp; Kör</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">&amp; Arc</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">Poli &amp; gon</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">Splin &amp; e</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">Ellip &amp; se</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp; Polyline</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">Egyéb</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">&amp; Rajzolás</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">Ellipszis</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">Ot &amp; her</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">Módosítás</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp; Rendelés</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">Méretek</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp; Információ</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp; Eszközök</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp; Kijelölés</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">Dime &amp; nsion</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp; Fájl</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">A legutóbbi fájlok</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Import</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Exportálás</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp; Opciók</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">Szerkesztés</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">Nézet</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">Megtekintések visszaállítása</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">Pl &amp; uginok</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">Munkahely</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Dokk-területek</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">CAD Wid &amp; gets</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">Rajzok</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">Kontextus</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Eszköztárak</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">Szélességek</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">CAD szélességek</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">CAD eszköztárak</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Kijelölés</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">Nemrég</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Módosítás</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">Módosítás</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Rajz</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Vonal</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polin</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Pont</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Kör</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Poligon</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">Polyline / Spline</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Ellipszis</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Egyéb</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">Méretek hozzáadása</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">Align</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">A megrendelés megjelenítése</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Lábak</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Információ</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Szerkesztés</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">Opciók</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">Megnevezett nézetek</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">Tulajdonságok szerkesztése</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">Generikus módosítása</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">A vonal módosítása</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">Vonal rajzolása</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">Kör rajzolása</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">Más rajzolása</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">A kör módosítása</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">Arc módosítása</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">A polilin módosítása</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">Spline módosítása</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">Spline pontok módosítása</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">Szöveg módosítása</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">Az MText módosítása</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">Block szerkesztése</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Rendelés</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">Eszköztár</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">&amp; CAD eszköztárak</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">Munkahelyek</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Ta &amp; b mód</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">Ablak mód</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">Elrendezés</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">Kerekített</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">Háromszög</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">Észak</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">Dél</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">Kelet</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">Nyugat</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp; Rendezés</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">Maximalizálva</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp; Cascade</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp; Tílus</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">&amp; Vertikálisan</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">&amp; Vízszintesen</translation>
-    </message>
-</context>
-<context>
     <name>LC_MenuFactoryBase</name>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
@@ -23011,21 +21133,6 @@ Adjon meg másik értéket.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offlet:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Pick offset from drawn</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23162,197 +21269,6 @@ Adjon meg másik értéket.</translation>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Ha ez be van jelölve, a jelenlegi attribútumokat tükröző entitásokra használjuk, máskülönben az eredetiekre.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuális attribútumok használata</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Ha nem ellenőrzik, az eredeti entitásokat eltávolítják, különben túlélik.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originals megtartása</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Ha ez be van jelölve, a tükröző entitásokat az aktuális rétegre helyezik, máskülönben eredeti rétegekbe.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">A felhasználó aktuális rétege</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">Ha ez be van jelölve, a gazdálkodó egységek szükség esetén méretezettek lesznek. Ellenkező esetben csak elhelyezik és elforgatják őket.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Méret</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">Ha ez be van jelölve, a kereszteződési pontok közötti szegmensek eltávolításra kerülnek. Ha nincs ellenőrizve - az entitiy kereszteződésekre oszlik.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">Szekciók eltávolítása</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">Ha ez be van jelölve, a kiválasztott szegmenst el kell távolítani. Ellenkező esetben a kiválasztott szegmens túléli, a fennmaradó szegmensek pedig megszűnnek.</translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">Válogatott eltávolítása</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Snap távolság:</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">Snap pont a rés a vonal patthelyzet</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Vonalhoz igazítás:</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">Gap mérete:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">Snap pont a rés a vonalon</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Ingyenes</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">Réshöz igazítás:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">Kezdés</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">Középső</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">Vége</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">Ingyenes</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">Kezdés</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">Középső</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">Vége</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">A rajzolástól mért rés mérete</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">Távolság a pillanatponttól</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Válassza ki a rajztól való patttávolságot</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">A rés mérete, ha nem ingyenes</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">Ha ellenőriztük, a rés méretét az egér határozza meg</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">Ha ez be van jelölve, a tükröt a kiválasztott vonali egység fogja elvégezni.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">Tükör a kijelölt vonalhoz</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Ha nem ellenőrzik, az eredeti entitásokat eltávolítják, különben túlélik.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originals megtartása</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Ha ez be van jelölve, a jelenlegi attribútumokat tükröző entitásokra használjuk, máskülönben az eredetiekre.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuális attribútumok használata</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Ha ez be van jelölve, a tükröző entitásokat az aktuális rétegre helyezik, máskülönben eredeti rétegekbe.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">A felhasználó aktuális rétege</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23398,234 +21314,6 @@ Adjon meg másik értéket.</translation>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation type="unfinished">Az aktuális réteg használata</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Forgatási beállítások</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">A tényező szabad kiválasztását egérrel kell elvégezni, ha ellenőrizték.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Ingyenes</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Ha ez be van jelölve, az új lenies az aktuális rétegre kerül, máskülönben eredeti rétegekben lesznek.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Az aktuális réteg használata</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">Ha abszolút, a referenciapontot elforgatják, de az entitás csak második szögben lesz elforgatva, ellenkező esetben a szögek felduzzadnak</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">Abszolút</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">Az entitás forgási középpont körüli szöge</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">Ha ez be van jelölve, a jelenlegi attribútumokat a létrehozott gazdálkodó egységekre fogják alkalmazni, a bölcsen eredetieket pedig használni fogják.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuális attribútumok használata</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">Ha be van jelölve, a második rotáció a referenciapont körül van</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">Forgatás kétszer</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">A fényvisszaverődési pont körüli további forgáshoz szükséges szög</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Válassza ki a forgási szöget a rajzolástól</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">Ha ez be van jelölve, az eredeti entitások túlélik, különben eltávolítják őket.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originals megtartása</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">Ha be van jelölve, több másolat készül.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Többpéldányok</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">Forgatási szög:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Meghatározza, hogy a szöget a megadott érték vagy az egér helyzete határozza meg</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">Válassza ki a rajzolás második forgási szögét</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Másolatok száma</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Forgatási beállítások</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">Ha ez be van jelölve, több másolat készül.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Többpéldányok</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">Ha ez be van jelölve, ugyanazt a méretezési tényezőt kell alkalmazni az X és Y tengelyre.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">Izotróp</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Ha ez be van jelölve, az eredeti entitások túlélik, különben eltávolítják őket.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originals megtartása</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Másolatok száma</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Ha be van jelölve, a jelenlegi attribútumokat a létrehozott gazdálkodó egységekre fogják alkalmazni, máskülönben az eredetieket fogják használni.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuális attribútumok használata</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">Az Y tengely mérettényezője</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Mérettényező:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">Ha be van jelölve, a létrehozott egységek a jelenlegi rétegbe kerülnek. Máskülönben eredeti rétegekbe kerülnek.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Az aktuális réteg használata</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">Ha ez be van jelölve, a tényező szabadon kiválasztható egérrel. Ellenkező esetben a tényezők meghatározott értékeit kell használni.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Ingyenes</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">Mérettényező az X tengelyhez</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Ha ez be van jelölve, az eredeti entitások túlélik, különben eltávolítják őket.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">Eredeti adatok megtartása</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">Ha be van jelölve, a létrehozott egységek a jelenlegi rétegbe kerülnek. Máskülönben eredeti rétegekbe kerülnek.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Az aktuális réteg használata</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Másolatok száma</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">Ha ez be van jelölve, a jelenlegi attribútumokat a létrehozott szervezetekre alkalmazzák, az eredetieket használják.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuális attribútumok használata</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Ha ez be van jelölve, az eredeti entitások túlélik, különben eltávolítják őket.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originals megtartása</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Ha ez be van jelölve, több másolat készül.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Többpéldányok</translation>
     </message>
 </context>
 <context>
@@ -23941,14 +21629,6 @@ Adjon meg másik értéket.</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>...</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">A nézeteket név szerint szűrjük</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Szűrő...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24384,45 +22064,6 @@ Figyelem: ezt a műveletet NEM lehet visszavonni!</translation>
         <source>Control Points</source>
         <translation>Ellenőrzési pontok</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">A parabola-ellenőrzési pontok nem lehetnek kollineáris</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szögek:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">Ha be van jelölve, a beszúrási pontként használt pontot a beillesztés után törölni kell. Különben túléli.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">A pont eltávolítása</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Mérettényező</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Foltos gazdálkodó egységekre vonatkozó skála</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Forgási szög tapintott gazdálkodó egységek számára</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24498,89 +22139,6 @@ Figyelem: ezt a műveletet NEM lehet visszavonni!</translation>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">A rajzolás szöge</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Forgási szög tapintott gazdálkodó egységek számára</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">Az entitások közötti üresedés a beiktatási pontok sorában.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szögek:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">Válassza ki a tömb távolságát X-szel a rajztól</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Mérettényező</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">A rajzolás szögének kiválasztása</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">Forgatási szög tömbhöz.</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">Gyújtósorok száma.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">Válassza ki a tömb távolságát Y-val a rajzból</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">Ha be van jelölve, ugyanazt a forgási szöget kell használni minden egyes paszta és egész tömb esetében. Ellenkező esetben különböző szögeket kell használni.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">Ugyanazon szögek</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Helymeghatározás:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">Az oszlopok száma.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">Ha ez az opció be van jelölve, akkor a másolatok tömbjei a paszta segítségével készülnek el.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">Array</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">Array szög:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Foltos gazdálkodó egységekre vonatkozó skála</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">A gazdálkodó egységek oszlopokba történő beillesztési pontjai között.</translation>
     </message>
 </context>
 <context>
@@ -25202,17 +22760,9 @@ Figyelem: ezt a műveletet NEM lehet visszavonni!</translation>
         <translation>Vonalszélesség-név</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Színek</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>Az injekciós toll elemének háttérszíne jelenleg szerkesztve az injekciós toll táblázatában</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">A rácsok színe a tolllistában</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25234,10 +22784,6 @@ Figyelem: ezt a műveletet NEM lehet visszavonni!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>Az egész táblázatsor félkövér az aktív injekciós tollhoz</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">A rács színe:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25330,17 +22876,9 @@ Figyelem: ezt a műveletet NEM lehet visszavonni!</translation>
         <translation>Amennyiben lehetséges, természetes név</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">Ha be van jelölve, további üzenetek jelennek meg az injekciós tollal kapcsolatos műveletek részeként</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>Informatikai üzenet megjelenítése, ha egyetlen entitás sem választható ki tollal</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">Kattintson duplán az asztalra elem</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25565,12 +23103,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
 
 Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a szerkesztőn keresztül, a paletta aktuális tollai az új fájlba kerülnek mentésre, ezért annak meglévő tartalma felülíródik.</translation>
     </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">A tollfájl helye megváltozott, kérjük, indítsa újra az alkalmazást, hogy az új tollfájl használatba kerüljön.
-Kérjük, vegye figyelembe, hogy ha a tollat az editorban menti el újraindítás nélkül, a jelenlegi tollak a palettáról az új fájlba kerülnek, és így felülírják annak meglévő tartalmát.</translation>
-    </message>
 </context>
 <context>
     <name>LC_PointPickButton</name>
@@ -25616,37 +23148,6 @@ Kérjük, vegye figyelembe, hogy ha a tollat az editorban menti el újraindítá
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>Válassza ki a rajzot</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">A pontok száma a rácsok Y iránya szerint (a rácssorok száma)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">A sorok száma:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">Oszlopok száma:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">Pontok száma X rácsos irányban (rácsos oszlopok száma)</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">Ha kiválasztjuk, az utolsó pontot az első ponthoz igazítjuk, így a rácsot rect vagy quadrangle</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">Az utolsó pont beállítása az elsőhöz</translation>
     </message>
 </context>
 <context>
@@ -32913,10 +30414,6 @@ Kérjük, vegye figyelembe, hogy ha a tollat az editorban menti el újraindítá
         <translation>Átmérő</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">Kerület</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="740"/>
@@ -33905,10 +31402,6 @@ p, li {white- space: pre- wrap;}
         <translation>Szervezet Info</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt; html &gt; &lt; fej / &gt; &lt; test &gt; &lt; p &gt; Ha be van jelölve, a polinline részét képező vonalakról és ívekről részletesebb információk jelennek meg a Szervezetek Info widget-jében. &lt; br / &gt; Ellenkező esetben csak a vertexesekre / dudorokra vonatkozó információk jelennek meg</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ha be van jelölve, az Entitásinfo widgetben részletesebb információk jelennek meg a polilinja részét képező vonalakról és ívekről.&lt;br/&gt;Ellenkező esetben csak a csúcsokra/domborulatokra vonatkozó információk jelennek meg.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -33957,205 +31450,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>Az injekciós toll kiemelése</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Edges:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">Ha ez be van jelölve, akkor a pattpontot a sarkok sugarával kell eltolni.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Csavareltolódás</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">A bevel sarok hossza Y irányban.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">A téglalap széleinek meghatározása (így a téglalap helyett csak két párhuzamos vonalat lehet létrehozni)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Mindkettő</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Függőleges</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Vízszintes</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">A téglalap szélessége</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">Ellenőrzi, hogy a téglalap sarkait hogyan kell rajzolni.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Egyenes</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Kerek</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">Ha ez be van jelölve, a téglalapot meghatározott szögben forgatják.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Bázisszög:</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">Ha be van jelölve, a téglalap megadott magassága és szélessége határozza meg az ívek középpontjai közötti távolságot kerekítési sarkok esetében. Ellenkező esetben ezek az értékek határozzák meg a téglalap külső méretét.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">Belső méret</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Y hosszúság:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">Ha ez be van jelölve, a téglalap polinvonalként jön létre az egyes szegmensek helyett.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polin</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Snap:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Magasság:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radiusz:</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">A bevel sarok hossza az X irányhoz.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">X hossz:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">A téglalap magassága</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">A lekerekített sarkok sugarai.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">A téglalap kereszteződés helyét a betáplálási ponthoz kell helyezni.</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">Balra</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Top</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">Top- right</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Bal</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Középső</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Rendben</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">Bal oldal</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Alsó</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">Bottom- right</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Válassza ki a forgási szöget a rajzolástól</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Válassza ki a lekerekített sarkok sugarát a rajztól.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Forgatási szög</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">A téglalap csúcsának kiválasztása a rajzból</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">A téglalap húzásának szélessége</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Szélesség:</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Sarkok:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">Válassza ki a bevel sarok hosszát X irány rajzolástól.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">Válassza ki a bevel sarok hosszát Y irány rajzolástól.</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">Ha be van jelölve, a szöget egérrel kell meghatározni. Ellenkező esetben meghatározott értéket kell használni.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Ingyenes</translation>
     </message>
 </context>
 <context>
@@ -34525,153 +31819,6 @@ p, li {white- space: pre- wrap;}
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">A téglalap széleinek meghatározása (így a téglalap helyett csak két párhuzamos vonalat lehet létrehozni)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Mindkettő</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Függőleges</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Vízszintes</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">Meghatározza, hogy melyik téglalapot kell kiindulási helyzetbe hozni.</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">Sarok</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">Közép- Függőleges</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">Közép- Vízszintes</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Középső</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">Válassza ki a téglalap forgási szögét a rajzból</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">Válassza ki a lekerekített sarkok sugarát a rajztól.</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Sarkok:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">Meghatározza, hogy a téglalap melyik pontját kell végpont helyzetbe hozni.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Válassza ki a bevel hossza X irányban rajz.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Edges:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">Válasszuk ki az Y irányban lévő bevel hosszát a rajztól.</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">Snap indítása:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">A metszés hossza Y irányban.</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Ha ez be van jelölve, akkor ez azt jelenti, hogy a pattpontokat a sarkok sugarával kell elmozdítani.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Csavareltolódás</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">X hossz:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radiusz:</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">Ha be van jelölve, a téglalap forgatási szöge megadható.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Bázisszög:</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">A téglalap forgási szöge.</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">Snap vége:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">Meghatározza, hogy a téglalap sarkait hogyan kell húzni.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Egyenes</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Kerek</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">A lekerekített sarkok sugarai.</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Y hosszúság:</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">Ha ez be van jelölve, az egész téglalap polinvonalként fog rajzolni.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polin</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">A metszés hossza X irányban.</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -34929,145 +32076,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation type="unfinished">Válasszuk ki az Y irányban lévő bevel hosszát a rajztól.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">A quadrangle belső szöge.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">Ha be van jelölve, a kvadrangle belső szögét meghatározott értékre kell rögzíteni.</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">Rögzített belső szög:</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">A téglalap alapszöge.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">X hossz:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">A metszés hossza X irányban.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">Meghatározza, hogyan kell sarkokat rajzolni téglalap.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Egyenes</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Kerek</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Sarkok:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Ha ez be van jelölve, akkor ez azt jelenti, hogy a pattpontokat a sarkok sugarával kell elmozdítani.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Csavareltolódás</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Y hosszúság:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">A metszés hossza Y irányban.</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">A lekerekített sarkok sugarai.</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radiusz:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">Ha ez be van jelölve, az alakzat polinvonalként jön létre.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polin</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">Válassza ki a kvadrangle belső szögét a rajzból.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Edges:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Válassza ki a lekerekített sarkok sugarát a rajztól.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Válassza ki a bevel hossza X irányban rajz.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">Válasszuk ki az Y irányban lévő bevel hosszát a rajztól.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">A téglalap széleinek meghatározása (így a téglalap helyett csak két párhuzamos vonalat lehet létrehozni)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Mindkettő</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Függőleges</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Vízszintes</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">A téglalap alapszögének kiválasztása a rajzból</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">Ha ez be van jelölve, a téglalap elforgatható a megadott alapszögre. Ellenkező esetben az alapszöget az első és a második téglalap közötti szög határozza meg.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">Rögzített alapszög:</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">Ha ez be van jelölve, négyszöget kell létrehozni téglalap helyett.</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">Quadrangle</translation>
     </message>
 </context>
 <context>
@@ -35716,100 +32724,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">Sajnálom, hálózati hiba történt az új verzió ellenőrzése során.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">Nem sikerült feldolgozni a választ a szerverről</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Forgatási beállítások</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">Meghatározza, hogy a másolatok bekerülnek-e az aktuális vagy eredeti rétegbe</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Az aktuális réteg használata</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">A másodlagos szög beállítása, így a szögek összege (relatív forgási szög) 0. Az ilyen beállítás entitás lesz mozgatni, de nem forog.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">Szögek tükrözve</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">Válassza ki az elsődleges szöget a rajzolásból</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">Meghatározza, hogy az aktuális vagy az eredeti rajzatattribútumokat alkalmazzák-e</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuális attribútumok használata</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">Válassza ki a másodlagos szög rajzolás</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">Forgatási szög az abszolút referenciaponton</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Ha ez be van jelölve, több másolat készül.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Többpéldányok</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">Létrehozandó másolatok száma</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">Másodlagos szög:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">Ha be van jelölve, ugyanazt a szöget kell használni minden másolathoz. Máskülönben arányosan növeljük a másolási számhoz képest.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">A másolatok másodlagos szöge</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Ha ez be van jelölve, az eredeti entitások túlélik, különben eltávolítják őket.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originals megtartása</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">Elsődleges szög:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">Szögek a másodlagos referenciaponthoz</translation>
     </message>
 </context>
 <context>
@@ -36804,141 +33718,6 @@ p, li {white- space: pre- wrap;}
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">A kör szöge:</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">Indítsa szög kör, ahonnan kullancsok kezdődik.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offlet:</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">A kullancstól a kereszteződésig.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szögek:</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">A rajztól való távolság kiválasztása</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Távolság:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">Távolság a kullancsok között.</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">Ha be van jelölve, a kiválasztott entitás osztva lesz kullancs metszéspontokkal.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Osztás</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">Válassza ki a kullancsot a rajzból</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">A kullancs hossza.</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">Válassza ki a kullancsszög rajzolás</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">Tik-tak:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">Válassza ki a kullancs hosszát a rajzból</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">PIck start kör szög rajzolás</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">A kullancs és a kiválasztott entitás közötti szög.</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">Ha be van jelölve, a kullancsszög a kiválasztott entitáshoz kapcsolódik, máskülönben abszolút szög.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">Jelölőhossz:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">Meghatározza, hogy melyik kullancspontot kell a kiválasztott entitással való metszéspontra helyezni.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Kezdés</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Középső</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Vége</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">Ha be van jelölve, a kullancsok között meghatározott állandó távolságot kell használni. Ellenkező esetben a távolságot az entitás hossza és a kullancsok száma alapján számítják ki.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">Rögzített</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">A kiválasztott entitás szélei közötti kullancsok száma.</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">Gróf:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">A kullancsok elhelyezésének módja az entitás szélein.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Nincs</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Mindkettő</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">Éljelölő:</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37258,57 +34037,6 @@ p, li {white- space: pre- wrap;}
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">Meghatározza az egyes spline- fit spline- fitt polinerek generálandó vonalszegmenseinek számát</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Ha nem ellenőrzik, az eredeti sínt eltávolítják, különben túléli.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originals megtartása</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Ha be van jelölve, akkor a jelenlegi attribútumokat a létrehozott entitások esetében használjuk, máskülönben - az eredetiek esetében.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuális attribútumok használata</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Ha be van jelölve, akkor a létrehozott egységeket a jelenlegi rétegre helyezik, máskülönben eredeti rétegekbe.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Az aktuális réteg használata</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">Ha be van jelölve, meg lehet adni a sorok egyedi mennyiségét. Ellenkező esetben az aktuális rajz beállításainak értékét használjuk.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">Egyéni szegmensek száma</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">Ha ez be van jelölve, a vonali szegmensek a polilin részei lesznek. Ellenkező esetben egyedi vonalak lesznek</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -37432,65 +34160,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
         <translation type="unfinished">Polyline</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Ha be van jelölve, akkor a létrehozott egységeket a jelenlegi rétegre helyezik, máskülönben eredeti rétegekbe.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">A felhasználó aktuális rétege</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">A polivonal szegmens középső pontjainak összege, amelyet hozzá kell adni a spline-hoz.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">A sín mértékének meghatározása</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Ha nincs ellenőrizve, az eredeti polinvezetéket eltávolítják, különben túléli.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Fokozat:</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and ordinary spline will be created.</source>
-        <translation type="vanished">Ha be van jelölve, a polilinja csúcsai splinepontként kezelendők és pontokon átmenő spline jön létre. Ellenkező esetben kontrollpontként kezelendők és rendes spline jön létre.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originals megtartása</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">Középpontok:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Ha be van jelölve, akkor a jelenlegi attribútumokat a létrehozott entitások esetében használjuk, máskülönben - az eredetiek esetében.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuális attribútumok használata</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">Ha ez be van jelölve, akkor a polinvonalas vertexeket spline pontoknak és pontokkal spline-nek tekintik. Ellenkező esetben ellenőrző pontoknak tekintendők, és orináris sínt hoznak létre.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">A vertexes spline points</translation>
     </message>
 </context>
 <context>
@@ -37747,10 +34416,6 @@ p, li {white- space: pre- wrap;}
 <context>
     <name>LC_SplinePropertiesEditingWidget</name>
     <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="14"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="17"/>
         <source>Spline Properties Editor</source>
@@ -37898,69 +34563,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>A spline közelítésére használt fok</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">Ha be van jelölve, szimmetrikus csillag jön létre.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Szimmetrikus</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">Sugárzás a belső élekre.</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Szám:</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">A rajztól számított külső sugár kiválasztása</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">Válassza ki a belső sugarat a rajztól</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">A sugarak száma.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">Ha ez be van jelölve, a külső széleket lekerekítik.</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">Radiusz külső</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">Ha be van jelölve, a belső széleket lekerekítik.</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">Radius inner</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">Ha ez be van jelölve, a csillag polinvonalként fog megjelenni.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polin</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">Sugárzás külső sugarakhoz (szélek).</translation>
     </message>
 </context>
 <context>
@@ -38851,14 +35453,6 @@ p, li {white- space: pre- wrap;}
         <translation>Beállítások</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">A felhasználói koordináták szűrése név szerint</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Szűrő...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>&lt; Nincs név &gt;</translation>
@@ -38959,33 +35553,6 @@ Figyelem: ezt a műveletet NEM lehet visszavonni!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>A &amp; ll UPS eltávolítása</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formanyomtatvány</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szögek:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">Új koordinátarendszer X- tengelye</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Meghatározza, hogy az X- Axis szöget a megadott érték vagy az egér helyzete határozza meg</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Ingyenes</translation>
     </message>
 </context>
 <context>
@@ -39598,33 +36165,6 @@ Figyelem: ezt a műveletet NEM lehet visszavonni!</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.cpp" line="63"/>
         <source>remove 0&quot;</source>
         <translation>eltávolítás 0&quot;</translation>
-    </message>
-</context>
-<context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Vonal relatív szögének beállításai</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Térköz:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">Távolság az eredeti vonallánctól</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">Másolatok:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Másolatok száma</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">Válasszon távolságot a rajztól</translation>
     </message>
 </context>
 <context>
@@ -40304,81 +36844,6 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Ív</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Layer of arc</source>
-        <translation type="vanished">Ív rétege</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Az injekciós toll jellemzői</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometria</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="vanished">X Az ív középpontjának koordinátája</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">Y Az ív középpontjának koordinátája</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="vanished">Meghatározza, hogy az ív fordított (óramutató járásával megegyező)</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">Megfordított</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">Középpont (y):</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Ív sugara</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">A szög indítása:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Sugár:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="vanished">Az ív kiinduló szöge</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="vanished">Az ív vége</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">Végszög:</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">Középpont (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Toll</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
@@ -40416,198 +36881,6 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
         <translation>Toll</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Kör</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometria</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Sugár:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">A kör sugara</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">Középpont (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="vanished">Y A kör középpontjának koordinátája</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">Középpont (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="vanished">X A kör középpontjának koordinátája</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Toll</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">Lineáris dimenzió</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">Méretréteg</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Az injekciós toll jellemzői</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometria</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szög:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="vanished">Forgatási szög</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Toll</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Méret</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">Méretréteg</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Az injekciós toll jellemzői</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Toll</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Ellipszis</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Layer of ellipse</source>
-        <translation type="vanished">Ellipszis rétege</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometria</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="vanished">Forgatási szög a fő tengely ellipszis, fok</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="vanished">Meghatározza, hogy az ív fordított</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">Megfordított</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">Középpont (y):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="vanished">Az elliptikus ív végszöge, fok</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">Y Az ív középpontjának koordinátája</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="vanished">Az ellipszis fő tengelyének sugara</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="vanished">fokban</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="vanished">Start szög (°):</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="vanished">Forgatás (°):</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="vanished">Az ellipszis kisebb tengelyének sugara</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="vanished">Végszög (°):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="vanished">Az elliptikus ív indítási szöge, fok</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="vanished">Őrnagy:</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="vanished">Kisebb:</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="vanished">X Ellipse központjának koordinátája</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">Középpont (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Toll</translation>
     </message>
 </context>
 <context>
@@ -40684,105 +36957,6 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <source>Image</source>
-        <translation type="vanished">Kép</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Layer of image</source>
-        <translation type="vanished">Kép rétege</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometria</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szög:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Magasság:</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="vanished">A kép szélessége</translation>
-    </message>
-    <message>
-        <source>insert (y):</source>
-        <translation type="vanished">Beillesztés (y):</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">X a beszúrási pont koordinátája</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">Felbontás (pontok / hüvelyk)</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="vanished">A képfájlhoz vezető út</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">Mérési tényező</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">Méret (px):</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Forgatási szög</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">A beszúrási pont Y koordinátája</translation>
-    </message>
-    <message>
-        <source>path:</source>
-        <translation type="vanished">Útvonal:</translation>
-    </message>
-    <message>
-        <source>insert (x):</source>
-        <translation type="vanished">Beillesztés (x):</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Méretarány:</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">Képméret pixelben</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Szélesség:</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="vanished">A kép magassága</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="vanished">Képfájl kiválasztása</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Toll</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="32"/>
@@ -40805,167 +36979,9 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
         <translation>Programfelület nyelve:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt; html &gt; &lt; head / &gt; &lt; body &gt; &lt; p joint = &quot;center&quot; &gt; &lt; span style = &quot;Font- size: large; Font- weight: 700;&quot; &gt; Welcome to LibreCAD &lt; / span &gt; &lt; br / &gt; &lt; / p &gt; &lt; p &gt; Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és az Ui és Command kedvenc nyelvét. &lt; br / &gt; &lt; / p &gt; &lt; p &gt; Később megváltoztathatja ezeket a beállításokat. &lt; / p &gt; &lt; / test &gt; &lt; / html &gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
         <translation>Parancsok nyelve:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <source>Insert</source>
-        <translation type="vanished">Beillesztés</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Layer of insert</source>
-        <translation type="vanished">Beillesztés rétege</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometria</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="vanished">Beillesztési pont (y):</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="vanished">Beillesztési pont (x):</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="vanished">A sor összege másolatok esetében</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Forgatási szög</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="vanished">Az oszlopok közötti távolság</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="vanished">Mérési tényező X tengelyenként</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">X a beszúrási pont koordinátája</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="vanished">A sorok közötti távolság</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="vanished">A másolatok oszlopainak összege</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="vanished">Mérési tényező Y tengely szerint</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="vanished">Y skála:</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="vanished">Szöveg:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szög:</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">A beszúrási pont Y koordinátája</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="vanished">Szövegürítés:</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="vanished">Oszlopok:</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="vanished">X skála:</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="vanished">Oszlopürítés:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Toll</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Vonal</translation>
-    </message>
-    <message>
-        <source>ID: </source>
-        <translation type="vanished">ID: </translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Layer of line</source>
-        <translation type="vanished">Vonal rétege</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometria</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="vanished">Végpont (x):</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="vanished">X pont befejező koordináta</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="vanished">Az Y pont vége</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="vanished">Végpont (y):</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="vanished">Indítási pont (y):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="vanished">Az Y kiindulási pont koordinátája</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="vanished">Kezdési pont (x):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="vanished">Indítási pont: X koordináta</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Toll</translation>
     </message>
 </context>
 <context>
@@ -41136,10 +37152,6 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
         <translation>Szimbólum beszúrás</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">Szimbólum behelyezése</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
         <source>Degree (°)</source>
         <translation>Fok (°)</translation>
@@ -41188,10 +37200,6 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>Font (£)</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Jen (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -41827,115 +37835,6 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
         <translation>Toll</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <source>Mirroring Options</source>
-        <translation type="vanished">Tükrözés beállítása</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Másolatok száma</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">Eredeti &amp;törlése</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Eredeti &amp;meghagyása</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">&amp;Aktuális tulajdonságokkal</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Aktuális &amp;fóliára</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Másolatok száma</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">Eredeti &amp;törlése</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Eredeti &amp;meghagyása</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Többszörös másolatok</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">&amp;Aktuális tulajdonságokkal</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Aktuális &amp;fóliára</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Move/Copy Options</source>
-        <translation type="vanished">Mozgatás/másolás beállításai</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <source>Move/Rotate Options</source>
-        <translation type="vanished">Mozgatás/Forgatás beállítása</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Másolatok száma</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Szög (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">&amp;Aktuális tulajdonságokkal</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Aktuális &amp;fóliára</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">Eredeti &amp;törlése</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Eredeti &amp;meghagyása</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Többpéldányok</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="vanished">Ctrl+S</translation>
     </message>
 </context>
 <context>
@@ -44952,10 +40851,6 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
         <translation>Relative zero marker</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">Viselkedés</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
         <translation>A rajzolandó rács típusa</translation>
@@ -46011,287 +41906,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Rajzváltozók</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Változó</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Kód</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Érték</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Mégse</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Pont</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Layer of point</source>
-        <translation type="vanished">Pont rétege</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometria</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="vanished">Pozíció (y):</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="vanished">A pont helyzete Y koordináta szerint</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="vanished">Pozíció:</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="vanished">A pont helyzete X koordináta szerint</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Toll</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polin</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Layer of polyline</source>
-        <translation type="vanished">Polilinja rétege</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometria</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="vanished">Meghatározza, hogy a polinvonal zárt kontúrú-e</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Zárt</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Toll</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation type="vanished">Forgatás beállítása</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Másolatok száma</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">Eredeti &amp;törlése</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Eredeti &amp;meghagyása</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="vanished">&amp;Többszörös másolatok:</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Szög (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">&amp;Aktuális tulajdonságokkal</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Aktuális &amp;fóliára</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <source>Rotate Two Options</source>
-        <translation type="vanished">Többszörös forgatás beállítása</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Másolatok száma</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">Eredeti &amp;törlése</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Eredeti &amp;meghagyása</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Többszörös másolatok</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;a):</source>
-        <translation type="vanished">&amp;Szög (a):</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;b):</source>
-        <translation type="vanished">&amp;Szög (b):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">&amp;Aktuális tulajdonságokkal</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Aktuális &amp;fóliára</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <source>Scaling Options</source>
-        <translation type="vanished">Átméretezés beállítása</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Másolatok száma</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">&amp;Aktuális tulajdonságokkal</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Aktuális &amp;fóliára</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt; html &gt; &lt; fej / &gt; &lt; test &gt; &lt; p &gt; Keresse meg a középpont körüli arányokat referenciaponttal és célponttal. &lt; / p &gt; &lt; / test &gt; &lt; / html &gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">Eredeti &amp;törlése</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Eredeti &amp;meghagyása</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Többszörös másolatok</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="vanished">Átméretezés azonos aránnyal x-, és y irányban</translation>
-    </message>
-    <message>
-        <source>Isotropic Scaling</source>
-        <translation type="vanished">Izotrópikus átméretezés</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">Spline</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Layer of spline</source>
-        <translation type="vanished">Spline rétege</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometria</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Fok:</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="vanished">Meghatározza, hogy a sín határozza-e meg a zárt kontúrt</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Zárt</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="vanished">A spline közelítésére használt fok</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Toll</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="20"/>
@@ -46439,10 +42053,6 @@ so default step value required for baking</source>
         <translation>Font (£)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Jen (¥)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Times (×)</source>
         <translation>Szorzó (×)</translation>
@@ -46486,10 +42096,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>A szöveg rétege</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">A szöveg kötelezettsége</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -47097,10 +42703,6 @@ so default step value required for baking</source>
         <translation>Szög:</translation>
     </message>
     <message>
-        <source>Oblique:</source>
-        <translation type="vanished">Ferde:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
         <source>Width factor:</source>
         <translation>Szélességi tényező:</translation>
@@ -47618,21 +43220,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">Érvénytelen skála</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">A maximális nyomtatási aránynál nagyobb papírskála-tényező</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">A papírskála-tényező kisebb, mint a min nyomtatási arány</translation>
-    </message>
-</context>
-<context>
     <name>QG_RecentFiles</name>
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="183"/>
@@ -47699,58 +43286,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>World</source>
         <translation>Világ</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">Snap</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="vanished">Illesztés végpontokhoz</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="vanished">Illesztés az entitás egyenlő távolságú pontjaihoz</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="vanished">Illesztés középpontokhoz</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="vanished">Automatikus illesztés metszéspontokhoz</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="vanished">Illesztés az entitás legközelebbi pontjához</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="vanished">Illesztés adott távolságra végponttól</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="vanished">Kézi illesztés metszéspontokhoz</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="vanished">Illesztés rácshoz</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="vanished">Korlátozás vízszintesen</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="vanished">Korlátozás függőlegesen</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="vanished">Relatív nulla mozgatása</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="vanished">Relatív nulla zárolása</translation>
     </message>
 </context>
 <context>
@@ -47951,12 +43486,6 @@ Adjon meg másik értéket.</translation>
         <translation>Üres rétegek eltávolítása</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Layer (s) entitások nélkül, mégis szűrik, és nem látható.
-Törölje a szűrőt és ismételje meg.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -48024,14 +43553,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 Ha Igen - a &quot;Réteg szerint&quot; tollal rendelkező elemek az új rétegen pontosan ugyanúgy néznek ki, mint az előző rétegeken, és a &quot;Réteg szerint&quot; érték helyére a feloldott tollak kerülnek.
 
 Ha Nem - a &quot;Réteg szerint&quot; értékek megmaradnak, így az ilyen elemek tollát a célréteg tolla határozza meg.</translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Felülírja a „Réteg szerint” értéket a forrásrétegek értékeivel?
-Ha Igen, akkor a „Réteg szerint” tollal rendelkező entitások pontosan úgy jelennek meg az új rétegen, mint az előző rétegeken, és a „Réteg szerint” érték felülírásra kerül a feloldott tollakkal.
-Ha Nem, akkor a „Réteg szerint” értékek változatlanok maradnak, és a célréteg tolla határozza meg az ilyen entitások tollát.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -48474,14 +43995,6 @@ Lecseréli?</translation>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="799"/>
         <source>Tagged Image File Format</source>
         <translation>TIFF, Címkézett képfájl formátum</translation>
-    </message>
-    <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">Régi rajzcsere %1</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">Megnyitott dwg fájl verziója: %1.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -50133,11 +45646,6 @@ Lecseréli?</translation>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>mpoint</translation>
-    </message>
-    <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">criclebyarc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -51876,10 +47384,6 @@ Lecseréli?</translation>
         <translation>Információ</translation>
     </message>
     <message>
-        <source>DWG support is not complete; if this file fails to open try an older DWG format or convert it to DXF.</source>
-        <translation type="vanished">A DWG-támogatás nem teljes; ha a fájl nem nyílik meg, próbáljon egy régebbi DWG-formátumot, vagy konvertálja DXF-be.</translation>
-    </message>
-    <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="104"/>
         <source>Error</source>
         <comment>fileImport</comment>
@@ -51946,11 +47450,6 @@ Lecseréli?</translation>
         <translation>hiba történt a DXF/DWG fájlfejléc olvasásakor</translation>
     </message>
     <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">hiba a DXF/DWG fejléc olvasásakor</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
@@ -52008,26 +47507,6 @@ Lecseréli?</translation>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="85"/>
         <source>usage: </source>
         <translation>használat: </translation>
-    </message>
-    <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished">[options] [beállítások] &lt;dxf_files&gt;</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished"> *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">-- az összes dxf fájl kinyomtatása azonos nevű pdf fájlba.</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished"> -o néhány.pdf *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">-- az összes dxf fájl kinyomtatása &quot;some.pdf&quot; fájlba.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
@@ -52105,16 +47584,6 @@ Lecseréli?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Papírméret (szélesség x magasság) mm-ben.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">Kimeneti felbontás (DPI).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>Kimeneti skála. Pl.: 0,01 (1:100 méretarányhoz).</translation>
@@ -52160,14 +47629,6 @@ Lecseréli?</translation>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation>Bemeneti fájl(ok): %1.</translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">&lt;dxf_files&gt;</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">DXF fájl(ok) bevitele</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -52576,10 +48037,6 @@ Lecseréli?</translation>
         <translation>[Override] [Felülírás]</translation>
     </message>
     <message>
-        <source>Draft</source>
-        <translation type="vanished">Vázlat</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="86"/>
         <source>%2 - command for &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
@@ -52587,10 +48044,6 @@ Lecseréli?</translation>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
-    <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">Válassza ki, hogy hozzon létre blokkot (Enter to complete)</translation>
-    </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
@@ -52605,68 +48058,6 @@ Lecseréli?</translation>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>Adjon meg referencia pontot</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">Válassza ki, hogy felrobban tartály (Adja meg a teljes)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">Válassza ki és robbanjon fel</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Értelmetlen kifejezés</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Adjon meg referencia pontot</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Adja meg a szöget:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Méret:</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">Oszlopok:</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">Sorok:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">Oszlopok távolsága:</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">Sorok távolsága:</translation>
-    </message>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">A blokk nem tartalmazhat önmaga beszúrását.</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished"> beágyazott aktuális blokk beillesztése:
-</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">
-Ez a blokk nem illeszthető be.</translation>
     </message>
 </context>
 <context>
@@ -52918,270 +48309,6 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">Az akkord hossza nem lehet nulla</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Értelmetlen kifejezés</translation>
-    </message>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">Szabálytalan hossz adat</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Középpont megadása</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">A kiindulási pont megadása</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternatív ívek</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">Adja meg az akkord hosszát (az altpont negatív):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">Alternatív ívpont használata</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">Sugár megadása</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">Kezdő szöge:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">Adja meg a végszöget vagy [szög / akkorlen]</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">Befoglalt szög:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">Érvénytelen ív adat.</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">A harmadik pont megadása</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Második pont</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">Kezdőpont vagy [középpont] megadása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">Bázis elem meghatározása</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">Alternatív ívek</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">Alternatív ív</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">Adja meg a lezáró szöget</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">Adja meg a végpontot</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Értelmetlen kifejezés</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Középpont megadása</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">Adja meg a kör pontját</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">Érvénytelen Kör adat.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Első pont</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Második pont</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">Érvénytelen kör adat.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Első pont</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Második pont</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Harmadik pont</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Értelmetlen kifejezés</translation>
-    </message>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">Középpont megadása</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">Sugár megadása</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">sugár=%1 érvénytelen (kifejezés)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">sugár=%1 érvénytelen (negatív)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">sugár=%1 érvénytelen (nulla)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">Adja meg az első vonalat</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">Adja meg a második vonalat</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">Adja meg a harmadik vonalat</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">Adja meg az érintőkör első pontját</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">Adja meg az érintőkör második pontját</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Válassza ki az érintőkör középpontját</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Adjon meg egy vonalat/ívet/kört</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Adja meg az első vonalat/ívet/kört</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Adja meg a második vonalat/ívet/kört</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Válassza ki az érintőkör középpontját</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">Nincs közös érintőkör a &apos;%1&apos; sugárhoz</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Adjon meg egy vonalat/ívet/kört</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">Adja meg a másik vonalat / ívet / kört</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">Adjon meg egy pontot az érintőkörön</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Válassza ki az érintőkör középpontját</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Válassza ki az érintőkör középpontját</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Adja meg az első vonalat/ívet/kört</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">A kiválasztott entitások esetében nincs közös tangenciális kör</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Adja meg a második vonalat/ívet/kört</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">Adja meg a harmadik vonalat/ívet/kört</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
@@ -53376,125 +48503,9 @@ Ez a blokk nem illeszthető be.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">Válassza ki a kikeléshez (Enter to complete)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
         <translation>Hatch közvetlenül a kiválasztás után</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Értelmetlen kifejezés</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Referencia pont megadása</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Adja meg a szöget:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Méret:</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">DPI megadása:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Első pont</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Következő pont, vagy [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Következő pont</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">A sorok sorozata nem zárható be: Még nincs elég elem meghatározva, vagy már le van zárva.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">Nem vonható vissza: Elérte az előzmények kezdetét</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">Nem lehet újraindítani: Elérkezett az előzmények vége</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Értelmetlen kifejezés</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Pozíció</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">Alternatív irány</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Adja meg a szöget:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">Hossza:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">egységek jönnek létre</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Értelmetlen kifejezés</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">Válassza ki az első vonalat</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">Válassza ki a második vonalat</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">Szögfelező hossza:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">Felosztások száma:</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">A tartományon kívüli szektorvonalak száma: </translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">Rajzolás az egér nyomvatartásával</translation>
     </message>
 </context>
 <context>
@@ -53527,74 +48538,6 @@ Ez a blokk nem illeszthető be.</translation>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Válasszon ki egy kört, ívet, vagy ellipszist</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">egységek jönnek létre</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Adjon meg egy számot:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Értelmetlen kifejezés</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Érvénytelen szám</translation>
-    </message>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">Adja meg a távolságot &lt;%1&gt; vagy válasszon elemet, [%2]</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">Válasszon elemet</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">Átmenő pont</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">egységek jönnek létre</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Szám:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Érvénytelen szám</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Értelmetlen kifejezés</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">Adjon meg egy sarkot</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Adja meg az első sarkot</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Adja meg a második sarkot</translation>
     </message>
 </context>
 <context>
@@ -53636,29 +48579,6 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Értelmetlen kifejezés</translation>
-    </message>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">Bázis elem</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">A szög megadása</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">Adja meg a hosszt</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Pozíció</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53696,17 +48616,6 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Adja meg a beszúrás helyét</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Írja be a szöveget:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
@@ -53715,108 +48624,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Adja meg az első pontot</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Adja meg a következő pontot, vagy [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Adja meg a következő pontot</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">Nem lehet lezárni a sokszöget: Nincs elég elem.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Nem lehet visszavonni: Nincs elég elem.</translation>
-    </message>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">Adja meg a végpontot x</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Írja be a vonalláncok számát</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">Írjon be egy egyenletet, f(x)</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">Adja meg a kezdőpontot x</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">A beírt x érvénytelen.</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">A megadott lépésméret érvénytelen.</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">A megadott x érték érvénytelen.</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternatív ívek</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">Adja meg az első irányító pontot</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">Adja meg a következő pontot, vagy [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">Adja meg a következő irányító pontot</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Nem lehet visszavonni: Nincs elég elem.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">Szöveg:</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Adja meg a beszúrás helyét</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Írja be a szöveget:</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Második pont</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">Válassza ki a vágást (Adja meg a befejezést)</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -53835,10 +48643,6 @@ Ez a blokk nem illeszthető be.</translation>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>Kiválasztás után vágd el</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">Válassza ki a másolást (Adja meg a teljes)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -53876,24 +48680,6 @@ Ez a blokk nem illeszthető be.</translation>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Paste Multiple</source>
         <translation>Többszörös paszta</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="vanished">A paszta referenciapont beállítása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">Nincs mit visszavonni!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">Nincs mit újból csinálni!</translation>
     </message>
 </context>
 <context>
@@ -54114,57 +48900,6 @@ Befejezés: (%8,%9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">Távolság:%1
-Karteziai: (%2,%3)
-Polar: (%4 &lt;%5)
-Szervezeti egység: (%6,%7)
-Pont: (%8,%9)</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">Válasszon elemet</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">Ügyeljen arra, hogy ne essen át a konténerben lévő gyermekekre</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">Relatív pont a gazdálkodó egység</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Információ</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Távolság:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szögek:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">A következő időponttól:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">Hogy:</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">Válasszon pontot</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -54210,10 +48945,6 @@ Pont: (%8,%9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">Válassza ki a teljes hossz méréséhez (Adja meg a teljességet)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="74"/>
         <source>Select contour</source>
         <translation>A kontúr kiválasztása</translation>
@@ -54245,917 +48976,6 @@ Pont: (%8,%9)</translation>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>Törlés</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Értelmetlen kifejezés</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Referencia pont</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Adja meg a szöget:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Méret:</translation>
-    </message>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">Nem lehet megnyitni a &apos;%1&apos; fájlt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">Válassza ki az attribútumok módosítását (Enter to complete)</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">Az attribútumok módosítása a kijelölés után azonnal</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">A kontúr kiválasztása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">A kiválasztott vonalak párhuzamosak</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">A kiválasztott vonalak nem ugyanannak a polinnak a gyermekei</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Vágás</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Intersection:</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">1. pont:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">2. pont</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">Érvénytelen entitás (nem szerkeszthető).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">Érvénytelen entitás (nem atomi).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">Érvénytelen jogalany kiválasztva (az első entitással nem lehet meghajolni).</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Értelmetlen kifejezés</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Első elem</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Második elem</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">Hosszúság 1:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">Hosszúság 2:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Osztás</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">A következő címen:</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nincs elem.</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">A vágási pont nem feltétlenül a gazdálkodó egység végpontja.</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">Vágandó elem</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">Vágási pont</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">Az elem lehet vonal, ív, kör, ellipszis vagy interpolációs hajlítható vonal.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">Válassza ki, hogy törölje (Adja meg a teljes)</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">A kiválasztás után azonnal törlendő</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">A kontúr kiválasztása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">A sokszög első törési pontja</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">A sokszög második töréspontja</translation>
-    </message>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">Elemek nem ugyanabban a törött vonalban.</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">A második elem szülője nem törött vonal</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">Az első elem szülője nem törött vonal</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">A második elem elődje null minta</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">A kiválasztott elemek egyike a null minta</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">Az első elem elődje null minta</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">Az első elem null minta</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">A második elem null minta</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Pick entity to delete</source>
-        <translation type="vanished">Válassza ki a törlendő entitást</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">Kattintson az elemre a módosításhoz</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">Válassza ki, hogy felrobban a szöveg (Adja meg a teljes)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">A kiválasztás után azonnal fel kell robbantani</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Tükrözés</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szögek:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">Szögek (alt):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">Vonal:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">Vonal:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">Válassza ki a tükröt (Enter to complete)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">A kontúr kiválasztása</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">A tükörvonal megadása</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">Fordítás vertikálisan</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">Flip vízszintesen</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">Tükrözés tengelyének első pontja</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">Tükrözés tengelyének második pontja</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">Mozgó ofszet</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">Offset másolása</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Referencia pont</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">Másolás létrehozása</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">Válassza ki a mozgatáshoz (Enter to complete)</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">A kiválasztás után azonnal mozgassa</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">A kontúr kiválasztása</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Célpont</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">Mozgatás forgással</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">Forrás:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">Célpont:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offlet:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szögek:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Értelmetlen kifejezés</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Referencia pont</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">Válassza ki a mozgatáshoz és a forgatáshoz (Enter to complete)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">A kiválasztás után azonnal mozgassa és forgassa</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">A kontúr kiválasztása</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Célpont</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">Forgatás szöge:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">Ellentmondás</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Távolság:</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">Adja meg az eltolás irányát</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">Adja meg a vonatkoztatási pontot az eltolódás irányára</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle, arc or ellipse to create offset (Enter to complete)</source>
-        <translation type="vanished">Válasszon vonalat, polilinját, kört, ívvét vagy ellipszist az eltolás létrehozásához (Enter a befejezéshez)</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">Válassza ki a sort, polinvonalat, kört vagy ívet az eltolódás létrehozásához (Adja meg a teljes)</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">Közvetlenül a kiválasztás után</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">A kontúr kiválasztása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">Válassza ki, hogy visszafordítsa az irányt (Adja meg a teljes)</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">A kiválasztás után azonnal vissza kell fordulni</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">A kontúr kiválasztása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Referencia pont</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">Forgatás</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szögek:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Forráspont:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Célpont:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offlet:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Referenciapont:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">Középpont:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">Második szög:</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">Válassza ki a forgatást (Adja meg a teljes)</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">A kiválasztás után azonnal forgassa</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">A kontúr kiválasztása</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Snap a kiválasztás központjába</translation>
-    </message>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">Adja meg a forgatás középpontját</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">Adjon meg egy pontot, ami körül forgatni szeretne</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">A referenciapont körüli forgáspont meghatározása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">Forgatás kétszer</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">Központ 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">Szög:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">Központ 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">2. szög:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">Válassza ki a két tengely forgását (Adja meg a teljes)</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">A 2. tengely elforgatása a kiválasztás után azonnal</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">A kontúr kiválasztása</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">Abszolút referencia pont</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">Relatív referencia pont</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Értelmetlen kifejezés</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Kerek</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">1. pont:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">2. pont</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">Második elem</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">Adja meg a sugarat:</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">Adja meg az első elemet, vagy adja meg a sugarat &lt;%1&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Méret</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Központ:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Forráspont:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Célpont:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offlet:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">Méret X-szel:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">Méret Y-ra:</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">Méretközpont megadása</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Snap a kiválasztás központjába</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">A forráspont megadása</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Célpont megadása</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">Ingyenes kattanás</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">Válassza ki a skálát (Adja meg a teljes)</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">Közvetlenül a kiválasztás után</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">A kontúr kiválasztása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Első sarok</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Második sarok</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">Stretch</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">A sarok kezdete:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">Sarokpont:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Referenciapont:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Célpont:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offlet:</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Referencia pont</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Célpont</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">Első elem a letöréshez</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">Határoló elem</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Vágás</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">Második metszés</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Intersection:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">2. szakasz:</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">Második elem a letöréshez</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">Válasszon elemet a letöréshez</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">Nem található entitás.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">A választott elemet (elemi egység) nem lehet letörni.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Értelmetlen kifejezés</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">Válassza ki a sort / ívet a kárpitozáshoz VAGY adja meg a hosszértéket:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nem található elem.</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">Szervezetek kiválasztása (Enter to Complete)</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">A kiválasztás után azonnal rendeljen</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">A kontúr kiválasztása</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">Válasszon elemet a rendeléshez</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nem található elem.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Az elemnek törött vonalnak kell lennie.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">A pont hozzáadása érvénytelen.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">A pont hozzáadása nem az elemen történik.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">Adjon meg törött vonalat csomópontok hozzáadásához</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">Csomópont pontjának hozzáadása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nincs elem.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Az elemeknek vonalláncnak kell lennie.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">Kattintson valahol a meglévő vonallánc elejének vagy végének közelébe.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Adja meg a polilinek számát</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">Adja meg a vonalláncot valahol a kezdő- vagy végpont közelében</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">Nem lehet csomópontokat hozzáfűzni egy zárt vonallánchoz.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Nem lehet visszavonni: Nincs elég elem.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nincs elem.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Az elemeknek vonalláncnak kell lennie.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">Adja meg a vonalláncot a csomópont törléséhez</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">Adja meg a csomópont törlésének pontját</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">A törlési pont érvénytelen.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">A törlési pont nincs elemen.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nincs elem.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Az elemeknek vonalláncnak kell lennie.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">A törlési pont nincs entitáson.</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">Nem találtunk polinvezetéket.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">A polirinnek legalább két szegmensének a kiválasztott pontok között kell lennie.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">Adja meg a két csomópont közötti törlendő vonalláncot</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">Adja meg az első csomópontot</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">Adja meg a második csomópontot</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">A pont törlése érvénytelen.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nincs elem.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Az elemeknek vonalláncnak kell lennie.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">Válassza ki az eredeti vonalláncot</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nincs elem.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">Válasszon egy szegmenst az eredeti vonalláncon</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">Az elem nem lehet zárt vonallánc.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">Vonallánc létrehozva</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nincs elem.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Az elemeknek vonalláncnak kell lennie.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">Az első szegmensnek a kiválasztott polinvonalon kell lennie.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">A második szegmensnek a kiválasztott polinvonalon kell lennie, és nem egyenlő az elsővel.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">Adja meg a vágandó vonalláncot</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">Adja meg az első szegmenst</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">Adja meg a második szegmenst</translation>
     </message>
 </context>
 <context>
@@ -55232,113 +49052,11 @@ Pont: (%8,%9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Nincs kiválasztva entitás!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectBase</name>
     <message>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">Elemi egységet válasszon.</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Adja meg az egység kiválasztását</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">Metsző egyenes első pontja</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">A keresztező egység kiválasztása</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">Gyermek szervezetek kiválasztása</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">Metsző egyenes második pontja</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">A kívánt rétegű egység megadása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Adja meg az egység kiválasztását</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">A kontúr kiválasztása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">Kiválasztás</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">Válogatás</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">szervezetek</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">a doboz keresztezése</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">amelyek dobozon belül vannak</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">Második sarok</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">Szektálás kiválasztása</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">Kiválasztott szervezetek</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">Szervezetek kiválasztása</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">Válassza ki a kereszteződést</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">Kattintson és húzza a kijelölési ablakot</translation>
     </message>
 </context>
 <context>
@@ -55646,158 +49364,6 @@ Pont: (%8,%9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Ív beállítások</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Óramutató járásával ellentétesen</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Óramutató járásával megegyező</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">Érintő ív beállításai</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">Ha kiválasztják, a tangens ívet meghatározott sugárral kell létrehozni</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">Érintői körív sugara</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">Ha be van jelölve, a megadott szögű ívet kell létrehozni</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">Érintői körív teljes látható szöge</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Válassza ki a sugaras alak rajzát</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Sugár</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Szög</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">Letörés beállítása</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">Jelölje be, ha mindkét elemet ferdére vágja</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Vágás</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">Hossz 1:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">A metszés hossza X irányban.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">Válassza ki az első hosszú alak rajz</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">Hossz 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">A metszés hossza Y irányban.</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">Válassza ki a második hosszú alak rajz</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">Kör beállítása</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Sugár:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">A kör sugara</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Húzási sugár kiválasztása</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">Kör Érintő2 Beállítások</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A rajzolandó érintőkör sugara&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Sugár:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">Érintő kör sugara</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Húzási sugár kiválasztása</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="vanished">Lineáris méret opciók</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szög:</translation>
-    </message>
-    <message>
-        <source>Angle of dimension</source>
-        <translation type="vanished">Méret szöge</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -55934,849 +49500,6 @@ Pont: (%8,%9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Beszúrási beállítások</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szög:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Forgatás szöge</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Mérettényező:</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">DPI:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Átméretezés</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">A kép DPI-értéke</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Beszúrási beállítások</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szög:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Forgatás szöge</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Tényező:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Átméretezés</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">Array:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">Oszlopok száma</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">Sorok száma</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">Válassza ki a sortávolságot a rajztól</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">Válassza ki az oszlop távolságát a rajztól</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Térköz:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">Oszlopok távolsága</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">Sorköz</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">Beszúrás elemkönyvtárból</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szög:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Forgatás szöge</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Tényező:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Mérettényező</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">Vonalszög beállításai</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szög:</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">A betáplálási pontba betáplált vonal pontja</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Vonal szöge</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Hossz:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Vonal hossza</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">Illesztési pont:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">A vonalszög kiválasztása a rajzból</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Kezdet</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Középső</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Vég</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">A vágányvonal hossza a rajztól</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">Ha be van jelölve, a vonal orhotogonális lesz a szögek tengelyéig. Ellenkező esetben - a képernyőtengelyhez</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">Angles Basis</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">Vonalfelező beállítások</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Hossz:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">Felező hossza</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">Válassza ki a vonal hosszát a rajztól</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Szám:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">A létrehozandó felezők száma</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Vonal beállítása</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Készítsen egy zárt kontúrvonalat vonalak rajzolásával</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Bezár</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Utolsó vonal visszavonása</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Visszavonás</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Az utolsó vonalrajz megismétlése</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Mégis</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Vonalbeállítások</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">Irány:</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">Polyline-t hoz létre vonalszegmensekből</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polin</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">Függőleges vonal</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">Vonal meghatározott szögben</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Szögek</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">Vízszintes vonal</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">Ha be van jelölve, a szög a korábbi szegmenshez viszonyítva van</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Az utolsó vonalrajz eltávolítása</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Visszavonás</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">A húzott vonalak zárt körvonala</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Bezárás</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Az utolsó vonalrajz módosítása</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Módosítás</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">A vonal szöge</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">Vonal az önkényes ponthoz</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Pont</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">Párhuzamos vonalak</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Távolság:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">Távolság a kiindulási elemtől</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">A rajztól való távolság kiválasztása</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Szám:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Párhuzamos vonalak száma</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">Párhuzamos beállítások</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">Ha ez be van jelölve, a párhuzamokat a gazdálkodó egység mindkét oldalán létre fogják hozni</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Szimmetrikus</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Szám:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Párhuzamos vonalak száma</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Sokszög beállítások</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Szám:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">Élek száma</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Sokszög beállítások</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Szám:</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">Ha ez be van jelölve, a sokszögek lekerekíthetők.</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">Radiusz</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">Ha ez be van jelölve, a sokszög polinvonalként fog megjelenni. Máskülönben egyedi entitásokat hoznak létre.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polin</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Húzási sugár kiválasztása</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">Élek száma</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">Kerekítési sugár a vertex bevelre.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">Ha kiválasztásra kerül, a referenciapontok a sokszögek. Ellenkező esetben a szélek középpontja.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">Vertex - Vertex</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Vonal relatív szögének beállításai</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szög:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Vonal szöge</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Hossz:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Vonal hossza</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Húzási hossz</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Szöveg beállítása</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Szöveg:</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">A beillesztendő szöveg</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szög:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Forgatási szög</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">Eltolási beállítások módosítása</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">Az eredeti gazdálkodó egységtől való beszámítás távolsága</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Ha ez be van jelölve, akkor a létrehozott entitások bekerülnek a jelenlegi rétegbe, máskülönben eredeti rétegekben lesznek.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Az aktuális réteg használata</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">A másolatok száma.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Ha ez be van jelölve, az eredeti entitások túlélik, különben eltávolítják őket.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originals megtartása</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">Ha ez be van jelölve, akkor az ofszet távolságát javítják, máskülönben azt az egér határozza meg.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Rögzített távolság</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Ha be van jelölve, a jelenlegi attribútumokat a létrehozott gazdálkodó egységekre fogják alkalmazni, máskülönben az eredetieket fogják használni.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuális attribútumok használata</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">A rajztól való távolság kiválasztása</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Ha ez be van jelölve, több másolat készül.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Többpéldányok</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Forgatási beállítások</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Ha be van jelölve, a jelenlegi attribútumokat a létrehozott gazdálkodó egységekre fogják alkalmazni, máskülönben az eredetieket fogják használni.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuális attribútumok használata</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Ha ez be van jelölve, több másolat készül.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Többpéldányok</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">Ha ez be van jelölve, az összes példányt ugyanaz a cápa fogja forgatni. Ellenkező esetben a szög arányos lesz az egyes példányok számával.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">Ugyanaz a szög a másolatok esetében</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">Forgatási szög.</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">A másolatok száma.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">Ha be van jelölve, a forgási szöget az egér határozza meg. Ellenkező esetben meghatározott értéket kell használni.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Ingyenes</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szög:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">Ha ez be van jelölve, a létrehozott egységek bekerülnek a jelenlegi rétegbe, máskülönben az eredeti rétegekbe kerülnek.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Az aktuális réteg használata</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Ha ez be van jelölve, az eredeti entitások túlélik, különben eltávolítják őket.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originals megtartása</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">Vonallánc beállításai</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">Kapcsolatok vége a polinvonal így zárt kontúr jön létre</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Bezár</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">@ info: whatsthis</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Visszavonás</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">Szekciótípus:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">Meghatározza, hogy a polilin melyik szegmensét kell létrehozni</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Vonal</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">Érintő</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">Érintő sugár</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">Tan szög</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Szög</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">Tangenciális ív</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">Rögzített sugarú szögek</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">Rögzített szögű szögek</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">Ív szöggel</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Sugár:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Az ívsugár</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Válassza ki a sugaras alak rajzát</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szög:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">Az ív szöge</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">Az óramutató járásával ellentétes irányba</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Óramutató járásával megegyező</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">Nyomtatási kép beállításai</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">Tájkép-orientáció</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">Rajzolási beállítások</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Méret:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt; html &gt; &lt; fej / &gt; test &gt; &lt; p &gt; nyomtatott méret: rajzméret &lt; / p &gt; &lt; / test &gt; &lt; / html &gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A Nyomtatási lépték az aktuális értékhez van rögzítve&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">rögzített</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">Fekete / Fehér mód váltás</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">Landscape Orientáció papír</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">A papír portré-iránya</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">Nyomtatási méretezés alkalmazása vonalvastagságra</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">Oldal a rajz közepén</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">Nagyítás a nyomtatási területre</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">1 oldal</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">Ha be van jelölve, a papírtér tartalmazza az oszlopokba és sorokba szervezett oldalak meghatározott mennyiségét</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">Titkos nyomtatás</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">Oldalszám:</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">Az oldalak oszlopainak összege</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">Oldalak:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">Az oldalsorok összege</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">Számold ki, hány oldalra van szükség a rajz elhelyezéséhez</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">Lekerekítés</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">Ellenőrizze, hogy mindkét széle a kerekítés</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Levágni</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Sugár:</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">Kerekítési sugár</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Húzási sugár kiválasztása</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56815,99 +49538,6 @@ Pont: (%8,%9)</translation>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>Egyenlő távolságra lévő osztópontok száma</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">Spline beállítások</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Fok:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">A pontok közelítésére használt Spline-fok</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">Ha be van jelölve, zárt sín jön létre</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Zárt</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">Az előző pont visszavonása</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Visszavonás</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Szöveg beállítása</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Szöveg:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Szög:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Forgatási szög</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">A rajzolás szöge</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">A vágásmennyiség beállításai</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">Távolság. Negatív vágási, pozitív nyúlási értékek.</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">Összesen</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Hossz:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">Távolság. Negatív értékek levágáshoz, pozitív értékek növeléshez. A mínusz előjel nem számít adott hosszra vágásnál.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Húzási hossz</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">Ha ez be van jelölve, akkor a vágást / kiterjesztést mindkét oldalon el kell végezni.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Szimmetrikus</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">A megadott hosszúság a végső hosszt határozza meg, nem a hosszúság növekedését</translation>
     </message>
 </context>
 </TS>

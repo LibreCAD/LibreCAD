@@ -7182,10 +7182,6 @@ Are you sure you are going to discard changes?</source>
         <source>Hatch Properties</source>
         <translation>ຄຸນສົມບັດລວດລາຍ</translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">ຄຸນສົມບັດ?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -7692,17 +7688,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ການສະແດງຜົນ</translation>
     </message>
     <message>
-        <source>Toolip with view details for table items</source>
-        <translation type="vanished">ຄຳແນະນຳ (Tooltip) ພ້ອມລາຍລະອຽດມຸມມອງສຳລັບລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="68"></location>
         <source>UCS Details column</source>
         <translation>ຄໍລຳລາຍລະອຽດ UCS</translation>
-    </message>
-    <message>
-        <source>If checked, type of grid for saved view will be shown</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະສະແດງປະເພດຂອງເສັ້ນຕາຕະລາງ (Grid) ສຳລັບມຸມມອງທີ່ບັນທຶກໄວ້</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="78"></location>
@@ -7715,17 +7703,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ຄໍລຳໄອຄອນປະເພດ</translation>
     </message>
     <message>
-        <source>If checked, the column with details of view's coordinate system will be show</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະສະແດງຄໍລຳທີ່ມີລາຍລະອຽດຂອງລະບົບພິກັດມຸມມອງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"></location>
         <source>Tooltip with view details for table items</source>
         <translation>ຄຳແນະນຳ (Tooltip) ພ້ອມລາຍລະອຽດມຸມມອງສຳລັບລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view's coordinate system will be show.</source>
-        <translation type="vanished">ຫາກໝາຍເລືອກ, ຈະສະແດງຄໍລຳທີ່ມີລາຍລະອຽດຂອງລະບົບພິກັດມຸມມອງ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="65"></location>
@@ -7778,17 +7758,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ຄືນຄ່າມຸມມອງເມື່ອຄລິກບາດດຽວໃສ່ລາຍການໃນຕາຕະລາງ</translation>
     </message>
     <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">ເມື່ອດັບເບິນຄລິກໃສ່ລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="144"></location>
         <source>Defines which action should be performed on double click on view item of the table.</source>
         <translation>ກຳນົດວ່າຈະໃຫ້ປະຕິບັດການໃດເມື່ອດັບເບິນຄລິກໃສ່ລາຍການມຸມມອງໃນຕາຕະລາງ.</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table. </source>
-        <translation type="vanished">ກຳນົດວ່າຈະໃຫ້ປະຕິບັດການໃດເມື່ອດັບເບິນຄລິກໃສ່ລາຍການມຸມມອງໃນຕາຕະລາງ. </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="148"></location>
@@ -7816,10 +7788,6 @@ Are you sure you are going to discard changes?</source>
         <translation>ຫາກເປີດໃຊ້, ການຄລິກໃສ່ລາຍການໃນຕາຕະລາງມຸມມອງຈະເປັນການຄືນຄ່າມຸມມອງ.</translation>
     </message>
     <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">ຄືນຄ່າມຸມມອງເມື່ອຄລິກບາດດຽວໃສ່ລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="55"></location>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
         <translation>ຫາກສະແດງ, ຄຳແນະນຳ (Tooltip) ພ້ອມຂໍ້ມູນເພີ່ມເຕີມກ່ຽວກັບມຸມມອງຈະສະແດງຂຶ້ນ.</translation>
@@ -7828,10 +7796,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"></location>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
         <translation>ຫາກໝາຍເລືອກ ແລະ ໃນຂະນະທີ່ສ້າງມີມຸມມອງຊື່ນີ້ຢູ່ແລ້ວ, ມັນຈະຖືກອັບເດດດ້ວຍຕຳແໜ່ງໃໝ່.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">ຫາກເລືອກ, ຈະມີກ່ອງຢືນຢັນສະແດງຂຶ້ນເມື່ອລຶບມຸມມອງ. ຖ້າບໍ່ດັ່ງນັ້ນ, ມຸມມອງຈະຖືກລຶບໂດຍບໍ່ມີການແຈ້ງເຕືອນ. </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"></location>
@@ -8232,17 +8196,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ຖ້າໝາຍເອົາ, ຈະສະແດງຄຳອະທິບາຍເພີ່ມເຕີມກ່ຽວກັບ UCS ເມື່ອຊີ້ໃສ່ລາຍການໃນຕາຕະລາງ.</translation>
     </message>
     <message>
-        <source>Toolip with UCS details for table items</source>
-        <translation type="vanished">ຄຳອະທິບາຍລາຍລະອຽດ UCS ສຳລັບລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"></location>
         <source>Type icon column</source>
         <translation>ຖັນໄອຄອນປະເພດ</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ຖັນທີ່ມີລາຍລະອຽດຈຸດກຳເນີດ ແລະ ມຸມຂອງ UCS ຈະຖືກສະແດງໃນຕາຕະລາງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"></location>
@@ -8258,10 +8214,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="79"></location>
         <source>Editing</source>
         <translation>ການແກ້ໄຂ</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະມີປ່ອງຢືນຢັນກ່ອນການລຶບມຸມມອງ. ຖ້າບໍ່ດັ່ງນັ້ນ, ມຸມມອງຈະຖືກລຶບອອກທັນທີ. </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"></location>
@@ -8354,30 +8306,6 @@ Are you sure you are going to discard changes?</source>
         <translation>ກຳນົດຈຳນວນຄັ້ງການກະພິບຂອງເຄື່ອງໝາຍ UCS ເພື່ອເນັ້ນໃຫ້ເຫັນ.</translation>
     </message>
     <message>
-        <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation type="vanished">ກຳນົດວ່າຈະໃຫ້ເຮັດຫຍັງ ເມື່ອດັບເບິນຄລິກໃສ່ລາຍການໃນຕາຕະລາງ. </translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">ກູ້ຄືນ UCS ເມື່ອຄລິກບາດດຽວໂດຍລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ຖັນທີ່ມີໄອຄອນບອກປະເພດຂອງ UCS ຈະຖືກສະແດງໃນຕາຕະລາງ. </translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation type="vanished">ຖ້າໝາຍເອົາ, ຈະສະແດງຖັນທີ່ບອກປະເພດເສັ້ນຕາຕະລາງຂອງ UCS</translation>
-    </message>
-    <message>
-        <source>Defines how drawing's view window should be adjusted after UCS is applied</source>
-        <translation type="vanished">ກຳນົດວ່າປ່ອງມຸມມອງຂອງຮູບແຕ້ມຄວນປັບແນວໃດ ຫຼັງຈາກນຳໃຊ້ UCS ແລ້ວ</translation>
-    </message>
-    <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">ເມື່ອດັບເບິນຄລິກໃສ່ລາຍການໃນຕາຕະລາງ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="153"></location>
         <source>Defines which action should be performed on double click on the item of the table.</source>
         <translation>ກຳນົດວ່າຈະໃຫ້ເຮັດຫຍັງ ເມື່ອດັບເບິນຄລິກໃສ່ລາຍການໃນຕາຕະລາງ.</translation>
@@ -8413,10 +8341,6 @@ Are you sure you are going to discard changes?</source>
         <translation>ການເນັ້ນ UCS</translation>
     </message>
     <message>
-        <source>Defines delay between UCS marker blinks</source>
-        <translation type="vanished">ກຳນົດໄລຍະເວລາຫ່າງລະຫວ່າງການກະພິບຂອງເຄື່ອງໝາຍ UCS</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="199"></location>
         <source> ms</source>
         <translation>ms</translation>
@@ -8430,10 +8354,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="225"></location>
         <source>Blink Delay:</source>
         <translation>ໄລຍະຫ່າງການກະພິບ:</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation type="vanished">ກຳນົດຈຳນວນຄັ້ງການກະພິບຂອງເຄື່ອງໝາຍ UCS ເພື່ອເນັ້ນໃຫ້ເຫັນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="235"></location>
@@ -13397,17 +13317,9 @@ Warning: this action can NOT be undone!</source>
         <translation>ຊື່ສີທົ່ວໄປຖ້າເປັນໄປໄດ້</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">ຖ້າເລືອກ, ຈະສະແດງຂໍ້ຄວາມເພີ່ມເຕີມໃນການເຮັດວຽກທີ່ກ່ຽວກັບປາກກາ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="301"></location>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>ສະແດງຂໍ້ຄວາມແຈ້ງເຕືອນຖ້າບໍ່ມີອົງປະກອບໃດຖືກເລືອກໂດຍປາກກາ</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">ເມື່ອດັບເບິນຄລິກທີ່ລາຍການໃນຕາຕະລາງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="183"></location>
@@ -13630,12 +13542,6 @@ Warning: this action can NOT be undone!</source>
 Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation>ຕຳແໜ່ງໄຟລ໌ປາກກາຖືກປ່ຽນແປງ, ກະລຸນາເລີ່ມໂປຣແກຣມໃໝ່ເພື່ອໃຊ້ໄຟລ໌ໃໝ່.
 
-ໝາຍເຫດ: ຖ້າທ່ານບັນທຶກປາກກາຜ່ານຕົວແກ້ໄຂໂດຍບໍ່ເລີ່ມໂປຣແກຣມໃໝ່, ປາກກາປັດຈຸບັນຈະຖືກບັນທຶກທັບລົງໃນໄຟລ໌ໃໝ່ ແລະ ຂໍ້ມູນເກົ່າຈະຖືກຂຽນທັບ.</translation>
-    </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">ຕຳແໜ່ງໄຟລ໌ປາກກາຖືກປ່ຽນແປງ, ກະລຸນາເລີ່ມໂປຣແກຣມໃໝ່ເພື່ອໃຊ້ໄຟລ໌ໃໝ່.
 ໝາຍເຫດ: ຖ້າທ່ານບັນທຶກປາກກາຜ່ານຕົວແກ້ໄຂໂດຍບໍ່ເລີ່ມໂປຣແກຣມໃໝ່, ປາກກາປັດຈຸບັນຈະຖືກບັນທຶກທັບລົງໃນໄຟລ໌ໃໝ່ ແລະ ຂໍ້ມູນເກົ່າຈະຖືກຂຽນທັບ.</translation>
     </message>
 </context>
@@ -14940,10 +14846,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="75"></location>
         <source>Entity Info</source>
         <translation>ຂໍ້ມູນອົງປະກອບ</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ຖ້າເລືອກ, ຈະສະແດງຂໍ້ມູນລະອຽດເພີ່ມເຕີມກ່ຽວກັບເສັ້ນຊື່ ແລະ ເສັ້ນໂຄ້ງທີ່ເປັນສ່ວນໜຶ່ງຂອງ polyline ໃນວິດເຈັດຂໍ້ມູນວັດຖຸ.&lt;br/&gt;ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະສະແດງສະເພາະຂໍ້ມູນຈຸດຍອດເທົ່ານັ້ນ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"></location>
@@ -24353,10 +24255,6 @@ so default step value required for baking</source>
         <translation>ປອນ (£)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">ເຢນ (¥)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1007"></location>
         <source>Times (×)</source>
         <translation>ຄູນ (×)</translation>
@@ -24400,10 +24298,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="197"></location>
         <source>Layer of text</source>
         <translation>ເລເຢີຂອງຂໍ້ຄວາມ</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">ຄວາມອຽງຂອງຂໍ້ຄວາມ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="261"></location>
@@ -25009,10 +24903,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="268"></location>
         <source>Angle:</source>
         <translation>ມຸມ:</translation>
-    </message>
-    <message>
-        <source>Oblique:</source>
-        <translation type="vanished">ເນີງ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="317"></location>
@@ -25876,12 +25766,6 @@ Please specify a different value.</source>
         <translation>ລຶບເລເຢີທີ່ວ່າງເປົ່າ</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">ພົບເລເຢີທີ່ບໍ່ມີອົງປະກອບ, ແຕ່ພວກມັນຖືກກອງໄວ້ ແລະ ບໍ່ສະແດງໃຫ້ເຫັນ.
-ລ້າງຕົວຕອງແລ້ວລອງໃໝ່.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="958"></location>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -25948,14 +25832,6 @@ If No - "By Layer" values remains and so pen of target layer will define pen for
 
 ຖ້າ ແມ່ນ - ອົງປະກອບທີ່ໃຊ້ປາກກາແບບ "ຕາມເລເຢີ" ຈະສະແດງໃນເລເຢີໃໝ່ຄືກັນກັບເລເຢີກ່ອນໜ້າ ແລະ ຄ່າ "ຕາມເລເຢີ" ຈະຖືກແທນທີ່ດ້ວຍຄ່າປາກກາທີ່ກຳນົດໄວ້.
 
-ຖ້າ ບໍ່ - ຄ່າ "ຕາມເລເຢີ" ຈະຍັງຄືເກົ່າ ແລະ ປາກກາຂອງເລເຢີປາຍທາງຈະເປັນຕົວກຳນົດຮູບແບບໃຫ້ກັບອົງປະກອບເຫຼົ່ານັ້ນ.</translation>
-    </message>
-    <message>
-        <source>Replace "By Layer" value to source layers values?
-If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
-If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">ແທນທີ່ຄ່າ "ຕາມເລເຢີ" ດ້ວຍຄ່າຂອງເລເຢີຕົ້ນທາງບໍ່?
-ຖ້າ ແມ່ນ - ອົງປະກອບທີ່ໃຊ້ປາກກາແບບ "ຕາມເລເຢີ" ຈະສະແດງໃນເລເຢີໃໝ່ຄືກັນກັບເລເຢີກ່ອນໜ້າ ແລະ ຄ່າ "ຕາມເລເຢີ" ຈະຖືກແທນທີ່ດ້ວຍຄ່າປາກກາທີ່ກຳນົດໄວ້.
 ຖ້າ ບໍ່ - ຄ່າ "ຕາມເລເຢີ" ຈະຍັງຄືເກົ່າ ແລະ ປາກກາຂອງເລເຢີປາຍທາງຈະເປັນຕົວກຳນົດຮູບແບບໃຫ້ກັບອົງປະກອບເຫຼົ່ານັ້ນ.</translation>
     </message>
     <message>
@@ -27772,11 +27648,6 @@ Do you want to replace it?</source>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>mpoint</translation>
-    </message>
-    <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">ວົງມົນຈາກເສັ້ນໂຄ້ງ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="210"></location>
@@ -29768,22 +29639,6 @@ Do you want to replace it?</source>
         <translation>arch e</translation>
     </message>
     <message>
-        <source>DWG support is not complete!</source>
-        <translation type="vanished">ການຮອງຮັບ DWG ຍັງບໍ່ສຳເລັດ!</translation>
-    </message>
-    <message>
-        <source>If this file fails to open try an older DWG format</source>
-        <translation type="vanished">ຫາກແຟ້ມນີ້ລົ້ມເຫຼວ ລອງຟໍແມັດແບບ DWG ທີ່ເກົ່າກວ່າ</translation>
-    </message>
-    <message>
-        <source>or try to find a converter to make it a DXF file.</source>
-        <translation type="vanished">ຫຼື ພະຍາຍາມຫາຕົວແປງເພື່ອໃຫ້ເປັນແຟ້ມ DXF.</translation>
-    </message>
-    <message>
-        <source>Information</source>
-        <translation type="vanished">ຂໍ້ມູນ</translation>
-    </message>
-    <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="74"></location>
         <source>DWG support is not complete; if this file fails to open try an older DWG format or convert it to DXF.</source>
         <translation>ການຮອງຮັບ DWG ຍັງບໍ່ສົມບູນ; ຫາກເປີດແຟ້ມບໍ່ໄດ້ ກະລຸນາລອງໃຊ້ DWG ລຸ້ນເກົ່າ ຫຼື ແປງເປັນ DXF.</translation>
@@ -29860,11 +29715,6 @@ Do you want to replace it?</source>
         <translation>ເກີດຂໍ້ຜິດພາດໃນການອ່ານຫົວແຟ້ມ DXF/DWG</translation>
     </message>
     <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">ເກີດຂໍ້ຜິດພາດໃນການອ່ານຫົວແຟ້ມ DXF/DWG</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="201"></location>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
@@ -29911,10 +29761,6 @@ Do you want to replace it?</source>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>ເກີດຂໍ້ຜິດພາດໃນການອ່ານລະຫັດ DXF/DWG</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">ເປີດໃຊ້ງານແຟ້ມ dwg ລຸ້ນ %1 ແລ້ວ.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="199"></location>
@@ -32625,10 +32471,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="187"></location>
         <source>Select line, polyline, circle, arc or ellipse to create offset (Enter to complete)</source>
         <translation>ເລືອກເສັ້ນ, ເສັ້ນຕໍ່ເນື່ອງ, ວົງມົນ, ເສັ້ນໂຄ້ງ ຫຼື ວົງມົນຮີ ເພື່ອສ້າງອັອບເຊັດ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">ເລືອກເສັ້ນ, ເສັ້ນຕໍ່ເນື່ອງ, ວົງມົນ ຫຼື ເສັ້ນໂຄ້ງ ເພື່ອສ້າງອັອບເຊັດ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="187"></location>

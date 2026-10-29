@@ -39,130 +39,11 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>&gt;</source>
-        <translation type="obsolete">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="obsolete">&lt;</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">ਸੰਭਾਲੋ</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">ਸੰਭਾਲੋ</translation>
-    </message>
-</context>
-<context>
-    <name>DlgParabola</name>
-    <message>
-        <source>Parabola</source>
-        <translation type="obsolete">Parabola</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">Mga Punto sa Spline</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="obsolete">Kung pinili, ginagamit ang mga punto ng spline</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="obsolete">Mga Punto ng Spline</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="obsolete">Kung pinili, ginagamit ang mga kontrol na punto</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">Mga Punto sa Spline</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
         <translation>Ang panimulang punto ay maaaring itakda sa pamamagitan ng distansya o estado ng punto lamang.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Lilikha:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">Parihaba</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Lapad:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Taas:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Gitna:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">Hindi wastong anggulo</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">Hindi wastong radius</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">Hindi wastong halaga</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Tukuyin ang puntong paglalagay</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Tukuyin ang anggulo</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">Tukuyin ang laki (lapad, taas)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">Tukuyin ang uri ng mga sulok
-[matulis|bilog|beveled]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">Tukuyin ang haba ng bevel ng sulok (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">Tukuyin ang radius ng sulok</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">Tukuyin ang mode ng mga gilid
-[pareho|pahalang|patayo]</translation>
     </message>
 </context>
 <context>
@@ -409,73 +290,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Porma</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">Taas ng arko (ang distansya sa pagitan ng chord at tuktok na punto ng arko)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Taas:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Counterclockwise</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">Pumili ng anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Radius ng arc</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Clockwise</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">Sentral na anggulo ng arc</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Anggulo:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">Haba ng arc</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Haba:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Pumili ng radius mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">Piliin ang taas mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Piliin ang haba mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Piliin ang anggulo mula sa pagguhit</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -687,10 +501,6 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">Piliin ang mga entity para sa bounding box (Pindutin ang Enter upang makumpleto)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation type="unfinished"></translation>
@@ -745,31 +555,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">ਰੇਡੀਅਸ=%1 ਚੁਣੇ ਗਏ ਬਿੰਦੂਆਂ ਲਈ ਬਹੁਤ ਛੋਟਾ ਹੈ
-ਬਿੰਦੂਆਂ ਵਿਚਾਲੇ ਦੀ ਦੂਰੀ=%2 ਡਾਇਮੀਟਰ=%3 ਤੋਂ ਵੱਧ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">ਦੋ ਸੰਭਾਵਿਤ ਸਰਕਲ ਸੈਂਟਰਾਂ ਵਿੱਚੋਂ ਚੁਣੋ</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">ਪਹਿਲਾ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">ਦੂਜਾ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">ਸਰਕਲ ਸੈਂਟਰ ਚੁਣੋ</translation>
     </message>
 </context>
 <context>
@@ -1018,13 +803,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">Piliin ang bilog, arc, o ellipse</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1068,10 +846,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>Piliin ang Sentro</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">Walang tinukoy na sentro.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1466,154 +1240,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">Tukuyin ang unang punto</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">Tukuyin ang pangalawang punto
-o [numero|x|y|anggulo|p|gilid|distansya]</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">Tukuyin ang pangalawang punto
-o [numero]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">Tukuyin ang direksyon ng linya
-[x|y|anggulo|p|distansya]</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">Tukuyin ang anggulo ng direksyon ng linya
-o [x|y|p|numero|gilid|distansya]</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">Tukuyin ang mode ng mga gilid na punto
-[wala|simula|dulo|pareho|distansya]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">Tukuyin ang nakatakdang distansya sa pagitan ng mga punto
-o[x|y|p|numero|mga gilid]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">ਪਿੱਛੇ</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">ਦੂਰੀ ਨਿਰਧਾਰਤ ਕਰੋ (%1)
-ਜਾਂ [%2]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">ਦੂਰੀ ਨਿਰਧਾਰਤ ਕਰੋ (ਕੋਣ %1 ਡਿਗਰੀ)
-ਜਾਂ [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">Tukuyin ang bilang ng mga punto</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Tukuyin ang pangalawang sulok</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">Tukuyin ang pangalawang tangent</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Tukuyin ang unang sulok</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">Tukuyin ang unang tangent</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Hindi ito isang wastong numero. Subukan ang 1..9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">Hindi wastong halaga ng radius ng pag-ikot</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Hindi ito isang wastong ekspresyon</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Ipasok ang numero:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">Ipasok ang radius ng pag-ikot:</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Tukuyin ang sentro</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Lilikha:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Sentro:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">Panimulang anggulo:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">Panloob na Radius:</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Poligono</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">ਇੱਕ ਟੈਨਜੈਂਟ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1854,29 +1480,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/text/lc_action_draw_mtext.cpp" line="198"/>
         <source>Enter text:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Hindi ito isang wastong ekspresyon</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Piliin ang unang entidad</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Piliin ang pangalawang entidad</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">Salitang mga dulo</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">Ipasok ang halaga ng offset</translation>
     </message>
 </context>
 <context>
@@ -3896,10 +3499,6 @@ or [%2]</source>
         <translation>Prompt</translation>
     </message>
     <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">I-snap sa grid</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>Manu-manong I-snap sa Gitna</translation>
@@ -4320,26 +3919,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>Widget Options</source>
         <translation>ਵਿਜੈੱਟ ਆਪਸ਼ਨ</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">ਖੱਬਾ</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">ਸੱਜਾ</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">ਉੱਪਰ</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">ਹੇਠਾਂ</translation>
-    </message>
-    <message>
-        <source>Floating</source>
-        <translation type="vanished">ਫਲੋਟਿੰਗ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
@@ -5187,10 +4766,6 @@ Point: (%8 , %9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">Piliin ang mga entidad na i-align (Pindutin ang Enter upang makumpleto)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>Piliin at i-align</translation>
@@ -5222,10 +4797,6 @@ Point: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
         <translation>Scale:</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">Piliin upang i-align (Pindutin ang Enter upang makumpleto)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -6219,13 +5790,6 @@ Point: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Walang napiling entity!</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionModifyStretch</name>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="118"/>
@@ -7199,18 +6763,6 @@ Point: (%8 , %9)</translation>
         <translation>Hindi mabasa ang ibinigay na file - mangyaring tiyakin na ito ay umiiral at pinapayagan itong basahin.</translation>
     </message>
     <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">Hindi na-import ang mga shortcut mapping.
-Mayroon ang ibinigay na file, ngunit hindi ito naglalaman ng mga shortcut mapping ng LibreCAD.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">Hindi na-import ang mga shortcut mapping. 
-Nagkaroon ng error sa pag-parse ng XML habang pinoproseso ang file.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
         <translation>Matagumpay na na-save ang mga shortcut mapping.</translation>
@@ -7219,12 +6771,6 @@ Nagkaroon ng error sa pag-parse ng XML habang pinoproseso ang file.</translation
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
         <translation>Hindi maaaring magsulat sa ibinigay na file - mangyaring tiyakin na pinapayagan itong magsulat.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">Hindi na-import ang mga shortcut mapping. 
-May naganap na error habang ginagawa ang XML.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -8619,74 +8165,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
     </message>
 </context>
 <context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ਫਾਰਮ</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">Kung naka-check, aalisin ang orihinal na arc</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">ਆਰਕ ਬਦਲੋ</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">Layer kung saan ilalagay ang nilikhang bilog</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktibo</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Orihinal</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktibo</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Orihinal</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Orihinal na Nalutas</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">Pumili ng halaga ng offset mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">ਪੈਨ:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">Panulat na ilalapat sa nilikhang bilog</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">ਲੇਅਰ:</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">Pagkakaiba ng radius ng bilog sa radius ng arc</translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">ਰੇਡੀਅਸ ਸ਼ਿਫਟ:</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -8981,69 +8459,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>Toolbar: %1 (Pasadyang)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ਫਾਰਮ</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ਕੋਣ:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">ਟਾਈਪ</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">Ang pahalang na dimensyon ng krus</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">Piliin ang halaga ng X mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">Tinutukoy kung paano ilalapat ang mga dimensyon ng krus</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">ਐਕਸਟੈਂਸ਼ਨ</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">ਕੁੱਲ ਲੰਬਾਈ</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">ਪ੍ਰਤੀਸ਼ਤ</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">Piliin ang halaga ng Y mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Piliin ang anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">Ang patayong dimensyon ng krus</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">Ang anggulo ng pag-ikot para sa krus sa paligid ng gitna</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
     </message>
 </context>
 <context>
@@ -9407,29 +8822,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="obsolete">Dimensyon ng Ordinate</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Dimensyon ng layer</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Mga katangian ng panulat</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="obsolete">Ordinate</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -9491,11 +8883,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
         <translation>Pagitan ng baseline:</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">Itinatakda ang pagitan sa pagitan ng mga linya ng dimensyon ng isang baseline dimension. Maglagay ng distansya. Para sa impormasyon tungkol sa mga baseline dimension, tingnan ang DIMBASELINE. (DIMDLI system variable)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -11142,10 +10529,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <source>Hatch Properties</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">Mga Katangian?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -11702,14 +11085,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">Tooltip na may mga detalye ng view para sa mga item sa talahanayan</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">Kung napili, ipapakita ang kolum na may mga detalye ng coordinate system ng view.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="85"/>
         <source>If checked, type of grid for saved view will be shown.</source>
         <translation>Kung napili, ipapakita ang uri ng grid para sa naka-save na view.</translation>
@@ -11735,17 +11110,9 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <translation>Kung minarkahan, ipapakita ang column na may mga detalye ng view sa talahanayan.</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">Column ng Mga Detalye ng View</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>Mga Operasyon</translation>
-    </message>
-    <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">Sa pag-double-click sa item ng talahanayan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
@@ -11776,10 +11143,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="194"/>
         <source>If enabled, click on the view table item will restore view. Otherwise, view should be restored explicitly.</source>
         <translation>Kung naka-enable, ang pag-click sa item ng talahanayan ng view ay ibabalik ang view. Kung hindi, dapat ibalik ang view nang tahasan.</translation>
-    </message>
-    <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">Ibalik ang view sa isang pag-click sa pamamagitan ng item ng talahanayan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
@@ -12085,13 +11448,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation>Ang pangalan ay hindi natatangi. Mangyaring ilagay ang isang natatanging pangalan.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="obsolete">Ang mga kontrol na punto ng parabola ay hindi maaaring maging collinear</translation>
     </message>
 </context>
 <context>
@@ -12638,10 +11994,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <translation>Kung minarkahan, ang kolum na naglalaman ng uri ng grid para sa UCS ay ipapakita.</translation>
     </message>
     <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">Kung pinili, isang kumpirmasyon na diyalogo ang ipapakita kapag tinanggal ang view. Kung hindi, tahimik na tatanggalin ang view.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
         <source>Ask for confirmation before UCS removal</source>
         <translation>Magtanong para sa kumpirmasyon bago tanggalin ang UCS</translation>
@@ -12705,10 +12057,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="249"/>
         <source>Defines amount of blinks of UCS marker for UCS highlighting.</source>
         <translation>Tinutukoy ang bilang ng mga pagkurap ng marker ng UCS para sa pag-highlight ng UCS.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">Ibalik ang UCS sa isang pag-click sa pamamagitan ng item ng talahanayan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
@@ -13165,45 +12513,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Porma</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">Kung minarkahan, isang bounding box para sa buong seleksyon ang gagawin. Kung hindi, gagawin ito para sa bawat entidad.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">Piliin bilang Grupo</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Piliin ang offset mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">Kung pinili, tanging mga sulok na punto lamang ang iguguhit para sa bounding box. Kung hindi, iguguhit ang mga gilid.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">Mga sulok na punto lamang</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">Kung pinili, ang bounding box ay iguguhit bilang isang polyline</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13297,86 +12606,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ਫਾਰਮ</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">Ang patayong paglilipat ng duplikado mula sa orihinal na entidad</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">Ang pahalang na paglilipat ng duplikado mula sa orihinal na entidad</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">Piliin ang paglilipat sa pamamagitan ng X mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">ਪੈਨ:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">Kung naka-check, ang duplikado ay ipoposisyon sa mga coordinate ng orihinal</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">ਥਾਂ ਤੇ</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">Piliin ang paglilipat sa pamamagitan ng Y mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">ਲੇਅਰ:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">Panulat na ilalapat sa nilikhang duplikado</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktibo</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Orihinal</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Orihinal na Nalutas</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">Layer kung saan ilalagay ang duplicate</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktibo</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Orihinal</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">Y ਆਫਸੈੱਟ:</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">X ਆਫਸੈੱਟ:</translation>
     </message>
 </context>
 <context>
@@ -13558,69 +12787,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Hugis</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">Maliit na Radius:</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">Halaga ng anggulo para sa pangunahing radius</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">Kung naka-check, maaaring tukuyin ang anggulo para sa pangunahing radius</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Pangunahing anggulo:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Counterclockwise</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">Piliin ang mga pangunahing aksyon mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pumili ng anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">Kung naka-check, ang pangunahing anggulo ng radius ay tinutukoy ng mouse</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Malaya</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">Haba ng pangunahing radius ng ellipse</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">Pumili ng menor na radius mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">Pangunahing Radius:</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">Haba ng menor na radius ng ellipse</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Pakanan</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13759,21 +12925,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Mga Opsyon sa Arc</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Pakanan</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Counterclockwise</translation>
     </message>
 </context>
 <context>
@@ -14664,30 +13815,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <source>Eccentricity:</source>
         <translation>Pagkabaluktot:</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">Hindi wastong kahulugan ng hyperbola</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">Dapat magkaiba ang mga foci</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">Hindi wastong mga coordinate ng sentro</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">Dapat positibo ang pangunahing radius</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">Hindi wastong anggulo ng pag-ikot</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">Dapat positibo ang ratio o menor na radius</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -14859,10 +13986,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <translation>Lapad:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">Lapad ng imahe</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>Piliin ang halaga ng lapad mula sa pagguhit</translation>
@@ -14873,21 +13996,9 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <translation>Taas:</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">Taas ng imahe</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>Piliin ang halaga ng taas mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Sukatan:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">Sukat na salik</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -14899,10 +14010,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>Anggulo:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Anggulo ng pag-ikot</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -14934,22 +14041,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <source>Select an image file</source>
         <translation>Pumili ng isang file ng imahe</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">Sukat (px):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">Sukat ng imahe sa mga pixel</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">Resolusyon (mga tuldok bawat pulgada)</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -14962,21 +14053,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Porma</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">Kung minarkahan, ang punto ay palaging nasa loob ng napiling entidad</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">I-snap sa Entidad</translation>
     </message>
 </context>
 <context>
@@ -15354,14 +14430,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <translation>ਵਿਭਾਜਕ, ਜੋ ਪਰਤ ਦੇ ਅੰਦਰੂਨੀ ਨਾਮ ਨੂੰ ਦਰਜੇਵਾਰ ਨਾਮਾਂ ਵਿੱਚ ਵੰਡਣ ਲਈ ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">ਲੇਅਰ ਲੈਵਲ ਨਾਮ ਵਿਭਾਜਕ</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">ਸੈਕੰਡਰੀ ਲੇਅਰ ਸਫਿਕਸ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15392,10 +14460,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>ਪਰਤ ਦੇ ਨਾਮ ਦਾ ਸਫਿਕਸ, ਜੋ ਦੱਸਦਾ ਹੈ ਕਿ ਪਰਤ ਵਿਕਲਪਿਕ ਸਥਿਤੀ ਲਈ ਹੈ।</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">ਨਾਮ ਡੁਪਲੀਕੇਟ ਕਰਨਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15538,17 +14602,9 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <translation>ਰੰਗਾਂ ਦੀਆਂ ਵੱਖ-ਵੱਖ ਸੈਟਿੰਗਾਂ</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">ਰੰਗ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>ਪਰਤ ਟ੍ਰੀ ਵਿੱਚ ਚੁਣੀਆਂ ਆਈਟਮਾਂ ਦਾ ਬੈਕਗ੍ਰਾਊਂਡ ਰੰਗ।</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">Kulay para sa mga separator line sa layer tree view.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15587,10 +14643,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>ਵਰਚੁਅਲ ਪਰਤ ਬੈਕਗ੍ਰਾਊਂਡ ਰੰਗ</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">ਥ੍ਰੀਵਿਊ ਆਈਟਮਾਂ ਵਿਭਾਜਕ ਗ੍ਰਿਡ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15646,10 +14698,6 @@ Sigurado ka bang gusto mong itapon ang mga pagbabago?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>ਵਿਕਲਪਿਕ ਸਥਿਤੀ ਪਰਤ</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">grid</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16139,118 +15187,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ਫਾਰਮ</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">Kung naka-check, ang haba ng linya ay tinutukoy ng posisyon ng mouse sa halip na ng setting.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ਫ੍ਰੀ</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Piliin ang distansya ng snap mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Piliin ang anggulo mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">Offset ng punto ng snap ng tick mula sa punto ng interseksyon.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Piliin ang haba mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Piliin ang offset mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">Kung naka-check, ang orihinal na entity ay hahatiin sa pamamagitan ng punto ng interseksyon.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">ਵੰਡੋ</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ਆਫਸੈੱਟ:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">Distansya ng punto ng interseksyon mula sa tinukoy na punto ng snap ng linya.</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">Tinutukoy kung aling bahagi ng nilikhang linya ang isasnap sa punto ng interseksyon.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">ਸ਼ੁਰੂ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">ਮੱਧ</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">ਅੰਤ</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">ਟਿਕ ਸਨੈਪ:</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">ਲਾਈਨ ਸਨੈਪ:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Linya haba</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">Kung minarkahan, ang anggulo ay relatibo sa anggulo ng napiling entity</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">ਰਿਲੇਟਿਵ</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">ਲੰਬਾਈ:</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">Snap point para sa posisyon ng intersection point sa pagitan ng nilikhang linya at source entity (sa loob ng orihinal na linya)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">Malaya</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ਕੋਣ:</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">ਸਨੈਪ ਦੂਰੀ:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Linya anggulo</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16557,93 +15493,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation type="unfinished">Bilang ng mga bisector na gagawin</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ਫਾਰਮ</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ਕੋਣ:</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">ਸਾਈਜ਼:</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">ਅੰਤ ਆਫਸੈੱਟ:</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">Offset para sa nilikhang linya mula sa intersection point</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">Snap point para sa nilikhang linya</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pumili ng anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">ਸ਼ੁਰੂ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">ਮੱਧ</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">ਅੰਤ</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">ਲੰਬਾਈ:</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">Nakapirming haba ng nilikhang linya</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">ਸਨੈਪ:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Pumili ng haba mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Pumili ng offset mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">Tinutukoy kung ang nilikhang linya ay dapat gawin sa puntong pinagtagpo o dapat may nakatakdang haba</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">ਕਟਾਉਂਦੇ ਤੱਕ</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">ਫਿਕਸਡ ਲੰਬਾਈ</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">Kung nakacheck, ang nilikhang linya ay magiging patayo sa napiling linya</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">ਆਰਥੋਗੋਨਲ</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">Anggulo sa pagitan ng orihinal na linya at ng nilikha</translation>
     </message>
 </context>
 <context>
@@ -17029,81 +15878,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ਫਾਰਮ</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">Kung nakacheck, isang polyline ang malilikha sa halip na mga indibidwal na linya</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">ਪੌਲੀਲਾਈਨ ਬਣਾਓ</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">Patakaran para sa pangalawang napiling linya</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">ਐਕਸਟੈਂਡ/ਟ੍ਰਿਮ</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">ਸੈਗਮੈਂਟ ਸ਼ਾਮਲ ਕਰੋ</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">ਕੋਈ ਤਬਦੀਲੀ ਨਹੀਂ</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">ਲਾਈਨ 1:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">ਲਾਈਨ 2:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">Patakaran para sa pagsasama ng unang napiling linya</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">Tinutukoy kung paano dapat ilapat ang panulat sa nilikhang mga bagay</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">ਐਕਟਿਵ ਪੈਨ</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">ਲਾਈਨ 1</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">ਲਾਈਨ 2</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">ਦੋਵੇਂ ਲਾਈਨਾਂ</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">ਐਟ੍ਰੀਬਿਊਟ:</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">Kung nakacheck, aalisin ang mga orihinal na linya</translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">ਅਸਲੀ ਹਟਾਓ</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17485,85 +16259,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ਫਾਰਮ</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">Kinokontrol kung paano dapat likhain ang mga punto sa mga gilid (mga panimula/pangunahing punto)</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">ਕੋਈ ਨਹੀਂ</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">ਦੋਵੇਂ</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">ਸ਼ੁਰੂ</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">ਅੰਤ</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Piliin ang distansya mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">Bilang ng mga puntong gagawin</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">ਐਜ ਬਿੰਦੂ:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Piliin ang anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">Tinutukoy kung ang lahat ng mga punto ay dapat na magkasya sa pagitan ng mga panimula/wakas na punto ng linya o kung ang haba ng linya ay kinakalkula batay sa bilang ng mga punto at ang distansya sa pagitan ng mga punto.</translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">ਫਿੱਟ ਲਾਈਨ</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">Distansya sa pagitan ng mga punto.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">Kung naka-check, ang linya ng mga punto ay iguguhit na may tinukoy na anggulo</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ਕੋਣ:</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">ਬਿੰਦੂਆਂ ਦੀ ਗਿਣਤੀ:</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">Kung naka-check, gagamitin ang nakatakdang tinukoy na distansya sa pagitan ng mga punto. Kung hindi, kakalkulahin ang distansya.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">ਫਿਕਸਡ ਦੂਰੀ</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Anggulo ng linya</translation>
     </message>
 </context>
 <context>
@@ -21813,433 +20508,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Tulong</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">Mga Dokumento sa &amp;Online</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;Wiki</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">Manwal ng Gumagamit</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp;Mga Utos</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">Mga &amp;Estilo ng Pahina</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">Mga &amp;Widget</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Tungkol sa</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp;Forum</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">LC_MenuFactory: Zulip &amp;Chat</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">&amp;Isumite ang Error</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">&amp;Hilingin ang Tampok</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">&amp;Pahina ng mga Paglabas</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp;Magbigay</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Linya</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">Poin&amp;t</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Bilog</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">&amp;Arc</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">Poly&amp;gon</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">Splin&amp;e</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">Elip&amp;se</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Polyline</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">&amp;Iba pa</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">&amp;Iguhit</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;Elipse</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">I&amp;ba pa</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Baguhin</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp;Ayusin</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">&amp;Mga Dimensyon</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Impormasyon</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp;Mga Kasangkapan</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;Piliin</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">Di&amp;mensyon</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;File</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Mga Kamakailang File</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">I-import</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">I-export</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;Mga Opsyon</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp;I-edit</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;Tingnan</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">I-restore ang &amp;Mga View</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">&amp;Mga Plugin</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">&amp;Workspace</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Mga Lugar ng Dock</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">Mga CAD Wid&amp;get</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">&amp;Mga Drawing</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">Konteksto</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Mga Toolbar</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">Mga Widget</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">Mga CAD Widget</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">Mga toolbar ng CAD</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Pili</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">Kamakailan</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Baguhin</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">Baguhin pa</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Iguhit</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Linya</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Tuldok</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Bilog</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Polygon</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">Polyline/Spline</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Ellipse</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Iba pa</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">Magdagdag ng mga Dimensyon</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">I-align</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">Pagkakasunud-sunod ng Pagguhit</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Mga Layer</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Impormasyon</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">I-edit</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">Mga Opsyon</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">&amp;Mga Pinangalanang View</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">I-edit ang mga Katangian</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">Baguhin ang Generic</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">Baguhin ang Linya</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">Gumuhit ng Linya</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">Gumuhit ng Bilog</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">Gumuhit ng Iba Pa</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">Baguhin ang Bilog</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">Baguhin ang Arc</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">Baguhin ang Polyline</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">Baguhin ang Spline</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">Baguhin ang mga Punto ng Spline</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">Baguhin ang Teksto</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">Baguhin ang MText</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">I-edit ang Block</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Pagkakasunud-sunod</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;Mga Toolbar</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">&amp;Mga Toolbar ng CAD</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">&amp;Mga Workspace</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Ta&amp;b Mode</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">&amp;Window Mode</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp;Layout</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">Bilog</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">Triangular</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">Hilaga</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">Timog</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">Silangan</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">Kanluran</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">Ayusin</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">Pinakamalaki</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">Isalansan</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">Pag-ayos</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Pag-ayos nang patayo</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Pag-ayos nang pahalang</translation>
-    </message>
-</context>
-<context>
     <name>LC_MenuFactoryBase</name>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
@@ -22855,21 +21123,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Porma</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Pagkakaiba:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Piliin ang pagkakaiba mula sa pagguhit</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23006,197 +21259,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Porma</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Kung naka-check, ang kasalukuyang mga katangian ay gagamitin para sa mga mirrored entity, kung hindi - ang orihinal.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Gamitin ang Kasalukuyang mga Katangian</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Kung hindi minarkahan, aalisin ang orihinal na mga entity, kung hindi, mananatili ang mga ito.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Panatilihin ang mga Orihinal</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Kung minarkahan, ilalagay ang mga mirrored na entity sa kasalukuyang layer, kung hindi, ilalagay ang mga ito sa orihinal na mga layer.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Gamitin ang Kasalukuyang Layer</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">Kung minarkahan, isusukat ang mga entity kung kinakailangan. Kung hindi, ipoposisyon at iikot lamang ang mga ito.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Sukatin</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ਫਾਰਮ</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">Kung minarkahan, aalisin ang mga segment sa pagitan ng mga intersection point. Kung hindi minarkahan, hahatiin ang entity sa mga intersection point.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">ਸੈਗਮੈਂਟ ਹਟਾਓ</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">Kung minarkahan, aalisin ang napiling segment. Kung hindi, mananatili ang napiling segment at aalisin ang natitirang mga segment.</translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">ਚੁਣਿਆ ਹਟਾਓ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ਫਾਰਮ</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">ਸਨੈਪ ਦੂਰੀ:</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">I-snap ang punto ng agwat sa punto ng pag-snap ng linya</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">ਲਾਈਨ ਸਨੈਪ:</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">ਗੈਪ ਆਕਾਰ:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">Punto ng pag-snap para sa agwat sa linya</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ਫ੍ਰੀ</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">ਗੈਪ ਸਨੈਪ:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">Simulan</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">Gitna</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">Tapusin</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">Malaya</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">Simulan</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">Gitna</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">Tapusin</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">Piliin ang laki ng puwang mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">Distansya mula sa puntong pinagdidikit</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Piliin ang distansya mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">Ang laki ng agwat, kung hindi malaya</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">Kung naka-check, ang laki ng agwat ay tinutukoy ng mouse</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Hugis</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">Kung naka-check, ang pag-mirror ay gagawin sa pamamagitan ng napiling entity ng linya.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">I-mirror sa napiling linya</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Kung hindi naka-check, aalisin ang orihinal na mga entity, kung hindi, mananatili ang mga ito.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Panatilihin ang mga Orihinal</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Kung naka-check, gagamitin ang kasalukuyang mga katangian para sa mga mirrored na entity, kung hindi, gagamitin ang mga orihinal.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Gamitin ang Kasalukuyang mga Katangian</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Kung naka-check, ilalagay ang mga mirrored na entity sa kasalukuyang layer, kung hindi, ilalagay ang mga ito sa orihinal na mga layer.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Kasalukuyang Layer ng Gumagamit</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23242,234 +21304,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Ilipat ang Mga Opsyon sa Pag-ikot</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">Kung naka-check, ang malayang pagpili ng salik ay gagawin gamit ang mouse.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Malaya</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Kung naka-check, ang mga bagong entity ay ilalagay sa kasalukuyang layer, kung hindi, ang mga ito ay nasa orihinal na mga layer.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Gamitin ang Kasalukuyang Layer</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">Kung absolute, ang reference point ay iikot ngunit ang entity ay iikot lamang sa pamamagitan ng pangalawang anggulo, kung hindi, ang mga anggulo ay pagsasamahin.</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">Absolute</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">Anggulo upang iikot ang entity sa paligid ng rotation center point</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">Kung naka-check, ang kasalukuyang mga katangian ay ilalapat sa mga nilikhang entity, kung hindi, ang mga orihinal na katangian ang gagamitin.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Gamitin ang kasalukuyang mga katangian</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">Kung minarkahan, ang pangalawang pag-ikot ay nasa paligid ng puntong sanggunian</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">Ikot nang dalawang beses</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">Anggulo para sa karagdagang pag-ikot sa paligid ng puntong sanggunian</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Piliin ang anggulo ng pag-ikot mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">Kung minarkahan, ang orihinal na mga entity ay mananatili, kung hindi, aalisin ang mga ito.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Panatilihin ang mga Orihinal</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">Maraming kopya ang malilikha kung minarkahan.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Maraming Kopya</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">Anggulo ng Pag-ikot:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Tinutukoy kung ang anggulo ay tinukoy ng ipinasok na halaga o ng posisyon ng mouse.</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">Piliin ang pangalawang anggulo ng pag-ikot mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Bilang ng mga kopya.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Ilipat ang Mga Opsyon sa Pag-ikot.</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">Kung naka-check, maraming kopya ang malilikha.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Maraming Kopya.</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">Kung naka-check, ang parehong salik ng pag-scale ay ilalapat sa X at Y axis.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">Isotropic</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Kung minarkahan, ang orihinal na mga entity ay mananatili, kung hindi, aalisin ang mga ito.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Panatilihin ang mga Orihinal</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Bilang ng mga kopya</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Kung minarkahan, ang kasalukuyang mga katangian ay ilalapat sa mga nilikhang entity, kung hindi, ang mga orihinal na katangian ang gagamitin.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Gamitin ang Kasalukuyang mga Katangian</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">Scale factor para sa Y axis</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Factor ng scale:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">Kung minarkahan, ang mga nilikhang entity ay ilalagay sa kasalukuyang layer. Kung hindi, ilalagay ang mga ito sa orihinal na mga layer.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Gamitin ang Kasalukuyang Layer</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">Kung minarkahan, ang factor ay malayang pipiliin gamit ang mouse. Kung hindi, ang mga tinukoy na halaga ng mga factor ang gagamitin.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Malaya</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">X axis para sa scale factor</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Kung minarkahan, ang orihinal na mga entity ay mananatili, kung hindi, aalisin ang mga ito.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">Panatilihin ang mga orihinal</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">Kung minarkahan, ang mga nilikhang entity ay ilalagay sa kasalukuyang layer. Kung hindi, ilalagay ang mga ito sa orihinal na mga layer.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Gamitin ang kasalukuyang layer</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Bilang ng mga kopya</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">Kung minarkahan, ang kasalukuyang mga katangian ay ilalapat sa mga nilikhang entity, kung hindi, ang mga orihinal ang gagamitin.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Gamitin ang kasalukuyang mga katangian</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Kung minarkahan, ang orihinal na mga entity ay mananatili, kung hindi, aalisin ang mga ito.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Panatilihin ang mga Orihinal</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Kung minarkahan, maraming kopya ang malilikha.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Maraming Kopya</translation>
     </message>
 </context>
 <context>
@@ -23785,14 +21619,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>...</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">Pag-filter ng mga view ayon sa pangalan</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">I-filter...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24227,45 +22053,6 @@ Warning: this action can NOT be undone!</source>
         <source>Control Points</source>
         <translation>Mga Kontrol na Punto</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Ang mga kontrol na punto ng parabola ay hindi maaaring maging collinear</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Anggulo:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Piliin ang anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">Kung napili, ang punto na ginamit bilang insertion point ay tatanggalin pagkatapos ng operasyon ng pag-paste. Kung hindi, mananatili ito.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">Alisin ang punto</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Salik na Kadaghan</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Scale factor para sa mga nakadikit na bagay</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Anggulo ng pag-ikot para sa mga nakadikit na bagay</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24341,89 +22128,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Porma</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Anggulo ng pag-ikot para sa mga nakadikit na bagay</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">Pagitan ng mga puntong paglalagay ng mga bagay sa mga hanay.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Anggulo:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">Piliin ang pagitan ng array sa pamamagitan ng X mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Salik na Kadaghan</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">Pumiliin ang anggulo ng array mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">Anggulo ng pag-ikot para sa array.</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">Bilang ng mga row ng array.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">Pumili ng pagitan ng array sa pamamagitan ng Y mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pumili ng anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">Kung naka-check, ang parehong anggulo ng pag-ikot ay gagamitin para sa bawat indibidwal na pag-paste at buong array. Kung hindi, iba&apos;t ibang anggulo ang gagamitin.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">Parehong mga Anggulo</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Pagitan:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">Bilang ng mga column ng array.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">Kung naka-check, ang mga array ng mga kopya ay malilikha sa pag-paste.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">Array</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">Anggulo ng Array:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Sukatan para sa mga bagay na idinikit</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">Pagitan sa pagitan ng mga puntong ipapasok ng mga bagay sa mga hanay.</translation>
     </message>
 </context>
 <context>
@@ -25045,17 +22749,9 @@ Warning: this action can NOT be undone!</source>
         <translation>ਲਾਈਨ ਚੌੜਾਈ ਨਾਮ</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">ਰੰਗ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>Kulay ng background para sa elemento ng panulat na kasalukuyang ina-edit sa talahanayan ng panulat</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">Kulay ng grid para sa listahan ng mga panulat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25077,10 +22773,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>ਸਾਰੀ ਟੇਬਲ ਰੋ ਐਕਟਿਵ ਪੈਨ ਲਈ ਬੋਲਡ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">ਗ੍ਰਿਡ ਰੰਗ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25173,17 +22865,9 @@ Warning: this action can NOT be undone!</source>
         <translation>ਸੰਭਵ ਤੌਰ ਤੇ ਕੁਦਰਤੀ ਨਾਮ</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">Kung napili, ang mga karagdagang mensahe ay ipapakita bilang bahagi ng mga operasyon na may kaugnayan sa panulat</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>ਜੇ ਪੈਨ ਨਾਲ ਕੋਈ ਐਂਟੀਟੀ ਚੁਣੀ ਨਾ ਜਾ ਸਕੇ ਤਾਂ ਇਨਫੋ ਮੈਸੇਜ ਵਿਖਾਓ</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">ਟੇਬਲ ਆਈਟਮ ਤੇ ਡਬਲ ਕਲਿੱਕ ਤੇ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25406,12 +23090,6 @@ Warning: this action can NOT be undone!</source>
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">ਪੈਨ ਫਾਈਲ ਦਾ ਸਥਾਨ ਬਦਲ ਦਿੱਤਾ ਗਿਆ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਐਪਲੀਕੇਸ਼ਨ ਨੂੰ ਮੁੜ ਚਾਲੂ ਕਰੋ ਤਾਂ ਜੋ ਨਵੀਂ ਪੈਨ ਫਾਈਲ ਵਰਤੀ ਜਾ ਸਕੇ।
-ਕਿਰਪਾ ਕਰਕੇ ਧਿਆਨ ਦਿਓ ਕਿ ਜੇਕਰ ਤੁਸੀਂ ਮੁੜ ਚਾਲੂ ਕੀਤੇ ਬਿਨਾਂ ਸੰਪਾਦਕ ਰਾਹੀਂ ਪੈਨ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਦੇ ਹੋ, ਤਾਂ ਪੈਲੇਟ ਤੋਂ ਮੌਜੂਦਾ ਪੈਨ ਨਵੀਂ ਫਾਈਲ ਵਿੱਚ ਸੁਰੱਖਿਅਤ ਕੀਤੇ ਜਾਣਗੇ ਅਤੇ ਇਸ ਤਰ੍ਹਾਂ ਇਸਦੀ ਮੌਜੂਦਾ ਸਮੱਗਰੀ ਨੂੰ ਓਵਰਰਾਈਡ ਕਰ ਦਿੱਤਾ ਜਾਵੇਗਾ।</translation>
-    </message>
 </context>
 <context>
     <name>LC_PointPickButton</name>
@@ -25457,37 +23135,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>Piliin ang posisyon mula sa pagguhit</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">Bilang ng mga punto sa direksyon ng Y lattice (bilang ng mga row ng lattice)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">Bilang ng mga Row:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">Bilang ng mga Column:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">Bilang ng mga punto sa direksyon ng X lattice (bilang ng mga column ng lattice)</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">Kung napili, ang huling punto ng lattice ay iaayos ayon sa posisyon ng unang punto, upang ang lattice ay maging rektanggulo o quadrilateral</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">Ayusin ang huling punto sa unang punto</translation>
     </message>
 </context>
 <context>
@@ -32754,10 +30401,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Diameter</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">Circumference</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="740"/>
@@ -33746,10 +31389,6 @@ p, li { white-space: pre-wrap; }
         <translation>Impormasyon ng Entity</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kung pinili, mas detalyadong impormasyon tungkol sa mga linya at arko na bahagi ng polyline ay ipapakita sa widget ng Impormasyon ng Entity.&lt;br/&gt;Kung hindi, tanging ang impormasyon tungkol sa mga vertex/bulge lamang ang ipapakita.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
@@ -33798,205 +31437,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>Mga puntong nagha-highlight ng panulat.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ਫਾਰਮ</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">ਕਿਨਾਰੇ:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">Kung naka-check, tinutukoy nito na ang snap point ay dapat ilipat ng radius ng mga sulok.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">ਸਨੈਪ ਸ਼ਿਫਟ</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">Haba ng bevel corner para sa direksyon ng Y.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Tinutukoy kung aling mga gilid ng rektanggulo ang dapat iguhit (kaya posible na lumikha lamang ng dalawang parallel na linya sa halip na isang rektanggulo).</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">ਦੋਵੇਂ</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">ਵਰਟੀਕਲ</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">ਹਰੀਜ਼ੋਂਟਲ</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">Lapad ng rektanggulo.</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">Kinokontrol kung paano dapat iguhit ang mga sulok ng rektanggulo.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">ਸਿੱਧਾ</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">ਗੋਲ</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">ਬੈਵਲ</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">Kung minarkahan, ang rektanggulo ay iikot sa tinukoy na anggulo.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">ਬੇਸ ਐਂਗਲ:</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">Kung minarkahan, ang tinukoy na taas at lapad ng rektanggulo ay tumutukoy sa distansya sa pagitan ng mga sentro ng mga arko para sa pag-ikot ng mga sulok. Kung hindi, ang mga halagang ito ay tumutukoy sa panlabas na sukat ng rektanggulo.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">ਅੰਦਰੂਨੀ ਆਕਾਰ</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">ਲੰਬਾਈ Y:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">Kung minarkahan, ang rektanggulo ay gagawing isang polyline sa halip na mga indibidwal na segment.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">ਪੌਲੀਲਾਈਨ</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">ਸਨੈਪ:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">ਉਚਾਈ:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ਰੇਡੀਅਸ:</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">Haba ng bevel corner para sa direksyon ng X.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">ਲੰਬਾਈ X:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">Taas ng rektanggulo</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Radius ng mga bilog na sulok.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">Ang punto ng rektanggulo na ilalagay sa puntong pagpasok.</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">ਉੱਪਰ-ਖੱਬਾ</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">ਉੱਪਰ</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">ਉੱਪਰ-ਸੱਜਾ</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">ਖੱਬਾ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">ਮੱਧ</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">ਸੱਜਾ</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">ਹੇਠਾਂ-ਖੱਬਾ</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">ਹੇਠਾਂ</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">ਹੇਠਾਂ-ਸੱਜਾ</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Pumili ng anggulo ng pag-ikot mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Pumili ng radius ng mga bilog na sulok mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Anggulo ng pag-ikot</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">Piliin ang taas ng rektanggulo mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">Piliin ang lapad ng rektanggulo mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">ਚੌੜਾਈ:</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">ਕੋਨੇ:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">Piliin ang haba ng bevel corner para sa direksyon ng X mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">Piliin ang haba ng bevel corner para sa direksyon ng Y mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">Kung naka-check, ang anggulo ay tutukuyin ng posisyon ng mouse. Kung hindi, gagamitin ang tinukoy na halaga.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Malaya</translation>
     </message>
 </context>
 <context>
@@ -34366,153 +31806,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ਫਾਰਮ</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Tinutukoy kung aling mga gilid ng rektanggulo ang dapat iguhit (kaya posible na lumikha lamang ng dalawang parallel na linya sa halip na isang rektanggulo)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">ਦੋਵੇਂ</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">ਵਰਟੀਕਲ</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">ਹਰੀਜ਼ੋਂਟਲ</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">Tinutukoy kung aling punto ng rektanggulo ang dapat ilagay sa panimulang posisyon.</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">ਕੋਨਾ</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">ਮੱਧ-ਵਰਟੀਕਲ</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">ਮੱਧ-ਹਰੀਜ਼ੋਂਟਲ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">ਮੱਧ</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">Piliin ang anggulo ng pag-ikot ng rektanggulo mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">Piliin ang radius ng mga bilog na sulok mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">ਕੋਨੇ:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">Tinutukoy kung aling punto ng parihaba ang dapat ilagay sa posisyon ng dulo.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Piliin ang haba ng bevel sa direksyon ng X mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">ਕਿਨਾਰੇ:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">Piliin ang haba ng bevel sa direksyon ng Y mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">ਸ਼ੁਰੂ ਸਨੈਪ:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Haba ng bevel sa direksyon ng Y.</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Kung naka-check, tinutukoy na ang mga punto ng pag-snap ay dapat ilipat ng radius ng mga sulok.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">ਸਨੈਪ ਸ਼ਿਫਟ</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">ਲੰਬਾਈ X:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ਰੇਡੀਅਸ:</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">Kung naka-check, pinapayagan nitong tukuyin ang anggulo ng pag-ikot para sa parihaba.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">ਬੇਸ ਐਂਗਲ:</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">Anggulo ng pag-ikot ng parihaba.</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">ਅੰਤ ਸਨੈਪ:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">Tinutukoy kung paano dapat iguhit ang mga sulok ng parihaba.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">ਸਿੱਧਾ</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">ਗੋਲ</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">ਬੈਵਲ</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">Radius ng mga bilog na sulok.</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">ਲੰਬਾਈ Y:</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">Kung naka-check, ang buong parihaba ay iguguhit bilang isang polyline.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">ਪੌਲੀਲਾਈਨ</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Ang haba ng bevel sa direksyon ng X.</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -34770,145 +32063,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation type="unfinished">Piliin ang haba ng bevel sa direksyon ng Y mula sa pagguhit.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ਫਾਰਮ</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">Panloob na anggulo ng quadrilateral.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">Kung naka-check, ang panloob na anggulo ng quadrilateral ay itatakda sa tinukoy na halaga.</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">ਫਿਕਸਡ ਅੰਦਰੂਨੀ ਕੋਣ:</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">Base na anggulo ng rektanggulo.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">ਲੰਬਾਈ X:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Ang haba ng bevel sa direksyon ng X.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">Tinutukoy kung paano iguguhit ang mga sulok para sa rektanggulo.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">ਸਿੱਧਾ</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">ਗੋਲ</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">ਬੈਵਲ</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">ਕੋਨੇ:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Kung naka-check, tinutukoy na ang mga puntong snap ay dapat ilipat ng radius ng mga sulok.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">ਸਨੈਪ ਸ਼ਿਫਟ</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">ਲੰਬਾਈ Y:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Ang haba ng bevel sa direksyon ng Y.</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Radius ng mga bilog na sulok.</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">ਰੇਡੀਅਸ:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">Kung naka-check, ang hugis ay gagawin bilang isang polyline.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">ਪੌਲੀਲਾਈਨ</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">Piliin ang panloob na anggulo ng quadrilateral mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">ਕਿਨਾਰੇ:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Piliin ang radius ng mga bilog na sulok mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Piliin ang haba ng bevel sa direksyon ng X mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">Piliin ang haba ng bevel sa direksyon ng Y mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Tinutukoy kung aling mga gilid ng rektanggulo ang dapat iguhit (kaya posible na lumikha lamang ng dalawang parallel na linya sa halip na isang rektanggulo).</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">ਦੋਵੇਂ</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">ਵਰਟੀਕਲ</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">ਹਰੀਜ਼ੋਂਟਲ</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">Piliin ang base na anggulo ng rektanggulo mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">Kung naka-check, ang rektanggulo ay iikot sa tinukoy na base na anggulo. Kung hindi, ang base na anggulo ay tutukuyin ng anggulo sa pagitan ng unang at pangalawang punto ng rektanggulo.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">ਫਿਕਸਡ ਬੇਸ ਐਂਗਲ:</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">Kung naka-check, isang quadrilateral ang malilikha sa halip na isang rektanggulo.</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">ਚਤੁਰਭੁਜ</translation>
     </message>
 </context>
 <context>
@@ -35557,100 +32711,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">Paumanhin, may nangyaring error sa network habang sinusuri ang bagong bersyon.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">Hindi ma-parse ang tugon mula sa server.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Ilipat ang Mga Opsyon sa Pag-ikot</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">Tinutukoy kung ang mga kopya ay ipapasok sa kasalukuyang layer o orihinal na layer.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Gamitin ang Kasalukuyang Layer</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">Ayusin ang pangalawang anggulo upang ang kabuuan ng mga anggulo (kamag-anak na anggulo ng pag-ikot) ay 0. Sa ganitong setting, ang entity ay ililipat ngunit hindi iikot.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">Mga anggulong sinasalamin</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">Piliin ang pangunahing anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">Tinutukoy kung ang kasalukuyang o orihinal na mga katangian ng pagguhit ay ilalapat.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Gamitin ang kasalukuyang mga katangian</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">Piliin ang pangalawang anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">Anggulo para sa pag-ikot sa ibabaw ng ganap na punto ng sanggunian</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Kung minarkahan, maraming kopya ang malilikha.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Maraming Kopya</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">Bilang ng mga kopya na gagawin</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">Pangalawang Anggulo:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">Kung minarkahan, ang parehong anggulo ay gagamitin para sa lahat ng mga kopya. Kung hindi, ito ay tataas nang proporsyonal sa bilang ng kopya.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">Parehong pangalawang anggulo para sa mga kopya</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Kung minarkahan, ang orihinal na mga entity ay mananatili, kung hindi, aalisin ang mga ito.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Panatilihin ang mga Orihinal</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">Pangunahing Anggulo:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">Anggulo upang paikutin sa pangalawang punto ng sanggunian</translation>
     </message>
 </context>
 <context>
@@ -36645,141 +33705,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ਫਾਰਮ</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">ਸ਼ੁਰੂਆਤੀ ਸਰਕਲ ਕੋਣ:</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">Panimulang anggulo para sa bilog kung saan magsisimula ang mga marka.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ਆਫਸੈੱਟ:</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">Offset ng punto ng pag-snap ng marka sa punto ng interseksyon.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">ਕੋਣ:</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Piliin ang distansya mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">ਦੂਰੀ:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">Distansya sa pagitan ng mga marka.</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">Kung minarkahan, ang napiling entity ay hahatiin sa pamamagitan ng mga puntong pinagtagpo ng mga marka.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">ਵੰਡੋ</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">Piliin ang offset ng marka mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">Haba ng marka.</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">Piliin ang anggulo ng marka mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">ਟਿਕ ਸਨੈਪ:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">Piliin ang haba ng marka mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">Piliin ang panimulang anggulo ng bilog mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">Anggulo sa pagitan ng marka at ng napiling entity.</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">Kung minarkahan, ang anggulo ng marka ay nauugnay sa napiling entity; kung hindi, ito ay isang ganap na anggulo.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">ਰਿਲੇਟਿਵ</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">ਟਿਕ ਲੰਬਾਈ:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">Tinutukoy kung aling punto ng marka ang dapat ilagay sa puntong pinagtagpo sa napiling entity.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">ਸ਼ੁਰੂ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">ਮੱਧ</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">ਅੰਤ</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">Kung minarkahan, gagamitin ang tinukoy na nakatakdang distansya sa pagitan ng mga marka. Kung hindi, ang distansya ay kakalkulahin batay sa haba ng entity at bilang ng mga marka.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">ਫਿਕਸਡ</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">Bilang ng mga marka sa pagitan ng mga gilid ng napiling entity.</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">ਗਿਣਤੀ:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">Tinutukoy kung paano dapat ilagay ang mga marka sa mga gilid ng entity.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">ਕੋਈ ਨਹੀਂ</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">ਦੋਵੇਂ</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">ਐਜ ਟਿਕ:</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37099,57 +34024,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">Tinutukoy ang bilang ng mga segment ng linya na bubuuin para sa bawat spline-fit na polyline.</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Kung hindi naka-check, aalisin ang orihinal na spline, kung hindi, mananatili ito.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Panatilihin ang mga Orihinal</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Kung naka-check, gagamitin ang kasalukuyang mga katangian para sa mga nilikhang entity, kung hindi, gagamitin ang mga orihinal.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Gamitin ang Kasalukuyang mga Katangian</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Kung naka-check, ilalagay ang mga nilikhang entity sa kasalukuyang layer, kung hindi, ilalagay ang mga ito sa mga orihinal na layer.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Gamitin ang Kasalukuyang Layer</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">Kung minarkahan, posible na tukuyin ang pasadyang bilang ng mga segment ng linya. Kung hindi, gagamitin ang halaga mula sa mga setting para sa kasalukuyang pagguhit.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">Pasadyang Bilang ng mga Segment</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">Kung minarkahan, ang mga segment ng linya ay magiging bahagi ng polyline. Kung hindi, magiging indibidwal na mga linya ang mga ito.</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">Sa Polyline</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -37273,61 +34147,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
         <translation type="unfinished">Sa Polyline</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Bumuo</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Kung minarkahan, ang mga nilikhang entity ay ilalagay sa kasalukuyang layer, kung hindi, ilalagay ang mga ito sa orihinal na mga layer.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Gamitin ang Kasalukuyang Layer</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">Bilang ng mga gitnang punto ng segment ng polyline na idaragdag sa spline.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">Tinutukoy ang antas ng spline</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Kung hindi minarkahan, aalisin ang orihinal na polyline, kung hindi, mananatili ito.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Degree:</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Panatilihin ang mga Orihinal</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">Mga gitnang punto:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Kung minarkahan, gagamitin ang kasalukuyang mga katangian para sa mga nilikhang entity, kung hindi, ang mga orihinal na katangian.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Gamitin ang Kasalukuyang mga Katangian</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">Kung minarkahan, ang mga vertex ng polyline ay ituturing bilang mga punto ng spline at isang spline ay malilikha gamit ang mga punto. Kung hindi, ituturing ang mga ito bilang mga control point at isang ordinaryong spline ang malilikha.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">Ang mga vertex ay mga punto ng spline</translation>
     </message>
 </context>
 <context>
@@ -37731,69 +34550,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>Degree na ginamit upang tantyahin ang spline</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">ਫਾਰਮ</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">Kung naka-check, gagawa ng simetrikong bituin.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">ਸਮਮਿਤ</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">Radius para sa panloob na mga gilid.</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">ਨੰਬਰ:</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">Piliin ang panlabas na radius mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">Piliin ang panloob na radius mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">Bilang ng mga sinag.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">Kung minarkahan, ang panlabas na mga gilid ay magiging bilugan.</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">ਬਾਹਰੀ ਰੇਡੀਅਸ</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">Kung minarkahan, ang panloob na mga gilid ay magiging bilugan.</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">ਅੰਦਰੂਨੀ ਰੇਡੀਅਸ</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">Kung minarkahan, ang bituin ay iguguhit bilang isang polyline.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">ਪੌਲੀਲਾਈਨ</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">Radius para sa panlabas na mga sinag (gilid).</translation>
     </message>
 </context>
 <context>
@@ -38684,14 +35440,6 @@ p, li { white-space: pre-wrap; }
         <translation>Mga Setting</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">I-filter ang mga user coordinate ayon sa pangalan.</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">I-filter...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>&lt;Walang pangalan&gt;</translation>
@@ -38792,33 +35540,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>Tanggalin ang &amp;lahat ng UCS</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Anggulo:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">Anggulo ng X-axis ng bagong coordinate system</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pumili ng anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Tinutukoy kung ang anggulo ng X-Axis ay tinukoy ng ipinasok na halaga o ng posisyon ng mouse</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Malaya</translation>
     </message>
 </context>
 <context>
@@ -39431,33 +36152,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.cpp" line="63"/>
         <source>remove 0&quot;</source>
         <translation>0&quot; ਹਟਾਓ</translation>
-    </message>
-</context>
-<context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">ਲਾਈਨ ਰਿਲੇਟਿਵ ਐਂਗਲ ਆਪਸ਼ਨ</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">ਸਪੇਸਿੰਗ:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">ਅਸਲੀ ਪੌਲੀਲਾਈਨ ਤੋਂ ਦੂਰੀ</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">ਕਾਪੀਆਂ:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Bilang ng mga kopya</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">Piliin ang pagitan mula sa pagguhit</translation>
     </message>
 </context>
 <context>
@@ -40138,45 +36832,6 @@ Please check its existence and permissions.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Mga katangian ng panulat</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">X coordinate ng gitna ng arc</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="obsolete">Tinutukoy kung ang arc ay binaliktad (pakanan)</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">Binaliktad</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">Gitna (y):</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="obsolete">Simulang Anggulo:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="obsolete">Anggulo ng pagsisimula ng arc</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="obsolete">Pangwakas na anggulo ng arc</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="obsolete">Pangwakas na Anggulo:</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
@@ -40214,114 +36869,6 @@ Binabago nito ang lahat ng entity ng Block mismo.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
         <translation>Panulat</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">Gitna (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">Y Koordinasyon ng gitna ng bilog</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">X Coordinate ng sentro ng bilog</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">Linear na Dimensyon</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Dimensyon ng layer</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Mga katangian ng panulat</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="obsolete">Anggulo ng pag-ikot ng dimensyon</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Dimensyon ng layer</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Mga katangian ng panulat</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="obsolete">Anggulo ng pag-ikot para sa pangunahing axis ng ellipse, degrees</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="obsolete">Tinutukoy kung ang arko ay binaliktad</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">Binaliktad</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">Gitna (y):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="obsolete">Pangwakas na anggulo ng eliptikong arko, sa mga degree</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="obsolete">Radius ng pangunahing axis ng ellipse</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="obsolete">sa degrees</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="obsolete">Panimulang Anggulo (°):</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="obsolete">Pag-ikot (°):</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="obsolete">Radius ng minor axis ng ellipse</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="obsolete">Pangwakas na Anggulo (°):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="obsolete">Panimulang anggulo ng elliptic arc, degrees</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="obsolete">Major:</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="obsolete">Minor:</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="obsolete">X Coordinate ng gitna ng ellipse</translation>
     </message>
 </context>
 <context>
@@ -40398,53 +36945,6 @@ Binabago nito ang lahat ng entity ng Block mismo.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <source>Image</source>
-        <translation type="obsolete">Larawan</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="obsolete">Lapad ng imahe</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="obsolete">Resolusyon (mga tuldok bawat pulgada)</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="obsolete">Landas patungo sa file ng imahe</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="obsolete">Sukat na salik</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="obsolete">Sukat (px):</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">Anggulo ng pag-ikot</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="obsolete">Sukat ng imahe sa mga pixel</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">DPI</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="obsolete">Taas ng imahe</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="obsolete">Pumili ng isang file ng imahe</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="32"/>
@@ -40467,111 +36967,9 @@ Binabago nito ang lahat ng entity ng Block mismo.</translation>
         <translation>ਕਾਰਜ ਭਾਸ਼ਾ:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Maligayang pagdating sa LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at ang iyong ginustong wika para sa UI at Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Maaari mong baguhin ang mga setting na ito sa ibang pagkakataon.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
         <translation>ਕਮਾਂਡ ਭਾਸ਼ਾ:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="obsolete">Puntong paglalagay (y):</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="obsolete">Punong paglalagay (x):</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="obsolete">Dami ng mga hanay para sa mga kopya</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">Anggulo ng pag-ikot</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="obsolete">Pagitan sa pagitan ng mga kolum</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="obsolete">Factor ng pag-scale sa pamamagitan ng X axis</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="obsolete">Pagitan sa pagitan ng mga hanay</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="obsolete">Dami ng mga haligi para sa mga kopya</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="obsolete">Factor ng pag-scale sa pamamagitan ng Y axis</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="obsolete">LC_InsertPropertiesEditingWidget: Scale Y:</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="obsolete">Mga Hanay:</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="obsolete">Pagitan ng mga Hanay:</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="obsolete">Mga Haligi:</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="obsolete">LC_InsertPropertiesEditingWidget: Scale X:</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="obsolete">Kolum na Pagitan:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <source>End point (x):</source>
-        <translation type="obsolete">Pangwakas na punto (x):</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="obsolete">Pangwakas na punto X coordinate</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="obsolete">Pangwakas na punto Y coordinate</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="obsolete">Pangwakas na punto (y):</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="obsolete">Simulang punto (y):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="obsolete">Simulang punto Y coordinate</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="obsolete">Simulang punto (x):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="obsolete">Simulang punto X coordinate</translation>
     </message>
 </context>
 <context>
@@ -40742,10 +37140,6 @@ Binabago nito ang lahat ng entity ng Block mismo.</translation>
         <translation>Magdagdag ng Simbolo</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">Paglalagay ng Simbolo</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
         <source>Degree (°)</source>
         <translation>Degree (°)</translation>
@@ -40794,10 +37188,6 @@ Binabago nito ang lahat ng entity ng Block mismo.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>Pound (£)</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Yen (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -41433,115 +37823,6 @@ Binabago nito ang lahat ng entity ng Block mismo.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
         <translation>Panulat</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <source>Mirroring Options</source>
-        <translation type="vanished">ਪ੍ਰਤੀਬਿੰਬ ਚੋਣ</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">ਨਕਲਾਂ ਦੀ ਗਿਣਤੀ</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">ਅਸਲੀ ਹਟਾਓ(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">ਅਸਲੀ ਰੱਖੋ(&amp;K)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">ਮੌਜੂਦਾ ਗੁਣ ਵਰਤੋਂ(&amp;a)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">ਮੌਜੂਦਾ ਪਰਤ ਵਰਤੋਂ(&amp;l)</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">ਨਕਲਾਂ ਦੀ ਗਿਣਤੀ</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">ਅਸਲੀ ਹਟਾਓ(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">ਅਸਲੀ ਰੱਖੋ(&amp;K)</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">ਕਈ ਨਕਲਾਂ(&amp;M)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">ਮੌਜੂਦਾ ਗੁਣ ਵਰਤੋਂ(&amp;a)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">ਮੌਜੂਦਾ ਪਰਤ ਵਰਤੋਂ(&amp;l)</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Move/Copy Options</source>
-        <translation type="vanished">Mga Opsyon para sa Paglipat/Pagkopya</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <source>Move/Rotate Options</source>
-        <translation type="vanished">ਘੁੰਮਾਉ/ਹਿਲਾਓ ਚੋਣ</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">ਨਕਲਾਂ ਦੀ ਗਿਣਤੀ</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">ਕੋਣ (a)(&amp;A):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">ਮੌਜੂਦਾ ਗੁਣ ਵਰਤੋਂ(&amp;a)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">ਮੌਜੂਦਾ ਪਰਤ ਵਰਤੋਂ(&amp;l)</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">ਅਸਲੀ ਹਟਾਓ(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">ਅਸਲੀ ਰੱਖੋ(&amp;K)</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Maraming Kopya</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="vanished">Ctrl+S</translation>
     </message>
 </context>
 <context>
@@ -44558,10 +40839,6 @@ Binabago nito ang lahat ng entity ng Block mismo.</translation>
         <translation>Marka ng Relatibong Zero</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">Pag-uugali</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
         <translation>Uri ng grid na iguguhit</translation>
@@ -45609,199 +41886,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Code</source>
-        <translation type="obsolete">Code</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Halaga</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <source>Position (y):</source>
-        <translation type="obsolete">Posisyon (y):</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="obsolete">Posisyon ng punto ayon sa Y coordinate</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="obsolete">Posisyon (x):</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="obsolete">Ang posisyon ng punto ayon sa X coordinate</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="obsolete">Tinutukoy kung ang polyline ay saradong hugis</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation type="vanished">ਘੁੰਮਾਉ ਚੋਣ</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">ਨਕਲਾਂ ਦੀ ਗਿਣਤੀ</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">ਅਸਲੀ ਹਟਾਓ(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">ਅਸਲੀ ਰੱਖੋ(&amp;K)</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="vanished">ਕਈ ਨਕਲਾਂ(&amp;M)</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">ਕੋਣ (a)(&amp;A):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">ਮੌਜੂਦਾ ਗੁਣ ਵਰਤੋਂ(&amp;a)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">ਮੌਜੂਦਾ ਪਰਤ ਵਰਤੋਂ(&amp;l)</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <source>Rotate Two Options</source>
-        <translation type="vanished">ਘੁੰਮਾਉ ਦੋ ਚੋਣ</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">ਨਕਲਾਂ ਦੀ ਗਿਣਤੀ</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">ਅਸਲੀ ਹਟਾਓ(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">ਅਸਲੀ ਰੱਖੋ(&amp;K)</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">ਕਈ ਨਕਲਾਂ(&amp;M)</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;a):</source>
-        <translation type="vanished">ਕੋਣ (&amp;a):</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;b):</source>
-        <translation type="vanished">ਕੋਣ (&amp;b):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">ਮੌਜੂਦਾ ਗੁਣ ਵਰਤੋਂ(&amp;a)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">ਮੌਜੂਦਾ ਪਰਤ ਵਰਤੋਂ(&amp;l)</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <source>Scaling Options</source>
-        <translation type="vanished">ਪੈਮਾਨਾ ਗੁਣ</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">ਨਕਲਾਂ ਦੀ ਗਿਣਤੀ</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">ਮੌਜੂਦਾ ਗੁਣ ਵਰਤੋਂ(&amp;a)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">ਮੌਜੂਦਾ ਪਰਤ ਵਰਤੋਂ(&amp;l)</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hanapin ang mga ratio ng pag-scale sa paligid ng gitna sa pamamagitan ng isang reference point at isang target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">ਅਸਲੀ ਹਟਾਓ(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">ਅਸਲੀ ਰੱਖੋ(&amp;K)</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">ਕਈ ਨਕਲਾਂ(&amp;M)</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="vanished">Mag-scale sa parehong factor sa parehong x- at y-direksyon.</translation>
-    </message>
-    <message>
-        <source>Isotropic Scaling</source>
-        <translation type="vanished">Isotropikong Pag-iiskala</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Oo</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">Spline</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="obsolete">Degree:</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="obsolete">Tinutukoy kung ang spline ay naglalarawan ng saradong contour</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="obsolete">Degree na ginamit upang tantyahin ang spline</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="20"/>
@@ -45949,10 +42033,6 @@ so default step value required for baking</source>
         <translation>ਪਾਊਂਡ (£)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">ਯੇਨ (¥)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Times (×)</source>
         <translation>ਗੁਣਾ (×)</translation>
@@ -45996,10 +42076,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>ਪਾਠ ਦੀ ਪਰਤ</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">Pagkiling ng teksto</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -46607,10 +42683,6 @@ so default step value required for baking</source>
         <translation>Anggulo:</translation>
     </message>
     <message>
-        <source>Oblique:</source>
-        <translation type="vanished">Pahilis:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
         <source>Width factor:</source>
         <translation>Factor ng lapad:</translation>
@@ -47124,21 +43196,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">Hindi wastong sukat ang ibinigay</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">Ang sukat ng papel ay mas malaki kaysa sa pinakamataas na ratio ng pag-print</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">Ang sukat ng papel ay mas maliit kaysa sa pinakamababang ratio ng pag-print</translation>
-    </message>
-</context>
-<context>
     <name>QG_RecentFiles</name>
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="183"/>
@@ -47407,12 +43464,6 @@ Please specify a different value.</source>
         <translation>ਖਾਲੀ ਪਰਤਾਂ ਹਟਾਓ</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">May mga layer na walang entity na natagpuan, ngunit naka-filter ang mga ito at hindi nakikita.
-Linisin ang filter mask at ulitin.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -47474,14 +43525,6 @@ If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly 
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">&quot;ਲੇਅਰ ਦੁਆਰਾ&quot; ਮੁੱਲ ਨੂੰ ਸੋਰਸ ਪਰਤਾਂ ਦੇ ਮੁੱਲਾਂ ਨਾਲ ਬਦਲਣਾ ਹੈ?
-ਜੇਕਰ ਹਾਂ, ਤਾਂ &quot;ਲੇਅਰ ਦੁਆਰਾ&quot; ਪੈਨ ਵਾਲੀਆਂ ਸੰਸਥਾਵਾਂ ਨਵੀਂ ਪਰਤ ਵਿੱਚ ਠੀਕ ਉਸੇ ਤਰ੍ਹਾਂ ਦਿਖਾਈ ਦੇਣਗੀਆਂ ਜਿਵੇਂ ਪਿਛਲੀਆਂ ਪਰਤਾਂ ਵਿੱਚ, ਅਤੇ &quot;ਲੇਅਰ ਦੁਆਰਾ&quot; ਮੁੱਲ ਨੂੰ ਹੱਲ ਕੀਤੇ ਗਏ ਪੈਨ ਨਾਲ ਬਦਲ ਦਿੱਤਾ ਜਾਵੇਗਾ।
-ਜੇਕਰ ਨਹੀਂ, ਤਾਂ &quot;ਲੇਅਰ ਦੁਆਰਾ&quot; ਮੁੱਲ ਬਰਕਰਾਰ ਰਹੇਗਾ, ਅਤੇ ਇਸ ਤਰ੍ਹਾਂ ਟੀਚੇ ਦੀ ਪਰਤ ਦਾ ਪੈਨ ਅਜਿਹੀਆਂ ਸੰਸਥਾਵਾਂ ਲਈ ਪੈਨ ਨੂੰ ਪਰਿਭਾਸ਼ਤ ਕਰੇਗਾ।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -47804,10 +43847,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="799"/>
         <source>Tagged Image File Format</source>
         <translation>Tagged Image File Format</translation>
-    </message>
-    <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">Lumang Drawing Exchange %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="471"/>
@@ -49369,11 +45408,6 @@ Do you want to replace it?</source>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>gpunto</translation>
-    </message>
-    <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">bilog sa pamamagitan ng arc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -51223,26 +47257,6 @@ Do you want to replace it?</source>
         <translation>Paggamit:</translation>
     </message>
     <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished">[options] [mga opsyon] &lt;mga file ng dxf&gt;</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished">*.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">-- i-print ang lahat ng mga file ng dxf sa mga file ng pdf na may parehong mga pangalan.</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished">-o some.pdf *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">-- i-print ang lahat ng mga file ng dxf sa file na &apos;some.pdf&apos;.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
         <source> [options] &lt;%1_files&gt;</source>
         <translation type="unfinished"></translation>
@@ -51318,16 +47332,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Laki ng papel (Lapad x Taas) sa mm.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">Resolusyon ng output (DPI).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>Sukatan ng output. Halimbawa: 0.01 (para sa 1:100 na sukatan).</translation>
@@ -51373,14 +47377,6 @@ Do you want to replace it?</source>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">&lt;dxf_files&gt;</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">Input DXF file(s)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -51529,11 +47525,6 @@ Do you want to replace it?</source>
         <translation>Error sa pagbasa ng header ng DXF/DWG file</translation>
     </message>
     <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">Error sa pagbasa ng header data ng DXF/DWG</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
@@ -51580,10 +47571,6 @@ Do you want to replace it?</source>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>error sa pagbasa ng DXF/DWG code</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">Binuksan ang bersyon ng dwg file na %1.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -52032,10 +48019,6 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">Piliin upang lumikha ng bloke (Pindutin ang Enter upang makumpleto)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
         <translation>Piliin ang contour</translation>
@@ -52049,66 +48032,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>ਹਵਾਲਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">Piliin upang buksan ang lalagyan (Pindutin ang Enter upang makumpleto)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">Piliin at buksan</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">ਹਵਾਲਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">ਕੋਣ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">ਫੈਕਟਰ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">ਕਾਲਮ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">ਕਤਾਰਾਂ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">ਕਾਲਮ ਖਾਲੀ ਥਾਂ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">ਕਤਾਰ ਖਾਲੀ ਥਾਂ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">Hindi maaaring maglaman ang bloke ng pagpasok ng sarili nito.</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished">may nakapaloob na pagpasok ng kasalukuyang bloke sa:</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">Hindi maaaring ipasok ang blokeng ito.</translation>
     </message>
 </context>
 <context>
@@ -52360,270 +48283,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">Ang haba ng chord ay dapat na hindi zero.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">ਠੀਕ ਵਤਰ ਲੰਬਾਈ ਨਹੀਂ</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">ਕੇਂਦਰ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">Tukuyin ang panimulang punto.</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternatibong Arc.</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">Tukuyin ang haba ng chord (negatibo para sa alternatibong punto):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">Gamitin ang alternatibong punto ng arc.</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">ਅਰਧ-ਵਿਆਸ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">ਸ਼ੁਰੂਆਤੀ ਕੋਣ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">Tukuyin ang huling anggulo o [anggulo/haba ng chord].</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">ਸ਼ਾਮਿਲ ਕੋਣ ਦਿਓ:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">ਗਲਤ ਚਾਪ ਡਾਟਾ</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Tukuyin ang ikatlong punto.</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">ਦੂਜਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">Tukuyin ang panimulang punto o [gitna].</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">ਮੂਲ ਇਕਾਈ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">Alternatibong arc.</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">Alternatibong Arc.</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">ਅੰਤ ਕੋਣ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">Tukuyin ang dulo.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">ਕੇਂਦਰ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">Tukuyin ang punto sa bilog.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">ਗਲਤ ਚੱਕਰ ਡਾਟਾ</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">ਪਹਿਲਾਂ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">ਦੂਜਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">ਗਲਤ ਚੱਕਰ ਡਾਟਾ ਹੈ।</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">ਪਹਿਲਾਂ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">ਦੂਜਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">ਤੀਜਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">ਚੱਕਰ ਕੇਂਦਰ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">ਚੱਕਰ ਅਰਧ-ਵਿਆਸ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">radius=%1 ay hindi wasto (ekspresyon)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">radius=%1 ay hindi wasto (negatibo)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">radius=%1 ay hindi wasto (sero)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">Tukuyin ang unang linya.</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">Tukuyin ang pangalawang linya.</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">Tukuyin ang pangatlong linya.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">Tukuyin ang unang punto sa bilog na tangent.</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">Tukuyin ang pangalawang punto sa bilog na tangent.</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Piliin ang gitna ng tangent circle</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Tukuyin ang isang linya/arc/circle</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Tukuyin ang unang linya/arc/circle</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Tukuyin ang pangalawang linya/arc/circle</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Piliin ang gitna ng tangent circle</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">Walang karaniwang tangent circle para sa radius &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Tukuyin ang isang linya/arc/circle</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">Tukuyin ang isa pang linya/arc/circle</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">Tukuyin ang isang punto sa tangent circle</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Piliin ang gitna ng tangent circle</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Piliin ang gitna ng tangent circle</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Tukuyin ang unang linya/arc/circle</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">Walang karaniwang tangent circle para sa mga napiling entity</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Tukuyin ang pangalawang linya/arc/circle</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">Tukuyin ang pangatlong linya/arc/circle</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
@@ -52818,125 +48477,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">Piliin upang mag-hatch (Pindutin ang Enter upang makumpleto)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
         <translation>Mag-hatch kaagad pagkatapos ng pagpili</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">ਹਵਾਲਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">ਕੋਣ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">ਫੈਕਟਰ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">Ipasok ang dpi:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">ਪਹਿਲਾਂ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">ਅਗਲਾ ਬਿੰਦੂ ਜਾਂ [%1] ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">ਅਗਲਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">Hindi maaaring isara ang pagkakasunud-sunod ng mga linya: Hindi pa sapat ang mga entity na tinukoy, o nakasara na.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">Hindi maaaring i-undo: Naabot na ang simula ng kasaysayan</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">Hindi maaaring i-redo: Naabot na ang dulo ng kasaysayan</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">ਟਿਕਾਣਾ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">Salitang Direksyon</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">ਕੋਣ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">ਲੰਬਾਈ ਦਿਓ:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">Lilikha ng mga entity</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">ਪਹਿਲੀ ਰੇਖਾ ਚੁਣੋ</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">ਦੂਜੀ ਰੇਖਾ ਚੁਣੋ</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">ਦੋ-ਖੰਡ ਲੰਬਾਈ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">ਦੋ-ਖੰਡਾਂ ਦੀ ਗਿਣਤੀ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">Ang bilang ng mga linya ng sektor ay wala sa saklaw:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">ਇੱਕ ਰੇਖਾ ਖਿੱਚਣ ਲਈ ਦਬਾਉ ਅਤੇ ਖਿੱਚੋ</translation>
     </message>
 </context>
 <context>
@@ -52969,74 +48512,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Pumili ng bilog, arko, o ellipse</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">ਦੂਰੀ &lt;%1&gt; ਦਿਓ ਜਾਂ ਇਕਾਈ ਚੁਣੋ ਜਾਂ [%2]</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">Lilikha ng mga entity</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">ਨੰਬਰ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">ਠੀਕ ਗਿਣਤੀ ਨਹੀਂ ਹੈ। 1..99 ਨਾਲ ਕੋਸ਼ਿਸ ਕਰੋ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">ਇਕਾਈ ਚੁਣੋ</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">ਬਿੰਦੂ ਰਾਹੀਂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">Lilikha ng mga entity</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">ਅੰਕ:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">ਠੀਕ ਗਿਣਤੀ ਨਹੀਂ ਹੈ। 1..99 ਨਾਲ ਕੋਸ਼ਿਸ ਕਰੋ</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">Tukuyin ang isang sulok</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Tukuyin ang unang sulok</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Tukuyin ang pangalawang sulok</translation>
     </message>
 </context>
 <context>
@@ -53078,29 +48553,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">ਮੂਲ ਇਕਾਈ ਚੁਣੋ</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Tukuyin ang anggulo</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">Tukuyin ang haba</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">ਟਿਕਾਣਾ ਦਿਓ</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53138,17 +48590,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Tukuyin ang puntong paglalagay</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Ipasok ang teksto:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
@@ -53157,108 +48598,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Tukuyin ang unang punto</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Tukuyin ang susunod na punto o [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Tukuyin ang susunod na punto</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">Hindi maaaring isara ang pagkakasunud-sunod ng mga linya: Hindi pa sapat ang bilang ng mga entity na tinukoy.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Hindi maaaring i-undo: Hindi pa sapat ang bilang ng mga entity na tinukoy.</translation>
-    </message>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">Ipasok ang huling punto x</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Ipasok ang bilang ng mga polyline</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">Ipasok ang isang equation, f(x)</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">Ipasok ang panimulang punto ng x</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">Hindi wasto ang ipinasok na x.</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">Hindi wasto ang ipinasok na laki ng hakbang.</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">Hindi wasto ang ipinasok na halaga ng x.</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternatibong Arc</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">ਪਹਿਲਾਂ ਕੰਟਰੋਲ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">ਅਗਲਾ ਕੰਟਰੋਲ ਬਿੰਦੂ ਜਾਂ [%1] ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">ਅਗਲਾ ਕੰਟਰੋਲ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">ਵਾਪਸੀ ਨਹੀਂ: ਹਾਲੇ ਲੋੜੀਦੀਆਂ ਇਕਾਈਆਂ ਨਹੀਂ ਦਿੱਤੀਆਂ ਹਨ।</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">Teksto:</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">ਸ਼ਾਮਿਲ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">ਪਾਠ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Tukuyin ang pangalawang punto</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">Piliin upang putulin (Pindutin ang Enter upang makumpleto)</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -53277,10 +48617,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>Piliin pagkatapos ng pagpili</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">Piliin upang kopyahin (Pindutin ang Enter upang makumpleto)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -53318,17 +48654,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Paste Multiple</source>
         <translation>Idikit nang maramihan</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">Walang dapat i-undo!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">Walang dapat i-redo!</translation>
     </message>
 </context>
 <context>
@@ -53549,57 +48874,6 @@ Wakas: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">Distansya: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">ਇਕਾਈ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">Huwag ikabit sa mga child entity sa loob ng container</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">Ang relatibong punto ay nasa entity</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Impormasyon</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Distansya:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Anggulo:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">Mula:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">Hanggang:</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -53645,10 +48919,6 @@ Point: (%8 , %9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">Piliin upang sukatin ang kabuuang haba (Pindutin ang Enter upang tapusin)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="74"/>
         <source>Select contour</source>
         <translation>Piliin ang kontur</translation>
@@ -53680,906 +48950,6 @@ Point: (%8 , %9)</translation>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>Kanselahin</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">ਹਵਾਲਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">ਕੋਣ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">ਫੈਕਟਰ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">ਫਾਇਲ &apos;%1&apos; ਨੂੰ ਖੋਲਿਆ ਨਹੀ ਜਾ ਸਕਦਾ ਹੈ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">Piliin upang baguhin ang mga katangian (Pindutin ang Enter upang makumpleto)</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">Baguhin agad ang mga katangian pagkatapos pumili</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Piliin ang contour</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">Ang mga napiling linya ay magkapareho</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">Ang mga napiling linya ay hindi mga anak ng parehong polyline</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Gupitin</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Pagtagpo:</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Punto 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Punto 2:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">Hindi wastong entidad ang napili (hindi maaaring putulin).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">Hindi wastong entidad ang napili (hindi atomiko).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">Hindi wastong entidad ang napili (hindi maaaring putulin kasama ang unang entidad).</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">ਪਹਿਲੀ ਇਕਾਈ ਚੁਣੋ</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">ਦੂਜੀ ਇਕਾਈ ਚੁਣੋ</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">ਲੰਬਾਈ 1 ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">ਲੰਬਾਈ 2 ਦਿਓ:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Hatiin</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">Sa:</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">Ang puntong pagputol ay hindi maaaring maging dulo ng entidad.</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">ਕੱਟ ਲਈ ਇਕਾਈ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">ਕੱਟਣ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">Ang entidad ay dapat na linya, arko, bilog, elipse, o interpolation spline.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">Piliin upang burahin (Pindutin ang Enter upang makumpleto)</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">Piliin at agad na burahin pagkatapos ng pagpili</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Piliin ang contour</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">ਇੱਕ ਬਹੁ-ਰੇਖਾ ਉੱਤੇ ਪਹਿਲਾਂ ਰੋਕ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">ਇੱਕ ਬਹੁ-ਰੇਖਾ ਉੱਤੇ ਦੂਜਾ ਰੋਕ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">ਇਕਾਈਆਂ ਇੱਕੋ ਬਹੁ-ਰੇਖਾ ਵਿੱਚ ਨਹੀਂ ਹਨ।</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">ਮੁੱਢਲੀ ਦੀ ਦੂਜੀ ਇਕਾਈ ਇੱਕ ਬਹੁ-ਰੇਖਾ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">ਮੁੱਢਲੀ ਦੀ ਪਹਿਲੀ ਇਕਾਈ ਇੱਕ ਬਹੁ-ਰੇਖਾ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">Ang magulang ng pangalawang entity ay nullptr</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">Ang isa sa mga piniling entity ay nullptr</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">Ang magulang ng unang entity ay nullptr</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">Ang unang entity ay nullptr</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">Ang pangalawang entity ay nullptr</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">I-click ang entity upang baguhin</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">Piliin upang i-explode ang teksto (Pindutin ang Enter upang makumpleto)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">Agad na i-explode pagkatapos ng pagpili</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Salamin</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Anggulo:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">Anggulo (alternatibo):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">Linya mula:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">Linya patungo:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">Piliin upang salaminin (Pindutin ang Enter upang tapusin)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Piliin ang contour</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">Tukuyin ang linya ng salamin</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">Baligtarin nang patayo</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">Baligtarin nang pahalang</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">ਪ੍ਰਤੀਬਿੰਬ ਰੇਖਾ ਦਾ ਪਹਿਲਾਂ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">ਪ੍ਰਤੀਬਿੰਬ ਰੇਖਾ ਦਾ ਦੂਜਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">Paglipat ng Offset</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">Kopyahin ang Offset</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">ਹਵਾਲਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">Gumawa ng Kopya</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">Piliin upang ilipat (Pindutin ang Enter upang makumpleto)</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">Ilipat kaagad pagkatapos ng pagpili</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Piliin ang contour</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">ਨਿਸ਼ਾਨਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">Paglipat na may pag-ikot</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">Pinagmulan:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">Patutunguhan:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Anggulo:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">ਹਵਾਲਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">Piliin upang ilipat at paikutin (Pindutin ang Enter upang makumpleto)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">Ilipat at paikutin kaagad pagkatapos ng pagpili</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Piliin ang contour</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">ਨਿਸ਼ਾਨਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">ਘੁੰਮਾਉ ਕੋਣ ਦਿਓ:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">Offset</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Distansya:</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">Tukuyin ang direksyon ng offset</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">Tukuyin ang puntong sanggunian para sa direksyon ng offset</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">Piliin ang linya, polyline, bilog o arc upang lumikha ng offset (Pindutin ang Enter upang makumpleto)</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">Offset kaagad pagkatapos ng pagpili</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Piliin ang contour</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">Piliin upang baligtarin ang direksyon (Pindutin ang Enter upang makumpleto)</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">Baligtarin kaagad pagkatapos ng pagpili</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Piliin ang contour</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">ਹਵਾਲਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">Pag-ikot</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Anggulo:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Pinagmulan na Punto:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Target na Punto:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Sanggunian na Punto:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">Sentrong Punto:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">Pangalawang Anggulo:</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">Piliin upang paikutin (Pindutin ang Enter upang tapusin)</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">Paikutin kaagad pagkatapos ng pagpili</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Piliin ang contour</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">I-snap sa gitna ng pagpili</translation>
-    </message>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">Tukuyin ang sentro ng pag-ikot</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">Tukuyin ang puntong patutunguhan upang paikutin</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">Tukuyin ang puntong patutunguhan para sa pag-ikot sa paligid ng puntong reperensya</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">Pag-ikot nang Dalawang Beses</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">Sentro 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">Anggulo 1:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">Sentro 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">Anggulo 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">Piliin para sa pag-ikot sa dalawang axis (Pindutin ang Enter upang makumpleto)</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">Ikot ang 2 Axis kaagad pagkatapos ng pagpili</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Piliin ang contour</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">ਅਸਲੀ ਹਵਾਲਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">ਅਨੁਸਾਰੀ ਹਵਾਲਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Pagbilog</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Punto 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Punto 2:</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">ਦੂਜੀ ਇਕਾਈ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">ਅਰਧ-ਵਿਆਸ ਦਿਓ:</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">Tukuyin ang unang entidad o ipasok ang radius &lt;%1&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Sukatin</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Gitna:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Pinagmulan:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Patutunguhan:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Paglipat:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">Sukatin ayon sa X:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">Sukatin ayon sa Y:</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">Tukuyin ang gitna ng pag-sukat</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">I-snap sa gitna ng pagpili</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">Tukuyin ang pinanggalingang punto</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Tukuyin ang puntong patutunguhan</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">Malayang pag-snap</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">Piliin upang baguhin ang sukat (Pindutin ang Enter upang makumpleto)</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">Baguhin agad ang sukat pagkatapos ng pagpili</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Piliin ang contour</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">ਪਹਿਲਾਂ ਕੋਨਾ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">ਦੂਜਾ ਕੋਨਾ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">Iunat</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">Panimulang Sulok:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">Pangwakas na Sulok:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Punto ng Sanggunian:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Target Point:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">ਹਵਾਲਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">ਨਿਸ਼ਾਨਾ ਬਿੰਦੂ ਦਿਓ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">ਪਹਿਲੀ ਇਕਾਈ ਚੁਣੋ</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">ਸੀਮਿਤ ਇਕਾਈ ਚੁਣੋ</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">Trim Dalawa</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Intersection:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">Pagtagpo 2:</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">ਦੂਜੀ ਇਕਾਈ ਚੁਣੋ</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">ਛਾਂਟਣ ਲਈ ਇਕਾਈ ਚੁਣੋ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">Walang natagpuang entity.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">ਚੁਣੀ ਇਕਾਈ ਇੱਕ ਵੱਖਰੀ ਨਹੀਂ ਹੈ ਜਾਂ ਇਸ ਨੂੰ ਛਾਂਟਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">Pumili ng linya/arc para i-trim O ipasok ang halaga ng haba:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Walang natagpuang Entity.</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">Pumili ng mga entity (Pindutin ang Enter para makumpleto)</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">Piliin kaagad pagkatapos ng pagpili</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Piliin ang contour</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">Piliin ang entity para sa order</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Walang entity na natagpuan.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Ang entity ay dapat na isang polyline.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">Hindi wasto ang pagdaragdag ng punto.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">Ang puntong idinaragdag ay wala sa entity.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">Tukuyin ang polyline upang magdagdag ng mga node</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">Tukuyin ang puntong idinaragdag.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Walang entity na natagpuan.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Ang entidad ay dapat na isang polyline.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">Mag-click sa isang lugar malapit sa simula o dulo ng umiiral na polyline.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Ipasok ang bilang ng mga polyline.</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">Tukuyin ang polyline sa isang lugar malapit sa simula o dulo.</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">Hindi maaaring magdagdag ng mga node sa isang saradong polyline.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Hindi maaaring i-undo: Hindi pa sapat ang mga entidad na tinukoy.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Walang entidad na natagpuan.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Ang entidad ay dapat na isang polyline.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">Tukuyin ang polyline upang tanggalin ang node.</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">Tukuyin ang puntong tatanggalin.</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Hindi wasto ang pagtanggal ng punto.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Ang puntong tinatanggal ay wala sa entity.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Walang entity na natagpuan.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Ang entity ay dapat na isang polyline.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Ang puntong tinatanggal ay wala sa entity.</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">Walang polyline na natagpuan.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">Dapat mayroong hindi bababa sa dalawang segment ng polyline sa pagitan ng mga napiling punto.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">Tukuyin ang polyline na tatanggalin sa pagitan ng dalawang node.</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">Tukuyin ang unang node.</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">Tukuyin ang pangalawang node.</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Hindi wasto ang pagtanggal ng punto.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Walang natagpuang entity.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Ang entity ay dapat na isang polyline.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">Piliin ang orihinal na polyline.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Walang natagpuang entity.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">Piliin ang isa sa mga segment sa orihinal na polyline.</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">Hindi maaaring maging saradong polyline ang entity.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">Nalikha ang polyline.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Walang natagpuang entity.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Ang entity ay dapat na isang polyline.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">Ang unang segment ay dapat nasa napiling polyline.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">Ang pangalawang segment ay dapat nasa napiling polyline at hindi dapat kapareho ng una.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">Tukuyin ang polyline na itatrim.</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">Tukuyin ang unang segment.</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">Tukuyin ang pangalawang segment.</translation>
     </message>
 </context>
 <context>
@@ -54656,113 +49026,11 @@ Point: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="obsolete">Walang napiling entity!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectBase</name>
     <message>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">ਇਕਾਈ ਇੱਕ ਇੱਕਲੀ ਹੀ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Tukuyin ang entity na pipiliin.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">ਇੱਕ ਕਾਂਟਵੀ ਰੇਖਾ ਦਾ ਪਹਿਲਾਂ ਬਿੰਦੂ ਚੁਣੋ</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">Piliin ang mga entidad na nagtatagpo</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">Piliin ang mga anak na entidad</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">ਕਾਂਟਵੀ ਰੇਖਾ ਦਾ ਦੂਜਾ ਬਿੰਦੂ ਚੁਣੋ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">Tukuyin ang entidad na may nais na layer</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Tukuyin ang entidad na pipiliin</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Piliin ang contour</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">Hindi na pipiliin</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">Pinipili</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">mga entidad</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">na nagtatagpo sa kahon</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">na nasa loob ng kahon</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">ਦੂਜਾ ਕਿਨਾਰਾ ਚੁਣੋ</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">Piliin ang mga nagtatagpo</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">Alisin ang pagpili sa mga entidad</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">Piliin ang mga entidad</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">Alisin ang pagpili sa mga nagtatagpo</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">I-click at i-drag para sa window ng pagpili</translation>
     </message>
 </context>
 <context>
@@ -55070,143 +49338,6 @@ Point: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Mga Opsyon ng Arc</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Counterclockwise</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Clockwise</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">Mga Opsyon ng Tangential Arc</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">Kung napili, isang tangential arc na may tinukoy na radius ang malilikha.</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">Tangential arc radius</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">Kung pinili, isang arc na may tinukoy na anggulo ang gagawin</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">Kabuuang anggulo ng tangential arc</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Piliin ang radius mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Radius</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Anggulo</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Piliin ang anggulo mula sa pagguhit</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">Mga Opsyon sa Bevel</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">Lagyan ng tsek upang putulin ang parehong entity sa bevel</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Putulin</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">Haba 1:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Haba ng bevel sa direksyon ng X.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">Piliin ang unang haba mula sa pagguhit.</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">Haba 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Haba ng bevel sa direksyon ng Y.</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">Piliin ang pangalawang haba mula sa pagguhit.</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">Mga Opsyon sa Bilog</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Radius ng bilog.</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Piliin ang radius mula sa pagguhit.</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">Mga Opsyon ng Circle Tangential2</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius ng tangential circle na iguguhit&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">Radius ng tangential circle</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Piliin ang radius mula sa pagguhit</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -55343,845 +49474,6 @@ Point: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Mga Opsyon sa Pagpasok</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Anggulo:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Anggulo ng Pag-ikot</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pumili ng anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Salik ng Pag-scale:</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">DPI:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Salik ng Pag-scale</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">DPI ng Larawan</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Mga Opsyon sa Pagpasok</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angulo:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Angulo ng Pag-ikot</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Salik:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Salik ng Pag-iiba</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">Array:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">Bilang ng mga Haligi</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">Bilang ng mga Hanay</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">Piliin ang pagitan ng hanay mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">Piliin ang pagitan ng haligi mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Piliin ang anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Pagitan:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">Pagitan ng mga Haligi</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">Pagitan ng mga Hanay</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">Mga Opsyon sa Paglalagay ng Aklatan</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Anggulo:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Anggulo ng Pag-ikot</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pumili ng anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Salik:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Salik ng Pag-iiba</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">Mga Opsyon sa Anggulo ng Linya</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angulo:</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">Ilagay ang puntong ito sa linya na nilikha sa puntong paglalagay.</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Angulo ng linya</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Haba:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Haba ng linya</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">Puntong Pagkakabit:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">Piliin ang angulo ng linya mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Simula</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Gitna</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Dulo</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">Piliin ang haba ng linya mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">Kung napili, ang linya ay magiging orthogonal sa axis ng base ng mga anggulo. Kung hindi, ito ay magiging orthogonal sa axis ng screen.</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">Patungo sa Base ng mga Anggulo</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">Mga Opsyon sa Bisector ng Linya</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Haba:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">Haba ng bisector</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">Piliin ang haba ng linya mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Bilang:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">Bilang ng mga bisector na gagawin</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Mga Opsyon sa Linya</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Mga linya na iginuhit upang bumuo ng isang saradong hugis</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Isara</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">I-undo ang huling pagguhit ng linya</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">I-undo</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">I-redo ang huling pagguhit ng linya</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">I-redo</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Mga Opsyon sa Linya</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">Direksyon:</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">Lumilikha ng polyline mula sa mga segment ng linya</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pumili ng anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">Patayong linya</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">Linya ayon sa tinukoy na anggulo</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Anggulo</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">Pahalang na linya</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">Kung nakacheck, ang anggulo ay relatibo sa nakaraang segment</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Relatibo</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">I-undo ang huling pagguhit ng linya</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">I-undo</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Bumuo ng isang saradong hugis mula sa mga iginuhit na linya</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Isara</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Ulitin ang huling pagguhit ng linya</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Ulitin</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Anggulo ng linya</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">Linya patungo sa isang arbitraryong punto</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Punto</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">Mga Opsyon para sa Linya na Paralelo</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Distansya:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">Distansya sa orihinal na entidad</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Piliin ang distansya mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Bilang:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Bilang ng mga parallel na gagawin</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">Mga Opsyon para sa Linya na Parallel sa Pamamagitan</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">Kung nakacheck, ang mga parallel ay gagawin sa magkabilang panig ng entidad</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Simetriko</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Bilang:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Bilang ng mga parallel na gagawin</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Mga Opsyon para sa Polygon</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Bilang ng mga gilid</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Mga Opsyon para sa Polygon</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Bilang:</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">Kung minarkahan, ang mga sulok ng polygon ay magiging bilog.</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">Radius</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">Kung minarkahan, ang polygon ay iguguhit bilang isang polyline. Kung hindi, ang mga indibidwal na entidad ay malilikha.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Pumili ng radius mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">Bilang ng mga gilid</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">Radius ng pagbilog para sa bevel ng sulok.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">Kung pinili, ang mga puntong reperensya ay para sa mga sulok ng polygon. Kung hindi, ang mga ito ay para sa gitnang punto ng mga gilid.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">Sulok hanggang Sulok</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Mga Opsyon para sa Anggulo ng Linya</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Anggulo:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Anggulo ng linya</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Piliin ang anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Haba:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Haba ng linya</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Piliin ang haba mula sa pagguhit</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Mga Opsyon sa Teksto</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Teksto:</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">Teksto na ipapasok</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Anggulo:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Anggulo ng pag-ikot</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pumili ng anggulo mula sa pagguhit</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">Mga Opsyon sa Pagbabago ng Offset</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">Distansya para sa offset mula sa orihinal na entity</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Kung naka-check, ang mga nilikhang entity ay ilalagay sa kasalukuyang layer, kung hindi, ang mga ito ay nasa orihinal na mga layer.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Gamitin ang Kasalukuyang Layer</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Bilang ng mga kopya.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Kung naka-check, ang mga orihinal na entity ay mananatili, kung hindi, ang mga ito ay aalisin.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Panatilihin ang mga Orihinal</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">Kung minarkahan, gagamitin ang mga nakatakdang distansya para sa offset, kung hindi, ito ay tutukuyin ng mouse.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Nakatakdang Distansya</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Kung minarkahan, ilalapat ang kasalukuyang mga katangian sa mga nilikhang entity, kung hindi, gagamitin ang orihinal.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Gamitin ang Kasalukuyang mga Katangian</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">Pumili ng distansya mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Kung minarkahan, maraming kopya ang malilikha.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Maraming Kopya</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Mga Opsyon sa Paglipat at Pag-ikot</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Kung minarkahan, ilalapat ang kasalukuyang mga katangian sa mga nilikhang entity, kung hindi, gagamitin ang orihinal.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Gamitin ang Kasalukuyang mga Katangian</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Kung minarkahan, maraming kopya ang malilikha.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Maraming Kopya</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Piliin ang anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">Kung minarkahan, lahat ng kopya ay iikot sa parehong anggulo. Kung hindi, ang anggulo ay magiging proporsyonal sa bilang ng bawat kopya.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">Parehong anggulo para sa mga kopya</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">Anggulo ng pag-ikot.</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Bilang ng mga kopya.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">Kung minarkahan, ang anggulo ng pag-ikot ay tinutukoy ng mouse. Kung hindi, gagamitin ang tinukoy na halaga.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Malaya</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Anggulo:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">Kung minarkahan, ang mga nilikhang entity ay ilalagay sa kasalukuyang layer, kung hindi, ang mga ito ay nasa orihinal na mga layer.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Gamitin ang Kasalukuyang Layer</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Kung minarkahan, ang mga orihinal na entity ay mananatili, kung hindi, ang mga ito ay tatanggalin.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Panatilihin ang mga Orihinal</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">Mga Opsyon sa Polyline</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">Ikinokonekta ang mga dulo ng polyline upang makalikha ng saradong contour</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Isara</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">I-undo ang nakaraang vertex</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">I-undo</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">Uri ng Segment:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">Tinutukoy kung aling bahagi ng polyline ang dapat likhain</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Linya</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">Tangential</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">Radius ng Tangent</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">Anggulo ng Tangent</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Anggulo</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">Arko na tangent</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">Tangential arc na may nakatakdang radius</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">Tangential arc na may nakatakdang anggulo</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">Arc na may anggulo</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Arc radius</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Piliin ang radius mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Anggulo:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">Anggulo ng arc</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Piliin ang anggulo mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">Pabaliktad na orasan</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Clockwise</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">Mga Opsyon sa Print Preview</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">Oryentasyong Landscape</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">Mga Setting ng Pag-guhit</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Sukatan:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;sukat na na-print: sukat ng pagguhit&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ang Sukat ng Pag-print ay nakatakda sa kasalukuyang halaga&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">nakatakda</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">Palitan ang Itim / Puti na mode</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">Oryentasyong pahalang ng papel</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">Oryentasyong patayo ng papel</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">Ilapat ang Sukat ng Pag-print sa lapad ng linya</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">Ilagay ang Pahina sa gitna ng pagguhit</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">I-zoom sa lugar na ipi-print</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">I-angkop sa 1 pahina</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">Kung naka-enable, ang espasyo ng papel ay maglalaman ng tinukoy na bilang ng mga pahina na nakaayos sa mga hanay at kolum</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">Pag-print na naka-tile</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">Mga Hanay ng Pahina::</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">Bilang ng mga kolum ng pahina</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">Mga Kolum ng Pahina:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">Bilang ng mga hanay ng pahina</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">Kalkulahin ang bilang ng mga pahina na kinakailangan upang maglaman ng guhit</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">Mga Opsyon sa Pag-ikot</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">Tiyakin upang putulin ang parehong gilid upang gawing bilog.</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Putulin</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">Radius ng paggawa ng bilog</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Piliin ang radius mula sa pagguhit.</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56220,99 +49512,6 @@ Point: (%8 , %9)</translation>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>Bilang ng mga pantay-pantay na punto ng paghahati</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">Mga Opsyon ng Spline</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Degree:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">Ang degree ng spline na ginamit para sa pagtatantiya sa pagitan ng mga punto</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">Kung napili, isang saradong spline ang nilikha</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Sarado</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">I-undo ang nakaraang punto</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">I-undo</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Mga Opsyon ng Teksto</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Teksto:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Anggulo:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Anggulo ng pag-ikot</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Piliin ang anggulo mula sa pagguhit</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">Mga Opsyon sa Dami ng Pagputol</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">Distansya. Ang mga negatibong halaga ay para sa pagputol, ang mga positibong halaga ay para sa pagpapahaba.</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">Kabuuang</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Haba:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">Distansya. Ang mga negatibong halaga ay para sa pagputol, ang mga positibong halaga ay para sa pagpapahaba. Hindi pinapansin ang negatibong tanda kapag pinupukol sa huling kabuuang haba.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Piliin ang haba mula sa pagguhit</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">Kung minarkahan, ang pagputol/pagpapahaba ay ginagawa sa magkabilang panig ng linya.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Simetriko</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">Ang haba ng input ay ginagamit bilang kabuuang haba pagkatapos ng pagputol, sa halip na pagtaas ng haba.</translation>
     </message>
 </context>
 </TS>

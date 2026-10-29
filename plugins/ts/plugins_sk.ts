@@ -97,15 +97,6 @@ first base, second base, first target, second target.</source>
         <translation>druhý základný bod:</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Ak je začiarknuté políčko „Zachovať pôvodné objekty“, funkcia Zarovnanie bude kopírovať namiesto toho, aby presúvala vybrané objekty.
-Ak je začiarknuté políčko „Najprv určiť základné body“, funkcia Zarovnanie vás vyzve na zadanie zarovnávacích bodov v nasledujúcom poradí: prvý základný bod, druhý základný bod, prvý cieľový bod, druhý cieľový bod.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="89"/>
         <source>second target point:</source>
         <translation>druhý cieľový bod:</translation>

@@ -71,16 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>Klikoni në opsionet për të vendosur/hequr, OK për të pranuar dhe filluar rreshtimin.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Nëse &apos;Ruaj objektet origjinale&apos; është shënuar, Rreshtimi do të kopjojë në vend se të lëvizë objektet e zgjedhura.
-Nëse &apos;Specifikoni pikët bazë së pari&apos; është shënuar, Rreshtimi do të kërkojë pikët e rreshtimit në rendin:
-pikë bazë e parë, pikë bazë e dytë, pikë cak e parë, pikë cak e dytë.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>pikë bazë e parë:</translation>

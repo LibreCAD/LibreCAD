@@ -39,154 +39,11 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Raami</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="obsolete">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="obsolete">&lt;</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Päästa</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Raami</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Päästa</translation>
-    </message>
-</context>
-<context>
-    <name>DlgParabola</name>
-    <message>
-        <source>Parabola</source>
-        <translation type="obsolete">Parabola</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geomeetria</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">Spline&apos; i punktid</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">Kontrollpunktid</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geomeetria</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Suletud</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="obsolete">Sisselülitamisel kasutatakse kerimispunkte</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="obsolete">Valimisel kasutatakse kontrollpunkte</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">Kontrollpunktid</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">Spline&apos; i punktid</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
         <translation>Alguspunkt võib seada ainult kauguse või punkti oleku</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Luuakse:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">Ristküliku</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Laius:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Kõrgus:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Keskus:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">Vigane nurk</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">Vigane raadius</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">Vigane väärtus</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Sisestuspunkti määramine</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Määrake nurk</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">Märkida suurus (laius, kõrgus)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">Nurkade tüübi määramine
-[str|round|bevels]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">Nurkkalde pikkus (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">Nurgaraadiuse määramine</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">Servade režiimi määramine
-[mõlemad hor|vert]</translation>
     </message>
 </context>
 <context>
@@ -433,73 +290,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">Kaare kõrgus (distants akordi ja ülemise kaarepunkti vahel)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Kõrgus:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Vastupäeva</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">Jooniselt nurga valimine</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Kaare raadius</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Päripäeva</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">Kaare kesknurk</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">Kaare pikkus</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Pikkus:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Joonise raadiuse valimine</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">Joonise kõrgus</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Joonise pikkuse valimine</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -711,10 +501,6 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">Piirava kasti üksuste valimine (täita kirje)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation type="unfinished"></translation>
@@ -769,31 +555,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">raadius=%1 on valitud punktide jaoks liiga väike
-punktide vaheline kaugus=%2 on suurem kui diameeter= %3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">Vali kahe võimaliku ringkeskme hulgast</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Esimese punkti täpsustamine</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Täpsustada teine punkt</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">Vali ringi keskpunkt</translation>
     </message>
 </context>
 <context>
@@ -1042,13 +803,6 @@ punktide vaheline kaugus=%2 on suurem kui diameeter= %3</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">Ringi, kaare või ellipsi valimine</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1092,10 +846,6 @@ punktide vaheline kaugus=%2 on suurem kui diameeter= %3</translation>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>Valige keskus</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">Keskust pole määratud.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1490,154 +1240,6 @@ punktide vaheline kaugus=%2 on suurem kui diameeter= %3</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">Esimese punkti määramine</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">Teise punkti määramine
-või [number|x|y|angle|p|edges|distance]</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">Teise punkti määramine
-või [number]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">Määrab liini suuna
-[x]yangangle|p|distance]</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">Määrata sirge suunanurk
-või [x|y|p|number|edges|distance]</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">Äärepunktide režiimi määramine
-[noneartstart|end|mõlemad kaugused]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">Punktidevaheline fikseeritud kaugus
-või [x|y|p|number|edges]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tagasi</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">Määra kaugus (%1)
-või [%2]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Määra kaugus (nurk%1 deg)
-või [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">Punktide arvu määramine</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Teise nurga määramine</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">Teise puutuja määramine</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Esimese nurga määramine</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">Esimese puutuja määramine</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Ei ole õige number. Proovi 1.9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">Ümardamisraadiuse vigane väärtus</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ei ole korrektne avaldis</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Sisestage number:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">Sisesta ümardamisraadius:</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Keskme määramine</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Luuakse:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Keskus:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">Algusnurk:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">Sisemine raadius:</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Polygon</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">Puutuja määramine</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1878,29 +1480,6 @@ või [%2]</translation>
         <location filename="../src/actions/drawing/draw/text/lc_action_draw_mtext.cpp" line="198"/>
         <source>Enter text:</source>
         <translation type="unfinished">Sisesta tekst:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ei ole korrektne avaldis</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Vali esimene üksus</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Teise üksuse valimine</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">Alternatiivsed näitajad</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">Sisesta nihkeväärtus</translation>
     </message>
 </context>
 <context>
@@ -3920,10 +3499,6 @@ või [%2]</translation>
         <translation>Prompt</translation>
     </message>
     <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">Löö võrku</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>Lõika keskkäsiraamat</translation>
@@ -4344,26 +3919,6 @@ või [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>Widget Options</source>
         <translation>Vidina valikud</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Vasak</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Õige</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Top</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Alumine</translation>
-    </message>
-    <message>
-        <source>Floating</source>
-        <translation type="vanished">Ujuv</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
@@ -5211,10 +4766,6 @@ Punkt: (%8 ,%9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">Joondatavate üksuste valimine (Sisene täita)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>Vali ja joonda</translation>
@@ -5246,10 +4797,6 @@ Punkt: (%8 ,%9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
         <translation>Skaala:</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">Vali joondamiseks (sisselülitamine lõpetamiseks)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -6243,13 +5790,6 @@ Punkt: (%8 ,%9)</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Ühtegi üksust pole valitud!</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionModifyStretch</name>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="118"/>
@@ -7223,18 +6763,6 @@ Punkt: (%8 ,%9)</translation>
         <translation>Esitatud faili ei saa lugeda - palun kontrollige, kas see on olemas ja sellest on lubatud lugeda.</translation>
     </message>
     <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">Kiirklahvide kaardistamist ei imporditud.
-Eeldatav fail on olemas, kuid see ei sisalda LibreCAD kiirklahvide kaardistamist.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">Kiirklahvide kaardistamist ei imporditud.
-XML- parsimisviga tekkis failide töötlemisel.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
         <translation>Kiirklahvide kaardistamine salvestati edukalt.</translation>
@@ -7243,12 +6771,6 @@ XML- parsimisviga tekkis failide töötlemisel.</translation>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
         <translation>Esitatud failile ei saa kirjutada - palun kontrollige, kas sellele on lubatud kirjutada.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">Kiirklahvide kaardistamist ei imporditud.
-Mõned vead tekkisid XML-i genereerimisel.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -8643,74 +8165,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     </message>
 </context>
 <context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">Sisselülitamisel eemaldatakse originaalkaar</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">Kaare asendamine</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">Kihik, kuhu loodud ring asetatakse</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktiivselt</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Originaal</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktiivselt</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Originaal</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Algne lahendatud</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">Joonise nihkeväärtuse valimine</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Pen:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">Tekkinud ringile rakendatav pen</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Kihik:</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">Ringi raadiuse delta kaare raadiuseni</translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">Raadiuse nihe:</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -9005,69 +8459,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>Tööriistariba:%1 (kohandatud)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">Tüüp</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">Ristme horisontaalmõõde</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">Joonise X väärtuse valimine</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">Määrab, kuidas rakendada ristmõõtmeid</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">Pikendamine</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">Kogupikkus</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">Protsent</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">Joonise Y väärtus</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">Ristme vertikaalne mõõde</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">Pööramisnurk ümber keskpunkti ristlõike korral</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
     </message>
 </context>
 <context>
@@ -9431,37 +8822,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="obsolete">Ordinaatmõõde</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Dimensioonikiht</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Peni atribuudid</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geomeetria</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="obsolete">Ordinaat</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -9523,11 +8883,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
         <translation>Lähtevahemik:</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">Määrab lähtemõõtme dimensioonijoonte vahelise vahe. Sisene kaugusesse. Teavet algtaseme mõõtmete kohta vt DIMBASELINE. (DIMDLI süsteemimuutuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -11174,10 +10529,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <source>Hatch Properties</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">Omadused?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -11699,10 +11050,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <translation>UCSi andmete veerg</translation>
     </message>
     <message>
-        <source>If checked, type of grid for saved view will be shown</source>
-        <translation type="vanished">Märkimise korral näidatakse salvestatud vaate võrgutüüpi</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
         <translation>Võrgutüübi ikooni veerg</translation>
@@ -11711,18 +11058,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Type icon column</source>
         <translation>Ikooni veerg</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation type="vanished">Sisselülitamisel näidatakse vaate koordinaatsüsteemi üksikasjadega veergu</translation>
-    </message>
-    <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">Vaate üksikasjade vihje tabeli elementide jaoks</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">Kui see on märgitud, kuvatakse veerg, mis sisaldab vaate koordinaatsüsteemi üksikasju.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
@@ -11765,10 +11100,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <translation>Sisselülitamisel näidatakse tabelis vaate üksikasjadega veergu.</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">VIew Detailide veerg</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>Operatsioonid</translation>
@@ -11784,17 +11115,9 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">Topeltklõpsuga tabelikirjel</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
         <source>Defines which action should be performed on double click on view item of the table.</source>
         <translation>Määrab, milline toiming tehakse, kui tabeli vaateelemendile topeltklõpsatakse.</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table. </source>
-        <translation type="vanished">Määrab, milline toiming tuleb teha topeltklõpsuga tabeli vaateelemendil.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="158"/>
@@ -11822,10 +11145,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <translation>Sisselülitamisel taastab vaatelaua elemendil klõpsamine vaate. Vastasel juhul tuleks vaade selgelt taastada.</translation>
     </message>
     <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">Vaade taastatakse tabeliühikute kaupa</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
         <translation>Näitamise korral näidatakse kohtspikrit vaate kohta lisainfoga tabelikirjel.</translation>
@@ -11834,10 +11153,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
         <translation>Märkimisel ja loomise ajal on sisestatud nimega vaade juba olemas, uuendatakse seda uue asukoha järgi. Vastasel juhul on vaja uue vaate ainulaadset nime.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Sisselülitamisel näidatakse vaate eemaldamisel kinnitusdialoogi. Vastasel juhul eemaldatakse vaade vaikselt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
@@ -12133,13 +11448,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation>Nimi pole unikaalne. Palun sisesta unikaalne nimi.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="obsolete">Parabola kontrollpunktid ei saa olla kollineaarsed</translation>
     </message>
 </context>
 <context>
@@ -12636,17 +11944,9 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <translation>Kui see on sisse lülitatud, näidatakse tabeli kirjel kohtspikrit koos lisainfoga UCSi kohta.</translation>
     </message>
     <message>
-        <source>Toolip with UCS details for table items</source>
-        <translation type="vanished">Tabelielementide UCS üksikasjadega tööriistakast</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
         <source>Type icon column</source>
         <translation>Ikooni veerg</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation type="vanished">Märkimise korral näidatakse tabelis veergu UCSi päritolu ja nurgaga</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -12662,10 +11962,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
         <source>Editing</source>
         <translation>Redigeerimine</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Sisselülitamisel näidatakse vaate eemaldamisel kinnitusdialoogi. Vastasel juhul eemaldatakse vaade vaikselt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"/>
@@ -12686,10 +11982,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
         <translation>Kui see on valitud, kuvatakse veerg, milles on UCS-i ruudustiku tüüp.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">Kui see on valitud, kuvatakse vaate eemaldamisel kinnitusdialoog. Vastasel juhul eemaldatakse vaade vaikselt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12757,26 +12049,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <translation>Määrab, mitu korda UCS-i märgendi vilgub, kui UCS-i esitletakse.</translation>
     </message>
     <message>
-        <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation type="vanished">Määrab, milline toiming tuleb teha topeltklõpsuga tabeli elemendil.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">UCS- i taastamine ühe nupuvajutusega tabeliühiku kaupa</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation type="vanished">Sisselülitamisel näidatakse tabelis veergu UCS- i tüübi ikooniga.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation type="vanished">Märkimisel näidatakse veergu UCS- i ruudustiku tüübiga</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied</source>
-        <translation type="vanished">Määrab, kuidas kohandada joonise vaateakent pärast UCS- i rakendamist</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
         <source>On double-click on table item</source>
         <translation>Topeltklõpsuga tabelikirjel</translation>
@@ -12832,10 +12104,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <translation>UCSi esiletõstmine</translation>
     </message>
     <message>
-        <source>Defines delay between UCS marker blinks</source>
-        <translation type="vanished">Määrab viivituse UCS markeri vilkude vahel</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="216"/>
         <source> ms</source>
         <translation>ms</translation>
@@ -12849,10 +12117,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="242"/>
         <source>Blink Delay:</source>
         <translation>Pilgutamise viivitus:</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation type="vanished">Määrab UCS- i markeri vilkude hulga UCS- i esiletõstmisel</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="252"/>
@@ -13249,45 +12513,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">Sisselülitamisel luuakse kogu valiku piirdekast. Vastasel juhul luuakse see üksikute üksuste jaoks.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">Valimine grupina</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Joonise nihke valimine</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">Sisselülitamisel näidatakse ainult piirdekasti nurgapunkte. Vastasel juhul tõmmatakse servajooned.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">Ainult nurgapunktid</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">Sisselülitamisel joonistatakse piirdekast mitmeliinilisena</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polüliin</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13381,86 +12606,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation type="unfinished">Joonise nihke valimine</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">Duplikaadi vertikaalne nihe algsest olemist</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">Duplikaadi horisontaalne nihe algsest olemist</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">Võetakse X- i nihe jooniselt</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Pen:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">Sisselülitamisel asetatakse duplikaat originaali koordinaatidesse</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">Kohapeal</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">Võetakse nihe Y- ga jooniselt</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Kihik:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">Loodud duplikaadile rakendatav pensüstel</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktiivselt</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Originaal</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Algne lahendatud</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">Kiht, kuhu tuleks paigutada duplikaat</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktiivselt</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Originaal</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">Tasakaal Y:</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">X-nihe:</translation>
     </message>
 </context>
 <context>
@@ -13642,69 +12787,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">Väike raadius:</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">Nurga väärtus suurema raadiuse korral</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">Märkimise korral võib määrata suurema raadiuse nurga</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Põhinurk:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Vastupäeva</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">Peamised toimingud joonistamisel</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">Märkimise korral määrab suurema raadiuse nurga hiir</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vaba</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">Ellipsi põhiraadiuse pikkus</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">Joonise väikese raadiuse valimine</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">Suur raadius:</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">Ellipsi väikse raadiuse pikkus</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Päripäeva</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13843,21 +12925,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">Joonise nurga valimine</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Kaarevalikud</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Päripäeva</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Vastupäeva</translation>
     </message>
 </context>
 <context>
@@ -14748,30 +13815,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <source>Eccentricity:</source>
         <translation>Ekstsentrilisus:</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">Vigane hüperbooli definitsioon</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">Foci peab olema eristatav</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">Vigased keskkoordinaadid</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">Suur raadius peab olema positiivne</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">Vigane pöördenurk</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">Suhe või väike raadius peab olema positiivne</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -14943,10 +13986,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <translation>Laius:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">Pildi laius</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>Pildi laiuse väärtus</translation>
@@ -14957,21 +13996,9 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <translation>Kõrgus:</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">Pildi kõrgus</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>Jooniselt võetakse kõrguse väärtus</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Skaala:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">Skaleerimistegur</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -14983,10 +14010,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>Nurk:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Pöördenurk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -15018,22 +14041,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <source>Select an image file</source>
         <translation>Pildifaili valimine</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">Suurus (px):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">Pildi suurus pikslites</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">Eraldusvõime (dots per inch)</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -15046,21 +14053,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">Sisselülitamisel asub punkt alati valitud olemi sees</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">Snap on entiteet</translation>
     </message>
 </context>
 <context>
@@ -15438,14 +14430,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <translation>Eraldaja, mille järgi jagatakse kihi sisemine nimi hierarhilisteks nimedeks</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">Kihi taseme nime eraldaja</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">Sekundaarse kihi sufiksid</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15476,10 +14460,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>Kihi nime sufiks, mis määrab, et kiht on alternatiivse asendi kiht.</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">Dubleeriv nimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15622,17 +14602,9 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <translation>Erinevad värviseadistused</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Värvid</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>Valitud elementide taustavärv kihtide puus.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">Separaatorridade värv kihtide puuvaates</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15671,10 +14643,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>Virtuaalse kihi taustavärv</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">Kolmevaateelementide eraldaja võrk</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15730,10 +14698,6 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>Alternatiivse asendi kiht</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">võrku</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16223,118 +15187,6 @@ Palun määra muu väärtus.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">Sisselülitamisel määratakse rea pikkus määramise asemel hiire asukohaga</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vaba</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Pildistamise kauguse valimine</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">Puutepunkti nihe lõikepunktist</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Joonise pikkuse valimine</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Joonise nihke valimine</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">Sisselülitamisel jagatakse algne olem lõikepunkti järgi.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Jaga</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">Lõikepunkti kaugus kindlaksmääratud sirge murdepunktist</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">Määrab, milline osa loodud reast lõikumispunkti haaratakse</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Alusta</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Middle</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Lõpp</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">Tikk Snap:</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Liinilõikus:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Liini pikkus</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">Märkimise korral on nurk valitud olemi nurga suhtes</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Pikkus:</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">Lõikumispunkt loodud liini ja allikaüksuse lõikepunkti asukoha jaoks (algse rea piires)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">Vaba</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Rippkaugus:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Liininurk</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16641,93 +15493,6 @@ Palun määra muu väärtus.</translation>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation type="unfinished">Loodavate sektorite arv</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">Suurus:</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">Lõpunihe:</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">Loodud liini nihe lõikepunktist</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">Loodud rea haaramispunkt</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Alusta</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Middle</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Lõpp</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Pikkus:</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">Loodud liini fikseeritud pikkus</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Snap:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Joonise pikkuse valimine</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Joonise nihke valimine</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">Määrab, kas loodud rida tuleb luua ristumispunkti või peab sellel olema fikseeritud pikkus</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">Ristmikule</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">Fikseeritud pikkus</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">Sisselülitamisel on loodud rida valitud rea suhtes ortogonaalne</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">Ortogonaalne</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">Nurk algse rea ja loodud ühe vahel</translation>
     </message>
 </context>
 <context>
@@ -17113,81 +15878,6 @@ Palun määra muu väärtus.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">Sisselülitamisel luuakse üksikute ridade asemel polüliin</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">Polüliini loomine</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">Teisena valiti liini poliitika</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">Laienda/Trim</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">Lisa segment</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">Muutust pole</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">Rida 1:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">Rida 2:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">Esimesena valitud liiniga liitumise poliitika</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">Määrab, kuidas rakendada pliiatsit loodud üksustele</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">Joone ühendusvalikud: Aktiivne pliiats</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">Rida 1</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">Rida 2</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">Mõlemad jooned</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">Atribuudid:</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">Sisselülitamisel eemaldatakse originaalread</translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">Eemalda originaalid</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17569,85 +16259,6 @@ Palun määra muu väärtus.</translation>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">Määrab, kuidas luua punktid servadel (algus-/ lõpupunktid).</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Mitte ükski</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Mõlemad</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Alusta</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Lõpp</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Joonise kauguse valimine</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">Loodavate punktide arv</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">Servpunktid:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">Määrab, kas kõik punktid peaksid mahtuma liini algus- ja lõpp-punktide vahele või arvutatakse liini pikkus punktide arvu ja punktidevahelise kauguse põhjal.</translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">Joone punktide valikud: Joone kohandamine</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">Punktidevaheline kaugus.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">Märkimise korral joonistatakse punktide joon määratud nurga all</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">Punktide arv:</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">Märkimise korral kasutatakse kindlat punktidevahelist kaugust. Vastasel juhul arvutatakse vahemaa.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Fikseeritud vahemaa</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Liininurk</translation>
     </message>
 </context>
 <context>
@@ -21897,433 +20508,6 @@ Palun määra muu väärtus.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Abi</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">&amp; Online Docs</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">Wiki</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">Kasutaja &amp; käsiraamat</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp;Commands</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">&amp; Stiillehed</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">Wid&amp;gets</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Umbes</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp;Forum</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">Zulip &amp; Chat</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">&amp; Edastamise viga</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">&amp;Requesti funktsioon</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">&amp; Vabasta leht</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp; Anneta</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Line</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">Poin&amp;t</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Circle</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">&amp; Arc</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">Poly&amp;gon</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">Splin&amp;e</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">Ellip</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Polyline</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">&amp; Other</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">&amp;Draw</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp; Ellipse</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">Ot&amp;her</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Muuda</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp; Tellimus</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">&amp; Mõõtmed</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Info</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp;Tools</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp; Vali</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">Dime&amp;nsion</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp; Fail</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Viimased failid</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Import</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Eksport</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;Valikud</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp; Edit</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp; View</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">&amp; Vaadete taastamine</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">Pl&amp;ugins</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">&amp;Workspace</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Dokialad</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">CAD Wid &amp; gets</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">&amp; Joonised</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">Kontekst</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Tööriistaribad</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">Vidinad</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">CAD vidinad</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">CAD tööriistaribad</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Vali</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">Hiljutised</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Muuda</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">Muuda veel</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Tõmba</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Line</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polüliin</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Point</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Ring</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Polygon</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">Polüliin/pöörlev</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Ellipse</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Teised</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">Lisa mõõtmed</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">Joonda</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">Korralda</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Kihid</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Edit</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">Valikud</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">&amp;Nimetatud vaated</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">Muuda omadusi</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">Muuda üldist</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">Muuda rida</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">Joonista joon</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">Joonista ringi</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">Joonista teisi</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">Muuda ringi</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">Muuda kaar</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">Muuda polüliini</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">Muuda spline</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">Muuda kerimispunkte</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">Muuda teksti</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">Muuda MText</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">Redigeerimine Blokk</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Ordu</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp; Tööriistaribad</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">&amp;CAD tööriistaribad</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">&amp; Workspaces</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Ta &amp; b režiim</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">&amp; Windowsi režiim</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp;Layout</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">Ümardatud</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">Kolmnurkne</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">North</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">Lõuna</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">Ida</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">West</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp;Arrange</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp;Maximized</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;Cascade</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Tile</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Plaadi &amp; püstsuunas</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Kataloog &amp; horisontaalne</translation>
-    </message>
-</context>
-<context>
     <name>LC_MenuFactoryBase</name>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
@@ -22939,21 +21123,6 @@ Palun määra muu väärtus.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Joonise nihke valimine</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23090,197 +21259,6 @@ Palun määra muu väärtus.</translation>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Sisselülitamisel kasutatakse aktiivseid atribuute peegeldunud olemite puhul, vastasel juhul - originaalsed.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktiivsete atribuutide kasutamine</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Märkimata jätmisel eemaldatakse algsed üksused, vastasel juhul jäävad nad ellu.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originaalid alles jätta</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Sisselülitamisel asetatakse aktiivsele kihile peegelduvad üksused, vastasel juhul paigutatakse need originaalkihtidesse.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Kasutaja aktiivne kiht</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">Märkimise korral skaleeritakse vajaduse korral üksusi. Vastasel juhul on nad lihtsalt asetatud ja pööratud.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Skaala</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">Märkimise korral eemaldatakse lõikepunktide vahelised lõigud. Märkimata jätmise korral jagatakse üksus lõikumispunktideks.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">Eemalda lõigud</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">Sisselülitamisel eemaldatakse valitud segment. Vastasel juhul jäävad valitud segmendid ellu ja ülejäänud segmendid eemaldatakse.</translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">Eemalda valitud</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Rippkaugus:</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">Lõikumispunkt joone murdepunktini</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Liinilõikus:</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">Tühiku suurus:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">Liini tühimiku haaramispunkt</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vaba</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">Vahe kohandamise valikud: Vahe kohandamine:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">Alusta</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">Middle</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">Lõpp</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">Vaba</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">Alusta</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">Middle</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">Lõpp</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">Pikivahe suurus jooniselt</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">Vahemaa katkestuspunktist</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Pildistamise kauguse valimine</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">Vahe suurus, kui see ei ole vaba</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">Kui närida, määratakse vahe suurus hiirega</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">Märkimise korral teostab peegli valitud reaolem.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">Peegel valitud reale</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Märkimata jätmisel eemaldatakse algsed üksused, vastasel juhul jäävad nad ellu.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originaalid alles jätta</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Sisselülitamisel kasutatakse aktiivseid atribuute peegeldunud olemite puhul, vastasel juhul - originaalsed.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktiivsete atribuutide kasutamine</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Sisselülitamisel asetatakse aktiivsele kihile peegelduvad üksused, vastasel juhul paigutatakse need originaalkihtidesse.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Kasutaja aktiivne kiht</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23326,234 +21304,6 @@ Palun määra muu väärtus.</translation>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation type="unfinished">Aktiivse kihi kasutamine</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Pööramise valikute liigutamine</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">Märkimisel peaks faktori vaba valiku tegema hiir.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vaba</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Sisselülitamisel asetatakse aktiivsele kihile uued olemid, vastasel juhul on need originaalkihtides.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Aktiivse kihi kasutamine</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">Absoluutsuse korral pööratakse võrdluspunkti, kuid olemit pööratakse ainult teise nurgaga, vastasel juhul võetakse nurgad kokku</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">Absoluutselt</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">Nurk üksuse pööramiseks pöörlemiskeskme punkti ümber</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">Sisselülitamisel rakendatakse loodud olemitele aktiivseid atribuute, vastasel juhul kasutatakse algseid.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktiivsete atribuutide kasutamine</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">Märkimise korral on teine pööramine võrdluspunkti ümber</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">Pöörake kaks korda</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">Täiendava pöörlemise nurk peegelduspunkti ümber</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Vali jooniselt pöördenurk</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">Sisselülitamisel jäävad algsed üksused ellu, vastasel juhul need eemaldatakse.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originaalid alles jätta</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">Märkimisel luuakse mitu koopiat.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Mitu koopiat</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">Pöörlemisnurk:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Määrab, kas nurk on määratud sisestatud väärtusega või hiire asukohaga</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">Jooniselt teise pöördenurga valimine</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Koopiate arv</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Pööramise valikute liigutamine</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">Märkimise korral luuakse mitu koopiat.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Mitu koopiat</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">Märkimisel rakendatakse X- ja Y- telje puhul sama skaleerimistegurit.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">Isotroopne</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Sisselülitamisel jäävad algsed üksused ellu, vastasel juhul need eemaldatakse.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originaalid alles jätta</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Koopiate arv</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Sisselülitamisel rakendatakse loodud üksustele aktiivseid atribuute, vastasel juhul kasutatakse originaalseid.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktiivsete atribuutide kasutamine</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">Y-telje skaalategur</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Skaalategur:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">Sisselülitamisel asetatakse loodud olemid aktiivsele kihile. Vastasel juhul asetatakse need algsetele kihtidele.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Aktiivse kihi kasutamine</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">Märkimisel saab faktori vabalt valida hiirega. Vastasel juhul kasutatakse kindlaksmääratud tegurite väärtusi.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vaba</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">X-telje skaalategur</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Sisselülitamisel jäävad algsed üksused ellu, vastasel juhul need eemaldatakse.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">Originaalid alles jätta</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">Sisselülitamisel asetatakse loodud olemid aktiivsele kihile. Vastasel juhul pannakse need algsetesse kihtidesse.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Aktiivse kihi kasutamine</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Koopiate arv</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">Sisselülitamisel rakendatakse loodud üksustele aktiivseid atribuute, edaspidi kasutatakse originaalseid.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktiivsete atribuutide kasutamine</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Sisselülitamisel jäävad algsed üksused ellu, vastasel juhul need eemaldatakse.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originaalid alles jätta</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Märkimise korral luuakse mitu koopiat.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Mitu koopiat</translation>
     </message>
 </context>
 <context>
@@ -23869,14 +21619,6 @@ Palun määra muu väärtus.</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>...</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">Vaatete filtreerimine nime järgi</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Filter...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24312,45 +22054,6 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
         <source>Control Points</source>
         <translation>Kontrollpunktid</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Parabola kontrollpunktid ei saa olla kollineaarsed</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">Sisselülitamisel kustutatakse sisestamispunktina kasutatud punktolem pärast asetamist. Vastasel juhul jääb see ellu.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">Eemalda punkt</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Skaalafaktor</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Mastaabitegur pasteeritud üksuste puhul</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Pöörlemisnurk pasteeritud üksuste puhul</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24426,89 +22129,6 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">Joonise nurga valimine</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Pöörlemisnurk pasteeritud üksuste puhul</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">Üksuste vaheline vahe sisestamispunktides ridades.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">Jooniselt X- i järgi massiivi vahe valimine</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Skaalafaktor</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">Joonistamisel valitakse massiivi nurk</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">Massiivi pöörlemisnurk.</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">Ridade arv.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">Jooniselt Y- ga valitud massiivi vahe</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">Märkimisel kasutatakse iga pasta ja terve massiivi puhul sama pöördenurka. Vastasel juhul kasutatakse erinevaid nurki.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">Samad nurgad</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Vahemik:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">Kolonnide arv.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">Sisselülitamisel luuakse pastale koopiate massiivid.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">Array</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">Array nurk:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Mastaabitegur pasteeritud üksuste puhul</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">Vahe veergudes olevate üksuste sisestamispunktide vahel.</translation>
     </message>
 </context>
 <context>
@@ -25130,17 +22750,9 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
         <translation>Rea laiuse nimi</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Värvid</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>Pliiatsi elemendi taustavärv, mida parajasti redigeeritakse pliiatsi tabelis</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">Sulgede nimekirja alusvõrgu värv</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25162,10 +22774,6 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>Terve tabelirida on aktiivse pensüsteli jaoks rasvane</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">Võrgu värv:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25258,17 +22866,9 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
         <translation>Looduslik nimetus (võimaluse korral)</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">Sisselülitamisel näidatakse lisasõnumeid pliiatsiga seotud toimingute raames</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>Infosõnumi näitamine, kui pliiatsiga ei saa ühtegi üksust valida</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">Topeltklõpsuga tabelielemendil</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25491,12 +23091,6 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Pliiatsifaili asukoht on muudetud, taaskäivitage rakendus, et uus pliiatsifail saaks kasutada. 
-Palun pange tähele, et kui salvestate pliiatsi redaktoris ilma taaskäivitamiseta, salvestatakse praegused pliiatsid paletist uude faili ja seega kaetakse selle olemasolev sisu.</translation>
-    </message>
 </context>
 <context>
     <name>LC_PointPickButton</name>
@@ -25542,37 +23136,6 @@ Palun pange tähele, et kui salvestate pliiatsi redaktoris ilma taaskäivitamise
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>Jooniselt asukoha valimine</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">Punktide arv võre Y suuna järgi (võreridade arv)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">Ridade arv:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">Veerud Loe:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">Punktide arv X võre suuna järgi (võre veergude arv)</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">Sisselülitamisel kohandatakse võre viimast punkti vastavalt esimese punkti asukohale, nii et võre on tagurpidi või nelinurkne</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">Kohanda viimane punkt esimeseks</translation>
     </message>
 </context>
 <context>
@@ -32839,10 +30402,6 @@ Palun pange tähele, et kui salvestate pliiatsi redaktoris ilma taaskäivitamise
         <translation>Diameeter</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">Ümbermõõt</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="740"/>
@@ -33831,10 +31390,6 @@ p, li { white- space: pre- wrap; }
         <translation>Üksuse teave</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Kui see on sisse lülitatud, näidatakse üksuse info vidinas täpsemat teavet mitmeliiniliste ridade ja kaarte kohta.&lt;br/&gt; Muul juhul kuvatakse ainult tippude/pulgade info.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
@@ -33883,205 +31438,6 @@ p, li { white- space: pre- wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>Punktide tippsulepea</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Servid:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">Sisselülitamisel määratakse, et murdepunkti nihutatakse nurkade raadiusega.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Liikumise samm</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">Kaldnurga pikkus Y-suuna jaoks.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Määrab, millised ristküliku servad tuleb joonistada (nii et ristküliku asemel on võimalik luua vaid kaks paralleelset joont)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Mõlemad</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikaalne</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horisontaalne</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">Ristküliku laius</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">Määrab, kuidas joonistada ristküliku nurki.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Otse</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Round</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">Sisselülitamisel pööratakse ristkülikut määratud nurga all.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Põhinurk:</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">Sisselülitamisel määrab ristküliku määratud kõrgus ja laius kaare keskmete vahelise kauguse ümardamisnurkade puhul. Vastasel juhul määravad need väärtused ristküliku välismõõtme.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">Sisemine suurus</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Pikkus Y:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">Sisselülitamisel luuakse ristkülik üksikute segmentide asemel hulkjoonena.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polüliin</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Snap:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Kõrgus:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">Kallutusnurga pikkus X suuna jaoks.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Pikkus X:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">Ristküliku kõrgus</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Ümardatud nurkade raadius.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">Ristkülikuvihma punkt asetatakse sisestamispunkti.</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">Ülavasak</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Top</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">Ülaparem</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Vasak</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Middle</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Õige</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">Alumine vasak</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Alumine</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">Alumine parem</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Vali jooniselt pöördenurk</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Jooniselt valitakse ümardatud nurkade raadius.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Pöördenurk</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">Jooniselt ristküliku kõrgus</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">Jooniselt ristküliku laiuse valimine</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Laius:</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Nurgad:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">Jooniselt valitakse kaldnurga pikkus X- suuna jaoks.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">Jooniselt valitakse Y-suunalise kaldenurga pikkus.</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">Sisselülitamisel määratakse nurk hiire asukoha järgi. Vastasel juhul kasutatakse määratud väärtust.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vaba</translation>
     </message>
 </context>
 <context>
@@ -34451,153 +31807,6 @@ p, li { white- space: pre- wrap; }
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Määrab, millised ristküliku servad tuleb joonistada (nii et ristküliku asemel on võimalik luua vaid kaks paralleelset joont)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Mõlemad</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikaalne</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horisontaalne</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">Määrab, milline ristküliku punkt tuleb paigutada alguspunkti.</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">Nurk</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">Vertikaalkeskmine</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">Keskmine horisontaalne</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Middle</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">Jooniselt valitakse ristküliku pöördenurk</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">Jooniselt valitakse ümardatud nurkade raadius.</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Nurgad:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">Määrab, milline ristküliku punkt tuleb asetada lõpp-punkti.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Jooniselt valitakse kaldenurk X-suunas.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Servid:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">Vali joonistamisest kaldenurk Y-suunas.</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">Käivita Snap:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Kalde pikkus Y-suunas.</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Sisselülitamisel määratakse, et klõpsupunkte nihutatakse nurkade raadiusega.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Liikumise samm</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Pikkus X:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">Sisselülitamisel saab määrata ristküliku pöördenurga.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Põhinurk:</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">Ristküliku pöördenurk.</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">Lõpeta Snap:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">Määrab, kuidas joonistada ristküliku nurki.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Otse</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Round</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">Ümardatud nurkade raadius.</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Pikkus Y:</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">Sisselülitamisel joonistatakse kogu ristkülik mitmejoonelisena.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polüliin</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Kalde pikkus X suunas.</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -34855,145 +32064,6 @@ p, li { white- space: pre- wrap; }
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation type="unfinished">Vali joonistamisest kaldenurk Y-suunas.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">Nelinurga sisemine nurk.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">Sisselülitamisel fikseeritakse nelinurga sisenurk määratud väärtusele.</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">Fikseeritud sisemine nurk:</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">Ristküliku baasnurk.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Pikkus X:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Kalde pikkus X suunas.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">Määrab, kuidas tõmmata ristkülikule nurgad.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Otse</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Round</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Nurgad:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Sisselülitamisel määratakse, et klõpsupunkte nihutatakse nurkade raadiusega.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Liikumise samm</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Pikkus Y:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Kalde pikkus Y-suunas.</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Ümardatud nurkade raadius.</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">Sisselülitamisel luuakse kuju polüliinina.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polüliin</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">Vali nelinurga sisemine nurk jooniselt.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Servid:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Jooniselt valitakse ümardatud nurkade raadius.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Jooniselt valitakse kaldenurk X-suunas.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">Vali joonistamisest kaldenurk Y-suunas.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Määrab, millised ristküliku servad tuleb joonistada (nii et ristküliku asemel on võimalik luua vaid kaks paralleelset joont)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Mõlemad</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikaalne</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horisontaalne</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">Jooniselt valitakse ristküliku baasnurk</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">Sisselülitamisel pööratakse ristkülikut määratud baasnurgani. Vastasel juhul määratakse baasnurk ristküliku esimese ja teise punkti vahelise nurga abil.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">Fikseeritud baasnurk:</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">Sisselülitamisel luuakse ristküliku asemel nelinurk.</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">Nelinurkne</translation>
     </message>
 </context>
 <context>
@@ -35642,100 +32712,6 @@ p, li { white- space: pre- wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">Vabandame, uue versiooni kontrollimisel tekkis võrguviga.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">Serveri vastuse parsimine nurjus</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Pööramise valikute liigutamine</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">Määrab, kas koopiad lisatakse aktiivsele või originaalkihile</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Aktiivse kihi kasutamine</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">Teisese nurga reguleerimine nii, et nurkade summa (suhteline pöördenurk) on 0. Sellise seadistusega üksust liigutatakse, kuid ei pöörata.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">Nurgad peegelduvad</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">Joonise põhinurga valimine</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">Määrab, kas rakendatakse aktiivseid või originaalseid joonise atribuute</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktiivsete atribuutide kasutamine</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">Joonistamisel võetakse teisene nurk</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">Pöörlemisnurk absoluutse võrdluspunkti kohal</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Märkimise korral luuakse mitu koopiat.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Mitu koopiat</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">Loodavate koopiate arv</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">Teisene nurk:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">Märkimisel kasutatakse kõigi koopiate puhul sama nurka. Vastasel juhul suurendatakse seda proportsionaalselt koopiate arvuga.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">Sama teisene nurk koopiate puhul</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Sisselülitamisel jäävad algsed üksused ellu, vastasel juhul need eemaldatakse.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originaalid alles jätta</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">Põhinurk:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">Nurk, mis pööratakse üle sekundaarse võrdluspunkti</translation>
     </message>
 </context>
 <context>
@@ -36730,141 +33706,6 @@ p, li { white- space: pre- wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">Käivita ringinurk:</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">Algusnurk ringile, millest puugid algavad.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">Puutepunkti nihe lõikepunktini.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Joonise kauguse valimine</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Kaugus:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">Puukide vaheline kaugus.</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">Märkimise korral jagatakse valitud olem ristumispunktidega.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Jaga</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">Tõmmake tikk joonisele</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">Puugi pikkus.</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">Tipunurga valimine jooniselt</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">Joonduspunkt:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">Tipu pikkuse valimine jooniselt</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">Pilk algusringi nurk jooniselt</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">Nurk märke ja valitud olemi vahel.</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">Märkimisel on märkenurk seotud valitud olemiga, vastasel juhul on see absoluutne nurk.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">Puugi pikkus:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">Määrab, milline ristumispunkt asetatakse valitud olemiga ristumispunkti.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Alusta</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Middle</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Lõpp</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">Märkimise korral kasutatakse kindlat puukidevahelist kaugust. Vastasel juhul arvutatakse kaugus olemi pikkuse ja puukide arvu alusel.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">Parandatud</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">Puukide arv valitud olemi servade vahel.</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">Krahv:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">Määrab, kuidas puugid üksuse servadele asetada.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Mitte ükski</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Mõlemad</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">Serv Tick:</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37184,57 +34025,6 @@ p, li { white- space: pre- wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">Määrab iga spline- fit- spline- fit mitmeliini kohta genereeritavate realõikude arvu</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Märkimata jätmisel eemaldatakse algne spline, vastasel juhul jääb see ellu.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originaalid alles jätta</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Sisselülitamisel kasutatakse loodud olemite puhul aktiivseid atribuute, vastasel juhul - originaalseid.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktiivsete atribuutide kasutamine</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Sisselülitamisel asetatakse loodud olemid aktiivsele kihile, vastasel juhul asetatakse need originaalkihtidesse.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Aktiivse kihi kasutamine</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">Sisselülitamisel saab määrata realõikude kohandatud arvu. Vastasel juhul kasutatakse aktiivse joonise seadistuste väärtust.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">Kohandatud segmentide arv</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">Sisselülitamisel on reasegmendid osa polüliinist. Vastasel juhul on need üksikud jooned</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">Polüliinile</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -37358,61 +34148,6 @@ p, li { white- space: pre- wrap; }
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
         <translation type="unfinished">Polüliinile</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Sisselülitamisel asetatakse loodud olemid aktiivsele kihile, vastasel juhul asetatakse need originaalkihtidesse.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Kasutaja aktiivne kiht</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">Polüliinisegmendi keskmiste punktide arv, mis lisatakse spline&apos;ile.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">Määrab spline&apos; i astme</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Märkimata jätmisel eemaldatakse algne polüliin, vastasel juhul jääb see ellu.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Kraad:</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originaalid alles jätta</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">Keskpunkt:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Sisselülitamisel kasutatakse loodud olemite puhul aktiivseid atribuute, vastasel juhul - originaalseid.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktiivsete atribuutide kasutamine</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">Märkimisel loetakse mitmejoonelised tipud spline- punktideks ja luuakse spline punktide järgi. Vastasel juhul peetakse neid kontrollpunktideks ja luuakse orinaarne spline.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">Vertikaaljooned on kerimispunktid</translation>
     </message>
 </context>
 <context>
@@ -37816,69 +34551,6 @@ p, li { white- space: pre- wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>Spline&apos; i ligikaudseks määramiseks kasutatav kraad</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">Sisselülitamisel luuakse sümmeetriline täht.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Sümmeetriline</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">Raadius siseservadele.</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Number:</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">Jooniselt välisraadiuse valimine</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">Joonise siseraadiuse valimine</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">Kiirte arv.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">Märkimisel ümardatakse välisservad.</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">Välimusraadius</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">Märkimisel ümardatakse siseservad.</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">Sisemine raadius</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">Sisselülitamisel näidatakse tähte mitmeliinilisena.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polüliin</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">Väliskiirte raadius (servad).</translation>
     </message>
 </context>
 <context>
@@ -38769,14 +35441,6 @@ p, li { white- space: pre- wrap; }
         <translation>Seadistused</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">Kasutaja koordinaatide filtreerimine nime järgi</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Filter...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>&lt;Ei nime&gt;</translation>
@@ -38877,33 +35541,6 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>Eemalda A&amp;ll UCS</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Vormi</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">Uue koordinaatsüsteemi X-telg</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Määrab, kas X- telje nurk on määratud sisestatud väärtusega või hiire asukohaga</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vaba</translation>
     </message>
 </context>
 <context>
@@ -39516,33 +36153,6 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.cpp" line="63"/>
         <source>remove 0&quot;</source>
         <translation>eemalda 0</translation>
-    </message>
-</context>
-<context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Ridade suhtelise nurga valikud</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Vahemik:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">Kaugus algsest polüliinist</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">Koopiad:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Koopiate arv</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">Joonise vahe valimine</translation>
     </message>
 </context>
 <context>
@@ -40223,69 +36833,6 @@ Palun kontrollige nende olemasolu ja õigusi.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">Arc</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Peni atribuudid</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geomeetria</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">X Kaare keskpunkti koordinaat</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">Y Kaare keskme koordinaat</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="obsolete">Määrab, kas kaar pööratakse ümber (päripäeva)</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">Tagurpidi</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">Keskpunkt (y):</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="obsolete">Kaare raadius</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="obsolete">Nurga käivitamine:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Radius:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="obsolete">Kaare algusnurk</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="obsolete">Kaare otsanurk</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="obsolete">Lõppnurk:</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Keskpunkt (x):</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
@@ -40323,162 +36870,6 @@ See rekursiivselt muudab kõiki ploki üksusi.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
         <translation>Peni</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Ring</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geomeetria</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="obsolete">Ringiraadius</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">Keskpunkt (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">Y Ringi keskpunkti koordinaat</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Keskpunkt (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">X Ringi keskpunkti koordinaat</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">Lineaarmõõde</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Dimensioonikiht</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Peni atribuudid</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geomeetria</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Nurk:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="obsolete">Dimensiooni pöördenurk</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Dimensioon</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Dimensioonikiht</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Peni atribuudid</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Ellipse</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geomeetria</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="obsolete">Ellipsi peatelje pöörlemisnurk kraadides</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="obsolete">Määrab, kas kaar on pööratud</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">Tagurpidi</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">Keskpunkt (y):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="obsolete">Elliptilise kaare otsanurk, kraadid</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">Y Kaare keskme koordinaat</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="obsolete">Ellipsi peatelje raadius</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="obsolete">kraadides</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="obsolete">Algusnurk(°):</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="obsolete">Pöörlemine(°):</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="obsolete">Ellipsi pisitelje raadius</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="obsolete">Lõppnurk(°):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="obsolete">Elliptilise kaare algusnurk, kraadid</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="obsolete">Major:</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="obsolete">Väike:</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="obsolete">X ellipsi keskpunkti koordinaat</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Keskpunkt (x):</translation>
     </message>
 </context>
 <context>
@@ -40555,77 +36946,6 @@ See rekursiivselt muudab kõiki ploki üksusi.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <source>Image</source>
-        <translation type="obsolete">Pilt</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geomeetria</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Nurk:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="obsolete">Kõrgus:</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="obsolete">Pildi laius</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="obsolete">X sisestamispunkti koordinaat</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="obsolete">Eraldusvõime (dots per inch)</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="obsolete">Pildifaili asukoht</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="obsolete">Skaleerimistegur</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="obsolete">Suurus (px):</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">Pöördenurk</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="obsolete">Y sisestamispunkti koordinaat</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="obsolete">Pildi suurus pikslites</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">DPI</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="obsolete">Laius:</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="obsolete">Pildi kõrgus</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="obsolete">Pildifaili valimine</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="32"/>
@@ -40648,135 +36968,9 @@ See rekursiivselt muudab kõiki ploki üksusi.</translation>
         <translation>Kasutajaliidese keel:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt; Palun valige ühik, mida soovite kasutada uute jooniste jaoks, ning Ui ja Commandi eelistatud keel.&lt;br/&gt;&lt;/p&gt;&lt;p&gt; Neid seadistusi saab hiljem muuta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
         <translation>Käskude keel:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geomeetria</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="obsolete">Sisestamispunkt y:</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="obsolete">Sisestamispunkt x:</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="obsolete">Koopiate ridade arv</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">Pöördenurk</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="obsolete">Vahe veergude vahel</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="obsolete">Skaleerimistegur X-telje järgi</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="obsolete">X sisestamispunkti koordinaat</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="obsolete">Ridade vaheline kaugus</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="obsolete">Koopiate veergude arv</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="obsolete">Skaalategur Y-telje järgi</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="obsolete">Skaala Y:</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="obsolete">Rows:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Nurk:</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="obsolete">Y sisestamispunkti koordinaat</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="obsolete">Ridade vahe:</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="obsolete">Kolonnid:</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="obsolete">Skaala X:</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="obsolete">Veeruvahed:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Line</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geomeetria</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="obsolete">Lõpp-punkt x:</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="obsolete">Lõpp-punkti X koordinaat</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="obsolete">Lõpp-punkti Y koordinaat</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="obsolete">Lõpp-punkt (y):</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="obsolete">Alguspunkt (y):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="obsolete">Alguspunkti Y koordinaat</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="obsolete">Algpunkt x:</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="obsolete">Alguspunkti X koordinaat</translation>
     </message>
 </context>
 <context>
@@ -40947,10 +37141,6 @@ See rekursiivselt muudab kõiki ploki üksusi.</translation>
         <translation>Lisa sümbol</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">Sümboli lisamine</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
         <source>Degree (°)</source>
         <translation>Kraad (°)</translation>
@@ -40999,10 +37189,6 @@ See rekursiivselt muudab kõiki ploki üksusi.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>Nael (£)</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Jeeni (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -41638,115 +37824,6 @@ See rekursiivselt muudab kõiki ploki üksusi.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
         <translation>Peni</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <source>Mirroring Options</source>
-        <translation type="vanished">Peegeldamise sätted</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Koopiate arv</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Kustuta originaal</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Säilita originaal</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Kasuta aktiivseid &amp;atribuute</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Kasuta aktii&amp;set kilet</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Koopiate arv</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Kustuta originaal</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Säilita originaal</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Mitu koopiat</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Kasuta aktiivseid &amp;atribuute</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Kasuta aktii&amp;set kilet</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Move/Copy Options</source>
-        <translation type="vanished">Liikumise/ kopeerimise valikud</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <source>Move/Rotate Options</source>
-        <translation type="vanished">Pööra / Liiguta sätted</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Koopiate arv</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Nurk (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Kasuta aktiivseid &amp;atribuute</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Kasuta aktii&amp;set kilet</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Kustuta originaal</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Säilita originaal</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Mitu koopiat</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="vanished">Ctrl+S</translation>
     </message>
 </context>
 <context>
@@ -44763,10 +40840,6 @@ See rekursiivselt muudab kõiki ploki üksusi.</translation>
         <translation>Suhteline nullmärk</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">Käitumine</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
         <translation>Loodava võrgu tüüp</translation>
@@ -45822,231 +41895,6 @@ Küpsetamiseks vajalik vaikeastme väärtus</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Code</source>
-        <translation type="obsolete">Kood</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Väärtus</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Tühistage</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Point</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geomeetria</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="obsolete">Asukoht (y):</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="obsolete">Punkti asukoht Y-koordinaadi järgi</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="obsolete">Asukoht x:</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="obsolete">Punkti asukoht X-koordinaadi järgi</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Polüliin</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geomeetria</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="obsolete">Määrab, kas polüliin on suletud kontuur</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Suletud</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation type="vanished">Pööramise sätted</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Koopiate arv</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Kustuta originaal</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Säilita originaal</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="vanished">&amp;Mitu koopiat:</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Nurk (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Kasuta aktiivseid &amp;atribuute</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Kasuta aktii&amp;set kilet</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <source>Rotate Two Options</source>
-        <translation type="vanished">Topeltpöörde sätted</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Koopiate arv</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Kustuta originaal</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Säilita originaal</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Mitu koopiat</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;a):</source>
-        <translation type="vanished">&amp;Nurk (a):</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;b):</source>
-        <translation type="vanished">Nurk (&amp;b):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Kasuta aktiivseid &amp;atribuute</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Kasuta aktii&amp;set kilet</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <source>Scaling Options</source>
-        <translation type="vanished">Skaleerimise sätted</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Koopiate arv</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Kasuta aktiivseid &amp;atribuute</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Kasuta aktii&amp;set kilet</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Otsige skaleerimissuhted ümber keskme võrdluspunkti ja sihtpunkti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Kustuta originaal</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Säilita originaal</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Mitu koopiat</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="vanished">Skaala sama teguriga nii x- kui ka y- suunas</translation>
-    </message>
-    <message>
-        <source>Isotropic Scaling</source>
-        <translation type="vanished">Isotroopne skaleerimine</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">Spline</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geomeetria</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="obsolete">Kraad:</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="obsolete">Määrab, kas spline määrab suletud kontuuri</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Suletud</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="obsolete">Spline&apos; i ligikaudseks määramiseks kasutatav kraad</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="20"/>
@@ -46194,10 +42042,6 @@ Küpsetamiseks vajalik vaikeastme väärtus</translation>
         <translation>Naelsterling (£)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Jeen (¥)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Times (×)</source>
         <translation>Korda (×)</translation>
@@ -46241,10 +42085,6 @@ Küpsetamiseks vajalik vaikeastme väärtus</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>Teksti kiht</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">Teksti ebamäärasus</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -46852,10 +42692,6 @@ Küpsetamiseks vajalik vaikeastme väärtus</translation>
         <translation>Nurk:</translation>
     </message>
     <message>
-        <source>Oblique:</source>
-        <translation type="vanished">Oblique:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
         <source>Width factor:</source>
         <translation>Laiuse tegur:</translation>
@@ -47373,21 +43209,6 @@ p, li { white- space: pre- wrap; }
     </message>
 </context>
 <context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">Esitatud vigane skaala</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">Maksimaalse trükiarvuga paberi skaalategur</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">Paberi skaalategur, mis on väiksem trükiaja suhtarvust</translation>
-    </message>
-</context>
-<context>
     <name>QG_RecentFiles</name>
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="183"/>
@@ -47454,10 +43275,6 @@ p, li { white- space: pre- wrap; }
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>World</source>
         <translation>Maailma</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Snap</translation>
     </message>
 </context>
 <context>
@@ -47660,12 +43477,6 @@ Palun määra muu väärtus.</translation>
         <translation>Tühjade kihtide eemaldamine</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Kihid ilma olemite leidmiseta, kuid need on filtreeritud ja ei ole nähtavad.
-Puhastage filtreerimismask ja korrake.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -47727,14 +43538,6 @@ If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly 
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Kas asendada väärtus „Kihtide järgi” lähtkihtide väärtustega?
-Kui jah, siis entiteetidel, millel on „Kihtide järgi” pliiatsid, on uuel kihil täpselt sama välimus kui eelmistel kihtidel ja väärtus „Kihtide järgi” asendatakse lahendatud pliiatsitega.
-Kui ei, siis väärtused „Kihtide järgi” jäävad samaks ja seega määrab sihtkihi pliiats selliste entiteetide pliiatsi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -48057,10 +43860,6 @@ Tahad sa seda asendada?</translation>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="799"/>
         <source>Tagged Image File Format</source>
         <translation>Sildistatud pildifaili vorming</translation>
-    </message>
-    <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">Vana joonistusvahetus%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="471"/>
@@ -49622,11 +45421,6 @@ Tahad sa seda asendada?</translation>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>mpoint</translation>
-    </message>
-    <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">criclebyarc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -51476,26 +47270,6 @@ Tahad sa seda asendada?</translation>
         <translation>kasutamine:</translation>
     </message>
     <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished">[options] [valikud] &lt;dxf files&gt;</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished">*.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">-- printida kõik dxf-failid sama nimega pdf-failidesse.</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished">-o some.pdf *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">-- printida kõik dxf- failid &apos;some.pdf&apos; faili.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
         <source> [options] &lt;%1_files&gt;</source>
         <translation type="unfinished"></translation>
@@ -51571,16 +47345,6 @@ Tahad sa seda asendada?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Paberi suurus (laius x kõrgus) millimeetrites.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">Väljundi lahutusvõime (DPI).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>Väljundskaala. Nt: 0.01 (skaala 1:100 jaoks).</translation>
@@ -51626,14 +47390,6 @@ Tahad sa seda asendada?</translation>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">&lt;dxf files&gt;</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">Sisend- DXF- failid</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -51782,11 +47538,6 @@ Tahad sa seda asendada?</translation>
         <translation>vea lugemine DXF/DWG faili päis</translation>
     </message>
     <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">vea lugemine DXF/DWG päise dara</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
@@ -51833,10 +47584,6 @@ Tahad sa seda asendada?</translation>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>vea lugemine DXF/DWG kood</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">Avas dwg- faili versiooni% 1.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -52285,10 +48032,6 @@ Tahad sa seda asendada?</translation>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">Valib ploki loomiseks (sisselülitamine lõpetamiseks)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
         <translation>Kontuuri valimine</translation>
@@ -52302,66 +48045,6 @@ Tahad sa seda asendada?</translation>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>Määra rakenduspunkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">Vali plahvatav konteiner (sissekanne täita)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">Vali ja plahvata</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Vigane avaldis</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Määra rakenduspunkt</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Sisesta nurk:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Sisesta tegur:</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">Sisesta veergude arv:</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">Sisesta ridade arv:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">Sisesta veergude vahe:</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">Sisesta ridade vahe:</translation>
-    </message>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">Plokk ei saa sisaldada enda sisemust.</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished">on pesastanud aktiivse ploki sisendi:</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">Seda lahtrit ei saa lisada.</translation>
     </message>
 </context>
 <context>
@@ -52613,270 +48296,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">Akordi pikkus ei tohiks olla null</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Vigane avaldis</translation>
-    </message>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">Vigane kõõlu pikkus</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Määra keskpunkt</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">Määrata alguspunkt</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternatiivne kaar</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">Täpsustada akordi pikkus (allt-punkti puhul negatiivne):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">Alternatiivse kaarpunkti kasutamine</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">Määra raadius</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">Määra algnurk:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">Otsnurk või [nurk/koorem]</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">Määra kaare nurk:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">Vigased kaare andmed.</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Täpsustada kolmas punkt</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Määra teine punkt</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">Määrata alguspunkt või [keskpunkt]</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">Baasüksuse määramine</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">Alternatiivkaar</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">Alternatiivkaar</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">Lõppnurga määramine</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">Lõpp-punkti määramine</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Vigane avaldis</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Määra keskpunkt</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">Punkti määramine ringjoonel</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">Vigased ringjoone andmed.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Määra esimene punkt</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Määra teine punkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">Vigased ringjoone andmed.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Määra esimene punkt</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Määra teine punkt</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Määra kolmas punkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Vigane avaldis</translation>
-    </message>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">Määra ringjoone keskpunkt</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">Määra ringjoone raadius</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">radius=%1 on vigane (väljend)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">radius=%1 on vigane (negatiivne)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">raadius=%1 on vigane (null)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">Esimese rea määramine</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">Teise rea määramine</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">Kolmanda rea määramine</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">Esimese punkti määramine puutujaringil</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">Määrab puuteringi teise punkti</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Puutumisringi keskme valimine</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Täpsustada joon/kaar/ringi</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Esimese rea/kaare/ringi määramine</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Määrata teine rida/kaar/ringijoon</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Puutumisringi keskme valimine</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">Puudub ühine puutering raadiusele &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Täpsustada joon/kaar/ringi</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">Muu joone/kaare/ringi määramine</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">Määrab punkti puutumisringil</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Puutumisringi keskme valimine</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Puutumisringi keskme valimine</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Esimese rea/kaare/ringi määramine</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">Valitud olemite ühine puutering puudub</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Määrata teine rida/kaar/ringijoon</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">Kolmanda rea/kaare/ringi määramine</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
@@ -53071,125 +48490,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">Vali koorumiseks (Sisene täita)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
         <translation>Koore kohe pärast valimist</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Vigane avaldis</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Määra rakenduspunkt</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Sisesta nurk:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Sisesta tegur:</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">Sisesta dpi:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Määra esimene punkt</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Määra järgmine punkt või [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Määra järgmine punkt</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">Ridade jada sulgemine nurjus: pole piisavalt üksusi, mis on veel määratletud või juba suletud.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">Tagasivõtmine nurjus: ajaloo algus jõudis</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">Uuesti tegemine nurjus: ajaloo lõpp jõudis kohale</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Vigane avaldis</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Määra asukoht</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">Alternatiivne suund</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Sisesta nurk:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">Sisesta pikkus:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">luuakse üksused</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Vigane avaldis</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">Vali esimene joon</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">Vali teine joon</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">Sisesta nurgapoolitaja pikkus:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">Sisesta nurgapoolitajate arv:</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">Arvsektoriread, mis ei ole vahemikus:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">Klõpsuta ja tõmba joon</translation>
     </message>
 </context>
 <context>
@@ -53222,74 +48525,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Ringi, kaare või ellipsi valimine</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">Määra kaugus &lt;%1&gt; või vali element või [%2]</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">luuakse üksused</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Sisesta arv:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Vigane avaldis</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Vigane arv. Proovi 1...99</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">Vali element</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">Määra läbitav punkt</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">luuakse üksused</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Arv:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Vigane arv. Proovi 1...99</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Vigane avaldis</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">Nurga määramine</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Esimese nurga määramine</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Teise nurga määramine</translation>
     </message>
 </context>
 <context>
@@ -53331,29 +48566,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Vigane avaldis</translation>
-    </message>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">Vali lähteelement</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Määrake nurk</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">Määra pikkus</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Määra asukoht</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53391,17 +48603,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Sisestuspunkti määramine</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Sisesta tekst:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
@@ -53410,108 +48611,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Esimese punkti täpsustamine</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Järgmise punkti või [%1] määramine</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Järgmise punkti määramine</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">Ridade jada sulgemine nurjus: pole veel piisavalt üksusi defineeritud.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Tagasivõtmine nurjus: pole veel piisavalt üksusi defineeritud.</translation>
-    </message>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">Sisesta lõpp- punkt x</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Sisesta mitmerealiste arv</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">Sisesta võrrand f(x)</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">Sisesta alguspunkt x</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">Sisestatud x on vigane.</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">Sisestatud astme suurus on vigane.</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">Sisestatud väärtus x on vigane.</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternatiivne kaar</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">Määra esimene punkt</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">Määra järgmine juhtpunkt või [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">Määra järgmine juhtpunkt</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Ei saa tühistada: elemente pole veel piisavalt.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">Tekst:</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Määra rakenduspunkt</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Sisesta tekst:</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Täpsustada teine punkt</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">Lõikatav valik (lõikatav sissekanne)</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -53530,10 +48630,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>Lõika kohe pärast valikut</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">Vali kopeeritav (täidetav kirje)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -53571,24 +48667,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Paste Multiple</source>
         <translation>Aseta mitu</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="obsolete">Pasta võrdluspunkti määramine</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">Pole midagi tagasi võtta!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">Pole midagi teha!</translation>
     </message>
 </context>
 <context>
@@ -53809,57 +48887,6 @@ Lõpp: (%8 ,%9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">Kaugus:%1
-Cartesian: (%2 ,%3)
-Polaarne: (%4 &lt;%5)
-Punkt olemil: (%6 ,%7)
-Punkt: (%8 ,%9)</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">Määra element</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">Ära klõpsake konteineris olevatele lastele</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">Suhteline punkt on olem</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Kaugus:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">Alates:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">Et:</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">Määra punkt</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -53905,10 +48932,6 @@ Punkt: (%8 ,%9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">Vali kogupikkuse mõõtmiseks (Sisene täita)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="74"/>
         <source>Select contour</source>
         <translation>Kontuuri valimine</translation>
@@ -53940,906 +48963,6 @@ Punkt: (%8 ,%9)</translation>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>Tühistage</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Vigane avaldis</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Määra rakenduspunkt</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Sisesta nurk:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Sisesta tegur:</translation>
-    </message>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">Faili &apos;%1&apos; avamine nurjus</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">Vali atribuutide muutmiseks (Lisa täita)</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">Atribuutide muutmine kohe pärast valimist</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Kontuuri valimine</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">Valitud read on paralleelsed</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">Valitud liinid ei ole sama polüliini lapsed</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Ristmik:</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Punkt 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Punkt 2:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">Valitud vigane olem (mittetrimmitav).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">Valitud vigane olem (mitteatomiline).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">Valitud vigane olem (esimese olemiga mittetrimmitav).</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Vigane avaldis</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Vali esimene element</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Vali teine element</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">Sisesta pikkus 1:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">Sisesta pikkus 2:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Jaga</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">Kell:</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">�34htegi elementi ei leitud.</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">Lõikamispunkt ei pruugi olla üksuse lõpp-punkt.</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">Määra lõigatav element</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">Määra lõikepunkt</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">Üksus peab olema joon, kaar, ring, ellips või interpolatsiooni spline.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">Vali kustutatav (sissekanne täita)</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">Kustuta kohe pärast valimist</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Kontuuri valimine</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">Määra liitjoone esimene katkestuspunkt</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">Määra sama liitjoone teine katkestuspunkt</translation>
-    </message>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">Üksused, mis ei kuulu samasse polüliini.</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">Teise üksuse ema ei ole polüliin</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">Esimese üksuse ema ei ole polüliin</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">Teise üksuse emaettevõte on nullptr</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">Üks valitud üksustest on nullptr</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">Esimese üksuse emaettevõte on nullptr</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">Esimene üksus on nullptr</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">Teine üksus on nullptr</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">Klõpsa muutujal</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">Valida plahvatav tekst (täita sisestamine)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">Lõhkeb kohe pärast valimist</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Peegel</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">Nurk (alt):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">Rida alates:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">Rida:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">Vali peeglisse (Sisene täita)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Kontuuri valimine</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">Peeglijoone määramine</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">Flip Vertikaalselt</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">Flip horisontaalselt</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">Määra peegeldusjoone esimene punkt</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">Määra peegeldusjoone teine punkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">Liikuv tasaarvestus</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">Kopeeri Offset</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Määra rakenduspunkt</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">Koopia loomine</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">Vali liigutamiseks (sisselülitamine lõpetamiseks)</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">Liiguta vahetult pärast valimist</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Kontuuri valimine</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Määra sihtpunkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">Liikumine rotatsiooniga</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">Allikas:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">Sihtmärk:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Vigane avaldis</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Määra rakenduspunkt</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">Vali liigutamiseks ja pööramiseks (sisselülitamiseks)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">Liiguta ja pööra kohe pärast valimist</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Kontuuri valimine</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Määra sihtpunkt</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">Sisesta pöördenurk:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">Offset</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Kaugus:</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">Nihke suuna määramine</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">Määrata nihke suuna võrdluspunkt</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">Vali rida, hulkjoon, ring või kaar, et luua nihe (Sisene täita)</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">Vahetus kohe pärast valimist</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Kontuuri valimine</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">Ümberpööratava suuna valimine (Lisa täita)</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">Taastatakse kohe pärast valimist</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Kontuuri valimine</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Määra rakenduspunkt</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">Rotatsioon</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Allikas:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Sihtpunkt:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Võrdluspunkt:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">Keskpunkt:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">Teine nurk:</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">Vali pööratav (sisselülitamine täita)</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">Pöörake kohe pärast valimist</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Kontuuri valimine</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Lõika valiku keskele</translation>
-    </message>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">Pööramiskeskuse määramine</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">Sihtpunkti määramine pööramiseks</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">Määrata võrdluspunkti ümber pööramise sihtpunkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">Pöörleb kaks korda</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">Keskus 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">Nurk 1:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">Keskus 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">Nurk 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">Vali kaheteljeline pööramine (sisselülitamine lõpule)</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">Pöörake 2. telge kohe pärast valimist</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Kontuuri valimine</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">Määra absoluutne rakenduspunkt</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">Määra suhteline rakenduspunkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Vigane avaldis</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Round</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Punkt 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Punkt 2:</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">Määra teine element</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">Sisesta raadius:</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">Määra esimene olem või sisesta raadius &lt;%1&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Skaala</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Keskus:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Allikas:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Sihtpunkt:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">Skaala X järgi:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">Skaala Y järgi:</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">Skaalakeskme määramine</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Lõika valiku keskele</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">Lähtepunkti määramine</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Sihtpunkti määramine</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">Vabasta</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">Skaalale valimine (täitmiseks sisestamine)</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">Skaleerimine kohe pärast valimist</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Kontuuri valimine</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Määra esimene nurgapunkt</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Määra teine nurgapunkt</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">Venitage</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">Nurga käivitamine:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">Lõppnurk:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Võrdluspunkt:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Sihtpunkt:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Määra rakenduspunkt</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Määra sihtpunkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">Vali esimene trimmitav element</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">Vali piirav element</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">Kaks trimmi</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Ristmik:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">Lõige 2:</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">Vali teine trimmitav element</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">Vali trimmitav element</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">Ühtegi isikut ei leitud.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">Valitud element ei ole algelement ja seda ei saa trimmida.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Vigane avaldis</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">Vali rida/ kaar kuni trimmi VÕI sisesta pikkuse väärtus:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ühtegi üksust ei leitud.</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">Olemite valimine (Sisene täita)</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">Tellimus kohe pärast valimist</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Kontuuri valimine</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">Vali järjekorras olev üksus</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ühtegi üksust ei leitud.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Üksus peab olema mitmeliiniline.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">Lisamispunkt on vigane.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">Lisamispunkt ei ole entiteet.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">Määra polüliin sõlmede lisamiseks</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">Sõlme lisamise punkti määramine</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ühtegi üksust ei leitud.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Üksus peab olema mitmeliiniline.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">Klõpsake kuskil olemasoleva polüliini alguses või lõpus.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Sisesta mitmerealiste arv</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">Määra polüliin kuskil algus- või lõpp-punkti lähedal</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">Suletud polüliini sõlmi ei saa lisada.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Tagasivõtmine nurjus: pole veel piisavalt üksusi defineeritud.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ühtegi üksust ei leitud.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Üksus peab olema mitmeliiniline.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">Määra polüliin sõlme kustutamiseks</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">Kustutussõlme punkti määramine</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Kustutuspunkt on vigane.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Kustutuspunkt ei ole ole olem.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ühtegi üksust ei leitud.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Üksus peab olema mitmeliiniline.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Kustutuspunkt ei ole ole olem.</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">Polliini ei leitud.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">Valitud punktide vahel peaks olema vähemalt kaks polüliini segmenti.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">Kahe sõlme vahel kustutatava polüliini määramine</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">Esimese sõlme määramine</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">Teise sõlme määramine</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Kustutuspunkt on vigane.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ühtegi üksust ei leitud.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Üksus peab olema mitmeliiniline.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">Vali originaalpolüliin</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ühtegi üksust ei leitud.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">Vali üks segmentidest algsel polüliinil</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">Üksus ei saa olla suletud polüliin.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">Loodud polüliin</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ühtegi üksust ei leitud.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Üksus peab olema mitmeliiniline.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">Esimene segment peaks olema valitud polüliinil.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">Teine segment peaks olema valitud polüliinil ja mitte võrdne esimesega.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">Määrata mitmeliiniline trimmimine</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">Esimese segmendi määramine</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">Teise lõigu määramine</translation>
     </message>
 </context>
 <context>
@@ -54916,113 +49039,11 @@ Punkt: (%8 ,%9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="obsolete">Ühtegi üksust pole valitud!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectBase</name>
     <message>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">Element peab olema algelement.</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Valitava üksuse määramine</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">Määra valikujoone esimene punkt</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">Vali lõikuv olem</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">Lapsüksuste valimine</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">Määra valikujoone teine punkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">Määra soovitud kihiga olem</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Valitava üksuse määramine</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Kontuuri valimine</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">De- valik</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">Valides</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">üksuste</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">ristuvad kastiga</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">karbi sees</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">Vali teine nurk</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">Vali lõikuv</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">Üksuste väljavalimine</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">Valige üksused</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">Lõikumise eemaldamine</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">Klõpsa ja lohista valikuaknale</translation>
     </message>
 </context>
 <context>
@@ -55330,150 +49351,6 @@ Punkt: (%8 ,%9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Kaarevalikud</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Vastupäeva</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Päripäeva</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">Tangentsiaalkaare valikud</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">Sisselülitamisel luuakse määratud raadiusega tangentaalkaar</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">Puutekaare raadius</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">Valimisel luuakse määratud nurgaga kaar</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">Puutekaare alanurk kokku</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Valige raadiusjoonis</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Radius</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Angle</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">Beveli valikud</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">Märkimisel trimmitakse mõlemad üksused kaldpinnale</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">Pikkus 1:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Kalde pikkus X suunas.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">Esimese pikkusega vormijoonise valimine</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">Pikkus 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Kalde pikkus Y-suunas.</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">Teise pikkusega vormijoonise valimine</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">Ringi valikud</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Ringiraadius</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Joonise raadiuse valimine</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">Circle Tangential2 võtmed</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Joonistamiseks kasutatava puuteringi raadius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">Puuteringi raadius</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Joonise raadiuse valimine</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Nurk:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -55610,845 +49487,6 @@ Punkt: (%8 ,%9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Lisa valikud</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Pöörlemisnurk</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Skaalategur:</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">DPI:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Skaalafaktor</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">Pildi DPI</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Lisa valikud</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Pöörlemisnurk</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Faktor:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Skaalafaktor</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">Array:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">Veerude arv</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">Ridade arv</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">Jooniselt reavahe valimine</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">Jooniselt veeruvahe valimine</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Vahemik:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">Veeruvahed</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">Ridade vahe</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">Teegi lisamise valikud</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Pöörlemisnurk</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Faktor:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Skaalafaktor</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">Reanurga valikud</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">Punkt loodud real, mis asetatakse sisestamispunkti</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Joonenurk</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Pikkus:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Liini pikkus</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">Kinnituspunkt:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">Jooniselt joonenurga valimine</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Alusta</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Middle</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Lõpp</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">Joonise joone pikkus</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">Sisselülitamisel on joon risti nurkade teljega. Vastasel juhul - telje sõelumiseks</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">Anglesi baasi</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">Ridade ja sektorite valikud</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Pikkus:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">Kahe sektori pikkus</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">Vali joone pikkus jooniselt</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Number:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">Loodavate sektorite arv</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Reavalikud</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Joonistatud joontest suletud kontuuri moodustamine</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Sulge</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Tühistab viimase reajoonise</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Võta tagasi</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Taastab viimase reajoonise</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Redo</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Reavalikud</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">Suund:</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">Loob reasegmentidest polüliini</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polüliin</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">Vertikaalne joon</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">Joon määratud nurga all</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Angle</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">Horisontaaljoon</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">Märkimise korral on nurk eelmise lõigu suhtes</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Tühistab viimase reajoonise</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Võta tagasi</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Joonistatud joontest suletud kontuuri moodustamine</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Sulge</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Taastab viimase reajoonise</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Redo</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Liininurk</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">Rida suvalise punktini</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Point</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">Ridade paralleelsed valikud</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Kaugus:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">Kaugus algsest üksusest</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Joonise kauguse valimine</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Number:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Loodavate paralleelide arv</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">Rida paralleelselt valikutega</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">Märkimisel luuakse paralleelid olemi mõlemale poolele</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Sümmeetriline</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Number:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Loodavate paralleelide arv</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Hulknurga valikud</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Servade arv</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Hulknurga valikud</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Number:</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">Märkimisel ümardatakse hulknurga tipud.</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">Radius</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">Märkimise korral joonistatakse hulknurk mitmeliinina. Vastasel juhul luuakse individuaalsed üksused.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polüliin</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Joonise raadiuse valimine</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">Servade arv</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">Ümardusraadius tipukalde korral.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">Kui see on valitud, on võrdluspunktid hulknurga tippude jaoks. Vastasel juhul on nad servade keskel.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">Vertex kuni Vertex</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Ridade suhtelise nurga valikud</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Joonenurk</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Pikkus:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Liini pikkus</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Joonise pikkuse valimine</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Tekstivalikud</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Tekst:</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">Tekst sisestamiseks</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Pöördenurk</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">Parandusvalikute muutmine</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">Tasaarvestuse kaugus algsest üksusest</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Sisselülitamisel paigutatakse loodud olemid aktiivsesse kihti, vastasel juhul on nad originaalkihtides.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Aktiivse kihi kasutamine</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Koopiate arv.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Sisselülitamisel jäävad algsed üksused ellu, vastasel juhul need eemaldatakse.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originaalid alles jätta</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">Märkimise korral kasutatakse nihkekauguse fikseerimist, vastasel juhul määratakse see hiirega.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Fikseeritud vahemaa</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Sisselülitamisel rakendatakse loodud üksustele aktiivseid atribuute, vastasel juhul kasutatakse originaalseid.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktiivsete atribuutide kasutamine</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">Joonise kauguse valimine</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Märkimise korral luuakse mitu koopiat.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Mitu koopiat</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Pööramise valikute liigutamine</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Sisselülitamisel rakendatakse loodud üksustele aktiivseid atribuute, vastasel juhul kasutatakse originaalseid.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktiivsete atribuutide kasutamine</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Märkimise korral luuakse mitu koopiat.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Mitu koopiat</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">Märkimisel pööratakse kõiki koopiaid sama kiirusega. Vastasel juhul on nurk proportsionaalne iga koopia arvuga.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">Sama nurk koopiate puhul</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">Pöördenurk.</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Koopiate arv.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">Sisselülitamisel määratakse pöörlemisnurk hiirega. Vastasel juhul kasutatakse määratud väärtust.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vaba</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">Sisselülitamisel paigutatakse loodud olemid aktiivsesse kihti, vastasel juhul on need algkihtides.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Aktiivse kihi kasutamine</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Sisselülitamisel jäävad algsed üksused ellu, vastasel juhul need eemaldatakse.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originaalid alles jätta</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">Polüliinivalikud</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">Ühendab mitmeliini otsad nii, et luuakse suletud kontuur</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Sulge</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">Eelmise tipu tagasivõtmine</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Võta tagasi</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">Segmendi tüüp:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">Määrab, milline polüliini segment luuakse</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Line</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">Tangential</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">Puutujaraadius</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">Puutujanurk</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Angle</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">Tangentsiaalkaar</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">Kindla raadiusega tangentaalkaar</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">Fikseeritud nurgaga tangentaalkaar</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">Kaar nurga all</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Kaare raadius</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Valige raadiusjoonis</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">Kaarenurk</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">Vastupäeva</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Päripäeva</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">Trüki eelvaatluse valikud</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">Maastiku orientatsioon</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">Joonistamise seadistused</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Skaala:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;trükitud suurus: joonise suurus&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Printi skaala on lukustatud praegusele väärtusele&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">fikseeritud</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">Musta/valge režiimi lülitamine</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">Paberi maastiku orientatsioon</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">Paberi portree orientatsioon</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">Trükkimisskaala rakendamine rea laiusele</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">Joonise keskel asuv lehekülg</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">Trükiala suurendamine</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">Sobib 1 leheküljele</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">Sisselülitamisel sisaldab paberruum määratud hulga lehekülgi, mis on paigutatud veergudesse ja ridadesse</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">Plaaditrükk</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">Lehekülgede read:</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">Lehekülgede veergude arv</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">Lehekülgede veerud:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">Lehekülgede ridade arv</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">Arvutage joonise esitamiseks vajalik lehekülgede arv</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">Ümarvalikud</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">Märgi mõlema serva kärpimine ümardamiseni</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">Ümardusraadius</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Joonise raadiuse valimine</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56487,99 +49525,6 @@ Punkt: (%8 ,%9)</translation>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>Võrdsete jaotuspunktide arv</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">Spline&apos; i valikud</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Kraad:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">Spline&apos;i kraad, mida kasutatakse punktide lähendamiseks</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">Sisselülitamisel luuakse suletud spline</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Suletud</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">Eelmise punkti tagasivõtmine</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Võta tagasi</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Tekstivalikud</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Tekst:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Nurk:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Pöördenurk</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Joonise nurga valimine</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">Koguse kärpimise valikud</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">Kaugus. Korrigeerimise negatiivsed väärtused, pikendamise positiivsed väärtused.</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">Kokku</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Pikkus:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">Kaugus. Korrigeerimise negatiivsed väärtused, pikendamise positiivsed väärtused. Negatiivset märki eiratakse lõpliku kogupikkuse korral.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Joonise pikkuse valimine</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">Märkimise korral tehakse trimmimine/laiendamine mõlemal pool joont.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Sümmeetriline</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">Sisendpikkust kasutatakse kogupikkusena pärast trimmimist, mitte pikkuse suurendamisena</translation>
     </message>
 </context>
 </TS>

@@ -39,162 +39,11 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Markoa</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="obsolete">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="obsolete">&lt;</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Gorde</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Markoa</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Gorde</translation>
-    </message>
-</context>
-<context>
-    <name>DlgParabola</name>
-    <message>
-        <source>Parabola</source>
-        <translation type="obsolete">Parabola</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Geruza:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">Puntuak Splinen</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">Kontrol-puntuak</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Geruza:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="obsolete">Hautatuta badago, spline puntuak erabiltzen dira</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="obsolete">Spline puntuak</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="obsolete">Hautatuta badago, kontrol-puntuak erabiltzen dira</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">Kontrol-puntuak</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">Puntuak Splinen</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
         <translation>Hasierako puntua distantzian edo puntu-egoeran bakarrik ezar daiteke</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Sortzeko:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">Laukizuzena</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Zabalera:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Altuera:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Zentrua:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">Angelu baliogabea</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">Erradio baliogabea</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">Balio baliogabea</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Zehaztu txertatze-puntua</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Zehaztu angelua</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">Zehaztu tamaina (zabalera, altuera)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">Zehaztu ertz mota
-[str|round|bevels]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">Zehaztu ertzaren luzera (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">Zehaztu ertzaren erradioa</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">Zehaztu ertzen modua
-[Biak|hor|vert]</translation>
     </message>
 </context>
 <context>
@@ -441,73 +290,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">Arkuaren altuera (akordearen eta goiko arkuaren puntuaren arteko distantzia)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Altuera:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Counterclockwise</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Arkuaren erradioa</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Erradioa:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Erlojuaren noranzkoan</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">Arkuaren erdiko angelua</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">Arkuaren luzera</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Luzera:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Aukeratu erradioa marrazkitik</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">Aukeratu altuera marrazkitik</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Hartu luzera marrazkitik</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -719,10 +501,6 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">Hautatu entitateak muga-laukian (Sartu osatzeko)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation type="unfinished"></translation>
@@ -777,30 +555,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished">Hautatu zirkulua, arkua edo elipsia</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">%1 erradioa txikiegia da aukeratutako puntuentzat%2 puntuen arteko distantzia %3 diametroa baino haundiagoa da</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">Aukeratu zirkuluaren balizko bi puntuen artean</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Lehen puntua adierazi</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Bigarren puntua aukeratu</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">Zirkuluaren zentrua aukeratu</translation>
     </message>
 </context>
 <context>
@@ -1048,13 +802,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">Hautatu zirkulua, arkua edo elipsia</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1098,10 +845,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>Hautatu zentroa</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">Ez da zentrorik zehaztu.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1496,154 +1239,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">Zehaztu lehen puntua</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">Zehaztu bigarren puntua
-edo [x|y|angle|p|edges|distantzia]</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">Zehaztu bigarren puntua
-edo [zenbakia]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">Zehaztu lerroaren norabidea
-[x|y|angle|p|distantzia]</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">Zehaztu lerro-zuzen angelua
-edo [x|y|p|number|edges|distantzia]</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">Zehaztu ertz-puntuen modua
-[bat ere ez|hasiera|biak|distantzia]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">Zehaztu puntuen arteko distantzia finkoa
-edo [x|y|p|number|edges]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atzera</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">Zehaztu distantzia (%1)
-edo [%2]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Zehaztu distantzia (%1 deg angelua)
-edo [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">Zehaztu puntu kopurua</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Zehaztu bigarren ertza</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">Zehaztu bigarren tangentea</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Zehaztu lehen ertza</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">Zehaztu lehen tangentea</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Ez da baliozko zenbakia. Saiatu 1.9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">Biraketaren erradioaren balio baliogabea</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Sartu zenbakia:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">Sartu zirkuluaren erradioa:</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Zehaztu zentroa</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Sortzeko:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Zentrua:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">Hasierako angelua:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Erradioa:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">Barrua:</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Polygon</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">Zehaztu ukitzailea</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1884,29 +1479,6 @@ edo [%2]</translation>
         <location filename="../src/actions/drawing/draw/text/lc_action_draw_mtext.cpp" line="198"/>
         <source>Enter text:</source>
         <translation type="unfinished">Sartu testua:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Hautatu lehen entitatea</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Hautatu bigarren entitatea</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">Bestelako amaiera-puntuak</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">Sartu desplazamenduaren balioa</translation>
     </message>
 </context>
 <context>
@@ -3761,10 +3333,6 @@ edo [%2]</translation>
         <translation>Gonbitea</translation>
     </message>
     <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">Atxiki sareta</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>Atxikitu erdiko eskuliburua</translation>
@@ -4230,26 +3798,6 @@ edo [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>Widget Options</source>
         <translation>Widget Aukerak</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Ezkerra</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Eskuma</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Gora</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Behera</translation>
-    </message>
-    <message>
-        <source>Floating</source>
-        <translation type="vanished">Floating</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
@@ -5217,10 +4765,6 @@ Puntua: (%8, %9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">Hautatu lerrokatu beharreko entitateak (Sartu osatzeko)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>Hautatu eta lerrokatu</translation>
@@ -5252,10 +4796,6 @@ Puntua: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
         <translation>Eskala:</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">Hautatu lerrokatzeko (Sartu osatzeko)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -6249,13 +5789,6 @@ Puntua: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Ez da entitaterik hautatu!</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionModifyStretch</name>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="118"/>
@@ -7229,18 +6762,6 @@ Puntua: (%8, %9)</translation>
         <translation>Ezin da emandako fitxategia irakurri, egiaztatu existitzen dela eta irakurtzeko baimena duela.</translation>
     </message>
     <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">Laster-teklak ez dira inportatu.
-Fitxategi bat badago, baina ez du LibreCAD lasterbideak mapatzen.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">Laster-teklak ez dira inportatu.
-XML analisi-errorea gertatu da fitxategia prozesatzean.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
         <translation>Laster-markak ongi gorde dira.</translation>
@@ -7249,12 +6770,6 @@ XML analisi-errorea gertatu da fitxategia prozesatzean.</translation>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
         <translation>Ezin da fitxategi batean idatzi, egiaztatu idatz daitekeela.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">Laster-teklak ez dira inportatu.
-Erroreren bat gertatu da XML sortzean.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -8649,74 +8164,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     </message>
 </context>
 <context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">Hautatzen bada, jatorrizko arkua kenduko da</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">Ordeztu arkua</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">Sortutako zirkuluaren geruza jarri behar da</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktibo</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Jatorrizkoa</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktibo</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Jatorrizkoa</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Jatorrizko ebazpena</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">Aukeratu marrazkiaren desplazamendu-balioa</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Pen:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">Sortutako zirkuluari aplikatzekoa</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Geruza:</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">Zirkuluaren erradioa arkuaren erradioaren delta</translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">Erradio-desplazamendua:</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -9011,69 +8458,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>Tresna-barra: %1 (pertsonalizatua)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">Mota</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">Gurutzearen dimentsio horizontala</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">Hartu X balioa marrazkitik</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">Gurutzearen dimentsioak nola aplikatu zehazten du</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">Luzapena</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">Luzera guztira</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">Ehunekoa</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">Aukeratu Y balioa marrazkitik</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">Gurutzearen dimentsio bertikala</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">Erdian zehar gurutzatzeko angelua</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
     </message>
 </context>
 <context>
@@ -9437,45 +8821,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="obsolete">Koordenatuen dimentsioa</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Geruza:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Dimentsioaren geruza</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Pen atributuak</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="obsolete">Ordinate</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -9537,11 +8882,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
         <translation>Oinarrizko tartea:</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">Dimentsio-lerroen arteko tartea ezartzen du. Sartu distantzia bat. Oinarrizko dimentsioei buruzko informazioa lortzeko, ikus DIMBASELINE. (DIMDLI sistemaren aldagaia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -11188,10 +10528,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <source>Hatch Properties</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">Propietateak?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -11713,10 +11049,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <translation>UCS xehetasunen zutabea</translation>
     </message>
     <message>
-        <source>If checked, type of grid for saved view will be shown</source>
-        <translation type="vanished">Hautatzen bada, gordetako ikuspegirako sareta mota erakutsiko da</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
         <translation>Sareta Mota ikonoaren zutabea</translation>
@@ -11725,18 +11057,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Type icon column</source>
         <translation>Ikono-motaren zutabea</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation type="vanished">Hautatzen bada, ikuspegiaren koordenatu-sistemaren xehetasunak dituen zutabea erakutsiko da</translation>
-    </message>
-    <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">Taulako elementuen ikuspegi-xehetasunen azalpen-testua</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">Hautatzen bada, ikuspegiaren koordenatu-sistemaren xehetasunak erakusten duen zutabea agertuko da.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
@@ -11779,10 +11099,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <translation>Aktibatzen bada, xehetasunak dituen zutabea azalduko da taulan.</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">Xehetasunen zutabea</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>Eragiketak</translation>
@@ -11798,17 +11114,9 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">Egin klik bikoitza taula-elementuan</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
         <source>Defines which action should be performed on double click on view item of the table.</source>
         <translation>Definitzen du taulako ikuspegi-elementuan egin klik bikoitz eginez gero zer ekintza egin behar den.</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table. </source>
-        <translation type="vanished">Taulako elementuaren gainean klik bikoitza egitean zein ekintza egin behar den zehazten du.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="158"/>
@@ -11836,10 +11144,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <translation>Gaitzen bada, egin klik ikuspegi-mahaiko elementuan ikuspegia berrezartzeko. Bestela, ikuspegia esplizituki berrezarri beharko litzateke.</translation>
     </message>
     <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">Leheneratu ikuspegia klik bakar batean taula-elementuan</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
         <translation>Erakutsiz gero, ikuspegiari buruzko informazio gehigarria emango da taulako elementuan.</translation>
@@ -11848,10 +11152,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
         <translation>Egiaztatuta badago eta sortzean izena duen ikuspegia badago, posizio berriak eguneratuko du. Bestela, ikuspegi berriaren izen esklusiboa beharko da.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Hautatuta badago, berrespenaren elkarrizketa-koadroa erakutsiko da ikuspegia kentzean. Bestela, ikuspegia isilean kenduko da.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
@@ -12147,17 +11447,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation>Izena ez da bakarra. Sartu izen bakarra.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="obsolete">Parabola kontrol-puntuak ezin dira paraleloak izan</translation>
     </message>
 </context>
 <context>
@@ -12573,13 +11862,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgSplinePoints</name>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgTolerance</name>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="14"/>
@@ -12661,17 +11943,9 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <translation>Hautatuz gero, UCSri buruzko argibidea erakutsiko da taulako elementurako.</translation>
     </message>
     <message>
-        <source>Toolip with UCS details for table items</source>
-        <translation type="vanished">Toolip UCS xehetasunekin taulako elementuetarako</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
         <source>Type icon column</source>
         <translation>Ikono-motaren zutabea</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation type="vanished">Hautatzen bada, UCS jatorriaren eta angeluaren xehetasunak dituen zutabea azalduko da taulan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -12687,10 +11961,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
         <source>Editing</source>
         <translation>Edizioa</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Hautatuta badago, berrespenaren elkarrizketa-koadroa erakutsiko da ikuspegia kentzean. Bestela, ikuspegia isilean kenduko da.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"/>
@@ -12711,10 +11981,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
         <translation>Hautatzen bada, taulan UCS-ren sare-mota erakusten duen zutabea agertuko da.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">Hautatzen bada, baieztapen-elkarrizketa bat erakutsiko da ikuspegia kentzean. Bestela, ikuspegia isil-isilik kentzen da.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12782,26 +12048,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <translation>Definitzen du UES markaren keinu kopurua UES-a nabarmendu ahal izateko.</translation>
     </message>
     <message>
-        <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation type="vanished">Taulako elementuan klik bikoitza egitean zein ekintza egin behar den zehazten du.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">Berrezarri UCS klik bakar batean taulako elementuaren arabera</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation type="vanished">Aktibatzen bada, UCS motako ikonoa duen zutabea azalduko da taulan.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation type="vanished">Aktibatzen bada, UCSentzako sareta mota duen zutabea erakutsiko da</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied</source>
-        <translation type="vanished">Marrazkiaren ikuspegiaren leihoa nola doitu behar den definitzen du UCS aplikatu ondoren</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
         <source>On double-click on table item</source>
         <translation>Egin klik bikoitza taula-elementuan</translation>
@@ -12857,10 +12103,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <translation>UCS nabarmentzea</translation>
     </message>
     <message>
-        <source>Defines delay between UCS marker blinks</source>
-        <translation type="vanished">UCS markatzailearen arteko atzerapena definitzen du</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="216"/>
         <source> ms</source>
         <translation>ms</translation>
@@ -12874,10 +12116,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="242"/>
         <source>Blink Delay:</source>
         <translation>Blink-en atzerapena:</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation type="vanished">UCS markatzailearen keinu kopurua zehazten du UCS nabarmentzeko</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="252"/>
@@ -13274,45 +12512,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Desplazamendua:</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">Aktibatzen bada, hautapenaren koadroa sortuko da. Bestela, entitate indibidualentzat sortuko da.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">Hautapena talde gisa</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Hartu desplazamendua marrazkitik</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">Hautatuta badago, ertz-puntuak bakarrik marraztuko dira muga-laukian. Bestela, ertz-lerroak marraztuko dira.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">Izkina-puntuak soilik</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">Hautatuta badago, muga-koadroa polimarra gisa marraztuko da</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilerroa</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13406,86 +12605,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation type="unfinished">Hartu desplazamendua marrazkitik</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">Jatorrizko entitatetik bikoiztutako desplazamendu bertikala</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">Jatorrizko entitatetik bikoiztutako desplazamendu horizontala</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">Hartu desplazamendua X-en marrazkitik</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Pen:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">Aktibatzen bada, bikoiztua jatorrizko koordenatuetan kokatuko da</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">Leku batean</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">Hartu desplazamendua Yk marrazkitik</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Geruza:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">Sortutako bikoiztutakoari aplikatzekoa</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktibo</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Jatorrizkoa</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Jatorrizko ebazpena</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">Bikoiztutako geruza jarri behar da</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktibo</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Jatorrizkoa</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">Y desplazamendua:</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">X desplazamendua:</translation>
     </message>
 </context>
 <context>
@@ -13667,69 +12786,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">Erradio txikia:</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">Angeluaren balioa erradio nagusirako</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">Aktibatzen bada, erradioaren angelua zehaztu daiteke</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Oinarrizko angelua:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Counterclockwise</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">Aukeratu marrazkiaren ekintza nagusiak</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">Aktibatzen bada, erradioaren angelu nagusia saguak zehazten du</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Libre</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">Elipsearen erradio handiaren luzera</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">Aukeratu erradio txikia marrazkitik</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">Erradio nagusia:</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">Elipsearen erradio txikiko luzera</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Erlojuaren noranzkoan</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13868,21 +12924,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">Aukeratu angelua marrazkitik</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Arku-aukerak</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Erlojuaren noranzkoan</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Counterclockwise</translation>
     </message>
 </context>
 <context>
@@ -14773,30 +13814,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <source>Eccentricity:</source>
         <translation>Ekzentrikotasuna:</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">Hiperbola definizio baliogabea</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">Focik desberdina izan behar du</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">Zentruaren koordenatu baliogabeak</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">Erradio nagusia positiboa izan behar da</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">Biraketaren angelu baliogabea</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">Erradio txikia positiboa izan behar du</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -14968,10 +13985,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <translation>Zabalera:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">Irudiaren zabalera</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>Hartu marrazteko zabaleraren balioa</translation>
@@ -14982,21 +13995,9 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <translation>Altuera:</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">Irudiaren altuera</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>Aukeratu marrazkiaren altuera-balioa</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Eskala:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">Eskalatze-faktorea</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -15008,10 +14009,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>Angelua:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Biratze-angelua</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -15043,22 +14040,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <source>Select an image file</source>
         <translation>Hautatu irudi-fitxategia</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">Tamaina (px):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">Irudiaren tamaina (pixeletan)</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">Bereizmena (puntu hazbeteko)</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -15071,21 +14052,6 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">Hautatzen bada, puntua beti egongo da hautatutako entitatearen barruan</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">Atxikitu entitateari</translation>
     </message>
 </context>
 <context>
@@ -15463,14 +14429,6 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
         <translation>Bereizlea geruzaren barne-izena izen hierarkikoetan zatitzeko erabiltzen da</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">Geruza-mailaren izena Bereizlea</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">Bigarren mailako geruza-buffixak</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15501,10 +14459,6 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>Geruzaren izenaren atzizkia, geruza ordezko posiziokoa dela definitzen duena.</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">Izena bikoizten</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15647,17 +14601,9 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
         <translation>Hainbat koloreren ezarpenak</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Koloreak</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>Atzeko planoaren kolorea geruzen zuhaitzean hautatutako elementuentzat.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">Marra bereizleen kolorea geruzen zuhaitz-ikuspegian</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15696,10 +14642,6 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>Geruza birtualaren atzeko planoaren kolorea</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">Hiru ikuspegiko elementuak sareta bereizlea</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15755,10 +14697,6 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>Ordezko posizioko geruza</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">sareta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16248,118 +15186,6 @@ Zehaztu beste balio bat.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">Aktibatzen bada, lerroaren luzera saguaren posizioak definitzen du ezarri ordez</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Libre</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Hartu distantzia bat marrazkitik</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">Ebakidura-puntutik puntu-puntu bateko puntu-puntuaren desplazamendua</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Hartu luzera marrazkitik</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Hartu desplazamendua marrazkitik</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">Aktibatzen bada, jatorrizko entitatea ebaki-puntuaren bidez zatituko da.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Zatitu</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Desplazamendua:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">Ebakidura-puntuaren distantzia zehaztutako lerroaren atxikitzeko puntutik</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">Sortutako lerroaren zein zati moztuko den ebakitzeko puntura</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Hasi</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Erdialdean</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Amaiera</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">Markatu angeluetan:</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Atxikitze-lerroa:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Lerroaren luzera</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">Aktibatzen bada, angelua hautatutako entitatearen angeluarekiko erlatiboa da</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Luzera:</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">Sortutako lerroaren eta iturburuaren arteko ebakidura-puntuaren posizioa (jatorrizko lerroan)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">Libre</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Atxikitze distantzia:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Lerroaren angelua</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16666,93 +15492,6 @@ Zehaztu beste balio bat.</translation>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation type="unfinished">Bisektore kopurua sortzeko</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">Tamaina:</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">Desplazamendua:</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">Sortutako lerroa ebakitze-puntutik</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">Sortutako lerroaren atxikitze-puntua</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Hasi</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Erdialdean</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Amaiera</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Luzera:</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">Sortutako lerroaren luzera finkoa</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Atxikitu:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Hartu luzera marrazkitik</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Hartu desplazamendua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">Sortutako lerroa ebakitzeko edo luzera finkoa izateko sortu behar den zehazten du</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">Intersekziora</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">Luzera finkoa</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">Hautatzen bada, sortutako lerroa ortogonala izango da hautatutako lerroarentzat</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">Ortogonala</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">Jatorrizko lerroaren eta sortutakoaren arteko angelua</translation>
     </message>
 </context>
 <context>
@@ -17138,81 +15877,6 @@ Zehaztu beste balio bat.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">Hautatzen bada, polilerroa sortuko da lerro indibidualen ordez</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">Sortu polilerroa</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">Lerroko politika bigarren hautatu da</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">Zabaldu/Trim</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">Gehitu segmentua</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">Aldaketarik ez</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">1. lerroa:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">2. lerroa:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">Hautatutako lerroa elkartzeko politika</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">Sortutako entitateei luma nola aplikatu behar zaien definitzen du</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">Arkatza aktibo</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">1. lerroa</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">2. linea</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">Bi lerroak</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">Atributuak:</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">Hautatzen bada, jatorrizko lerroak kenduko dira</translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">Kendu jatorrizkoak</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17594,85 +16258,6 @@ Zehaztu beste balio bat.</translation>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">Ertzetako puntuak nola sortu behar diren kontrolatzen du.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Bat ere ez</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Biak</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Hasi</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Amaiera</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Hartu distantzia marrazkitik</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">Puntu kopurua sortzeko</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">Ertzaren puntuak:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">Puntu guztiak lerroaren hasierako/amaierako puntuen artean edo lerroaren luzera puntuen eta puntuen arteko distantziaren arabera kalkulatzen den zehazten du.</translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">Doitu lerroa</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">Puntuen arteko distantzia.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">Aktibatzen bada, puntu-lerroa angelu zehatz batekin marraztuko da</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">Puntu kopurua:</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">Hautatzen bada, puntuen arteko distantzia zehaztua erabiliko da. Bestela, distantzia kalkulatuko da.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Distantzia finkoa</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Lerroaren angelua</translation>
     </message>
 </context>
 <context>
@@ -21922,433 +20507,6 @@ Zehaztu beste balio bat.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Laguntza</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">Lineako dokumentazioa</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;Wiki</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">Erabiltzailearen &amp;eskuzkoa</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp;Komandoak</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">Orri &amp; soilak</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">Wid &amp;gets</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Honi buruz</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp;Forum</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">Zulip txata</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">&amp;Submit errorea</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">&amp;Eskatu ezaugarria</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">Orria</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp;Donate</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Linea</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">Poin&amp;t</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Circle</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">&amp; Arkua</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">Poly&amp;gon</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">Splin &amp;e</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">Ellip &amp;se</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Polyline</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">&amp; Bestelakoak</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">&amp;Draw</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp; Elipsea</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">Ot&amp;her</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Aldatu</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp;Order</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">&amp;Dimensions</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Info</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">Tresnak</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;Hautatu</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">Dime &amp;nsion</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;Fitxategia</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Azken fitxategiak</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Inportatu</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Esportatu</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;Aukerak</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp;Editatu</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;Ikusi</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">Berrezarri &amp; ikuspegiak</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">Pl&amp;ugins</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">&amp;Lan-lekua</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Atrakagarriko areak</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">CAD Wid &amp;gets</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">&amp;Drawings</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">Testuingurua</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Tresna-barrak</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">Trepetak</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">CAD trepetak</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">CAD tresna-barrak</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Hautatu</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">Oraintsukoa</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Aldatu</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">Aldatu gehiago</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Marraztu</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Lerroa</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilerroa</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Puntua</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Zirkulua</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arkua</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Polygon</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">Polilerroa/Spline</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Elipsea</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Bestelakoak</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">Gehitu neurriak</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">Lerrokatu</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">Marraztu ordena</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Geruzak</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Informazioa</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Editatu</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">Aukerak</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">Izendatutako ikuspegiak</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">Editatu propietateak</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">Aldatu generikoa</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">Aldatu lerroa</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">Marraztu lerroa</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">Marraztu zirkulua</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">Marraztu beste</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">Aldatu zirkulua</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">Aldatu arkua</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">Aldatu polilerroa</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">Aldatu Spline</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">Aldatu Spline puntuak</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">Aldatu testua</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">Aldatu MText</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">Editatu blokea</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Ordena</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;Tresna-barrak</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">&amp;CAD tresna-barrak</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">&amp; Laneko areak</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Ta&amp;b modua</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">Leiho modua</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp;Layout</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">Biribilduta</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">Triangeluarra</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">Iparraldea</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">Hegoaldea</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">Ekialdea</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">Mendebaldea</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp;Arrange</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp;Gehienez</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;Cascade</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Tile</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Lerrokatuta bertikalki</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Lerrokatuta horizontalki</translation>
-    </message>
-</context>
-<context>
     <name>LC_MenuFactoryBase</name>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
@@ -22964,21 +21122,6 @@ Zehaztu beste balio bat.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Desplazamendua:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Hartu desplazamendua marrazkitik</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23115,197 +21258,6 @@ Zehaztu beste balio bat.</translation>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Aktibatzen bada, uneko atributuak ispiludun entitateentzat erabiliko dira, bestela, jatorrizkoak.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Erabili uneko atributuak</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Egiaztatu gabe, jatorrizko entitateak ezabatuko dira, bestela bizirik aterako dira.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mantendu jatorrizkoak</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Aktibatzen bada, objektu ispiludunak uneko geruzan jarriko dira, bestela jatorrizko geruzetan jarriko dira.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Erabiltzailearen uneko geruza</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">Aktibatzen bada, entitateak eskalatuko dira, beharrezkoa bada. Bestela, kokatu eta biratu egingo dira.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Eskala</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">Aktibatzen bada, ebaki-puntuen arteko bereizketak ezabatuko dira. Egiaztatu ezean, sarrera ebaki-puntuetan banatuko da.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">Kendu segmentuak</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">Hautatzen bada, hautatutako segmentua ezabatuko da. Bestela, hautatutako segmentuak bizirik iraungo du eta gainerako segmentuak ezabatuko dira.</translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">Kendu hautatutakoa</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Atxikitze distantzia:</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">Atxikitze-puntua lerroaren atxikitzeko puntura</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Atxikitze-lerroa:</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">Gap tamaina:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">Atxiki puntua marrako tarterako</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Libre</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">Markatu tarteetan:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">Hasi</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">Erdialdean</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">Amaiera</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">Libre</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">Hasi</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">Erdialdean</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">Amaiera</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">Zuloaren tamaina marrazteko</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">Distantzia momentutik</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Hartu distantzia bat marrazkitik</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">Hutsunearen tamaina, aske ez bada</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">Sartzen bada, tartearen tamaina saguak zehazten du</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">Aktibatzen bada, hautatutako lerro-erakundeak ispilua egingo du.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">Ispilua hautatutako lerrora</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Egiaztatu gabe, jatorrizko entitateak ezabatuko dira, bestela bizirik aterako dira.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mantendu jatorrizkoak</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Aktibatzen bada, uneko atributuak ispiludun entitateentzat erabiliko dira, bestela, jatorrizkoak.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Erabili uneko atributuak</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Aktibatzen bada, objektu ispiludunak uneko geruzan jarriko dira, bestela jatorrizko geruzetan jarriko dira.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Erabiltzailearen uneko geruza</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23351,234 +21303,6 @@ Zehaztu beste balio bat.</translation>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation type="unfinished">Erabili uneko geruza</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Biratu aukerak</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">Hautapen librea saguak egin beharko luke, egiaztatuz gero.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Libre</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Hautatzen bada, enties berriak uneko geruzan jarriko dira, bestela jatorrizko geruzetan egongo dira.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Erabili uneko geruza</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">Absolutua bada, erreferentzia-puntua biratuko da, baina entitatea bigarren angeluaren bidez bakarrik biratuko da, bestela angeluak batuko dira</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">Absolutua</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">Angelua biraketa zentroaren inguruan</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">Aktibatzen bada, uneko atributuak sortuko zaizkie entitate sortzaileei, othewise originalak erabiliko dira.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Erabili uneko atributuak</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">Hautatzen bada, bigarren biraketa erreferentzia-puntuaren inguruan dago</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">Biratu bi aldiz</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">Errefrakzio-puntuaren inguruko biraketa gehigarriaren angelua</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Aukeratu biraketaren angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">Aktibatzen bada, jatorrizko entitateak bizirik aterako dira, bestela ezabatu egingo dira.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mantendu jatorrizkoak</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">Kopia anitz sortuko dira, egiaztatuz gero.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Kopia anizkoitzak</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">Biratze-angelua:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Angelua sartutako balioak edo saguaren posizioak definitzen duen zehazten du</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">Aukeratu bigarren biraketa-angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Kopia kopurua</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Biratu aukerak</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">Aktibatzen bada, hainbat kopia sortuko dira.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Kopia anizkoitzak</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">Hautatzen bada, X eta Y ardatzen eskalatze-faktore bera aplikatuko da.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">Isotropikoa</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Aktibatzen bada, jatorrizko entitateek bizirik iraungo dute, bestela ezabatu egingo dira.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mantendu jatorrizkoak</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Kopia kopurua</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Aktibatzen bada, uneko atributuak sortuko zaizkie entitateei, bestela jatorrizkoak erabiliko dira.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Erabili uneko atributuak</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">Y ardatzaren eskala-faktorea</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Eskala-faktorea:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">Aktibatzen bada, sortutako entitateak uneko geruzan kokatuko dira. Bestela, jatorrizko geruzetan jarriko dira.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Erabili uneko geruza</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">Hautatzen bada, faktorea saguak hautatuko du. Bestela, faktoreen balio zehatzak erabiliko dira.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Libre</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">X ardatzaren eskala-faktorea</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Aktibatzen bada, jatorrizko entitateek bizirik iraungo dute, bestela ezabatu egingo dira.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">Mantendu jatorrizkoak</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">Aktibatzen bada, sortutako entitateak uneko geruzan kokatuko dira. Bestela, jatorrizko geruzetan jarriko dira.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Erabili uneko geruza</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Kopia kopurua</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">Aktibatzen bada, uneko atributuak sortuko zaizkie entitate sortzaileei, jatorrizkoak erabiliko dira.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Erabili uneko atributuak</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Aktibatzen bada, jatorrizko entitateek bizirik iraungo dute, bestela ezabatu egingo dira.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mantendu jatorrizkoak</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Aktibatzen bada, hainbat kopia sortuko dira.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Kopia anizkoitzak</translation>
     </message>
 </context>
 <context>
@@ -23894,14 +21618,6 @@ Zehaztu beste balio bat.</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>...</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">Iragazi ikuspegiak izenaren arabera</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Iragazkia...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24337,45 +22053,6 @@ Abisua: ekintza hau ezin da desegin!</translation>
         <source>Control Points</source>
         <translation>Kontrol-puntuak</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Parabola kontrol-puntuak ezin dira paraleloak izan</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">Hautatuta badago, txertatze-puntu gisa erabiltzen den puntua ezabatu egingo da itsas eragiketaren ondoren. Bestela, bizirik aterako da.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">Kendu puntua</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Eskala-faktorea</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Igarotako erakundeen eskala-faktorea</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Biratze-angelua itsatsiriko entitateentzat</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24451,89 +22128,6 @@ Abisua: ekintza hau ezin da desegin!</translation>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">Aukeratu angelua marrazkitik</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Biratze-angelua itsatsiriko entitateentzat</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">Entitateak txertatzeko puntuen arteko tartea errenkadetan.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">Aukeratu matrizeen tartea X-en marrazkitik</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Eskala-faktorea</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">Hautatu matrizearen angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">Biratze-angelua matrizerako.</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">Array errenkaden zenbakia.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">Aukeratu Y-ren matrize-tartea marrazkitik</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">Aktibatzen bada, biraketa-angelu bera erabiltzen da banan-banan itsasteko eta matrize osorako. Bestela, angelu desberdinak erabiltzen dira.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">Angelu berak</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Tartea:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">Array zutabeen zenbakia.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">Aktibatzen bada, kopia sorta bat sortuko da itsatsi ondoren.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">Array-a</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">Array-angelua:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Igarotako erakundeen eskala-faktorea</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">Zutabeetan entitateak txertatzeko puntuen arteko tartea.</translation>
     </message>
 </context>
 <context>
@@ -25155,17 +22749,9 @@ Abisua: ekintza hau ezin da desegin!</translation>
         <translation>Marra-zabaleraren izena</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Koloreak</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>Luma-elementuaren atzeko planoaren kolorea luma-taulan editatua</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">Saretaren kolorea boligrafoen zerrendarako</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25187,10 +22773,6 @@ Abisua: ekintza hau ezin da desegin!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>Mahaiaren errenkada osoa ausarta da luma aktiboarentzat</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">Saretaren kolorea:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25283,17 +22865,9 @@ Abisua: ekintza hau ezin da desegin!</translation>
         <translation>Izen naturala posible denean</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">Hautatuta badago, mezu gehigarriak erakutsiko dira boligrafoarekin lotutako eragiketen barruan</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>Erakutsi informazio-mezua boligrafoak entitaterik hautatu ezin badu</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">Egin klik bikoitza taulako elementuan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25516,12 +23090,6 @@ Abisua: ekintza hau ezin da desegin!</translation>
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Arkatzen fitxategiaren kokapena aldatu da, beraz, berrabiarazi aplikazioa, fitxategi berria erabili ahal izateko.
-Kontuan izan, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako arkatza gorde egingo da fitxategi berrian, eta, beraz, fitxategiaren edukiera ordezkatuko da.</translation>
-    </message>
 </context>
 <context>
     <name>LC_PointPickButton</name>
@@ -25567,37 +23135,6 @@ Kontuan izan, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako ar
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>Aukeratu kokapena marrazkitik</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">Puntu kopurua Y norabidearen arabera (lattizko errenkaden kopurua)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">Errenkada kopurua:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">Zutabe kopurua:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">Puntu kopurua X lattice norabidearen arabera (lattice zutabe kopurua)</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">Hautatuta badago, lehenengo puntuaren posizioaren azken puntua doituko da, beraz, latticea laukizuzena edo laukizuzena izango da</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">Doitu azken puntua lehenera</translation>
     </message>
 </context>
 <context>
@@ -32864,10 +30401,6 @@ Kontuan izan, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako ar
         <translation>Diametroa</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">Zirkunferentzia</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="740"/>
@@ -33856,10 +31389,6 @@ p, li { zuriunea: aurreitzulbira; }
         <translation>Entitatearen informazioa</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Hautatuta badago, polilerroko lerro eta arkuei buruzko informazio zehatzagoa Entitatearen Informazioaren trepetan agertuko da.&lt;br/&gt; Bestela, vertexes/bulges buruzko informazioa bakarrik bistaratuko da.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
@@ -33908,205 +31437,6 @@ p, li { zuriunea: aurreitzulbira; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>Puntuak nabarmendu</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Ertzak:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">Aktibatzen bada, zehazten du izpi-puntua ertzen erradioaren arabera aldatu behar dela.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Atxikitu desplazamendua</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">Izkina luzea Y norabidean.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Laukizuzenaren zein ertz marraztu behar diren definitzen du (zuzendu ordez bi lerro paralelo bakarrik sor daitezke)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Biak</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Bertikala</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontala</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">Laukizuzenaren zabalera</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">Laukizuzenaren ertzak nola marraztu behar diren kontrolatzen du.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Zuzena</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Biribildu</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">Hautatzen bada, laukizuzena biratuko da zehaztutako angeluan.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Oinarrizko angelua:</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">Aktibatzen bada, laukizuzenaren altuerak eta zabalerak arku-zentruen arteko distantzia definitzen du biribiltzeko izkinetarako. Bestela, balio hauek laukizuzenaren kanpoko tamaina definitzen dute.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">Tamaina barnekoa</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Y luzera:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">Hautatzen bada, laukizuzena polilerro gisa sortuko da, segmentu indibidualen ordez.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilerroa</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Atxikitu:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Altuera:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Erradioa:</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">X norabiderako bihurgunearen luzera.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">X luzera:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">Laukizuzenaren altuera</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Izkina borobilen erradioa.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">Puntu laukizuzena txertatze-puntuan kokatuko da.</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">Goiko ezkerrekoa</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Goian</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">Goian eskuinean</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Ezkerra</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Erdialdean</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Eskuinean</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">Behean ezkerrean</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Behean</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">Behean eskuinean</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Aukeratu biraketaren angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Aukeratu ertz borobilen erradioa marrazkitik.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Biratze-angelua</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">Hartu laukizuzenaren altuera marrazkitik</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">Hartu laukizuzenaren zabalera marrazkitik</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Zabalera:</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Izkina:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">Aukeratu ertzaren luzera X norabidean, marrazkitik.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">Hartu ertzaren luzera Y norabidean, marrazkitik.</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">Hautatzen bada, angelua saguaren posizioaren arabera zehaztuko da. Bestela, zehaztutako balioa erabiliko da.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Libre</translation>
     </message>
 </context>
 <context>
@@ -34476,153 +31806,6 @@ p, li { zuriunea: aurreitzulbira; }
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Laukizuzenaren zein ertz marraztu behar diren definitzen du (zuzendu ordez bi lerro paralelo bakarrik sor daitezke)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Biak</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Bertikala</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontala</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">Hasierako puntuaren posizioan zein puntutan kokatu behar den zehazten du.</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">Corner</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">Erdi-bertikala</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">Erdi-horizontala</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Erdialdean</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">Aukeratu laukizuzenaren biraketa angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">Aukeratu ertz borobilen erradioa marrazkitik.</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Izkina:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">Laukizuzenaren zein puntu kokatu behar den zehazten du.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Hartu oihalaren luzera X norabidean, marrazkitik.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Ertzak:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">Hartu oihalaren luzera Y norabidean, marrazkitik.</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">Hasi pantaila:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Alakaren luzera Y norabidean.</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Aktibatzen bada, zehazten du kaptura-puntuak ertzen erradioaren arabera aldatu behar direla.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Atxikitu desplazamendua</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">X luzera:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Erradioa:</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">Aktibatzen bada, laukizuzenaren biraketa-angelua zehaztu daiteke.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Oinarrizko angelua:</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">Biraketaren angelu angelu angeluzuzena.</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">Bukaerako lotura:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">Laukizuzenaren ertzak nola marraztu behar diren zehazten du.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Zuzena</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Biribildu</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">Izkina borobilen erradioa.</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Y luzera:</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">Hautatzen bada, laukizuzen osoa polilinea gisa marraztuko da.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilerroa</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Alakaren luzera X norabidean.</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -34880,145 +32063,6 @@ p, li { zuriunea: aurreitzulbira; }
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation type="unfinished">Hartu oihalaren luzera Y norabidean, marrazkitik.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">Koadranoaren barneko angelua.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">Hautatzen bada, koadranoaren barneko angelua zehaztuko da.</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">Barneko angelu finkoa:</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">Laukizuzenaren oinarrizko angelua.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">X luzera:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Alakaren luzera X norabidean.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">Izkina laukizuzenerako nola marraztu behar den zehazten du.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Zuzena</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Biribildu</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Izkina:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Aktibatzen bada, zehazten du kaptura-puntuak ertzen erradioaren arabera aldatu behar direla.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Atxikitu desplazamendua</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Y luzera:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Alakaren luzera Y norabidean.</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Izkina borobilen erradioa.</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Erradioa:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">Hautatzen bada, forma polilinea gisa sortuko da.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilerroa</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">Hartu koadranoaren barneko angelua marrazkitik.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Ertzak:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Aukeratu ertz borobilen erradioa marrazkitik.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Hartu oihalaren luzera X norabidean, marrazkitik.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">Hartu oihalaren luzera Y norabidean, marrazkitik.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Laukizuzenaren zein ertz marraztu behar diren definitzen du (zuzendu ordez bi lerro paralelo bakarrik sor daitezke)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Biak</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Bertikala</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontala</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">Hartu laukizuzenaren oinarrizko angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">Aktibatzen bada, laukizuzena oinarri-angelu jakin batera biratuko da. Bestela, oinarrizko angelua angeluaren bidez definituko da lehenengo eta bigarren puntuen artean.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">Oinarri-angelu finkoa:</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">Aktibatzen bada, laukizuzenaren ordez koadrangle sortuko da.</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">Quadrangle</translation>
     </message>
 </context>
 <context>
@@ -35667,100 +32711,6 @@ p, li { zuriunea: aurreitzulbira; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">Barkatu, sareko erroreren bat gertatu da bertsio berria egiaztatzean.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">Ezin da zerbitzariaren erantzuna analizatu</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Biratu aukerak</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">Whetether kopiak uneko edo jatorrizko geruzan txertatuko direla zehazten du</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Erabili uneko geruza</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">Egokitu bigarren mailako angelua, beraz, angeluen batura (biraketa-angelua) 0 da. Horrelako entitatea mugitu egingo da, baina ez da biratuko.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">Angeluak ispiluetan</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">Hautatu marrazkiaren angelu nagusia</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">Uneko edo jatorrizko marrazkiaren atributuak aplikatuko diren zehazten du</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Erabili uneko atributuak</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">Hautatu bigarren mailako angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">Angelua erreferentzia-puntu absolutuaren gainean biratzeko</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Aktibatzen bada, hainbat kopia sortuko dira.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Kopia anizkoitzak</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">Sortu beharreko kopia kopurua</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">Bigarren mailako angelua:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">Egiaztatuz gero, angelu bera erabiliko da kopia guztietan. Bestela, proportzionalki handituko da zenbakiaren kopia.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">Bigarren mailako angelu bera kopientzat</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Aktibatzen bada, jatorrizko entitateek bizirik iraungo dute, bestela ezabatu egingo dira.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mantendu jatorrizkoak</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">Angelu nagusia:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">Angelua bigarren mailako erreferentzia-puntuaren gainean biratuko da</translation>
     </message>
 </context>
 <context>
@@ -36755,141 +33705,6 @@ p, li { zuriunea: aurreitzulbira; }
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">Hasi zirkuluaren angelua:</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">Hasi angelua tik-ak hasiko diren zirkulurako.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Desplazamendua:</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">Puntua ebakitzeko puntuaren desplazamendua.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Hartu distantzia marrazkitik</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Distantzia:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">Marka arteko distantzia.</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">Aktibatzen bada, hautatutako entitatea ebaki-puntuen bidez zatituko da.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Zatitu</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">Hartu tik-tak desplazamendua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">Marka-luzera.</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">Hartu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">Marka-egokitzea:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">Hartu marra-luzera marrazkitik</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">Hasi zirkuluaren angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">Markatu eta hautatutako entitatearen arteko angelua.</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">Aktibatzen bada, angelua hautatutako entitatearekin lotuta dago, bestela angelu absolutua da.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">Probaren luzera:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">Hautatutako entitatearekin ebakitzeko puntua zein puntutan jarri behar den zehazten du.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Hasi</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Erdialdean</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Amaiera</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">Aktibatzen bada, tiketen arteko distantzia finkoa erabiliko da. Bestela, distantzia entitatearen luzeraren arabera kalkulatuko da eta marka kopurua.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">Finkoa</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">Markatu kopurua hautatutako entitatearen ertzen artean.</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">Zenbat:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">Entitatearen ertzetako markak nola jarri behar diren erakusten du.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Bat ere ez</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Biak</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">Marka-ertza:</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37209,57 +34024,6 @@ p, li { zuriunea: aurreitzulbira; }
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">Lerro-segmentuen kopurua definitzen du spline-fit polilerro bakoitzeko sortzeko</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Egiaztatu gabe, jatorrizko splinea kenduko da, bestela bizirik aterako da.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mantendu jatorrizkoak</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Aktibatzen bada, uneko atributuak sortuko dira, bestela, jatorrizkoak.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Erabili uneko atributuak</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Aktibatzen bada, sortutako entitateak uneko geruzan jarriko dira, bestela jatorrizko geruzetan jarriko dira.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Erabili uneko geruza</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">Aktibatzen bada, lerro-segmentuen kopuru pertsonalizatua zehaztu daiteke. Bestela, uneko marrazkiaren ezarpenen balioa erabiliko da.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">Segmentu pertsonalizatuen kopurua</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">Aktibatzen bada, lerro-segmentuak polilerroa izango dira. Bestela lerro indibidualak izango dira</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">Polilerroa</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -37383,61 +34147,6 @@ p, li { zuriunea: aurreitzulbira; }
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
         <translation type="unfinished">Polilerroa</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Aktibatzen bada, sortutako entitateak uneko geruzan jarriko dira, bestela jatorrizko geruzetan jarriko dira.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Erabiltzailearen uneko geruza</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">Spline-ri gehituko zaizkion erdiko segmentuen kopurua.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">Esplinearen gradua definitzen du</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Egiaztatu gabe, jatorrizko polilerroa kenduko da, bestela bizirik aterako da.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Gradua:</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mantendu jatorrizkoak</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">Erdiko puntuak:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Aktibatzen bada, uneko atributuak sortuko dira, bestela, jatorrizkoak.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Erabili uneko atributuak</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">Aktibatzen bada, polilerroa puntutzat hartzen da eta puntuz marratua sortuko da. Bestela, kontrol-puntutzat hartzen dira, eta jatorrizko splinea sortuko da.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">Vertexeak spline puntuak dira</translation>
     </message>
 </context>
 <context>
@@ -37694,10 +34403,6 @@ p, li { zuriunea: aurreitzulbira; }
 <context>
     <name>LC_SplinePropertiesEditingWidget</name>
     <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="14"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="17"/>
         <source>Spline Properties Editor</source>
@@ -37845,69 +34550,6 @@ p, li { zuriunea: aurreitzulbira; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>Spline gutxi gorabeherako gradua</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">Hautatzen bada, izar simetriko bat sortuko da.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Simetrikoa</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">Erradioa barneko ertzetarako.</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Zenbakia:</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">Aukeratu kanpoko erradioa marrazkitik</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">Aukeratu barneko erradioa marrazkitik</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">Izpien kopurua.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">Hautatzen bada, kanpoko ertzak biribilduko dira.</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">Kanpoko erradioa</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">Aktibatzen bada, barneko ertzak biribilduko dira.</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">Barneko erradioa</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">Aktibatzen bada, izarra polilerroa bezala marraztuko da.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilerroa</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">Erradioa kanpoko izpientzat (edges).</translation>
     </message>
 </context>
 <context>
@@ -38798,14 +35440,6 @@ p, li { zuriunea: aurreitzulbira; }
         <translation>Ezarpenak</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">Erabiltzailearen koordenatuak izenaren arabera iragaztea</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Iragazkia...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>&lt;Izenik ez&gt;</translation>
@@ -38906,33 +35540,6 @@ Abisua: ekintza hau ezin da desegin!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>Kendu A&amp;ll UCS</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">Koordenatu-sistema berriaren X ardatzaren angelua</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">X-Axis angelua sartutako balioak edo saguaren posizioak definitzen duen zehazten du</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Libre</translation>
     </message>
 </context>
 <context>
@@ -39545,33 +36152,6 @@ Abisua: ekintza hau ezin da desegin!</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.cpp" line="63"/>
         <source>remove 0&quot;</source>
         <translation>kendu 0ª</translation>
-    </message>
-</context>
-<context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Poliliniaren distantzia berdineko aukerak</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Spacing:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">Jatorrizko polilineatik distantzia</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">Kopiak:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Kopia kopurua</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">Hartu tartea marrazkitik</translation>
     </message>
 </context>
 <context>
@@ -40252,77 +36832,6 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">Arkua</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Geruza:</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Pen atributuak</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">Arkuaren zentroaren X koordenatua</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">Arkuaren zentroaren Y koordenatua</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="obsolete">Arkua alderantziz dagoen ala ez zehazten du (erlojuaren norantzan)</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">Alderantzizkoa</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">Zentrua (y):</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="obsolete">Arkuaren erradioa</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="obsolete">Hasierako angelua:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Erradioa:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="obsolete">Arkuaren hasierako angelua</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="obsolete">Arkuaren amaierako angelua</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="obsolete">Angeluaren amaiera:</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Zentrua (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
@@ -40360,194 +36869,6 @@ Honek errekurtsiboki aldatzen ditu blokearen entitate guztiak.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
         <translation>Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Zirkulua</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Geruza:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Erradioa:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="obsolete">Zirkuluaren erradioa</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">Zentrua (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">Zirkuluaren zentroaren Y koordenatua</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Zentrua (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">Zirkuluaren zentroaren X koordenatua</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">Dimentsio lineala</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Geruza:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Dimentsioaren geruza</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Pen atributuak</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angelua:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="obsolete">Dimentsioaren biraketa-angelua</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Neurria</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Dimentsioaren geruza</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Geruza:</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Pen atributuak</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Elipsea</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Geruza:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="obsolete">Elipsearen ardatz nagusiaren biraketa-angelua, graduak</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="obsolete">Arkua alderantziz dagoen ala ez zehazten du</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">Alderantzizkoa</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">Zentrua (y):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="obsolete">Arku eliptikoaren azken angelua, graduak</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">Arkuaren zentroaren Y koordenatua</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="obsolete">Elipsearen ardatz nagusiaren erradioa</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="obsolete">gradutan</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="obsolete">Hasierako angelua (°):</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="obsolete">Biraketa(°):</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="obsolete">Elipsearen ardatz txikiko erradioa</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="obsolete">Amaierako angelua (°):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="obsolete">Hasierako arku eliptikoaren angelua, graduak</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="obsolete">Nagusia:</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="obsolete">Txikia:</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="obsolete">Elipsearen zentroaren X koordenatua</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Zentrua (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
     </message>
 </context>
 <context>
@@ -40624,89 +36945,6 @@ Honek errekurtsiboki aldatzen ditu blokearen entitate guztiak.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <source>Image</source>
-        <translation type="obsolete">Irudia</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Geruza:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angelua:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="obsolete">Altuera:</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="obsolete">Irudiaren zabalera</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="obsolete">Txertatzeko puntuaren X koordenatua</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="obsolete">Bereizmena (puntu hazbeteko)</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="obsolete">Bide-izena irudi-fitxategira</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="obsolete">Eskalatze-faktorea</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="obsolete">Tamaina (px):</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">Biratze-angelua</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="obsolete">Txertatzeko puntuaren Y koordenatua</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="obsolete">Eskala:</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="obsolete">Irudiaren tamaina (pixeletan)</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">DPI</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="obsolete">Zabalera:</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="obsolete">Irudiaren altuera</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="obsolete">Hautatu irudi-fitxategia</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="32"/>
@@ -40729,155 +36967,9 @@ Honek errekurtsiboki aldatzen ditu blokearen entitate guztiak.</translation>
         <translation>Menuaren hizkuntza:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Ongi etorri LibreCADera&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Mesedez, aukeratu marrazki berrientzat erabili nahi duzun unitatea eta UI eta komandoetarako nahi duzun hizkuntza.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Ezarpen hauek geroago alda ditzakezu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
         <translation>Komandoen Hizkuntza:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <source>Insert</source>
-        <translation type="obsolete">Txertatu</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Geruza:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="obsolete">Txertatu puntua (y):</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="obsolete">Txertatu puntua (x):</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="obsolete">Kopiarako errenkaden kopurua</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">Biratze-angelua</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="obsolete">Zutabeen arteko tartea</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="obsolete">Eskala-faktorea X ardatzaren arabera</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="obsolete">Txertatzeko puntuaren X koordenatua</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="obsolete">Errenkaden arteko tartea</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="obsolete">Zutabe kopurua kopietarako</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="obsolete">Eskala-faktorea Y ardatzaren arabera</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="obsolete">Y eskala:</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="obsolete">Errenkadak:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angelua:</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="obsolete">Txertatzeko puntuaren Y koordenatua</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="obsolete">Errenkada-tartea:</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="obsolete">Zutabeak:</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="obsolete">X eskala:</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="obsolete">Zutabe-tartea:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Lerroa</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Geruza:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="obsolete">Amaiera-puntua (x):</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="obsolete">X puntuaren koordenatua</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="obsolete">Y puntuaren koordenatua</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="obsolete">Amaiera-puntua (y):</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="obsolete">Hasierako puntua (y):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="obsolete">Hasierako puntua Y koordenatua</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="obsolete">Hasierako puntua (x):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="obsolete">Hasierako puntuaren X koordenatua</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
     </message>
 </context>
 <context>
@@ -41048,10 +37140,6 @@ Honek errekurtsiboki aldatzen ditu blokearen entitate guztiak.</translation>
         <translation>Sinboloa sartu</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">Ikurrak txertatzea</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
         <source>Degree (°)</source>
         <translation>Graduak (°)</translation>
@@ -41100,10 +37188,6 @@ Honek errekurtsiboki aldatzen ditu blokearen entitate guztiak.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>Libera (£)</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Yen (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -41739,115 +37823,6 @@ Honek errekurtsiboki aldatzen ditu blokearen entitate guztiak.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
         <translation>Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <source>Mirroring Options</source>
-        <translation type="vanished">Simetria Aukerak</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Kopia kourua</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Jatorrizkoa ezabatu</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Jatorrizkoa Mantendu</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Uneko &amp;atributuak erabili</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Uneko &amp;geruza erabili</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Kopia kopurua</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">Jatorrizkoa &amp;ezabatu</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Jatorrizkoa &amp;Mantendu</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">Kopia &amp;Anitzak</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Uneko &amp;atributuak erabili</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Uneko &amp;geruza erabili</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Move/Copy Options</source>
-        <translation type="vanished">Mugitu/Kopiatu Aukerak</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <source>Move/Rotate Options</source>
-        <translation type="vanished">Mugitu/Biratu Aukerak</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Kopia kopurua</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Angelua (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Uneko &amp;atributuak erabili</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Uneko &amp;geruza erabili</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Jatorrizkoa ezabatu</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Jatorrizkoa Mantendu</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Kopia anizkoitzak</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="vanished">Ctrl+S</translation>
     </message>
 </context>
 <context>
@@ -44864,10 +40839,6 @@ Honek errekurtsiboki aldatzen ditu blokearen entitate guztiak.</translation>
         <translation>Zero markatzaile erlatiboa</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">Portaera</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
         <translation>Sareta mota marrazteko</translation>
@@ -45923,247 +41894,6 @@ beraz, labean egiteko behar den urrats-balio lehenetsia</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Code</source>
-        <translation type="obsolete">Kodea</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Balioa</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Puntua</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Geruza:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="obsolete">Posizioa (y):</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="obsolete">Puntuaren posizioa Y koordenatuaren arabera</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="obsolete">Posizioa (x):</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="obsolete">Puntuaren posizioa X koordenatuaren arabera</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Polilerroa</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Geruza:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="obsolete">Polilerroa itxita dagoen ala ez zehazten du</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation type="vanished">Biraketaren aukerak</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Kopia kopurua</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Ezabatu jatorrizkoa</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp; Mantendu jatorrizkoa</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="vanished">Kopia anitzak:</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Angelua (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Erabili uneko &amp; atributuak</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Erabili uneko &amp; geruza</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <source>Rotate Two Options</source>
-        <translation type="vanished">Biratu bi aukerak</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Kopia kopurua</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Ezabatu jatorrizkoa</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp; Mantendu jatorrizkoa</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">Kopia anitzak</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;a):</source>
-        <translation type="vanished">Angelua (&amp;a):</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;b):</source>
-        <translation type="vanished">Angelua (&amp;b):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Erabili uneko &amp; atributuak</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Erabili uneko &amp; geruza</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <source>Scaling Options</source>
-        <translation type="vanished">Eskalatzeko aukerak</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Kopia kopurua</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Erabili uneko &amp; atributuak</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Erabili uneko &amp; geruza</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Bilatu erdiko eskala-erlazioak erreferentzia-puntu baten eta helburu-puntu baten bidez.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Ezabatu jatorrizkoa</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp; Mantendu jatorrizkoa</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">Kopia anitzak</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="vanished">Eskalatu faktore beraren arabera x eta y norabideetan</translation>
-    </message>
-    <message>
-        <source>Isotropic Scaling</source>
-        <translation type="vanished">Eskala isotropikoa</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">Spline</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Geruza:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="obsolete">Gradua:</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="obsolete">Splinek amaiera itxia definitzen duen ala ez zehazten du</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="obsolete">Spline gutxi gorabeherako gradua</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="20"/>
@@ -46311,10 +42041,6 @@ beraz, labean egiteko behar den urrats-balio lehenetsia</translation>
         <translation>Libera (£)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Yen ())</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Times (×)</source>
         <translation>Garaiak (x)</translation>
@@ -46358,10 +42084,6 @@ beraz, labean egiteko behar den urrats-balio lehenetsia</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>Testuaren geruza</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">Testuaren lizuna</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -46969,10 +42691,6 @@ beraz, labean egiteko behar den urrats-balio lehenetsia</translation>
         <translation>Angelua:</translation>
     </message>
     <message>
-        <source>Oblique:</source>
-        <translation type="vanished">Oblikoa:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
         <source>Width factor:</source>
         <translation>Zabalera-faktorea:</translation>
@@ -47490,21 +43208,6 @@ p, li { zuriunea: aurreitzulbira; }
     </message>
 </context>
 <context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">Eskala baliogabea eman da</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">Paper-eskalaren faktorea gehienezko inprimatze-erlazioa baino handiagoa</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">Paper-eskalaren faktorea txikiagoa da inprimatze-erlazioa baino</translation>
-    </message>
-</context>
-<context>
     <name>QG_RecentFiles</name>
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="183"/>
@@ -47571,10 +43274,6 @@ p, li { zuriunea: aurreitzulbira; }
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>World</source>
         <translation>Mundua</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Atxikitu</translation>
     </message>
 </context>
 <context>
@@ -47777,12 +43476,6 @@ Zehaztu beste balio bat.</translation>
         <translation>Kendu geruza hutsak</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Objekturik gabeko geruzak, hala ere, iragazten dira eta ez dira ikusten.
-Garbitu iragazki-maskara eta errepikatu.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -47844,14 +43537,6 @@ If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly 
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Ordezko &quot;Geruzaren arabera&quot; balioa iturburu-geruzen balioekin?
-Bai aukeratuz gero, &quot;Geruzaren arabera&quot; boligrafoak dituzten entitateek geruza berrian aurreko geruzetan bezala izango dute itxura, eta &quot;Geruzaren arabera&quot; balioa balio ebatzien bidez ordezkatuko da.
-Ez aukeratuz gero, &quot;Geruzaren arabera&quot; balioak mantenduko dira, eta, beraz, helburuko geruzaren boligrafoak entitate horien boligrafoa definituko du.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -48169,10 +43854,6 @@ Ordeztea nahi duzu?</translation>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="799"/>
         <source>Tagged Image File Format</source>
         <translation>Etiketadun irudi-formatua</translation>
-    </message>
-    <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">Marrazki-truke zaharra %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="471"/>
@@ -50004,11 +45685,6 @@ Ordeztea nahi duzu?</translation>
         <translation>mpoint</translation>
     </message>
     <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">kriclebyarc</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
         <source>cba</source>
         <comment>draw circle by arc</comment>
@@ -51538,26 +47214,6 @@ Ordeztea nahi duzu?</translation>
         <translation>erabilera:</translation>
     </message>
     <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished">[options] [aukerak] &lt;dxf files&gt;</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished">*.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">-- inprimatu dxf fitxategi guztiak izen bereko pdf fitxategietara.</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished">-o batzuk.pdf *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">-- inprimatu dxf fitxategi guztiak &apos;bat.pdf&apos; fitxategian.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
         <source> [options] &lt;%1_files&gt;</source>
         <translation type="unfinished"></translation>
@@ -51633,16 +47289,6 @@ Ordeztea nahi duzu?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Paperaren tamaina (Width x Height) mm-tan.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">Irteerako bereizmena (DPI).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>Irteera-eskala. Adibidez: 0,01 (1,100 eskalan).</translation>
@@ -51688,14 +47334,6 @@ Ordeztea nahi duzu?</translation>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">&lt;dxf files&gt;</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">Sarrerako DXF fitxategia(k)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -51899,11 +47537,6 @@ Ordeztea nahi duzu?</translation>
         <translation>errorea DXF/DWG fitxategi-goiburua irakurtzean</translation>
     </message>
     <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">errorea DXF/DWG goiburua irakurtzean</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
@@ -51950,10 +47583,6 @@ Ordeztea nahi duzu?</translation>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>errorea DXF/DWG kodea irakurtzean</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">Dwg fitxategiaren %1 bertsioa ireki da.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -52402,10 +48031,6 @@ Ordeztea nahi duzu?</translation>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">Hautatu blokea sortzeko (Sartu osatzeko)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
         <translation>Hautatu ingurunea</translation>
@@ -52419,66 +48044,6 @@ Ordeztea nahi duzu?</translation>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>Zehaztu erreferentzia-puntua</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">Hautatu edukiontzia lehertzeko (Sartu osatzeko)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">Hautatu eta lehertu</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Zehaztu erreferentzia-puntua</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Sartu angelua:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Sartu faktorea:</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">Sartu zutabeak:</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">Sartu errenkadak:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">Sartu zutabeen tartea:</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">Sartu errenkada-tartea:</translation>
-    </message>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">Blokeak ezin du bere burua txertatu.</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished">uneko blokearen txertaketa habiaratua du:</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">Ezin da bloke hau sartu.</translation>
     </message>
 </context>
 <context>
@@ -52730,270 +48295,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">Akordearen luzera ez da zero izango</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">Ez da baliozko akordearen luzera</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Zehaztu zentroa</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">Zehaztu hasierako puntua</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Arku alternatiboa</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">Adierazi akordearen luzera (puntuaren negatiboa):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">Erabili ordezko arku-puntua</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">Zehaztu erradioa</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">Zehaztu hasierako angelua:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">Zehaztu amaierako angelua edo [angelua/kordlenoa]</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">Zehaztu angelua:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">Arku-datu baliogabeak.</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Zehaztu hirugarren puntua</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Zehaztu bigarren puntua</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">Zehaztu hasierako puntua edo [zentroa]</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">Zehaztu oinarrizko entitatea</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">Ordezko arkua</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">Ordezko arkua</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">Zehaztu amaierako angelua</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">Zehaztu amaierako puntua</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Zehaztu zentroa</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">Zehaztu puntua zirkuluan</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">Zirkuluaren datu baliogabeak.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Zehaztu lehen puntua</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Zehaztu bigarren puntua</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">Zirkuluaren datu baliogabeak.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Zehaztu lehen puntua</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Zehaztu bigarren puntua</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Zehaztu hirugarren puntua</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">Zehaztu zirkulu-zentroa</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">Zehaztu zirkuluaren erradioa</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">erradioa=%1 ez da baliozkoa (adierazpena)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">erradioa=%1 ez da baliozkoa (negatiboa)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">erradioa=%1 baliogabea da (zero)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">Zehaztu lehen lerroa</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">Zehaztu bigarren lerroa</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">Zehaztu hirugarren lerroa</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">Zehaztu zirkulu tangentearen lehen puntua</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">Zehaztu zirkulu tangentearen bigarren puntua</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Hautatu zirkulu tangentearen zentroa</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Zehaztu lerroa/arc/circle</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Zehaztu lehen lerroa/arc/circle</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Zehaztu bigarren lerroa/arc/circle</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Hautatu zirkulu tangentearen zentroa</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">Ez dago zirkulu tangente arruntik &apos;%1&apos; erradioarentzat</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Zehaztu lerroa/arc/circle</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">Zehaztu beste lerro/arc/circle</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">Zehaztu puntu bat tangentearen zirkuluan</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Hautatu zirkulu tangentearen zentroa</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Hautatu zirkulu tangentearen zentroa</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Zehaztu lehen lerroa/arc/circle</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">Ez dago zirkulu tangente arruntik hautatutako entitateentzat</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Zehaztu bigarren lerroa/arc/circle</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">Zehaztu hirugarren lerroa/arc/circle</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
@@ -53188,125 +48489,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">Hautatu atakatzeko (Sartu osatzeko)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
         <translation>Hatch berehala hautapenaren ondoren</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Zehaztu erreferentzia-puntua</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Sartu angelua:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Sartu faktorea:</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">Sartu dpi:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Zehaztu lehen puntua</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Zehaztu hurrengo puntua edo [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Zehaztu hurrengo puntua</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">Ezin da lerro-sekuentzia itxi: oraindik ez dago nahikoa entitate definituta edo jadanik itxita.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">Ezin da desegin: historiaren hasiera iritsi da</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">Ezin da berreskuratu: historiaren amaiera iritsi da</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Zehaztu posizioa</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">Bestelako norabidea</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Sartu angelua:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">Sartu luzera:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">entitateak sortuko dira</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">Hautatu lehen lerroa</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">Hautatu bigarren lerroa</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">Sartu bisektorearen luzera:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">Sartu bisektore kopurua:</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">Zenbaki-sektoreko lerroak ez daude barrutian:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">Egin klik eta arrastatu marra bat marrazteko</translation>
     </message>
 </context>
 <context>
@@ -53339,74 +48524,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Hautatu zirkulua, arkua edo elipsia</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">Zehaztu distantzia &lt;%1&gt; edo hautatu entitatea edo [%2]</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">entitateak sortuko dira</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Sartu zenbakia:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Ez da baliozko zenbakia. Saiatu 1.99</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">Hautatu entitatea</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">Zehaztu puntuaren bidez</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">entitateak sortuko dira</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Zenbakia:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Ez da baliozko zenbakia. Saiatu 1.99</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">Zehaztu izkina bat</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Zehaztu lehen ertza</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Zehaztu bigarren ertza</translation>
     </message>
 </context>
 <context>
@@ -53448,29 +48565,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">Hautatu oinarrizko entitatea</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Zehaztu angelua</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">Zehaztu luzera</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Zehaztu posizioa</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53508,17 +48602,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Zehaztu txertatze-puntua</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Sartu testua:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
@@ -53527,108 +48610,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Zehaztu lehen puntua</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Zehaztu hurrengo puntua edo [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Zehaztu hurrengo puntua</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">Ezin da lerro-sekuentzia itxi: oraindik ez dago nahikoa entitate definituta.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Ezin da desegin: oraindik ez dago nahikoa entitate definituta.</translation>
-    </message>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">Sartu x amaierako puntua</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Sartu polilerro kopurua</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">Sartu ekuazio bat, f(x)</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">Sartu x hasierako puntua</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">Sartutako x ez da baliozkoa.</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">Sartutako urratsaren tamaina ez da baliozkoa.</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">Sartutako x balioa ez da baliozkoa.</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Arku alternatiboa</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">Zehaztu lehen kontrol-puntua</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">Zehaztu hurrengo kontrol-puntua edo [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">Zehaztu hurrengo kontrol-puntua</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Ezin da desegin: oraindik ez dago nahikoa entitate definituta.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">Testua:</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Zehaztu txertatze-puntua</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Sartu testua:</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Zehaztu bigarren puntua</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">Hautatu ebakitzeko (Sartu osatzeko)</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -53647,10 +48629,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>Ebaki hautapenaren ondoren</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">Hautatu kopiatzeko (Sartu osatzeko)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -53688,24 +48666,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Paste Multiple</source>
         <translation>Itsatsi anizkoitza</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="obsolete">Ezarri itsatsiaren erreferentzia-puntua</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">Ez dago ezer desegiteko!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">Ez dago ezer konpontzeko!</translation>
     </message>
 </context>
 <context>
@@ -53926,57 +48886,6 @@ Amaiera: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">Distantzia: %1
-Kartesiarra: (%2, %3)
-Polarra: (%4 &lt; %5)
-Entitatearen puntua: (%6, %7)
-Puntua: (%8, %9)</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">Zehaztu entitatea</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">Ez atxiki edukiontziko ume-erakundeei</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">Puntu erlatiboa entitatean dago</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Informazioa</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Distantzia:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">Hemendik:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">Hona:</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">Zehaztu puntua</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -54022,10 +48931,6 @@ Puntua: (%8, %9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">Hautatu luzera osoa neurtzeko (Sartu osatzeko)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="74"/>
         <source>Select contour</source>
         <translation>Hautatu ingurunea</translation>
@@ -54057,906 +48962,6 @@ Puntua: (%8, %9)</translation>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>Utzi</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Zehaztu erreferentzia-puntua</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Sartu angelua:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Sartu faktorea:</translation>
-    </message>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">Ezin da &apos;%1&apos; fitxategia ireki</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">Hautatu atributuak aldatzeko (Sartu osatzeko)</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">Aldatu atributuak berehala hautatu ondoren</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Hautatu ingurunea</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">Hautatutako lerroak paraleloak dira</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">Hautatutako lerroak ez dira polilerro bereko umeak</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Intersekzioa:</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">1. puntua:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">2. puntua:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">Baliogabeko entitatea hautatuta (ez-trimmable).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">Baliogabeko entitatea hautatu da (ez-atomikoa).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">Baliogabeko entitatea hautatu da (lehen entitatearekin ezin da murriztu).</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Hautatu lehen entitatea</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Hautatu bigarren entitatea</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">Sartu 1. luzera:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">Sartu luzera:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Zatitu</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">At:</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ez da erakunderik aurkitu.</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">Ebaketa-puntua ezin da entitatearen amaierako puntua izan.</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">Zehaztu ebaki beharreko entitatea</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">Zehaztu ebaketa-puntua</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">Entitateak lerro, arku, zirkulu, elipse edo interpolazio-lerro bat izan behar du.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">Hautatu ezabatzeko (Sartu osatzeko)</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">Ezabatu hautapenaren ondoren</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Hautatu ingurunea</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">Zehaztu polilerroko lehen eten-puntua</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">Zehaztu bigarren eten-puntua lerro berean</translation>
-    </message>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">Polilerro berean ez dauden entitateak.</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">Bigarren entitatearen gurasoa ez da polilerroa</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">Lehen entitatearen gurasoa ez da polilerroa</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">Bigarren entitatearen gurasoa ez da baliozkoa</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">Aukeratutako erakundeetako bat nullptr da</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">Lehen entitatearen gurasoa ez da baliozkoa</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">Lehen entitatea ez da baliozkoa</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">Bigarren entitateak ez du balio</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">Egin klik entitatean aldatzeko</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">Hautatu testua lehertzeko (Sartu osatzeko)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">Lehertu hautapenaren ondoren</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Ispilua</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">Angelua (alt):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">Lerroa:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">Lerroa:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">Hautatu ispilura (Sartu osatzeko)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Hautatu ingurunea</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">Zehaztu ispilu-lerroa</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">Irauli bertikalki</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">Irauli horizontalki</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">Zehaztu ispiluaren lerroaren lehen puntua</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">Zehaztu ispiluaren lerroaren bigarren puntua</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">Desplazamendua</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">Kopiatu desplazamendua</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Zehaztu erreferentzia-puntua</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">Sortu kopia bat</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">Hautatu mugitu (Sartu osatzeko)</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">Mugitu hautapenaren ondoren</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Hautatu ingurunea</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Zehaztu helburu-puntua</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">Biraketarekin mugitzen</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">Iturburua:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">Helburua:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Desplazamendua:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Zehaztu erreferentzia-puntua</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">Hautatu mugitu eta biratu (Sartu osatzeko)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">Mugitu eta biratu hautapenaren ondoren</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Hautatu ingurunea</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Zehaztu helburu-puntua</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">Sartu biraketaren angelua:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">Desplazamendua</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Distantzia:</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">Zehaztu desplazamenduaren norabidea</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">Zehaztu desplazamendurako erreferentzia-puntua</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">Hautatu lerroa, polilerroa, zirkulua edo arkua desplazamendua sortzeko (Sartu osatzeko)</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">Desplazatu hautapenaren ondoren</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Hautatu ingurunea</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">Hautatu norabidea alderantzikatzeko (Sartu osatzeko)</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">Leheneratu hautapenaren ondoren</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Hautatu ingurunea</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Zehaztu erreferentzia-puntua</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">Biraketa</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Iturburu-puntua:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Helburu-puntua:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Desplazamendua:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Erreferentzia-puntua:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">Zentru-puntua:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">Bigarren angelua:</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">Hautatu biratzeko (Sartu osatzeko)</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">Biratu hautapenaren ondoren</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Hautatu ingurunea</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Atxiki hautapenaren zentrora</translation>
-    </message>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">Zehaztu biraketaren zentroa</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">Zehaztu biratu beharreko helburu-puntua</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">Zehaztu puntuaren inguruko biraketa-puntua</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">Bi aldiz biratzen</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">1. zentroa:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">1. angelua:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">2. zentroa:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">2. angelua:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">Hautatu bi ardatzen biraketarako (Sartu osatzeko)</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">Biratu 2 ardatza hautapenaren ondoren</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Hautatu ingurunea</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">Zehaztu erreferentzia-puntu absolutua</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">Zehaztu erreferentzia-puntu erlatiboa</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Biribildu</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">1. puntua:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">2. puntua:</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">Zehaztu bigarren entitatea</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">Sartu erradioa:</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">Zehaztu lehen entitatea edo sartu erradioa &lt;%1&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Eskala</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Zentrua:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Iturburu-puntua:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Helburu-puntua:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Desplazamendua:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">Eskalatu X-ren arabera:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">Eskala Y-ren arabera:</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">Zehaztu eskala-zentroa</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Atxiki hautapenaren zentrora</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">Zehaztu iturburu-puntua</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Zehaztu helburu-puntua</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">Libreki</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">Hautatu eskalara (Sartu osatzeko)</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">Eskalatu hautapenaren ondoren</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Hautatu ingurunea</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Zehaztu lehen ertza</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Zehaztu bigarren ertza</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">Tiratu</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">Hasi izkina:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">Amaierako izkina:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Erreferentzia-puntua:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Helburu-puntua:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Desplazamendua:</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Zehaztu erreferentzia-puntua</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Zehaztu helburu-puntua</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">Hautatu lehen trim entitatea</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">Hautatu entitate mugatzailea</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">Bi</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Intersekzioa:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">2. atala:</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">Hautatu bigarren entitatea</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">Hautatu entitatea trimatzeko</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">Ez da inor aurkitu.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">Aukeratutako Entitatea ez da entitate atomiko bat edo ezin da moztu.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">Hautatu lerro/arc luzera balioa mozteko edo sartzeko:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ez da erakunderik aurkitu.</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">Aukeratu entitateak (Sartu osatzeko)</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">Ordena hautapenaren ondoren</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Hautatu ingurunea</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">Aukeratu erakundea ordenarako</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ez da erakunderik aurkitu.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entitateak polilerroa izan behar du.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">Gehitu-puntua ez da baliozkoa.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">Gehitu-puntua ez dago entitatean.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">Zehaztu polilerroa nodoak gehitzeko</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">Zehaztu nodoaren puntua gehitzea</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ez da erakunderik aurkitu.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entitateak polilerroa izan behar du.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">Egin klik existitzen den polilerroaren hasiera edo amaieratik gertu.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Sartu polilerro kopurua</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">Zehaztu poligonoa hasiera edo amaiera puntutik gertu</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">Ezin dira nodoak erantsi poligono itxi batean.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Ezin da desegin: oraindik ez dago nahikoa entitate definituta.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ez da erakunderik aurkitu.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entitateak polilerroa izan behar du.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">Zehaztu nodoa ezabatzeko polilerroa</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">Zehaztu nodoaren puntua ezabatzea</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Puntua ezabatzea ez da baliozkoa.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Puntua ezabatzea ez dago entitatean.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ez da erakunderik aurkitu.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entitateak polilerroa izan behar du.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Puntua ezabatzea ez dago entitatean.</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">Ez da polilerroa aurkitu.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">Gutxienez bi polilinea-segmentu hautatuen artean egon beharko lirateke.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">Zehaztu polilerroa bi nodoren artean ezabatzeko</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">Zehaztu lehen nodoa</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">Zehaztu bigarren nodoa</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Puntua ezabatzea ez da baliozkoa.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ez da erakunderik aurkitu.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entitateak polilerroa izan behar du.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">Aukeratu jatorrizko polilerroa</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ez da erakunderik aurkitu.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">Aukeratu jatorrizko polilerroko segmentuetako bat</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">Entitatea ezin da polilerro itxia izan.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">Sortutako polilerroa</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ez da erakunderik aurkitu.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entitateak polilerroa izan behar du.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">Lehen segmentuak hautatutako polilerroa izan behar du.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">Bigarren segmentua hautatutako polilinean egon behar du, eta ez lehena.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">Zehaztu polilerroa trimera</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">Zehaztu lehen segmentua</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">Zehaztu bigarren segmentua</translation>
     </message>
 </context>
 <context>
@@ -55033,113 +49038,11 @@ Puntua: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="obsolete">Ez da entitaterik hautatu!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectBase</name>
     <message>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">Entitateak entitate atomiko bat izan behar du.</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Zehaztu entitatea hautatzeko</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">Aukeratu ebakidura-lerroaren lehen puntua</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">Hautatu ezkutuko entitatea</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">Hautatu entitate umeak</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">Aukeratu ebakidura-lerroaren bigarren puntua</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">Zehaztu nahi den geruza duen entitatea</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Zehaztu entitatea hautatzeko</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Hautatu ingurunea</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">De-Hautatu</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">Hautatu</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">entitateak</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">kutxarekin gurutzatzen den hori</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">kaxa barruan daude</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">Aukeratu bigarren ertza</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">Hautatu ebakidura</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">Desautatu entitateak</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">Hautatu entitateak</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">Desautatu elkarrizketa</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">Egin klik eta arrastatu hautapen-leihoan</translation>
     </message>
 </context>
 <context>
@@ -55447,150 +49350,6 @@ Puntua: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Arku-aukerak</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Counterclockwise</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Erlojuaren noranzkoan</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">Arku tangentzialaren aukerak</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">Hautatuta badago, arku tangentea sortuko da zehaztutako erradioarekin</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">Arku tangentearen erradioa</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">Hautatuta badago, angelu zehatzeko arkua sortuko da</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">Arku tangentearen angelua guztira</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Aukeratu erradioaren forma marrazkia</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Erradioa</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Angelua</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">Alakaren aukerak</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">Egiaztatu bi entitateak belaontzira botatzea</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">1. luzera:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Alakaren luzera X norabidean.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">Aukeratu lehen luzera marrazkia</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">2. luzera:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Alakaren luzera Y norabidean.</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">Aukeratu bigarren luzeraren marrazkia</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">Zirkuluaren aukerak</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Erradioa:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Zirkuluaren erradioa</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Aukeratu erradioa marrazkitik</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">Zirkulu tangentziala 2 aukerak</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Zirkulu tangentearen erradioa &lt;/p&gt;&lt;/body&gt;&lt;/html&gt; marrazteko</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Erradioa:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">Zirkulu tangentearen erradioa</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Aukeratu erradioa marrazkitik</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angelua:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -55727,849 +49486,6 @@ Puntua: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Txertatu aukerak</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Biratze-angelua</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Eskala-faktorea:</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">DPI:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Eskala-faktorea</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">DPI irudia</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Txertatu aukerak</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Biratze-angelua</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Faktorea:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Eskala-faktorea</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">Array-a:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">Zutabe kopurua</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">Errenkada kopurua</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">Aukeratu errenkada-tartea marrazkitik</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">Aukeratu zutabeen tartea marrazkitik</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Tartea:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">Zutabe-tartea</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">Errenkada-tartea</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">Liburutegiaren aukerak</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Biratze-angelua</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Faktorea:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Eskala-faktorea</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">Lerro-angeluaren aukerak</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">Sortutako lerroaren puntua txertatze-puntuan jarriko dena</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Lerro-angelua</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Luzera:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Lerroaren luzera</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">Atxikitze-puntua:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">Hautatu marraren angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Hasi</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Erdialdean</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Amaiera</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">Marra-luzera marrazkitik</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">Hautatuta badago, lerroa ortogonala izango da angeluen oinarriaren ardatzean. Bestela, pantailaren ardatzera</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">Angeluen Basisera</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">Line Bisector aukerak</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Luzera:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">Bisektorearen luzera</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">Aukeratu marraren luzera marrazkitik</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Zenbakia:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">Bisektore kopurua sortzeko</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Lerro-aukerak</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Sortu ingurune itxia marraztatutako lerroetatik</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Itxi</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Desegin azken marra marraztea</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Desegin</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Lerroaren azken marrazkia berregiten du</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Redo</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Lerro-aukerak</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">Norabidea:</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">Lerro-segmentuetatik polilerroa sortzen du</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilerroa</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">Lerro bertikala</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">Lerroa angelu zehatzaren arabera</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Angelua</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">Marra horizontala</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">Aktibatzen bada, angelua aurreko segmentuarekiko erlatiboa da</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Desegin azken marra marraztea</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Desegin</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Sortu ingurune itxia marraztatutako lerroetatik</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Itxi</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Lerroaren azken marrazkia berregiten du</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Redo</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Lerroaren angelua</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">Lerroa puntu arbitrariora</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Puntua</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">Lerro paraleloen aukerak</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Distantzia:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">Jatorrizko entitatearen distantzia</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Hartu distantzia marrazkitik</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Zenbakia:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Sortzeko paralelo kopurua</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">Linea paraleloa aukeren bidez</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">Aktibatzen bada, paraleloak sortuko dira bi aldeetan</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Simetrikoa</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Zenbakia:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Sortzeko paralelo kopurua</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Poligonoen aukerak</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Zenbakia:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Ertz kopurua</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Poligonoen aukerak</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Zenbakia:</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">Hautatzen bada, poligonoaren erpinak biribilduko dira.</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">Erradioa</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">Hautatzen bada, poligonoa polilerro gisa marraztuko da. Bestela, entitate indibidualak sortuko dira.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilerroa</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Aukeratu erradioa marrazkitik</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">Ertz kopurua</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">Biribiltzeko erradioa erpin-sortarako.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">Hautatuta badago, erreferentzia-puntuak poligonoaren erpinak dira. Bestela, ertz erdikoak dira.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">Vertex</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Angelu erlatiboaren aukerak</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Lerro-angelua</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Luzera:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Lerroaren luzera</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Hartu luzera marrazkitik</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Testu-aukerak</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Testua:</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">Txertatzeko testua</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Biratze-angelua</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">Desplazatu aukerak</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">Jatorrizko entitatetik desplazamendurako distantzia</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Hautatzen bada, sortutako entitateak uneko geruzan jarriko dira, bestela jatorrizko geruzetan egongo dira.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Erabili uneko geruza</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Kopia kopurua.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Aktibatzen bada, jatorrizko entitateek bizirik iraungo dute, bestela ezabatu egingo dira.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mantendu jatorrizkoak</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">Hautatzen bada, desplazamenduaren distantziaren konponketak erabiliko dira, bestela saguak definituko du.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Distantzia finkoa</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Aktibatzen bada, uneko atributuak sortuko zaizkie entitateei, bestela jatorrizkoak erabiliko dira.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Erabili uneko atributuak</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">Aukeratu marrazkitik distantzia</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Aktibatzen bada, hainbat kopia sortuko dira.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Kopia anizkoitzak</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Biratu aukerak</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Aktibatzen bada, uneko atributuak sortuko zaizkie entitateei, bestela jatorrizkoak erabiliko dira.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Erabili uneko atributuak</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Aktibatzen bada, hainbat kopia sortuko dira.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Kopia anizkoitzak</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">Aktibatzen bada, kopia guztiak agle berak biratuko ditu. Bestela, angelua kopia bakoitzaren zenbakiarekiko proportzionala izango da.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">Angelu berdina kopientzat</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">Biraketaren angelua.</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Kopia kopurua.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">Hautatzen bada, biraketa-angelua saguak definitzen du. Bestela, zehaztutako balioa erabiliko da.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Libre</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">Hautatzen bada, sortutako entitateak uneko geruzan jarriko dira, bestela jatorrizko geruzetan egongo dira.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Erabili uneko geruza</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Aktibatzen bada, jatorrizko entitateek bizirik iraungo dute, bestela ezabatu egingo dira.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Mantendu jatorrizkoak</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">Polilerroa</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">Polilinearen amaierak sortzen dira, hain itxitako ingurunea</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Itxi</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">Desegin aurreko erpinerako</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Desegin</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">Segmentu mota:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">Polilerroaren zein segmentu sortu behar den definitzen du</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Lerroa</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">Tangente</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">Ukituaren erradioa</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">Ukituaren angelua</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Angelua</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">Arku tangentea</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">Tangental arkua erradio finkoarekin</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">Tangental arkua angelu finkoarekin</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">Arkua angeluarekin</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Erradioa:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Arkuaren erradioa</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Aukeratu erradioaren forma marrazkia</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">Arkuaren angelua</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">Erlojuaren orratzaren kontra</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Erlojuaren noranzkoan</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">Inprimatzeko aurrebistaren aukerak</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">Orientazio horizontala</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">Marrazkiaren ezarpenak</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Eskala:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size: drawing size&lt;/p&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale uneko balioarekin blokeatuta dago&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">finkoa</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">Txandakatu beltza/zuria modua</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">Aplikatu inprimatzeko eskala marra-zabaleran</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">Paperaren orientazioa horizontala</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">Paperaren orientazioa</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">Orria marrazkiaren erdian</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">Zooma inprimatzeko areara</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">Doitu orri 1era</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">Gaitzen bada, paper-espazioak zutabeetan eta errenkadetan antolaturiko orrialde-kopurua zehaztuko du</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">Inprimatuta</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">Orrialdeen errenkadak:</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">Orrialdeen zutabe kopurua</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">Orrialdeen zutabeak:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">Orrialde-errenkada kopurua</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">Kalkulatu marrazkia edukitzeko behar den orrialde kopurua</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">Aukera orokorrak</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">Egiaztatu bi ertzak biribilgunera mozteko</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Erradioa:</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">Biraketaren erradioa</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Aukeratu erradioa marrazkitik</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56608,99 +49524,6 @@ Puntua: (%8, %9)</translation>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>Distantzia berdineko puntu kopurua</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">Spline Aukerak</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Gradua:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">Puntuen arteko hurbilketarako erabiltzen den Splineren gradua</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">Hautatuta badago, spline itxia sortuko da</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Itxia</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">Desegin aurreko puntua</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Desegin</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Testu Aukerak</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Testua:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Biratze-angelua</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Aukeratu angelua marrazkitik</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">Moztu Aukerak</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">Distantzia. Balio negatiboak mozteko, positiboak luzatzeko.</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">Guztira</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Luzera:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">Distantzia: Balio negatiboak mozteko, positiboak luzatzeko. Balio negatikoak alde batera utziko dira mozterako orduan.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Hartu luzera marrazkitik</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">Aktibatzen bada, marraren bi aldeetarako trim/extensioa egiten da.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Simetrikoa</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">Jarritako luzera luzera osoa bezala erabiliko da, luzera luzatu ordez.</translation>
     </message>
 </context>
 </TS>
