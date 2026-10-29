@@ -36,6 +36,7 @@
 #include <map>
 #include <optional>
 #include <set>
+#include <stdexcept>
 #include <tuple>
 #include <QScopeGuard>
 #include <QElapsedTimer>
