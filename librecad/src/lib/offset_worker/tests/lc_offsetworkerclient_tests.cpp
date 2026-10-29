@@ -811,6 +811,42 @@ TEST_CASE("Joined cached Produce completions update only current caches and revo
     CHECK(source.sourceHandle() == 91);
 }
 
+TEST_CASE("Cached Produce carries action-wide eviction across a fresh helper process",
+          "[lc-offsetcurve][worker-client][preview-portable]") {
+    auto& rt = runtime(); OwnedClient owned{rt}; Receipts receipts;
+    RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+    LC_OffsetPreviewCache parent;
+    const auto budget = makeDefaultOffsetSourceBudget();
+    LC_CurveOffsetMaterializationResult refused;
+    refused.status = LC_CurveOffsetStatus::SingularOffset;
+    parent.keep(&source, LC_CurveOffsetSide::Left, 10, budget, refused);
+    std::vector<std::unique_ptr<RS_Line>> otherSources;
+    otherSources.reserve(255);
+    for (int i = 1; i <= 255; ++i) {
+        otherSources.push_back(std::make_unique<RS_Line>(nullptr, RS_Vector{0, double(i)}, RS_Vector{1, double(i)}));
+        parent.keep(otherSources.back().get(), LC_CurveOffsetSide::Left, 1, budget, refused);
+    }
+
+    auto snapshot = parent.snapshot(&source); REQUIRE(snapshot);
+    REQUIRE(snapshot->entries.size() == 1); CHECK(snapshot->otherEntries == 255);
+    Req::Produce produce;
+    produce.source = source.getData(); produce.minimum = source.getMin(); produce.maximum = source.getMax();
+    produce.context.topLevel = true; produce.coordinate = {3, 2}; produce.distance = .25;
+    produce.copies = 1; produce.preview = true;
+    Req::CachedProduce cached{std::move(produce), *snapshot};
+    REQUIRE(owned.get().submit({token(1), std::move(cached)}, Client::Mode::Preview, receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& completion = completed(receipts.at(0), 1, 6);
+    REQUIRE(completion.updatePreviewCache(parent, &source));
+
+    const auto after = parent.snapshot(&source); REQUIRE(after);
+    CHECK(after->cleared); CHECK(after->otherEntries == 0); REQUIRE(after->entries.size() == 1);
+    LC_CurveOffsetMaterializationResult found;
+    CHECK_FALSE(parent.find(otherSources.front().get(), LC_CurveOffsetSide::Left, 1, budget, found));
+    CHECK(parent.find(&source, after->entries.front().side, after->entries.front().magnitude, budget, found));
+    CHECK(found.status == LC_CurveOffsetStatus::Ok);
+}
+
 TEST_CASE("Ordered mixed offset batches retain numeric prefixes and bind exact helper requests",
           "[lc-offsetcurve][worker-client][ordered-preparation]") {
     auto& rt = runtime(); OwnedClient client{rt}; Receipts receipts;
