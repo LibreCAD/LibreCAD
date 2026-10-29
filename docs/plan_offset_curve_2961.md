@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117/W126/W127 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan, and W124 requalifies local trim file/conversion/undo-reopen coverage in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100, W128 requalifies E1 guarded entity/factory/clone/transform behavior, W129 requalifies U1 type/INSERT/selection/SVG/menu/info/plugin dispatch, and W131 requalifies E2 cached grips/snaps/through edits and transactional transforms in Release/ASan; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117/W126/W127 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan, and W124 requalifies local trim file/conversion/undo-reopen coverage in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100, W128 requalifies E1 guarded entity/factory/clone/transform behavior, W129 requalifies U1 type/INSERT/selection/SVG/menu/info/plugin dispatch, W131 requalifies E2 cached grips/snaps/through edits and transactional transforms, and W132 requalifies F1 typed schema/carrier/ownership/resource-limit behavior in Release/ASan; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -317,7 +317,7 @@ candidate except the explicitly proposed native-worker tags.
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; W129 current-source dispatch review and focused Release/ASan coverage found no gap; separately gated legacy DXF test remains unavailable in this configuration; remote/final R acceptance remains | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; W131 current-source review and focused Release/ASan requalification found no gap; remote/final R acceptance remains | native edit/grip/transform TUs |
 | G | Eligible creation, repeated offset and bounded ordinary fallback/reporting | E2,U1,W2 | shared preparation `ef40eecad`, typed Produce `558c3bba2`, W16/W17 cache and W18/W19 GUI/publication qualified through `f035d983e`; current-source W67a/W67b and W117 Release+ASan requalification; final platform/visible acceptance remains | creation/repeat/modification TUs, `[creation-worker]`, `[creation-publication]`, `[creation-sources]` and existing Offset tests |
-| F1 | Shared typed schema, raw-carrier eligibility, ownership and byte limits | E1 | candidate `305042903`; audit/retest | `lc_offsetcurvexdata_tests.cpp`, `lc_offsetcurvecarrier_tests.cpp` |
+| F1 | Shared typed schema, raw-carrier eligibility, ownership and byte limits | E1 | candidate `305042903`; W132 current-source review and Release/ASan hostile/adaptor coverage found no gap; remote/final R acceptance remains | `lc_offsetcurve_adapter_tests.cpp` (`[offset-adapter]`), `lc_offsetcurve_hostilefile_tests.cpp` (`[lc-offsetcurve][g-hostile-file]`), `lc_offsetcurve_eed_packet_tests.cpp` (`[offset-xdata]`), plus entity owned-tail cases |
 | F2 | Actual DXF/DWG SPLINE writer/adoption and transactional errors | F1,G | candidate `32597762b`, `7e46b2de8`; audit/retest | offset adapter/persistence/hostile-file TUs |
 | F3 | Version/read/write/conversion, clipboard, independent fixtures and output inspection | F2 | candidate `79ae1930b`; fixtures present, rerun scope required | `[lc-offsetcurve][g-matrix]`, explicit per-row evidence |
 | U2 | Single/multi properties, busy state, async preparation and stale-result protection | E2,U1,W2 | dialog `705a0135b` and sheet `ac7c7646f` isolated/qualified; final R requalification remains open | sheet/dialog/batch-failure TUs |
@@ -5473,3 +5473,28 @@ Remote platforms and final R acceptance remain open.
 
 Logs: `/private/tmp/offset-W131-e2-release.log` and
 `/private/tmp/offset-W131-e2-asan.log`.
+
+## 92. W132 Typed Schema, Carrier and Ownership Requalification (F1)
+
+At source revision `2fe9f5d3c`, audited the actual carrier and XDATA
+implementations and corrected the F1 test inventory above: the previously named
+standalone XDATA/carrier test files are absent; these cases live in adapter,
+hostile-file, EED-packet, and entity owned-tail suites. The combined
+`[offset-adapter],[lc-offsetcurve][g-hostile-file],[offset-xdata]` selector
+passed 104 cases / 390,961 assertions in Release and ASan. It exercises exact
+typed schema recognition, unsupported/raw carrier refusal without repair,
+duplicate/malformed schema fallback, owned/reserved tails, clone/edit behavior,
+byte and item caps, EED packet boundaries, malicious declared counts and
+carrier geometry, and staged-import refusal/reporting. Source review found no
+unbounded copy before carrier count admission and no native authority granted
+by raw cache data without C-check success. No F1 defect was demonstrated. ASan
+used `detect_leaks=0`; no leak-validation claim is made. Remote platforms and
+final R acceptance remain open.
+
+| W132 lane | Result | SHA256 |
+|---|---|---|
+| Typed schema/carrier/hostile-file selector, Release | PASS; 104 cases / 390,961 assertions | `b34ed12ed102ea7fda7a9583e1235eb45a1d3132841c144752ca3ce3fa9ade39` |
+| Typed schema/carrier/hostile-file selector, ASan | PASS; 104 cases / 390,961 assertions | `8e48993fdb68633635921b70d7961f6a00197ce6d8114215e13687595de314c5` |
+
+Logs: `/private/tmp/offset-W132-f1-release.log` and
+`/private/tmp/offset-W132-f1-asan.log`.
