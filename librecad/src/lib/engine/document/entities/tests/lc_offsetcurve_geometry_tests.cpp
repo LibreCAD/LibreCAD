@@ -4324,7 +4324,7 @@ TEST_CASE("Contact failed item pair and depth admission retains the exact entere
     REQUIRE(old.status == LC_IntersectionStatus::Ok);
     REQUIRE(complete.status == LC_IntersectionStatus::Ok);
     struct Stage { std::optional<unsigned> depth; };
-    std::vector<Stage> stages{Stage{std::nullopt}}; // Initial contact control is a compound admission.
+    std::vector<Stage> stages{Stage{std::nullopt}}; // Contact control; item precedes its pair.
     for (const auto offset : {geo::ReferenceRole::Own, geo::ReferenceRole::Opposite}) {
         for (const auto cutter : {geo::ReferenceRole::StartCutter, geo::ReferenceRole::EndCutter}) {
             stages.push_back({std::nullopt}); // Construction record/initial examination.
@@ -4346,7 +4346,7 @@ TEST_CASE("Contact failed item pair and depth admission retains the exact entere
             const auto failed = geo::prepareReferenceContactProviders(data, 1.0, budget);
             CHECK(failed.status == LC_IntersectionStatus::LimitExceeded);
             checkNoProviders(failed, budget);
-            const bool itemAdmittedBeforePair = pairs && entered != 0 && !stages[entered].depth;
+            const bool itemAdmittedBeforePair = pairs && !stages[entered].depth;
             CHECK(failed.work.vertices == old.work.vertices + entered + (itemAdmittedBeforePair ? 1 : 0));
             CHECK(failed.work.distancePairs == old.work.distancePairs + entered);
             CHECK(failed.work.deepest == observed); // An admitted item with a failed pair is not examined.
