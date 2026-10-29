@@ -823,13 +823,13 @@ void LC_OffsetCurvePropertyQueue::commit(Epoch contextSerial) {
         notifyLateCancellation();
         return;
     }
-    // std::map moves preserve the candidate-owner addresses stored by prepared.
-    static_assert(std::is_nothrow_move_constructible_v<decltype(m_pending)>);
-    auto pending = std::move(m_pending);
-    m_pending.clear();
+    // Swap nodes so the prepared owner's candidate addresses remain stable
+    // without depending on library-specific map move-constructor traits.
+    decltype(m_pending) pending;
+    static_assert(noexcept(m_pending.swap(pending)));
+    m_pending.swap(pending);
     const auto outcome = prepared->execute();
     if (outcome == LC_OffsetCurvePropertyBatch::Outcome::Refused && alive) {
-        static_assert(noexcept(m_pending.swap(pending)));
         m_pending.swap(pending);
         reportFailure("Offset Curve: the document changed before publication; accepted edits remain pending.");
     }
