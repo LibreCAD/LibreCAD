@@ -2502,9 +2502,9 @@ and a failed queued import followed by a successful one. The seven GUI skips
 require a larger offscreen screen; the storage skip is the existing JWW case.
 ASan uses `detect_leaks=0`. Two qmake6 objects compile, not a full link. The
 first ASan queue probe aborted on the application singleton assertion while the
-fixture replaced a window with six drawings still open. Final tests explicitly
-close those drawings normally before fixture replacement; forced destruction
-with live drawings remains a lifecycle risk to investigate, not a qualified pass.
+fixture replaced a window with six drawings still open. W33 final tests closed
+those drawings normally before fixture replacement; W35 below reproduces and fixes
+the forced-destruction path rather than treating that W33 result as proof.
 The red probe is retained alongside the final evidence. Reports are
 `offset-W33-{queue,gui,storage,hostile}-{release,asan}.xml` in the evidence root:
 
@@ -2560,6 +2560,43 @@ not a full link. In the evidence root, reports are
 | storage | `c3e61b18784788bbf240dcf68acf2574e665a09984f450c951e7f95e0357fbf0` | `e81d2f2ead1a4c97855a055bd17d0dcc75ac74221c3e323e7ad57f9501d8e3c2` |
 | hostile | `33303b5126423b4fb0fe9215cdd6e64b0e34839ac134dedb7e0b4dca0f588307` | `4898d6e343e9783b01baa52bd4803f659ceba83bffda63ab7b701589da04a277` |
 
+W35 MDI teardown `d8d174365` reproduces the W33 assertion with six live imported
+drawings and the original hide/deferred-delete sequence. LLDB showed that
+destroying an MDI child emitted `QMdiArea::subWindowActivated`, which reached
+`doWindowActivated`, the undo listener, and `getAppWindow()` after the singleton
+had been reset. Application destruction now disconnects the MDI area's signals
+to the application before cancelling imports and destroying child windows.
+The focused test verifies destruction and replacement with live drawings, and
+with a real helper stopped at startup: the helper is reaped and no drawing survives.
+Normal close/ownership regressions also pass. This does not qualify every possible
+teardown or naturally hung numerical primitive.
+
+Fresh Release application/full-test/helper and focused Release/ASan builds pass.
+All discovered identities execute with zero errors/failures; extra cases are
+named sections:
+
+| Suite | Declarations | Cases | Assertions Release / ASan | Skips |
+| --- | ---: | ---: | ---: | ---: |
+| forced destruction | 1 | 2 | 116 / 84 | 0 |
+| dock-window | 45 | 50 | 758 / 861 | 7 |
+| normal GUI close | 9 | 10 | 483 / 483 | 0 |
+| documents storage | 33 | 56 | 1241 / 1241 | 1 |
+| hostile file | 48 | 53 | 53794 / 54801 | 0 |
+
+Polling counts vary. The GUI skips require a larger offscreen screen; the storage
+skip is the existing JWW case. ASan uses `detect_leaks=0`. One qmake6 object
+compiled, not a full link; cross-platform and visible acceptance remain open.
+The failing W35 ASan reproduction is retained alongside the W33 red probe. In the
+evidence root, reports are `offset-W35-{forced,gui,close,storage,hostile}-{release,asan}.xml`:
+
+| Suite | Release SHA256 | ASan SHA256 |
+| --- | --- | --- |
+| forced | `7afa032ab72589e1360e4d1e892c08b9282f07d9a8399afd5e247f8846a1c779` | `2a5a927e743c0a7b1fd51fe67482abcfeba1cb53d63d391def04218d28480c79` |
+| dock-window | `0dbdd233bbf1971792914455018ef3fa8b213bbc4daba6bd8a9205f15adba654` | `352f4ccc958db71b52d2f1ee0a53075e6f96cee45b405319cbc2640c1129ee84` |
+| close | `ac9e9cbaaaaa487e87deee6cbede77213e4d0d4c5cc3d56853ecc659d4f9ffd7` | `358345da8447851b67e7476dcd38d3f93daa6c9a1d3dd1ed6ed2eb1bddd8d899` |
+| storage | `92d1b755bdbafc24b50d9803cc9da610ad5287afad9201eb7c75edac8e7e9c66` | `05d345db92500cd7d5a72db4f53d5994e69d304550b7df28a9077a6c42646726` |
+| hostile | `fd6efefb1d0ccdd80236b0fd02e1d37886ab4160549c83dba48f029517690aa1` | `2e576ba1079457dfd935576143797617c9ac080a30e3aced9d3127052a4801b4` |
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -2607,10 +2644,11 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** investigate the W33 forced-
-destruction singleton assertion, strengthen W34's metadata-only source and
-non-atomic autosave alias checks, and exercise a genuine partial DWG through the GUI dialog.
-Audit close/dialog reentrancy and startup selection versus later user action.
+**Next concrete action on implementation resume:** strengthen W34's metadata-only
+source and non-atomic autosave alias checks, and exercise a genuine partial DWG
+through the GUI dialog. W35 fixes the observed W33 teardown assertion; retain its
+forced-destruction regression while auditing other close/dialog reentrancy.
+Also audit startup selection versus later user action.
 W31/W32 drawing-open/template publication and W33 GUI queue bounds are
 implemented; do not repeat them as absent. Design and test direct synchronous,
 console and nested-XREF contracts without silently weakening editable imports.
