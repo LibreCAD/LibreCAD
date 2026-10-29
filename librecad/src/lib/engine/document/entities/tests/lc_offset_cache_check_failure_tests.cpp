@@ -16,6 +16,7 @@
 #include <cstddef>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <optional>
 #if defined(_MSC_VER)
 #include <malloc.h>
@@ -144,7 +145,7 @@ Fixture wholeCircleFixture(const bool reversed) {
     return fixture;
 }
 
-std::optional<Fixture> openTrimmedComponentFixture() {
+std::optional<Fixture> trimmedComponentFixture(const bool wantOpen) {
     const RS_EllipseData source{RS_Vector{0, 0}, RS_Vector{100, 0}, .05,
         M_PI / 12, 7 * M_PI / 4, false};
     const RS_Ellipse ellipse{nullptr, source};
@@ -155,22 +156,31 @@ std::optional<Fixture> openTrimmedComponentFixture() {
         LC_CurveOffset::makeDirectSourceBudget());
     if (made.status != LC_CurveOffsetStatus::Ok || made.entities.size() != 2) { return {}; }
 
-    const RS_Spline* open = nullptr;
+    const RS_Spline* selected = nullptr;
     for (const auto& entity : made.entities) {
         const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
         if (!spline) { return {}; }
         const auto& data = spline->getData();
-        if (data.controlPoints.front() != data.controlPoints.back()) { open = spline; }
+        const bool isOpen = data.controlPoints.front() != data.controlPoints.back();
+        if (isOpen == wantOpen) { selected = spline; }
     }
-    if (!open) { return {}; }
+    if (!selected) { return {}; }
 
     Fixture fixture;
-    fixture.cache = open->getData();
+    fixture.cache = selected->getData();
     fixture.definition.basis = source;
     fixture.definition.distance = 4;
     fixture.definition.towardCentre = true;
     fixture.definition.relTolerance = .01;
     return fixture;
+}
+
+std::optional<Fixture> openTrimmedComponentFixture() {
+    return trimmedComponentFixture(true);
+}
+
+std::optional<Fixture> closedTrimmedComponentFixture() {
+    return trimmedComponentFixture(false);
 }
 
 int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definition,
@@ -249,6 +259,7 @@ int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definiti
     totalInjectionPoints += completeAllocationCount;
     std::printf("allocation_failure_sweep_recovered=1 fixture=%s injection_points=%zu vertices=%zu\n",
                 label, completeAllocationCount, baseline.work.vertices);
+    std::fflush(stdout);
     return 0;
 }
 
@@ -310,12 +321,21 @@ int sweepStage(const char* label, Operation&& operation, Complete&& complete,
     totalInjectionPoints += completeAllocationCount;
     std::printf("allocation_stage_sweep_recovered=1 fixture=%s injection_points=%zu vertices=%zu\n",
                 label, completeAllocationCount, baseline.work.vertices);
+    std::fflush(stdout);
     return 0;
 }
 }
 
-int main() {
+int main(const int argc, char** argv) {
     namespace geo = LC_EllipseOffsetGeometry;
+    if (argc == 2 && std::strcmp(argv[1], "--closed-trimmed") == 0) {
+        const auto closedTrimmed = closedTrimmedComponentFixture();
+        if (!closedTrimmed) { return 16; }
+        std::size_t injectionPoints = 0;
+        return sweep(closedTrimmed->cache, closedTrimmed->definition,
+            "two-component-trim-closed-path", injectionPoints, .1, false, true);
+    }
+    if (argc != 1) { return 17; }
     const RS_EllipseData source{RS_Vector{0, 0}, RS_Vector{1, 0}, 1.0, .25, .2501, false};
     const auto frame = geo::ReferenceFrame::create(source, 1.0);
     if (!frame) { return 2; }
@@ -371,6 +391,11 @@ int main() {
     if (!openTrimmed) { return 11; }
     if (const int result = sweep(openTrimmed->cache, openTrimmed->definition,
         "two-component-trim-open-path", injectionPoints, .001, false, false)) { return result; }
+    const auto closedTrimmed = closedTrimmedComponentFixture();
+    if (!closedTrimmed) { return 16; }
+    if (const int result = sweep(closedTrimmed->cache, closedTrimmed->definition,
+        "two-component-trim-closed-path", injectionPoints, .1, false, true)) { return result; }
     std::printf("allocation_failure_sweep_all_fixtures_recovered=1 injection_points=%zu\n", injectionPoints);
+    std::fflush(stdout);
     return 0;
 }
