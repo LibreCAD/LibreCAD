@@ -325,7 +325,7 @@ candidate except the explicitly proposed native-worker tags.
 | U4 | Ellipse-only persisted option, preview/commit parity and messages | G,F3,U2,U3 | candidate `3d7195631`; audit/retest | option-enable TU and visible workflows |
 | O1 | Transactional Update from legal live ellipse; no-op/refusal counts | U4 | worker batch `075038088` qualified Release/ASan; final R remains | `lc_action_offsetcurve_source_tests.cpp` |
 | O2 | Restore Original, same-container dedup, attributes and all entry points | O1 | candidate `0d3fed653`, `4a231d243` plus final fixes; audit/retest | Restore/source-UI TUs |
-| T1 | Pure bounded trim prep and exact stored-cache fragments | C-check,E1,F2 | candidate `04c712069`; audit/retest | `[lc-offsetcurve][trim-kernel]`, standalone trim fault target |
+| T1 | Pure bounded trim prep and exact stored-cache fragments | C-check,E1,F2 | candidate `04c712069`; W104 requalifies standalone trim allocation/cancellation failures locally and adds both trim/cache fault executables to Linux/Windows CI; broader audit remains | `[lc-offsetcurve][trim-kernel]`, standalone trim fault target |
 | T2 | Trim/Trim Two, owner mapping, common prep and atomic undo | T1,U1,W2 | candidate `49bb7755f` plus final fixes; prepared worker consumption `3e4401990` qualified; async action routing remains open | `[lc-offsetcurve][trim-action]` |
 | T3 | Plain-fragment metadata and trim/downgrade save/reopen/conversion | T2,F3,O2 | candidate `905158174`; audit/retest | `[lc-offsetcurve][trim-files]` |
 | R | Exact-source cross-feature, Release/ASan/qmake6/visible checks and delivery closeout | T3 | open; older scoped COMPLETE is not this plan's closure | all required rows, scoped receipts and exclusions |
@@ -4834,3 +4834,20 @@ A-core through C-check site audit and final R gates remain open.
 This closes only the public checker allocation-failure sweep for the selected
 fixture. It does not claim every geometry operation or every allocator call
 site across A/B/C has been swept.
+
+## 66. W104 Cross-Platform Standalone Fault Gates
+
+Product/test commit `08a23f294` adds the existing isolated trim-staging fault
+executable beside the cache-check fault executable in the bounded Linux and
+Windows x64/ARM64 workflow. Both are built explicitly and run as standalone
+processes, keeping global allocation replacement out of Catch and the app. The
+trim test's diagnostic now prints its `size_t` spline degree with the matching
+format, removing the compiler warning seen during the fresh local build.
+
+Fresh local Release and ASan builds/runs of the trim executable passed: 1,616
+injected staging-allocation failures, 20 mid-staging cancellations, four conic
+allocation failures and four conic cancellations, with subsequent recovery.
+`actionlint` and `git diff --check` passed. ASan used `detect_leaks=0`. The
+workflow on this pushed head is pending; no remote Windows/Linux success is
+claimed until its jobs finish. This adds platform execution for both global
+allocator test processes but does not close the broader A-C/T fault inventory.
