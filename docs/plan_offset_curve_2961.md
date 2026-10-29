@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, and W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan, and W124 requalifies local trim file/conversion/undo-reopen coverage in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, and W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, public low-level storage compatibility, remote cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -327,7 +327,7 @@ candidate except the explicitly proposed native-worker tags.
 | O2 | Restore Original, same-container dedup, attributes and all entry points | O1 | candidate `0d3fed653`, `4a231d243` plus final fixes; audit/retest | Restore/source-UI TUs |
 | T1 | Pure bounded trim prep and exact stored-cache fragments | C-check,E1,F2 | candidate `04c712069`; W104 requalifies standalone trim allocation/cancellation failures locally and adds both trim/cache fault executables to Linux/Windows CI; broader audit remains | `[lc-offsetcurve][trim-kernel]`, standalone trim fault target |
 | T2 | Trim/Trim Two, owner mapping, common prep and atomic undo | T1,U1,W2 | candidate `49bb7755f` plus final fixes; prepared worker consumption `3e4401990` qualified; W123 requalifies action-level asynchronous preview/commit routing, stale-input refusal, cancellation, timeout, process reaping and recovery in Release/ASan; final visible/platform acceptance remains | `[lc-offsetcurve][trim-action]` |
-| T3 | Plain-fragment metadata and trim/downgrade save/reopen/conversion | T2,F3,O2 | candidate `905158174`; audit/retest | `[lc-offsetcurve][trim-files]` |
+| T3 | Plain-fragment metadata and trim/downgrade save/reopen/conversion | T2,F3,O2 | candidate `905158174`; W124 requalifies the full local trim-file matrix in Release/ASan across DXF R12-R2018, DWG targets, binary DXF and conversion chains, second saves/reopens, and undo/redo; external-platform/final R acceptance remains | `[lc-offsetcurve][trim-files]` |
 | R | Exact-source cross-feature, Release/ASan/qmake6/visible checks and delivery closeout | T3 | open; older scoped COMPLETE is not this plan's closure | all required rows, scoped receipts and exclusions |
 
 ### 4.0 First Runnable Slice: S0
@@ -5330,3 +5330,24 @@ not final visible interaction, remote platforms, or final R acceptance.
 
 Logs: `/private/tmp/offset-W123-trim-action-release.log` and
 `/private/tmp/offset-W123-trim-action-asan.log`.
+
+## 86. W124 Trimmed-Fragment File and Conversion Matrix
+
+Ran `[lc-offsetcurve][trim-files]` offscreen at the current source head. The
+same 12 cases and 809,556 assertions passed in Release and ASan. The registered
+matrix covers ASCII DXF R12/R14/R2000/R2004/R2007/R2010/R2013/R2018, every
+supported DWG writer target, binary DXF output and input, DXF-to-DWG and
+DWG-to-DXF conversion, chained modern-version conversions, second
+save/reopen, trimmed plain-fragment metadata, and undo/redo restoring native
+definitions only when undo restores the original entities. DWG support was
+enabled in both tested builds. This requalifies the local T3 matrix, not
+independent external-CAD validation, remote platforms, or final R acceptance.
+ASan used `detect_leaks=0`; no leak-validation claim is made.
+
+| W124 lane | Result | SHA256 |
+|---|---|---|
+| Trim file/conversion selector, Release | PASS; 12 cases / 809,556 assertions | `2d81b728ed05c1bf67e38c0c87abfb5261b6d7b5efe54d5854cd1a473d7ed124` |
+| Trim file/conversion selector, ASan | PASS; 12 cases / 809,556 assertions | `5279c8f4bd9f30788cf483d31fa90cb9c2c281a7d08d56240fa06f089f6b4582` |
+
+Logs: `/private/tmp/offset-W124-trim-files-release.log` and
+`/private/tmp/offset-W124-trim-files-asan.log`.
