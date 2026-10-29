@@ -25,7 +25,7 @@ USA.
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
 Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117/W126/W127 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W137 requalifies W126 preview-cache portability in the dedicated kernel/client/fresh-helper targets, W138 requalifies W127 Modify Offset creation/repeat GUI routing, W139 requalifies U4 persisted option/preview/commit behavior, W140 requalifies O1 Update from Source, W141 requalifies O2 Restore Original, and W142-W143 record the in-repo import-caller ownership audit plus current-source caller and GUI open/template tests; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan, and W124 requalifies local trim file/conversion/undo-reopen coverage in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100, W128 requalifies E1 guarded entity/factory/clone/transform behavior, W129 requalifies U1 type/INSERT/selection/SVG/menu/info/plugin dispatch, W131 requalifies E2 cached grips/snaps/through edits and transactional transforms, W132 requalifies F1 typed schema/carrier/ownership/resource-limit behavior, W133 requalifies F2 actual DXF/DWG writing and transactional refusal, W134 requalifies F3 independent fixture/version/write/conversion/reopen matrix, W135 requalifies U2 dialog/sheet async property publication, and W136 requalifies U3 async grip drag/cancel/ownership/history behavior in Release/ASan; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, external use of public synchronous low-level import APIs, remote cross-platform CI and final acceptance remain open**.
-Latest recorded slice: W148 passes a fresh qmake6 app/helper build and exercises the qmake-built sibling helper with worker, preview-cache and creation/repeat Release suites. W147 requalifies Modify Offset creation/repeat GUI routing at current head in Release and ASan; W146 requalifies preview-cache portability after the current-master merge. W145 fixes a Windows MSVC include failure found by current PR CI; its rerun and other remote checks remain pending. W144 integrates and requalifies the five newer `origin/master` commits. External use of public synchronous low-level import APIs, physical visible interaction, and remote/final acceptance remain open.
+Latest recorded slice: W151 confirms the two broad randomized command-alias failures also occur in a fresh `origin/master` build; they are inherited baseline failures, not offset regressions. W150's three isolated randomized `[commands]` seeds pass; W149's full declaration-order and DXF/DWG fast Release lanes pass with documented optional fixture skips. W148 qmake6 app/helper qualification, W147 creation/repeat routing, and W146 preview-cache portability remain qualified. Remote/platform CI, packaged-helper acceptance, external synchronous API use, physical visible interaction, and final W0-W2/R acceptance remain open.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -3112,15 +3112,16 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   DXF/DWG, source and trim implementation with any new worker/publication changes.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   including Windows, visible GUI acceptance and remaining platform/package acceptance; W79
-  now covers a complete staged macOS CMake install; resolve
-  or baseline-classify the two order-sensitive command-alias cases in W59. The command
-  source/tests are unchanged from `origin/master`, and W62 isolated random-order seeds
-  1-3 pass; this does not yet baseline the broad-process interaction. Review scoped
-  commits, preserve reproducible evidence and close every required gap.
+  now covers a complete staged macOS CMake install. W149-W151 record broad local
+  Release results and classify the five randomized alias assertions as the same
+  inherited behavior on a fresh `origin/master` build; do not attribute them to
+  the offset changes. Review scoped commits, preserve reproducible evidence and
+  close every required gap.
 
-**Next concrete action on implementation resume:** follow Windows x64 and ARM64
-jobs in Actions run `40842072529`, then address any build/runtime failures before
-claiming platform parity. W55 now records a fresh full macOS qmake6 app/bundle
+**Next concrete action on implementation resume:** inspect the latest PR checks
+for the pushed roadmap head, then follow Windows x64/ARM64 and other remote
+platform jobs and address any build/runtime failures before claiming parity.
+The W145 Windows include correction has local validation only. W55 now records a fresh full macOS qmake6 app/bundle
 build plus a worker-protocol smoke using the helper beside the bundled executable;
 W79 separately records a complete staged macOS CMake install and offscreen
 installed-directory tests. Neither establishes Windows behavior or visible GUI
@@ -3154,11 +3155,11 @@ time-of-check limits without weakening editable imports.
 Qualify remaining platform faults without weakening the existing worker tests.
 W58 isolated two stale synchronous assertions in native Trim tests; W61 fixes
 their event-pump/wait contract and requalifies the affected ASan lane. W59's
-full randomized fast-lane run no longer fails those offset cases, but reports
-five JUnit failure assertions in two `[commands]` alias cases; the isolated
-`[commands]` selection passes. Preserve this as an unresolved broader-suite
-order/state issue rather than changing unrelated command behavior or waiving the
-fast-lane gate.
+full randomized fast-lane run reports five assertions in two `[commands]` alias
+cases. W150 passes the isolated selector in three seeds, and W151 reproduces
+the same five assertion failures on a fresh `origin/master` build. Classify this
+as inherited command-test ordering/state behavior; do not change unrelated
+command behavior or waive the offset-specific gates.
 W16-W19 cache portability and local creation/repeat GUI
 routing are qualified; do not restart them as absent. The ordinary DWG2007 correction and fresh broad
 baseline are already recorded; do not restart them as missing implementation.
@@ -5926,3 +5927,31 @@ broad-order failures against an exact clean `origin/master` build.
 Logs: `/private/tmp/offset-W150-commands-seed{1,2,3}.log`. This is focused
 Release evidence only; it does not close unrelated command-state behavior in
 the complete randomized suite or any W0-W2 acceptance gate.
+
+## 109. W151 Randomized Alias Failures Baseline Classification
+
+Built a fresh detached checkout of exact `origin/master` revision
+`35e7def3d8365b3ef1bb2af54c6071ae3313691e` with the local Release CMake
+configuration, then ran the full suite with randomized order and seed 1. It
+reported 3,766 cases (3,690 passed, two failed, 74 skipped) and five failed
+assertions. The five failures are the same alias-test assertions seen in the
+current PR-source full randomized run: `rs_commands_tests.cpp` lines 83-84 and
+117, 120-121 (`gl` resolves to the pre-existing Break/Divide alias and the
+temporary alias-file expectation fails). The source/test definitions for the
+command module are unchanged from this upstream revision. The PR source's
+declaration-order full suite passes; the isolated command selector passes for
+seeds 1-3 (W150). Therefore classify these five failures as inherited broad
+test-order/state behavior, not an offset feature regression. No unrelated
+command code is changed or waived from offset-specific coverage.
+
+| W151 lane | Result | SHA256 |
+|---|---|---|
+| Exact `origin/master` test-target build | PASS | `8056f4586ccd68af85cb53a91c9d9f76441f15b456e52216c327454f6a11de29` |
+| Full randomized suite, seed 1 | Baseline reproduces the same five assertions; 3,766 cases / 74 skips | `5fe7309e1cf94c3e4513ec129c1fd407018da54f69af59265cbec57bd11d434e` |
+| PR-source full randomized suite, seed 1 (comparison) | Same five assertions; 5,129 cases / 75 skips | `416eb8f46f820c0e184dd37ca1661fd1d70836ea7727c0f7bbead7e17d521915` |
+
+Logs: `/private/tmp/offset-W151-master-build.log`,
+`/private/tmp/offset-W151-master-random-release.log`, and
+`/private/tmp/offset-W151-full-random-release.log`. This classification does
+not close remote CI, platform/package deployment, visible UI, public external
+synchronous API, or final W0-W2/R acceptance.
