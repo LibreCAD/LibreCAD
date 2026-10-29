@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W96 requalifies A-core and the full offset selector without a new finding; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, public low-level storage compatibility, cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W96 requalifies A-core and the full offset selector and W97 requalifies B occurrence/terminal identity without new findings; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, public low-level storage compatibility, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -307,7 +307,7 @@ candidate except the explicitly proposed native-worker tags.
 | A-strict | Strict-query callback/record/order/depth/exception accounting | A-core | candidate `dc016f6e2`; W64 focused strict-budget Release/ASan requalification; W87 fixes depth-ceiling-based queue over-allocation; broader audit remains open | `lc_parametriccurveintersection_tests.cpp`, named strict-budget cases |
 | A-reference | Critical/provider/event accounting and atomic paired graph publication | A-strict | candidate `5c12fbeef`; W65 focused reference-accounting Release/ASan requalification; paired graph audit remains open | `[lc-offsetcurve][reference-accounting]` |
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66 focused cache-budget Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][cache-budget-accounting]` |
-| B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; audit/retest | geometry terminal/occurrence case inventory |
+| B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; W97 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | geometry terminal/occurrence case inventory |
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; audit/retest | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a` plus later search; audit/retest | `[lc-offsetcurve][cache-topology-chain]` |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; finish caller/fallback/import ownership freeze before routing | operation/cap/deadline/call-site table |
@@ -4646,3 +4646,30 @@ ASan used `detect_leaks=0`, so it is not leak validation.
 W96 does not resolve the known legacy-export skip or complete the source/budget
 audit. Cross-platform worker CI, public low-level storage compatibility,
 visible-GUI acceptance, and final W0-W2 gates remain open.
+
+## 59. W97 Current-Source Occurrence and Terminal Identity Audit
+
+Reviewed B's issuer-bound critical occurrence handles and immutable reference
+component occurrence/edge-side terminal tables at the W96 source head. Critical
+handles compare shared-owner identity and index before access; moved, destroyed,
+foreign, and expired issuers cannot authorize a snapshot or contraction.
+Reference terminal lookup rejects out-of-range edges and invalid enum values;
+published terminal records are tied to exact directed occurrence, node, edge,
+side, and one provenance locator (free end or pair event). The audit found no
+new occurrence/terminal identity defect. This qualifies B's focused review and
+test gate, not the dependent C-search/C-check proof obligations or final R.
+
+The focused union `[reference-terminals],[intersection-refine]` completed all
+24 JUnit entries in Release and ASan, with 1,453 assertions and zero
+errors/failures/skips in each. The full `[lc-offsetcurve]` W96 selectors also
+passed in both configurations, retaining the one unavailable legacy-export
+skip documented above. ASan used `detect_leaks=0`.
+
+| W97 lane | Result | SHA256 |
+|---|---|---|
+| Occurrence/terminal identity union, Release; 24 JUnit entries / 1,453 assertions | PASS | `212c7aa2354201a1a5440455a37d03ea71d2a93eb3e51485e546d19a4aba175e` |
+| Occurrence/terminal identity union, ASan; 24 JUnit entries / 1,453 assertions | PASS | `3e0f7e2391ae356162244180640edeb4ecdef5165e5906195fca1d69f561786c` |
+
+No product edit was needed. C-search, C-check, broader source/budget audit,
+cross-platform CI, public low-level storage compatibility, visible-GUI testing,
+and final acceptance remain open.
