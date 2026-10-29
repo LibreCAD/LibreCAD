@@ -24,22 +24,27 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W160, superseding W159 below): S0 source/target reconciliation
+Current status (W161, superseding W160 below): S0 source/target reconciliation
 and the local A-core through C-check audit are closed. Direct synchronous
 `fileImport`, stream, and byte filter imports validate offset carriers through
 the worker in the current source. W158 requalifies the qmake6 app/helper bundle;
 W159 requalifies preview-cache portability and creation/repeat routing on the
 current source in Release and ASan; W160 requalifies the staged installed-helper
-path in Release and ASan. W0-W2, E/U/G/F/O/T and R remain open for
-cross-platform, package, visible UI, external-CAD, and final integration acceptance.
+path in Release and ASan. W161 triages all 13 direct ACadSharp failures as its
+known AC1021 uncompressed-metadata reader limitation; ODA re-saves those exact
+files and ACadSharp reads all 13 converted files with the expected entity/spline
+counts. Direct AC1021 ACadSharp acceptance remains unqualified. W0-W2,
+E/U/G/F/O/T and R remain open for cross-platform, package, visible UI,
+external-CAD, and final integration acceptance.
 Status: **W0-W2 is partially implemented; worker, geometry, creation/repeat, trim,
 GUI open/template, and DXF/DWG paths have scoped local qualifications recorded in
 W1-W160. W156 closes local routing for the public synchronous file/stream/byte
 filter APIs. Current-head worker CI, Windows failure coverage, deployed-package
 checks, visible UI, external-CAD interoperability, and final integration remain
 open.**
-Latest recorded slice: W160 requalifies the current-source staged install helper
-with Release and ASan clients; W159 requalifies cache portability and GUI
+Latest recorded slice: W161 records direct/converted ACadSharp triage; W160
+requalifies the current-source staged install helper with Release and ASan
+clients; W159 requalifies cache portability and GUI
 creation/repeat, and W158 records a full qmake6 app/helper build and client smoke.
 W157 adds the synchronous import selector to Linux and Windows x64/ARM64 CI; W156
 routes file/stream/byte filter imports through bounded worker validation. W155
@@ -3158,10 +3163,14 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   the offset changes. Review scoped commits, preserve reproducible evidence and
   close every required gap.
 
-**Next concrete action on implementation resume:** push W157 and follow the new
-PR-head Linux and Windows x64/ARM64 direct-import plus installed-helper checks
-through completion, then address any platform/runtime failure before the
-remaining W0-W2 deployment gates and final E/U/G/F/O/T integration.
+**Next concrete action on implementation resume:** follow all checks on the
+current PR head through completion; address any Windows/Linux worker, direct-
+import, or staged-helper failure; then close remaining W0-W2 deployment and
+failure gates, requalify E/U/G/F/O/T on the exact source, and complete R's
+visible-GUI, external-CAD, platform/package and final closeout rows. Treat the
+ACadSharp AC1021 result as a reader limitation only where its negative-
+`ComprLen` throw is reproduced; do not count conversion as direct AC1021 reader
+acceptance.
 The W145 Windows include correction has local validation only. W55 now records a fresh full macOS qmake6 app/bundle
 build plus a worker-protocol smoke using the helper beside the bundled executable;
 W79 separately records a complete staged macOS CMake install and offscreen
@@ -6303,3 +6312,32 @@ zero pending declarations, and no production mismatches; `git diff --check` pass
 | ASan installed helper-client, `/private/tmp/offset-W159-installed-worker-client-asan.log` | `61bfbe8b05bc6c4b4f962bd23995987ea97ffe19a385f494b4168b2ab4043431` |
 | ASan installed helper, `/private/tmp/offset-W159 ASan relocated install/bin/LibreCAD.app/Contents/MacOS/LibreCADOffsetWorker` | `c06edb294686e19f0f43c8ce61757bf6500b47abc8d46aaeb54563dc7d367b5e` |
 | Roadmap parser/inventory, `/private/tmp/offset-W160-plan-inventory.log` | PASS; 99 / 99 / `dfddcd7598ec6945ea5d4daa4f877dc79d622354a686f5205a535f891d3b2e15` |
+
+## 119. W161 ACadSharp AC1021 Failure Triage
+
+Re-ran the pinned temporary ACadSharp inspector over the 176 retained current-
+source G-matrix artifacts. It reported 163 pass and 13 failures. All 13 failing
+files have the `AC1021` magic. Their exception stacks converge on
+`ACadSharp.IO.DwgReader.readFileHeaderAC21` line 980, where the pinned ACadSharp
+source explicitly throws `NotImplementedException` when `comprLen < 0` at lines
+976-980. This is before entity/object decoding and therefore is not evidence of
+a LibreCAD spline or entity failure. Do not waive direct AC1021 semantic-reader
+acceptance based on this diagnosis.
+
+As a bounded follow-up, ODAFileConverter 27.1.0.0 re-saved those exact 13 files
+to ACAD2018 DWG with audit/repair disabled. It emitted 13 files; the pinned
+ACadSharp inspector then read all 13 as AC1032. The four offset-spline rows
+retained the expected degree/control/knot layouts and LibreCAD schema marker;
+the ordinary line row had one non-spline entity, and the four plot-only rows
+had zero modelspace entities. This is conversion-path semantic corroboration,
+not direct proof that ACadSharp accepts AC1021, nor a replacement for visible
+CAD acceptance. W0-W2/E/U/G/F/O/T/R and the direct AC1021 external-reader gap
+remain open.
+
+| W161 artifact | SHA256 / result |
+|---|---|
+| Direct 176-file ACadSharp inspection, `/private/tmp/offset-W161-acadsharp-stack.log` | 163 pass, 13 AC1021 reader failures / `528c79dae49bc17cc44f040b9b4da8fc5a26dee55bb547eeaa1e49886044bfe3` |
+| ODA-resaved-file ACadSharp inspection, `/private/tmp/offset-W161-acadsharp-oda.log` | 13 / 13 pass as AC1032 / `a3734d7b239800651c27fb56b7abd8d8e019e83773d8fc67fc6296da9a38c985` |
+| Roadmap parser/inventory, `/private/tmp/offset-W161-plan-inventory-final.log` | PASS; 99 / 99, 93 executable obligations, zero pending/mismatches / `b5a3b7d111052e265bdd36b7b0868e7f3da88170f7554822ff4339fe0332df75` |
+| ACadSharp source | commit `3a52a52047e84670759c1f9ad3916ec3ce85ff56`; `src/ACadSharp/IO/DwgReader.cs:976-980` |
+| LibreCAD source under test | product code unchanged at `41d0089d8d583f5521f5069e18631445699b14d3`; plan-only head before W161 |
