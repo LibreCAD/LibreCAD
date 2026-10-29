@@ -2597,6 +2597,41 @@ evidence root, reports are `offset-W35-{forced,gui,close,storage,hostile}-{relea
 | storage | `92d1b755bdbafc24b50d9803cc9da610ad5287afad9201eb7c75edac8e7e9c66` | `05d345db92500cd7d5a72db4f53d5994e69d304550b7df28a9077a6c42646726` |
 | hostile | `fd6efefb1d0ccdd80236b0fd02e1d37886ab4160549c83dba48f029517690aa1` | `2e576ba1079457dfd935576143797617c9ac080a30e3aced9d3127052a4801b4` |
 
+Startup selection continuation W36 (`96f595cca`):
+An observed switch to another MDI window while startup imports remain pending
+now takes precedence over the saved startup filename. Import publication and
+its restoration run under a lifetime-guarded activation scope, so they do not
+overwrite the later selection; subsequent publications restore the selected
+live window by identity. The selected pointer is checked against the live
+window list before use, and cancellation/end of the queue clears the state.
+The new regression first reproduced the lost selection, then passed using a
+real helper stopped before numeric work, both the application window command
+and Qt MDI activation paths, multiple publications, and closing the selected
+window. These are offscreen programmatic activations, not visible mouse tests.
+
+Fresh Release application, full-test executable, helper and focused GUI builds
+passed. Release and ASan (`detect_leaks=0`) startup reports cover two declared
+tests / eight JUnit entries with zero errors/failures/skips (176 / 207 assertions,
+including polling). The broader dock-window suite has all 46 discovered
+declarations / 57 entries, zero errors/failures and seven small-screen skips
+(929 / 1015 assertions). Discovery identities were checked against both reports.
+The changed qmake6 application-window object compiles, not a full qmake link.
+The evidence root is unchanged:
+
+| W36 artifact | SHA256 |
+| --- | --- |
+| `offset-W36-startup-release.xml` | `2b020aa4fb4a12dd469d880eda7d35448ebb3f6a264fc79547345a9af20917fa` |
+| `offset-W36-startup-asan.xml` | `dc8a95d24ce9c3e7168f07fb508de758f1fa3f339d980711bc2648a0537688f5` |
+| `offset-W36-gui-release.xml` | `c32dbe62edf316b804ca3358f73b1aa927e0af177090f262faabb672acaed933` |
+| `offset-W36-gui-asan.xml` | `50244d6657c7e9a18d87fb32583c5d94156b9c5b2c9fdf0f7404ef3071c7cec5` |
+| `offset-W36-gui-discovery.xml` | `bcd861ac8d9a8617ee69cf75605ed87857a6989ac8e589ee64fa3309d743a64b` |
+
+This does not detect interaction with the already-active window or establish
+priority for a new user-requested open; an activation from another non-import
+source is treated as a later selection. Audit these cases, nested/reentrant
+activation and actual visible keyboard/mouse behavior before declaring the
+broader startup-intent contract complete.
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -2648,7 +2683,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 source and non-atomic autosave alias checks, and exercise a genuine partial DWG
 through the GUI dialog. W35 fixes the observed W33 teardown assertion; retain its
 forced-destruction regression while auditing other close/dialog reentrancy.
-Also audit startup selection versus later user action.
+W36 handles observed switches to another live window; also audit same-window
+interaction, newly requested opens and reentrant/visible startup focus behavior.
 W31/W32 drawing-open/template publication and W33 GUI queue bounds are
 implemented; do not repeat them as absent. Design and test direct synchronous,
 console and nested-XREF contracts without silently weakening editable imports.
