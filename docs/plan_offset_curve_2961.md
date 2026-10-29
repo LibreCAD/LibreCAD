@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, public low-level storage compatibility, cross-platform CI and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, and W87 bounds strict-query queue allocation by admitted work; W96 requalifies A-core and the full offset selector without a new finding; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; remaining budget audit, public low-level storage compatibility, cross-platform CI and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -4617,3 +4617,32 @@ convert the public low-level synchronous storage API into an async API,
 establish that external callers use the staged route, or close remaining
 source/budget, Windows/Linux runtime, installed-helper, visible-GUI, and final
 W0-W2 acceptance.
+
+## 58. W96 Current-Source A-Core and Offset-Suite Audit
+
+Reviewed the shared `WorkBudget` and strict intersection accounting paths at
+the W95 source head. The audit found no new admission atomicity, overflow,
+sticky-refusal, retained-issuer lifetime, or entered-work reporting defect.
+Existing A-core/A-strict/A-reference/A-cache audit obligations remain open;
+this pass is requalification evidence, not closure of the broad accounting
+review.
+
+The focused `[budget-core]` selector and full `[lc-offsetcurve]` selector were
+run from the current Release and ASan test binaries. Both full selectors have
+1,354 JUnit entries (including Catch sections), zero errors/failures and one
+known skip: the real legacy DXF exporter
+dispatch test, because this build lacks `RS_FilterDXF`, `dl_dxf.h`, and
+`FormatDXFOLD`. No surrogate exporter is used. The Release full suite reports
+3,954,967 assertions; ASan reports 3,982,318 due to randomized/section paths.
+ASan used `detect_leaks=0`, so it is not leak validation.
+
+| W96 lane | Result | SHA256 |
+|---|---|---|
+| `[budget-core]`, Release; 15 JUnit entries, zero errors/failures/skips | PASS | `19843bfcc84ecca61850d945a2d2a90eb7d65ccbac8508bb109aafd90b5326ce` |
+| `[budget-core]`, ASan; 15 JUnit entries, zero errors/failures/skips | PASS | `f5e736b6a82e5fa28147a7f76ab21123c9fa4b9b9b1f6f45c4ee6a9c68dbb8f6` |
+| `[lc-offsetcurve]`, Release; 1,354 JUnit entries, 3,954,967 assertions, one known skip | PASS, skip retained | `a773eaa5ccc1fb09720609a555f0ca35b94e8115ec12abc61c951853a0c378c2` |
+| `[lc-offsetcurve]`, ASan; 1,354 JUnit entries, 3,982,318 assertions, one known skip | PASS, skip retained | `f0a46ed5f57592189ff3ce5f98e4f90b3d471cfd4e3de510731b86c0caa811b1` |
+
+W96 does not resolve the known legacy-export skip or complete the source/budget
+audit. Cross-platform worker CI, public low-level storage compatibility,
+visible-GUI acceptance, and final W0-W2 gates remain open.
