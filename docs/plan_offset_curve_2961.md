@@ -24,21 +24,24 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W156, superseding W155 below): S0 source/target reconciliation and
-the local A-core through C-check audit are closed. Direct synchronous
-`fileImport`, stream, and byte filter imports now validate offset carriers through
-the worker in the current source. W0-W2, E/U/G/F/O/T and R remain open for
+Current status (W159, superseding W157 below): S0 source/target reconciliation
+and the local A-core through C-check audit are closed. Direct synchronous
+`fileImport`, stream, and byte filter imports validate offset carriers through
+the worker in the current source. W158 requalifies the qmake6 app/helper bundle;
+W159 requalifies preview-cache portability and creation/repeat routing on the
+current source in Release and ASan. W0-W2, E/U/G/F/O/T and R remain open for
 cross-platform, package, visible UI, external-CAD, and final integration acceptance.
 Status: **W0-W2 is partially implemented; worker, geometry, creation/repeat, trim,
 GUI open/template, and DXF/DWG paths have scoped local qualifications recorded in
-W1-W155. W156 closes local routing for the public synchronous file/stream/byte
-filter APIs. Remote worker CI, Windows failure coverage, deployed-package checks,
-visible UI, external-CAD interoperability, and final current-source integration
-remain open.**
-Latest recorded slice: W157 adds the synchronous import selector to Linux and
-Windows x64/ARM64 CI; W156 routes file/stream/byte filter imports through bounded
-worker validation and records Release, focused ASan, and qmake6 changed-object
-evidence. W155
+W1-W159. W156 closes local routing for the public synchronous file/stream/byte
+filter APIs. Current-head worker CI, Windows failure coverage, deployed-package
+checks, visible UI, external-CAD interoperability, and final integration remain
+open.**
+Latest recorded slice: W159 requalifies cache portability and GUI creation/repeat
+with current-source Release and focused ASan tests; W158 records a full qmake6
+app/helper build and helper-client smoke. W157 adds the synchronous import
+selector to Linux and Windows x64/ARM64 CI; W156 routes file/stream/byte filter
+imports through bounded worker validation. W155
 rechecks the shared-budget/counter-transfer chain; W154 adds staged installed-
 helper CI and local macOS relocation evidence. W153 closes source/target
 reconciliation. W152 records the ASan cache-check fault sweep. W151 classifies
@@ -6210,3 +6213,66 @@ tests. It also validates the worker helper dependency added in W156. `actionlint
 and `git diff --check` pass locally. W157's new remote jobs remain pending until
 the pushed PR-head workflows finish; earlier DWG/DXF runs do not qualify this
 new selector.
+
+## 116. W158 Current-Source qmake6 App and Helper Smoke
+
+At source head `41d0089d8d583f5521f5069e18631445699b14d3`, rebuilt the private
+out-of-source qmake6 application tree `tmp/offset-2961-qmake-native` against
+this worktree. The generated Makefile selects `/opt/homebrew/bin/qmake6`; qmake
+reports version 3.1 with Qt 6.12.0. The app and `LibreCADOffsetWorker` are
+present as adjacent arm64 Mach-O executables in `LibreCAD.app/Contents/MacOS`.
+The top-level `make -C tmp/offset-2961-qmake-native
+-j"$(sysctl -n hw.ncpu)"` build completed, and a subsequent
+`make -C tmp/offset-2961-qmake-native -j12` recheck exited 0 with no remaining
+work.
+
+Ran the adjacent qmake-built `librecad_offset_worker_client_tests` executable
+against its sibling qmake helper from the app directory. The real helper-client
+selector passed 17 cases / 4,185 assertions. This verifies qmake app/helper
+discovery and client behavior, not installed/signed distribution, ASan qmake,
+physical visible interaction, or remote platform runtime.
+
+| W158 artifact | Result / SHA256 |
+|---|---|
+| qmake6 top-level incremental recheck, `/private/tmp/offset-W158-qmake-recheck.log` | PASS / `13eb1bdeda3218d37bf718a5ebf1c6e62a2d22fe00ca8040e9be66e68fadd12d` |
+| qmake-built adjacent helper client, `/private/tmp/offset-W158-qmake-helper-client.log` | PASS; 17 / 4,185 / `4ac3ba83019ce574bdd27312f59dc71c45de9a436485f7ebf843b97f522d64be` |
+
+## 117. W159 Current-Source Preview and Creation/Repeat Requalification
+
+At source head `41d0089d8d583f5521f5069e18631445699b14d3`, rebuilt the Release
+and RelWithDebInfo+ASan test/helper targets against this worktree. The Release
+build recompiled the changed adapter test object; the ASan tree rebuilt the
+current test executable and native helper. The current-source preview portability
+and GUI creation/repeat selectors pass in both configurations:
+
+| Lane | Release | ASan |
+|---|---:|---:|
+| GUI preview portability, `[preview-portable]` | 4 cases / 67 assertions | 4 / 67 |
+| Worker kernel preview portability | 4 / 156 | 4 / 156 |
+| Worker-client preview portability | 2 / 391 | 2 / 1,323 |
+| Fresh-helper process preview portability | 1 / 160 | 1 / 171 |
+| GUI creation/repeat, `[creation-worker]` | 11 / 318 | 11 / 318 |
+
+Every selector exited 0 with no failure. Client/process assertion totals vary
+with exercised polling and elapsed-time observations; case identities are the
+stable coverage count. ASan used `detect_leaks=0`, so this is not a leak check.
+
+| W159 artifact | SHA256 |
+|---|---|
+| GUI preview portability, Release / ASan | `0bc340e7a7cd1e50d371d8eb0b0e214812d1283b8af75b8a0a2c9578c161e08b` / `71533f5c27e6476bf446f8287af2d736f9850701cb0716d26017005467201a41` |
+| GUI creation/repeat, Release / ASan | `29b1fdff4db10b276b637ad23108e48a855b6747c482d151c04d1c028e03da6b` / `0c11657c5c507cb983e45871da7086678f152125f5c2e0e7dad324400cc0ab96` |
+| Worker kernel preview, Release / ASan | `2353fca52cfb848942656a559bee39525deeec762e3a17c53bc8eea6cafe351c` / `08217d9a17f350fdd9d960744f34a83a35f04975b5f90cb81453ea6368fd8803` |
+| Worker-client preview, Release / ASan | `ee2545a062c1e97f5a9029527d1b5b868ee1ed3389330f33b895a9d72cb6efe7` / `bae54074655380ba6cd2d26a25e66e64ff24cd92d4227f052fc60473c28764bc` |
+| Fresh-helper process preview, Release / ASan | `cc4e7064fc426adcc6747c26746f5128ce11b682230ee6b5661375b1fd1d0de6` / `5a88ea9b655415c1846e0297f02f5b0f0b057b3b19b06626ba5442b405d44fa5` |
+| Roadmap parser/inventory, `/private/tmp/offset-W159-plan-inventory.log` | PASS; 99 / 99, 93 executable obligations, zero pending, no mismatches / `d9e643c38c5515968c442483b7e234eebc22fd95765a6197a17d12f94ffd7195` |
+
+Logs are under `/private/tmp/offset-W159-{preview,creation}-{release,asan}.log`
+and `/private/tmp/offset-W159-preview-{kernel,client,process}-{release,asan}.log`.
+The roadmap parser/inventory regression passed 99/99; its inventory reports 93
+obligations, all 93 executable, zero pending declarations, and no production
+mismatches. `git diff --check` passed.
+No preview-cache portability or creation/repeat routing defect was demonstrated.
+This does not close visible GUI interaction, installed/deployed helper
+acceptance, Windows runtime, external-CAD interoperability, or final W0-W2/R.
+The W157 PR-head CI run was still active at this checkpoint; after this
+roadmap-only commit, the pushed head must be rechecked for current CI status.
