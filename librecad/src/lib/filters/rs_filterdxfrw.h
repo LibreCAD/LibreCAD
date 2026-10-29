@@ -2443,6 +2443,8 @@ private:
 
   bool fileImportImpl(RS_Graphic &g, const QString &logicalFile,
                       RS2::FormatType type, std::istream *input);
+  bool fileImportImplBody(RS_Graphic &g, const QString &logicalFile,
+                          RS2::FormatType type, std::istream *input);
   std::function<bool(const QString &, QByteArray &)> m_xrefSnapshotProvider;
   void prepareBlocks();
   void prepareDxfEntityHandleMap();

@@ -92,6 +92,11 @@ public:
         PartialDecision decision, Callback callback);
     bool startWithDecision(const QString& file, RS2::FormatType type, RS2::DxfTextEncoding encoding,
         PartialRequest request, Callback callback);
+    /** Validate placeholders already present in a caller-owned graphic. The
+     * synchronous compatibility API uses a bounded nested event loop here;
+     * geometry itself remains isolated in the sibling worker. */
+    static Outcome validateExistingGraphic(RS_Graphic& graphic,
+        std::shared_ptr<LC_OffsetImportBudget> budget);
     void cancel();
     bool busy() const noexcept;
 private:
@@ -101,6 +106,7 @@ private:
     void parse(const std::shared_ptr<Work>&);
     void captureSource(const std::shared_ptr<Work>&);
     void parseSnapshot(const std::shared_ptr<Work>&);
+    bool startValidation(RS_Graphic&, std::shared_ptr<LC_OffsetImportBudget>, Callback);
     bool snapshotXref(const std::shared_ptr<Work>&, const QString&, QByteArray&);
     void resolvePartial(const std::shared_ptr<Work>&, bool accepted);
     void beginValidation(const std::shared_ptr<Work>&);

@@ -293,21 +293,53 @@ struct CodecFixture : lc::test::NullDrwInterface {
 };
 }
 
-TEST_CASE("offset adapter adopts original independent degree one and cubic DXF carriers", "[offset-adapter][import]") {
+TEST_CASE("synchronous file, stream, and byte filter imports adopt DXF carriers through the worker",
+          "[offset-adapter][import][worker][sync-api]") {
     lc::test::OutputDirectory out("offset_adapter_raw");
     for (unsigned degree : {1u, 3u}) {
-        CAPTURE(degree); const auto c = carrier(degree); const auto file = out.file(std::to_string(degree) + ".dxf");
-        writeBytes(file, rawDxf(c)); Drawing drawing; load(drawing.graphic, file);
-        auto &native = onlyNative(drawing.graphic); CHECK(native.getData().degree == degree);
-        REQUIRE(native.getData().controlPoints.size() == c.controls.size());
-        for (std::size_t i = 0; i < c.controls.size(); ++i) samePoint(native.getData().controlPoints[i], c.controls[i]);
-        CHECK(native.getData().knotslist == c.knots); CHECK(native.getData().weights == std::vector<double>(c.controls.size(), 1));
-        CHECK(native.getData().type == RS_SplineData::SplineType::ClampedOpen);
-        CHECK(native.getParent() == &drawing.graphic); REQUIRE(native.getLayer()); CHECK(native.getLayer()->getName() == "0");
-        CHECK(native.sourceHandle() == 0x100); CHECK(native.getPen(false).getColor() == RS_Color(0, 255, 0));
-        CHECK(markers(native.getDrwExtData()) == 0); CHECK(firstText(native.getDrwExtData(), "FOREIGN") == "foreign");
-        CHECK(native.unknownOwnedFlags() == 16); REQUIRE(native.unknownOwnedTail().size() == 1);
-        CHECK(std::get<QString>(native.unknownOwnedTail()[0].value) == QStringLiteral("owned"));
+        CAPTURE(degree);
+        const auto c = carrier(degree);
+        const auto bytes = rawDxf(c);
+        const auto file = out.file(std::to_string(degree) + ".dxf");
+        writeBytes(file, bytes);
+
+        for (const auto api : {"file", "stream", "bytes"}) {
+            CAPTURE(api);
+            Drawing drawing;
+            RS_FilterDXFRW filter;
+            bool imported = false;
+            if (std::string(api) == "file") {
+                imported = filter.fileImport(drawing.graphic,
+                    QString::fromStdString(file.string()), RS2::FormatDXFRW2018);
+            } else if (std::string(api) == "stream") {
+                std::istringstream input(bytes);
+                imported = filter.fileImportStream(drawing.graphic,
+                    QString::fromStdString(file.string()), RS2::FormatDXFRW2018, input);
+            } else {
+                imported = filter.fileImportBytes(drawing.graphic,
+                    QString::fromStdString(file.string()), RS2::FormatDXFRW2018,
+                    QByteArray(bytes.data(), int(bytes.size())));
+            }
+            REQUIRE(imported);
+            auto &native = onlyNative(drawing.graphic);
+            CHECK(native.getData().degree == degree);
+            REQUIRE(native.getData().controlPoints.size() == c.controls.size());
+            for (std::size_t i = 0; i < c.controls.size(); ++i)
+                samePoint(native.getData().controlPoints[i], c.controls[i]);
+            CHECK(native.getData().knotslist == c.knots);
+            CHECK(native.getData().weights == std::vector<double>(c.controls.size(), 1));
+            CHECK(native.getData().type == RS_SplineData::SplineType::ClampedOpen);
+            CHECK(native.getParent() == &drawing.graphic);
+            REQUIRE(native.getLayer());
+            CHECK(native.getLayer()->getName() == "0");
+            CHECK(native.sourceHandle() == 0x100);
+            CHECK(native.getPen(false).getColor() == RS_Color(0, 255, 0));
+            CHECK(markers(native.getDrwExtData()) == 0);
+            CHECK(firstText(native.getDrwExtData(), "FOREIGN") == "foreign");
+            CHECK(native.unknownOwnedFlags() == 16);
+            REQUIRE(native.unknownOwnedTail().size() == 1);
+            CHECK(std::get<QString>(native.unknownOwnedTail()[0].value) == QStringLiteral("owned"));
+        }
     }
 }
 

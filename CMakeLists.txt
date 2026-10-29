@@ -3512,6 +3512,8 @@ if (BUILD_TESTS)
         LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
         LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata"
     )
+    add_dependencies(librecad_dxf_fast_tests librecad_offset_test_helper)
+    add_dependencies(librecad_dwg_fast_tests librecad_offset_test_helper)
 
     # Build one LibreCAD-linked test translation unit at a time for the
     # incremental loop. The grouped DWG/DXF targets remain useful for family
@@ -3564,6 +3566,7 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_offset_adapter_tests
         librecad/src/lib/filters/tests/lc_offsetcurve_adapter_tests.cpp)
+    add_dependencies(librecad_offset_adapter_tests librecad_offset_test_helper)
     add_librecad_filter_micro_test(
         librecad_offset_worker_probe_tests
         librecad/src/lib/engine/document/entities/tests/lc_offsetworkerprobe_tests.cpp)
@@ -3733,15 +3736,15 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_offset_persistence_tests
         librecad/src/lib/filters/tests/lc_offsetcurve_persistence_tests.cpp)
+    add_dependencies(librecad_offset_persistence_tests librecad_offset_test_helper)
     add_librecad_filter_micro_test(
         librecad_offset_hostilefile_tests
         librecad/src/lib/filters/tests/lc_offsetcurve_hostilefile_tests.cpp)
-    if(TARGET librecad_offset_worker)
-        add_dependencies(librecad_offset_hostilefile_tests librecad_offset_worker)
-    endif()
+    add_dependencies(librecad_offset_hostilefile_tests librecad_offset_test_helper)
     add_librecad_filter_micro_test(
         librecad_offset_matrix_tests
         librecad/src/lib/filters/tests/lc_offsetcurve_matrix_tests.cpp)
+    add_dependencies(librecad_offset_matrix_tests librecad_offset_test_helper)
     add_librecad_filter_micro_test(
         librecad_xdata_appid_tests
         librecad/src/lib/filters/tests/lc_dxf_xdata_appid_tests.cpp)

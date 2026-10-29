@@ -6,6 +6,7 @@
 #include "rs_block.h"
 #include <QByteArray>
 #include <QCoreApplication>
+#include <QEventLoop>
 #include <QFile>
 #include <QFileInfo>
 #include <QPointer>
@@ -60,7 +61,8 @@ struct LC_OffsetImportSession::Work {
     std::optional<Status> terminal;
     Callback callback;
     PartialRequest partialRequest;
-    std::unique_ptr<RS_Graphic> graphic;
+    std::unique_ptr<RS_Graphic> ownedGraphic;
+    RS_Graphic* graphic = nullptr;
     std::shared_ptr<LC_OffsetImportBudget> budget;
     LC_OffsetImportSourceStamp sourceStamp;
     QFile source;
@@ -141,6 +143,33 @@ bool containsPlaceholder(RS_Graphic& graphic) {
     }
     return false;
 }
+
+std::size_t downgradePlaceholders(RS_Graphic& graphic) noexcept {
+    std::size_t downgraded = 0;
+    const auto downgrade = [&downgraded](RS_EntityContainer& parent) {
+        for (unsigned index = 0; index < parent.count(); ++index) {
+            auto* placeholder = dynamic_cast<LC_OffsetImportPlaceholder*>(parent.entityAt(int(index)));
+            if (!placeholder) continue;
+            try {
+                auto fallback = std::make_unique<RS_Spline>(*placeholder);
+                fallback->setParent(&parent);
+                parent.insertEntity(int(index), fallback.get());
+                if (parent.removeEntity(placeholder)) {
+                    fallback.release();
+                    ++downgraded;
+                } else {
+                    parent.removeEntity(fallback.get());
+                }
+            } catch (...) {
+                // Its RS_Spline base remains renderable if fallback allocation fails.
+            }
+        }
+    };
+    downgrade(graphic);
+    for (unsigned i = 0; i < graphic.countBlocks(); ++i)
+        if (auto* block = graphic.blockAt(i)) downgrade(*block);
+    return downgraded;
+}
 }
 
 LC_OffsetImportSession::LC_OffsetImportSession(QObject* parent) : QObject(parent) {
@@ -180,12 +209,64 @@ bool LC_OffsetImportSession::startWithDecision(const QString& file, RS2::FormatT
         auto work = std::make_shared<Work>();
         work->file = file; work->type = type; work->encoding = encoding; work->partialRequest = std::move(request);
         work->generation = ++m_generation; work->callback = std::move(callback);
-        work->graphic = std::make_unique<RS_Graphic>(); work->graphic->initForNewDocument();
+        work->ownedGraphic = std::make_unique<RS_Graphic>();
+        work->graphic = work->ownedGraphic.get();
+        work->graphic->initForNewDocument();
         if (!alive) return false;
         work->budget = std::make_shared<LC_OffsetImportBudget>(); m_work = work;
         QTimer::singleShot(0, this, [alive, work] { if (alive) alive->parse(work); });
         return true;
     } catch (...) { if (alive) m_work.reset(); return false; }
+}
+
+LC_OffsetImportSession::Outcome LC_OffsetImportSession::validateExistingGraphic(
+    RS_Graphic& graphic, std::shared_ptr<LC_OffsetImportBudget> budget) {
+    Outcome outcome;
+    outcome.status = Status::ResourceLimit;
+    outcome.error = QStringLiteral("Offset import could not start bounded worker validation");
+    if (!QCoreApplication::instance()) {
+        outcome.downgraded = downgradePlaceholders(graphic);
+        return outcome;
+    }
+
+    LC_OffsetImportSession session;
+    QEventLoop loop;
+    bool completed = false;
+    if (!session.startValidation(graphic, std::move(budget), [&](Outcome result) {
+            outcome = std::move(result);
+            completed = true;
+            loop.quit();
+        })) {
+        outcome.downgraded = downgradePlaceholders(graphic);
+        return outcome;
+    }
+    if (!completed) loop.exec(QEventLoop::ExcludeUserInputEvents);
+    if (!completed) {
+        outcome.status = Status::ResourceLimit;
+        outcome.downgraded = downgradePlaceholders(graphic);
+    }
+    return outcome;
+}
+
+bool LC_OffsetImportSession::startValidation(RS_Graphic& graphic,
+    std::shared_ptr<LC_OffsetImportBudget> budget, Callback callback) {
+    if (!QCoreApplication::instance() || QThread::currentThread() != thread() || busy() ||
+        !m_worker.healthyAndIdle() || !callback || m_generation == std::numeric_limits<qint64>::max())
+        return false;
+    const QPointer<LC_OffsetImportSession> alive(this);
+    try {
+        auto work = std::make_shared<Work>();
+        work->graphic = &graphic;
+        work->budget = budget ? std::move(budget) : std::make_shared<LC_OffsetImportBudget>();
+        work->generation = ++m_generation;
+        work->callback = std::move(callback);
+        m_work = work;
+        QTimer::singleShot(0, this, [alive, work] { if (alive) alive->beginValidation(work); });
+        return true;
+    } catch (...) {
+        if (alive) m_work.reset();
+        return false;
+    }
 }
 
 void LC_OffsetImportSession::parse(const std::shared_ptr<Work>& work) {
@@ -532,6 +613,7 @@ void LC_OffsetImportSession::finish(const std::shared_ptr<Work>& work, Status st
         } catch (...) { status = Status::ResourceLimit; }
     }
     if (!alive || m_work != work) return;
+    if (!work->ownedGraphic) work->downgraded += downgradePlaceholders(*work->graphic);
     if (status == Status::ResourceLimit && work->error.isEmpty())
         work->error = tr("Offset import could not be completed within its resource or worker limits");
     Outcome result; result.status = status; result.error = work->error; result.partial = work->partial;
@@ -539,8 +621,9 @@ void LC_OffsetImportSession::finish(const std::shared_ptr<Work>& work, Status st
     result.suppressedDiagnostics = work->budget->suppressedDiagnostics;
     result.diagnostics = std::move(work->budget->diagnostics);
     result.sourceStamp = work->sourceStamp;
-    result.sourceUnverified = status == Status::Complete && !work->sourceStamp.matches(work->file);
-    if (status == Status::Complete) result.graphic = std::move(work->graphic);
+    result.sourceUnverified = status == Status::Complete && !work->file.isEmpty() &&
+        !work->sourceStamp.matches(work->file);
+    if (status == Status::Complete) result.graphic = std::move(work->ownedGraphic);
     auto callback = std::move(work->callback); m_work.reset();
     try { callback(std::move(result)); } catch (...) {}
 }

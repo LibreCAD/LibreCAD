@@ -4507,6 +4507,57 @@ bool RS_FilterDXFRW::fileImportBytes(RS_Graphic &g, const QString &logicalFile,
 
 bool RS_FilterDXFRW::fileImportImpl(RS_Graphic &g, const QString &file,
                                     [[maybe_unused]] RS2::FormatType type, std::istream *input) {
+  if (m_deferOffsetAdmission || m_offsetCurveCacheOnlyImport)
+    return fileImportImplBody(g, file, type, input);
+
+  std::shared_ptr<LC_OffsetImportBudget> budget;
+  try {
+    budget = std::make_shared<LC_OffsetImportBudget>();
+  } catch (const std::bad_alloc &) {
+    const bool previousCacheOnly = m_offsetCurveCacheOnlyImport;
+    m_offsetCurveCacheOnlyImport = true;
+    try {
+      const bool imported = fileImportImplBody(g, file, type, input);
+      m_offsetCurveCacheOnlyImport = previousCacheOnly;
+      return imported;
+    } catch (...) {
+      m_offsetCurveCacheOnlyImport = previousCacheOnly;
+      throw;
+    }
+  }
+
+  const bool previousDefer = m_deferOffsetAdmission;
+  const auto previousBudget = m_offsetImportBudget;
+  m_deferOffsetAdmission = true;
+  m_offsetImportBudget = budget;
+  bool imported = false;
+  try {
+    imported = fileImportImplBody(g, file, type, input);
+  } catch (...) {
+    m_deferOffsetAdmission = previousDefer;
+    m_offsetImportBudget = previousBudget;
+    throw;
+  }
+  m_deferOffsetAdmission = previousDefer;
+  m_offsetImportBudget = previousBudget;
+
+  LC_OffsetImportSession::Outcome validation;
+  const bool needsValidation = budget->carriers != 0;
+  if (needsValidation)
+    validation = LC_OffsetImportSession::validateExistingGraphic(g, std::move(budget));
+  if (needsValidation && validation.downgraded != 0)
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+        "RS_FilterDXFRW: %zu offset carrier(s) retained as ordinary spline geometry",
+        validation.downgraded);
+  if (needsValidation && validation.status != LC_OffsetImportSession::Status::Complete)
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+        "RS_FilterDXFRW: bounded worker validation did not complete; editable carriers were downgraded");
+  refreshDeferredOffsetInserts(g);
+  return imported;
+}
+
+bool RS_FilterDXFRW::fileImportImplBody(RS_Graphic &g, const QString &file,
+                                    [[maybe_unused]] RS2::FormatType type, std::istream *input) {
   RS_DEBUG->print("RS_FilterDXFRW::fileImport");
   m_sourceChangedDuringRead = false;
   RS_DEBUG->print("DXFRW Filter: importing file '%s'...",
