@@ -3723,3 +3723,22 @@ acceptance. The creation/repeat GUI action is a separate W67b slice.
 | `/private/tmp/offset-W67-worker-process-release.xml` | `f1d122253ec9528a0e5ba947efe94315c8e857d6d5b6f997967523a7df76bfed` |
 | `/private/tmp/offset-W67-source-asan.xml` | `6f808536a2abf8a663b16c29d8aebe7ae24f5edbbd4ffc7dda0bd0e1a7288762` |
 | `/private/tmp/offset-W67-worker-process-asan.xml` | `d6684555cc075829ab117853e033bdddf26957d1008e12133b45de898459470d` |
+
+## 27. W67b Current-Source Creation/Repeat Routing Requalification
+
+Rebuilt and ran the complete offscreen Qt creation-action suite against the
+current source in Release and ASan. Both pass all 132 JUnit cases / 90,217
+assertions with zero errors, failures or skips. Coverage includes worker-backed
+preview/cache reuse and one-cycle publication, native repeated offsets and the
+zero-sum stored-cache fallback, ordered mixed sources, attributes and failed
+selection, stale-input/context seals, cancellation and real helper timeout/retry,
+two-click ellipse behavior, relative-zero undo, and DWG identity policy. This
+confirms local GUI action routing under the offscreen harness; it is not a visible
+interactive desktop run, installed-package validation, Windows runtime, or a
+full application test. ASan used `detect_leaks=0`; it is not a leak check. W19b
+remains the implementation checkpoint; W67b is current-source requalification.
+
+| W67b artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W67-creation-action-release.xml` | `311e2fcfb0b8cd3d4406e4621dccb74b2a83aa5a5b0ea96ee398dc9c7b526dc6` |
+| `/private/tmp/offset-W67-creation-action-asan.xml` | `c43baacbc8b6409c81cf145c6dcdb12931c73ce65bc15a08a67961a1b5ba17dc` |
