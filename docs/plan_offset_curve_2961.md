@@ -309,7 +309,7 @@ candidate except the explicitly proposed native-worker tags.
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66 focused cache-budget Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][cache-budget-accounting]` |
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; W97 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | geometry terminal/occurrence case inventory |
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; W98 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
-| C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a` plus later search; audit/retest | `[lc-offsetcurve][cache-topology-chain]` |
+| C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a`; W100 charges the final proof-publication slot before allocation and verifies injected failure in Release/ASan; broader audit/retest remains | `[lc-offsetcurve][cache-topology-chain]`, standalone cache-check allocation-fault target |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; finish caller/fallback/import ownership freeze before routing | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; full app/deployed-package gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
 | W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit and scoped action faults and geometry-entry timeout receipts qualified locally; W81 adds Linux/Windows CMake worker CI; W82 removes PR path filtering and W83 adds scoped feature-branch push triggering; current cross-platform run, import and final gates remain open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
@@ -4725,3 +4725,31 @@ Reports: `/private/tmp/offset-W99-preview-release.xml` and
 macOS regression pass, not visible-GUI or cross-platform runtime acceptance.
 No product change was needed. The remaining W0-W2, import/caller, budget,
 cross-platform and final acceptance work is still open.
+
+## 62. W100 Cache-Checker Final Publication Allocation
+
+Moved the final proof-output vertex debit ahead of allocation of the immutable
+`CacheTopologyAnalysis`. Added a dedicated CMake-only failure executable; its
+global `operator new` interposition is isolated from Catch and LibreCAD. The
+test measures a successful check's allocation count, injects `std::bad_alloc`
+at the final allocation, and verifies that the caller-owned `WorkBudget` has
+the complete successful work ledger despite the exception. The standalone
+fault executable reports 108 allocations and 140 charged vertices in both
+Release and ASan. The focused public checker selector separately retains
+exact-cap success, one-less refusal, sticky retry refusal, proof ownership,
+directed coverage, contact, seam, closure and typed-refusal cases.
+
+| W100 lane | Result | SHA256 |
+|---|---|---|
+| Standalone final-allocation injection, Release | PASS; full ledger retained (140 vertices) | n/a |
+| Standalone final-allocation injection, ASan | PASS; full ledger retained (140 vertices) | n/a |
+| `[cache-topology-chain]`, Release; 65 JUnit cases / 17,977 assertions | PASS; zero errors/failures/skips | `b9a74214f12ecc78b8187842484c58698a32fd154143f71467506484dccdc538` |
+| `[cache-topology-chain]`, ASan; 65 JUnit cases / 17,977 assertions | PASS; zero errors/failures/skips | `578e3629177e76f830009d543f4833ed698a762fe108964a481176bce4224ce3` |
+| qmake6 full app/plugin build (`make -j4`) | PASS, exit 0 | n/a |
+
+Reports: `/private/tmp/offset-W100-cache-check-release.xml` and
+`/private/tmp/offset-W100-cache-check-asan.xml`. ASan used
+`detect_leaks=0`; no leak-validation claim is made. This fixes and directly
+tests the output-publication accounting gap, but it does not close the full
+C-check inventory, the broader A-C allocation/failure audit, or final worker
+acceptance.
