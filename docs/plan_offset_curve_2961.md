@@ -3100,7 +3100,7 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   accounting, ownership, occurrence or global-topology gaps. No duplicate checker.
 - [ ] W0-W2: typed/cached Produce, creation/repeat and local native Trim GUI routing and scoped action faults are qualified;
   a fresh macOS qmake6 full-app/bundle build and adjacent-helper worker smoke are now
-  qualified in W55/W56. Finish other import ownership, Windows/native cross-platform failure
+  qualified in W55-W57. Finish other import ownership, Windows/native cross-platform failure
   coverage and remaining caller/final adoption/failure acceptance. Reuse the qualified
   geometry-entry timeout/helper/client/reply modules; do not redo them as absent. Keep
   Node runner scope separate.
@@ -3543,3 +3543,25 @@ qmake helper, not ASan coverage of the helper process itself or leak validation.
 
 Visible interactive GUI acceptance, Windows behavior, packaged installation,
 and full-plan integration/failure acceptance remain open.
+
+## 19. W57 Release Cache and Creation Tests Against qmake Helper
+
+Repeated the W56 focused suites with the current CMake Release test runner,
+also placed beside the fresh W55 bundle helper so `applicationDirPath()`
+resolves the qmake-built `LibreCADOffsetWorker`. This pairs Release and ASan
+test-runner coverage against the same helper binary and discovery location:
+
+| W57 suite | Testcases | JUnit `tests` | Errors / failures / skips | Result |
+|---|---:|---:|---:|---|
+| `[preview-portable]` | 4 | 67 | 0 / 0 / 0 | PASS |
+| `[creation-worker]` | 13 | 318 | 0 / 0 / 0 | PASS |
+
+| W57 artifact | SHA256 |
+|---|---|
+| `/private/tmp/offset-W57-preview-portable-release.xml` | `48e2dff7de69234bf8001afde6b307d5498dfc0517fb049b3f38630c03c4141e` |
+| `/private/tmp/offset-W57-creation-worker-release.xml` | `b6868514f6bdbc46363f66b616523bdee3973207c56795d4b0fee595c56c858d` |
+
+The Release runner was built from the current worktree after W53; later W54-W56
+changes were roadmap-only. XML receipts pass `xmllint --noout`. These offscreen
+checks still do not substitute for visible interaction, Windows runtime, or
+installed-package acceptance.
