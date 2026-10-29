@@ -183,6 +183,22 @@ std::optional<Fixture> closedTrimmedComponentFixture() {
     return trimmedComponentFixture(false);
 }
 
+Fixture hiddenCuspEndpointFixture() {
+    const RS_EllipseData source{RS_Vector{0, 0}, RS_Vector{100, 0}, .05,
+        M_PI / 12, 7 * M_PI / 4, false};
+    Fixture fixture;
+    fixture.cache.degree = 1;
+    fixture.cache.controlPoints = {{-0x1.8700a72e08b38p+6, -0x1.8c704c47d1742p+1},
+        {-0x1.8700a72e08b38p+6, 0x1.8c704c47d1742p+1}};
+    fixture.cache.weights = {1.0, 1.0};
+    fixture.cache.knotslist = {0.0, 0.0, 1.0, 1.0};
+    fixture.definition.basis = source;
+    fixture.definition.distance = 4;
+    fixture.definition.towardCentre = true;
+    fixture.definition.relTolerance = .01;
+    return fixture;
+}
+
 int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definition,
           const char* label, std::size_t& totalInjectionPoints, const double worldTolerance = .01,
           const bool expectSeam = false, const std::optional<bool> expectClosed = std::nullopt) {
@@ -263,6 +279,76 @@ int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definiti
     return 0;
 }
 
+int sweepRefusal(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definition,
+                 const char* label, const LC_OffsetCheckResult::Reason expectedReason,
+                 const double worldTolerance, std::size_t& totalInjectionPoints) {
+    namespace geo = LC_EllipseOffsetGeometry;
+    geo::WorkBudget baselineBudget;
+    failAt = 0;
+    allocationCount = 0;
+    injected = false;
+    armed = true;
+    LC_OffsetCheckResult baseline;
+    try {
+        baseline = geo::checkCache(cache, definition, worldTolerance, baselineBudget);
+    } catch (...) {
+        armed = false;
+        return 18;
+    }
+    armed = false;
+    const std::size_t completeAllocationCount = allocationCount;
+    if (baseline.reason != expectedReason || baseline.analysis ||
+        !sameWork(baseline.work, baselineBudget.consumed()) || completeAllocationCount == 0) {
+        std::printf("allocation_refusal_baseline_failed=1 fixture=%s reason=%u allocations=%zu\n",
+                    label, unsigned(baseline.reason), completeAllocationCount);
+        return 19;
+    }
+
+    for (std::size_t failure = 1; failure <= completeAllocationCount; ++failure) {
+        geo::WorkBudget failedBudget;
+        failAt = failure;
+        allocationCount = 0;
+        injected = false;
+        armed = true;
+        bool threw = false;
+        try {
+            auto failed = geo::checkCache(cache, definition, worldTolerance, failedBudget);
+            (void)failed;
+        } catch (const std::bad_alloc&) {
+            threw = true;
+        } catch (...) {
+            armed = false;
+            return 20;
+        }
+        armed = false;
+
+        const auto& work = failedBudget.consumed();
+        if (!threw || !injected || failedBudget.status() != geo::BudgetStatus::Ok ||
+            work.cacheSpans > baseline.work.cacheSpans || work.vertices > baseline.work.vertices ||
+            work.distancePairs > baseline.work.distancePairs || work.deepest > baseline.work.deepest ||
+            work.orderingComparisons > baseline.work.orderingComparisons) {
+            std::printf("allocation_refusal_failure=%zu/%zu fixture=%s threw=%d injected=%d status=%u\n",
+                        failure, completeAllocationCount, label, threw, injected,
+                        unsigned(failedBudget.status()));
+            return 21;
+        }
+
+        const auto recovered = geo::checkCache(cache, definition, worldTolerance, failedBudget);
+        if (recovered.reason != expectedReason || recovered.analysis ||
+            !sameWork(recovered.work, failedBudget.consumed())) {
+            std::printf("allocation_refusal_recovery=%zu/%zu fixture=%s reason=%u\n",
+                        failure, completeAllocationCount, label, unsigned(recovered.reason));
+            return 22;
+        }
+    }
+
+    totalInjectionPoints += completeAllocationCount;
+    std::printf("allocation_refusal_sweep_recovered=1 fixture=%s reason=%u injection_points=%zu\n",
+                label, unsigned(expectedReason), completeAllocationCount);
+    std::fflush(stdout);
+    return 0;
+}
+
 template<typename Operation, typename Complete>
 int sweepStage(const char* label, Operation&& operation, Complete&& complete,
                std::size_t& totalInjectionPoints) {
@@ -335,6 +421,12 @@ int main(const int argc, char** argv) {
         return sweep(closedTrimmed->cache, closedTrimmed->definition,
             "two-component-trim-closed-path", injectionPoints, .1, false, true);
     }
+    if (argc == 2 && std::strcmp(argv[1], "--hidden-cusp-endpoint") == 0) {
+        const auto cusp = hiddenCuspEndpointFixture();
+        std::size_t injectionPoints = 0;
+        return sweepRefusal(cusp.cache, cusp.definition, "hidden-cusp-endpoint",
+            LC_OffsetCheckResult::Reason::OffCurve, 1e-5, injectionPoints);
+    }
     if (argc != 1) { return 17; }
     const RS_EllipseData source{RS_Vector{0, 0}, RS_Vector{1, 0}, 1.0, .25, .2501, false};
     const auto frame = geo::ReferenceFrame::create(source, 1.0);
@@ -395,6 +487,9 @@ int main(const int argc, char** argv) {
     if (!closedTrimmed) { return 16; }
     if (const int result = sweep(closedTrimmed->cache, closedTrimmed->definition,
         "two-component-trim-closed-path", injectionPoints, .1, false, true)) { return result; }
+    const auto cusp = hiddenCuspEndpointFixture();
+    if (const int result = sweepRefusal(cusp.cache, cusp.definition, "hidden-cusp-endpoint",
+        LC_OffsetCheckResult::Reason::OffCurve, 1e-5, injectionPoints)) { return result; }
     std::printf("allocation_failure_sweep_all_fixtures_recovered=1 injection_points=%zu\n", injectionPoints);
     std::fflush(stdout);
     return 0;
