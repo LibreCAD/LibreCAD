@@ -6597,3 +6597,47 @@ Windows x64 and ARM64 jobs, especially source identity and the prior worker
 timeout/fault chain, before closing current-head cross-platform CI. Remaining
 visible CAD workflow, deployed/package checks, direct AC1021 ACadSharp reading,
 external-CAD visual checks, and final W0-W2/R acceptance are unchanged.
+
+## 127. W169 Fresh qmake6 Full Build and Bundled Helper Exchange
+
+At PR source `9d983e8e027a890930a25eacb3baa18b8b271655`, configured a new
+out-of-source top-level qmake6 tree at
+`/private/tmp/offset-2961-qmake-final-9d983e`. The toolchain is qmake6/Qt6.12.0,
+AppleClang21, macOS SDK27.0, arm64. The fresh `qmake6 librecad.pro` plus
+`make -j4` produced the complete application and its sibling
+`LibreCADOffsetWorker` in `LibreCAD.app/Contents/MacOS`, along with the plugin
+and tool targets. A subsequent top-level `make -j4` completed with exit0 and
+reported all generated targets up to date.
+
+Launched the helper from that new app bundle with a valid four-byte-length-
+prefixed protocol-v4 Generate request for a small elliptical arc. The request
+used token `[7,11,13,17]` and the full typed definition/run-limit layout. The
+helper exited0; decoding its response confirmed protocol4, the exact token,
+operation0, failure0, a 15-item typed payload and a 530-byte frame. A separate
+empty-array request was rejected with exit2 and `invalid request`, as expected.
+This is a local bundled-helper request/response smoke, not a signed/deployed
+bundle on another machine or a GUI interaction receipt.
+
+| W169 artifact | SHA256 / result |
+|---|---|
+| qmake6 application binary | `/private/tmp/offset-2961-qmake-final-9d983e/LibreCAD.app/Contents/MacOS/LibreCAD` / `ead4a2a24abea643fead31136b0fedc49ce99d610406bd14cb50ee437bf893a1` |
+| qmake6 worker binary | `/private/tmp/offset-2961-qmake-final-9d983e/LibreCAD.app/Contents/MacOS/LibreCADOffsetWorker` / `f468b857359de8b76e86357b8efda545d114b538c28928ef2983cf1739ea767c` |
+| Valid helper exchange | protocol4; op0; failure0; 15 payload items; frame530 bytes |
+| Empty-array negative control | helper exit2; `invalid request`; no response frame |
+
+At checkpoint, PR workflow `40953169555` is still in progress: the Ubuntu
+bounded build step passed and its DWG/DXF and relocated-helper execution is
+running; Windows x64 and ARM64 are compiling. PR Headless OFF and ON checks
+passed. Do not close W168/current-head CI until both Windows architectures and
+the bounded format/helper lanes finish successfully.
+
+The desktop became unlocked, but CUA still returned
+`Computer Use was not approved to use LibreCAD-PR3193-visible` after the user
+confirmed approval. No alternate UI route was attempted. The full visible drag,
+cancel, properties, creation/repeat, Update/Restore, Trim, save/reopen and
+undo/redo matrix remains open, along with display/DPR screenshots and external
+CAD visual inspection. Also still open: signed/deployed helper acceptance,
+direct AC1021 parsing by pinned ACadSharp (its known pre-entity header exception),
+external CAD acceptance not already covered by semantic readers, and final R/W0-W2
+acceptance. W169 closes only fresh local qmake6 app/helper build and a bundled
+helper wire exchange; it adds no product-source change.
