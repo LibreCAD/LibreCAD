@@ -2916,9 +2916,36 @@ load before final acceptance. Local temporary evidence in `/private/tmp`:
 Identity and timestamp comparisons are observations, not an atomic snapshot or
 content hash: filesystems can have weak or altered metadata, a pathname can
 change between checks, and the source can change after publication. Windows
-continues using the existing metadata checks and is not runtime-qualified here.
+parity is implemented below but is not runtime-qualified here.
 Nested XREFs, save/check-to-use and atomic destination protection, the 256 MiB
 host limit, other import callers and full platform/visible acceptance stay open.
+
+W44 Windows staged source identity `2ab7f67ce` uses `QFile::handle()`'s CRT
+descriptor and `_get_osfhandle` to compare volume serial/file index, size,
+last-write time and change time from the open handle. Path checks open the
+current path for attributes and compare the same identity; Windows timestamps
+are normalized from 100 ns FILETIME units. The common capture flow now requires
+this identity for regular files on Windows as on POSIX. Two Windows-guarded
+tests cover same-handle mutation and a pathname replacement before open.
+
+On this macOS host, Release and ASan hostile-file suites each pass all 59
+discovered declarations / 64 entries with no failures or skips, and discovery
+identity coverage is complete. The qmake6 session object compiles. These runs
+exercise the POSIX branch only: no Windows SDK/compiler or Windows runtime was
+available, so the Windows implementation and its two tests are not yet compiled
+or executed. Do not close cross-platform acceptance based on this code-only
+parity. Local temporary reports in `/private/tmp`:
+
+| W44 report | SHA256 |
+| --- | --- |
+| `offset-W44-hostile-release-final.xml` | `c1d6c711bfc5895891e0a2efc2ec1baacc6505105435c5f9a629433cf30686e3` |
+| `offset-W44-hostile-asan.xml` | `4460f59c2ab1b0ed884c38731ea6a8018a88f800df802fee9d25a3dc7b4cf4e8` |
+| `offset-W44-hostile-discovery.xml` | `0223e0dc24c79edc576e82c3ce562460e0301e288e17b56ae7e95251a479912e` |
+
+The Windows handle checks still depend on filesystem identity/timestamp
+semantics and are not an atomic transaction. Nested XREFs, save/check-to-use,
+destination publication, large-file policy and Windows runtime validation remain
+open.
 
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
