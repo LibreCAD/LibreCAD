@@ -309,7 +309,23 @@ bool DwgDxfOutputTransaction::finishWrite() {
     return true;
 }
 
-bool DwgDxfOutputTransaction::finishPublish() {
+bool DwgDxfOutputTransaction::finishPublish(PublishGuard guard, void* guardContext) {
+    if (!stageMatchesPath()) {
+        abort();
+        return false;
+    }
+    if (guard) {
+        bool allowed = false;
+        try {
+            allowed = guard(guardContext);
+        } catch (...) {
+            allowed = false;
+        }
+        if (!allowed) {
+            abort();
+            return false;
+        }
+    }
     if (!stageMatchesPath() || !publish()) {
         abort();
         return false;
@@ -320,12 +336,13 @@ bool DwgDxfOutputTransaction::finishPublish() {
     return true;
 }
 
-bool DwgDxfOutputTransaction::commit() {
-    return finishWrite() && finishPublish();
+bool DwgDxfOutputTransaction::commit(PublishGuard guard, void* guardContext) {
+    return finishWrite() && finishPublish(guard, guardContext);
 }
 
 bool DwgDxfOutputTransaction::commitVerified(
-    StagedFileVerifier verifier, void* context) {
+    StagedFileVerifier verifier, void* context, PublishGuard guard,
+    void* guardContext) {
     if (m_committed || m_finalizing)
         return false;
     if (!verifier) {
@@ -344,7 +361,7 @@ bool DwgDxfOutputTransaction::commitVerified(
         abort();
         return false;
     }
-    return finishPublish();
+    return finishPublish(guard, guardContext);
 }
 
 void DwgDxfOutputTransaction::abort() noexcept {

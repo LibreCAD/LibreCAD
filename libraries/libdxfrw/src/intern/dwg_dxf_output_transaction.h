@@ -45,7 +45,8 @@ public:
     DwgDxfOutputTransaction& operator=(const DwgDxfOutputTransaction&) = delete;
 
     bool open();
-    bool commit();
+    using PublishGuard = bool (*)(void*);
+    bool commit(PublishGuard guard = nullptr, void* guardContext = nullptr);
     /// Inspect the flushed, closed private file before atomic publication.
     /// Verification runs synchronously and must not change the staged file.
     /// Rejection or an exception aborts the transaction, preserving the target.
@@ -53,7 +54,8 @@ public:
     /// Path replacement between identity checks and publication remains a
     /// race; this class is not a security boundary against directory mutation.
     using StagedFileVerifier = bool (*)(const std::filesystem::path&, void*);
-    bool commitVerified(StagedFileVerifier verifier, void* context);
+    bool commitVerified(StagedFileVerifier verifier, void* context,
+                        PublishGuard guard = nullptr, void* guardContext = nullptr);
     void abort() noexcept;
 
     [[nodiscard]] bool isOpen() const noexcept { return m_open; }
@@ -66,7 +68,7 @@ private:
     bool stageMatchesPath() const noexcept;
     bool publish();
     bool finishWrite();
-    bool finishPublish();
+    bool finishPublish(PublishGuard guard = nullptr, void* guardContext = nullptr);
 
     std::filesystem::path m_target;
     std::filesystem::path m_temporary;

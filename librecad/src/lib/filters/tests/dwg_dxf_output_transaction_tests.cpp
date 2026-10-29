@@ -249,4 +249,31 @@ TEST_CASE("Replacing the stage during verification refuses publication", "[stage
     REQUIRE(swap.replaced); CHECK(std::filesystem::is_symlink(swap.stage));
     CHECK(read(fixture.target) == "old destination");
 }
+
+TEST_CASE("A publish guard rejects a destination changed during verification", "[stage][race][publish-guard]") {
+    Fixture fixture; DwgDxfOutputTransaction output(fixture.target.string(), std::ios::binary);
+    write(output);
+    struct Guard {
+        std::filesystem::path target;
+        unsigned calls = 0;
+        static bool verify(const std::filesystem::path&, void*) { return true; }
+        static bool allow(void* opaque) {
+            auto& self = *static_cast<Guard*>(opaque);
+            ++self.calls;
+            return read(self.target) == "old destination";
+        }
+    } guard{fixture.target};
+    struct Replace {
+        std::filesystem::path target;
+        static bool verify(const std::filesystem::path&, void* opaque) {
+            auto& self = *static_cast<Replace*>(opaque);
+            std::ofstream replacement(self.target, std::ios::binary | std::ios::trunc);
+            replacement << "external replacement";
+            return replacement.good();
+        }
+    } replace{fixture.target};
+    CHECK_FALSE(output.commitVerified(&Replace::verify, &replace, &Guard::allow, &guard));
+    CHECK(guard.calls == 1); CHECK(read(fixture.target) == "external replacement");
+    CHECK(fixture.files() == 1);
+}
 #endif
