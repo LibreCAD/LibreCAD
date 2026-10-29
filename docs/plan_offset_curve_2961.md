@@ -4963,3 +4963,25 @@ cross-platform PR workflow already invokes this standalone executable; its
 updated-head Linux and Windows runs remain unverified. This covers one open
 component from the two-component producer result, not the closed companion or
 all cusp/contact cases. C-check and final R remain open.
+
+## 72. W110 Current-Head Preview Portability and Creation/Repeat Requalification
+
+At source head `1ba916084`, reran `[preview-portable],[creation-worker]` in the
+current local Release and ASan test executables with Qt offscreen. Both passed
+17 cases / 385 assertions with zero errors, failures or skips. The selected
+coverage includes bounded owned cache snapshots through CBOR and fresh helper
+processes, revision-bound cache rebinding/merge and eviction, and Modify Offset
+GUI preview followed by one-cycle publication, repeated native creation and
+zero-sum stored-cache fallback. Source review found no current implementation
+gap in these routes, so this is an evidence-only checkpoint rather than a code
+change. It does not replace remote Windows/Linux worker jobs or visible GUI
+acceptance; those remain open under W0-W2 and final R.
+
+| W110 lane | JUnit cases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Preview portability + creation/repeat, Release | 17 / 385 | PASS; 0 errors, 0 failures, 0 skips | `4e5044ea6e9926df74cb454289b2e18494f7cce3cc94b98eeecaeaf09f59abb8` |
+| Preview portability + creation/repeat, ASan | 17 / 385 | PASS; 0 errors, 0 failures, 0 skips | `9e13746693083df218fe5196cd252f3cfbd2eee571c1d41a5361de533a87a3c3` |
+
+Reports: `/private/tmp/offset-W110-preview-creation-release.xml` and
+`/private/tmp/offset-W110-preview-creation-asan.xml`. ASan used
+`detect_leaks=0`; this is not leak validation.
