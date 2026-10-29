@@ -2477,6 +2477,44 @@ cross-platform acceptance are not claimed. Reports in the evidence root are
 | storage | `aa1ab9ed68e10882a5e6ed2b3f719dbe8651e88a9a0a0b8a16202e4845c6da75` | `6958778a4c27f7a9ab042075c72c4385dc4607b0023bce8a1d57fb8293bf806f` |
 | hostile | `4ddaca144384c9cf4647474b5e80a427efc216afd3b3eb84ce4bb2a25c2f3a2b` | `def852f9c101c847694abaa4c82241e184aaa246cca89c3a2a94f6b4300b648b` |
 
+W33 bounded GUI import queue `33f882ebf` limits staged drawing/template
+imports to four active sessions and 64 FIFO waiting requests. Further requests
+are explicitly refused in command history; queued requests are announced.
+Completion or failure schedules the next waiting requests without a nested event
+loop. Cancellation/application close clears both active and queued work, and
+startup-active restoration stays pending until both are empty. These bounds apply
+to this GUI import queue, not all native workers in the application.
+
+Fresh Release application/full-test/helper and focused Release/ASan builds pass.
+All discovered identities execute with zero errors/failures; extra cases are
+named sections:
+
+| Suite | Declarations | Cases | Assertions Release / ASan | Skips |
+| --- | ---: | ---: | ---: | ---: |
+| GUI import queue | 3 | 3 | 49 / 56 | 0 |
+| dock-window | 41 | 45 | 603 / 681 | 7 |
+| documents storage | 30 | 53 | 1207 / 1207 | 1 |
+| hostile file | 48 | 53 | 53913 / 54888 | 0 |
+
+Tests cover mixed drawing/template requests, FIFO waiting order, the active cap,
+startup-active restoration across the queue, overflow diagnostics, cancellation,
+and a failed queued import followed by a successful one. The seven GUI skips
+require a larger offscreen screen; the storage skip is the existing JWW case.
+ASan uses `detect_leaks=0`. Two qmake6 objects compile, not a full link. The
+first ASan queue probe aborted on the application singleton assertion while the
+fixture replaced a window with six drawings still open. Final tests explicitly
+close those drawings normally before fixture replacement; forced destruction
+with live drawings remains a lifecycle risk to investigate, not a qualified pass.
+The red probe is retained alongside the final evidence. Reports are
+`offset-W33-{queue,gui,storage,hostile}-{release,asan}.xml` in the evidence root:
+
+| Suite | Release SHA256 | ASan SHA256 |
+| --- | --- | --- |
+| queue | `36cb80fecc34b7aa82bd1f64269368b9a9569ff979d5c21ee506bbedee20915a` | `f6f21c81389a044999dd490b6e693703bfe9513a6910c70bd450a2369f541721` |
+| dock-window | `b0b8b549b2078217198ba33a87e70d58ccf7dadd17ffd0b9e1821a53104b6f57` | `df776f6c8308b5e249b51249275dfd2dd3f50b34dd018068ed94de9adc79b198` |
+| storage | `2f20b3a80a9a2049e96d1b29ec4dfe966d561ebf43b46d2267adbc2fedd74ab9` | `146400da206b4a9fecf04a8b330cd8ef18f198d4acf3c48e3454e047d21117e0` |
+| hostile | `181f855144b9933c1c2ffeb6ac09e6464563353fc099393bd9844cd78e513333` | `522c0ea4da97ebe022a37f192989724ee47ed1877b3f7967a727bea31dfa7065` |
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -2524,10 +2562,11 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** exercise a genuine partial
-DWG through the GUI dialog, and audit concurrent-open resource limits, source-file
-changes while validation is pending, close/dialog reentrancy and startup selection
-versus later user action. W31/W32 drawing-open and template publication are
+**Next concrete action on implementation resume:** protect against source-file
+changes while validation is pending, investigate the W33 forced-destruction
+singleton assertion, and exercise a genuine partial DWG through the GUI dialog.
+Audit close/dialog reentrancy and startup selection versus later user action.
+W31/W32 drawing-open/template publication and W33 GUI queue bounds are
 implemented; do not repeat them as absent. Design and test direct synchronous,
 console and nested-XREF contracts without silently weakening editable imports.
 Qualify remaining platform faults without weakening the existing worker tests.
