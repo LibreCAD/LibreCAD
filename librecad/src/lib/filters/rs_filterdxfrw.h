@@ -43,6 +43,7 @@
 #include <QByteArray>
 
 #include "drw_interface.h"
+#include "lc_fileidentity.h"
 #include "lc_extentitydata.h"
 #include "lc_offsetcurvexdata.h"
 #include "libdxfrw.h"
@@ -2433,6 +2434,9 @@ protected:
                                  const std::string &rawLayerName);
 
 private:
+  static bool outputPublishGuard(void *context);
+  bool verifyOutputTargetForPublication();
+
   bool fileImportImpl(RS_Graphic &g, const QString &logicalFile,
                       RS2::FormatType type, std::istream *input);
   std::function<bool(const QString &, QByteArray &)> m_xrefSnapshotProvider;
@@ -3121,6 +3125,9 @@ private:
 
   /** Pointer to the m_graphic we currently operate on. */
   RS_Graphic *m_graphic = nullptr;
+  QString m_activeOutputPath;
+  LC_FileIdentity m_activeOutputSourceIdentity;
+  bool m_activeOutputTargetsSource = false;
   /** File name. Used to find out the full path of images. */
   QString m_file;
   /** Pointer to current entity container (either block or graphic) */

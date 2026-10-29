@@ -37,9 +37,12 @@
 #include <string>
 #include <vector>
 
+#include <QFile>
+
 #include "drw_base.h"
 #include "drw_objects.h"
 #include "lc_dwgadvancedmetadata.h"
+#include "lc_fileidentity.h"
 #include "lc_filtertestsupport.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
@@ -123,6 +126,30 @@ std::string putExistingContent(const std::filesystem::path& file) {
     }
     return lc::test::fileBytes(file);
 }
+
+class ReplaceSourceOnFinalizeFilter final : public RS_FilterDXFRW {
+public:
+    explicit ReplaceSourceOnFinalizeFilter(QString sourcePath)
+        : m_sourcePath(std::move(sourcePath)) {}
+
+    bool finalizeDxfWrite() override {
+        return RS_FilterDXFRW::finalizeDxfWrite() && replaceSource();
+    }
+
+    bool finalizeDwgWrite() override {
+        return RS_FilterDXFRW::finalizeDwgWrite() && replaceSource();
+    }
+
+private:
+    bool replaceSource() const {
+        std::ofstream out(QFile::encodeName(m_sourcePath).constData(),
+                          std::ios::binary | std::ios::trunc);
+        out << "external replacement during export";
+        return out.good();
+    }
+
+    QString m_sourcePath;
+};
 
 } // namespace
 
@@ -252,5 +279,54 @@ TEST_CASE("a refused DWG export creates no file and keeps an existing one", "[dw
         fill(saved, 2);
         CHECK(lc::test::exportDrawing(saved, out.file("control.dwg"), target.m_format));
         CHECK(out.entries() == std::vector<std::string>{"control.dwg", "drawing.dwg"});
+    }
+}
+
+TEST_CASE("DXF and DWG publication guards reject changed source paths and aliases",
+          "[dxf][dwg][filter][source-identity][export-commit]") {
+    lc::test::ensureSettings();
+    const lc::test::QuietLog quiet;
+    for (const Target& target : {Target{RS2::FormatDXFRW2018, "dxf"},
+                                 Target{RS2::FormatDWG2018, "dwg"}}) {
+        for (const bool hardLinkAlias : {false, true}) {
+            CAPTURE(target.m_name, hardLinkAlias);
+            const lc::test::OutputDirectory out("changed_source_export");
+            const auto source = out.file(std::string("source.") +
+                                         (target.m_format == RS2::FormatDWG2018 ? "dwg" : "dxf"));
+            const auto destination = hardLinkAlias
+                ? out.file(std::string("alias.") +
+                           (target.m_format == RS2::FormatDWG2018 ? "dwg" : "dxf"))
+                : source;
+            {
+                std::ofstream original(source, std::ios::binary);
+                original << "original source snapshot";
+                REQUIRE(original.good());
+            }
+            if (hardLinkAlias) {
+                std::error_code error;
+                std::filesystem::create_hard_link(source, destination, error);
+                REQUIRE_FALSE(error);
+            }
+
+            RS_Graphic graphic;
+            fill(graphic, 1);
+            graphic.setSourceFileIdentity(
+                LC_FileIdentity::capture(lc::test::toQString(source)));
+            REQUIRE(graphic.sourceFileIdentity().valid);
+
+            ReplaceSourceOnFinalizeFilter filter(
+                lc::test::toQString(source));
+            CHECK_FALSE(filter.fileExport(graphic,
+                                          lc::test::toQString(destination),
+                                          target.m_format));
+            if (hardLinkAlias) {
+                CHECK(sameBytes(source, "original source snapshot"));
+                CHECK(sameBytes(destination, "original source snapshot"));
+            }
+            else {
+                CHECK(sameBytes(source, "external replacement during export"));
+            }
+            CHECK(out.entries().size() == (hardLinkAlias ? 2u : 1u));
+        }
     }
 }

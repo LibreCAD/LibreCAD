@@ -11989,6 +11989,29 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   }
 
   this->m_graphic = &g;
+  m_activeOutputPath = QFileInfo(file).absoluteFilePath();
+  m_activeOutputSourceIdentity = g.sourceFileIdentity();
+  const QFileInfo outputIdentityInfo(file);
+  const bool targetHasSourceCanonicalPath =
+      m_activeOutputSourceIdentity.valid &&
+      outputIdentityInfo.canonicalFilePath() ==
+          m_activeOutputSourceIdentity.canonicalPath;
+  m_activeOutputTargetsSource = m_activeOutputSourceIdentity.valid &&
+      (m_activeOutputSourceIdentity.refersToPath(file) ||
+       targetHasSourceCanonicalPath ||
+       m_activeOutputSourceIdentity.refersToSameObject(file));
+  const auto activeOutputGuard = qScopeGuard([this] {
+    m_activeOutputPath.clear();
+    m_activeOutputSourceIdentity = {};
+    m_activeOutputTargetsSource = false;
+  });
+  if (m_activeOutputTargetsSource &&
+      !m_activeOutputSourceIdentity.matches(m_activeOutputPath)) {
+    m_errorCode = DRW::BAD_OPEN;
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "RS_FilterDXFRW: refusing export over a changed source file");
+    return false;
+  }
   m_writeFailed = false;
   m_offsetOutputContext.reset();
   m_offsetOutputVersion = DRW::UNKNOWNV;
@@ -12395,7 +12418,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                       "typed metadata identities");
       return false;
     }
-    bool success = m_dwgW->write(this, dwgVer, false) && !m_writeFailed;
+    bool success = m_dwgW->writeGuarded(
+                       this, dwgVer, false,
+                       &RS_FilterDXFRW::outputPublishGuard, this) &&
+                   !m_writeFailed;
     m_lastDwgWriteSkipCounters = m_dwgW->getWriteSkipCounters();
     m_writeLeftOut = m_dwgW->leftOut();
     m_lastDwgOptionalReferenceDropCount = dwgWriteOptionalReferenceDropCount();
@@ -12433,6 +12459,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // supported platform. Preserve the old file while committing the
     // completed staged output, and restore it if the commit fails.
     const auto commitStagedOutput = [&]() {
+      if (!verifyOutputTargetForPublication())
+        return false;
       if (!QFileInfo::exists(file))
         return QFile::rename(stagedOutputPath, file);
       // Only a file is moved aside. A directory of that name would go to the
@@ -13195,7 +13223,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 
   //    bool success = m_dxfW->write(this, exportVersion, false); //ascii
   const bool success =
-      m_dxfW->write(this, exportVersion, binary) && !m_writeFailed; // binary
+      m_dxfW->writeGuarded(this, exportVersion, binary,
+                           &RS_FilterDXFRW::outputPublishGuard, this) &&
+      !m_writeFailed; // binary
   m_writeLeftOut = m_dxfW->leftOut();
   activeWriter.reset();
 
@@ -28177,6 +28207,22 @@ bool RS_FilterDXFRW::finalizeDxfWrite() {
   // A failure latched in any DXF write callback reaches dxfRW here, before
   // it replaces the destination.
   return !m_writeFailed;
+}
+
+bool RS_FilterDXFRW::verifyOutputTargetForPublication() {
+  if (!m_activeOutputTargetsSource)
+    return true;
+  if (m_activeOutputSourceIdentity.matches(m_activeOutputPath))
+    return true;
+  m_writeFailed = true;
+  RS_DEBUG->print(RS_Debug::D_WARNING,
+                  "RS_FilterDXFRW: source file changed during export; refusing publication");
+  return false;
+}
+
+bool RS_FilterDXFRW::outputPublishGuard(void *context) {
+  auto *filter = static_cast<RS_FilterDXFRW *>(context);
+  return filter != nullptr && filter->verifyOutputTargetForPublication();
 }
 
 bool RS_FilterDXFRW::finalizeDwgWrite() {
