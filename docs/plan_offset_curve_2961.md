@@ -309,7 +309,7 @@ candidate except the explicitly proposed native-worker tags.
 | A-cache | Bounds/local cache, inherited depth and failed-stage snapshots | A-reference | candidate `dbf895638`; W66 focused cache-budget Release/ASan requalification; broad audit remains open | `[lc-offsetcurve][cache-budget-accounting]` |
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; W97 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | geometry terminal/occurrence case inventory |
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; W98 current-source review and focused Release/ASan requalification found no gap; final R acceptance remains | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
-| C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a`; W100 charges the final proof-publication slot before allocation and verifies injected failure in Release/ASan; W101 current-source full-selector requalification; broader site audit remains | `[lc-offsetcurve][cache-topology-chain]`, standalone cache-check allocation-fault target |
+| C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a`; W100 charges the final proof-publication slot before allocation; W103 sweeps every observed allocation failure in a public check and verifies bounded ledger plus same-budget retry in Release/ASan; broader site audit remains | `[lc-offsetcurve][cache-topology-chain]`, standalone cache-check allocation-fault target |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; finish caller/fallback/import ownership freeze before routing | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; full app/deployed-package gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
 | W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit and scoped action faults and geometry-entry timeout receipts qualified locally; W81 adds Linux/Windows CMake worker CI; W82 removes PR path filtering and W83 adds scoped feature-branch push triggering; current cross-platform run, import and final gates remain open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
@@ -4804,3 +4804,33 @@ only.
 
 Reports: `/private/tmp/offset-W102-preview-creation-release.xml` and
 `/private/tmp/offset-W102-preview-creation-asan.xml`.
+
+## 65. W103 Exhaustive Cache-Checker Allocation Failure Sweep
+
+Product/test commit `2e5db37ba` extends the isolated cache-check fault executable
+from final-publication-only injection to every allocation observed during one
+successful public `checkCache` call, including aligned allocations. For each
+failure point, the test verifies `std::bad_alloc` is injected, the caller-owned
+budget remains `Ok` with every work counter no greater than the successful
+baseline, and retrying with that same budget returns a complete analysis whose
+reported work equals the accumulated ledger. The fixture encountered 108
+allocation points and 140 baseline vertices. The executable remains separate
+from Catch/the application because it replaces global allocation operators.
+
+The DWG/DXF verification workflow now explicitly builds and runs this standalone
+target in its Linux and Windows x64/ARM64 lanes, so the platform-specific aligned
+allocator implementation is exercised by PR CI. Local macOS Release and ASan
+builds/runs both passed all 108 injections and recoveries. ASan used
+`detect_leaks=0`; this is not leak validation. `actionlint` passed. The remote
+Windows/Linux run is not yet available in the current check set; the broader
+A-core through C-check site audit and final R gates remain open.
+
+| W103 lane | Result |
+|---|---|
+| Standalone checker fault sweep, Release | PASS; 108 injection points, 108 same-budget recoveries |
+| Standalone checker fault sweep, ASan | PASS; 108 injection points, 108 same-budget recoveries |
+| `actionlint .github/workflows/dwg-dxf-verify.yml` | PASS |
+
+This closes only the public checker allocation-failure sweep for the selected
+fixture. It does not claim every geometry operation or every allocator call
+site across A/B/C has been swept.
