@@ -2871,13 +2871,54 @@ The following reports are local temporary evidence in `/private/tmp`:
 | `offset-W42-dock-asan-discovery.xml` | `ebe000c59b0e71231f170c6fe39d9a5548a38fadc3a8304e3bd5d59043361678` |
 
 The captured bytes are stable after capture, not necessarily an atomic version
-of a concurrently modified file. Metadata-only comparisons can miss changes and
-do not bind the opened descriptor to the pathname. Nested XREFs still read their
+of a concurrently modified file. W43 below subsequently binds the POSIX opened
+descriptor to observed pathname identity and adds native metadata checks; those
+checks can still miss changes. Nested XREFs still read their
 own mutable paths. Parsing, each individual file read and XREF loading can block
 the owning thread; capture cancellation is between reads. Source-save identity,
 atomic publication, non-GUI callers, large-file policy and cross-platform
 qualification remain open. Do not describe this as a complete immutable import
 transaction or restart W42 as absent.
+
+W43 POSIX host identity `8dd114db9` records regular-file device/inode, size,
+modification and change timestamps in the staged source stamp. On POSIX it
+verifies the opened descriptor against that stamp before capture and again after
+capture and parsing, retains the descriptor through parsing, checks the captured
+byte count, and includes native identity in subsequent pathname comparisons. A
+regular source without verifiable POSIX identity is refused. Qt resources retain
+their separate non-descriptor path. macOS and Linux use nanosecond timestamps;
+other POSIX builds currently retain second-resolution native timestamps.
+
+macOS tests cover replacement between pathname observation and open (refused
+before parsing), descriptor mutation, same-size rewriting with restored mtime,
+hard links, symlinks and a Qt-resource import. Release and ASan hostile-file
+runs pass 59 declarations / 64 JUnit entries without skips; Release offscreen
+`[dock-window]` passes 50 / 65 and the serial ASan import/template/saved-layer
+subset passes 26 / 41. All discovered identities are accounted for without
+failures or skips in these final reports. ASan uses `detect_leaks=0`; qmake6
+compiled the session object, not a full app. An earlier ASan GUI selection run
+had a native-template assertion failure while multiple suites ran concurrently;
+the isolated template and full serial selection passed, but the initial failure
+is retained and its cause is not established. Investigate reproducibility under
+load before final acceptance. Local temporary evidence in `/private/tmp`:
+
+| W43 report | SHA256 |
+| --- | --- |
+| `offset-W43-hostile-release-final.xml` | `3c5a7ddf138f970be4bf82787182b15d86df158ee0b2182b6b79a301fa783bab` |
+| `offset-W43-hostile-asan-final.xml` | `9922c053a4f81a8786b84c8d1a2fec5ab4de34ec238e6a1780e330c34f6da3ff` |
+| `offset-W43-hostile-discovery.xml` | `96886f04bc0c9aa68235815b5953077fa19dc14cc409e6a2aa7e0c0bf70f8279` |
+| `offset-W43-dock-release.xml` | `1cc4fe4c7aa44c0c1f479bcf84cce2786355da344bab6ddf5bc00ed9be2c143d` |
+| `offset-W43-dock-discovery.xml` | `e0b5335c5964c16e60402ed500177a2b422dfd5e9e2326ac703974c5f5d48d60` |
+| `offset-W43-dock-asan.xml` (initial failure) | `b136bcc3142dd4d41da1f758b890f95a875281b3886c2e026d83e7d16fbfa583` |
+| `offset-W43-dock-asan-serial.xml` | `3ada700f2618c1fc0ba91aa27ebda4c6c8bb024efb1dd86ae1d234d3e3d0fc82` |
+| `offset-W43-dock-asan-discovery.xml` | `938fb1ec0baf5f71f18845fd3249dd2ad2aeeefac9608a6087a6405efd049095` |
+
+Identity and timestamp comparisons are observations, not an atomic snapshot or
+content hash: filesystems can have weak or altered metadata, a pathname can
+change between checks, and the source can change after publication. Windows
+continues using the existing metadata checks and is not runtime-qualified here.
+Nested XREFs, save/check-to-use and atomic destination protection, the 256 MiB
+host limit, other import callers and full platform/visible acceptance stay open.
 
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
@@ -2938,11 +2979,11 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** build on W42's bounded host
-capture to bind the opened source identity and detect mutation during capture;
-design nested-XREF admission and large-file policy without treating mutable XREFs
-as snapshotted. Strengthen W34's metadata-only
-source and non-atomic autosave alias checks, and exercise a genuine partial DWG
+**Next concrete action on implementation resume:** build on W42/W43 host capture
+and POSIX identity checks to design nested-XREF admission and large-file policy;
+do not treat mutable XREFs as snapshotted. Investigate the recorded ASan template
+failure under load, strengthen remaining source-save and non-atomic autosave alias
+checks, and exercise a genuine partial DWG
 through the GUI dialog. W35 fixes the observed W33 teardown assertion; retain its
 forced-destruction regression while auditing other close/dialog reentrancy.
 W36/W37 handle observed switches and later staged requests; also audit
