@@ -4032,3 +4032,28 @@ reproduce MSVC's move-trait result; the exact failing static assertion is
 removed, but Windows x64/ARM64 compile and runtime evidence remains pending the
 updated PR workflow. W75 identity-lane and other final acceptance gates remain
 open.
+
+## 38. W77a Current-Head Preview-Cache Portability
+
+At product source `f6f4f369d37ae4675558d9437a3f94c50ce0f9c5`, rebuilt the real
+worker-process and worker-client targets in isolated CMake Release and ASan
+trees. The helper-process selector transports cached preview values across
+fresh child processes and still applies native adoption checks. The client
+selector verifies joined completion/cache merge, stale-revision rejection,
+action-wide eviction and moved-from authority revocation. All discovered test
+identities executed, including the named cache cases, with zero failures,
+errors, skips, duplicate identities or undeclared executions.
+
+| W77a lane | Discovered / executed JUnit cases | Assertions | Result | SHA256 |
+|---|---:|---:|---|---|
+| Helper process Release | 1 / 1 | 231 | PASS | `7c0ff967f7849b2ba4ac355ab4438f9da5016bf48a2264aad6cc6b459defffca` |
+| Worker client Release | 2 / 2 | 825 | PASS | `fd15db36513ea7c3f8b689a8eed01800c00e6655a1ee04b1851b9fa832f206ab` |
+| Helper process ASan | 1 / 1 | 304 | PASS | `e495d51bc49fc11bcdb8843135a8c583180415b7a5d854ee0cb539cdc1472c44` |
+| Worker client ASan | 2 / 2 | 1219 | PASS | `78a3b2154961616c94dfcad3e17b100d9cf4ea903a425a7790baebecfaab20ff` |
+
+Reports are `/private/tmp/offset-W77-cache-{process,client}-{release,asan}.xml`;
+the matching Release discovery receipts are
+`/private/tmp/offset-W77-cache-{process,client}-discovery.xml`. ASan used
+`detect_leaks=0`, so this is not leak validation. This is current-head macOS
+offscreen qualification; Windows runtime, installed-helper deployment, visible
+GUI and final acceptance remain open. No product gap was found in this slice.
