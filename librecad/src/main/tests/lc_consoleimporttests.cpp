@@ -31,6 +31,7 @@
 
 #include "console_command_utils.h"
 #include "lc_actiontestsupport.h"
+#include "lc_offsetcurve.h"
 #include "rs_graphic.h"
 
 namespace {
@@ -56,9 +57,33 @@ TEST_CASE("console import reads a drawing", "[console][import]") {
     const QTemporaryDir dir;
     REQUIRE(dir.isValid());
 
-    RS_Graphic graphic;
-    CHECK(LC_Console::importGraphic(graphic, writeFile(dir, "line.dxf", kLineDxf)));
-    CHECK(graphic.count() == 1);
+    auto graphic = LC_Console::importGraphic(writeFile(dir, "line.dxf", kLineDxf));
+    REQUIRE(graphic);
+    CHECK(graphic->count() == 1);
+}
+
+TEST_CASE("console staged import validates and restores a native offset DXF",
+          "[console][import][offsetcurve]") {
+    REQUIRE(lc::test::application() != nullptr);
+    const QString path = QStringLiteral(LIBRECAD_TEST_DIR) +
+        "/offsetcurve_independent/dxf-binary-R2018-native-degree1.dxf";
+
+    auto graphic = LC_Console::importGraphic(path);
+    REQUIRE(graphic);
+    REQUIRE(graphic->count() == 1);
+    CHECK(dynamic_cast<LC_OffsetCurve*>(graphic->entityAt(0)) != nullptr);
+}
+
+TEST_CASE("console staged import validates and restores a native offset DWG",
+          "[console][import][offsetcurve][dwg]") {
+    REQUIRE(lc::test::application() != nullptr);
+    const QString path = QStringLiteral(LIBRECAD_TEST_DIR) +
+        "/offsetcurve_independent/oda-dwg-R2018-native-degree1.dwg";
+
+    auto graphic = LC_Console::importGraphic(path);
+    REQUIRE(graphic);
+    REQUIRE(graphic->count() == 1);
+    CHECK(dynamic_cast<LC_OffsetCurve*>(graphic->entityAt(0)) != nullptr);
 }
 
 // Before the import reported errors itself, a file it could not read opened a
@@ -69,9 +94,7 @@ TEST_CASE("console import fails on a file it cannot read", "[console][import]") 
     const QTemporaryDir dir;
     REQUIRE(dir.isValid());
 
-    RS_Graphic fromGarbage;
-    CHECK_FALSE(LC_Console::importGraphic(fromGarbage, writeFile(dir, "garbage.dxf", "this is not a drawing\n")));
+    CHECK_FALSE(LC_Console::importGraphic(writeFile(dir, "garbage.dxf", "this is not a drawing\n")));
 
-    RS_Graphic fromMissing;
-    CHECK_FALSE(LC_Console::importGraphic(fromMissing, dir.filePath("missing.dxf")));
+    CHECK_FALSE(LC_Console::importGraphic(dir.filePath("missing.dxf")));
 }

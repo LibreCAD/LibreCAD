@@ -3935,6 +3935,9 @@ if (BUILD_TESTS)
     target_sources(librecad_lc_consolesvgexporttests PRIVATE
         librecad/src/main/console_command_utils.cpp
         librecad/src/main/console_dxf2png.cpp)
+    target_sources(librecad_console_command_utils_tests PRIVATE
+        librecad/src/main/tests/lc_consoleimporttests.cpp)
+    add_dependencies(librecad_console_command_utils_tests librecad_offset_test_helper)
 
     # A parser-only lane for the tight implementation loop.  The existing
     # librecad_*_fast_tests targets intentionally exercise the LibreCAD filter,
@@ -4181,6 +4184,11 @@ if (BUILD_TESTS)
             TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
+        add_test(NAME librecad_console_import_tests
+            COMMAND $<TARGET_FILE:librecad_console_command_utils_tests>
+                "[console][import]" --reporter compact)
+        set_tests_properties(librecad_console_import_tests PROPERTIES
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
         add_test(NAME librecad_painter_tests
             COMMAND $<TARGET_FILE:librecad_painter_tests> --reporter compact)
         set_tests_properties(librecad_painter_tests PROPERTIES
