@@ -3216,3 +3216,39 @@ execution from heading numbering; they do not relax any original expectation.
 | H6-JOIN-03 | Pair order mismatch through exported transaction | RECEIPT_JOIN / RECEIPT_ORDER_MISMATCH |
 | H6-JOIN-04 | Self-consistent H3 output digest/bytes disagree with actual persisted prefix; H4 owned join throws | JOIN / OUTPUT_MISMATCH |
 <!-- lc2961-h6-original-inventory-v1:end -->
+
+## 10. W48 Preview Portability and Creation/Repeat Requalification
+
+W48a `ea25396f4` adds an end-to-end regression for action-wide cache eviction
+through a real fresh-helper CachedProduce request and parent merge. The parent
+starts at the 256-entry boundary with one source entry and 255 entries belonging
+to other sources; the worker computes a new entry, reports the global clear, and
+the joined parent merge drops all stale-source entries while retaining the new
+source result. This closes the process-boundary/global-clear test gap; it does
+not change W16/W17 cache semantics or authorize raw previews as native curves.
+
+Current-source macOS Release and ASan runs both discover and pass the two
+`[preview-portable]` worker-client cases with no failures, errors or skips. The
+new case is present in both runs and uses the built helper executable. ASan is
+configured with address instrumentation and `detect_leaks=0`.
+
+The Modify Offset creation/repeat path was requalified without duplicating its
+W19 implementation. Release and ASan both discover and pass all 13
+`[creation-worker]` cases with no failures, errors or skips. These exercise
+worker-routed preview/commit/repeat, cache-hit reuse, native zero-sum fallback,
+mixed copies, cancellation and publication invariants. This is offscreen GUI
+test coverage, not a visible interactive acceptance run.
+
+| W48 receipt | Test cases | JUnit `tests` | Result | SHA256 |
+|---|---:|---:|---|---|
+| Cache process Release | 2 | 709 | PASS | `bbbd2f838bdd6afc0efec5350e909ed36a4f70fbd17f8078107b7ebb1eb1a32d` |
+| Cache process ASan | 2 | 1053 | PASS | `b40319d5179144bd4a942c182ae3c22034b7674493bd92947d7cf18162f4a62b` |
+| Creation/repeat Release | 13 | 318 | PASS | `df93bf12c2dda78d5e72d2fdf7e401d01c29849ba3ce706d22ffb0ee838e52f7` |
+| Creation/repeat ASan | 13 | 318 | PASS | `74ef453ed7100b26ee5e1c4537fb44473a84ae919e9d0acf31bdffc579d94395` |
+
+Receipts are under `/private/tmp/offset-W48-*.xml`. ASan leak detection remains
+disabled and is not a leak-free claim. This host validates macOS only; Windows
+compile/runtime, installed-bundle execution, qmake6 deployment, and visible GUI
+acceptance remain open. Continue with the existing W44 cross-platform gate and
+the W47 destination-publication/source-path-race work; do not reopen W16-W19 as
+missing implementation.
