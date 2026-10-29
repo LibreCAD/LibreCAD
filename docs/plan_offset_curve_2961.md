@@ -3852,3 +3852,26 @@ ASan used `detect_leaks=0`, so this is not leak validation. This confirms the
 existing W16/W17 portable-cache implementation on the current W70 tree; no
 product gap was found and no cache implementation was duplicated. Cross-platform,
 installed-helper, and final acceptance gates remain open.
+
+## 32. W71b Creation and Repeat GUI Routing Requalification
+
+Against the same product source `7a90b5884`, rebuilt and ran the complete
+`[creation-worker]` selector in `librecad_offset_creation_action_tests` in Release
+and ASan. All 13 GUI-action cases passed with zero failures, errors, or skips
+(318 JUnit assertions in each run). Coverage includes worker-routed preview and
+commit, cache reuse at publication, native repeated copies and zero-sum stored
+cache fallback, mixed-source ordering and attributes, cancellation, timeout
+recovery, stale source/selection/layer/UCS rejection, and one-cycle undo/redo
+publication. These are offscreen Qt action tests, not visible interactive
+acceptance.
+
+| W71b lane | Testcases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Creation/repeat Release | 13 / 318 | PASS | `431301b4020ce1dad423503772271d972cca5430335498be760da42dda975ce5` |
+| Creation/repeat ASan | 13 / 318 | PASS | `846823c08358c784b41ad21b537d48f5f3c3d3dddc5ff4dc77c0205b7fb9c108` |
+
+Reports are `/private/tmp/offset-W71-creation-{release,asan}.xml`. ASan used
+`detect_leaks=0`; no leak-validation claim is made. This confirms W18/W19 local
+creation/repeat routing at the W70 source; no product gap was found. Visible GUI,
+Windows runtime, installed-helper, remaining import callers, and final acceptance
+remain open.
