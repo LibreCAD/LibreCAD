@@ -2947,6 +2947,38 @@ semantics and are not an atomic transaction. Nested XREFs, save/check-to-use,
 destination publication, large-file policy and Windows runtime validation remain
 open.
 
+W45 current-source cache/create requalification at `838bfeca8` revisited the
+requested preview-cache portability and creation/repeat routing. No product gap
+was found: W16/W17 already provide owned value snapshots, bounded CBOR transport,
+source rebinding and fresh-helper cache reuse; W18/W19 already route eligible
+Modify Offset preview/commit/repeat through owned continuations and atomic model
+publication. A fresh macOS Release CMake configure/build succeeded for
+`librecad_offset_source_preparation_tests`,
+`librecad_offset_worker_process_tests`, and
+`librecad_offset_creation_action_tests`. Running each binary offscreen passed:
+
+| W45 suite | Test cases | Assertions | Result |
+| --- | ---: | ---: | --- |
+| Source preparation/cache rebinding | 82 | 83527 | pass |
+| Real helper-process/cache transport | 4 | 2724 | pass |
+| Creation action/preview/repeat GUI routing | 85 | 90217 | pass |
+
+The helper-process assertion count is scheduling-dependent; the prior interactive
+run reported 2928 and the saved serial run below reports 2724. Both report all
+four test cases passed. Saved logs under `/private/tmp`:
+
+| W45 artifact | SHA256 |
+| --- | --- |
+| `offset-cache-portability-release.log` | `987d4d7d0890d73325a3714d6cc4d2de685dff1359a3a91b6ff967b479e31075` |
+| `offset-cache-worker-process-release.log` | `196fffab5c7abbf426a64ac7b89d5a009f8a03fa1afcad43a1dde75c441b3974` |
+| `offset-preview-create-action-release.log` | `d0a333f116a2d740ab50a5351945dd08d8a94dc5a0561d58954e158d068f9ec4` |
+
+This is current-source macOS Release qualification only, not a new code change,
+ASan run, cross-platform runtime result, visible interactive GUI session, or
+deployed-helper proof. Keep W16-W19 implemented; do not restart them as missing.
+Windows runtime validation and the separate W0-W2/import/final acceptance gates
+remain open.
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
