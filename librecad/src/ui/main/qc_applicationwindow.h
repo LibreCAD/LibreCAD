@@ -401,11 +401,13 @@ protected:
     void updateWidgetsAsDocumentLoaded(const QC_MDIWindow* w);
     void completeOpenedDrawing(QC_MDIWindow* w, const QString& fileName, bool legacyUtf8);
     bool beginStagedImport(const QString& fileName, RS2::FormatType type, RS2::DxfTextEncoding encoding, bool asTemplate);
-    bool startStagedImport(const QString& fileName, RS2::FormatType type, RS2::DxfTextEncoding encoding, bool asTemplate);
+    bool startStagedImport(const QString& fileName, RS2::FormatType type, RS2::DxfTextEncoding encoding,
+                           bool asTemplate, quint64 selectionRequest);
     void startQueuedImports();
     bool hasPendingImports() const;
     void cancelPendingImports();
     void clearStartupImportSelection();
+    quint64 nextStartupSelection();
     QC_MDIWindow* createDrawingWindow(RS_Document* doc, const QString& expectedFileName,
                                       std::unique_ptr<RS_Graphic> owned);
     void autoZoomAfterLoad(const QG_GraphicView* graphicView);
@@ -549,6 +551,7 @@ protected:
         RS2::FormatType type;
         RS2::DxfTextEncoding encoding;
         bool asTemplate;
+        quint64 selectionRequest;
     };
     static constexpr int MaxActiveImports = 4;
     static constexpr int MaxQueuedImports = 64;
@@ -558,6 +561,7 @@ protected:
     QPointer<QMdiSubWindow> m_startupSelectedWindow;
     bool m_startupSelectionChanged{false};
     unsigned m_importActivationDepth{0};
+    quint64 m_startupSelectionSerial{0};
     QList<QAction*> m_actionsToDisableInPrintPreviewList;
 
     friend class LC_WidgetFactory;

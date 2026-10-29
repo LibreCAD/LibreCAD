@@ -56,6 +56,7 @@
 #include <QWindow>
 
 #include <algorithm>
+#include <limits>
 #include <utility>
 
 #include "lc_iconcolorsoptions.h"
@@ -1329,7 +1330,7 @@ void QC_ApplicationWindow::doWindowActivated(QMdiSubWindow* w, const bool forced
         }
     }
 
-    if (!m_restoreActiveFile.isEmpty() && !m_importActivationDepth && w != m_activeMdiSubWindow) {
+    if (!m_restoreActiveFile.isEmpty() && !m_importActivationDepth && w != m_activeMdiSubWindow && nextStartupSelection()) {
         m_startupSelectedWindow = w;
         m_startupSelectionChanged = true;
     }
@@ -1813,6 +1814,15 @@ void QC_ApplicationWindow::clearStartupImportSelection() {
     m_startupSelectionChanged = false;
 }
 
+quint64 QC_ApplicationWindow::nextStartupSelection() {
+    if (m_restoreActiveFile.isEmpty()) return 0;
+    if (m_startupSelectionSerial == std::numeric_limits<quint64>::max()) {
+        clearStartupImportSelection();
+        return 0;
+    }
+    return ++m_startupSelectionSerial;
+}
+
 bool QC_ApplicationWindow::hasPendingImports() const {
     return !m_pendingImports.isEmpty() || !m_queuedImports.isEmpty();
 }
@@ -1821,6 +1831,7 @@ void QC_ApplicationWindow::restoreActiveFileAfterPendingImports(const QString& f
     clearStartupImportSelection();
     activateWindowWithFile(fileName);
     m_restoreActiveFile = hasPendingImports() ? fileName : QString{};
+    nextStartupSelection();
 }
 
 bool QC_ApplicationWindow::beginStagedImport(const QString& fileName, RS2::FormatType type,
@@ -1830,27 +1841,28 @@ bool QC_ApplicationWindow::beginStagedImport(const QString& fileName, RS2::Forma
             m_commandWidget->appendHistory(tr("Too many pending imports; '%1' was not opened.").arg(fileName));
             return false;
         }
-        m_queuedImports.append({fileName, type, encoding, asTemplate});
+        const auto selectionRequest = nextStartupSelection();
+        m_queuedImports.append({fileName, type, encoding, asTemplate, selectionRequest});
         showStatusMessage(tr("Queued import: ") + fileName, 2000);
         const QPointer<QC_ApplicationWindow> window(this);
         QTimer::singleShot(0, this, [window] { if (window) window->startQueuedImports(); });
         return true;
     }
-    return startStagedImport(fileName, type, encoding, asTemplate);
+    return startStagedImport(fileName, type, encoding, asTemplate, nextStartupSelection());
 }
 
 void QC_ApplicationWindow::startQueuedImports() {
     const QPointer<QC_ApplicationWindow> window(this);
     while (m_pendingImports.size() < MaxActiveImports && !m_queuedImports.isEmpty()) {
         const auto request = m_queuedImports.takeFirst();
-        startStagedImport(request.fileName, request.type, request.encoding, request.asTemplate);
+        startStagedImport(request.fileName, request.type, request.encoding, request.asTemplate, request.selectionRequest);
         if (!window) return;
     }
     if (!hasPendingImports()) clearStartupImportSelection();
 }
 
 bool QC_ApplicationWindow::startStagedImport(const QString& fileName, RS2::FormatType type,
-                                              RS2::DxfTextEncoding encoding, bool asTemplate) {
+                                              RS2::DxfTextEncoding encoding, bool asTemplate, quint64 selectionRequest) {
     if (!asTemplate && m_openedFiles.contains(fileName))
         showStatusMessage(tr("Warning: File already opened : ") + fileName, 2000);
     auto* session = new LC_OffsetImportSession(this);
@@ -1876,7 +1888,7 @@ bool QC_ApplicationWindow::startStagedImport(const QString& fileName, RS2::Forma
             QObject::connect(pending, &QObject::destroyed, box, &QDialog::reject);
             box->open();
         },
-        [window, pending, fileName, encoding, asTemplate](LC_OffsetImportSession::Outcome outcome) {
+        [window, pending, fileName, encoding, asTemplate, selectionRequest](LC_OffsetImportSession::Outcome outcome) {
             if (!window || !pending) return;
             window->m_pendingImports.removeAll(pending);
             pending->deleteLater();
@@ -1916,6 +1928,10 @@ bool QC_ApplicationWindow::startStagedImport(const QString& fileName, RS2::Forma
                 if (asTemplate) window->completeNewDrawing(mdi, fileName);
                 else window->completeOpenedDrawing(mdi, fileName, encoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8);
                 if (window && !window->m_restoreActiveFile.isEmpty()) {
+                    if (mdi && selectionRequest && selectionRequest == window->m_startupSelectionSerial) {
+                        window->m_startupSelectedWindow = mdi;
+                        window->m_startupSelectionChanged = true;
+                    }
                     if (window->m_startupSelectionChanged) {
                         auto* selected = qobject_cast<QC_MDIWindow*>(window->m_startupSelectedWindow.data());
                         if (selected && window->m_windowList.contains(selected)) window->doActivate(selected);

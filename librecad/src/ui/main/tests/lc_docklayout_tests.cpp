@@ -105,6 +105,9 @@ struct LC_DockLayoutTestAccess {
     static LC_OffsetImportSession* pendingImport(QC_ApplicationWindow& window) {
         return window.m_pendingImports.isEmpty() ? nullptr : window.m_pendingImports.first().data();
     }
+    static LC_OffsetImportSession* lastPendingImport(QC_ApplicationWindow& window) {
+        return window.m_pendingImports.isEmpty() ? nullptr : window.m_pendingImports.last().data();
+    }
     static Workspace capture() {
         Workspace workspace;
         LC_WorkspacesManager().fillByState(workspace);
@@ -535,14 +538,13 @@ TEST_CASE("Startup imports preserve a later drawing selection", "[.gui][dock-win
     });
     while (!started) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
     REQUIRE(pid > 0); REQUIRE(suspended == 0);
+    window.openFile(active);
     window.restoreActiveFileAfterPendingImports(active);
     REQUIRE(window.getCurrentMDIWindow()); REQUIRE(window.getCurrentMDIWindow()->getFileName() == active);
     const auto verifySelection = [&] {
         REQUIRE(window.getCurrentMDIWindow() == chosen);
         SECTION("selection survives multiple publications") {
-            const int before = LC_DockLayoutTestAccess::drawingCount(window);
-            window.openFile(active);
-            while (LC_DockLayoutTestAccess::drawingCount(window) == before) {
+            while (LC_DockLayoutTestAccess::pendingImports(window) > 1) {
                 REQUIRE(elapsed.elapsed() < 35000); settle(10);
             }
             CHECK(window.getCurrentMDIWindow() == chosen);
@@ -567,7 +569,117 @@ TEST_CASE("Startup imports preserve a later drawing selection", "[.gui][dock-win
         verifySelection();
     }
 }
+
+TEST_CASE("New imports take precedence over older startup imports", "[.gui][dock-window][offset-import][startup]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString root = QString(LIBRECAD_SOURCE_DIR) + "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    const QString line = root + "dxf-binary-R2018-line-control.dxf";
+    const QString active = directory.filePath("active.dxf"), requested = directory.filePath("requested.dxf");
+    const QString pending = root + "dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFile::copy(line, active)); REQUIRE(QFile::copy(line, requested));
+    window.openFile(active);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    window.openFile(pending);
+    auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+    bool started = false; pid_t pid = 0; int suspended = -1;
+    LC_GuiImportTestAccess::onStarted(*session, [&](QProcess& process) {
+        pid = static_cast<pid_t>(process.processId()); suspended = ::kill(pid, SIGSTOP); started = true;
+    });
+    while (!started) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(pid > 0); REQUIRE(suspended == 0);
+    window.restoreActiveFileAfterPendingImports(active);
+    const int before = LC_DockLayoutTestAccess::drawingCount(window);
+    bool asTemplate = false;
+    SECTION("drawing") { window.openFile(requested); }
+    SECTION("template") { asTemplate = true; REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, requested)); }
+    while (LC_DockLayoutTestAccess::drawingCount(window) == before) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    auto* chosen = window.getCurrentMDIWindow(); REQUIRE(chosen);
+    CHECK(chosen->getFileName() == (asTemplate ? QString{} : requested));
+    REQUIRE(::kill(pid, SIGCONT) == 0);
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    CHECK(window.getCurrentMDIWindow() == chosen);
+    LC_DockLayoutTestAccess::closeDrawings(window);
+}
+
+TEST_CASE("Later startup import choices win over slow earlier requests", "[.gui][dock-window][offset-import][startup]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString root = QString(LIBRECAD_SOURCE_DIR) + "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    const QString line = root + "dxf-binary-R2018-line-control.dxf";
+    const QString active = directory.filePath("active.dxf"), selected = directory.filePath("selected.dxf");
+    const QString pending = root + "dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFile::copy(line, active)); REQUIRE(QFile::copy(line, selected));
+    window.openFile(active); window.openFile(selected);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    QC_MDIWindow* selectedWindow = nullptr;
+    for (auto* mdi : window.findChildren<QC_MDIWindow*>()) if (mdi->getFileName() == selected) selectedWindow = mdi;
+    REQUIRE(selectedWindow);
+    window.openFile(line);
+    window.restoreActiveFileAfterPendingImports(active);
+    window.openFile(pending);
+    auto* slow = LC_DockLayoutTestAccess::lastPendingImport(window); REQUIRE(slow);
+    bool secondStarted = false; pid_t secondPid = 0; int secondStopped = -1;
+    LC_GuiImportTestAccess::onStarted(*slow, [&](QProcess& process) {
+        secondPid = static_cast<pid_t>(process.processId()); secondStopped = ::kill(secondPid, SIGSTOP); secondStarted = true;
+    });
+    while (!secondStarted) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(secondPid > 0); REQUIRE(secondStopped == 0);
+    QC_MDIWindow* chosen = nullptr;
+    SECTION("later open finishes first") {
+        const int before = LC_DockLayoutTestAccess::drawingCount(window);
+        window.openFile(selected);
+        while (LC_DockLayoutTestAccess::drawingCount(window) == before) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+        chosen = window.getCurrentMDIWindow(); REQUIRE(chosen); CHECK(chosen->getFileName() == selected);
+        CHECK(chosen != selectedWindow);
+    }
+    SECTION("later window switch") {
+        window.activateWindow(selectedWindow);
+        chosen = selectedWindow; REQUIRE(window.getCurrentMDIWindow() == chosen);
+    }
+    REQUIRE(::kill(secondPid, SIGCONT) == 0);
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    CHECK(window.getCurrentMDIWindow() == chosen);
+    bool native = false;
+    for (auto* mdi : window.findChildren<QC_MDIWindow*>()) {
+        if (mdi->getFileName() != pending || !mdi->getGraphic()) continue;
+        for (auto* entity : *mdi->getGraphic()) native |= dynamic_cast<LC_OffsetCurve*>(entity) != nullptr;
+    }
+    CHECK(native);
+    LC_DockLayoutTestAccess::closeDrawings(window);
+}
+
 #endif
+
+TEST_CASE("Queued new import wins over remaining startup imports", "[.gui][dock-window][offset-import][startup][queue]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString root = QString(LIBRECAD_SOURCE_DIR) + "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    const QString line = root + "dxf-binary-R2018-line-control.dxf";
+    const QString active = directory.filePath("active.dxf"), requested = directory.filePath("requested.dxf");
+    const QString selected = directory.filePath("selected.dxf");
+    REQUIRE(QFile::copy(line, active)); REQUIRE(QFile::copy(line, requested)); REQUIRE(QFile::copy(line, selected));
+    window.openFile(active); window.openFile(selected);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    QC_MDIWindow* existing = nullptr;
+    for (auto* mdi : window.findChildren<QC_MDIWindow*>()) if (mdi->getFileName() == selected) existing = mdi;
+    REQUIRE(existing);
+    for (int i = 0; i < LC_DockLayoutTestAccess::maxActiveImports(); ++i) {
+        window.openFile(line);
+    }
+    REQUIRE(LC_DockLayoutTestAccess::activeImports(window) == LC_DockLayoutTestAccess::maxActiveImports());
+    window.restoreActiveFileAfterPendingImports(active);
+    window.openFile(requested);
+    REQUIRE(LC_DockLayoutTestAccess::queuedImports(window) == 1);
+    bool switched = false;
+    SECTION("queued request wins") {}
+    SECTION("later switch wins") { switched = true; window.activateWindow(existing); }
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    auto* chosen = window.getCurrentMDIWindow(); REQUIRE(chosen);
+    if (switched) CHECK(chosen == existing);
+    else CHECK(chosen->getFileName() == requested);
+    LC_DockLayoutTestAccess::closeDrawings(window);
+}
 
 TEST_CASE("Staged GUI imports are bounded and queued work completes", "[.gui][dock-window][offset-import][queue]") {
     DockFixture fixture; auto& window = fixture.window;
