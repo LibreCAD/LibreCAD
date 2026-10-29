@@ -18,6 +18,36 @@
 #include <stdexcept>
 #include <utility>
 #include <vector>
+#ifdef Q_OS_UNIX
+#include <sys/stat.h>
+#endif
+
+bool LC_OffsetImportSourceStamp::NativeState::operator==(const NativeState& other) const noexcept {
+    return valid && other.valid && device == other.device && inode == other.inode && size == other.size &&
+        modifiedSeconds == other.modifiedSeconds && modifiedNanos == other.modifiedNanos &&
+        changedSeconds == other.changedSeconds && changedNanos == other.changedNanos;
+}
+
+#ifdef Q_OS_UNIX
+namespace {
+LC_OffsetImportSourceStamp::NativeState nativeState(const struct stat& info) noexcept {
+    LC_OffsetImportSourceStamp::NativeState state;
+    if (!S_ISREG(info.st_mode) || info.st_size < 0) return state;
+    state.valid = true; state.device = quint64(info.st_dev); state.inode = quint64(info.st_ino);
+    state.size = qint64(info.st_size);
+#if defined(Q_OS_DARWIN)
+    state.modifiedSeconds = info.st_mtimespec.tv_sec; state.modifiedNanos = info.st_mtimespec.tv_nsec;
+    state.changedSeconds = info.st_ctimespec.tv_sec; state.changedNanos = info.st_ctimespec.tv_nsec;
+#elif defined(Q_OS_LINUX)
+    state.modifiedSeconds = info.st_mtim.tv_sec; state.modifiedNanos = info.st_mtim.tv_nsec;
+    state.changedSeconds = info.st_ctim.tv_sec; state.changedNanos = info.st_ctim.tv_nsec;
+#else
+    state.modifiedSeconds = info.st_mtime; state.changedSeconds = info.st_ctime;
+#endif
+    return state;
+}
+}
+#endif
 
 LC_OffsetImportSourceStamp LC_OffsetImportSourceStamp::capture(const QString& file) {
     QFileInfo info(file);
@@ -28,6 +58,11 @@ LC_OffsetImportSourceStamp LC_OffsetImportSourceStamp::capture(const QString& fi
     stamp.modified = info.lastModified();
     stamp.metadataChanged = info.metadataChangeTime();
     stamp.birth = info.birthTime();
+#ifdef Q_OS_UNIX
+    struct stat native{};
+    const auto encoded = QFile::encodeName(file);
+    if (::stat(encoded.constData(), &native) == 0) stamp.native = nativeState(native);
+#endif
     stamp.valid = !stamp.canonicalPath.isEmpty() && stamp.size >= 0 && stamp.modified.isValid();
     return stamp;
 }
@@ -36,7 +71,17 @@ bool LC_OffsetImportSourceStamp::matches(const QString& file) const {
     const auto current = capture(file);
     return valid && current.valid && canonicalPath == current.canonicalPath && size == current.size &&
         modified == current.modified && (!metadataChanged.isValid() || metadataChanged == current.metadataChanged) &&
-        (!birth.isValid() || birth == current.birth);
+        (!birth.isValid() || birth == current.birth) && (!native.valid || native == current.native);
+}
+
+bool LC_OffsetImportSourceStamp::matchesDescriptor(int descriptor) const noexcept {
+#ifdef Q_OS_UNIX
+    struct stat info{};
+    return descriptor >= 0 && ::fstat(descriptor, &info) == 0 && native == nativeState(info);
+#else
+    Q_UNUSED(descriptor);
+    return false;
+#endif
 }
 
 void LC_OffsetImportBudget::report(LC_OffsetImportDiagnostic::Kind kind, int reason, std::size_t item, int detail) {
@@ -82,6 +127,7 @@ struct LC_OffsetImportSession::Work {
     LC_OffsetImportSourceStamp sourceStamp;
     QFile source;
     QByteArray snapshot;
+    qint64 expectedSize = -1;
     std::vector<ImportCandidate> candidates;
 };
 
@@ -232,12 +278,34 @@ void LC_OffsetImportSession::parse(const std::shared_ptr<Work>& work) {
         if (!supportedImportType(type)) { work->error = tr("Unsupported offset import format"); finish(work, Status::ReadFailed); return; }
         work->type = type;
         work->sourceStamp = LC_OffsetImportSourceStamp::capture(work->file);
+#ifdef Q_OS_UNIX
+        if (!work->file.startsWith(QLatin1String(":/")) &&
+            (!work->sourceStamp.valid || !work->sourceStamp.native.valid)) {
+            work->error = tr("The source file identity could not be verified.");
+            finish(work, Status::ReadFailed); return;
+        }
+#endif
+        if (m_testBeforeSourceOpen) {
+            auto hook = std::move(m_testBeforeSourceOpen); m_testBeforeSourceOpen = {}; hook();
+            if (!alive || m_work != work) return;
+        }
         work->source.setFileName(work->file);
         if (!work->source.open(QIODevice::ReadOnly) || work->source.isSequential()) {
             work->error = tr("The source file could not be opened for a bounded import.");
             finish(work, Status::ReadFailed); return;
         }
-        if (work->source.size() > ImportSnapshotLimit) {
+#ifdef Q_OS_UNIX
+        if (work->sourceStamp.native.valid && !work->sourceStamp.matchesDescriptor(work->source.handle())) {
+            work->error = tr("The source file changed while it was being opened; the drawing was not opened.");
+            finish(work, Status::SourceChanged); return;
+        }
+#endif
+        work->expectedSize = work->source.size();
+        if (work->expectedSize < 0) {
+            work->error = tr("The source file size could not be verified.");
+            finish(work, Status::ReadFailed); return;
+        }
+        if (work->expectedSize > ImportSnapshotLimit) {
             work->error = tr("The source file exceeds the 256 MiB staged import size limit.");
             finish(work, Status::ResourceLimit); return;
         }
@@ -267,8 +335,12 @@ void LC_OffsetImportSession::captureSource(const std::shared_ptr<Work>& work) {
             QTimer::singleShot(0, this, [alive, work] { if (alive) alive->captureSource(work); });
             return;
         }
-        work->source.close();
-        if (work->sourceStamp.valid && !work->sourceStamp.matches(work->file)) {
+        if (work->snapshot.size() != work->expectedSize ||
+            (work->sourceStamp.valid && !work->sourceStamp.matches(work->file))
+#ifdef Q_OS_UNIX
+            || (work->sourceStamp.native.valid && !work->sourceStamp.matchesDescriptor(work->source.handle()))
+#endif
+        ) {
             work->error = tr("The source file changed while it was being read; the drawing was not opened.");
             finish(work, Status::SourceChanged); return;
         }
@@ -292,10 +364,15 @@ void LC_OffsetImportSession::parseSnapshot(const std::shared_ptr<Work>& work) {
             auto hook = std::move(m_testAfterRead); m_testAfterRead = {}; hook();
             if (!alive || m_work != work) return;
         }
-        if (work->sourceStamp.valid && !work->sourceStamp.matches(work->file)) {
+        if ((work->sourceStamp.valid && !work->sourceStamp.matches(work->file))
+#ifdef Q_OS_UNIX
+            || (work->sourceStamp.native.valid && !work->sourceStamp.matchesDescriptor(work->source.handle()))
+#endif
+        ) {
             work->error = tr("The source file changed while it was being read; the drawing was not opened.");
             finish(work, Status::SourceChanged); return;
         }
+        work->source.close();
         if (!read) { work->error = filter.lastError(); work->partial = true; }
         if (!read) {
             if (!work->partialRequest) { finish(work, Status::ReadFailed); return; }

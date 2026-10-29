@@ -26,12 +26,20 @@ struct LC_OffsetImportDiagnostic {
 };
 
 struct LC_OffsetImportSourceStamp {
+    struct NativeState {
+        bool valid = false;
+        quint64 device = 0, inode = 0;
+        qint64 size = 0, modifiedSeconds = 0, modifiedNanos = 0, changedSeconds = 0, changedNanos = 0;
+        bool operator==(const NativeState& other) const noexcept;
+    };
     bool valid = false;
     QString canonicalPath;
     qint64 size = -1;
     QDateTime modified, metadataChanged, birth;
+    NativeState native;
     static LC_OffsetImportSourceStamp capture(const QString& file);
     bool matches(const QString& file) const;
+    bool matchesDescriptor(int descriptor) const noexcept;
 };
 
 struct LC_OffsetImportBudget {
@@ -118,5 +126,6 @@ private:
     // Private deterministic read-boundary seam; never set by product inputs.
     std::function<void()> m_testAfterRead;
     std::function<void()> m_testAfterSnapshotChunk;
+    std::function<void()> m_testBeforeSourceOpen;
 };
 #endif

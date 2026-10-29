@@ -991,6 +991,18 @@ TEST_CASE("GUI templates publish validated untitled native drawings", "[.gui][do
     CHECK(native); REQUIRE(source.open(QIODevice::ReadOnly)); CHECK(source.readAll() == original);
 }
 
+TEST_CASE("Staged imports retain Qt resource support", "[.gui][dock-window][offset-import][resource]") {
+    DockFixture fixture;
+    const QString path = QStringLiteral(":/dxf/dim_sample.dxf"); REQUIRE(QFile::exists(path));
+    LC_OffsetImportSession session; std::optional<LC_OffsetImportSession::Outcome> outcome;
+    REQUIRE(session.start(path, RS2::FormatDXFRW, RS2::DxfTextEncoding::Declared, false,
+        [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!outcome) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(outcome->status == LC_OffsetImportSession::Status::Complete); REQUIRE(outcome->graphic);
+    CHECK_FALSE(outcome->graphic->isEmpty());
+}
+
 TEST_CASE("Blank new drawings remain immediate", "[.gui][dock-window][offset-template]") {
     DockFixture fixture; auto& window = fixture.window;
     const int initial = LC_DockLayoutTestAccess::drawingCount(window);

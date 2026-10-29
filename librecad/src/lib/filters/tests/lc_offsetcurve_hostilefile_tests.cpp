@@ -18,6 +18,7 @@
 #ifdef Q_OS_UNIX
 #include <cerrno>
 #include <csignal>
+#include <sys/stat.h>
 #include <unistd.h>
 #endif
 #include "rs_layer.h"
@@ -55,6 +56,12 @@ public:
     static QTimer& deadline(LC_OffsetImportSession& session) { return session.m_deadline; }
     static void afterSnapshotChunk(LC_OffsetImportSession& session, std::function<void()> hook) {
         session.m_testAfterSnapshotChunk = std::move(hook);
+    }
+    static void beforeSourceOpen(LC_OffsetImportSession& session, std::function<void()> hook) {
+        session.m_testBeforeSourceOpen = std::move(hook);
+    }
+    static void afterRead(LC_OffsetImportSession& session, std::function<void()> hook) {
+        session.m_testAfterRead = std::move(hook);
     }
 };
 
@@ -873,6 +880,74 @@ TEST_CASE("Staged offset source capture yields cancels and detects changes",
 }
 
 #ifdef Q_OS_UNIX
+TEST_CASE("Staged source identity binds path and open descriptor",
+          "[lc-offsetcurve][import-session][snapshot][identity]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-identity");
+    const auto path = directory.file("input.dxf"); writeInput(path, Lane::Ascii, f::raw(3));
+    const auto symlink = directory.file("symlink.dxf"), hardlink = directory.file("hardlink.dxf");
+    std::filesystem::create_symlink(path, symlink);
+    std::filesystem::create_hard_link(path, hardlink);
+    for (const auto& linked : {path, symlink, hardlink}) {
+        CAPTURE(linked.string());
+        const auto stamp = LC_OffsetImportSourceStamp::capture(QString::fromStdString(linked.string()));
+        REQUIRE(stamp.valid); REQUIRE(stamp.native.valid);
+        QFile opened(QString::fromStdString(linked.string())); REQUIRE(opened.open(QIODevice::ReadOnly));
+        CHECK(stamp.matchesDescriptor(opened.handle())); CHECK(stamp.matches(QString::fromStdString(linked.string())));
+    }
+    const auto stamp = LC_OffsetImportSourceStamp::capture(QString::fromStdString(path.string()));
+    QFile opened(QString::fromStdString(path.string())); REQUIRE(opened.open(QIODevice::ReadOnly));
+    REQUIRE(stamp.matchesDescriptor(opened.handle()));
+    QFile modified(QString::fromStdString(path.string())); REQUIRE(modified.open(QIODevice::Append));
+    REQUIRE(modified.write("x", 1) == 1); modified.close();
+    CHECK_FALSE(stamp.matchesDescriptor(opened.handle())); CHECK_FALSE(stamp.matches(QString::fromStdString(path.string())));
+}
+
+TEST_CASE("Staged source swap before open refuses before parsing",
+          "[lc-offsetcurve][import-session][snapshot][identity]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-open-swap");
+    const auto path = directory.file("input.dxf"), previous = directory.file("previous.dxf");
+    writeInput(path, Lane::Ascii, f::raw(3));
+    const auto original = lc::test::fileBytes(path);
+    LC_OffsetImportSession session; std::optional<LC_OffsetImportSession::Outcome> outcome;
+    bool parsed = false;
+    LC_OffsetImportSessionTestAccess::beforeSourceOpen(session, [&] {
+        std::filesystem::rename(path, previous); f::put(path, original);
+    });
+    LC_OffsetImportSessionTestAccess::afterRead(session, [&] { parsed = true; });
+    REQUIRE(session.start(QString::fromStdString(path.string()), format(Lane::Ascii),
+        RS2::DxfTextEncoding::Declared, false, [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!outcome) { REQUIRE(elapsed.elapsed() < 5000); QCoreApplication::processEvents(QEventLoop::AllEvents); }
+    CHECK(outcome->status == LC_OffsetImportSession::Status::SourceChanged);
+    CHECK_FALSE(outcome->graphic); CHECK_FALSE(parsed);
+}
+
+#if defined(Q_OS_DARWIN) || defined(Q_OS_LINUX)
+TEST_CASE("Staged source descriptor detects a same-size rewrite with restored mtime",
+          "[lc-offsetcurve][import-session][snapshot][identity]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-staged-rewrite");
+    const auto path = directory.file("input.dxf"); writeInput(path, Lane::Ascii, f::raw(3));
+    const auto stamp = LC_OffsetImportSourceStamp::capture(QString::fromStdString(path.string()));
+    REQUIRE(stamp.native.valid);
+    QFile file(QString::fromStdString(path.string())); REQUIRE(file.open(QIODevice::ReadWrite));
+    REQUIRE(stamp.matchesDescriptor(file.handle()));
+    struct stat before{}; REQUIRE(::fstat(file.handle(), &before) == 0);
+    REQUIRE(file.write("X", 1) == 1); REQUIRE(file.flush());
+#if defined(Q_OS_DARWIN)
+    const timespec times[] = {before.st_atimespec, before.st_mtimespec};
+#else
+    const timespec times[] = {before.st_atim, before.st_mtim};
+#endif
+    REQUIRE(::futimens(file.handle(), times) == 0);
+    struct stat after{}; REQUIRE(::fstat(file.handle(), &after) == 0);
+    CHECK(after.st_size == before.st_size);
+    const auto current = LC_OffsetImportSourceStamp::capture(QString::fromStdString(path.string()));
+    CHECK(current.native.modifiedSeconds == stamp.native.modifiedSeconds);
+    CHECK(current.native.modifiedNanos == stamp.native.modifiedNanos);
+    CHECK_FALSE(stamp.matchesDescriptor(file.handle())); CHECK_FALSE(stamp.matches(QString::fromStdString(path.string())));
+}
+#endif
+
 TEST_CASE("Staged offset source capture refuses oversized input",
           "[lc-offsetcurve][import-session][snapshot][limit]") {
     Setup setup; lc::test::OutputDirectory directory("offset-staged-snapshot-limit");
