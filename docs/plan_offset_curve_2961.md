@@ -24,18 +24,21 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W169, superseding W168 below): implementation slices A-core
+Current status (W170, superseding W169 below): implementation slices A-core
 through T3 and the local A-core through C-check audit are closed. Direct
 synchronous `fileImport`, stream, and byte filter imports validate offset
 carriers through the worker. W158-W160 requalify qmake6 and staged installed
 helper paths, preview-cache portability, and creation/repeat routing in Release
 and ASan. W161-W165 record AC1021 reader triage and AC1032 independent-reader
 checks; direct AC1021 ACadSharp acceptance remains unqualified because its
-reader throws before entity decoding. W168 fixes Windows worker/wire/import
-failures; W169 freshly builds the complete app with qmake6 and CMake, exercises
+reader throws before entity decoding. W168 fixes Windows production worker pipe
+handling; W169 freshly builds the complete app with qmake6 and CMake, exercises
 the bundled helper, and passes the full local Node validation suite (412/412).
-Current-head platform/format CI is still running. W0-W2 and E/U/G/F/O/T/R remain
-open for Windows/Linux runtime, package/deployment, full visible UI, external-CAD
+W170 fixes three Windows ARM64 qualification failures: explicit CBOR test
+nesting, native pipe handles in the fault fixture, and CRLF-tolerant
+geometry-witness matching. Focused local CMake tests pass 3/3; an exact-head
+cross-platform rerun is required. W0-W2 and E/U/G/F/O/T/R remain open for
+Windows/Linux runtime, package/deployment, full visible UI, external-CAD
 acceptance, and final integration.
 W164 independently parsed the actual W163 AC1032 DXF output with ACadSharp,
 preserving both owned markers and valid spline knot layouts. On the retained
@@ -55,9 +58,9 @@ commit, properties, Undo/Redo, and AC1032 DXF save/reopen. This is partial
 evidence only; the full visible interaction matrix and its screenshot/display/
 DPR receipts remain open.
 W168 remediates the current Windows worker/wire/import CI failures: bounded raw
-CBOR scanning replaces platform-divergent stream traversal, and the helper uses
-binary native handles for redirected pipes. The local macOS CMake selection
-passes 9/9; the pushed Windows x64/ARM64 rerun is still required.
+CBOR scanning replaces platform-divergent stream traversal, and the production
+helper uses binary native handles for redirected pipes. W170 records the
+subsequent Windows ARM64 qualification failures and their test-fixture fixes.
 Status: **The planned product implementation is present; remaining work is
 acceptance, not an identified feature-code gap.** Worker, geometry,
 creation/repeat, trim, GUI open/template, and DXF/DWG paths have scoped local
@@ -65,7 +68,8 @@ qualifications recorded in W1-W169. W156 closes local routing for the public
 synchronous file/stream/byte filter APIs. Exact-head platform/format CI,
 deployed-package checks, full visible UI, external-CAD interoperability, and
 final W0-W2/R integration remain open.
-Latest recorded slice: W169 records fresh qmake6/CMake app builds, bundled helper
+Latest recorded slice: W170 records Windows ARM64 qualification-fixture fixes
+and the pending exact-head rerun; W169 records fresh qmake6/CMake app builds, bundled helper
 exchange, and full local validation; W168 records Windows worker/wire CI
 remediation; W165 records ODA conversion and independent readers; W164
 records independent ACadSharp/LibreDWG reads; W163
@@ -6668,3 +6672,37 @@ direct AC1021 parsing by pinned ACadSharp (its known pre-entity header exception
 external CAD acceptance not already covered by semantic readers, and final R/W0-W2
 acceptance. W169 closes only fresh local qmake6 app/helper build and a bundled
 helper wire exchange; it adds no product-source change.
+
+## 128. W170 Windows ARM64 Qualification Fixture Remediation
+
+Exact-head workflow `40960582569` exposed three failures in its Windows ARM64
+bounded test lanes (`123751984392`): wire depth/item expectations, the worker
+fault-helper lifecycle suite, and the geometry-entry timeout witness. The
+production worker was not implicated by those diagnostics. The wire test had
+relied on nested `QCborArray` initializers whose nesting was not made explicit;
+it now builds nested arrays with `append`, asserts canonical bytes `81818101`,
+and explicitly appends the deeper wrapper used by the depth-boundary case.
+This makes the structural-limit test independent of initializer-list overload
+resolution.
+
+The isolated fault helper still used `QFile::open(stdin/stdout/stderr)`, the
+same redirected-pipe path already replaced in the shipped helper by W168. It
+now reads and writes native Windows standard handles (`ReadFile`/`WriteFile`)
+and POSIX descriptors, preserving complete writes and retrying interrupted
+POSIX syscalls. The geometry timeout test's diagnostic regex now accepts both
+LF and CRLF. No product behavior changed in this slice.
+
+| W170 validation | Result |
+|---|---|
+| Local CMake Debug build: wire, fault fixture/test, geometry timeout fixture/test | PASS |
+| Focused CTest: `offset_worker_wire`, `offset_worker_fault`, `offset_worker_geometry_timeout` | PASS; 3/3, 19.89s |
+| `git diff --check` | PASS |
+| Code commit | `4e107daba` (`fix offset worker Windows test fixtures`) |
+| Exact-head Windows x64/ARM64 and Linux rerun | Pending after push; required before closing W168/W170 cross-platform gate |
+| Visible LibreCAD app control | Still unavailable: app-specific CUA approval remains denied despite the user's approval action; no alternate UI path used |
+
+W170 closes only the local test-fixture remediation. Recheck the exact pushed
+head's format/helper workflow, especially ARM64, before considering it fixed.
+The full visible workflow, signed/deployed package acceptance, current-source
+external-CAD checks (including AC1021's reader limitation), and final W0-W2/R
+acceptance remain open.
