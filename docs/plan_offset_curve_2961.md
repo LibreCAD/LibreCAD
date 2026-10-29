@@ -3112,10 +3112,10 @@ runtime run for W44 before claiming platform parity. W46 already bounds and
 snapshots nested XREF bytes for staged imports; W47 adds source identity
 preflight but not atomic publication. W49a-W49c add a transaction guard, per-call
 DXF/DWG APIs, and source-identity checks at filter publication boundaries.
-These narrow but cannot eliminate the check-to-rename window. Still add a
-deterministic backup-restore test for a failed staged rename, then obtain
-Windows compile/runtime evidence. Audit direct synchronous and console XREF
-callers without silently weakening their behavior. Investigate the recorded ASan template failure under
+These narrow but cannot eliminate the check-to-rename window. A deterministic
+backup-restore failure test now passes on macOS; obtain Windows compile/runtime
+evidence for native rename/share behavior. Audit direct synchronous and console
+XREF callers without silently weakening their behavior. Investigate the recorded ASan template failure under
 load, and exercise a genuine partial DWG through the GUI dialog. W35 fixes the
 observed W33 teardown assertion; retain its
 forced-destruction regression while auditing other close/dialog reentrancy.
@@ -3324,7 +3324,13 @@ check rejects before backup, preserves the external bytes, and leaves no stage
 or backup artifact. It passes 1 case / 7 assertions in the Release
 `librecad_tests [outer-publish]` run.
 
+W49e `1ba774225` adds a second one-shot test hook after the existing target is
+moved to backup and before the stage rename. Removing the private stage at that
+point forces the actual rename failure path; the test confirms the old
+destination is restored byte-for-byte and the backup/stage names are cleaned
+up. Combined W49d/W49e Release tests pass 2 cases / 14 assertions.
+
 The identity guard cannot atomically bind the final pathname check to
-replacement. A deterministic failure after the existing target has moved to
-backup, backup restoration verification, and Windows runtime remain open. No
-ASan, Windows, or visible GUI run is claimed.
+replacement. Backup restoration is fault-injected and verified on macOS, but
+Windows compile/runtime and native rename/share behavior remain open. No ASan,
+Windows, or visible GUI run is claimed.
