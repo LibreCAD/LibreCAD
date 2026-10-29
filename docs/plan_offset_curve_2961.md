@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, and an additive staged plugin block-import API are qualified in focused Release/ASan lanes; other import callers, cross-platform and final acceptance remain open**.
+Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, and an additive staged plugin block-import API are qualified in focused Release/ASan lanes; W79 adds a complete staged macOS CMake install with adjacent-helper and creation/repeat checks; other import callers, Windows and final acceptance remain open**.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -3101,24 +3101,29 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] W0-W2: typed/cached Produce, creation/repeat and local native Trim GUI routing and scoped action faults are qualified;
   a fresh macOS qmake6 full-app/bundle build, adjacent-helper worker smoke and paired
   cache/creation Release-ASan checks are qualified in W55-W57; asynchronous Trim test
-  synchronization is corrected and requalified in W58-W61. Finish other import ownership,
-  Windows/native cross-platform failure coverage and remaining caller/final adoption/failure
-  acceptance. Reuse the qualified geometry-entry timeout/helper/client/reply modules; do
-  not redo them as absent. Keep Node runner scope separate.
+  synchronization is corrected and requalified in W58-W61. W79 adds successful full CMake
+  installation plus installed-directory worker-client and creation/repeat routing tests.
+  Finish other import ownership, Windows/native cross-platform failure coverage and remaining
+  caller/final adoption/failure acceptance. Reuse the qualified geometry-entry
+  timeout/helper/client/reply modules; do not redo them as absent. Keep Node runner scope
+  separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
   DXF/DWG, source and trim implementation with any new worker/publication changes.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
-  including Windows and actual installed-package acceptance not covered by W55; resolve
+  including Windows, visible GUI acceptance and remaining platform/package acceptance; W79
+  now covers a complete staged macOS CMake install; resolve
   or baseline-classify the two order-sensitive command-alias cases in W59. The command
   source/tests are unchanged from `origin/master`, and W62 isolated random-order seeds
   1-3 pass; this does not yet baseline the broad-process interaction. Review scoped
   commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** obtain a Windows compile and
-runtime run for W44 before claiming platform parity. W55 now records a fresh
-full macOS qmake6 app/bundle build plus a worker-protocol smoke using the helper
-beside the bundled executable; this does not establish Windows behavior, an
-installed release package, or visible GUI acceptance. W46 already bounds and
+**Next concrete action on implementation resume:** follow Windows x64 and ARM64
+jobs in Actions run `40842072529`, then address any build/runtime failures before
+claiming platform parity. W55 now records a fresh full macOS qmake6 app/bundle
+build plus a worker-protocol smoke using the helper beside the bundled executable;
+W79 separately records a complete staged macOS CMake install and offscreen
+installed-directory tests. Neither establishes Windows behavior or visible GUI
+acceptance. W46 already bounds and
 snapshots nested XREF bytes for staged imports; W47 adds source identity
 preflight but not atomic publication. W49a-W49c add a transaction guard, per-call
 DXF/DWG APIs, and source-identity checks at filter publication boundaries.
@@ -4122,11 +4127,43 @@ the crash stack is in AppKit/QCocoa platform initialization before LibreCAD's
 window setup. The CUA attach did not produce a usable accessibility window, so
 this is recorded as an environment-limited launch attempt, not a GUI pass or a
 product defect. Prior W55 bundle/helper and W77 offscreen test evidence remains
-separate. Windows x64/ARM64 and Linux fast-lane run `40842072529` is still
-running against this product commit; do not claim Windows qualification until
-all its relevant jobs complete.
+separate. Actions run `40842072529` validates this exact product commit: Linux
+`VerifyDwgDxfFast` passed; Windows x64 and ARM64 remain in progress. Do not claim
+Windows qualification until both relevant jobs complete.
 
 | W78b artifact | SHA256 |
 |---|---|
 | `LibreCAD` bundle executable | `70fd5cde119b1439c5699bf2036c2330694aa0b6a202045361a1fe4b39a4cec9` |
 | `LibreCADOffsetWorker` bundle executable | `ede752059cd64b09c78eac6afc591812f8c575921b320b184e48c101af5ecaa0` |
+
+## 42. W79 Staged CMake Install: Preview Portability and Creation/Repeat Routing
+
+At product source commit `8e4213399cbe889b3ebc43f27c319d4671d4b177` (the
+current checkout adds only roadmap records after that source), enabled
+`LIBRECAD_REGISTER_OFFSET_WORKER_TESTS=ON` in the current-source macOS CMake
+Release tree `/private/tmp/offset-W77-release`. Built the app, production
+`LibreCADOffsetWorker`, worker-client tests, creation-action tests, `ttf2lff`,
+icon engine and configured default targets, then completed the full CMake install
+to `/private/tmp/offset-W79-stage`. The installed bundle contains app and helper
+at adjacent paths under `bin/LibreCAD.app/Contents/MacOS/`; CMake install exited
+0.
+
+Ran both test executables from that staged executable directory with
+`QT_QPA_PLATFORM=offscreen`. The worker-client selector exercises real helper
+requests, including portable cached-preview production across a fresh helper
+process. The creation-action selector exercises Modify Offset creation/repeat
+GUI continuations and publication routing using the same installed-adjacent
+helper. Both XML reports are well formed and report zero errors, failures and
+skips. The action selector has 13 JUnit testcase elements / 318 assertions. The
+worker-client selector has 17 testcase elements and a JUnit suite `tests` count
+of 8271.
+
+| W79 lane | Result | SHA256 |
+|---|---|---|
+| Installed worker-client, `/private/tmp/offset-W79-installed-worker.xml` | PASS; errors=0, failures=0, skipped=0 | `d82132c711584e77802e6aecefa713901751ac9ae510d3332404aca23344d230` |
+| Installed creation/repeat, `/private/tmp/offset-W79-creation-worker.xml` | PASS; 13 cases / 318 assertions | `f492d3ffda97dc9c0e7e3875f7654f58e8b01699c79a663e843df560c8f2580d` |
+
+This is staged-package offscreen coverage, not visible desktop interaction or
+cross-platform acceptance. Actions run `40842072529` has passed Linux
+`VerifyDwgDxfFast`; Windows x64 and ARM64 remain in progress. Do not close W0-W2
+or final platform gates from this macOS result alone.
