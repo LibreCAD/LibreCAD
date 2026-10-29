@@ -4868,3 +4868,26 @@ successful ledgers are 140 and 155 vertices respectively. ASan used
 This adds line/cubic, multispan and orientation coverage to the failure census.
 It still does not fault-sweep every analytic regime, contact/seam/cusp topology,
 or every A/B/C public operation; keep the broader site audit open.
+
+## 68. W106 Current-Head Preview Portability and Creation/Repeat Requalification
+
+Rebuilt the full test executable in the local Release and ASan configurations
+and reran `[preview-portable],[creation-worker]` offscreen at the current source
+head. Both runs passed 17 cases / 385 assertions with zero errors, failures or
+skips. The coverage exercises bounded owned ordinary cache snapshots through
+CBOR and fresh helper processes, cache rebinding/merge/eviction, and the GUI
+worker path for preview, one-cycle publication, native repeated copies, and
+zero-sum stored-cache fallback. Source review also confirmed the bounded Linux
+and Windows workflow runs the creation-worker selector and registers the
+worker-client/process portability suites. No implementation gap was found, so
+this is an evidence-only checkpoint. It does not claim remote platform jobs or
+visible GUI acceptance have completed; those remain final W0-W2 gates.
+
+| W106 lane | JUnit cases / assertions | Result | SHA256 |
+|---|---:|---|---|
+| Preview portability + creation/repeat, Release | 17 / 385 | PASS; 0 errors, 0 failures, 0 skips | `45114c048ed26bd6e06f0a013589dc526ba8ec2b5d102f7aecada3fc52430a25` |
+| Preview portability + creation/repeat, ASan | 17 / 385 | PASS; 0 errors, 0 failures, 0 skips | `6b499a10965a9f688e168a380ece25637db5232c5f020c610c9dbba54106ad3c` |
+
+Reports: `/private/tmp/offset-W106-preview-creation-release.xml` and
+`/private/tmp/offset-W106-preview-creation-asan.xml`. ASan used
+`detect_leaks=0`; this is not leak validation.
