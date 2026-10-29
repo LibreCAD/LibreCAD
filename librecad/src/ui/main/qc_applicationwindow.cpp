@@ -1876,9 +1876,17 @@ bool QC_ApplicationWindow::startStagedImport(const QString& fileName, RS2::Forma
             }
             QPointer<QC_MDIWindow> mdi;
             try {
+                const bool sourceUnverified = outcome.sourceUnverified || !outcome.sourceStamp.matches(fileName);
                 LC_DocumentsStorage storage;
                 if (asTemplate) storage.finalizeTemplateGraphic(*outcome.graphic);
-                else storage.finalizeLoadedGraphic(*outcome.graphic, fileName);
+                else {
+                    storage.finalizeLoadedGraphic(*outcome.graphic, fileName);
+                    if (outcome.sourceStamp.valid) outcome.graphic->setLastSaveTime(outcome.sourceStamp.modified);
+                    if (sourceUnverified) {
+                        outcome.graphic->setFormatType(RS2::FormatUnknown);
+                        outcome.graphic->setModified(true);
+                    }
+                }
                 if (!window) return;
                 mdi = window->createOwnedDrawingWindow(std::move(outcome.graphic), asTemplate ? QString{} : fileName);
                 if (!window || !mdi) return;
@@ -1891,6 +1899,10 @@ bool QC_ApplicationWindow::startStagedImport(const QString& fileName, RS2::Forma
                     window->activateWindowWithFile(window->m_restoreActiveFile);
                 if (window && outcome.downgraded)
                     window->m_commandWidget->appendHistory(QObject::tr("%1 offset curves could not be restored as editable and were retained as ordinary geometry.").arg(qulonglong(outcome.downgraded)));
+                if (window && sourceUnverified)
+                    window->m_commandWidget->appendHistory(asTemplate
+                        ? QObject::tr("The template changed or could not be verified while loading; the new drawing may not match the current template.")
+                        : QObject::tr("The source changed or could not be verified while loading; use Save As to avoid overwriting it."));
             } catch (...) {
                 if (window && mdi) window->doClose(mdi);
                 if (window) window->m_commandWidget->appendHistory(QObject::tr("Could not complete the imported drawing."));

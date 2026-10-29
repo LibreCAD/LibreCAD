@@ -595,6 +595,7 @@ TEST_CASE("Staged offset import resolves a private drawing through the real help
         auto outcome = stagedImport(input, lane);
         REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
         REQUIRE(outcome.graphic); CHECK_FALSE(outcome.partial);
+        CHECK(outcome.sourceStamp.valid); CHECK_FALSE(outcome.sourceUnverified);
         CHECK(outcome.admitted == 1); CHECK(outcome.downgraded == 0);
         CHECK(outcome.diagnostics.empty()); CHECK(outcome.suppressedDiagnostics == 0);
         auto* native = f::native(*outcome.graphic, 3); REQUIRE(native);
@@ -772,6 +773,7 @@ TEST_CASE("Staged offset import asks for partial-read acceptance without reparsi
     } else if (accept) {
         REQUIRE(outcome->status == LC_OffsetImportSession::Status::Complete); REQUIRE(outcome->graphic);
         CHECK(outcome->partial); CHECK(outcome->graphic->getFormatType() == RS2::FormatUnknown);
+        CHECK(outcome->sourceUnverified);
         CHECK(f::native(*outcome->graphic, 3) != nullptr);
     } else {
         CHECK(outcome->status == LC_OffsetImportSession::Status::ReadFailed); CHECK_FALSE(outcome->graphic);

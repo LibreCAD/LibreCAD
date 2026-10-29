@@ -5,6 +5,7 @@
 #include "rs_fileio.h"
 #include "rs_block.h"
 #include <QCoreApplication>
+#include <QFileInfo>
 #include <QPointer>
 #include <QThread>
 #include <algorithm>
@@ -13,6 +14,26 @@
 #include <stdexcept>
 #include <utility>
 #include <vector>
+
+LC_OffsetImportSourceStamp LC_OffsetImportSourceStamp::capture(const QString& file) {
+    QFileInfo info(file);
+    LC_OffsetImportSourceStamp stamp;
+    if (!info.exists() || !info.isFile()) return stamp;
+    stamp.canonicalPath = info.canonicalFilePath();
+    stamp.size = info.size();
+    stamp.modified = info.lastModified();
+    stamp.metadataChanged = info.metadataChangeTime();
+    stamp.birth = info.birthTime();
+    stamp.valid = !stamp.canonicalPath.isEmpty() && stamp.size >= 0 && stamp.modified.isValid();
+    return stamp;
+}
+
+bool LC_OffsetImportSourceStamp::matches(const QString& file) const {
+    const auto current = capture(file);
+    return valid && current.valid && canonicalPath == current.canonicalPath && size == current.size &&
+        modified == current.modified && (!metadataChanged.isValid() || metadataChanged == current.metadataChanged) &&
+        (!birth.isValid() || birth == current.birth);
+}
 
 void LC_OffsetImportBudget::report(LC_OffsetImportDiagnostic::Kind kind, int reason, std::size_t item, int detail) {
     if (diagnostics.size() == 32) { ++suppressedDiagnostics; return; }
@@ -54,6 +75,7 @@ struct LC_OffsetImportSession::Work {
     PartialRequest partialRequest;
     std::unique_ptr<RS_Graphic> graphic;
     std::shared_ptr<LC_OffsetImportBudget> budget;
+    LC_OffsetImportSourceStamp sourceStamp;
     std::vector<ImportCandidate> candidates;
 };
 
@@ -177,9 +199,18 @@ void LC_OffsetImportSession::parse(const std::shared_ptr<Work>& work) {
         filter.setDxfTextEncoding(work->encoding);
         const auto type = work->type == RS2::FormatUnknown ? RS_FileIO::detectFormat(work->file) : work->type;
         if (!supportedImportType(type)) { work->error = tr("Unsupported offset import format"); finish(work, Status::ReadFailed); return; }
+        work->sourceStamp = LC_OffsetImportSourceStamp::capture(work->file);
         work->graphic->setFormatType(type);
         const bool read = filter.fileImport(*work->graphic, work->file, type);
         if (!alive || m_work != work) return;
+        if (m_testAfterRead) {
+            auto hook = std::move(m_testAfterRead); m_testAfterRead = {}; hook();
+            if (!alive || m_work != work) return;
+        }
+        if (work->sourceStamp.valid && !work->sourceStamp.matches(work->file)) {
+            work->error = tr("The source file changed while it was being read; the drawing was not opened.");
+            finish(work, Status::SourceChanged); return;
+        }
         if (!read) { work->error = filter.lastError(); work->partial = true; }
         if (!read) {
             if (!work->partialRequest) { finish(work, Status::ReadFailed); return; }
@@ -306,6 +337,8 @@ void LC_OffsetImportSession::finish(const std::shared_ptr<Work>& work, Status st
     result.admitted = work->admitted; result.downgraded = work->downgraded;
     result.suppressedDiagnostics = work->budget->suppressedDiagnostics;
     result.diagnostics = std::move(work->budget->diagnostics);
+    result.sourceStamp = work->sourceStamp;
+    result.sourceUnverified = status == Status::Complete && !work->sourceStamp.matches(work->file);
     if (status == Status::Complete) result.graphic = std::move(work->graphic);
     auto callback = std::move(work->callback); m_work.reset();
     try { callback(std::move(result)); } catch (...) {}

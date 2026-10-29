@@ -4,6 +4,7 @@
 
 #include <QObject>
 #include <QTimer>
+#include <QDateTime>
 #include <functional>
 #include <memory>
 #include <vector>
@@ -22,6 +23,15 @@ struct LC_OffsetImportDiagnostic {
     int reason = 0;
     int detail = 0;
     std::size_t item = 0;
+};
+
+struct LC_OffsetImportSourceStamp {
+    bool valid = false;
+    QString canonicalPath;
+    qint64 size = -1;
+    QDateTime modified, metadataChanged, birth;
+    static LC_OffsetImportSourceStamp capture(const QString& file);
+    bool matches(const QString& file) const;
 };
 
 struct LC_OffsetImportBudget {
@@ -57,12 +67,16 @@ private:
  */
 class LC_OffsetImportSession final : public QObject {
 public:
-    enum class Status { Complete, ReadFailed, ResourceLimit };
+    enum class Status { Complete, ReadFailed, ResourceLimit, SourceChanged };
     struct Outcome {
         Status status = Status::ReadFailed;
         std::unique_ptr<RS_Graphic> graphic;
         QString error;
         bool partial = false;
+        // A caller publishing this drawing must prevent silent in-place save
+        // when the source no longer matches; the stamp is a metadata check.
+        bool sourceUnverified = false;
+        LC_OffsetImportSourceStamp sourceStamp;
         std::size_t admitted = 0, downgraded = 0;
         std::size_t suppressedDiagnostics = 0;
         std::vector<LC_OffsetImportDiagnostic> diagnostics;
@@ -99,5 +113,7 @@ private:
     QTimer m_deadline;
     std::shared_ptr<Work> m_work;
     qint64 m_generation = 0, m_request = 0;
+    // Private deterministic read-boundary seam; never set by product inputs.
+    std::function<void()> m_testAfterRead;
 };
 #endif

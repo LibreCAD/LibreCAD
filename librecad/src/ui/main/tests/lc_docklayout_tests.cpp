@@ -11,6 +11,7 @@
 #include <QJsonObject>
 #include <QElapsedTimer>
 #include <QProcess>
+#include <QThread>
 
 #include "lc_actiontestsupport.h"
 #include "lc_offsetcurve.h"
@@ -38,6 +39,9 @@
 struct LC_GuiImportTestAccess {
     static void onStarted(LC_OffsetImportSession& session, std::function<void(QProcess&)> hook) {
         session.m_worker.m_testStarted = std::move(hook);
+    }
+    static void afterRead(LC_OffsetImportSession& session, std::function<void()> hook) {
+        session.m_testAfterRead = std::move(hook);
     }
 };
 
@@ -651,6 +655,87 @@ TEST_CASE("A GUI import helper failure publishes an ordinary fallback", "[.gui][
         reported |= history->toPlainText().contains("could not be restored as editable");
     CHECK(reported);
 }
+
+TEST_CASE("A source changed during GUI validation cannot be saved in place", "[.gui][dock-window][offset-import][source-change]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString fixturePath = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    const QString fileName = directory.filePath("drawing.dxf"); REQUIRE(QFile::copy(fixturePath, fileName));
+    REQUIRE(QFile::setPermissions(fileName, QFile::ReadOwner | QFile::WriteOwner));
+    const QDateTime originalTime = QFileInfo(fileName).lastModified(); REQUIRE(originalTime.isValid());
+    window.openFile(fileName); auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+    bool changed = false;
+    LC_GuiImportTestAccess::onStarted(*session, [&](QProcess&) {
+        QFile file(fileName);
+        if (file.open(QIODevice::ReadWrite) && file.seek(file.size()) && file.write("changed") == 7 && file.flush())
+            changed = file.setFileTime(originalTime.addSecs(60), QFileDevice::FileModificationTime);
+    });
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(changed); auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); auto* graphic = mdi->getGraphic(); REQUIRE(graphic);
+    CHECK(graphic->getFormatType() == RS2::FormatUnknown); CHECK(graphic->isModified());
+    CHECK(graphic->getLastSaveTime() == originalTime); CHECK(QFileInfo(fileName).lastModified() != originalTime);
+    bool reported = false; for (const auto* history : window.findChildren<QTextEdit*>())
+        reported |= history->toPlainText().contains("use Save As to avoid overwriting it");
+    CHECK(reported);
+}
+
+TEST_CASE("A source changed at the read boundary is not published", "[.gui][dock-window][offset-import][source-change]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fixturePath = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    const QString fileName = directory.filePath("drawing.dxf"); REQUIRE(QFile::copy(fixturePath, fileName));
+    REQUIRE(QFile::setPermissions(fileName, QFile::ReadOwner | QFile::WriteOwner));
+    const QDateTime originalTime = QFileInfo(fileName).lastModified(); REQUIRE(originalTime.isValid());
+    window.openFile(fileName); auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+    bool changed = false;
+    LC_GuiImportTestAccess::afterRead(*session, [&] {
+        QFile file(fileName);
+        if (file.open(QIODevice::ReadWrite) && file.seek(file.size()) && file.write("changed") == 7 && file.flush())
+            changed = file.setFileTime(originalTime.addSecs(60), QFileDevice::FileModificationTime);
+    });
+    QElapsedTimer elapsed; elapsed.start(); QPointer<QMessageBox> box;
+    while (!box) {
+        REQUIRE(elapsed.elapsed() < 10000); settle(10);
+        for (auto* candidate : window.findChildren<QMessageBox*>()) if (candidate->isVisible()) { box = candidate; break; }
+    }
+    REQUIRE(changed); CHECK(box->text().contains("changed while it was being read"));
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial); box->done(QMessageBox::Ok);
+    settle(10); CHECK(LC_DockLayoutTestAccess::pendingImports(window) == 0);
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+}
+
+#ifdef Q_OS_UNIX
+TEST_CASE("A same-size source edit with restored mtime is detected where metadata time is available",
+          "[.gui][dock-window][offset-import][source-change]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString fixturePath = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    const QString fileName = directory.filePath("drawing.dxf"); REQUIRE(QFile::copy(fixturePath, fileName));
+    REQUIRE(QFile::setPermissions(fileName, QFile::ReadOwner | QFile::WriteOwner));
+    const QFileInfo original(fileName); const QDateTime originalTime = original.lastModified();
+    REQUIRE(originalTime.isValid());
+    if (!original.metadataChangeTime().isValid()) SKIP("Filesystem metadata-change time is unavailable");
+    QFile before(fileName); REQUIRE(before.open(QIODevice::ReadOnly)); REQUIRE(before.seek(8));
+    const QByteArray originalByte = before.read(1); REQUIRE(originalByte.size() == 1); before.close();
+    const QByteArray replacement = originalByte == QByteArray("X") ? QByteArray("Y") : QByteArray("X");
+    const qint64 originalSize = original.size(); window.openFile(fileName);
+    auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session); bool changed = false;
+    LC_GuiImportTestAccess::onStarted(*session, [&](QProcess&) {
+        QThread::msleep(30); QFile file(fileName);
+        if (file.open(QIODevice::ReadWrite) && file.seek(8) && file.write(replacement) == 1 && file.flush())
+            changed = file.setFileTime(originalTime, QFileDevice::FileModificationTime);
+    });
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(changed); const QFileInfo updated(fileName); CHECK(updated.size() == originalSize);
+    CHECK(updated.lastModified() == originalTime); CHECK(updated.metadataChangeTime() != original.metadataChangeTime());
+    QFile after(fileName); REQUIRE(after.open(QIODevice::ReadOnly)); REQUIRE(after.seek(8)); CHECK(after.read(1) == replacement);
+    auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); REQUIRE(mdi->getGraphic());
+    CHECK(mdi->getGraphic()->getFormatType() == RS2::FormatUnknown); CHECK(mdi->getGraphic()->isModified());
+}
+#endif
 
 TEST_CASE("A malformed DXF is reported without publishing a GUI drawing", "[.gui][dock-window][offset-import]") {
     DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());

@@ -24,6 +24,7 @@
 
 #include <QApplication>
 #include <QDir>
+#include <filesystem>
 
 #ifdef Q_OS_WIN
 #include <qt_windows.h>
@@ -41,6 +42,35 @@
 #include "rs_settings.h"
 
 namespace {
+    QString resolvedFilePath(QString path) {
+        for (int i = 0; i < 16; ++i) {
+            const QFileInfo info(path);
+            if (info.isSymLink()) {
+                path = info.symLinkTarget();
+                if (path.isEmpty()) return {};
+                continue;
+            }
+            const QString parent = info.dir().canonicalPath();
+            return QDir::cleanPath(parent.isEmpty() ? info.absoluteFilePath() : QDir(parent).filePath(info.fileName()));
+        }
+        return {};
+    }
+
+    bool sameFilePath(const QString& first, const QString& second) {
+        if (first.isEmpty() || second.isEmpty()) return false;
+        std::error_code error;
+        if (std::filesystem::equivalent(std::filesystem::u8path(first.toUtf8().constData()),
+                                        std::filesystem::u8path(second.toUtf8().constData()), error)) return true;
+        const QString a = resolvedFilePath(first);
+        const QString b = resolvedFilePath(second);
+        if (a.isEmpty() || b.isEmpty()) return true;
+#ifdef Q_OS_WIN
+        return a.compare(b, Qt::CaseInsensitive) == 0;
+#else
+        return a == b;
+#endif
+    }
+
     QString validatedFileAffix(const QString& affix, const QString& fallback) {
         for (const QChar character : affix) {
             if (character.unicode() < 0x20 || QStringLiteral("<>:\"/\\|?*").contains(character)) {
@@ -338,6 +368,11 @@ bool LC_DocumentsStorage::autoSaveGraphic(RS_Graphic* graphic, QString& fileName
         const QString autosaveFileName = graphic->getAutoSaveFileName();
         RS_DEBUG->print("LC_DocumentsStorage::autoSaveGraphic: autosaveFileName='%s'", autosaveFileName.toLatin1().data());
         if (!autosaveFileName.isEmpty()) {
+            if (sameFilePath(autosaveFileName, graphic->getFilename())) {
+                RS_DIALOGFACTORY->commandMessage(tr("Autosave was skipped because its path points to the source drawing."));
+                fileName = autosaveFileName;
+                return false;
+            }
             RS_DEBUG->print("LC_DocumentsStorage::autoSaveGraphic: attempting export to '%s'", autosaveFileName.toLatin1().data());
             ret = RS_FileIO::instance()->fileExport(*graphic, autosaveFileName, actualType);
             if (ret) {

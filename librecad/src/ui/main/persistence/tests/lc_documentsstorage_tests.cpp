@@ -289,6 +289,56 @@ TEST_CASE("Private template finalization keeps an untitled DXF document", "[docu
     CHECK_FALSE(graphic.isModified());
 }
 
+TEST_CASE("An unverified imported source requires Save As", "[documentsstorage][import][offset][source-change]") {
+    ensureApp(); QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString source = directory.filePath("drawing.dxf"); QFile file(source);
+    REQUIRE(file.open(QIODevice::WriteOnly)); REQUIRE(file.write("source") == 6); file.close();
+    TestStorage storage; RS_Graphic graphic; graphic.initForNewDocument();
+    graphic.setFilename(source); graphic.setFormatType(RS2::FormatUnknown); graphic.setModified(true);
+    bool cancelled = false;
+    CHECK(storage.saveDocument(&graphic, nullptr, cancelled)); CHECK(cancelled); CHECK(storage.m_asked == 1);
+    CHECK(contents(source) == QByteArray("source")); CHECK(graphic.isModified());
+}
+
+TEST_CASE("Autosave never writes through an alias of the source drawing", "[documentsstorage][import][offset][source-change]") {
+    ensureApp(); QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString source = directory.filePath("drawing.dxf"); QFile file(source);
+    REQUIRE(file.open(QIODevice::WriteOnly)); REQUIRE(file.write("source") == 6); file.close();
+    QString autosave = source;
+    SECTION("same path") {}
+    SECTION("hard link") {
+        autosave = directory.filePath("autosave.dxf"); std::error_code error;
+        std::filesystem::create_hard_link(std::filesystem::u8path(source.toUtf8().constData()),
+                                          std::filesystem::u8path(autosave.toUtf8().constData()), error);
+        if (error) SKIP("Hard links are unavailable on this filesystem");
+    }
+    SECTION("symbolic link") {
+        autosave = directory.filePath("autosave.dxf"); std::error_code error;
+        std::filesystem::create_symlink(std::filesystem::u8path(source.toUtf8().constData()),
+                                        std::filesystem::u8path(autosave.toUtf8().constData()), error);
+        if (error) SKIP("Symbolic links are unavailable on this filesystem");
+    }
+    TestStorage storage; RS_Graphic graphic; graphic.initForNewDocument();
+    graphic.setFilename(source); graphic.setFormatType(RS2::FormatUnknown); graphic.setAutosaveFileName(autosave);
+    graphic.setModified(true); QString written;
+    CHECK_FALSE(storage.autoSaveDocument(&graphic, nullptr, written)); CHECK(written == autosave);
+    CHECK(contents(source) == QByteArray("source")); CHECK(graphic.isModified());
+}
+
+TEST_CASE("Autosave does not recreate a removed source through a dangling link", "[documentsstorage][import][offset][source-change]") {
+    ensureApp(); QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString source = directory.filePath("drawing.dxf");
+    const QString autosave = directory.filePath("autosave.dxf"); std::error_code error;
+    std::filesystem::create_symlink(std::filesystem::u8path(source.toUtf8().constData()),
+                                    std::filesystem::u8path(autosave.toUtf8().constData()), error);
+    if (error) SKIP("Symbolic links are unavailable on this filesystem");
+    TestStorage storage; RS_Graphic graphic; graphic.initForNewDocument();
+    graphic.setFilename(source); graphic.setFormatType(RS2::FormatUnknown); graphic.setAutosaveFileName(autosave);
+    graphic.setModified(true); QString written;
+    CHECK_FALSE(storage.autoSaveDocument(&graphic, nullptr, written)); CHECK(written == autosave);
+    CHECK_FALSE(QFileInfo::exists(source)); CHECK(graphic.isModified());
+}
+
 TEST_CASE("Legacy DXF recovery saves a corrected copy and protects its original",
           "[documentsstorage][save][legacyutf8]") {
     ensureApp();
