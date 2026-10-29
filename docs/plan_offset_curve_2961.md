@@ -25,7 +25,7 @@ USA.
 
 Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
 Status: **S0/W0-W2 partially implemented; local creation/cache/trim, GUI drawing-open/template routing, staged plugin block import through both async and legacy sync APIs, W79's complete staged macOS CMake install, W86's relocated-install checks, and W88/W90/W92/W94/W99/W106/W110/W117/W126/W127 current-source preview-cache portability and creation/repeat routing are qualified in focused Release/ASan or offscreen lanes; W137 requalifies W126 preview-cache portability in the dedicated kernel/client/fresh-helper targets, W138 requalifies W127 Modify Offset creation/repeat GUI routing, W139 requalifies U4 persisted option/preview/commit behavior, W140 requalifies O1 Update from Source, W141 requalifies O2 Restore Original, and W142-W143 record the in-repo import-caller ownership audit plus current-source caller and GUI open/template tests; W88 rejects partial hatch-pattern imports, W89 makes dimension-style preview failures noninteractive, W93/W95 classify hatch/dimension previews as display-cache-only, and partial sample content is cleared; W80 fixes demonstrated compound admissions, W85 preserves the explicitly staged contact-control accounting after review corrected W84, W87 bounds strict-query queue allocation by admitted work, W107/W111/W112/W113 requalify budget-core, strict-query, paired-reference graph and cache-budget slices, W114 closes selected local A-cache allocation-failure coverage, W118/W119 add selected A-reference event and component publication allocation-failure coverage, W120 completes the standalone default fault suite in Release across all 29,117 injection/recovery points, W121 closes the local A-reference cross-entry matrix in Release/ASan, W122 closes the local C-check topology/test inventory in Release/ASan, W123 requalifies asynchronous native Trim/Trim Two action routing in Release/ASan, and W124 requalifies local trim file/conversion/undo-reopen coverage in Release/ASan; W96 requalifies A-core, W97 B occurrence/terminal identity, W98 C-search, W101 the full offset selector, W108/W109/W115/W116 expand selected C-check allocation-failure coverage after W100, W128 requalifies E1 guarded entity/factory/clone/transform behavior, W129 requalifies U1 type/INSERT/selection/SVG/menu/info/plugin dispatch, W131 requalifies E2 cached grips/snaps/through edits and transactional transforms, W132 requalifies F1 typed schema/carrier/ownership/resource-limit behavior, W133 requalifies F2 actual DXF/DWG writing and transactional refusal, W134 requalifies F3 independent fixture/version/write/conversion/reopen matrix, W135 requalifies U2 dialog/sheet async property publication, and W136 requalifies U3 async grip drag/cancel/ownership/history behavior in Release/ASan; W81-W83 provide bounded Linux/Windows worker CI with feature-branch triggering; broader A-C budget audit, external use of public synchronous low-level import APIs, remote cross-platform CI and final acceptance remain open**.
-Latest recorded slice: W146 requalifies preview-cache portability after the current-master merge in Release and ASan. W145 fixes a Windows MSVC include failure found by current PR CI; the Windows rerun is pending. W144 integrates and requalifies the five newer `origin/master` commits; creation/repeat GUI routing (W138) remains qualified pending its W147 current-head rerun. External use of public synchronous low-level import APIs, physical visible interaction, and remote/final acceptance remain open.
+Latest recorded slice: W147 requalifies Modify Offset creation/repeat GUI routing at current head in Release and ASan; W146 requalifies preview-cache portability after the current-master merge. W145 fixes a Windows MSVC include failure found by current PR CI; the Windows rerun is pending. W144 integrates and requalifies the five newer `origin/master` commits. External use of public synchronous low-level import APIs, physical visible interaction, and remote/final acceptance remain open.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 The prior temporary checkout and test artifacts disappeared after interruption;
@@ -5828,3 +5828,25 @@ does not qualify leak behavior.
 Logs: `/private/tmp/offset-W146-preview-{kernel,client,process}-{release,asan}.log`.
 These focused local checks do not close installed-helper deployment, physical
 visible interaction, remote-platform CI, or final W0-W2 acceptance.
+
+## 105. W147 Current-Head Creation/Repeat GUI Routing Requalification
+
+At source head `733bb7a2d` (W146's roadmap-only commit; no product source
+changes since the W144 current-master integration), ran the dedicated
+`[creation-worker]` selector offscreen in Release and RelWithDebInfo+ASan. Both
+passed 11 cases / 318 assertions. The selector covers cache-hit preview to
+one-cycle native publication, repeated native definitions and zero-sum stored
+cache fallback, mixed-source ordering and attributes, stale-input refusal,
+cancel/retry, preview supersession and timeout recovery, action/document
+lifetime, two-click ellipse creation, and provenance policy. No creation or
+repeat routing regression was demonstrated. ASan used `detect_leaks=0`; this
+does not qualify leak behavior. Offscreen checks do not close physical visible
+interaction, installed-helper deployment, remote-platform CI, or final W0-W2
+acceptance.
+
+| W147 lane | Result | SHA256 |
+|---|---|---|
+| Creation/repeat GUI action selector, Release | PASS; 11 / 318 | `ad6eb77af54758d078ee5bb406b049003dd00ca94cd6c9cb705a65d72f6e60cf` |
+| Creation/repeat GUI action selector, ASan | PASS; 11 / 318 | `1752444b033a90fa0ca92ebd854275550bf171c5231fa34e2508875f8dc84ae4` |
+
+Logs: `/private/tmp/offset-W147-creation-{release,asan}.log`.
