@@ -23,8 +23,8 @@
 #include "rs_block.h"
 #include "rs_undo.h"
 #include "rs_variable.h"
-#ifdef DWGSUPPORT
 #include "rs_filterdxfrw.h"
+#ifdef DWGSUPPORT
 
 class LC_DwgReadVersionTestAccess {
 public:
@@ -358,15 +358,15 @@ TEST_CASE("DWG offset input version follows the opened drawing after path replac
 #endif
 
 #ifdef DWGSUPPORT
-TEST_CASE("DWG source version observer precedes callbacks for files and buffers",
+TEST_CASE("DWG source version observer precedes callbacks for files buffers and streams",
           "[lc-offsetcurve][import-session][dwg-version][observer]") {
     Setup setup; lc::test::OutputDirectory directory("offset-dwg-version-observer");
     for (const auto version : {DRW::AC1015, DRW::AC1032}) {
         const auto path = directory.file(version == DRW::AC1015 ? "r2000.dwg" : "r2018.dwg");
         f::dwgFile(path, f::raw(3), version);
         const auto bytes = lc::test::fileBytes(path); REQUIRE_FALSE(bytes.empty());
-        for (const bool buffered : {false, true}) {
-            CAPTURE(static_cast<int>(version), buffered);
+        for (const int mode : {0, 1, 2}) {
+            CAPTURE(static_cast<int>(version), mode);
             struct State {
                 DRW::Version observed = DRW::UNKNOWNV;
                 unsigned calls = 0, headers = 0, splines = 0;
@@ -380,10 +380,14 @@ TEST_CASE("DWG source version observer precedes callbacks for files and buffers"
                 void addSpline(const DRW_Spline*) override { CHECK(state.calls == (state.expectObserver ? 1u : 0u)); ++state.splines; }
             } sink(state);
             dwgRW reader(path.string().c_str());
+            const std::string prefix("prefix\0", 7);
+            std::istringstream stream(prefix + bytes, std::ios::in | std::ios::binary);
+            stream.seekg(static_cast<std::streamoff>(prefix.size())); REQUIRE(stream.good());
             state.reenter = [&] {
                 state.attemptedReentry = true;
                 CHECK_FALSE(reader.read(&sink, false));
                 CHECK_FALSE(reader.readBuffer(reinterpret_cast<const std::uint8_t*>(bytes.data()), bytes.size(), &sink, false));
+                CHECK_FALSE(reader.readStream(stream, &sink, false));
                 CHECK_FALSE(reader.getPreview()); CHECK_FALSE(reader.testReader());
                 CHECK_FALSE(reader.write(&sink, version, false));
                 CHECK_FALSE(reader.writeVerified(&sink, version, false, nullptr, nullptr));
@@ -393,9 +397,9 @@ TEST_CASE("DWG source version observer precedes callbacks for files and buffers"
                 if (target.throwNow) throw std::runtime_error("observer failure");
                 if (target.reenter) target.reenter();
             }, &state);
-            const bool ok = buffered
+            const bool ok = mode == 1
                 ? reader.readBuffer(reinterpret_cast<const std::uint8_t*>(bytes.data()), bytes.size(), &sink, false)
-                : reader.read(&sink, false);
+                : mode == 2 ? reader.readStream(stream, &sink, false) : reader.read(&sink, false);
             REQUIRE(ok); CHECK(state.calls == 1); CHECK(state.observed == version); CHECK(state.attemptedReentry);
             CHECK(state.headers == 1); CHECK(state.splines > 0); CHECK(reader.getVersion() == version);
             CHECK(reader.getError() == DRW::BAD_NONE);
@@ -424,6 +428,31 @@ TEST_CASE("DWG physical version overrides a conflicting header variable",
         CHECK(LC_DwgReadVersionTestAccess::numericVersion(filter) == (dwg ? 1015 : 1032));
         CHECK(LC_DwgReadVersionTestAccess::inputVersion(filter) == (dwg ? DRW::AC1015 : DRW::AC1032));
     }
+}
+
+TEST_CASE("DWG stream reader rejects nonseekable and truncated input",
+          "[lc-offsetcurve][import-session][dwg-version][stream]") {
+    Setup setup;
+    struct ForwardOnly final : std::stringbuf {
+        explicit ForwardOnly(const std::string& data) : std::stringbuf(data) {}
+        pos_type seekoff(off_type, std::ios_base::seekdir, std::ios_base::openmode) override { return pos_type(off_type(-1)); }
+        pos_type seekpos(pos_type, std::ios_base::openmode) override { return pos_type(off_type(-1)); }
+    } buffer("AC1032");
+    std::istream input(&buffer); dwgRW reader(""); f::Capture sink;
+    CHECK_FALSE(reader.readStream(input, &sink, false)); CHECK(reader.getError() == DRW::BAD_OPEN);
+    struct NoEndSeek final : std::stringbuf {
+        explicit NoEndSeek(const std::string& data) : std::stringbuf(data) {}
+        pos_type seekoff(off_type offset, std::ios_base::seekdir direction, std::ios_base::openmode mode) override {
+            if (direction == std::ios_base::end) return pos_type(off_type(-1));
+            return std::stringbuf::seekoff(offset, direction, mode);
+        }
+    } noEndBuffer("AC1032");
+    std::istream noEndInput(&noEndBuffer);
+    CHECK(noEndInput.tellg() == std::streampos(0));
+    CHECK_FALSE(reader.readStream(noEndInput, &sink, false)); CHECK(reader.getError() == DRW::BAD_OPEN);
+    std::istringstream shortInput("AC10", std::ios::in | std::ios::binary);
+    CHECK_FALSE(reader.readStream(shortInput, &sink, false)); CHECK(reader.getError() == DRW::BAD_VERSION);
+    CHECK(sink.splines.empty());
 }
 #endif
 
@@ -1014,6 +1043,49 @@ TEST_CASE("Staged offset import follows XREF clones into the host block",
     REQUIRE(native->getLayer(false)); CHECK(native->getLayer(false)->getName() == "REF|FixtureOffsets");
     auto* insert = outcome.graphic->entityAt(0); REQUIRE(insert); REQUIRE(insert->isContainer());
     CHECK(static_cast<RS_EntityContainer*>(insert)->count() > 0);
+}
+
+TEST_CASE("Offset filter imports DXF and DWG streams using a logical source path",
+          "[lc-offsetcurve][import-session][stream]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-filter-stream");
+    unsigned index = 0;
+    for (const auto lane : lanes()) {
+        CAPTURE(static_cast<int>(lane));
+        const std::string stem = std::to_string(index++);
+        const auto source = directory.file(stem + (isDwg(lane) ? "-source.dwg" : "-source.dxf"));
+        const auto logical = directory.file(stem + (isDwg(lane) ? "-logical.dwg" : "-logical.dxf"));
+        writeInput(source, lane, f::raw(3));
+        const auto bytes = lc::test::fileBytes(source); REQUIRE_FALSE(bytes.empty());
+        CHECK_FALSE(std::filesystem::exists(logical));
+        const std::string prefix("prefix\0", 7);
+        std::istringstream input(prefix + bytes, std::ios::in | std::ios::binary);
+        input.seekg(static_cast<std::streamoff>(prefix.size())); REQUIRE(input.good());
+        RS_Graphic graphic; graphic.initForNewDocument(); RS_FilterDXFRW filter;
+        REQUIRE(filter.fileImportStream(graphic, QString::fromStdString(logical.string()), format(lane), input));
+        CHECK(f::native(graphic, 3) != nullptr);
+    }
+}
+
+TEST_CASE("Offset filter resolves stream XREFs relative to the logical host path",
+          "[lc-offsetcurve][import-session][stream][xref]") {
+    Setup setup; lc::test::OutputDirectory directory("offset-filter-stream-xref");
+    const auto external = directory.file("external.dxf"), logical = directory.file("unwritten-host.dxf");
+    writeInput(external, Lane::Ascii, f::raw(3));
+    auto text = f::ascii(f::raw(3));
+    const auto entities = text.find("0\nSECTION\n2\nENTITIES\n"); REQUIRE(entities != std::string::npos);
+    text.resize(entities);
+    text += "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n5\nB1\n8\n0\n2\nREF\n70\n4\n1\nexternal.dxf\n"
+        "10\n0\n20\n0\n30\n0\n0\nENDBLK\n5\nB2\n8\n0\n0\nENDSEC\n"
+        "0\nSECTION\n2\nENTITIES\n0\nINSERT\n5\nB3\n8\n0\n2\nREF\n10\n0\n20\n0\n30\n0\n"
+        "0\nENDSEC\n0\nEOF\n";
+    CHECK_FALSE(std::filesystem::exists(logical));
+    std::istringstream input(text, std::ios::in | std::ios::binary);
+    RS_Graphic graphic; graphic.initForNewDocument(); RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImportStream(graphic, QString::fromStdString(logical.string()), RS2::FormatDXFRW2018, input));
+    auto* block = graphic.findBlock("REF"); REQUIRE(block); REQUIRE(block->count() == 1);
+    auto* native = dynamic_cast<LC_OffsetCurve*>(block->entityAt(0)); REQUIRE(native);
+    CHECK(native->hasEditableDefinition()); CHECK(native->getParent() == block);
+    REQUIRE(native->getLayer(false)); CHECK(native->getLayer(false)->getName() == "REF|FixtureOffsets");
 }
 
 TEST_CASE("Staged offset import preserves carrier order around ordinary entities",

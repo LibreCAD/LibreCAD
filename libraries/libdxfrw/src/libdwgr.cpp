@@ -713,6 +713,26 @@ bool dwgRW::read(DRW_Interface *interface_, bool ext){
     return isOk;
 }
 
+bool dwgRW::readStream(std::istream& input, DRW_Interface *interface_, bool ext) {
+    if (m_invokingReadVersionObserver) return false;
+    error = DRW::BAD_NONE;
+    applyExt = ext;
+    iface = interface_;
+    resetReadDiagnostics();
+
+    if (!input.good() || input.tellg() == std::streampos(-1)) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    auto buffer = std::make_unique<dwgBuffer>(&input);
+    if (!buffer->isGood()) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    if (!openBuffer(std::move(buffer))) return false;
+    return readInstalledReader();
+}
+
 bool dwgRW::readBuffer(const std::uint8_t *data, std::uint64_t size,
                        DRW_Interface *interface_, bool ext) {
     if (m_invokingReadVersionObserver) return false;

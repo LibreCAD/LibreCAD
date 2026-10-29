@@ -4353,7 +4353,17 @@ void RS_FilterDXFRW::refreshDeferredOffsetInserts(RS_Graphic &graphic) {
  * taken to be stored in a m_file.
  */
 bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
-                                [[maybe_unused]] RS2::FormatType type) {
+                                RS2::FormatType type) {
+  return fileImportImpl(g, file, type, nullptr);
+}
+
+bool RS_FilterDXFRW::fileImportStream(RS_Graphic &g, const QString &logicalFile,
+                                      RS2::FormatType type, std::istream &input) {
+  return fileImportImpl(g, logicalFile, type, &input);
+}
+
+bool RS_FilterDXFRW::fileImportImpl(RS_Graphic &g, const QString &file,
+                                    [[maybe_unused]] RS2::FormatType type, std::istream *input) {
   RS_DEBUG->print("RS_FilterDXFRW::fileImport");
   RS_DEBUG->print("DXFRW Filter: importing file '%s'...",
                   (const char *)QFile::encodeName(file));
@@ -4439,7 +4449,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     if (RS_DEBUG->getLevel() == RS_Debug::D_DEBUGGING)
       dwgr.setDebug(DRW::DebugLevel::Debug);
     const auto dwgReadStart = std::chrono::steady_clock::now();
-    bool success = dwgr.read(this, true);
+    bool success = input ? dwgr.readStream(*input, this, true) : dwgr.read(this, true);
     if (std::getenv("LC_IMPORT_BENCH") != nullptr) {
       const auto dwgReadMs =
           std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -4581,7 +4591,9 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
       m_dxfR->setDebug(DRW::DebugLevel::Debug);
     }
     bool success{false};
-    if (file.startsWith(":")) {
+    if (input) {
+      success = m_dxfR->readStream(this, true, *input);
+    } else if (file.startsWith(":")) {
       // load content from resources. It SHOULD be present in resource!
       QFile resourceFile(file);
       if (resourceFile.open(QIODevice::ReadOnly)) {

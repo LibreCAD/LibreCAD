@@ -2036,6 +2036,10 @@ public:
   // Import:
   bool fileImport(RS_Graphic &g, const QString &file,
                   RS2::FormatType type) override;
+  /// Read caller-owned bytes while resolving external references relative to
+  /// the original logical filename. The stream must be seekable and binary.
+  bool fileImportStream(RS_Graphic &g, const QString &logicalFile,
+                        RS2::FormatType type, std::istream &input);
 
   // Methods from DRW_CreationInterface:
   void addHeader(const DRW_Header *data) override;
@@ -2424,6 +2428,8 @@ protected:
                                  const std::string &rawLayerName);
 
 private:
+  bool fileImportImpl(RS_Graphic &g, const QString &logicalFile,
+                      RS2::FormatType type, std::istream *input);
   void prepareBlocks();
   void prepareDxfEntityHandleMap();
   /** The application names of the XDATA a DXF export writes: on its table

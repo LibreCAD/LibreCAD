@@ -242,6 +242,9 @@ public:
     ~dwgRW();
     //read: return true if all ok
     [[nodiscard]] bool read(DRW_Interface *interface_, bool ext);
+    /// Reads from the current position of a caller-owned, seekable binary
+    /// stream through its end. The stream must outlive this synchronous call.
+    [[nodiscard]] bool readStream(std::istream& input, DRW_Interface *interface_, bool ext);
     [[nodiscard]] bool readBuffer(const std::uint8_t *data, std::uint64_t size,
                     DRW_Interface *interface_, bool ext);
 
