@@ -3334,3 +3334,33 @@ The identity guard cannot atomically bind the final pathname check to
 replacement. Backup restoration is fault-injected and verified on macOS, but
 Windows compile/runtime and native rename/share behavior remain open. No ASan,
 Windows, or visible GUI run is claimed.
+
+## 12. W50 Current-Tree Cache and Creation Requalification
+
+After W49d/W49e, rebuilt the current Release source and reran the portable
+preview-cache and local Modify Offset creation/repeat lanes offscreen. The real
+helper is used by the process/client and creation tests. All five JUnit reports
+have zero errors, failures or skips:
+
+| W50 suite | Testcases | JUnit `tests` | Result |
+|---|---:|---:|---|
+| Worker process cache portability | 1 | 186 | PASS |
+| Worker client cache portability | 2 | 669 | PASS |
+| Worker kernel cache ownership/merge | 4 | 156 | PASS |
+| Worker result transport | 1 | 18 | PASS |
+| GUI creation/repeat | 13 | 318 | PASS |
+
+Receipts are under `/private/tmp/offset-W50-*.xml`:
+
+| W50 artifact | SHA256 |
+|---|---|
+| `offset-W50-cache-process.xml` | `616cfd52d16121ff93b49c0add79acca9437d1f0024c291cfd6eecb969d03f32` |
+| `offset-W50-cache-client.xml` | `4160d7b2bfc4824129c149b864c87e4bb54c05055f17ec61eca0f22d59dd0a87` |
+| `offset-W50-cache-kernel.xml` | `e71893d01407f5bf1d121767bdb4ebb2e580f14a587a2106493c12f5660ef40f` |
+| `offset-W50-cache-result.xml` | `8461f01de35536e8fd7218cea9df91c9ad9f9f906ea9ceda8e730179e200aeb5` |
+| `offset-W50-creation-repeat.xml` | `d010dec1b99418c10a0af04cda67c29f0c26064244ceb4ca42032db3ed7e938e` |
+
+This is current-source macOS Release/offscreen evidence, not a refreshed ASan,
+visible interactive, deployed-bundle, or cross-platform run. Prior W48 ASan
+receipts remain as recorded; W49 changed only publication/filter code, not the
+preview-cache or creation/repeat implementation.
