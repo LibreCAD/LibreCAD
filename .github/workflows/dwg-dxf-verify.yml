@@ -25,7 +25,7 @@ name: DWG/DXF verification
 
 on:
   push:
-    branches: [master]
+    branches: [master, 'codex/**']
     paths:
       - '.github/workflows/dwg-dxf-verify.yml'
       - 'CMakeLists.txt'
@@ -59,7 +59,7 @@ on:
 
 # A newer push to the same branch or pull request supersedes a run still in progress.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head.ref || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
