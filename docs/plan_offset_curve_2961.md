@@ -5955,3 +5955,11 @@ Logs: `/private/tmp/offset-W151-master-build.log`,
 `/private/tmp/offset-W151-full-random-release.log`. This classification does
 not close remote CI, platform/package deployment, visible UI, public external
 synchronous API, or final W0-W2/R acceptance.
+
+The PR is still open and draft at head `069fce4234cff0012af54798718b9ed09caf84ab`.
+The GitHub status endpoint currently returns no contexts for that head. The
+CodeQL, DWG/DXF verification, and Pixi Builds runs `40903562768`, `40903562797`,
+and `40903562899` for earlier product head `d739b5a33` are completed with
+`cancelled` conclusions. No passing remote platform result is available for
+the current PR head; rerun/obtain the required checks before claiming remote
+qualification.
