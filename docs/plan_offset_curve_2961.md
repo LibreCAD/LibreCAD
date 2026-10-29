@@ -2804,6 +2804,40 @@ claimed. Evidence root is unchanged:
 | `offset-W40-dwg-release.xml` | `d98c37c0b6f0c33fe887de0cca81dfe936be5e1c45ecc70c8a4da214d533012f` |
 | `offset-W40-dwg-discovery.xml` | `704a1ca51c12003f7a15cb545b07ec6a06c34815fd13e3235ac71cb4416f52c4` |
 
+W41 caller-owned import streams `3c7effca8`:
+DWG readers now accept a caller-owned seekable binary stream from its current
+position, including independent logical cursors over a shared stream. The filter
+accepts either DWG or DXF bytes from a stream while retaining the logical source
+filename for relative external-reference lookup. Tests cover nonzero origins,
+file/buffer/stream version-observer ordering and reentry, forward-only and
+end-seek failures, truncated input, all existing offset import lanes, and an XREF
+resolved relative to a logical host pathname that does not exist on disk.
+
+Release and ASan hostile-file runs pass all 54 declarations / 59 JUnit entries,
+with no failures or skips and complete identity coverage. The DWG stream-buffer
+test passes in both configurations. Release DWG fast passes 1067 declarations /
+1153 entries with 37 existing skips; DXF fast passes 799 / 1094 with 4 existing
+skips. All discovered identities are accounted for and neither suite has
+failures. ASan uses `detect_leaks=0`; it is not a leak-free or full-suite claim.
+The qmake6 libdxfrw archive and changed filter object compile, not the full app.
+Local evidence in `/private/tmp` (temporary, not a durable external fixture):
+
+| W41 report | SHA256 |
+| --- | --- |
+| `offset-W41-hostile-release.xml` | `9bd63b1908969a22364fba46375f11303610543693c50f48b32bea9b13ef5c4e` |
+| `offset-W41-hostile-asan.xml` | `e62a7e10e91a766f0b3466087c9dbcf1580e74850c19b7cb1962903b5a5a9607` |
+| `offset-W41-hostile-discovery.xml` | `99c4eef53c40479c8fc4f7245dfa9ff30568c0fad3c2529f1b8a8c73a39acde3` |
+| `offset-W41-dwg-release.xml` | `395a0b53e8450d8e19320ad62d4609c164c0f1a92f194bc32f6977d880b6a9db` |
+| `offset-W41-dwg-discovery.xml` | `3e6dbf0423791f169616de7eb1e019ca9a31e7837b33437e26f88e47329d5225` |
+| `offset-W41-dxf-release.xml` | `1fb57b81306cef412316ef9c5d321f7243e903c00dcf79f39788f31a04f68048` |
+| `offset-W41-dxf-discovery.xml` | `969a963b7c937cb98185b97a28ac95e1225f2c612d5b5c1bb835ce4fc8f60790` |
+| `offset-W41-buffer-asan.xml` | `356cea5c4e60265010f5686d112766ebc7e3fbfaaeabaabe6e41d0ce0d04a9de` |
+
+This is an API prerequisite, not a bounded immutable snapshot or GUI session
+integration. In-place mutation, nested XREF consistency, source/save identity,
+atomic publication, cross-platform qualification and remaining import callers
+remain open. Parsing and nested XREF work are not made asynchronous by W41.
+
 Creation/repeat status after these review follow-ups:
 1. Shared owned numeric preparation is implemented/qualified at `ef40eecad`.
    Target-relative source accounting is recorded above; retain upstream #3140.
@@ -2863,7 +2897,10 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
   review scoped commits, preserve reproducible evidence and close every required gap.
 
-**Next concrete action on implementation resume:** strengthen W34's metadata-only
+**Next concrete action on implementation resume:** use W41's seekable stream
+interfaces to implement bounded, owned source snapshots for staged imports,
+including lifetime/cancellation and logical-path handling; do not treat nested
+XREFs as snapshotted without separate admission. Strengthen W34's metadata-only
 source and non-atomic autosave alias checks, and exercise a genuine partial DWG
 through the GUI dialog. W35 fixes the observed W33 teardown assertion; retain its
 forced-destruction regression while auditing other close/dialog reentrancy.
