@@ -6,7 +6,9 @@
 // Dedicated executable only. Keep global allocation interposition out of Catch
 // and application processes.
 
+#include "lc_curveoffset.h"
 #include "lc_ellipseoffsetgeometry.h"
+#include "rs_ellipse.h"
 #include "rs_spline.h"
 
 #include <algorithm>
@@ -14,6 +16,7 @@
 #include <cstddef>
 #include <cstdio>
 #include <cstdlib>
+#include <optional>
 #if defined(_MSC_VER)
 #include <malloc.h>
 #endif
@@ -141,9 +144,38 @@ Fixture wholeCircleFixture(const bool reversed) {
     return fixture;
 }
 
+std::optional<Fixture> openTrimmedComponentFixture() {
+    const RS_EllipseData source{RS_Vector{0, 0}, RS_Vector{100, 0}, .05,
+        M_PI / 12, 7 * M_PI / 4, false};
+    const RS_Ellipse ellipse{nullptr, source};
+    auto options = LC_CurveOffset::makeDirectOptions(ellipse, 4, 1e-4);
+    options.mode = LC_CurveOffsetMode::Trimmed;
+    auto made = LC_CurveOffset::createEntities(ellipse,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 4), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    if (made.status != LC_CurveOffsetStatus::Ok || made.entities.size() != 2) { return {}; }
+
+    const RS_Spline* open = nullptr;
+    for (const auto& entity : made.entities) {
+        const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
+        if (!spline) { return {}; }
+        const auto& data = spline->getData();
+        if (data.controlPoints.front() != data.controlPoints.back()) { open = spline; }
+    }
+    if (!open) { return {}; }
+
+    Fixture fixture;
+    fixture.cache = open->getData();
+    fixture.definition.basis = source;
+    fixture.definition.distance = 4;
+    fixture.definition.towardCentre = true;
+    fixture.definition.relTolerance = .01;
+    return fixture;
+}
+
 int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definition,
           const char* label, std::size_t& totalInjectionPoints, const double worldTolerance = .01,
-          const bool expectSeam = false) {
+          const bool expectSeam = false, const std::optional<bool> expectClosed = std::nullopt) {
     namespace geo = LC_EllipseOffsetGeometry;
     const auto& source = definition.basis;
     const auto frame = geo::ReferenceFrame::create(source, 1.0);
@@ -173,6 +205,7 @@ int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definiti
                 return join.kind == geo::CachePathJoinKind::Seam;
             })) { return 9; }
     }
+    if (expectClosed && baseline.analysis->closed() != *expectClosed) { return 10; }
 
     for (std::size_t failure = 1; failure <= completeAllocationCount; ++failure) {
         geo::WorkBudget failedBudget;
@@ -247,10 +280,14 @@ int main() {
     for (const bool reversed : {false, true}) {
         auto circle = wholeCircleFixture(reversed);
         if (const int result = sweep(circle.cache, circle.definition,
-            reversed ? "whole-circle-seam-reversed" : "whole-circle-seam", injectionPoints, .02, true)) {
+            reversed ? "whole-circle-seam-reversed" : "whole-circle-seam", injectionPoints, .02, true, true)) {
             return result;
         }
     }
+    const auto openTrimmed = openTrimmedComponentFixture();
+    if (!openTrimmed) { return 11; }
+    if (const int result = sweep(openTrimmed->cache, openTrimmed->definition,
+        "two-component-trim-open-path", injectionPoints, .001, false, false)) { return result; }
     std::printf("allocation_failure_sweep_all_fixtures_recovered=1 injection_points=%zu\n", injectionPoints);
     return 0;
 }
