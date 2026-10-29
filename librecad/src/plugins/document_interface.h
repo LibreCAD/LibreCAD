@@ -405,9 +405,10 @@ public:
     virtual void addInsert(QString name, QPointF ins, QPointF scale, qreal rot) = 0;
 
     //! Synchronously add a block definition from disk (legacy API).
-    /*! This method returns the block name immediately and may block the UI
-     * while a drawing is parsed. New plugins should prefer
-     * addBlockFromDiskAsync() for staged DXF/DWG imports.
+    /*! This method returns the block name immediately and may block the UI.
+     * LibreCAD stages DXF/DWG imports through the native offset validator before
+     * publication, but the synchronous compatibility contract waits for that
+     * work. New plugins should prefer addBlockFromDiskAsync() for responsiveness.
      * \param fullName path+name of the drawing to add.
      * \return name of created block or NULL if fail.
      */

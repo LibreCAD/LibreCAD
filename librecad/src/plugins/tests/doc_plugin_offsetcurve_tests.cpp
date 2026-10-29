@@ -23,6 +23,7 @@
 #include <QHash>
 #include <QPointF>
 #include <QThread>
+#include <QTimer>
 #include <QVariant>
 
 #include "doc_plugin_interface.h"
@@ -394,18 +395,42 @@ TEST_CASE("Plugin ordinary line transforms retain their existing KEEP DELETE geo
     }
 }
 
-TEST_CASE("Plugin legacy synchronous block import retains its immediate result contract",
+TEST_CASE("Plugin legacy synchronous block import stages DXF through the native worker",
           "[plugins][offsetcurve][block-import][legacy]") {
     Drawing drawing;
     REQUIRE(drawing.qtReady);
+    int heartbeats = 0;
+    QTimer heartbeat;
+    heartbeat.setInterval(0);
+    QObject::connect(&heartbeat, &QTimer::timeout, [&] { ++heartbeats; });
+    heartbeat.start();
     const QString name = drawing.dpi->addBlockfromFromdisk(nativeOffsetFixture());
+    heartbeat.stop();
     REQUIRE_FALSE(name.isEmpty());
+    CHECK(heartbeats > 0);
     auto* block = drawing.graphic.findBlock(name);
     REQUIRE(block);
     bool foundNativeOffset = false;
     for (int i = 0; i < block->count(); ++i)
         foundNativeOffset |= dynamic_cast<LC_OffsetCurve*>(block->entityAt(i)) != nullptr;
     CHECK(foundNativeOffset);
+}
+
+TEST_CASE("Plugin legacy synchronous block import refuses publication after its view changes documents",
+          "[plugins][offsetcurve][block-import][legacy][stale]") {
+    Drawing drawing;
+    REQUIRE(drawing.qtReady);
+    RS_Graphic replacement;
+    replacement.initForNewDocument();
+    const int originalBlocks = drawing.graphic.getBlockList()->count();
+    const int replacementBlocks = replacement.getBlockList()->count();
+    QTimer::singleShot(0, &drawing.view, [&] { drawing.view.setDocument(&replacement); });
+
+    const QString name = drawing.dpi->addBlockfromFromdisk(nativeOffsetFixture());
+
+    CHECK(name.isEmpty());
+    CHECK(drawing.graphic.getBlockList()->count() == originalBlocks);
+    CHECK(replacement.getBlockList()->count() == replacementBlocks);
 }
 
 TEST_CASE("Plugin asynchronous block import stages DXF before preserving its native offset curve",

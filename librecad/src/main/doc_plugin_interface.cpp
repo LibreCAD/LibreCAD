@@ -1070,7 +1070,11 @@ QString Doc_plugin_interface::addBlockfromFromdisk(const QString fullName) {
     if (fullName.isEmpty() || (m_document == nullptr)) {
         return nullptr;
     }
-    RS_BlockList* blockList = m_document->getBlockList();
+    RS_Document* const expectedDocument = m_document;
+    RS_Graphic* const expectedGraphic = m_docGr;
+    QPointer<RS_GraphicView> view(m_graphicView);
+    const bool hadView = !view.isNull();
+    RS_BlockList* blockList = expectedDocument->getBlockList();
     if (blockList == nullptr) {
         return nullptr;
     }
@@ -1079,15 +1083,42 @@ QString Doc_plugin_interface::addBlockfromFromdisk(const QString fullName) {
 
     if (fi.isReadable()) {
         const QString s = fi.completeBaseName();
+        const QString path = fi.absoluteFilePath();
+        const auto type = RS_FileIO::detectFormat(path);
+        if (LC_OffsetImportSession::supportsType(type)) {
+            if (!view || view->getDocument() != expectedDocument || view->getViewPort() == nullptr ||
+                view->getViewPort()->getGraphic() != expectedGraphic) {
+                return {};
+            }
+
+            QEventLoop loop;
+            QString importedName;
+            bool completed = false;
+            QObject::connect(view.data(), &QObject::destroyed, &loop, &QEventLoop::quit);
+            addBlockFromDiskAsync(path, [&](const QString& name, const QString&) {
+                importedName = name;
+                completed = true;
+                loop.quit();
+            });
+            if (!completed) loop.exec();
+            if (!view || !completed) return {};
+            return importedName;
+        }
+
         RS_Graphic g;
         const LC_DocumentsStorage storage;
-        if (!storage.loadDocument(&g, fi.absoluteFilePath(), RS2::FormatUnknown)) {
+        if (!storage.loadDocument(&g, path, RS2::FormatUnknown)) {
             // if (!g.open(fi.absoluteFilePath(), RS2::FormatUnknown)) {
             RS_DEBUG->print(RS_Debug::D_WARNING, "Doc_plugin_interface::addBlockfromFromdisk: Cannot open file: %s",
                             fullName.toStdString().c_str());
             return nullptr;
         }
-        return publishPluginBlock(m_document, m_docGr, g, s);
+        if (m_document != expectedDocument || m_docGr != expectedGraphic || (hadView && !view) ||
+            (view && (view->getDocument() != expectedDocument || view->getViewPort() == nullptr ||
+             view->getViewPort()->getGraphic() != expectedGraphic))) {
+            return {};
+        }
+        return publishPluginBlock(expectedDocument, expectedGraphic, g, s);
     }
     return nullptr;
 }
