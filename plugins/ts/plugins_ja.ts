@@ -466,10 +466,6 @@ anti-clockwise.</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <source>Polyline</source>
-        <translation>ポリライン</translation>
-    </message>
-    <message>
         <source>This plugin allows you to plot mathematical equations.
 If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
@@ -486,10 +482,6 @@ Use t or x in your equation as a variable/parameter.
         <translation>終了値:</translation>
     </message>
     <message>
-        <source>Line Segments</source>
-        <translation>線分</translation>
-    </message>
-    <message>
         <source>Equation 1:</source>
         <translation>方程式1:</translation>
     </message>
@@ -500,10 +492,6 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <source>Plot equation</source>
         <translation>方程式プロット</translation>
-    </message>
-    <message>
-        <source>SplinePoints</source>
-        <translation>スプライン点</translation>
     </message>
 </context>
 <context>

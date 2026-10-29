@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>點擊選項以設定/取消設定，然後點擊「確定」以接受並開始對齊。</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">如果勾選「保留原始物件」，「對齊」功能會複製選取的物件，而不是移動它們。
-如果勾選「先指定基準點」，「對齊」功能會依序提示您輸入對齊點，順序為：第一個基準點、第二個基準點、第一個目標點、第二個目標點。</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>第一基點</translation>

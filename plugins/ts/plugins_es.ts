@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>Haga clic en las opciones para activar/desactivar, Aceptar para confirmar y comenzar la alineación.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Si está marcada la opción &apos;Mantener objetos originales&apos;, la función Alinear copiará en lugar de mover los objetos seleccionados.
-Si está marcada la opción &apos;Especificar primero los puntos base&apos;, la función Alinear solicitará los puntos de alineación en el siguiente orden: primero el punto base, luego el segundo punto base, luego el primer punto de destino y, por último, el segundo punto de destino.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>primer punto base:</translation>

@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>ਵਿਕਲਪਾਂ &apos;ਤੇ ਕਲਿੱਕ ਕਰਕੇ ਸੈੱਟ/ਅਨਸੈੱਟ ਕਰੋ, ਅਤੇ ਅਲਾਈਨਮੈਂਟ ਸ਼ੁਰੂ ਕਰਨ ਲਈ &apos;ਠੀਕ ਹੈ&apos; ਦਬਾਓ।</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">ਜੇਕਰ &apos;ਮੂਲ ਆਬਜੈਕਟਸ ਨੂੰ ਰੱਖੋ&apos; ਚੈੱਕ ਕੀਤਾ ਗਿਆ ਹੈ, ਤਾਂ ਅਲਾਈਨ ਚੁਣੇ ਗਏ ਆਬਜੈਕਟਸ ਨੂੰ ਹਿਲਾਉਣ ਦੀ ਬਜਾਏ ਕਾਪੀ ਕਰੇਗਾ।
-ਜੇਕਰ &apos;ਪਹਿਲਾਂ ਬੇਸ ਪੁਆਇੰਟ ਦੱਸੋ&apos; ਚੈੱਕ ਕੀਤਾ ਗਿਆ ਹੈ, ਤਾਂ ਅਲਾਈਨ ਤੁਹਾਨੂੰ ਅਲਾਈਨਮੈਂਟ ਪੁਆਇੰਟਸ ਲਈ ਪੁੱਛੇਗਾ, ਪਹਿਲਾਂ ਬੇਸ, ਦੂਜਾ ਬੇਸ, ਪਹਿਲਾ ਟਾਰਗੇਟ, ਦੂਜਾ ਟਾਰਗੇਟ ਦੇ ਕ੍ਰਮ ਵਿੱਚ।</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>ਪਹਿਲਾ ਬੇਸ ਪੁਆਇੰਟ:</translation>

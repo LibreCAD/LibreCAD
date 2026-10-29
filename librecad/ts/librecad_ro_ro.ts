@@ -39,166 +39,11 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Cadru</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="obsolete">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="obsolete">&lt;</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Salvează</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Cadru</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Salvează</translation>
-    </message>
-</context>
-<context>
-    <name>DlgParabola</name>
-    <message>
-        <source>Parabola</source>
-        <translation type="obsolete">Parabola</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Strat:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometrie</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">Puncte pe Spline</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">Puncte de control</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Strat:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometrie</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Închis</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="obsolete">Dacă sunt selectate, se utilizează puncte de îmbinare</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="obsolete">Puncte de stropire</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="obsolete">Dacă sunt selectate, se utilizează puncte de control</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">Puncte de control</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">Puncte pe Spline</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
         <translation>Punctul de pornire poate fi stabilit numai la distanță sau la punctul de stare</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Se va crea:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">Rectangle</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Lățime:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Înălțime:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Centru:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">Unghi invalid</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">Raza nevalidă</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">Valoare nevalidă</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Specifică punctul de inserție</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Specifică unghiul</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">Specificați dimensiunea (lățimea, înălțimea)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">Specifică tipul de colțuri
-[Strigând] Bevels]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">A se specifica lungimea marginii (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">Specifică raza de colț</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">Specifică modul marginilor
-[Ambele</translation>
     </message>
 </context>
 <context>
@@ -445,73 +290,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">Înălțimea arcului (distanсe între coardă și punctul arc superior)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Înălțime:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">În sens invers acelor de ceasornic</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Raza arcului</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">În sensul acelor de ceasornic</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">Unghiul central al arcului</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">Lungimea arcului</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lungimea:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Alege raza de tragere</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">Alegeți înălțimea desenului</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Lungimea pick-ului de la desen</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -723,10 +501,6 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">Alegeți entitățile pentru caseta de legătură (Introduceți la finalizare)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation type="unfinished"></translation>
@@ -781,31 +555,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">raza=%1 este prea mică pentru punctele selectate
-distanța dintre puncte=%2 este mai mare decât diametrul = %3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">Selectaţi din două posibile centre de cerc</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Specificați primul punct</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">A se preciza al doilea punct</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">Selectare centru cerc</translation>
     </message>
 </context>
 <context>
@@ -1054,13 +803,6 @@ distanța dintre puncte=%2 este mai mare decât diametrul = %3</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">Alegeți cercul, arcul sau elipsa</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1104,10 +846,6 @@ distanța dintre puncte=%2 este mai mare decât diametrul = %3</translation>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>Alegeți centrul</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">Nici un centru specificat.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1502,154 +1240,6 @@ distanța dintre puncte=%2 este mai mare decât diametrul = %3</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">Specifică primul punct</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">Specificați al doilea punct
-fie [număr:</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">Specificați al doilea punct
-fie [număr]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">Specifică direcția liniei
-[x</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">Specifică unghiul de direcție al liniei
-fie [x</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">Specifică modul de puncte margine
-[nicio]start</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">Specificați distanța fixă între puncte
-sau[x</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Înapoi</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">Specifică distanța (%1)
-fie [%2]</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">A se specifica distanța (unghiul%1 deg)
-fie [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">Specifică numărătoarea punctelor</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Specifică al doilea colț</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">A se specifica a doua tangentă</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Specifică primul colț</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">Specifică prima tangentă</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Nu este un număr valid. Încearcă 1..9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">Valoarea nevalidă a razei de rotunjire</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nu este o expresie validă</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Introduceți numărul:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">Introduceți raza de rotunjire:</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Specifică centrul</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Se va crea:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Centru:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">Unghi de pornire:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">Rază interioară:</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Poligon</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">Specificați o tangentă</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1893,29 +1483,6 @@ fie [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nu este o expresie validă</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Alegeți prima entitate</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Alegeți a doua entitate</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">Criterii finale alternative</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">Introduceți valoarea offset</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="190"/>
@@ -2068,13 +1635,6 @@ fie [x</translation>
 [nicio]start</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="unfinished">Specificați distanța fixă între puncte
-sau[x</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Specify distance (%1)
@@ -2098,13 +1658,6 @@ fie [%2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="620"/>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="unfinished">A se specifica distanța (unghiul%1 deg)
-fie [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="625"/>
@@ -2263,11 +1816,6 @@ fie [%2]</translation>
         <translation>Specifică lățimea</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="396"/>
-        <source>Specify size (width, height))</source>
-        <translation>Specificați dimensiunea (lățimea, înălțimea)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
         <translation>A se preciza punctul de referință [topl</translation>
@@ -2333,11 +1881,6 @@ fie [%2]</translation>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="619"/>
         <source>Specify height</source>
         <translation>Specifică înălțimea</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="622"/>
-        <source>Specify start point)</source>
-        <translation>Specificați punctul de pornire)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="625"/>
@@ -3767,10 +3310,6 @@ fie [%2]</translation>
         <translation>Prompt</translation>
     </message>
     <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">Snap pe grilă</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>Aliniază manual la centru</translation>
@@ -4091,11 +3630,6 @@ fie [%2]</translation>
         <translation>Deselectează &amp; tot</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="910"/>
-        <source>Ctrl+K</source>
-        <translation>Ctrl+K</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="745"/>
         <source>Invert Selection</source>
         <translation>Inversează selecția</translation>
@@ -4211,12 +3745,6 @@ fie [%2]</translation>
         <translation>&amp; Grid</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="927"/>
-        <source>Ctrl+G</source>
-        <comment>Toggle Grid</comment>
-        <translation>Ctrl+G</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>&amp;Draft</source>
         <translation>&amp; Draft</translation>
@@ -4227,12 +3755,6 @@ fie [%2]</translation>
         <translation>&amp; Statusbar</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="930"/>
-        <source>Ctrl+I</source>
-        <comment>Hide Statusbar</comment>
-        <translation>Ctrl+I</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
         <source>Focus on &amp;Command Line</source>
         <translation>Concentrează-te pe linia &amp;Comandă</translation>
@@ -4241,26 +3763,6 @@ fie [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>Widget Options</source>
         <translation>Opțiuni control</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Stânga</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Corect</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Sus</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Jos</translation>
-    </message>
-    <message>
-        <source>Floating</source>
-        <translation type="vanished">Plutitor</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
@@ -4511,12 +4013,6 @@ fie [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Selection Pointer</source>
         <translation>&amp; Punct de selecție</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="929"/>
-        <source>Ctrl+D</source>
-        <comment>Toggle Draft Mode</comment>
-        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
@@ -5223,10 +4719,6 @@ Punct: (%8,%9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">Alegeți entitățile de alinia (Introduceți la finalizare)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>Selectează și aliniază</translation>
@@ -5258,10 +4750,6 @@ Punct: (%8,%9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
         <translation>Scalare:</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">Selectează alinierea (Introducere la finalizare)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -5944,22 +5432,6 @@ Punct: (%8,%9)</translation>
         <translation type="unfinished">Distanță:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="237"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="244"/>
-        <source>Specify direction of offset</source>
-        <translation type="unfinished">Specificati directia pentru distantare</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="240"/>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="unfinished">Specificați punctul de referință pentru direcția de compensare</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="253"/>
-        <source>Select line, polyline, ellipse, circle or arc to create offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="254"/>
         <source>Select contour</source>
         <translation type="unfinished">Alegeți conturul</translation>
@@ -6252,13 +5724,6 @@ Punct: (%8,%9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="430"/>
         <source>Scale immediately after selection</source>
         <translation type="unfinished">Scalează imediat după selecție</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Nicio entitate aleasă!</translation>
     </message>
 </context>
 <context>
@@ -7235,18 +6700,6 @@ Punct: (%8,%9)</translation>
         <translation>Nu pot citi fișierul furnizat - vă rugăm să verificați dacă acesta există și este permis să citească din el.</translation>
     </message>
     <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">Hărți rapide nu au fost importate.
-Cu condiţia ca fişierul să existe, totuşi nu conţine scurtături de cartografiere LibreCAD.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">Hărți rapide nu au fost importate.
-Eroare de parsare XML a apărut în timpul procesării fișierului.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
         <translation>Hărți rapide au fost salvate cu succes.</translation>
@@ -7255,12 +6708,6 @@ Eroare de parsare XML a apărut în timpul procesării fișierului.</translation
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
         <translation>Nu se poate scrie în fișierul furnizat - vă rugăm să verificați dacă este permis să-l scrie.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">Hărți rapide nu au fost importate.
-A apărut o eroare în timpul generației XML.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -8655,74 +8102,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     </message>
 </context>
 <context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">Dacă este verificat, arc original va fi eliminat</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">Înlocuiește arcul</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">Stratul pe care trebuie plasat cercul creat</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Activ</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Activ</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Rezolvat original</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">Alege valoarea offset din desen</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Pen:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">Pen pentru a aplica cercului creat</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Strat:</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">Delta razei cercului pe raza arcului</translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">Deplasare rază:</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -9017,69 +8396,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>Bara de unelte:%1 (Custom)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">Tip</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">Dimensiunea orizontală a crucii</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">Alege valoarea X din desen</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">Defineşte cum se aplică dimensiunile crucii</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">Extinderea</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">Lungime totală</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">Procent</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">Alege valoarea Y din desen</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">Dimensiunea verticală a crucii</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">Unghi de rotire pentru cruce în jurul centrului</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
     </message>
 </context>
 <context>
@@ -9443,41 +8759,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="obsolete">Dimensiune ordonată</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Strat:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Strat de dimensiune</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Atribuții pen</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometrie</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="obsolete">Ordinat</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -9539,11 +8820,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
         <translation>Spațierea inițială:</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">Setează distanța dintre liniile de dimensiune ale unei dimensiuni de referință. Introdu o distanţă. Pentru informaţii despre dimensiunile iniţiale, vezi DIMBASELINE. (Validitatea sistemului DIMDLI)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -11190,10 +10466,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <source>Hatch Properties</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">Proprietăţi?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -11642,19 +10914,9 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <translation>NOTĂ: Meniul va fi ignorat. Este rezervat pentru &quot;Pan.&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="240"/>
-        <source>NNOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
-        <translation>Meniul va fi ignorat. Este rezervat pentru &quot;Select Contour.&quot;.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="243"/>
         <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
         <translation>NOTĂ: Această combinație este rezervată pentru meniul context implicit și poate preveni invocarea ei!</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="246"/>
-        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored</source>
-        <translation>NOTĂ: Această combinaţie este rezervată lui Pan! Meniul va fi ignorat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="251"/>
@@ -11715,10 +10977,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <translation>Coloana detalii UCS</translation>
     </message>
     <message>
-        <source>If checked, type of grid for saved view will be shown</source>
-        <translation type="vanished">Dacă este verificat, va fi afișat tipul de grilă pentru vizualizare salvată</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
         <translation>Coloana pictogramă tip grilă</translation>
@@ -11727,18 +10985,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Type icon column</source>
         <translation>Tip coloană pictogramă</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation type="vanished">Dacă este verificat, coloana cu detalii privind sistemul de coordonate al vizualizării va fi afișată</translation>
-    </message>
-    <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">Informații detaliate despre elementele din tabelul cu vizualizări.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">Dacă este bifată, coloana cu detalii despre sistemul de coordonate al vizualizării va fi afișată.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
@@ -11781,10 +11027,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <translation>Dacă se verifică, coloana cu detalii de vizualizare va fi afișată în tabel.</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">Coloana de detalii VIew</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>Operațiuni</translation>
@@ -11800,17 +11042,9 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">Pe dublu clic pe element de masă</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
         <source>Defines which action should be performed on double click on view item of the table.</source>
         <translation>Definește acțiunea care trebuie efectuată la dublu-clic pe un element de vizualizare din tabel.</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table. </source>
-        <translation type="vanished">Defineşte ce acţiune trebuie efectuată pe dublu click pe elementul vizual al tabelului.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="158"/>
@@ -11838,10 +11072,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <translation>Dacă este activat, faceți clic pe elementul tabel de vizualizare va restabili vizualizarea. În caz contrar, punctul de vedere ar trebui restabilit în mod explicit.</translation>
     </message>
     <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">Restaurare vizualizare pe un singur clic pe element tabel</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
         <translation>Dacă arată, vârful de instrument cu informații suplimentare despre vedere vor fi afișate pentru element de tabel.</translation>
@@ -11850,10 +11080,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
         <translation>Dacă este verificat și în timpul creării vizualizarea cu numele introdus există deja, acesta va fi actualizat cu o nouă poziție. În caz contrar, va fi necesar un nume unic de vizualizare nouă.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Dacă sunt selectate, dialogul de confirmare va fi afișat la îndepărtarea vizualizării. Altfel, vederea va fi înlăturată în tăcere.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
@@ -12149,13 +11375,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation>Numele nu este unic. Introduceți un nume unic.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="obsolete">Punctele de control Parabola nu pot fi colinare</translation>
     </message>
 </context>
 <context>
@@ -12652,17 +11871,9 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <translation>Dacă сhecked, vârful de instrument cu informații suplimentare despre UCS vor fi afișate pentru element de tabel.</translation>
     </message>
     <message>
-        <source>Toolip with UCS details for table items</source>
-        <translation type="vanished">Toolip cu detalii UCS pentru elemente de masă</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
         <source>Type icon column</source>
         <translation>Tip coloană pictogramă</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation type="vanished">Dacă se verifică, coloana cu detalii privind originea și unghiul UCS va fi prezentată în tabel</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -12678,10 +11889,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
         <source>Editing</source>
         <translation>Editare</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Dacă sunt selectate, dialogul de confirmare va fi afișat la îndepărtarea vizualizării. Altfel, vederea va fi înlăturată în tăcere.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"/>
@@ -12702,10 +11909,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
         <translation>Dacă este bifată, coloana cu tipul de grilă pentru sistemul de coordonate (UCS) va fi afișată.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">Dacă este selectată, va fi afișat un dialog de confirmare la ștergerea vizualizării. Altfel, vizualizarea va fi ștearsă fără confirmare.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12773,26 +11976,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <translation>Definește numărul de intermitențe ale indicatorului UCS pentru evidențierea UCS.</translation>
     </message>
     <message>
-        <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation type="vanished">Defineşte ce acţiune trebuie efectuată cu dublu click pe elementul din tabel.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">Restaura UCS pe un singur clic pe element de masă</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation type="vanished">Dacă se verifică, coloana cu pictogramă pentru tipul de UCS va fi prezentată în tabel.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation type="vanished">Dacă se verifică, se va afișa coloana cu tipul de grilă pentru UCS</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied</source>
-        <translation type="vanished">Defineşte modul în care fereastra de vizualizare a desenului trebuie ajustată după aplicarea UCS</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
         <source>On double-click on table item</source>
         <translation>Pe dublu clic pe element de masă</translation>
@@ -12848,10 +12031,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <translation>Evidențiere UCS</translation>
     </message>
     <message>
-        <source>Defines delay between UCS marker blinks</source>
-        <translation type="vanished">Definește întârzierea între clipește markerul UCS</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="216"/>
         <source> ms</source>
         <translation>ms</translation>
@@ -12865,10 +12044,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="242"/>
         <source>Blink Delay:</source>
         <translation>Întârziere clipire:</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation type="vanished">Defineşte cantitatea de clipiri de marker UCS pentru evidenţierea UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="252"/>
@@ -13265,45 +12440,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">Dacă este verificat, se va crea caseta de legare pentru întreaga selecție. În caz contrar, acesta va fi creat pentru entități individuale.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">Selecţie ca grup</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Alege offset de desen</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">În cazul în care sunt selectate, vor fi trase numai puncte de colț pentru caseta de fixare. În caz contrar, liniile de margine vor fi trase.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">Numai puncte de colț</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">Dacă este selectat, caseta de legare este trasă ca polilină</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilinie</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13397,86 +12533,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation type="unfinished">Alege offset de desen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">Offset vertical al duplicatului de la entitatea inițială</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">Compensarea orizontală a duplicatului față de entitatea inițială</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">Alege compensat de X de desen</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Pen:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">Dacă este verificat, duplicatul va fi poziționat în coordonate originale</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">În loc</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">Selectează decalajul pe axa Y din desen.</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Strat:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">Stilou pentru aplicarea la duplicatul creat</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Activ</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Rezolvat original</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">Stratul pe care trebuie plasat duplicatul</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Activ</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">Decalaj Y:</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">Decalaj X:</translation>
     </message>
 </context>
 <context>
@@ -13658,69 +12714,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">Radius minor:</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">Valoarea unghiului pentru raza majoră</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">Dacă este verificat, unghiul pentru raza majoră poate fi specificat</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Unghi de bază:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">În sens invers acelor de ceasornic</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">Alege acțiuni majore din tragere</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">Dacă este verificat, unghiul de rază majoră este specificat de mouse</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Liber</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">Lungimea razei majore a elipsei</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">Alege raza minoră din desen</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">Maiorul Radius:</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">Lungimea razei minore a elipsei</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">În sensul acelor de ceasornic</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13859,21 +12852,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">Alege unghiul din desen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Opțiuni arc</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">În sensul acelor de ceasornic</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">În sens invers acelor de ceasornic</translation>
     </message>
 </context>
 <context>
@@ -14436,11 +13414,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
 <context>
     <name>LC_ExportToImageService</name>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="52"/>
-        <source>Exporting drawing...</source>
-        <translation>Export desen...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="59"/>
         <source>Exported: %1</source>
         <translation>Exportat:%1</translation>
@@ -14764,30 +13737,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <source>Eccentricity:</source>
         <translation>Excentricitate:</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">Definiția nevalidă a hiperbolei</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">Foci trebuie să fie distinct</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">Coordonate nevalide ale centrului</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">Raza mare trebuie să fie pozitivă</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">Unghi de rotație nevalidă</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">Raportul sau raza minoră trebuie să fie pozitive</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -14959,10 +13908,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <translation>Lățime:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">Lățimea imaginii</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>Valoarea lățimii de selecție din desen</translation>
@@ -14973,21 +13918,9 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <translation>Înălțime:</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">Înălțimea imaginii</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>Alegeți valoarea de înălțime din desen</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Scalare:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">Factor de scalare</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -14999,10 +13932,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>Unghi:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Unghiul de rotație</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -15034,22 +13963,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <source>Select an image file</source>
         <translation>Alegeți un fișier imagine</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">Dimensiune (px):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">Mărimea imaginii în pixeli</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">Rezoluția (doți per inch)</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -15062,21 +13975,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">Dacă este verificat, punctul va fi întotdeauna în interiorul entității selectate</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">Snap pe Entitate</translation>
     </message>
 </context>
 <context>
@@ -15454,14 +14352,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <translation>Separator utilizat pentru împărțirea numelui intern al stratului în nume ierarhice</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">Separator nume nivel</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">Suffixe secundare ale straturilor</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15492,10 +14382,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>Sufixul numelui stratului care indică un strat de poziție alternativă.</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">Nume duplicat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15638,17 +14524,9 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <translation>Configurări pentru diverse culori</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Culori</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>Culoare de fundal pentru elementele selectate din arborele de straturi.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">Culoare pentru linii de separare în straturi vedere copac</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15687,10 +14565,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>Culoare de fundal strat virtual</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">Grilă de separare a elementelor Threeview</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15746,10 +14620,6 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>Strat de poziție alternativă</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">grilă</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16239,118 +15109,6 @@ Vă rugăm să specificați o altă valoare.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">Dacă este verificat, lungimea liniei este definită prin poziția mouse-ului în loc de setare</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Liber</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Depărtează distanța de desen</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">Deplasarea punctului de oprire a căpușei din punctul de intersecție</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Lungimea pick-ului de la desen</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Alege offset de desen</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">Dacă este verificat, entitatea inițială va fi împărțită la punctul de intersecție.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Divide</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">Distanța dintre punctul de intersecție și punctul de prindere al liniei specificat</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">Definește care parte a liniei create va fi ruptă la punctul de intersecție</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mijloc</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Sfârşit</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">Aliniere la puncte:</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Linia Snap:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Lungimea liniei</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">Dacă este verificat, unghiul este relativ la unghiul entității selectate</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lungimea:</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">Punct de oprire pentru poziția punctului de intersecție dintre linia creată și entitatea sursă (în cadrul liniei originale)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">Liber</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Distanță Snap:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Unghiul liniei</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16657,93 +15415,6 @@ Vă rugăm să specificați o altă valoare.</translation>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation type="unfinished">Numărul de bisectoare de creat</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">Mărime:</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">Sfârșit compensat:</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">Deplasarea liniei create din punctul de intersecție</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">Punct de oprire pentru linia creată</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mijloc</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Sfârşit</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lungimea:</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">Lungimea fixă a liniei create</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Snap:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Lungimea pick-ului de la desen</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Alege offset de desen</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">Definește dacă linia creată ar trebui creată la punctul de intersecție sau ar trebui să aibă lungime fixă</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">La intersecţie</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">Lungime fixă</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">Dacă este verificat, linia creată va fi ortogonală pentru linia selectată</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">Ortogonală</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">Unghiul dintre linia originală și cea creată</translation>
     </message>
 </context>
 <context>
@@ -17129,81 +15800,6 @@ Vă rugăm să specificați o altă valoare.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">Dacă este verificat, poliline va fi creat în loc de linii individuale</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">Creează linie</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">Politica pentru linie a fost selectată pe locul al doilea</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">Extinde/Trim</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">Adaugă segment</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">Nicio schimbare</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">Linia 1:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">Linia 2:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">Politica de unire a liniei selectate</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">Defineşte modul în care stiloul injector (pen- ul) trebuie aplicat entităţilor create</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">Pen activ</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">Linia 1</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">Linia 2</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">Ambele linii</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">Atribute:</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">Dacă sunt verificate, liniile originale vor fi eliminate</translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">Elimină originalele</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17585,85 +16181,6 @@ Vă rugăm să specificați o altă valoare.</translation>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">Controlează modul în care trebuie create puncte pe margini (puncte de pornire/sfârșit).</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Niciuna</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Ambele</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Sfârşit</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Alegeți distanța de desen</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">Numărul de puncte de creat</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">Puncte margine:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">Specifică dacă toate punctele se încadrează între punctele de start/sfârșit ale liniei sau dacă lungimea liniei este calculată pe baza numărului de puncte și a distanței dintre puncte.</translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">Linie fit</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">Distanţa dintre puncte.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">Dacă este verificat, linia de puncte va fi trasată cu unghiul specificat</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">Număr de puncte:</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">Dacă se verifică, se va utiliza distanța specificată fixă între puncte. În caz contrar, distanța va fi calculată.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Distanță fixă</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Unghiul liniei</translation>
     </message>
 </context>
 <context>
@@ -21913,433 +20430,6 @@ Vă rugăm să specificați o altă valoare.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp; Ajutor</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">Docuri on-line</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;Wiki</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">&amp; Manualul utilizatorului</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp; Comenzi</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">Fișe &amp; stil</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">Wid&amp;gets</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Despre</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp; Forum</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">Zulip &amp; Chat</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">&amp; Trimite eroare</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">&amp; Cerere</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">&amp; Remite pagina</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp; Donează</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp; Linie</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">Poin &amp;t</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp; Circulă</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">&amp; Arc</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">Poli &amp;gon</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">Splin &amp;e</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">Ellip&amp;se</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp; Polilină</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">&amp; Altele</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">&amp; Draw</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp; Elipsă</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">Ot&amp;her</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp; Modificare</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp; Ordin</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">&amp; Dimensiuni</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp; Info</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp; Unelte</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp; Alege</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">Dime&amp;nsion</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp; Completează</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Fișiere recente</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Importă</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Exportă</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp; Opţiuni</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp; Edit</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp; Vizualizează</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">Restaurează</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">Pl&amp;ugins</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">&amp; Spațiu de lucru</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Dock zone</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">Widget-uri CAD</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">&amp; Desenări</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">Context</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Bare de unelte</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">Controale</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">Controale CAD</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">Bara de unelte CAD</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Alegeți</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">Recent</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Modificare</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">Modifică mai mult</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Trage</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Linie</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilinie</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Punct</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Cerc</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Poligon</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">Polilinie/Splină</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Elipsă</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Altele</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">Adaugă dimensiuni</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">Aliniere</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">Trage ordinea</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Straturi</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Informații</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Editare</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">Opțiuni</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">Vizualizări &amp; numite</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">Editează proprietăți</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">Modificare generic</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">Modificare linie</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">Trage linie</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">Desenează cercul</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">Desenează altele</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">Modifică cercul</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">Modificarea arcului</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">Modificarea polilinei</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">Modificare splină</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">Modificarea punctelor de stropire</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">Modificare text</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">Modificare text</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">Editează blocul</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Ordine</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp; Bare</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">Bara de unelte &amp;CAD</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">&amp; Spații de lucru</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Modul Ta&amp;b</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">Modul &amp; window</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp; Layout</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">Rotunjite</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">Triunghiular</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">Nord</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">Sud</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">Est</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">Vest</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp; Aranjează</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp;maximizat</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp; Cascadă</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp; Tigla</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Tigla &amp;Vertic</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Tigla și orizontală</translation>
-    </message>
-</context>
-<context>
     <name>LC_MenuFactoryBase</name>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
@@ -22955,21 +21045,6 @@ Vă rugăm să specificați o altă valoare.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Alege offset de desen</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23106,197 +21181,6 @@ Vă rugăm să specificați o altă valoare.</translation>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Dacă este verificat, atributele curente vor fi utilizate pentru entitățile oglindite, altfel - cele originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Folosește Atributele curente</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Dacă nu sunt verificate, entitățile originale vor fi eliminate, altfel vor supraviețui.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Păstrează originalele</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Dacă sunt verificate, entitățile oglindite vor fi plasate pe stratul curent, altfel vor fi plasate în straturi originale.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Plan curent utilizator</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">Dacă este verificat, entitățile vor fi scalate dacă este necesar. Altfel, vor fi poziţionaţi şi rotiţi.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Scala</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">Dacă sunt verificate, vor fi eliminate segmentele dintre punctele de intersecție. Dacă nu este verificată - entiţia va fi împărţită în puncte de intersecţie.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">Elimină segmente</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">Dacă este verificat, segmentul selectat va fi eliminat. În caz contrar, segmentul selectat va supraviețui și segmentele rămase vor fi eliminate.</translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">Elimină selectat</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Distanță Snap:</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">Punct de golire la punctul de prindere linie</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Linia Snap:</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">Dimensiune Gap:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">Punct de oprire pentru decalaj pe linie</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Liber</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">Aliniere la spații:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">Mijloc</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">Sfârşit</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">Liber</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">Mijloc</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">Sfârşit</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">Dimensiune decalaj PIck de la desen</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">Distanța de la punctul de închidere</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Depărtează distanța de desen</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">Dimensiunea decalajului, dacă nu este liberă</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">În cazul în care Cheched, dimensiunea decalajului este determinată de şoarece</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">Dacă este verificat, oglinda va fi efectuată de entitatea de linie selectată.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">Oglindă pentru linia selectată</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Dacă nu sunt verificate, entitățile originale vor fi eliminate, altfel vor supraviețui.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Păstrează originalele</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Dacă este verificat, atributele curente vor fi utilizate pentru entitățile oglindite, altfel - cele originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Folosește Atributele curente</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Dacă sunt verificate, entitățile oglindite vor fi plasate pe stratul curent, altfel vor fi plasate în straturi originale.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Plan curent utilizator</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23342,234 +21226,6 @@ Vă rugăm să specificați o altă valoare.</translation>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation type="unfinished">Folosește stratul curent</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Mută opțiunile de rotație</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">Selecţia gratuită a factorului trebuie efectuată de către şoarece dacă este verificată.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Liber</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Dacă sunt verificate, vor fi plasate pe stratul curent, altfel vor fi în straturi originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Folosește plan curent</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">Dacă este absolut, punctul de referință va fi rotit, dar entitatea va fi rotită numai cu al doilea unghi, altfel unghiurile se vor rezuma</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">Absolut</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">Unghiul de rotire a entității în jurul punctului central de rotație</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">Dacă se verifică, atributele curente vor fi aplicate entităților create, vor fi utilizate cele originale înțelepte.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Folosește Atributele curente</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">Dacă este verificat, a doua rotație este în jurul punctului de referință</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">Rotește de două ori</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">Unghiul de rotație suplimentară în jurul punctului de circulație</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Alege unghiul de rotație din desen</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">Dacă sunt verificate, entitățile originale vor supraviețui, altfel vor fi eliminate.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Păstrează originalele</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">Copii multiple vor fi create dacă sunt verificate.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Copii multiple</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">Unghi de rotire:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Specifică dacă unghiul este definit prin valoarea introdusă sau prin poziția mouse-ului</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">Alege al doilea unghi de rotație din desen</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numărul de copii</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Mută opțiunile de rotație</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">Dacă este verificat, vor fi create mai multe copii.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Copii multiple</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">Dacă se verifică, se va aplica același factor de scalare pentru axa X și Y.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">Izotropic</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Dacă sunt verificate, entitățile originale vor supraviețui, altfel vor fi eliminate.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Păstrează originalele</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numărul de copii</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Dacă sunt verificate, atributele curente vor fi aplicate entităților create, altfel vor fi utilizate cele originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Folosește Atributele curente</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">Factor de scală pentru axa Y</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Factor de scalare:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">Dacă este verificat, entitățile create vor fi plasate pe stratul curent. În caz contrar, acestea vor fi plasate pe straturi originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Folosește plan curent</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">Dacă este verificat, factorul va fi selectat liber de mouse. În caz contrar, vor fi utilizate valori specificate ale factorilor.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Liber</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">Factor de scalare pentru axa X</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Dacă sunt verificate, entitățile originale vor supraviețui, altfel vor fi eliminate.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">Păstrează originalele</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">Dacă este verificat, entitățile create vor fi plasate pe stratul curent. În caz contrar, acestea vor fi plasate în straturi originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Folosește plan curent</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numărul de copii</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">Dacă se verifică, atributele curente vor fi aplicate entităților create, vor fi utilizate unele originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Folosește Atributele curente</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Dacă sunt verificate, entitățile originale vor supraviețui, altfel vor fi eliminate.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Păstrează originalele</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Dacă este verificat, vor fi create mai multe copii.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Copii multiple</translation>
     </message>
 </context>
 <context>
@@ -23885,14 +21541,6 @@ Vă rugăm să specificați o altă valoare.</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>...</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">Filtrare vizualizări după nume</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Filtru...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24328,45 +21976,6 @@ Atenție: această acțiune NU poate fi anulată!</translation>
         <source>Control Points</source>
         <translation>Puncte de control</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Punctele de control Parabola nu pot fi colinare</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">Dacă este selectată, entitatea-punct utilizată ca punct de inserție va fi eliminată după funcționarea pastei. Altfel, va supravieţui.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">Elimină punctul</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Scalează Factorul</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Factorul de scală pentru entitățile lipite</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Unghiul de rotație pentru entitățile lipite</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24442,89 +22051,6 @@ Atenție: această acțiune NU poate fi anulată!</translation>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">Alege unghiul din desen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Unghiul de rotație pentru entitățile lipite</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">Spațiu între entități puncte de inserție în rânduri.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">Spațiere matrice alege de X de la desen</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Scalează Factorul</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">Alege unghiul array din desen</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">Unghi de rotire pentru matrice.</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">Număr de rânduri.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">Spațiere matrice alege de Y de la desen</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">Dacă se verifică, se utilizează același unghi de rotație pentru fiecare pastă individuală și întreg array-ul. În caz contrar, sunt utilizate unghiuri diferite.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">Același unghi</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Spațiere:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">Număr de coloane.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">Dacă sunt verificate, array-uri de copii vor fi create pe pastă.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">Array</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">Unghi Array:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Factorul de scală pentru entitățile lipite</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">Spațiu între punctele de inserție ale entităților în coloane.</translation>
     </message>
 </context>
 <context>
@@ -25146,17 +22672,9 @@ Atenție: această acțiune NU poate fi anulată!</translation>
         <translation>Nume lățime linie</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Culori</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>Culoare de fundal pentru elementul stiloului injector (pen) editat în prezent în tabelul pen-ului</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">Culoarea grilei pentru lista de stilouri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25178,10 +22696,6 @@ Atenție: această acțiune NU poate fi anulată!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>Întregul rând de tabel este îndrăzneţ pentru stiloul injector (pen) activ</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">Culoare grilă:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25274,17 +22788,9 @@ Atenție: această acțiune NU poate fi anulată!</translation>
         <translation>Denumirea naturală, dacă este posibil</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">Dacă sunt selectate, mesajele suplimentare vor fi afișate ca parte a operațiunilor legate de stilou</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>Afișează mesajul informativ dacă nicio entitate nu poate fi selectată de stilou</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">Pe dublu click pe element de masă</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25507,12 +23013,6 @@ Atenție: această acțiune NU poate fi anulată!</translation>
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Locația fișierului cu stiluri a fost modificată, vă rugăm să reporniți aplicația pentru ca noul fișier cu stiluri să fie utilizat.
-Vă rugăm să rețineți că, dacă salvați un stil prin editor fără a reporni, stilurile curente din paletă vor fi salvate în noul fișier și, prin urmare, conținutul existent al acestuia va fi suprascris.</translation>
-    </message>
 </context>
 <context>
     <name>LC_PointPickButton</name>
@@ -25558,37 +23058,6 @@ Vă rugăm să rețineți că, dacă salvați un stil prin editor fără a repor
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>Alegeți poziția din desen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">Numărul de puncte pe direcția Y (număr de rânduri de lattice)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">Rânduri Numără:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">Coloana Contează:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">Numărul de puncte pe direcția X (număr de coloane de lattice)</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">În cazul în care selectat, ultimul punct de lattice va fi ajustat în poziția de primul punct, astfel încât lattice va fi rect sau cvadruling</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">Ajustează ultimul punct la primul</translation>
     </message>
 </context>
 <context>
@@ -32855,10 +30324,6 @@ Vă rugăm să rețineți că, dacă salvați un stil prin editor fără a repor
         <translation>Diametru</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">Circumferinţa</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="740"/>
@@ -33847,10 +31312,6 @@ p, li {white- space: pre- wrap;}
         <translation>Informații referitoare la entitate</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html &gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Dacă sunt selectate, informaţii mai detaliate despre liniile şi arcurile care fac parte din poliline vor fi afișate în Widget Info Entitate.&lt;br/&gt; În caz contrar, vor fi afișate numai informații despre vertexuri/umflături.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
@@ -33899,205 +31360,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>Punct evidenţiat</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Margini:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">Dacă este verificat, se specifică faptul că punctul de închidere trebuie deplasat pe o rază de colțuri.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Schimbare rapidă</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">Lungime de colț Belel pentru direcția Y.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Definește marginile dreptunghiului (deci este posibil să se creeze doar două linii paralele în loc de dreptunghi)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Ambele</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertical</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Orizontal</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">Lățimea dreptunghiului</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">Controlează modul în care colțurile dreptunghiului trebuie trase.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Drept</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Rotund</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">Dacă este verificat, dreptunghiul va fi rotit pe unghiul specificat.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Unghi de bază:</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">Dacă este verificat, înălțimea și lățimea specificată a dreptunghiului definesc distanța dintre centrele de arcuri pentru colțurile rotunde. În caz contrar, aceste valori definesc dimensiunea exterioară a dreptunghiului.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">Dimensiune interioară</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Lungimea Y:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">Dacă este verificat, dreptunghiul va fi creat ca poliline în loc de segmente individuale.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilinie</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Snap:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Înălțime:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">Lungimea colțului pentru direcția X.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Lungimea X:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">Înălțimea dreptunghiului</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Radius din colțuri rotunjite.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">Punctul dreptunghiului care va fi plasat în punctul de inserţie.</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">Stânga sus</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Sus</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">Top-dreapta</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Stânga</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mijloc</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Corect</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">Stânga- jos</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Jos</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">Dreapta- jos</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Alege unghiul de rotație din desen</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Alege raza de colturi rotunjite de la desen.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Unghiul de rotație</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">Înălțimea vârfului dreptunghiului din desen</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">Lăţimea de deschidere a dreptunghiului din desen</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Lățime:</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Colțuri:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">Alege lungimea de colÅ£ pentru X direcÅ£ie de desen.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">Alege lungimea de colț Belel pentru direcția Y de la desen.</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">Dacă este verificat, unghiul va fi specificat prin poziția mouse-ului. În caz contrar, se va utiliza valoarea specificată.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Liber</translation>
     </message>
 </context>
 <context>
@@ -34467,153 +31729,6 @@ p, li {white- space: pre- wrap;}
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Definește marginile dreptunghiului (deci este posibil să se creeze doar două linii paralele în loc de dreptunghi)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Ambele</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertical</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Orizontal</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">Defineşte care punct al dreptunghiului trebuie plasat în poziţia punctului de pornire.</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">Colț</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">Mid-Vertical</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">Mijlocul orizontal</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mijloc</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">Alege unghiul de rotație dreptunghi din desen</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">Alege raza de colturi rotunjite de la desen.</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Colțuri:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">Defineşte care punct al dreptunghiului trebuie plasat în poziţia punctului final.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Alege lungimea de bevel în direcția X de la desen.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Margini:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">Alege lungimea de bevel în direcția Y de la desen.</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">Aliniere la început:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Lungimea belvel în direcția Y.</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Dacă se verifică, se specifică faptul că punctele de prindere trebuie deplasate pe o rază de colțuri.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Schimbare rapidă</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Lungimea X:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">Dacă este verificat, permite să se specifice unghiul de rotație pentru dreptunghi.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Unghi de bază:</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">Unghiul de rotație rectangle.</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">Sfârşit:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">Defineşte cum trebuie trase colţurile dreptunghiului.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Drept</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Rotund</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">Radius din colțuri rotunjite.</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Lungimea Y:</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">Dacă este verificat, întregul dreptunghi va fi desenat ca poliline.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilinie</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Lungimea belvel în direcția X.</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -34871,145 +31986,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation type="unfinished">Alege lungimea de bevel în direcția Y de la desen.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">Unghi interior de cvadruling.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">Dacă este verificat, unghiul interior de cvadruling va fi fixat la valoarea specificată.</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">Unghi interior fix:</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">Unghiul de bază al dreptunghiului.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Lungimea X:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Lungimea belvel în direcția X.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">Defineşte cum trebuie trase colţurile pentru dreptunghi.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Drept</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Rotund</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Colțuri:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Dacă se verifică, se specifică faptul că punctele de prindere trebuie deplasate pe o rază de colțuri.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Schimbare rapidă</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Lungimea Y:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Lungimea belvel în direcția Y.</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Radius din colțuri rotunjite.</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">Dacă este verificat, forma va fi creată ca polilină.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilinie</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">Alege unghiul interior de cvadruling de la desen.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Margini:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Alege raza de colturi rotunjite de la desen.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Alege lungimea de bevel în direcția X de la desen.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">Alege lungimea de bevel în direcția Y de la desen.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Definește marginile dreptunghiului (deci este posibil să se creeze doar două linii paralele în loc de dreptunghi)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Ambele</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertical</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Orizontal</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">Unghiul de bază al dreptunghiului din desen</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">Dacă este verificat, dreptunghiul va fi rotit în unghiul de bază specificat. În caz contrar, unghiul de bază va fi definit prin unghiul dintre primul și al doilea punct de dreptunghi.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">Unghi de bază fix:</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">Dacă este verificat, cvadrulingul va fi creat în loc de dreptunghi.</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">Quadrangle</translation>
     </message>
 </context>
 <context>
@@ -35658,100 +32634,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">Ne pare rău, unele eroare de rețea a avut loc în timpul verificării pentru noua versiune.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">Imposibil de analizat răspunsul serverului</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Mută opțiunile de rotație</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">Specifică copiile whetether vor fi introduse în stratul curent sau original</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Folosește plan curent</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">Ajustează unghiul secundar astfel încât suma unghiurilor (unghiul de rotație relativă) este 0. Cu o astfel de entitate de stabilire vor fi mutate, dar nu rotite.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">Unghiuri oglindite</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">Alege unghiul primar din desen</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">Definește dacă vor fi aplicate atributele de desen curent sau original</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Folosește Atributele curente</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">Alege unghiul secundar din desen</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">Unghi de rotație peste punctul de referință absolut</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Dacă este verificat, vor fi create mai multe copii.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Copii multiple</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">Numărul de copii de creat</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">Unghi secundar:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">Dacă este verificat, același unghi va fi utilizat pentru toate copiile. În caz contrar, acesta va fi majorat proporțional cu numărul de copiere.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">Același unghi secundar pentru copii</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Dacă sunt verificate, entitățile originale vor supraviețui, altfel vor fi eliminate.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Păstrează originalele</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">Unghi primar:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">Unghi de rotire peste punctul de referință secundar</translation>
     </message>
 </context>
 <context>
@@ -36746,141 +33628,6 @@ p, li {white- space: pre- wrap;}
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">Unghi cerc Start:</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">Unghiul de pornire pentru cercul din care va începe căpuşele.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">Deplasarea punctului de oprire a căpuşei până la punctul de intersecţie.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Alegeți distanța de desen</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Distanță:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">Distanţa dintre căpuşe.</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">Dacă este verificat, entitatea selectată va fi împărțită la punctele de intersecție ale căpușelor.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Divide</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">Alege căpușe offset de desen</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">Lungimea căpuşei.</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">Alege unghiul căpuşei din desen</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">Tic snap:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">Alege lungimea căpuşei de desen</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">Unghiul de pornire al cercului PIck din desen</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">Unghiul dintre căpușă și entitatea selectată.</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">Dacă este verificat, unghiul căpușei este legat de entitatea selectată, în caz contrar este unghiul absolut.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">Lungime căpuşă:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">Definește care punct al căpușei trebuie plasat la punctul de intersecție cu entitatea selectată.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mijloc</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Sfârşit</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">Dacă se verifică, se va utiliza distanța fixă specificată între căpușe. În caz contrar, distanța va fi calculată pe baza lungimii entității și a numărului de căpușe.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">Fix</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">Număr de căpușe între marginile entității selectate.</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">Conte:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">Devine modul în care căpușe pe marginile entității ar trebui să fie plasate.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Niciuna</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Ambele</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">Marcaj pe margine:</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37200,57 +33947,6 @@ p, li {white- space: pre- wrap;}
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">Definește numărul de segmente de linie care urmează să fie generate pentru fiecare polilină de tip spline-fit</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">În cazul în care neverificate, aşchii originale vor fi eliminate, altfel va supravieţui.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Păstrează originalele</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Dacă sunt verificate, atributele curente vor fi utilizate pentru entitățile create, altfel - cele originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Folosește Atributele curente</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Dacă sunt verificate, entitățile create vor fi plasate pe stratul curent, altfel vor fi plasate în straturi originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Folosește plan curent</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">Dacă este verificat, este posibil să se specifice cantitatea personalizată de segmente de linie. În caz contrar, se va utiliza valoarea din setările pentru desenul curent.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">Segmentele personalizate se numără</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">Dacă sunt verificate, segmentele de linie vor face parte din poliline. Altfel, vor fi linii individuale</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">Pentru a Poliline</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -37374,61 +34070,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
         <translation type="unfinished">Pentru a Poliline</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Dacă sunt verificate, entitățile create vor fi plasate pe stratul curent, altfel vor fi plasate în straturi originale.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Plan curent utilizator</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">Cantitatea de puncte de mijloc de segment poliline care va fi adăugat la spline.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">Defineşte gradul splinei</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Dacă nu este verificată, polilina originală va fi eliminată, altfel va supravieţui.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Grad:</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Păstrează originalele</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">Puncte mediane:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Dacă sunt verificate, atributele curente vor fi utilizate pentru entitățile create, altfel - cele originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Folosește Atributele curente</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">Dacă sunt verificate, vertexuri poliline sunt considerate ca puncte spline și spline de puncte vor fi create. În caz contrar, acestea sunt considerate ca puncte de control și atelă urinară vor fi create.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">Vertexurile sunt puncte spline</translation>
     </message>
 </context>
 <context>
@@ -37832,69 +34473,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>Gradul utilizat pentru aproximarea splinei</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">Dacă este verificat, stea simetrică va fi creată.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Simetrie</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">Radius pentru margini interioare.</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Număr:</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">Alege raza exterioară din desen</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">Alege raza interioară din desen</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">Numărul de raze.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">Dacă este verificat, marginile exterioare vor fi rotunjite.</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">Radius exterior</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">Dacă este verificat, marginile interioare vor fi rotunjite.</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">Rază interioară</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">Dacă este verificat, steaua va fi desenată ca poliline.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilinie</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">Radius pentru razele exterioare.</translation>
     </message>
 </context>
 <context>
@@ -38785,14 +35363,6 @@ p, li {white- space: pre- wrap;}
         <translation>Configurări</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">Filtrarea coordonatelor utilizatorului după nume</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Filtru...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>&lt;Nici un nume&gt;</translation>
@@ -38893,33 +35463,6 @@ Atenție: această acțiune NU poate fi anulată!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>Elimină A&amp;ll UCS</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">Axa X unghi a noului sistem de coordonate</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Specifică dacă unghiul X-Axis este definit prin valoarea introdusă sau prin poziția mouse-ului</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Liber</translation>
     </message>
 </context>
 <context>
@@ -39535,33 +36078,6 @@ Atenție: această acțiune NU poate fi anulată!</translation>
     </message>
 </context>
 <context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Opțiuni unghi relativ linie</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Spațiere:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">Distanţa faţă de polilina originală</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">Copii:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numărul de copii</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">Spațiere de picurăre din desen</translation>
-    </message>
-</context>
-<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="38"/>
@@ -39599,39 +36115,14 @@ Atenție: această acțiune NU poate fi anulată!</translation>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="839"/>
-        <source>Creating new file...</source>
-        <translation>Creare fisier nou...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="775"/>
         <source>unnamed document %1</source>
         <translation>document fara nume %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1867"/>
-        <source>Opening recent file...</source>
-        <translation>Deschiderea unui fisier recent...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
         <source>Loaded document: </source>
         <translation>Document incarcat:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1068"/>
-        <source>Opening aborted</source>
-        <translation>Renuntare deschidere</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1398"/>
-        <source>Printing...</source>
-        <translation>Listare...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1501"/>
-        <source>Exiting application...</source>
-        <translation>Inchiderea aplicatiei...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -39644,19 +36135,9 @@ Atenție: această acțiune NU poate fi anulată!</translation>
         <translation>A fost creat un nou desen.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing...</source>
-        <translation>Salvare desen...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="276"/>
         <source>Saved drawing: %1</source>
         <translation>Desen salvat: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1402"/>
-        <source>Printing complete</source>
-        <translation>Listare completa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="771"/>
@@ -39671,11 +36152,6 @@ Please check the permissions.</source>
         <translation>Nu pot deschide fisierul
 %1 
 Va rog verificati permisiunile.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1230"/>
-        <source>Auto-saving drawing...</source>
-        <translation>Salvare automata a desenului...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
@@ -39741,11 +36217,6 @@ Vă rugăm să verificaţi existenţa şi permisiunile sale.</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1067"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>Fișierul &quot;%1 &quot; nu există. Deschiderea anulată</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing: %1</source>
-        <translation>Salvare desen:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="271"/>
@@ -39814,12 +36285,6 @@ Vă rugăm să verificaţi existenţa şi permisiunile sale.</translation>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="196"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>evadare</translation>
-    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
@@ -39855,11 +36320,6 @@ Vă rugăm să verificaţi existenţa şi permisiunile sale.</translation>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="69"/>
         <source>Name of the block</source>
         <translation>Denumirea blocului</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="77"/>
-        <source>Renaming Block</source>
-        <translation>Redenumire Bloc</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="78"/>
@@ -40060,12 +36520,6 @@ Vă rugăm să verificaţi existenţa şi permisiunile sale.</translation>
         <translation>Istoric comenzi si valori iesire</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="260"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>evadare</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="54"/>
         <source>...</source>
         <translation>...</translation>
@@ -40240,73 +36694,6 @@ Vă rugăm să verificaţi existenţa şi permisiunile sale.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">Arc</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Strat:</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Atribuții pen</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometrie</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">X Coordonatele centrului arcului</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">Y Coordonatele centrului arcului</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="obsolete">Defineşte dacă arcul este inversat (în sensul acelor de ceasornic)</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">Inversat</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">Centrul (y):</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="obsolete">Raza arcului</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="obsolete">Unghi de pornire:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Radius:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="obsolete">Unghiul de pornire al arcului</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="obsolete">Unghiul final al arcului</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="obsolete">Unghi final:</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Centru (x):</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
@@ -40344,178 +36731,6 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
         <translation>Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Cerc</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Strat:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometrie</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="obsolete">Raza cercului</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">Centrul (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">Y Coordonatele centrului cercului</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Centru (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">X Coordonatele centrului cercului</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">Dimensiune liniară</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Strat:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Strat de dimensiune</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Atribuții pen</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometrie</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Unghi:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="obsolete">Unghiul de rotație al dimensiunii</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Dimensiune</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Strat de dimensiune</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Strat:</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Atribuții pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Elipsă</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Strat:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometrie</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="obsolete">Unghiul de rotație pentru axa principală a elipsei, grade</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="obsolete">Definește dacă arc este inversat</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">Inversat</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">Centrul (y):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="obsolete">Unghiul final al arcului eliptic, grade</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">Y Coordonatele centrului arcului</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="obsolete">Raza axei principale a elipsei</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="obsolete">în grade</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="obsolete">Unghi de pornire (°):</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="obsolete">Rotire (°):</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="obsolete">Raza axei minore a elipsei</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="obsolete">Unghiul final (°):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="obsolete">Unghiul de pornire al arcului eliptic, grade</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="obsolete">Major:</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="obsolete">Minore:</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="obsolete">X Coordonate ale centrului elipsei</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Centru (x):</translation>
     </message>
 </context>
 <context>
@@ -40592,73 +36807,6 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <source>Image</source>
-        <translation type="obsolete">Imagine</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Strat:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometrie</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Unghi:</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="obsolete">Lățimea imaginii</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="obsolete">X coordonatele punctului de inserţie</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="obsolete">Rezoluția (doți per inch)</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="obsolete">Cale către fișier imagine</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="obsolete">Factor de scalare</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="obsolete">Dimensiune (px):</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">Unghiul de rotație</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="obsolete">Coordonarea punctului de inserţie Y</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="obsolete">Mărimea imaginii în pixeli</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">DPI</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="obsolete">Înălțimea imaginii</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="obsolete">Alegeți un fișier imagine</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="32"/>
@@ -40681,143 +36829,9 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
         <translation>Limba de interfata:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center type&lt;span style=&quot; font-size:ground; font-weight:700; welcome to LibreCAD&lt;/span&gt;&lt;br/&gt; &lt;/p&gt; Vă rugăm să alegeți unitatea pe care doriți să o utilizați pentru noi desene și limba preferată pentru Ui și Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Puteți modifica aceste setări mai târziu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
         <translation>Limba de comanda:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Strat:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometrie</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="obsolete">Punctul (y):</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="obsolete">Punctul de intrare (x):</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="obsolete">Valoarea rândurilor pentru copii</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">Unghiul de rotație</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="obsolete">Spațiere între coloane</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="obsolete">Factor de scalare pe axă X</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="obsolete">X coordonatele punctului de inserţie</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="obsolete">Spațiere între rânduri</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="obsolete">Valoarea coloanelor pentru copii</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="obsolete">Factor de scalare pe axă Y</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="obsolete">Scala Y:</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="obsolete">Rânduri:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Unghi:</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="obsolete">Coordonarea punctului de inserţie Y</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="obsolete">Spațiere rând:</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="obsolete">Coloane:</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="obsolete">Scala X:</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="obsolete">Spațiere coloană:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Linie</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Strat:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometrie</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="obsolete">Punctul final (x):</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="obsolete">Coordonarea punctului final X</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="obsolete">Coordonarea punctului final Y</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="obsolete">Punctul final (y):</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="obsolete">Punctul de pornire (y):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="obsolete">Coordonarea punctului de pornire Y</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="obsolete">Punctul de pornire (x):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="obsolete">Coordonarea punctului de pornire X</translation>
     </message>
 </context>
 <context>
@@ -40988,10 +37002,6 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
         <translation>Inserează simbol</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">Introducerea simbolului</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
         <source>Degree (°)</source>
         <translation>Grad (°)</translation>
@@ -41040,10 +37050,6 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>Lire (£)</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Yen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -41679,115 +37685,6 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
         <translation>Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <source>Mirroring Options</source>
-        <translation type="vanished">Optiuni simetrie</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numar de copii</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Stergere original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Pastrare Original</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Folosire &amp;atribute curente</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Folosire stra&amp;t curent</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numar de copii</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Stergere Original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Pastrare Original</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">Copii &amp;Multiple</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Folosirea &amp;atributelor curente</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Folosirea stra&amp;tului curent</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Move/Copy Options</source>
-        <translation type="vanished">Optiuni de mutare / copiere</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <source>Move/Rotate Options</source>
-        <translation type="vanished">Optiuni de mutare / rotire</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numar de copii</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Unghi (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Folosire &amp;atribure curente</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Folosire str&amp;at curent</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Stergere original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Pastrare original</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Copii multiple</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="vanished">CTRL+S</translation>
     </message>
 </context>
 <context>
@@ -44804,10 +40701,6 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
         <translation>Marcator relativ zero</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">Comportament</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
         <translation>Tipul grilei de desenat</translation>
@@ -45296,38 +41189,6 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
         <translation>Desene de salvare automată</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4935"/>
-        <source>#</source>
-        <translation>#</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4940"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5009"/>
-        <source>~</source>
-        <translation>~</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4945"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
-        <source>_</source>
-        <translation>_</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4950"/>
-        <source>__</source>
-        <translation>__</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4955"/>
-        <source>lcauto_</source>
-        <translation>lcauto</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4960"/>
-        <source>autosaved_</source>
-        <translation>autosalvat</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4984"/>
         <source>Auto-save file name prefix:</source>
         <translation>Prefix nume fișier de salvare automată:</translation>
@@ -45336,36 +41197,6 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5001"/>
         <source>Backup file name suffix:</source>
         <translation>Sufixul numelui fișierului de rezervă:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5014"/>
-        <source>$$</source>
-        <translation>$$</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5024"/>
-        <source>_backup</source>
-        <translation>backup</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5029"/>
-        <source>_bak</source>
-        <translation>bak</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5034"/>
-        <source>.bak</source>
-        <translation>.bak</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5039"/>
-        <source>.backup</source>
-        <translation>- înapoi</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5044"/>
-        <source>.lcb</source>
-        <translation>.lcb</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5111"/>
@@ -45863,239 +41694,6 @@ deci valoarea implicită a treptei necesare pentru coacere</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Code</source>
-        <translation type="obsolete">Cod</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Valoare</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Punct</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Strat:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometrie</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="obsolete">Poziția (y):</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="obsolete">Poziția punctului de coordonate Y</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="obsolete">Poziția (x):</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="obsolete">Poziția punctului pe coordonate X</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Polilinie</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Strat:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometrie</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="obsolete">Definește dacă polilina este contur închis</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Închis</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation type="vanished">Optiuni de rotire</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numar de copii</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Stergere original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Pastrare original</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="vanished">Copii &amp;Multiple:</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Unghi (a) :</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Folosire &amp;atribute curente</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Folosire stra&amp;t curent</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <source>Rotate Two Options</source>
-        <translation type="vanished">Optiuni rotire dubla</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numar de copii</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Stergere original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Pastrare original</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">Copii &amp;Multiple</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;a):</source>
-        <translation type="vanished">&amp;Unghi (a) :</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;b):</source>
-        <translation type="vanished">&amp;Unghi (b) :</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Folosire &amp;atribute curente</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Folosire stra&amp;t curent</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <source>Scaling Options</source>
-        <translation type="vanished">Optiuni scara de marire</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Numar de copii</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Utilizarea &amp;atributelor curente</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Utilizarea stra&amp;tului curent</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html &gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Găsiți raportul de scalare în jurul centrului printr-un punct de referință și un punct țintă.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Stergere original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Pastrare original</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">Copii &amp;Multiple</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="vanished">Marire cu acelasi factor pentru directiile x si y</translation>
-    </message>
-    <message>
-        <source>Isotropic Scaling</source>
-        <translation type="vanished">Marire izotropica</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">Splină</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Strat:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometrie</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="obsolete">Grad:</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="obsolete">Definește dacă splina definește conturul închis</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Închis</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="obsolete">Gradul utilizat pentru aproximarea splinei</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="20"/>
@@ -46271,10 +41869,6 @@ deci valoarea implicită a treptei necesare pentru coacere</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>Stratul textului</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">Obligiul textului</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -46882,10 +42476,6 @@ deci valoarea implicită a treptei necesare pentru coacere</translation>
         <translation>Pi (π)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Yen (¥)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="178"/>
         <source>Layer:</source>
         <translation>Strat:</translation>
@@ -46899,10 +42489,6 @@ deci valoarea implicită a treptei necesare pentru coacere</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="268"/>
         <source>Angle:</source>
         <translation>Unghi:</translation>
-    </message>
-    <message>
-        <source>Oblique:</source>
-        <translation type="vanished">Oblique:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
@@ -47422,21 +43008,6 @@ p, li {white- space: pre- wrap;}
     </message>
 </context>
 <context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">Scala nevalidă furnizată</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">Factorul de scalare a hârtiei mai mare decât raportul maxim de imprimare</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">Factorul de scalare a hârtiei mai mic decât raportul de imprimare min</translation>
-    </message>
-</context>
-<context>
     <name>QG_RecentFiles</name>
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="183"/>
@@ -47503,10 +43074,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>World</source>
         <translation>Lume</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Snap</translation>
     </message>
 </context>
 <context>
@@ -47711,12 +43278,6 @@ Vă rugăm să specificați o altă valoare.</translation>
         <translation>Elimină straturile goale</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Strat (s) fără entități găsite, dar acestea sunt filtrate și nu sunt vizibile.
-Curăţă masca de filtrare şi repetă.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -47778,14 +43339,6 @@ If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly 
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Înlocuiți valoarea „În funcție de strat” cu valorile straturilor sursă?
-Dacă da, entitățile cu penițe „În funcție de strat” vor apărea pe noul strat exact ca pe straturile anterioare, iar valoarea „În funcție de strat” va fi înlocuită cu penițele rezolvate.
-Dacă nu, valorile „În funcție de strat” vor rămâne, iar penița stratului țintă va defini penița pentru aceste entități.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -48404,33 +43957,9 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <translation>Format de fișier imagine etichetat</translation>
     </message>
     <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">Schimb de desen vechi%1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="471"/>
         <source>dwg Drawing %1</source>
         <translation>dwg desen%1</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="85"/>
-        <source>DWG support is not complete!</source>
-        <translation>Suportul DWG nu este complet!</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="87"/>
-        <source>If this file fails to open try an older DWG format</source>
-        <translation>Dacă acest fișier nu deschide încercați un format DWG mai vechi</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="88"/>
-        <source>or try to find a converter to make it a DXF file.</source>
-        <translation>sau să încerce să găsească un convertor pentru a face un fișier DXF.</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
-        <source>Information</source>
-        <translation>Informații</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="104"/>
@@ -49692,23 +45221,6 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <translation>Trebuie să introduceți o distanță mai întâi.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="275"/>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>cal</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="276"/>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>calculează</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="311"/>
-        <source>cal</source>
-        <translation>cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="317"/>
         <source>Calculator mode: On</source>
         <translation>Modul de calcul: Activat</translation>
@@ -49967,11 +45479,6 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>mpoint</translation>
-    </message>
-    <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">croclebyarc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -50904,12 +46411,6 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <translation>file</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="799"/>
-        <source>bevel</source>
-        <comment>modify - fillet</comment>
-        <translation>bevel</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
@@ -51527,26 +47028,6 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <translation>utilizare:</translation>
     </message>
     <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished">[options] [opțiuni] &lt;dxf files&gt;</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished">*.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">-- imprima toate fisierele dxf in fisierele pdf cu aceleasi nume.</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished">-o some.pdf *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">-- printeaza toate fisierele dxf in fisierul &apos;unele.pdf&apos;.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
         <source> [options] &lt;%1_files&gt;</source>
         <translation type="unfinished"></translation>
@@ -51622,16 +47103,6 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Dimensiunea hârtiei (în lățime x înălțime) în mm.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">Rezoluția de ieșire (DPI).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>Scala de ieşire. De exemplu: 0,01 (pentru scara 1:100).</translation>
@@ -51664,27 +47135,9 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <translation>Dosarul de ieșire țintă.</translation>
     </message>
     <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="177"/>
-        <source>DXF output version: r12, r14, r2000, r2004, r2007 (default), r2018.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="183"/>
-        <source>DWG output version: r2000 (default), r2004, r2010, r2013, r2018.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">&lt;dxf files &gt;</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">Fișier DXF de intrare (s)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -51833,11 +47286,6 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <translation>eroare la citirea antetului fișierului DXF/WG</translation>
     </message>
     <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">citire eroare antet DXF/DWG dara</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
@@ -51884,10 +47332,6 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>eroare la citirea codului DXF/DWG</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">@ info: whatsthis.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -52338,10 +47782,6 @@ Doriti sa il inlocuiti cu acesta?</translation>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">Alegeți pentru a crea bloc (Introduceți pentru a finaliza)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
         <translation>Alegeți conturul</translation>
@@ -52355,66 +47795,6 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>Specificati punctul de referinta</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">Alegeți pentru a exploda containerul (Introduceți pentru a finaliza)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">Selectează și explodează</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Expresie incorecta</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specificati punctul de referinta</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Introduceti unghiul:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Introduceti factorul:</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">Introduceti  numarul de coloane:</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">Introduceti numarul de linii:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">Introduceti spatiul dintre coloane:</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">Introduceti spatiul dintre linii:</translation>
-    </message>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">Blocul nu poate conține o inserție de sine.</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished">a introdus un bloc curent în:</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">Acest bloc nu poate fi introdus.</translation>
     </message>
 </context>
 <context>
@@ -52666,270 +48046,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">Lungimea coardei ar trebui să nu fie zero</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Expresie incorecta</translation>
-    </message>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">Lungime de coarda incorecta</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Specificati centrul</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">Specificați punctul de pornire</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Arc alternativ</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">Se specifică lungimea coardei (negativ pentru alt punct):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">Folosește punctul alternativ arc</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">Specificati raza</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">Specificati unghiul de pornire:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">A se preciza unghiul final sau [unghi/cordon]</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">Specificati unghiul inclus:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">Données d&apos;arc invalides.</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Specificați al treilea punct</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Specificati al doilea punct</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">Specificați punctul de pornire sau [centru]</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">Specificati entitatea de baza</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">Arcul alternativ</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">Arc alternativ</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">Specificati unghiul final</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">Specificati punctul de final</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Expresie incorecta</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Specificati centrul</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">A se specifica punctul din cerc</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">Valori incorecte pentru cerc.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Specificati primul punct</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Specificati al doilea punct</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">Valori incorecte pentru cerc.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Specificati primul punct</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Specificati al doilea punct</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Specificati al treilea punct</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Expresie incorecta</translation>
-    </message>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">Specificati centrul cercului</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">Specificati raza cercului</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">raza =%1 este invalidă (exprimare)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">raza=%1 este invalidă (negativ)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">raza =%1 este invalidă (zero)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">Specificati prima linie</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">Specificati a doua linie</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">Specificati a treia linie</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Specificați o linie/arc/cerc</translation>
-    </message>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">A se preciza primul punct al cercului tangent</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">A se preciza al doilea punct al cercului tangent</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Selectaţi centrul cercului tangent</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Specificați prima linie/arc/cerc</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">A se preciza a doua linie/arc/cerc</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Selectaţi centrul cercului tangent</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">Niciun cerc tangential comun pentru raza &quot;%1 &quot;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Specificați o linie/arc/cerc</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">Specificați cealaltă linie/arc/cerc</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">Specificați un punct pe cercul tangent</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Selectaţi centrul cercului tangent</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Specificați prima linie/arc/cerc</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">A se preciza a doua linie/arc/cerc</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">Niciun cerc tangenţial comun pentru entităţile selectate</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">A se preciza a treia linie/arc/cerc</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Selectaţi centrul cercului tangent</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
@@ -53124,125 +48240,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">Alegeți trapa (Introduceți pentru a finaliza)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
         <translation>Hatch imediat după selecție</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Expresie incorecta</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specificati punctul de referinta</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Introduceti unghiul:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Introduceti factorul:</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">Introduceți dpi:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Specificati primul punct</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Specificati urmatorul punct sau [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Specificati urmatorul punct</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">Nu se poate inchide secventa de linii: nu au fost definite suficiente entitati sau secventa este deja inchisa.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">Nu se poate anula: A ajuns la începutul istoriei</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">Nu se poate reface: Sfârşitul istoriei a ajuns</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Expresie incorecta</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Specificati pozitia</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">Direcția alternativă</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Introduceti unghiul:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">Introduceti lungimea:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">vor fi create entități</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Expresie incorecta</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">Selectati prima linie</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">Selectati a doua linie</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">Introduceti lungimea bisectoarei:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">Introduceti numarul de bisectoare:</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">Liniile sectoriale ale numărului nu sunt în intervalul:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">Click-and-drag pentru desenare linie</translation>
     </message>
 </context>
 <context>
@@ -53275,74 +48275,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Selectati un obiect de tip cerc, arc sau elipsa</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">introduceti un numar:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Expresie incorecta</translation>
-    </message>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">Specificati Distanta &lt;%1&gt; sau entitatea sau [%2]</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">vor fi create entități</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Numar incorect. Incercati un numar intre 1 si 99</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">Selectati entitatea</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">Specificati punctul</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">vor fi create entități</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Numar:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Numar incorect. Incercati un numar intre 1 si 99</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Expresie incorecta</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">Specificati un colt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Specificati primul colt</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Specificati al doilea colt</translation>
     </message>
 </context>
 <context>
@@ -53384,29 +48316,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Expresie incorecta</translation>
-    </message>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">Selectati entitatea de baza</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Specifică unghiul</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">Specifică lungimea</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Specificati pozitia</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53444,17 +48353,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Specifică punctul de inserție</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Introduceți textul:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
@@ -53463,108 +48361,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Specificati primul punct</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Specificati urmatorul punct sau [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Specificati urmatorul punct</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">Nu se poate inchide secventa de linii: nu au fost definite suficiente entitati.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Nu se poate anula: nu au fost definite suficiente entitati.</translation>
-    </message>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">Introduceți punctul final x</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Introduceți numărul de poliline</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">Se introduce o ecuație, f(x)</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">Introduceți punctul de pornire x</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">@ info: whatsthis.</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">Mărimea treptei introduse este invalidă.</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">Valoarea x introdusă este invalidă.</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Arc alternativ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">Specificati primul punct de control</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">Specificati urmatorul punct de control sau [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">Specificati urmatorul punct de control</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Nu se poate anula: nu au fost definite suficiente entitati.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">Text:</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Specificati punctul de inserare</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">introduceti textul:</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">A se preciza al doilea punct</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">Alegeți de tăiat (Introduceți pentru a finaliza)</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -53583,10 +48380,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>Tăiați imediat după selecție</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">Alegeți copia (Introduceți în întregime)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -53624,24 +48417,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Paste Multiple</source>
         <translation>Lipește mai multe</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="obsolete">Setează punctul de referință al pastei</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">Nicio actiune de anulat!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">Nicio actiune de refacut!</translation>
     </message>
 </context>
 <context>
@@ -53862,57 +48637,6 @@ Sfârşit: (%8,%9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">Distanță:%1
-Cartezian: (%2,%3)
-Polar: (%4 &lt; %5)
-Punctul privind entitatea: (%6,%7)
-Punct: (%8,%9)</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">Specificati entitatea</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">Nu fixați la entitățile pentru copii în container</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">Punctul relativ este pe entitate</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Informații</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Distanță:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">De la:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">Către:</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">Specificati un punct</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -53958,10 +48682,6 @@ Punct: (%8,%9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">Alegeți pentru a măsura lungimea totală (Introduceți pentru a finaliza)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="74"/>
         <source>Select contour</source>
         <translation>Alegeți conturul</translation>
@@ -53993,906 +48713,6 @@ Punct: (%8,%9)</translation>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>Renunță</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Expresie incorecta</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specificati punctul de referinta</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Introduceti unghiul:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Introduceti factorul:</translation>
-    </message>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">Nu pot deschide fisierul &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">Alegeți pentru a modifica atributele (Introduceți pentru a completa)</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">Modifică atributele imediat după selectarea</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Alegeți conturul</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">Liniile selectate sunt paralele</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">Liniile selectate nu sunt copii de aceeaşi polilină</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Intersecţia:</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Punctul 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Punctul 2:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">Entitatea nevalidă selectată (netrimabilă).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">Entitatea nevalidă selectată (neatomică).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">Entitatea nevalidă selectată (netrimabilă cu prima entitate).</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Expresie incorecta</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Selectati prima entitate</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Selectati a doua entitate</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">Introduceti lungimea 1:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">Introduceti lungimea 2:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Divide</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">La:</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nu am gasit nicio entitate.</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">Punctul de tăiere nu poate fi obiectivul entității.</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">Specificati entitatea de decupat</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">Specificati punctul de decupare</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">Entitatea trebuie să fie o linie, arc, cerc, elipsă sau splină de interpolare.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">Alegeți de șters (Introduceți pentru a finaliza)</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">Șterge imediat după selecție</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Alegeți conturul</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">Specificati primul punct de intrerupere de pe polilinie</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">Specificati al doilea punct de intrerupere de pe aceeasi polilinie</translation>
-    </message>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">Entitatile nu se afla pe aceeasi polilinie.</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">Parintele celei de a doua entitati nu este polilinie</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">Parintele primei entitati nu este polilinie</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">Părintele celei de-a doua entități este nulptr</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">Una dintre entitățile alese este nulptr</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">Părintele primei entități este nulptr</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">Prima entitate este nulipter</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">A doua entitate este nulipter</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">Faceți clic pe entitate pentru a modifica</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">Alegeți pentru a exploda textul (Introduceți pentru a finaliza)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">Explodează imediat după selecție</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Oglindă</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">Unghi (alt):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">Linia de la:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">Linia către:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">Selectează în oglindă (Introduceți în întregime)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Alegeți conturul</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">Specifică linia oglindă</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">Flip vertical</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">Flip orizontal</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">Specificati primul punct al axei de simetrie</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">Specificati al doileal punct al axei de simetrie</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">Mutarea deconectării</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">Copiază deconectarea</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specificati punctul de referinta</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">Creează o copie</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">Alegeți să mutați (Introduceți pentru a finaliza)</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">Mută imediat după selecție</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Alegeți conturul</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Specificati punctul tinta</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">Mutarea cu rotație</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">Sursă:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">Țintă:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Expresie incorecta</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specificati punctul de referinta</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">Alegeți să mutați și rotiți (Introduceți pentru a finaliza)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">Mută și rotește imediat după selecție</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Alegeți conturul</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Specificati punctul tinta</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">Introduceti unghiul de rotire:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">Dezactivează</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Distanță:</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">Specificati directia pentru distantare</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">Specificați punctul de referință pentru direcția de compensare</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">Selectaţi linie, poliline, cerc sau arc pentru a crea offset (Introduceţi pentru a finaliza)</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">Dezactivează imediat după selecție</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Alegeți conturul</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">Alegeți direcția de întoarcere (Introduceți pentru a finaliza)</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">Restaurează imediat după selecție</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Alegeți conturul</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specificati punctul de referinta</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">Rotire</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Punct sursă:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Punct ţintă:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Punct de referință:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">Punct central:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">Al doilea unghi:</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">Alegeți rotirea (Introduceți pentru a finaliza)</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">Rotește imediat după selecție</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Alegeți conturul</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Snap la centrul de selecție</translation>
-    </message>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">Specificati centrul de rotire</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">Specificati punctul tinta catre care se face rotirea</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">Se specifică punctul țintă pentru rotație în jurul punctului de referință</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">Rotire de două ori</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">Centrul 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">Unghiul 1:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">Centrul 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">Unghiul 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">Selectaţi pentru două axe de rotaţie (Introduceţi pentru a finaliza)</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">Rotește 2 Axă imediat după selecție</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Alegeți conturul</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">Specificati punctul de referinta absolut</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">Specificati punctul de referinta relativ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Expresie incorecta</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Rotund</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Punctul 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Punctul 2:</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">Specificati a doua entitate</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">Introduceti raza:</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">Specificați prima entitate sau introduceți raza &lt;%1&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Scala</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Centru:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Punct sursă:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Punct ţintă:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">Scala de X:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">Scalare după Y:</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">Specifică centrul de scară</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Snap la centrul de selecție</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">Specificați punctul de sursă</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Specificați punctul țintă</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">Snap gratuit</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">Alegeți la scară (Introduceți la finalizare)</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">Scalează imediat după selecție</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Alegeți conturul</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Specificati primul colt</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Specificati al doilea colt</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">Întindere</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">Colț de început:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">Colț de sfârșit:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Punct de referință:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Punct ţintă:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specificati punctul de referinta</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Specificati punctul tinta</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">Selectati prima entitate pentru taiere</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">Selectati entitatea de la capat</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">Trunchiază două</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Intersecţia:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">Intersecţia 2:</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">Selectati a doua entitate pentru taiere</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">Selectati entitatea pentru taiere</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">Nicio entitate găsită.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">Entitatea aleasa nu este un obiect sau nu poate fi taiata.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Expresie incorecta</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">Alegeți linia/arcul de tăiat SAU introduceți valoarea lungimii:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nicio entitate nu a fost găsită.</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">Alegeți entitățile (Introduceți la Complet)</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">Comandă imediat după selecție</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Alegeți conturul</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">Alegeți entitatea pentru ordine</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nu am gasit nicio entitate.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entitatea trebuie sa fie polilinie.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">Punctul adaugat este incorect.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">Punctul adaugat nu se afla pe entitate.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">Specificati polilinia pe care veti adauga noduri</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">Specificati punctul unde se va adauga noul nod</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nu am gasit nicio entitate.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entitatea trebuie sa fie polilinie.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">Dati click intr-o zona apropiata de inceputul sau sfarsitul poliliniei existente.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Introduceți numărul de poliline</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">Specificati polilinia in zona de inceput sau sfarsit a acesteia</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">Nu se pot adauga noduri la o polilinie inchisa.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Nu se poate anula: nu au fost definite suficiente entitati.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nu am gasit nicio entitate.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entitatea trebuie sa fie polilinie.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">Specificati polilinia de pe care veti sterge noduri</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">Specificati punctul de stergere a nodului</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Punctul de eliminare este invalid.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Punctul de ștergere nu este pe entitate.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nu am gasit nicio entitate.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entitatea trebuie sa fie polilinie.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Punctul de sters nu se afla pe entitate.</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">Nu s-a găsit nicio poliline.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">Cel puțin două segmente de polilină ar trebui să fie între punctele selectate.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">Specificati polilinia de pe care veti sterge intre doua noduri</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">Specificati primul nod</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">Specificati al doilea nod</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Punctul de eliminare este invalid.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nu am gasit nicio entitate.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entitatea trebuie sa fie polilinie.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">Alegeti polilinia originala</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nu am gasit nicio entitate.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">Alegeti unul din segmentele poliliniei originale</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">Entitatea nu poate fi o polilinie inchisa.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">Polilinie creată</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nu am gasit nicio entitate.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entitatea trebuie sa fie polilinie.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">Primul segment ar trebui să fie pe poliline selectate.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">Al doilea segment ar trebui să fie pe poliline selectate și nu egal cu primul.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">Specificati polilinia pe care veti o veti taia</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">Specificati primul segment</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">Indiquez le deuxième segment</translation>
     </message>
 </context>
 <context>
@@ -54969,113 +48789,11 @@ Punct: (%8,%9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="obsolete">Nicio entitate aleasă!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectBase</name>
     <message>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">Entitatea trebuie sa fie de tip &quot;atomic&quot;.</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Specifică entitatea de selectat</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">Alegeti primul punct al liniei de intersectie</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">Alegeți entitatea de intersectare</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">Alegeți entitățile pentru copii</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">Alegeti al doilea punct al liniei de intersectie</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">Specificați entitatea cu stratul dorit</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Specifică entitatea de selectat</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Alegeți conturul</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">Deselecție</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">Selectare</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">entități</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">care se intersectează cu cutia</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">care sunt în interiorul cutiei</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">Alegeti al doilea capat</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">Alegeți intersectarea</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">Entitățile de dezselectare</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">Alegeți entitățile</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">Deselectarea intersectării</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">Click-and-drag pentru fereastra de selectie</translation>
     </message>
 </context>
 <context>
@@ -55383,150 +49101,6 @@ Punct: (%8,%9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Opțiuni arc</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">În sens invers acelor de ceasornic</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">În sensul acelor de ceasornic</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">Opțiuni Arc Tangential</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">Dacă este selectat, se va crea arc tangent cu raza specificată</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">Raza arcului tangential</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">Dacă sunt selectate, se va crea arc cu unghi specificat</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">Unghiul total subtending al arcului tangential</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Desen radius alege</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Radius</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Unghi</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">Opțiuni bevel</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">Verificați pentru a reduce ambele entități la bevel</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">Lungimea 1:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Lungimea belvel în direcția X.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">Alege primul desen de formă lungime</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">Lungimea 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Lungimea belvel în direcția Y.</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">Alegeți desenul formei a doua lungime</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">Opțiuni cerc</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Raza cercului</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Alege raza de tragere</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">Opțiuni Tangential 2 cerc</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html &gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Raza cercului tangențial de desenat &lt;/p&gt; &lt;/corp &gt; &lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">Raza cercului tangențial</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Alege raza de tragere</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Unghi:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -55663,845 +49237,6 @@ Punct: (%8,%9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Inserează opțiuni</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Unghi de rotire</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Factor de scalare:</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">DPI:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Scalează Factorul</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">DPI al imaginii</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Inserează opțiuni</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Unghi de rotire</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Factor:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Scalează Factorul</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">Array:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">Numărul de coloane</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">Numărul de rânduri</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">Alegeți distanța dintre rânduri de desen</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">Spațiere coloană de picurător de desen</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Spațiere:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">Spațiere coloană</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">Spațiere rând</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">Inserează opțiuni bibliotecă</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Unghi de rotire</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Factor:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Scalează Factorul</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">Opțiuni unghi linie</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">Punct pe linia creată care va fi plasat în punctul de inserție</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Unghiul liniei</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lungimea:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Lungimea liniei</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">Punct Snap:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">Alege unghiul liniei din desen</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mijloc</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Sfârşit</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">Lungimea liniei PIck de la desen</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">Dacă este selectat, linia va fi orhotogonală la axa de bază a unghiurilor. Altfel - pentru a ecrana axa</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">La baza unghiului</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">Opțiuni Bisector Linie</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lungimea:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">Lungimea bisectorului</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">Alegeți lungimea liniei de desen</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Număr:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">Numărul de bisectoare de creat</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Opțiuni linie</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Formați un contur închis din liniile trase</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Închide</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Anulează ultima linie de desen</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Desfă</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Reface ultimul desen linie</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Refă</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Opțiuni linie</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">Direcţie:</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">Creează poliline din segmente de linie</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilinie</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">Linia verticală</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">Linie după unghiul specificat</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Unghi</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">Linia orizontală</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">Dacă este verificat, unghiul este relativ la segmentul anterior</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Anulează ultima linie de desen</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Desfă</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Formați un contur închis din liniile trase</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Închide</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Reface ultimul desen linie</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Refă</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Unghiul liniei</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">Linia la punct arbitrar</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Punct</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">Opțiuni paralele de linie</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Distanță:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">Distanța față de entitatea inițială</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Alegeți distanța de desen</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Număr:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Numărul de paralele de creat</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">Linie paralelă prin opțiuni</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">Dacă este verificat, vor fi create paralele pe ambele părți ale entității</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Simetrie</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Număr:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Numărul de paralele de creat</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Opțiuni poligon</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Numărul de margini</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Opțiuni poligon</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Număr:</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">Dacă sunt verificate, vertexurile poligonului vor fi rotunjite.</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">Radius</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">Dacă este verificat, poligonul va fi tras ca polilină. În caz contrar, vor fi create entități individuale.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilinie</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Alege raza de tragere</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">Numărul de margini</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">Raza rotundă pentru vertex bevel.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">Dacă sunt selectate, punctele de referință sunt pentru vertexurile poligonului. În caz contrar, acestea sunt pentru punctul de mijloc al marginilor.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">Vertex către Vertex</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Opțiuni unghi relativ linie</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Unghiul liniei</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lungimea:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Lungimea liniei</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Lungimea pick-ului de la desen</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Opțiuni text</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Text:</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">Text de inserat</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Unghiul de rotație</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">Modifică opțiunile de deconectare</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">Distanța de compensare față de entitatea inițială</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Dacă sunt verificate, entitățile create vor fi plasate în stratul curent, altfel vor fi în straturi originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Folosește plan curent</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Numărul de copii.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Dacă sunt verificate, entitățile originale vor supraviețui, altfel vor fi eliminate.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Păstrează originalele</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">Dacă este verificat, vor fi utilizate dispozitive de distanță de compensare, altfel acestea vor fi definite de mouse.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Distanță fixă</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Dacă sunt verificate, atributele curente vor fi aplicate entităților create, altfel vor fi utilizate cele originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Folosește Atributele curente</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">Alegeți distanța față de desen</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Dacă este verificat, vor fi create mai multe copii.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Copii multiple</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Mută opțiunile de rotație</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Dacă sunt verificate, atributele curente vor fi aplicate entităților create, altfel vor fi utilizate cele originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Folosește Atributele curente</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Dacă este verificat, vor fi create mai multe copii.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Copii multiple</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">Dacă sunt verificate, toate copiile vor fi rotite de acelaşi ac. În caz contrar, unghiul va fi proporțional cu numărul fiecărei copii.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">Același unghi pentru copii</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">Unghiul de rotaţie.</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Numărul de copii.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">Dacă este verificat, unghiul de rotație este definit de mouse. În caz contrar, se utilizează valoarea specificată.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Liber</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">Dacă este verificat, entitățile create vor fi plasate în stratul curent, altfel va fi în straturi originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Folosește plan curent</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Dacă sunt verificate, entitățile originale vor supraviețui, altfel vor fi eliminate.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Păstrează originalele</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">Opțiuni poliline</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">Conectează capetele polilinei astfel încât conturul închis este creat</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Închide</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">Anulează pentru vertex anterior</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Desfă</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">Tip segment:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">Defineşte care segment de polilină trebuie creat</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Linie</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">Tangenţial</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">Rază tangentă</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">Unghi Tan</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Unghi</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">Arcul tangenţial</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">Arcul Tangental cu raza fixă</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">Arc Tangental cu unghi fix</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">Arc cu unghi</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Raza arcului</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Desen radius alege</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">Unghiul arcului</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">Contra cronometru</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">În sensul acelor de ceasornic</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">Opțiuni previzualizare tipărire</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">Orientarea peisajului</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">Configurări de desen</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Scalare:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html &gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt;dimensiune imprimată: dimensiunea desenului &lt;/p&gt; &lt;/corp&gt; &lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html &gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt;Print Scale este blocat la valoarea curentă &lt;/p&gt; &lt;/corp&gt; &lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">fix</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">Comută modul negru / alb</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">Orientarea peisagistică a hârtiei</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">Orientarea Portret de hârtie</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">Aplică scala de imprimare la lățimea liniei</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">Pagina în centrul de desen</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">Mărește până la zona de imprimare</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">Potrivit la 1 pagină</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">Dacă este activat, spațiul de hârtie va include cantitatea specificată de pagini organizate în coloane și rânduri</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">Tipărire gresită</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">Pagini Rânduri:</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">Cantitatea de coloane de pagini</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">Pagini Coloane:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">Cantitatea de rânduri de pagini</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">Calculați numărul de pagini necesare pentru a conține desenul</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">Opțiuni rotunde</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">Verificați pentru a tăia ambele margini la rotunjire</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">Raza de rotunjire</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Alege raza de tragere</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56540,99 +49275,6 @@ Punct: (%8,%9)</translation>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>Numărul de puncte de diviziune echidistante</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">Opțiuni splină</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Grad:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">Diplomă utilizată pentru apropierea punctelor</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">Dacă este selectată, se creează o linie închisă</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Închis</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">Anulează punctul precedent</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Desfă</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Opțiuni text</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Text:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Unghi:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Unghiul de rotație</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Alege unghiul din desen</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">Opțiuni suma trim</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">Distanţa. Valori negative pentru tăiere, valori pozitive pentru extindere.</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">Total</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lungimea:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">Distanţa. Valori negative pentru tăiere, valori pozitive pentru extindere. Semnul negativ este ignorat atunci când tunderea la lungimea totală finală.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Lungimea pick-ului de la desen</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">Dacă este verificat, se efectuează tapițerie/extensie pentru ambele părți ale liniei.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Simetrie</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">Lungimea de intrare este utilizată ca lungime totală după tăiere, în loc de creștere a lungimii</translation>
     </message>
 </context>
 </TS>

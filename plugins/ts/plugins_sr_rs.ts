@@ -81,15 +81,6 @@ first base, second base, first target, second target.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Ako je opcija „Zadrži originalne objekte“ označena, alat za poравнање će kopirati, a ne premestiti, izabrane objekte.
-Ako je opcija „Prvo odredite osnovne tačke“ označena, alat za poравнање će tražiti tačke za poравнање u sledećem redosledu: prva osnovna tačka, druga osnovna tačka, prva ciljna tačka, druga ciljna tačka.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>prva osnovna tačka:</translation>

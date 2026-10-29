@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>Kliknite na možnosti, da nastavite/odstranite. Kliknite »V redu«, da sprejmete in začnete poravnavo.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Če je možnost &apos;Ohrani prvotne objekte&apos; obkljukana, bo funkcija Poravnaj kopirala, namesto da bi premikala izbrane objekte.
-Če je možnost &apos;Najprej določite osnovne točke&apos; obkljukana, bo funkcija Poravnaj zahtevala točke za poravnavo v naslednjem vrstnem redu: prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna točka.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>prva bazna točka:</translation>
