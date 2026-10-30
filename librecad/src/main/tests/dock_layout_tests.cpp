@@ -87,6 +87,12 @@ private slots:
         QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
     }
 
+    void cleanupTestCase()
+    {
+        QSettings(QSettings::NativeFormat, QSettings::UserScope, qApp->organizationName(),
+                  "savedDockSizesSurviveRestart").clear();
+    }
+
     void movingCommandEnablesDestination()
     {
         auto* command = window->findChild<QDockWidget*>("command_dockwidget");
@@ -202,6 +208,159 @@ private slots:
         window->getAction("RightDockAreaToggle")->trigger();
         QVERIFY(!first->isHidden());
         QVERIFY(second->isHidden());
+    }
+
+    void leftAreaTogglePreservesDockSizes()
+    {
+        isolatedLayout();
+        auto* line = window->findChild<QDockWidget*>("dock_line");
+        auto* circle = window->findChild<QDockWidget*>("dock_circle");
+        QVERIFY(line && circle);
+        window->requestedDockAreas[Qt::RightDockWidgetArea] = false;
+        window->requestedDockAreas[Qt::LeftDockWidgetArea] = true;
+        window->requestedDockVisibility[line->objectName()] = true;
+        window->requestedDockVisibility[circle->objectName()] = true;
+        window->applyDockVisibility();
+        window->resize(796, 550);
+        settle();
+        window->resizeDocks({line}, {260}, Qt::Horizontal);
+        window->resizeDocks({line, circle}, {140, 360}, Qt::Vertical);
+        settle();
+        const QSize lineSize = line->size();
+        const QSize circleSize = circle->size();
+        for (bool viaDock : {false, true}) {
+            window->toggleLeftDockArea(false);
+            settle();
+            if (viaDock) window->requestDockVisible(line);
+            else window->toggleLeftDockArea(true);
+            settle();
+            QCOMPARE(line->size(), lineSize);
+            QCOMPARE(circle->size(), circleSize);
+        }
+    }
+
+    void constrainedDockSizesSurviveRepeatedToggle()
+    {
+        isolatedLayout();
+        auto* line = window->findChild<QDockWidget*>("dock_line");
+        auto* circle = window->findChild<QDockWidget*>("dock_circle");
+        QVERIFY(line && circle);
+        window->requestedDockAreas[Qt::RightDockWidgetArea] = false;
+        window->requestedDockAreas[Qt::LeftDockWidgetArea] = true;
+        window->requestedDockVisibility[line->objectName()] = true;
+        window->requestedDockVisibility[circle->objectName()] = true;
+        window->applyDockVisibility();
+        window->resize(796, 550);
+        settle();
+        window->resizeDocks({line}, {260}, Qt::Horizontal);
+        window->resizeDocks({line, circle}, {140, 360}, Qt::Vertical);
+        settle();
+        const QSize lineSize = line->size(), circleSize = circle->size();
+        window->toggleLeftDockArea(false);
+        settle();
+        const QVariantMap saved = window->dockAreaSizes;
+        QVERIFY(!saved.isEmpty());
+        window->resize(420, 400);
+        settle();
+        window->toggleLeftDockArea(true);
+        settle();
+        QCOMPARE(window->dockAreaSizes, saved);
+        window->toggleLeftDockArea(false);
+        settle();
+        QCOMPARE(window->dockAreaSizes, saved);
+        window->resize(796, 550);
+        settle();
+        window->toggleLeftDockArea(true);
+        settle();
+        QCOMPARE(line->size(), lineSize);
+        QCOMPARE(circle->size(), circleSize);
+        QVERIFY(window->dockAreaSizes.isEmpty());
+    }
+
+    void restoringAreaKeepsOtherDockChanges()
+    {
+        isolatedLayout();
+        auto* line = window->findChild<QDockWidget*>("dock_line");
+        QVERIFY(line);
+        window->requestedDockAreas[Qt::LeftDockWidgetArea] = true;
+        window->requestedDockVisibility[line->objectName()] = true;
+        window->applyDockVisibility();
+        auto* right = addDock("independent_right", QSize(100, 60));
+        window->resize(796, 550);
+        settle();
+        window->resizeDocks({line}, {150}, Qt::Horizontal);
+        settle();
+        window->toggleLeftDockArea(false);
+        settle();
+        window->resizeDocks({right}, {120}, Qt::Horizontal);
+        settle();
+        const int width = right->width();
+        window->toggleLeftDockArea(true);
+        settle();
+        QCOMPARE(right->width(), width);
+    }
+
+    void savedDockSizesSurviveRestart_data()
+    {
+        QTest::addColumn<bool>("reopenConstrained");
+        QTest::newRow("area hidden") << false;
+        QTest::newRow("area open in smaller window") << true;
+    }
+
+    void savedDockSizesSurviveRestart()
+    {
+        QFETCH(bool, reopenConstrained);
+        isolatedLayout();
+        auto* line = window->findChild<QDockWidget*>("dock_line");
+        auto* circle = window->findChild<QDockWidget*>("dock_circle");
+        QVERIFY(line && circle);
+        window->requestedDockAreas[Qt::RightDockWidgetArea] = false;
+        window->requestedDockAreas[Qt::LeftDockWidgetArea] = true;
+        window->requestedDockVisibility[line->objectName()] = true;
+        window->requestedDockVisibility[circle->objectName()] = true;
+        window->applyDockVisibility();
+        window->resize(796, 550);
+        settle();
+        window->resizeDocks({line}, {260}, Qt::Horizontal);
+        window->resizeDocks({line, circle}, {140, 360}, Qt::Vertical);
+        settle();
+        const QSize lineSize = line->size(), circleSize = circle->size();
+        window->toggleLeftDockArea(false);
+        settle();
+        if (reopenConstrained) {
+            window->resize(420, 400);
+            settle();
+            window->toggleLeftDockArea(true);
+            settle();
+        }
+        const QVariantMap saved = window->dockAreaSizes;
+        QVERIFY(!saved.isEmpty());
+        struct NativeSettingsGuard {
+            QSettings::Format previous {QSettings::defaultFormat()};
+            NativeSettingsGuard() { QSettings::setDefaultFormat(QSettings::NativeFormat); }
+            ~NativeSettingsGuard() { QSettings::setDefaultFormat(previous); }
+        } nativeSettings;
+        window->storeSettings();
+        QCOMPARE(QSettings().value("Geometry/DockAreaSizes").toMap(), saved);
+        instance->reset();
+        instance->reset(new QC_ApplicationWindow);
+        window = instance->get();
+        window->prepareWindowForShow();
+        for (auto* toolbar : window->findChildren<QToolBar*>()) toolbar->hide();
+        window->statusBar()->hide();
+        window->show();
+        settle();
+        QCOMPARE(window->dockAreaSizes, saved);
+        window->resize(796, 550);
+        settle();
+        if (!reopenConstrained) window->toggleLeftDockArea(true);
+        settle();
+        line = window->findChild<QDockWidget*>("dock_line");
+        circle = window->findChild<QDockWidget*>("dock_circle");
+        QVERIFY(line && circle);
+        QCOMPARE(line->size(), lineSize);
+        QCOMPARE(circle->size(), circleSize);
+        QVERIFY(window->dockAreaSizes.isEmpty());
     }
 
     void explicitPenWizardChoiceSurvivesActivationAndRestore()
