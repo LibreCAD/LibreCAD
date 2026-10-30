@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W188, superseding W187 and earlier below): implementation slices A-core
+Current status (W189, superseding W188 and earlier below): implementation slices A-core
 through T3 and the local A-core through C-check audit are closed. Direct
 synchronous `fileImport`, stream, and byte filter imports validate offset
 carriers through the worker. W158-W160 requalify qmake6 and staged installed
@@ -46,12 +46,14 @@ with valid knot layouts; both R12 rows parsed as the expected geometry-only
 POLYLINE representation. Focused local Release and ASan checks and the
 6,381-case headless suite pass. Exact-head Linux/Windows x64/ARM64 DWG/DXF/helper
 CI and five-platform Pixi checks pass. W187 made the current-source qmake6 app
-available in the approved isolated test bundle. LibreCAD's Qt open-file dialog
-crashes under macOS 27 accessibility traversal, but the Finder Open With route
-successfully loaded and visibly rendered an AC1032/R2018 DWG. Current-source
-selection/property editing and save/reopen are still unqualified. Full visible
-UI, screenshot/DPR evidence, external-CAD visual acceptance, deployed-package
-qualification, and final W0-W2/R integration remain open.
+available in the approved isolated test bundle. LibreCAD's Qt file dialog
+crashed when the macOS 27 accessibility bridge traversed it; W189 successfully
+used screenshot and keyboard input without traversing the dialog. Finder Open
+With loaded and visibly rendered an AC1032/R2018 DWG; W189 then selected and
+edited its offset, verified Undo/Redo, saved a separate R2010 DWG copy, reopened
+it, and confirmed the edited value. Full visible UI, retained screenshot/DPR
+receipts, external-CAD visual acceptance, deployed-package qualification, and
+final W0-W2/R integration remain open.
 W164 independently parsed the actual W163 AC1032 DXF output with ACadSharp,
 preserving both owned markers and valid spline knot layouts. W171 supersedes
 the retained W134 matrix evidence with a fresh current-source DWG matrix.
@@ -78,8 +80,9 @@ synchronous file/stream/byte filter APIs. The current exact-head Linux/Windows
 x64/ARM64 DWG/DXF/helper and Pixi workflows pass. Deployed-package checks, full
 visible UI, external-CAD interoperability, broader W0-W2 platform acceptance,
 and final R integration remain open.
-Latest recorded slice: W188 records full H6 roadmap validation and the stalled
-visible-app follow-up; W187 records the current-source GUI launch,
+Latest recorded slice: W189 records current-source DWG GUI selection, edit,
+Undo/Redo, R2010 save/reopen and independent read; W188 records full H6 roadmap
+validation and the recovered visible-app stall; W187 records the current-source GUI launch,
 Finder-mediated AC1032 DWG load/render, and direct-dialog accessibility failure;
 W186 records the complete exact-head Linux/Windows x64/ARM64 DWG/DXF/helper pass;
 W185 records the Windows ARM64 exact-head pass;
@@ -7319,8 +7322,50 @@ acceptance.
 | Selection/edit/undo/redo/save/reopen | OPEN; no successful current-source interaction recorded |
 | Product-source changes | None |
 
-Visible acceptance remains open. Retry with a healthy test-app process and a
-supported macOS accessibility/screenshot route; retain screenshot and DPR
-receipts, then complete selection/property inspection, edit, undo/redo and GUI
-save/reopen. External-CAD visual review, deployed-package acceptance, broader
-W0-W2 platform acceptance and final R integration also remain open.
+The W188 test-app stall was caused by a hidden exit prompt. Canceling the DWG
+close preserved the imported source; the empty untitled document was discarded.
+W189 below supersedes the W188 GUI blocker with a completed current-source
+selection/edit/undo/redo/save/reopen check on a separate copy.
+
+## 147. W189 Current-Source DWG GUI Edit and Save/Reopen
+
+Continued in the approved isolated qmake6 app at
+`/private/tmp/LibreCAD-PR3193-visible.app`. The AC1032/R2018 source fixture
+`/private/tmp/offset-W171-current-dwg/offset-matrix-write-dwg-R2018-d3_actual.dwg`
+was never overwritten; its SHA256 remains
+`aed066088fab728aff6224481accdd9900ce0b08e2e63c96dd729d28a2838842`. A
+separate working DWG was created with Save As before editing.
+
+The property sheet identified one imported `Offset Curve`. Its distance read
+0.2500. Editing it to 0.3750 reported `Offset Curve: 1 changed, 0 unchanged,
+0 refused.` Undo restored 0.2500; Redo restored 0.3750. The edited copy was
+saved, closed, reopened through the Open dialog, selected again, and its
+property sheet still showed 0.3750. The GUI's Save As filter was
+`DWG Drawing 2010 (*.dwg)`, so the round-trip copy is AC1024/R2010, not an
+AC1032 GUI-save qualification. LibreDWG `dwgread -O JSON` reads the reopened
+copy successfully.
+
+The open/save dialogs were operated by screenshot and keyboard without asking
+the CUA accessibility bridge to traverse their Qt accessibility tree. This
+avoided the earlier dialog crash. Screenshot observations were 1920x982; the
+DPR was unavailable and the screenshot was not retained as a standalone file.
+The test copy's on-disk SHA256 is
+`c423353091139502de186495c932a3a7a9970d2fdf3fbee722c64637921d99af`.
+
+| W189 check | Result |
+|---|---|
+| AC1032 source load/render | PASS; current-source DWG visibly rendered |
+| Entity selection/property inspection | PASS; one `Offset Curve`, initial distance 0.2500 |
+| Property edit | PASS; distance 0.2500 to 0.3750, one entity changed |
+| Undo / Redo | PASS; 0.2500 restored by Undo, 0.3750 restored by Redo |
+| Save/reopen | PASS; saved separate copy and reopened it in LibreCAD |
+| Reopened semantic value | PASS; property sheet shows distance 0.3750 |
+| Saved DWG version | AC1024/R2010; the GUI's active Save As filter was R2010 |
+| Independent DWG read | PASS; LibreDWG `dwgread -O JSON`, exit 0 |
+| Original fixture integrity | PASS; original AC1032 source hash unchanged |
+| Screenshot/DPR receipt | Partial; screenshot observed in-session at 1920x982, not retained; DPR unavailable |
+
+This closes one visible current-source offset edit and R2010 save/reopen path,
+not the full GUI matrix or AC1032 GUI-save path. External-CAD visual review,
+deployed-package acceptance, retained screenshot/DPR evidence, broader W0-W2
+platform acceptance, and final R integration remain open.
