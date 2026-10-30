@@ -3193,7 +3193,9 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   Windows ARM64 job `123816799173` passed all bounded tests and relocated-worker
   checks; Linux and Windows x64 remain active in the combined test step under
   workflow `40979668978`. The CTest selector includes source identity.
-  Pixi workflow `40979669043` has passed on all five platforms. Reuse the
+  Pixi workflow `40979669043` has passed on all five platforms. W175 aligns the
+  Linux bounded lane with the Windows Release configuration without reducing
+  the exhaustive test set; the next exact-head run must verify it. Reuse the
   qualified geometry-entry
   W157 extends the DWG/DXF matrix to build and execute `[sync-api]` on Linux and
   Windows x64/ARM64; ARM64 passed, while the Linux and Windows x64 exact-head
@@ -6802,6 +6804,31 @@ This closes Windows ARM64 for the current exact-head workflow, not the
 cross-platform or final W0-W2/R gates. Record the Linux and Windows x64 terminal
 results before pushing the queued roadmap commits or closing platform
 acceptance. Visible GUI and external-CAD visual checks remain open.
+
+## 133. W175 Linux Bounded CI Release Configuration
+
+The Linux CMake/Ninja configure in `.github/workflows/dwg-dxf-verify.yml` omitted
+`CMAKE_BUILD_TYPE`, unlike the Windows matrix's explicit Release configuration.
+The exact-head Windows ARM64 Release lane passed all 66,594 cache-check fault
+injection points in about 86 minutes, while the Linux job's combined test step
+had been active for more than two hours. This is consistent with the Linux
+single-config build using an unoptimized default for the same exhaustive
+geometry/fault-injection work; it is a runtime diagnosis, not evidence of a
+Linux test failure.
+
+Commit `2ecef4430` sets the Linux bounded lane to `CMAKE_BUILD_TYPE=Release`.
+It retains every test target and injection point and matches the Windows build
+configuration. `actionlint .github/workflows/dwg-dxf-verify.yml` and
+`git diff --check` pass locally. The in-flight workflow `40979668978` still
+uses its original c0438532b configuration; do not report it as Release. Verify
+the new configuration on the next exact-head PR workflow after the queued
+roadmap commits are pushed.
+
+| W175 check | Result |
+|---|---|
+| Workflow syntax | PASS; actionlint |
+| Whitespace/error check | PASS; git diff --check |
+| Exact-head Linux Release run | Pending; requires the next PR workflow |
 
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
 
