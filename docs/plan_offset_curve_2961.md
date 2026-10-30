@@ -24,93 +24,38 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W189, superseding W188 and earlier below): implementation slices A-core
-through T3 and the local A-core through C-check audit are closed. Direct
-synchronous `fileImport`, stream, and byte filter imports validate offset
-carriers through the worker. W158-W160 requalify qmake6 and staged installed
-helper paths, preview-cache portability, and creation/repeat routing in Release
-and ASan. W161-W165 record AC1021 reader triage and AC1032 independent-reader
-checks; direct AC1021 ACadSharp acceptance remains unqualified because its
-reader throws before entity decoding. W168 fixes Windows production worker pipe
-handling; W169 freshly builds the complete app with qmake6 and CMake, exercises
-the bundled helper, and passes the full local Node validation suite (412/412).
-W170 fixes three Windows ARM64 qualification failures: explicit CBOR test
-nesting, native pipe handles in the fault fixture, and CRLF-tolerant
-geometry-witness matching. W171 regenerated the current-source DWG matrix:
-LibreDWG 0.14 semantically parsed 24/24 outputs across AC1015-AC1032, including
-original and edited degree-1/degree-3 cases. ACadSharp parsed 20/24; its four
-AC1021 failures remain a pre-entity negative-ComprLen reader exception, while
-those same current AC1021 outputs pass LibreDWG. W172 regenerated 34
-current-source DXFs: ACadSharp parsed all 32 modern ASCII/binary spline rows
-with valid knot layouts; both R12 rows parsed as the expected geometry-only
-POLYLINE representation. Focused local Release and ASan checks and the
-6,381-case headless suite pass. Exact-head Linux/Windows x64/ARM64 DWG/DXF/helper
-CI and five-platform Pixi checks pass. W187 made the current-source qmake6 app
-available in the approved isolated test bundle. LibreCAD's Qt file dialog
-crashed when the macOS 27 accessibility bridge traversed it; W189 successfully
-used screenshot and keyboard input without traversing the dialog. Finder Open
-With loaded and visibly rendered an AC1032/R2018 DWG; W189 then selected and
-edited its offset, verified Undo/Redo, saved a separate R2010 DWG copy, reopened
-it, and confirmed the edited value. Full visible UI, retained screenshot/DPR
-receipts, external-CAD visual acceptance, deployed-package qualification, and
-final W0-W2/R integration remain open.
-W164 independently parsed the actual W163 AC1032 DXF output with ACadSharp,
-preserving both owned markers and valid spline knot layouts. W171 supersedes
-the retained W134 matrix evidence with a fresh current-source DWG matrix.
-W165 converted the current-source W163 DXF through ODA File Converter 27.1.0.0
-to AC1032 DWG; both LibreDWG and ACadSharp parsed the output and recovered both
-owned markers. ACadSharp's `HasValidKnotCount` is false for its 88-control closed
-spline after ODA sets the closed bit without changing its 92-knot array. ODA and
-LibreDWG agree on the closed bit; the DWG spec lists these counts independently,
-so this is recorded as a validator discrepancy, not proof of malformed output.
-This tests DXF-to-DWG conversion, not LibreCAD's direct DWG writer.
-W163 records one focused macOS qmake6 UI check: an ellipse offset preview and
-commit, properties, Undo/Redo, and AC1032 DXF save/reopen. This is partial
-evidence only; the full visible interaction matrix and its screenshot/display/
-DPR receipts remain open.
-W168 remediates the current Windows worker/wire/import CI failures: bounded raw
-CBOR scanning replaces platform-divergent stream traversal, and the production
-helper uses binary native handles for redirected pipes. W170 records the
-subsequent Windows ARM64 qualification failures and their test-fixture fixes.
-Status: **The planned product implementation is present; remaining work is
-acceptance, not an identified feature-code gap.** Worker, geometry,
-creation/repeat, trim, GUI open/template, and DXF/DWG paths have scoped local
-qualifications recorded in W1-W169. W156 closes local routing for the public
-synchronous file/stream/byte filter APIs. The current exact-head Linux/Windows
-x64/ARM64 DWG/DXF/helper and Pixi workflows pass. Deployed-package checks, full
-visible UI, external-CAD interoperability, broader W0-W2 platform acceptance,
-and final R integration remain open.
-Latest recorded slice: W189 records current-source DWG GUI selection, edit,
-Undo/Redo, R2010 save/reopen and independent read; W188 records full H6 roadmap
-validation and the recovered visible-app stall; W187 records the current-source GUI launch,
-Finder-mediated AC1032 DWG load/render, and direct-dialog accessibility failure;
-W186 records the complete exact-head Linux/Windows x64/ARM64 DWG/DXF/helper pass;
-W185 records the Windows ARM64 exact-head pass;
-W184 records the Linux exact-head DWG/DXF/helper pass;
-W183 records successful five-platform Pixi checks and the
-active exact-head format-test phase; W182 records a headless raster check of the qmake6 renderer;
-W181 records the published roadmap and exact-head rerun; W172 records the current-source DXF matrix and ACadSharp
-results; W171 records fresh current-source DWG generation and independent-reader
-results; W170 records Windows ARM64 qualification-fixture fixes
-and the pending exact-head rerun; W169 records fresh qmake6/CMake app builds, bundled helper
-exchange, and full local validation; W168 records Windows worker/wire CI
-remediation; W165 records ODA conversion and independent readers; W164
-records independent ACadSharp/LibreDWG reads; W163
-records a focused macOS qmake6 ellipse UI/save/reopen check; W162 records direct
-LibreDWG semantic inspection of the
-13 AC1021 files; W161 records direct/converted ACadSharp triage; W160
-requalifies the current-source staged install helper with Release and ASan
-clients; W159 requalifies cache portability and GUI
-creation/repeat, and W158 records a full qmake6 app/helper build and client smoke.
-W157 adds the synchronous import selector to Linux and Windows x64/ARM64 CI; W156
-routes file/stream/byte filter imports through bounded worker validation. W155
-rechecks the shared-budget/counter-transfer chain; W154 adds staged installed-
-helper CI and local macOS relocation evidence. W153 closes source/target
-reconciliation. W152 records the ASan cache-check fault sweep. W151 classifies
-five randomized command-alias failures as inherited baseline behavior. W149's
-broad local Release lanes and W148's qmake6 qualification remain recorded.
-Remote/platform CI, full deployed-package acceptance, visible interaction,
-external-CAD visual acceptance and final W0-W2/R acceptance remain open.
+Current status (W196; the chronological evidence ledger follows): planned product
+implementation slices A-core through T3 and the local A-core through C-check audit
+are present and locally qualified. This includes the shipped native geometry
+worker, Modify Offset creation/repeat, native Trim preview/commit, staged GUI
+drawing/template imports, and bounded worker validation for public synchronous
+file/stream/byte filter imports. No additional feature-code gap is currently
+identified by the roadmap review; W0-W2 and R remain open for acceptance, not
+because the Node developer runner substitutes for the native worker.
+
+W196 records a full merged-source CMake Release run (6,380 cases, zero failures
+or errors, 75 skips not qualified), deterministic full-selector ASan requalification
+(1,027 declarations / 1,354 JUnit cases, zero failures or errors, one legacy-DXF
+skip; leak detection disabled), worker CTest 9/9, and the Node validation suite
+412/412. The current PR head is roadmap-only `71ddb74ef14ab0540ba45c4b11fa1535e9c0ef83`,
+product-equivalent to merge head `8b139998c`. At that exact head, Text Foundations
+passed both headless modes; Pixi Builds, CodeQL analysis, and DWG/DXF Linux plus
+Windows x64/ARM64 checks are still running. CodeQL Security scan is skipped by
+workflow policy.
+
+The PR is open, draft, mergeable, and requires an approving review. Acceptance
+still open: exact-head workflows, complete visible GUI interaction (including
+active-preview cancellation and refusal), retained screenshot/display-DPR
+evidence, external-CAD visual review, signed/deployed package qualification,
+broader W0-W2 platform acceptance, and final R integration. CUA continues to
+report the native Mac locked; no new visible-app pass is claimed. Direct AC1021
+ACadSharp parsing is also unqualified because that reader throws on negative
+`ComprLen` before entity decoding; LibreDWG parses the current AC1021 matrix.
+
+Earlier reader findings remain in their dated ledger below: ACadSharp's
+`HasValidKnotCount` discrepancy on ODA-converted closed output is not treated as
+proof of malformed DWG, and ODA conversion is not a substitute for LibreCAD's
+direct DWG writer or external visual inspection.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
 Implementation owner: `/Users/dli/.codex/worktrees/offset-2961-runtime/LibreCAD`,
@@ -7712,3 +7657,26 @@ roadmap implementation incomplete until the remaining W0-W2 platform/deployment
 gates and R rows have evidence. Continue with locally executable, bounded
 acceptance work while remote checks run; do not substitute a successful build
 for GUI cancellation/refusal or independent CAD visual review.
+
+## 155. W197 Current-Tree Recheck and Rollup Correction
+
+The opening status summary was stale at W189 and incorrectly repeated older
+cross-platform completion wording. It now reflects W196: the planned product
+implementation is present, while exact-head CI, visible GUI, independent CAD
+visual review, deployed-package qualification, reviewer approval, and final
+W0-W2/R acceptance remain open. Historical observations remain in their dated
+sections and are not promoted to current-head results.
+
+On PR head `71ddb74ef14ab0540ba45c4b11fa1535e9c0ef83`, reran the full Node
+validation suite: 412/412 passed in 190.2 seconds, with no failures, skips,
+cancellations, or TODO cases. After the rollup edit, the focused roadmap parser
+passed 5/5; `actionlint .github/workflows/dwg-dxf-verify.yml` and
+`git diff --check` passed. No product source changed.
+
+At the status snapshot, PR #3193 remained open, draft, and mergeable, with an
+approving review required. Exact-head Text Foundations passed both headless
+modes. Pixi Builds, CodeQL analysis, and DWG/DXF Linux/Windows x64/ARM64 checks
+were still in progress; CodeQL Security scan was skipped by workflow policy.
+Native macOS controls remained unavailable because CUA reported the host locked.
+W197 is a roadmap and validation checkpoint only; it does not close any of those
+external acceptance gates.
