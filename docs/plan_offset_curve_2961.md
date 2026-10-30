@@ -7369,3 +7369,50 @@ This closes one visible current-source offset edit and R2010 save/reopen path,
 not the full GUI matrix or AC1032 GUI-save path. External-CAD visual review,
 deployed-package acceptance, retained screenshot/DPR evidence, broader W0-W2
 platform acceptance, and final R integration remain open.
+
+## 148. W190 High-Eccentricity Ellipse Property-Edit Budget
+
+Current-source visible testing uncovered a property-sheet-only rejection that
+the geometry and worker suites did not expose. A small edit from distance 1.000
+to 1.001 on a valid high-eccentricity ellipse offset was refused because
+`LC_OffsetCurveUI::sheetLimits()` divided four already bounded checker budgets
+by eight. The preview limits and native worker deadline remain the outer
+resource controls; applying this additional UI-only reduction made valid cached
+geometry fail checker validation. The fix now gives the worker-backed property
+edit the checker's full configured bounded allowance and adds a regression with
+major radius 10, ratio 0.5, tolerance 1e-4, and a cache containing more than 32
+control points.
+
+Product/test slice `4f32a89c41be3ff55f8cb78c20a60dea29df8be2` is committed. The
+focused cache-budget case passes 25 assertions; the full native offset property
+suite passes 42 cases / 9,392 assertions. The qmake6 application and bundled
+worker rebuilt successfully. On the isolated current-source GUI bundle, the
+high-eccentricity ellipse fixture visibly accepted 1.000 to 1.001 and reported
+`1 changed, 0 unchanged, 0 refused`; Undo and Redo both completed. A separate
+DXF 2018 copy was saved, and its `LC_OFFSET_CURVE` XDATA contains distance
+1.001. The source fixture was not overwritten (SHA256
+`d58e9d13b280f8f3b2fcb46ef276a0b251955ad8441fde811edcbbdd61d317a9`; saved
+copy SHA256
+`410356d466e373cb90f28e669778340ac1722395ac9816404b2f1991a5a4af90`). The
+saved DXF copy was not reopened in the GUI, so this is not a save/reopen claim.
+The temporary DXF Open With association and macOS full keyboard-navigation
+setting used during the check were restored afterward.
+
+| W190 check | Result |
+|---|---|
+| Focused cache-budget regression | PASS; 25 assertions / 1 case |
+| Native property-sheet suite | PASS; 9,392 assertions / 42 cases |
+| qmake6 incremental app/worker build | PASS |
+| Visible property edit | PASS; ellipse distance 1.000 to 1.001; 1 changed, 0 unchanged, 0 refused |
+| Undo / Redo | PASS |
+| Separate DXF 2018 output | PASS; `LC_OFFSET_CURVE` XDATA contains distance 1.001; copy not reopened |
+| Original fixture integrity | PASS; original SHA256 unchanged |
+| Product/test commit | `4f32a89c41be3ff55f8cb78c20a60dea29df8be2` |
+
+Continue the open offset-curve acceptance matrix: reopen the W190 DXF copy and
+independently inspect it; retain screenshot/DPR receipts; finish visible
+creation/repeat, preview, cancellation, refusal, and multi-entity workflows;
+qualify installed/deployed bundles and external-CAD output; complete the
+remaining platform-specific W0-W2/R gates and final integration. W190 closes
+only the valid cached-ellipse property-edit budget defect and its focused
+current-source GUI scenario.
