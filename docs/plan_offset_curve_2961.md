@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W207; the chronological evidence ledger follows): planned product
+Current status (W208; the chronological evidence ledger follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check audit
 are present and locally qualified. This includes the shipped native geometry
 worker, Modify Offset creation/repeat, native Trim preview/commit, staged GUI
@@ -40,10 +40,11 @@ skip; leak detection disabled), worker CTest 9/9, and the Node validation suite
 412/412. The W198 qmake6 product build is from code head
 `2c4f26b378f201135227403cbb0575e510f88550`; no product-path commits follow it
 through PR head `b086c780e3aed99fe80eadc949e379d8e740ad9b`, based on master
-`d66b7e1379990224a6a897105683463692b05549`. On `b086c780e`, Headless ON/OFF
-passed; C++ analysis, fast DWG/DXF verification, Windows x64 and ARM64
-verification, and Pixi platform builds were pending. The CodeQL Security scan
-was skipped by workflow policy. The qmake6 application
+`d66b7e1379990224a6a897105683463692b05549`. On PR head
+`4341e27e1fd5642d5763f372f722689e003d2ed7`, Headless ON/OFF passed; C++
+analysis, fast DWG/DXF verification, Windows x64 and ARM64 verification, and
+Pixi platform builds were pending. The CodeQL Security scan was skipped by
+workflow policy. The qmake6 application
 and native worker were rebuilt from the exact pre-W198 documentation head; the
 build succeeds. A relocated client-protocol run against that worker passes
 4,285 assertions / 17 cases, and the CMake worker CTest set passes 9/9. The
@@ -59,7 +60,8 @@ after Fit All and returned to FreeCAD's first-start page. Independent FreeCAD
 visual review of the separate W193 DXF remains recorded above; it does not close
 that W171-derived visual check. W206 reverified app access and the unchanged
 W193 rendering. W207 adds a create/property-edit/undo-redo GUI interaction on
-that product-equivalent app build; it does not close the remaining GUI matrix.
+that product-equivalent app build. W208 retried external visual inspection with
+FreeCAD's Draft-object importer; the viewport remained unusable.
 
 The PR is open and draft, blocked on required checks/review, and requires an
 approving review. Acceptance remains open: exact-head workflows, the rest of the
@@ -7903,6 +7905,36 @@ interaction paths, or external CAD rendering of the W171-derived DWG output.
 | Exact PR-head workflows | IN PROGRESS; head `f54e7f760`; Text Foundations ON/OFF passed, other checks running, Security scan skipped by policy |
 | PR state | OPEN; draft, merge state blocked, approving review required |
 | Product-source changes | None; visible-app validation/documentation checkpoint |
+
+## 166. W208 FreeCAD Draft-Mode Visual Retry
+
+In FreeCAD 1.1.4, reopened the ODA-converted W171 AC1032 DXF
+`/private/tmp/offset-W200-oda-output/offset-matrix-write-dwg-R2018-d3_actual.dxf`.
+The import dialog reported approximately 233 geometric entities. Selected
+`Editable Draft objects` rather than the earlier Individual Part shapes mode;
+the document opened with a `Layers` tree group, but the viewport remained blank
+except for a vertical line near the canvas center. Neither Fit All nor the
+`V`, `F` shortcut produced a usable rendered view. This is not a visual pass and
+does not identify whether the issue lies in the converted geometry, importer,
+view state, or FreeCAD's uncompleted first-start flow.
+
+A Document Recovery prompt appeared during further navigation. It listed the
+separate W193 file as not yet recovered. No recovery or Cleanup action was
+started; Escape dismissed the prompt. FreeCAD preferences were not changed and
+neither DXF was saved. The W171-derived converted DXF SHA256 remains
+`b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`.
+
+| W208 check | Result |
+|---|---|
+| FreeCAD recognition | PASS; import dialog reported approximately 233 entities |
+| Draft-object import | PASS; document opened, but no usable contours rendered |
+| Fit All / viewport | OPEN; no rendered view; central vertical line only |
+| Recovery prompt | Dismissed without recovery or Cleanup |
+| Preferences / source artifact | NONE changed; converted DXF hash unchanged; no save |
+| Screenshot / display-DPR | OPEN; observed in-session only, DPR unavailable |
+| Exact PR-head checks at capture (`4341e27e`) | Headless ON/OFF PASS; analysis, DWG/DXF Linux/Windows x64/ARM64, and Pixi pending; Security scan skipped by policy |
+| PR state | OPEN; draft, merge state blocked, approving review required |
+| Product-source changes | None; external visual-validation checkpoint |
 
 ## 165. W207 Editable Offset Creation and Property Undo/Redo
 
