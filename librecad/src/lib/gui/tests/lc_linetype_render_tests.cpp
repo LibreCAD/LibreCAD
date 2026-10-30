@@ -30,6 +30,8 @@
 #include <functional>
 #include <limits>
 #include <memory>
+#include <string>
+#include <utility>
 #include <vector>
 
 #include <catch2/catch_approx.hpp>
@@ -56,6 +58,7 @@
 #include "rs_linetypepattern.h"
 #include "rs_painter.h"
 #include "rs_pen.h"
+#include "rs_polyline.h"
 #include "rs_vector.h"
 
 namespace {
@@ -219,6 +222,156 @@ QVector<qreal> screenPattern(const RS2::LineType lineType, const double k) {
     }
     pattern.resize(pattern.size() - pattern.size() % 2);
     return pattern;
+}
+
+bool isLit(const QImage& image, const int x, const int row) {
+    return qGray(image.pixel(x, row)) < 128;
+}
+
+// The lit runs of one pixel row, as (start, length) pairs, over [from, to).
+std::vector<std::pair<int, int>> litRuns(const QImage& image, const int row,
+                                         const int from = 0, const int to = -1) {
+    const int end = to < 0 ? image.width() : to;
+    std::vector<std::pair<int, int>> runs;
+    int start = -1;
+    for (int x = from; x < end; ++x) {
+        if (isLit(image, x, row)) {
+            if (start < 0) start = x;
+        } else if (start >= 0) {
+            runs.emplace_back(start, x - start);
+            start = -1;
+        }
+    }
+    if (start >= 0) runs.emplace_back(start, end - start);
+    return runs;
+}
+
+// The lit runs of one pixel column, as (start, length) pairs, over [from, to)
+// rows.
+std::vector<std::pair<int, int>> litRunsColumn(const QImage& image, const int column,
+                                               const int from, const int to) {
+    std::vector<std::pair<int, int>> runs;
+    int y = from;
+    while (y < to) {
+        while (y < to && !isLit(image, column, y)) {
+            ++y;
+        }
+        const int start = y;
+        while (y < to && isLit(image, column, y)) {
+            ++y;
+        }
+        if (y > start) {
+            runs.emplace_back(start, y - start);
+        }
+    }
+    return runs;
+}
+
+std::string describeRuns(const std::vector<std::pair<int, int>>& runs) {
+    std::string text;
+    for (const auto& [start, length] : runs) {
+        if (!text.empty()) {
+            text += ", ";
+        }
+        text += std::to_string(start) + "+" + std::to_string(length);
+    }
+    return text.empty() ? "none" : text;
+}
+
+// A run boundary or length lies within one pixel of the expected value.
+bool nearValue(const int actual, const int expected) {
+    return actual >= expected - 1 && actual <= expected + 1;
+}
+
+// The row of a horizontal one-pixel stroke: rows 98..102 within [from, to) hold
+// lit pixels on exactly one row, and the caller compares every image on it.
+int litRow(const QImage& image, const int from = 0, const int to = -1) {
+    const int end = to < 0 ? image.width() : to;
+    int litRows = 0;
+    int bestRow = -1;
+    int bestCount = 0;
+    for (int row = 98; row <= 102; ++row) {
+        int count = 0;
+        for (int x = from; x < end; ++x) {
+            if (isLit(image, x, row)) {
+                ++count;
+            }
+        }
+        if (count > 0) {
+            ++litRows;
+            if (count > bestCount) {
+                bestCount = count;
+                bestRow = row;
+            }
+        }
+    }
+    REQUIRE(litRows == 1);
+    return bestRow;
+}
+
+// The column of a vertical one-pixel stroke: columns 38..42 within
+// [fromRow, toRow) hold lit pixels on exactly one column.
+int litColumn(const QImage& image, const int fromRow, const int toRow) {
+    int litColumns = 0;
+    int bestColumn = -1;
+    int bestCount = 0;
+    for (int column = 38; column <= 42; ++column) {
+        int count = 0;
+        for (int y = fromRow; y < toRow; ++y) {
+            if (isLit(image, column, y)) {
+                ++count;
+            }
+        }
+        if (count > 0) {
+            ++litColumns;
+            if (count > bestCount) {
+                bestCount = count;
+                bestColumn = column;
+            }
+        }
+    }
+    REQUIRE(litColumns == 1);
+    return bestColumn;
+}
+
+// One entity drawn into a white image at factor 4, so a 12-unit dash is 48 px.
+QImage renderEntityImage(RS_Entity& entity, RS_Graphic* graphic = nullptr) {
+    LC_GraphicViewport viewport;
+    viewport.setSize(640, 480);
+    viewport.setOffsetAndFactor(0, 380, 4.0);
+    if (graphic) viewport.setDocument(graphic);
+
+    QImage image(640, 480, QImage::Format_RGB32);
+    image.fill(Qt::white);
+    RS_Painter painter(&image);
+    LineTypeViewRenderer renderer(&viewport, &image);
+    renderer.setBackground(RS_Color(Qt::white));
+    if (graphic) renderer.updateGraphicRelatedSettings(graphic);
+    renderer.setupPainter(&painter);
+    painter.setRenderHint(QPainter::Antialiasing, false);
+    renderer.setPenForEntity(&painter, &entity, false);
+    entity.draw(&painter);
+    return image;
+}
+
+// A polyline of two collinear ten-unit lines from (0,0) to (20,0).
+RS_Polyline twoSegments(const RS2::LineType lineType) {
+    RS_Polyline polyline;
+    polyline.addVertex(RS_Vector{0., 0.});
+    polyline.addVertex(RS_Vector{10., 0.});
+    polyline.addVertex(RS_Vector{20., 0.});
+    polyline.setPen(lineTypePen(lineType));
+    return polyline;
+}
+
+// An L-shaped polyline of two ten-unit lines from (0,0) to (10,0) to (10,10).
+RS_Polyline lShape(const RS2::LineType lineType) {
+    RS_Polyline polyline;
+    polyline.addVertex(RS_Vector{0., 0.});
+    polyline.addVertex(RS_Vector{10., 0.});
+    polyline.addVertex(RS_Vector{10., 10.});
+    polyline.setPen(lineTypePen(lineType));
+    return polyline;
 }
 
 } // namespace
@@ -937,4 +1090,183 @@ TEST_CASE("A painter without a renderer draws a named line solid",
     painter.setPen(namedPen("DASHEDM"));
     CHECK(painter.pen().style() == Qt::SolidLine);
     CHECK_FALSE(painter.penHasDashPattern());
+}
+
+// The polyline cases below cover line children only; a polyline that contains
+// an arc is out of scope.
+TEST_CASE("Contiguous line segments of a polyline keep one dash phase",
+          "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Polyline polyline = twoSegments(RS2::DashLine);
+    RS_Line line{RS_Vector{0., 0.}, RS_Vector{20., 0.}};
+    line.setPen(lineTypePen(RS2::DashLine));
+
+    const QImage lineImage = renderEntityImage(line);
+    const QImage polylineImage = renderEntityImage(polyline);
+    const int row = litRow(lineImage);
+
+    const auto lineRuns = litRuns(lineImage, row);
+    const auto polylineRuns = litRuns(polylineImage, row);
+    REQUIRE_FALSE(lineRuns.empty());
+    INFO("polyline: " << describeRuns(polylineRuns));
+    INFO("single line: " << describeRuns(lineRuns));
+    CHECK(polylineRuns == lineRuns);
+}
+
+TEST_CASE("A polyline with a gap restarts the dash phase at the gap",
+          "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Polyline polyline = twoSegments(RS2::DashLine);
+    RS_Entity* secondEntity = polyline.entityAt(1);
+    REQUIRE(secondEntity != nullptr);
+    REQUIRE(secondEntity->rtti() == RS2::EntityLine);
+    auto* second = static_cast<RS_Line*>(secondEntity);
+    // The second child's start moves away from the first child's end, and the
+    // child spans 25 units, more than one 12 + 6 period at factor 4 (72 px).
+    second->setStartpoint(RS_Vector{15., 0.});
+    second->setEndpoint(RS_Vector{40., 0.});
+
+    RS_Line fresh{RS_Vector{15., 0.}, RS_Vector{40., 0.}};
+    fresh.setPen(lineTypePen(RS2::DashLine));
+
+    const QImage freshImage = renderEntityImage(fresh);
+    const QImage polylineImage = renderEntityImage(polyline);
+    const int row = litRow(freshImage);
+
+    // GUI x 40..60 is the gap itself, which no dash may bridge. The first
+    // child's round end cap owns pixel 40, so the inspected gap starts one
+    // pixel past it.
+    const auto gap = litRuns(polylineImage, row, 41, 60);
+    // The second child covers GUI x 60..160; the fresh line spans the same.
+    const auto afterGap = litRuns(polylineImage, row, 60, 160);
+    const auto freshRuns = litRuns(freshImage, row, 60, 160);
+    INFO("gap: " << describeRuns(gap));
+    INFO("after gap: " << describeRuns(afterGap));
+    INFO("fresh line: " << describeRuns(freshRuns));
+    CHECK(gap.empty());
+    REQUIRE_FALSE(freshRuns.empty());
+    CHECK(afterGap == freshRuns);
+}
+
+TEST_CASE("A line after an arc in a dashed polyline starts fresh",
+          "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Polyline polyline;
+    polyline.addVertex(RS_Vector{0., 0.});
+    polyline.addVertex(RS_Vector{10., 0.}, 1.0);
+    polyline.addVertex(RS_Vector{20., 0.});
+    polyline.addVertex(RS_Vector{30., 0.});
+    polyline.setPen(lineTypePen(RS2::DashLine));
+
+    RS_Line fresh{RS_Vector{20., 0.}, RS_Vector{30., 0.}};
+    fresh.setPen(lineTypePen(RS2::DashLine));
+
+    const QImage freshImage = renderEntityImage(fresh);
+    const QImage polylineImage = renderEntityImage(polyline);
+    const int row = litRow(freshImage, 80, 120);
+    const auto afterArc = litRuns(polylineImage, row, 80, 120);
+    const auto freshRuns = litRuns(freshImage, row, 80, 120);
+    INFO("after arc: " << describeRuns(afterArc));
+    INFO("fresh line: " << describeRuns(freshRuns));
+    REQUIRE_FALSE(freshRuns.empty());
+    CHECK(afterArc == freshRuns);
+}
+
+TEST_CASE("A dashed polyline keeps one phase around a corner",
+          "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Polyline polyline = lShape(RS2::DashLine);
+    const QImage image = renderEntityImage(polyline);
+
+    // The first leg lies on the row of its own horizontal one-pixel stroke.
+    const int row = litRow(image, 0, 38);
+    const auto horizontal = litRuns(image, row);
+    INFO("first leg: " << describeRuns(horizontal));
+    REQUIRE(horizontal.size() == 1);
+    // The first dash is 48 px long, so the whole 40 px leg is lit.
+    CHECK(nearValue(horizontal.front().first, 0));
+    CHECK(horizontal.front().first + horizontal.front().second >= 39);
+
+    // The second leg runs upwards in the GUI from the corner: the dash has
+    // 48 - 40 = 8 px left, then a 24 px gap, then 8 px of dash at the far end.
+    const int column = litColumn(image, 60, 67);
+    const auto vertical = litRunsColumn(image, column, 60, row);
+    INFO("column: " << column);
+    INFO("second leg: " << describeRuns(vertical));
+    REQUIRE(vertical.size() == 2);
+    CHECK(nearValue(vertical[0].first, 60));
+    CHECK(nearValue(vertical[0].second, 8));
+    CHECK(nearValue(vertical[1].first, 92));
+    CHECK(nearValue(vertical[1].second, 8));
+}
+
+TEST_CASE("A solid polyline lights both legs of a corner",
+          "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Polyline polyline = lShape(RS2::SolidLine);
+    const QImage image = renderEntityImage(polyline);
+
+    const int row = litRow(image, 0, 38);
+    const auto horizontal = litRuns(image, row, 0, 41);
+    INFO("first leg: " << describeRuns(horizontal));
+    REQUIRE(horizontal.size() == 1);
+    CHECK(nearValue(horizontal.front().first, 0));
+    CHECK(horizontal.front().first + horizontal.front().second >= 40);
+
+    const int column = litColumn(image, 60, 67);
+    const auto vertical = litRunsColumn(image, column, 60, row + 1);
+    INFO("column: " << column);
+    INFO("second leg: " << describeRuns(vertical));
+    REQUIRE(vertical.size() == 1);
+    CHECK(nearValue(vertical.front().first, 60));
+    CHECK(vertical.front().first + vertical.front().second >= row);
+}
+
+TEST_CASE("A solid polyline is drawn as before", "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Polyline polyline = twoSegments(RS2::SolidLine);
+    RS_Line line{RS_Vector{0., 0.}, RS_Vector{20., 0.}};
+    line.setPen(lineTypePen(RS2::SolidLine));
+
+    const QImage lineImage = renderEntityImage(line);
+    const QImage polylineImage = renderEntityImage(polyline);
+    const int row = litRow(lineImage);
+
+    const auto lineRuns = litRuns(lineImage, row);
+    const auto polylineRuns = litRuns(polylineImage, row);
+    REQUIRE_FALSE(lineRuns.empty());
+    INFO("solid polyline: " << describeRuns(polylineRuns));
+    INFO("single line: " << describeRuns(lineRuns));
+    CHECK(polylineRuns == lineRuns);
+}
+
+TEST_CASE("Contiguous segments of a named-line-type polyline keep one dash phase",
+          "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addLineType(graphic, "DASHEDM", {12., -6.});
+
+    RS_Polyline polyline = twoSegments(RS2::SolidLine);
+    polyline.setPen(namedPen("DASHEDM"));
+    RS_Line line{RS_Vector{0., 0.}, RS_Vector{20., 0.}};
+    line.setPen(namedPen("DASHEDM"));
+
+    const QImage lineImage = renderEntityImage(line, &graphic);
+    const QImage polylineImage = renderEntityImage(polyline, &graphic);
+    const int row = litRow(lineImage);
+    const auto lineRuns = litRuns(lineImage, row);
+    const auto polylineRuns = litRuns(polylineImage, row);
+    REQUIRE_FALSE(lineRuns.empty());
+    REQUIRE(lineRuns.size() >= 2);
+    INFO("named polyline: " << describeRuns(polylineRuns));
+    INFO("single line: " << describeRuns(lineRuns));
+    CHECK(polylineRuns == lineRuns);
 }
