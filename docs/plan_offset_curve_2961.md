@@ -3222,12 +3222,13 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   inherited behavior on a fresh `origin/master` build; do not attribute them to
   the offset changes. W170 adds targeted current-source Debug/Release/ASan worker
   fixtures and a full 6,381-case headless Release pass; W171/W172 add fresh
-  current-source cross-reader DWG/DXF matrix results and W178 adds a fresh
-  current-source qmake6 app/helper build. The c043 workflow
+  current-source cross-reader DWG/DXF matrix results; W177/W179 route all 34
+  current-source DXF rows through ODA, and W178 adds a fresh current-source
+  qmake6 app/helper build. The c043 workflow
   `40979668978` passed Windows ARM64 and was canceled before Linux/x64 completed;
-  new-head workflow `40998099806` and Pixi `40998099821` are active. The prior
-  Pixi run `40979669043` passed on all five platforms; the new Pixi run is 4/5
-  passed with macOS Intel active. CodeQL
+  new-head DWG/DXF workflow `40998099806` remains active on Linux bounded tests
+  and Windows x64/ARM64 builds. Exact-head Pixi `40998099821` passed on all five
+  platforms; prior Pixi run `40979669043` also passed on all five. CodeQL
   `40973686197` passed on the preceding
   product-equivalent head `4df7229ca`; this test-only follow-up did not trigger a
   new CodeQL run. Review scoped commits, preserve reproducible evidence and close
@@ -6938,8 +6939,40 @@ and external-CAD visual checks, and final W0-W2/R integration remain open.
 | W178 remote snapshot | Result |
 |---|---|
 | DWG/DXF workflow `40998099806` | Active; Linux bounded tests running; Windows x64/ARM64 building |
-| Pixi workflow `40998099821` | 4/5 passed; macOS Intel build active |
+| Pixi workflow `40998099821` | PASS; all five platform jobs completed successfully |
 | CodeQL for `7bd61bd24` | No run/result yet |
+
+## 137. W179 Current-Source Binary DXF and R12 ODA Conversion
+
+Extended the W177 ODA check to the six W172 rows not covered there: four
+binary-DXF codec rows (R14 and R2018, degree 1/3) and two R12
+geometry-only POLYLINE downgrade rows. ODA File Converter `27.1.0.0`
+converted all six inputs to ACAD2018 DWG; LibreDWG parsed all six with AC1032
+headers. The four binary-DXF rows retained one native SPLINE, one
+`LC_OFFSET_CURVE` marker, and valid ACadSharp knot layouts. Both R12 rows were
+read as one geometry-only LWPOLYLINE without the native marker, as expected;
+the ACadSharp harness's no-marker exit code is expected for that representation
+and is not a parser failure.
+
+Together W177 and W179 cover all 34 current-source W172 DXF files through ODA:
+32 native SPLINE/marker rows and two deliberate R12 geometry-only rows, with no
+conversion or DWG-read failures. This is DXF-to-DWG interoperability evidence,
+not validation of LibreCAD's direct DWG writer or CAD visual fidelity.
+
+| W179 artifact | Result / SHA256 |
+|---|---|
+| Input manifest, `/private/tmp/offset-W179-oda-output/dxf-input.sha256` | 6 files / `a3fc007f30839a5479d0d17bc8fe2e28c54c01fd89e28ce7db0ad2bdc0da0495` |
+| ODA AC1032 output manifest, `/private/tmp/offset-W179-oda-output/oda-dwg.sha256` | 6 files / `2258b83bdbc48f8eaf1e692876ac3aa05090db6e8e8f7f39bc5faecc16c8d2e9` |
+| LibreDWG summary, `/private/tmp/offset-W179-oda-output/reader-summary.tsv` | 6/6 AC1032 parsed; binary marker rows and expected R12 representation / `b1b10f9f76df588dbf5d1e7ba5fc9b1b8afe91735cf7672643c20d75cc7708a3` |
+| ACadSharp detail, `/private/tmp/offset-W179-oda-output/acadsharp-detail.tsv` | Binary rows valid; R12 geometry-only / `add5f613af332619763160e1a64f6e9e1ccf8de4a01da2a30632ed769f1f90e7` |
+| Converted DWGs and per-file reader logs | `/private/tmp/offset-W179-oda-output/` |
+
+The exact PR-head DWG/DXF workflow `40998099806` is still active on Linux
+bounded tests and Windows x64/ARM64 builds; Pixi `40998099821` passed all five
+platforms. Keep the product head unchanged until DWG/DXF jobs finish, then
+record terminal results before pushing accumulated roadmap-only commits. Visible
+GUI/external-CAD review, direct-DWG visual acceptance, deployed-package
+qualification and final W0-W2/R closure remain open.
 
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
 
