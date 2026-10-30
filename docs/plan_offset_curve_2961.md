@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W184, superseding W183 and earlier below): implementation slices A-core
+Current status (W185, superseding W184 and earlier below): implementation slices A-core
 through T3 and the local A-core through C-check audit are closed. Direct
 synchronous `fileImport`, stream, and byte filter imports validate offset
 carriers through the worker. W158-W160 requalify qmake6 and staged installed
@@ -72,7 +72,8 @@ qualifications recorded in W1-W169. W156 closes local routing for the public
 synchronous file/stream/byte filter APIs. Exact-head platform/format CI,
 deployed-package checks, full visible UI, external-CAD interoperability, and
 final W0-W2/R integration remain open.
-Latest recorded slice: W184 records the Linux exact-head DWG/DXF/helper pass;
+Latest recorded slice: W185 records the Windows ARM64 exact-head pass;
+W184 records the Linux exact-head DWG/DXF/helper pass;
 W183 records successful five-platform Pixi checks and the
 active exact-head format-test phase; W182 records a headless raster check of the qmake6 renderer;
 W181 records the published roadmap and exact-head rerun; W172 records the current-source DXF matrix and ACadSharp
@@ -7107,6 +7108,31 @@ No product source changed in this qualification checkpoint. Windows results are
 still required before cross-platform DWG/DXF qualification can be closed;
 visible GUI, external-CAD visual, deployed-package, and final W0-W2/R gates
 remain open.
+
+## 143. W185 Exact-Head Windows ARM64 Qualification
+
+Windows ARM64 job `123894559201` in workflow `41003855350` completed
+successfully on head `498a5deee690187a50ad776ad2e5df63fc51f1c5`. CTest passed
+23/23, the synchronous filter API passed 219 assertions, and creation-worker
+tests passed 318 assertions in 11 cases. Cache-check allocation recovery
+completed for all fixtures across 66,594 injection points. The installed and
+relocated worker client passed 3,893 assertions in 17 cases. Windows x64
+remains active in the same bounded test step; Linux passed in W184.
+
+| W185 ARM64 check | Result |
+|---|---|
+| CTest bounded suite | PASS; 23/23 |
+| `[sync-api]` filter | PASS; 219 assertions |
+| `[lc-offsetcurve][creation-worker]` | PASS; 318 assertions / 11 cases |
+| Cache-check allocation recovery | PASS; all fixtures / 66,594 injection points |
+| Relocated worker client | PASS; 3,893 assertions / 17 cases |
+| Windows ARM64 exact-head job | PASS; workflow `41003855350`, job `123894559201` |
+| Windows x64 exact-head job | Bounded tests still active |
+
+No product source changed in this qualification checkpoint. The Windows x64
+terminal result is still needed for full DWG/DXF matrix qualification; visible
+GUI/external-CAD visual review, deployed-package qualification, and final
+W0-W2/R integration remain open.
 
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
 
