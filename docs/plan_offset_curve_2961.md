@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W208; the chronological evidence ledger follows): planned product
+Current status (W210; the chronological evidence ledger follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check audit
 are present and locally qualified. This includes the shipped native geometry
 worker, Modify Offset creation/repeat, native Trim preview/commit, staged GUI
@@ -63,12 +63,27 @@ W193 rendering. W207 adds a create/property-edit/undo-redo GUI interaction on
 that product-equivalent app build. W208 retried external visual inspection with
 FreeCAD's Draft-object importer; the viewport remained unusable.
 
-The PR is open and draft, blocked on required checks/review, and requires an
-approving review. Acceptance remains open: exact-head workflows, the rest of the
-GUI refusal and interaction matrix, retained screenshot/display-DPR evidence,
-independent CAD visual checks for outputs beyond the W193 DXF, signed/deployed
-package qualification, broader W0-W2 platform acceptance, and final R
-integration. W203-W204 are scoped visible-app passes, not full GUI acceptance.
+W209 visibly created two ellipse offset copies, undid both in one history step,
+and confirmed the W193 source hash unchanged. W210 rebuilt the CMake Release
+test executable from this worktree and passed the focused creation-worker,
+portable preview-cache and real helper-process suites (19 cases, 2,711
+assertions total). The full Node validation suite passed 412/412, and the
+updated roadmap/refusal inventory suite passed 99/99 with W209/W210 present.
+
+The current PR head is `b3425996245419ba231b14778bfeaf145e9271f8`; changes since
+the tested product source head `6e1dc8b3fd69ba40a81789a00959eb5db230fb07` are
+roadmap receipts only. Fresh PR-head workflows are pending for Headless ON/OFF,
+C++ analysis, DWG/DXF, Windows x64/ARM and Pixi platforms; Security scan is
+skipped by workflow policy. The PR is open and draft, mergeability is unknown,
+and an approving review is required.
+
+Acceptance remains open: the rest of the GUI refusal and interaction matrix,
+retained screenshot/display-DPR evidence, independent CAD visual checks for
+outputs beyond the W193 DXF, signed/deployed package qualification, broader
+W0-W2 platform acceptance, and final R integration. The mirrored external
+display reports 1920x1080 at 75 Hz, but Qt DPR was not measured and screenshots
+were observed in-session only. W203-W204, W209 and W210 are scoped visible/test
+passes, not full GUI acceptance.
 Direct AC1021
 ACadSharp parsing is also unqualified because that reader throws on negative
 `ComprLen` before entity decoding; LibreDWG parses the current AC1021 matrix.
