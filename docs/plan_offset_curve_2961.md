@@ -7416,3 +7416,34 @@ qualify installed/deployed bundles and external-CAD output; complete the
 remaining platform-specific W0-W2/R gates and final integration. W190 closes
 only the valid cached-ellipse property-edit budget defect and its focused
 current-source GUI scenario.
+
+## 149. W191 W190 DXF Copy Reopen Confirmation
+
+Continued W190 in the same isolated current-source qmake6 app. Opened the
+separately saved DXF 2018 copy
+`/private/tmp/offset-W160-G-matrix-outputs/offset-W190-ellipse-edit-copy.dxf`
+and visibly rendered both ellipses. Selecting the edited native `Offset Curve`
+in the reopened document showed `Distance 1.0010` in the property sheet,
+confirming that the edited value survives a LibreCAD DXF save/reopen/import
+cycle. Raw DXF inspection finds both the original fixture offset (0.25) and the
+edited offset (1.001), consistent with the GUI selection. The original W190
+fixture remained untouched. The screenshot was observed at 1920x982; DPR was
+unavailable, and no standalone screenshot file was retained. The saved copy's
+SHA256 is `410356d466e373cb90f28e669778340ac1722395ac9816404b2f1991a5a4af90`.
+
+| W191 check | Result |
+|---|---|
+| Saved W190 DXF 2018 copy reopened in current-source app | PASS |
+| Imported offset geometry rendered | PASS; both ellipse boundaries visible |
+| Imported edited native offset property | PASS; property sheet shows distance 1.0010 |
+| Raw DXF XDATA | PASS; source distance 0.25 and edited distance 1.001 are both present |
+| Original fixture integrity | PASS; source SHA256 remains `d58e9d13b280f8f3b2fcb46ef276a0b251955ad8441fde811edcbbdd61d317a9` |
+| Roadmap/parser validation | PASS; parser 5/5 and refusal-inventory suite 94/94; 93 obligations, 0 pending, 0 mismatches |
+| Screenshot/DPR receipt | Partial; 1920x982 screenshot observed in-session, not retained; DPR unavailable |
+| Product-source changes | None; documentation-only validation checkpoint |
+
+W191 closes the W190 DXF reopen check, but not independent external-CAD
+inspection of this copy. Retained screenshot/DPR receipts, visible
+creation/repeat, preview, cancellation, refusal and multi-entity workflows,
+installed/deployed-bundle qualification, external-CAD output, the remaining
+platform-specific W0-W2 gates, and final R integration remain open.
