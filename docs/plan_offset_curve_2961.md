@@ -6753,9 +6753,9 @@ including restoring mtime and asserting that change-time detects the rewrite.
 |---|---|
 | Local macOS CMake build of `librecad_tests` | PASS |
 | Local `librecad_offset_import_identity_tests` | PASS; 1/1 |
-| Windows ARM64 exact-head rerun | Workflow `40979668978`, bounded test step active; source-identity CTest result pending |
-| Windows x64 exact-head format lane | Workflow `40979668978`, configuring/building |
-| Linux exact-head format lane | Workflow `40979668978`, bounded test step active |
+| Windows ARM64 exact-head rerun | Workflow `40979668978`, build complete; combined bounded-test step active, source-identity CTest result pending |
+| Windows x64 exact-head format lane | Workflow `40979668978`, build complete; combined bounded-test step active |
+| Linux exact-head format lane | Workflow `40979668978`, build complete; combined bounded-test step active |
 | Pixi cross-platform build | PASS; workflow `40979669043`, all five OS/architecture jobs |
 | Roadmap inventory/parser | PASS; 5/5 after this checkpoint edit |
 
@@ -6830,12 +6830,13 @@ invalid=0`.
 
 The exact-head workflow set for `c0438532b` is the remote qualification for the
 Windows x64/ARM64 and Linux helper/format lanes. Workflow `40979668978` has
-Linux and Windows ARM64 bounded test steps running and Windows x64
-configuring/building; the source-identity CTest selector is registered in all
-three lanes. Pixi `40979669043` passed on all five OS/architecture jobs. CodeQL
+completed configuration and builds on all three platforms; each is still in the
+combined bounded-test step, with terminal results pending. The source-identity
+CTest selector is registered in all three lanes. Pixi `40979669043` passed on
+all five OS/architecture jobs. CodeQL
 `40973686197` passed on the preceding product-equivalent head `4df7229ca`; no
 exact-`c0438532b` CodeQL run was
 triggered for the fixture/documentation-only follow-up. Recheck active runs
 before closing cross-platform acceptance. Visible CAD interaction remains
-unavailable because this task has no computer-use control tool, despite user
-approval; no alternate UI-control path was used.
+unavailable because this task has no computer-use control tool; the user said
+they will approve the test app, and no alternate UI-control path was used.
