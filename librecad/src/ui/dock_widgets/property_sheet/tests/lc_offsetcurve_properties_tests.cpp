@@ -424,6 +424,30 @@ TEST_CASE("Real native distance editor stages once and commits one replacement w
     CHECK(replacement->definition().distance == .5);
 }
 
+TEST_CASE("Native sheet accepts a small edit to a bounded high-eccentricity ellipse cache",
+          "[gui][properties][offsetcurve][cache-budget]") {
+    Fixture f;
+    const RS_Ellipse source{&f.graphic, RS_EllipseData{{0, 0}, {10, 0}, .5}};
+    auto made = LC_OffsetCurve::create(source, 1, false, {}, 1e-4);
+    REQUIRE(made);
+    REQUIRE(made.entity->getData().controlPoints.size() > 32);
+    made.entity->setParent(&f.graphic);
+    made.entity->setLayer(f.graphic.getActiveLayer());
+    auto* curve = made.entity.release();
+    f.graphic.addEntity(curve);
+
+    f.show({curve});
+    f.editNumber("distance", "1.001");
+    REQUIRE(f.queue()->lastAttempts().size() == 1);
+    const auto& result = f.queue()->lastAttempts().front().result;
+    INFO(LC_OffsetCurveUI::refusalText(result).toStdString());
+    CHECK(result);
+    CHECK(result.changed);
+    waitForCommit(f.queue());
+    REQUIRE(live(f.graphic).size() == 1);
+    CHECK(live(f.graphic).front()->definition().distance == 1.001);
+}
+
 TEST_CASE("Native editor restores refusals parse errors and exact no ops without undo", "[gui][properties][offsetcurve]") {
     Fixture f;
     auto* source = addArc(f.graphic);

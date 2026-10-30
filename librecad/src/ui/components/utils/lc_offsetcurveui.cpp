@@ -88,10 +88,7 @@ LC_OffsetRunLimits LC_OffsetCurveUI::sheetLimits() {
     limits.outputBudget = preview.perSource;
     limits.maxSamples = preview.maxSamples;
     limits.maxIntersectionPairs = preview.maxIntersectionPairs;
-    limits.checkLimits.maxCacheSpans /= 8;
-    limits.checkLimits.maxVertices /= 8;
-    limits.checkLimits.maxDistancePairs /= 8;
-    limits.checkLimits.maxOrderingComparisons /= 8;
-    // Depth is already bounded; keeping it avoids a second, coarser validation attempt.
+    // Keep the checker's full bounded allowance: large, valid ellipse caches need it.
+    // Property edits execute in the native worker and retain the worker deadline.
     return limits;
 }
