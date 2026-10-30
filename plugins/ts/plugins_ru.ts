@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>Нажмите на параметры, чтобы включить/отключить их, нажмите «ОК», чтобы принять и начать выравнивание.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Если установлена опция «Сохранять исходные объекты», функция «Выровнять» будет копировать, а не перемещать выбранные объекты.
-Если установлена опция «Сначала указать базовые точки», функция «Выровнять» будет запрашивать точки выравнивания в следующем порядке: сначала базовая точка, затем вторая базовая точка, затем первая целевая точка и, наконец, вторая целевая точка.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>Первая базовая точка:</translation>

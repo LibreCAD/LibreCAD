@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>انقر على الخيارات لتعيين/إلغاء التعيين، وانقر على &quot;موافق&quot; لقبول البدء في المحاذاة.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">إذا تم تحديد &quot;الحفاظ على الكائنات الأصلية&quot;، فستقوم المحاذاة بنسخ الكائنات المحددة بدلاً من نقلها.
-إذا تم تحديد &quot;تحديد النقاط الأساسية أولاً&quot;، فستطلب المحاذاة تحديد نقاط المحاذاة بالترتيب التالي: النقطة الأساسية الأولى، النقطة الأساسية الثانية، النقطة الهدف الأولى، النقطة الهدف الثانية.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>أول نقطة أساس:</translation>

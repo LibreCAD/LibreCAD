@@ -7572,3 +7572,53 @@ in-preview cancellation input, explicit invalid/unsupported-input refusal,
 external-CAD visual/render inspection, installed/deployed-bundle qualification,
 retained screenshot/DPR receipts, remaining platform-specific W0-W2 gates,
 PR conflict resolution, and final R integration.
+
+## 153. W195 Latest-Master Integration and Local Qualification
+
+Integrated current upstream `origin/master` at
+`d66b7e1379990224a6a897105683463692b05549` into the PR branch. The only content
+conflict was `.github/workflows/dwg-dxf-verify.yml`. Resolution keeps the PR
+trigger unconditional because this large feature branch exceeds GitHub's
+path-filter comparison window, retains upstream renderer paths for push
+events, and preserves the offset-worker build, test, and relocation lanes.
+`actionlint` passes on the resolved workflow. The merge tree has no remaining
+conflicts. A whole-merge `git diff --check` reports trailing whitespace in Lao
+translation lines inherited byte-for-byte from upstream; the resolved workflow
+itself passes `git diff --check` and those unrelated translations were not
+rewritten.
+
+The CMake Release build was regenerated from the merged source and built the
+DWG/DXF fast suites, renderer and SVG suites, offset adapter/action/cache suites,
+all worker protocol/process/client/fault/timeout targets, and verification
+targets successfully. The registered worker CTest set passes 9/9. Direct local
+results: DWG fast tests 1033 passed with 37 external-fixture skips; DXF fast
+tests 798 passed with 4 skips; painter/render tests 3096 assertions across 51
+cases; SVG export tests 306 assertions across 9 cases; adapter sync API 219
+assertions; creation/worker action 318 assertions across 11 cases; and worker
+client 3807 assertions across 17 cases. The relocated OffsetWorker component
+also passed the worker-client test from its installed directory (4165
+assertions across 17 cases), confirming helper discovery from the staged
+package path on macOS. Cache-trim failure injection passed. The cache-check
+failure-injection executable was still running at this checkpoint; do not count
+that test as passed until its exit is observed.
+
+| W195 check | Result |
+|---|---|
+| Upstream integration | PASS; merged `d66b7e1`; only workflow conflict, resolved |
+| Workflow syntax and required trigger/job coverage | PASS; `actionlint`; unconditional PR trigger, upstream renderer push paths, offset-worker lanes retained |
+| Merged-source CMake build | PASS; all selected DWG/DXF, renderer, offset, worker, and verification targets built |
+| Registered offset-worker CTest | PASS; 9/9 |
+| DWG/DXF, painter, SVG, adapter, creation/action, worker-client suites | PASS; counts recorded above; documented external DWG fixture skips remain |
+| Relocated installed-worker client test | PASS; 4165 assertions / 17 cases |
+| Cache trim failure injection | PASS |
+| Cache-check failure injection | INTERRUPTED after more than 12 minutes at full CPU to avoid blocking; no new pass claimed; the cache checker and geometry sources are unchanged from the earlier W100 Release/ASan qualification |
+| qmake6 integration build | PASS; full current-source `make -j4` completed, including the LibreCAD app and adjacent `LibreCADOffsetWorker` |
+| Whole merge whitespace check | WARN; only upstream Lao translation trailing whitespace; resolved workflow is clean |
+| Exact-head GitHub matrix | OPEN; previous PR head's five platform checks were still in progress; merge push will create the relevant new head |
+| Visible UI, active-preview cancellation, refusal, external visual inspection, screenshot/DPR | OPEN; macOS lock prevents CUA access |
+| Final PR integration | IN PROGRESS; local merge resolved the master conflict, but commit/push and fresh checks remain |
+
+W195 closes the stale-base/workflow-conflict slice and qualifies the installed
+worker locally. It does not close the active-preview cancellation, GUI refusal,
+external visual review, retained screenshot/DPR, remote platform matrix, or
+final PR acceptance gates.

@@ -29,6 +29,10 @@
 #define RS_PAINTER_H
 
 #include <QPainter>
+#include <QVector>
+
+#include <cstdint>
+#include <vector>
 
 #include "lc_coordinates_mapper.h"
 #include "lc_rect.h"
@@ -113,6 +117,15 @@ public:
     double currentDashOffset(DashSpace dashSpace = DashSpace::Model) const;
     // Whether the pen setPen() last built carries a dash pattern.
     bool penHasDashPattern() const {return m_lastUsedPen.style() == Qt::CustomDashLine;}
+    // The next setPen() rebuilds the dash pattern; the renderer calls it once per pass.
+    void invalidateDashPattern() {m_lastDashValid = false;}
+
+    /// Canonicalise group 49 runs in drawing units, starting with a dash.
+    /// Returns the offset from this pattern's origin to the DXF origin.
+    static QVector<qreal> canonicalDashPattern(const std::vector<double>& raw,
+                                               qreal* phaseOffset = nullptr);
+    /// Scale a table pattern for QPen and make its lengths strictly positive.
+    static QVector<qreal> dashPatternForQt(const QVector<qreal>& canonical, double k);
 
     void drawEntityArc(RS_Arc* arc);
     void drawEntityPolyline(const RS_Polyline *polyline);
@@ -434,6 +447,7 @@ protected:
     // What the dash pattern in m_lastUsedPen was built from, valid while it holds
     // that pattern. Compared exactly: a mismatch only rebuilds the pattern.
     bool m_lastDashValid = false;
+    std::uint16_t m_lastDashLineTypeId = 0;
     RS2::LineType m_lastDashLineType = RS2::SolidLine;
     double m_lastDashScreenWidth = 0.;
     double m_lastDashDeviceScale = 0.;

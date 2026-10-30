@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>Klik på indstillingerne for at aktivere/deaktivere, og klik på OK for at acceptere og starte justeringen.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Hvis &apos;Behold originale objekter&apos; er markeret, vil Juster kopiere de valgte objekter i stedet for at flytte dem.
-Hvis &apos;Angiv basispunkter først&apos; er markeret, vil Juster bede om justeringspunkterne i følgende rækkefølge: først basispunkt, derefter andet basispunkt, derefter første målpunkt og til sidst andet målpunkt.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>Første udgangspunkt:</translation>

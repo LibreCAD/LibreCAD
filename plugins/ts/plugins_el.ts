@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>Κάντε κλικ στις επιλογές για να ορίσετε/αποορίσετε, πατήστε OK για να αποδεχτείτε και να ξεκινήσετε την ευθυγράμμιση.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Εάν είναι επιλεγμένη η επιλογή &apos;Διατήρηση των αρχικών αντικειμένων&apos;, η λειτουργία Ευθυγράμμιση θα αντιγράψει αντί να μετακινήσει τα επιλεγμένα αντικείμενα.
-Εάν είναι επιλεγμένη η επιλογή &apos;Καθορισμός των σημείων βάσης πρώτα&apos;, η λειτουργία Ευθυγράμμιση θα ζητήσει τα σημεία ευθυγράμμισης με την ακόλουθη σειρά: πρώτο σημείο βάσης, δεύτερο σημείο βάσης, πρώτο σημείο στόχος, δεύτερο σημείο στόχος.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>πρώτο σημείο βάσης:</translation>

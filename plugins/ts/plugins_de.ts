@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>Klicken Sie auf die Optionen, um diese zu aktivieren oder deaktivieren. Klicken Sie auf „OK“, um die Einstellungen zu übernehmen und die Ausrichtung zu starten.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Wenn die Option „Originalobjekte beibehalten“ aktiviert ist, kopiert die Funktion „Ausrichten“ die ausgewählten Objekte, anstatt sie zu verschieben.
-Wenn die Option „Zuerst Basispunkte angeben“ aktiviert ist, fordert die Funktion „Ausrichten“ die Angabe der Ausrichtungspunkte in der folgenden Reihenfolge an: zuerst Basispunkt, zweiter Basispunkt, erster Zielpunkt, zweiter Zielpunkt.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>Erster Basispunkt:</translation>

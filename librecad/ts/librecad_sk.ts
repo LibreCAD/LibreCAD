@@ -39,158 +39,11 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Rámček</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="obsolete">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="obsolete">-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Uložiť</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Rámček</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Uložiť</translation>
-    </message>
-</context>
-<context>
-    <name>DlgParabola</name>
-    <message>
-        <source>Parabola</source>
-        <translation type="obsolete">Parabola</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">Body na Spline</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">Kontrolné body</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Uzavreté</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="obsolete">Ak je vybraný, použijú sa spline body</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="obsolete">Spline body</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="obsolete">Ak sa zvolí, použijú sa kontrolné body</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">Kontrolné body</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">Body na Spline</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
         <translation>Štartovací bod môže byť nastavený len vo vzdialenosti alebo v bode</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Vytvorí sa:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">Obdĺžnik</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Šírka:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Výška:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Centrum:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">Neplatný uhol</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">Neplatný polomer</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">Neplatná hodnota</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Uveďte bod vloženia</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Uveďte uhol</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">Uveďte veľkosť (šírka, výška)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">Uveďte typ rohov
-[Okolie]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">Uveďte dĺžku rohu (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">Zadajte polomer rohu</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">Zadajte režim hrán
-[Oboje]</translation>
     </message>
 </context>
 <context>
@@ -437,73 +290,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">Výška oblúka (distanсe medzi akordom a vrcholovým oblúkovým bodom)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Výška:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Proti smeru hodinových ručičiek</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">Vyberte uhol z výkresu</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Polomer oblúka</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Polomer:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Hodinové</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">Centrálny uhol oblúka</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">Dĺžka oblúka</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Dĺžka:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Vyberte polomer z výkresu</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">Výška výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Dĺžka výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -715,10 +501,6 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">Vybrať entity pre viazanie poľa (Vstúpiť na dokončenie)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation type="unfinished"></translation>
@@ -773,31 +555,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">rádius=%1 je príliš malý pre vybrané body
-vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">Vyberte si z dvoch možných kruhových centier</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Uveďte prvý bod</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Uveďte druhý bod</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">Vyberte stred kruhu</translation>
     </message>
 </context>
 <context>
@@ -1046,13 +803,6 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">Vyberte kruh, oblúk alebo elipsu</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1096,10 +846,6 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>Vybrať stred</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">Nie je špecifikované žiadne centrum.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1494,154 +1240,6 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">Zadajte prvý bod</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">Zadajte druhý bod
-alebo [Číslo x x x x y ch ch ch ch y ch ch ch ch ch ch ch ch y ch ch y ch ch ch y ch ch ch y ch ch ch ch ch ch ch y ch ch ch ch ch ch y ch ch ch y ch ch ch ch ch y ch ch ch ch ch ch ch ch ch ch ch y ch ch ch ch ch ch ch</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">Zadajte druhý bod
-alebo [číslo]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">Uveďte smer trate
-[x</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">Uveďte smerový uhol čiary
-alebo [x</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">Zadajte režim okrajových bodov
-[Žiadny chrobák chápavý chrobák]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">Zadajte pevnú vzdialenosť medzi bodmi
-alebo [x</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Späť</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">Špecifikujte vzdialenosť (%1)
-alebo [%2]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Zadajte vzdialenosť (uhol%1 deg)
-alebo [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">Uveďte počet bodov</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Zadajte druhý roh</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">Zadajte druhú dotyčnicu</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Zadajte prvý roh</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">Zadajte prvú dotyčnicu</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Neplatné číslo. Skús 1.9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">Neplatná hodnota polomeru zaokrúhľovania</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Neplatný výraz</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Zadajte číslo:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">Zadajte polomer zaokrúhľovania:</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Zadajte stred</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Vytvorí sa:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Centrum:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">Štartovací uhol:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Polomer:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">Vnútorný polomer:</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Polygón</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">Uveďte dotyčnicu</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1885,29 +1483,6 @@ alebo [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Neplatný výraz</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Vyberte prvú jednotku</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Vyberte druhú jednotku</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">Alternatívne cieľové ukazovatele</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">Zadajte ofsetovú hodnotu</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="190"/>
@@ -2060,13 +1635,6 @@ alebo [x</translation>
 [Žiadny chrobák chápavý chrobák]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="unfinished">Zadajte pevnú vzdialenosť medzi bodmi
-alebo [x</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Specify distance (%1)
@@ -2090,13 +1658,6 @@ alebo [%2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="620"/>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="unfinished">Zadajte vzdialenosť (uhol%1 deg)
-alebo [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="625"/>
@@ -2255,11 +1816,6 @@ alebo [%2]</translation>
         <translation>Uveďte šírku</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="396"/>
-        <source>Specify size (width, height))</source>
-        <translation>Uveďte veľkosť (šírka, výška)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
         <translation>Uveďte referenčný bod [topl</translation>
@@ -2325,11 +1881,6 @@ alebo [%2]</translation>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="619"/>
         <source>Specify height</source>
         <translation>Uveďte výšku</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="622"/>
-        <source>Specify start point)</source>
-        <translation>Uveďte počiatočný bod)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="625"/>
@@ -3924,10 +3475,6 @@ alebo [%2]</translation>
         <translation>Výstup</translation>
     </message>
     <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">Snap na mriežke</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>Snap stredná príručka</translation>
@@ -4198,11 +3745,6 @@ alebo [%2]</translation>
         <translation>Zrušiť výber</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="910"/>
-        <source>Ctrl+K</source>
-        <translation>Ctrl+K</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="745"/>
         <source>Invert Selection</source>
         <translation>Prevrátiť výber</translation>
@@ -4318,12 +3860,6 @@ alebo [%2]</translation>
         <translation>&amp; Grid</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="927"/>
-        <source>Ctrl+G</source>
-        <comment>Toggle Grid</comment>
-        <translation>Ctrl+G</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>&amp;Draft</source>
         <translation>&amp; Draft</translation>
@@ -4334,12 +3870,6 @@ alebo [%2]</translation>
         <translation>&amp; Stavový panel</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="930"/>
-        <source>Ctrl+I</source>
-        <comment>Hide Statusbar</comment>
-        <translation>Ctrl+I</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
         <source>Focus on &amp;Command Line</source>
         <translation>Zameranie na trať &amp; zabezpečenia</translation>
@@ -4348,26 +3878,6 @@ alebo [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>Widget Options</source>
         <translation>Možnosti prvku</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Vľavo</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Správne</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Hore</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Dole</translation>
-    </message>
-    <message>
-        <source>Floating</source>
-        <translation type="vanished">Plávajúce</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
@@ -4503,12 +4013,6 @@ alebo [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Selection Pointer</source>
         <translation>&amp;Výberový ukazovateľ</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="929"/>
-        <source>Ctrl+D</source>
-        <comment>Toggle Draft Mode</comment>
-        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
@@ -5215,10 +4719,6 @@ Bod: (%8, %9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">Vybrať jednotky pre zosúladenie (Enter to complete)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>Výber a nastavenie</translation>
@@ -5250,10 +4750,6 @@ Bod: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
         <translation>Mierka:</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">Vybrať pre zarovnanie (Vstup pre dokončenie)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -5936,22 +5432,6 @@ Bod: (%8, %9)</translation>
         <translation type="unfinished">Vzdialenosť:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="237"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="244"/>
-        <source>Specify direction of offset</source>
-        <translation type="unfinished">Uveďte smer posunu</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="240"/>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="unfinished">Uveďte referenčný bod pre smer posunu</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="253"/>
-        <source>Select line, polyline, ellipse, circle or arc to create offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="254"/>
         <source>Select contour</source>
         <translation type="unfinished">Vybrať obrys</translation>
@@ -6244,13 +5724,6 @@ Bod: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="430"/>
         <source>Scale immediately after selection</source>
         <translation type="unfinished">Mierka ihneď po výbere</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Žiadna jednotka nebola vybraná!</translation>
     </message>
 </context>
 <context>
@@ -7227,18 +6700,6 @@ Bod: (%8, %9)</translation>
         <translation>Nemôžem čítať zadaný súbor - prosím skontrolujte, či existuje a či je z neho možné čítať.</translation>
     </message>
     <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">Mapovanie skratiek nebolo dovezené.
-Za predpokladu, že súbor existuje, však neobsahuje mapovanie skratiek LibreCAD.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">Mapovanie skratiek nebolo dovezené.
-Chyba spracovania XML nastala počas spracovania súboru.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
         <translation>Mapovanie skratiek bolo úspešne uložené.</translation>
@@ -7247,12 +6708,6 @@ Chyba spracovania XML nastala počas spracovania súboru.</translation>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
         <translation>Nemôžem napísať do poskytnutého súboru - prosím skontrolujte, či je možné ho zapísať.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">Mapovanie skratiek nebolo dovezené.
-Určitá chyba nastala počas generovania XML.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -8647,74 +8102,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     </message>
 </context>
 <context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">Ak je označené, pôvodný oblúk bude odstránený</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">Nahradiť oblúk</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">Vrstva, do ktorej by mal byť umiestnený vytvorený kruh</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktívny</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Originál</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktívny</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Originál</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Pôvodné vyriešené</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">Vybrať ofsetovú hodnotu z výkresu</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Pero:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">Pero na aplikáciu na vytvorenú kružnicu</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Vrstva:</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">Delta polomeru kruhu s polomerom oblúka</translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">Posun polomeru:</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -9009,69 +8396,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>Panel nástrojov:%1 (Custom)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">Typ</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">Horizontálny rozmer kríža</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">Vyberte hodnotu X z výkresu</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">Definuje, ako aplikovať rozmery kríža</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">Predĺženie</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">Celková dĺžka</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">Percento</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">Vyberte hodnotu Y z výkresu</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">Vertikálny rozmer kríža</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">Uhol otáčania pre kríž okolo stredu</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
     </message>
 </context>
 <context>
@@ -9435,41 +8759,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="obsolete">Obnoviť rozmer</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Vrstva rozmeru</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Atribúty pera</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="obsolete">Ordinát</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -9531,11 +8820,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
         <translation>Východiskový odstup:</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">Nastaví vzdialenosť medzi rozmermi čiar základného rozmeru. Zadajte vzdialenosť. Informácie o základných rozmeroch pozri v DIMBASELINE. (meniteľná hodnota systému DIMDLI)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -11182,10 +10466,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <source>Hatch Properties</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">Vlastnosti?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -11634,19 +10914,9 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <translation>POZNÁMKA: Menu úloha bude ignorovaná. Je vyhradený pre Pana.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="240"/>
-        <source>NNOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
-        <translation>Priradenie menu bude ignorované. Je vyhradené pre &quot;Select Contour.&quot;.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="243"/>
         <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
         <translation>UPOZORNENIE: Táto kombinácia je vyhradená pre štandardné kontextové menu a môže zabrániť jej vyvolaniu!</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="246"/>
-        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored</source>
-        <translation>POZNÁMKA: Táto kombinácia je vyhradená pre Pana! Priradenie menu bude ignorované</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="251"/>
@@ -11707,10 +10977,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <translation>UCS Podrobnosti stĺpec</translation>
     </message>
     <message>
-        <source>If checked, type of grid for saved view will be shown</source>
-        <translation type="vanished">Ak je zaškrtnuté, zobrazí sa typ siete pre uložené zobrazenie</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
         <translation>Stĺpec ikon typu mriežky</translation>
@@ -11719,18 +10985,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Type icon column</source>
         <translation>Stĺpec ikon typu</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation type="vanished">Ak je zaškrtnuté, zobrazí sa stĺpec s podrobnosťami súradnicového systému zobrazenia</translation>
-    </message>
-    <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">Nápovedný text s podrobnosťami o pohľade pre položky tabuľky</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">Ak je začiarknuté, zobrazí sa stĺpec s podrobnými informáciami o súradnicovom systéme zobrazenia.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
@@ -11773,10 +11027,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <translation>Ak je zaškrtnuté, v tabuľke bude zobrazený stĺpec s detailmi zobrazenia.</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">VIew Podrobnosti stĺpec</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>Operácie</translation>
@@ -11792,17 +11042,9 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">Pri dvojitom kliknutí na stolovú položku</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
         <source>Defines which action should be performed on double click on view item of the table.</source>
         <translation>Definuje, ktorá akcia sa má vykonať pri dvojitom kliknutí na položku zobrazenia v tabuľke.</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table. </source>
-        <translation type="vanished">Definuje, ktoré akcie by mali byť vykonané pri dvojitom kliknutí na položku zobrazenia tabuľky.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="158"/>
@@ -11830,10 +11072,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <translation>Ak je povolené, kliknite na položku tabuľky zobrazenia obnoví zobrazenie. V opačnom prípade by sa mal názor výslovne obnoviť.</translation>
     </message>
     <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">Obnoviť zobrazenie jediným kliknutím na položku tabuľky</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
         <translation>Ak sa zobrazí, náhľad s ďalšími informáciami o zobrazení bude zobrazený pre položku tabuľky.</translation>
@@ -11842,10 +11080,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
         <translation>Ak je zaškrtnuté a počas vytvorenia zobrazenie so zadaným názvom už existuje, bude aktualizované o novú pozíciu. Inak bude potrebný jedinečný názov nového zobrazenia.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Ak je vybraný, dialóg pre potvrdenie bude zobrazený pri odstránení zobrazenia. Inak bude pohľad potichu odstránený.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
@@ -12141,17 +11375,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation>Meno nie je jedinečné. Zadajte jedinečné meno.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="obsolete">Kontrolné body paraboly nemôžu byť kolineárne</translation>
     </message>
 </context>
 <context>
@@ -12567,13 +11790,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgSplinePoints</name>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgTolerance</name>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="14"/>
@@ -12655,17 +11871,9 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <translation>Ak je сhecked, nápoveda s ďalšími informáciami o UCS bude zobrazený pre položku tabuľky.</translation>
     </message>
     <message>
-        <source>Toolip with UCS details for table items</source>
-        <translation type="vanished">Toolip s UCS detaily pre stolové položky</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
         <source>Type icon column</source>
         <translation>Stĺpec ikon typu</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation type="vanished">Ak je zaškrtnuté, stĺpec s podrobnosťami o pôvode a uhle UCS bude zobrazený v tabuľke</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -12681,10 +11889,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
         <source>Editing</source>
         <translation>Úprava</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Ak je vybraný, dialóg pre potvrdenie bude zobrazený pri odstránení zobrazenia. Inak bude pohľad potichu odstránený.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"/>
@@ -12705,10 +11909,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
         <translation>Ak je začiarknuté, zobrazí sa stĺpec s typom mriežky pre súradnicový systém (UCS).</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">Ak je vybrané, zobrazí sa dialógové okno s potvrdením pri odstránení zobrazenia. V opačnom prípade sa zobrazenie odstráni bez upozornenia.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12776,26 +11976,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <translation>Definuje počet bliknutí ukazovateľa UCS pre zvýraznenie UCS.</translation>
     </message>
     <message>
-        <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation type="vanished">Definuje, ktoré akcie by mali byť vykonané pri dvojitom kliknutí na položku tabuľky.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">Obnoviť UCS pri jednom kliknutí podľa položky tabuľky</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation type="vanished">Ak je zaškrtnuté, stĺpec s ikonou pre typ UCS bude zobrazený v tabuľke.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation type="vanished">Ak je zaškrtnuté, zobrazí sa stĺpec s typom mriežky pre UCS</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied</source>
-        <translation type="vanished">Definuje, ako by malo byť zobrazené okienko nastavené po použití UCS</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
         <source>On double-click on table item</source>
         <translation>Pri dvojitom kliknutí na stolovú položku</translation>
@@ -12851,10 +12031,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <translation>Zvýraznenie UCS</translation>
     </message>
     <message>
-        <source>Defines delay between UCS marker blinks</source>
-        <translation type="vanished">Definuje oneskorenie medzi UCS marker blinks</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="216"/>
         <source> ms</source>
         <translation>ms</translation>
@@ -12868,10 +12044,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="242"/>
         <source>Blink Delay:</source>
         <translation>Blink Meškanie:</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation type="vanished">Definuje množstvo blikania UCS značky pre UCS zvýraznenie</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="252"/>
@@ -13268,45 +12440,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Posun:</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorí sa políčko pre celý výber. Inak sa vytvorí pre jednotlivé subjekty.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">Výber ako skupina</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Vybrať ofset z výkresu</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">Ak je vybraná, budú zobrazené len rohové body pre ohraničenie poľa. Inak sa nakreslia hrany.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">Iba rohové body</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">Ak je zvolená, ohraničujúca krabica sa nakreslí ako polylínia</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylín</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13400,86 +12533,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation type="unfinished">Vybrať ofset z výkresu</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">Vertikálna kompenzácia duplikátu od pôvodnej účtovnej jednotky</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">Horizontálna kompenzácia duplikátu od pôvodnej účtovnej jednotky</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">Vybrať ofset podľa X z výkresu</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Pero:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">Ak je zaškrtnuté, duplikát bude umiestnený v pôvodných súradniciach</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">Miesto</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">Vybrať ofset podľa Y z výkresu</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Vrstva:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">Pero na aplikáciu na vytvorený duplikát</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktívny</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Originál</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Pôvodné vyriešené</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">Vrstva, do ktorej by sa mali umiestniť duplikáty</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktívny</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Originál</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">Posun Y:</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">Posun X:</translation>
     </message>
 </context>
 <context>
@@ -13661,69 +12714,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">Malý polomer:</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">Hodnota uhla pre hlavný polomer</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">Ak je zaškrtnuté, môže byť špecifikovaný uhol pre väčší polomer</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Základný uhol:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Proti smeru hodinových ručičiek</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">Vybrať hlavné akcie z výkresu</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">Ak je zaškrtnuté, veľký polomer je špecifikovaný myšou</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Bez cla</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">Dĺžka hlavného polomeru elipsy</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">Vyberte malý polomer z výkresu</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">Hlavný polomer:</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">Dĺžka menšieho polomeru elipsy</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Hodinové</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13862,21 +12852,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">Uhol výberu z výkresu</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Možnosti oblúka</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Hodinové</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Proti smeru hodinových ručičiek</translation>
     </message>
 </context>
 <context>
@@ -14439,11 +13414,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
 <context>
     <name>LC_ExportToImageService</name>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="52"/>
-        <source>Exporting drawing...</source>
-        <translation>Exportujem výkres...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="59"/>
         <source>Exported: %1</source>
         <translation>Exportované:%1</translation>
@@ -14767,30 +13737,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <source>Eccentricity:</source>
         <translation>Výstrednosť:</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">Neplatná hyperbola definícia</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">Foci musia byť odlišné</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">Neplatné súradnice stredu</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">Veľký polomer musí byť kladný</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">Neplatný uhol otáčania</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">Pomer alebo menší polomer musí byť kladný</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -14962,10 +13908,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <translation>Šírka:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">Šírka obrázku</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>Hodnota šírky výberu z výkresu</translation>
@@ -14976,21 +13918,9 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <translation>Výška:</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">Výška obrazu</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>Hodnota výšky výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Mierka:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">Faktor mierky</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -15002,10 +13932,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>Uhol:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Uhol otáčania</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -15037,22 +13963,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <source>Select an image file</source>
         <translation>Vyberte obrázok</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">Veľkosť (px):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">Veľkosť obrázku v pixeloch</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">Rozlíšenie (body na palec)</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -15065,21 +13975,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">Ak je zaškrtnuté, bod bude vždy vnútri vybranej jednotky</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">Snap na subjekt</translation>
     </message>
 </context>
 <context>
@@ -15457,14 +14352,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <translation>Oddeľovač používaný na rozdelenie vnútorného názvu hladiny na hierarchické názvy</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">Oddeľovač názvu úrovne vrstvy</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">Sekundárne vrstvy</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15495,10 +14382,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>Prípona názvu hladiny, ktorá určuje, že ide o hladinu alternatívnej polohy.</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">Názov</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15641,17 +14524,9 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <translation>Rôzne nastavenia farieb</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Farby</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>Farba pozadia vybraných položiek v strome hladín.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">Farba pre oddeľovacie čiary vo vrstvách stromov</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15690,10 +14565,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>Farba pozadia virtuálnej hladiny</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">Oddeľovacia mriežka troch položiek</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15749,10 +14620,6 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>Hladina alternatívnej polohy</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">sieť</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16242,118 +15109,6 @@ Zadajte inú hodnotu.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">Ak je zaškrtnuté, dĺžka čiary je definovaná myšou miesto nastavenia</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Bez cla</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Vyberte vzdialenosť od výkresu</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">Offset of tick snap point from comession point</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Dĺžka výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Vybrať ofset z výkresu</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">Ak je zaškrtnuté, pôvodná jednotka bude rozdelená medzníkom.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Rozdeliť</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Posun:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">Vzdialenosť priesečníka od špecifikovaného priamkového bodu</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">Definuje, ktorá časť vytvorenej čiary bude odtrhnutá na priesečník</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Začiatok</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Stredná</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Koniec</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">Označenie uhla:</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Označenie čiary:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Dĺžka trate</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">Ak je zaškrtnuté, uhol je vo vzťahu k uhlu vybraného subjektu</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Dĺžka:</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">Snap point pre pozíciu priesečníka medzi vytvorenou linkou a zdrojovou jednotkou (v rámci pôvodnej línie)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">Bez cla</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Vzdialenosť:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Uhol čiary</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16660,93 +15415,6 @@ Zadajte inú hodnotu.</translation>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation type="unfinished">Počet bisektorov na vytvorenie</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">Veľkosť:</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">Koncový posun:</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">Offset pre vytvorenú čiaru z priesečníka</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">Snap point pre vytvorený riadok</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Začiatok</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Stredná</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Koniec</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Dĺžka:</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">Pevná dĺžka vytvorenej čiary</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Snap:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Dĺžka výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Vybrať ofset z výkresu</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">Definuje, či by mala byť vytvorená priamka vytvorená na priesečník alebo by mala mať pevnú dĺžku</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">Na prienik</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">Pevná dĺžka</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorený riadok bude ortogonálny na vybranú líniu</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">Ortogonálne</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">Uhol medzi pôvodnou líniou a vytvorenou líniou</translation>
     </message>
 </context>
 <context>
@@ -17132,81 +15800,6 @@ Zadajte inú hodnotu.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorí sa polylínia namiesto jednotlivých línií</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">Vytvoriť polylín</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">Zásady pre riadok bol vybraný druhý</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">Predĺženie/trojnásobok</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">Pridať segment</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">Žiadna zmena</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">Riadok 1:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">Riadok 2:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">Zásady pre pripojenie linky, ktorá bola vybraná ako prvá</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">Definuje, ako sa pero má aplikovať na vytvorené subjekty</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">Aktívne pero</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">Riadok 1</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">Riadok 2</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">Oba riadky</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">Atribúty:</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">Ak je zaškrtnuté, pôvodné riadky budú odstránené</translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">Odstrániť originály</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17588,85 +16181,6 @@ Zadajte inú hodnotu.</translation>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">Ovláda, ako by sa mali vytvoriť body na hranách (štartovacie/koncové body).</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Žiadne</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Obe</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Začiatok</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Koniec</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Vzdialenosť od výkresu</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">Počet bodov na vytvorenie</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">Body na okraji:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">Určuje, či by mali všetky body zodpovedať začiatočným/koncovým bodom priamky, alebo či sa dĺžka priamky vypočíta na základe počtu bodov a vzdialenosti medzi bodmi.</translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">Vhodný riadok</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">Vzdialenosť medzi bodmi.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">Ak je zaškrtnuté, čiara bodov sa nakreslí so špecifikovaným uhlom</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">Počet bodov:</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">Ak je zaškrtnuté, použije sa stanovená vzdialenosť medzi bodmi. V opačnom prípade sa vypočíta vzdialenosť.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Pevná vzdialenosť</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Uhol čiary</translation>
     </message>
 </context>
 <context>
@@ -21916,433 +20430,6 @@ Zadajte inú hodnotu.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp; Pomoc</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">On-line dokumenty</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;Wiki</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">User&apos;s &amp; Manual</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp; Príkazy</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">&amp; Štýlové listy</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">Wid &amp;gets</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">O</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp; Fórum</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">Zulip &amp; Chat</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">&amp; Odoslať chybu</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">Extra hra</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">&amp; Znovu prepúšťa stránku</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp; Darovať</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp; Line</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">Poin &amp;t</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp; Obeh</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">&amp; Oblúk</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">Polyagon</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">Splin&amp;e</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">Ellip&amp;se</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Polyline</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">&amp; Ostatné</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">&amp; Nakresliť</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp; Elipse</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">Ot&amp;her</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp; Zmeniť</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp; Objednávka</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">&amp;Rozmery</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp; Info</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp; Nástroje</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp; Vybrať</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">Dime &amp;nsion</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp; File</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Nedávne súbory</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Dovoz</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Vývoz</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp; Možnosti</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp; Upraviť</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp; Zobraziť</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">&amp; Zobraziť obnovenie</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">Pl&amp;ugins</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">&amp; Pracovný priestor</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Oblasti doku</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">CAD wid &amp;gets</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">&amp; Kresby</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">Kontext</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Panely nástrojov</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">Komponenty</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">CAD widgety</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">CAD panely nástrojov</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Vybrať</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">Nedávny</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Zmeniť</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">Zmeniť</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Kresliť</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Čiara</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylín</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Bod</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Kruh</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Oblúk</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Polygón</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">Polylín/splín</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">EllipseCity name (optional, probably does not need a translation)</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Iné</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">Pridať rozmery</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">Zarovnať</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">Zobraziť poradie</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Vrstvy</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Upraviť</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">Možnosti</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">&amp; Menované pohľady</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">Upraviť vlastnosti</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">Upraviť generické</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">Zmeniť riadok</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">Kresliť čiaru</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">Kresliť kruh</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">Kresliť iné</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">Upraviť kruh</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">Zmeniť oblúk</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">Upraviť polylín</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">Zmeniť spline</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">Zmeniť body v tvare</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">Zmeniť text</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">Upraviť MText</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">Upraviť blok</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Uznesenie</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp; Nástroje</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">&amp;CAD panely nástrojov</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">&amp; Pracovné priestory</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Režim Ta&amp;b</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">Režim &amp; window</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp; Layout</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">Zaokrúhlené</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">Trojuholníkové</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">Sever</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">Juh</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">Východ</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">Západ</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp; Zoradiť</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp; Maximalizované</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp; Kaskáda</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp; Tile</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">&amp; Všestranne</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Til &amp; Horizontálne</translation>
-    </message>
-</context>
-<context>
     <name>LC_MenuFactoryBase</name>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
@@ -22958,21 +21045,6 @@ Zadajte inú hodnotu.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Posun:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Vybrať ofset z výkresu</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23109,197 +21181,6 @@ Zadajte inú hodnotu.</translation>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Ak je zaškrtnuté, aktuálne atribúty sa použijú pre zrkadlové subjekty, inak - pôvodné.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Použiť aktuálne atribúty</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Ak sa nekontroluje, pôvodné subjekty budú odstránené, inak prežijú.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Ponechať originály</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Ak je zaškrtnuté, zrkadlové jednotky budú umiestnené na aktuálnej vrstve, inak budú umiestnené do pôvodných vrstiev.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Aktuálna vrstva užívateľa</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">Ak sa kontroluje, subjekty budú v prípade potreby odstupňované. Inak budú umiestnené a otočené.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Mierka</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">Ak je zaškrtnuté, odstránia sa segescie medzi priesečníkmi. Ak sa nekontroluje - oprávnenie bude rozdelené v priesečníkoch.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">Odstrániť segmenty</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">Ak je zaškrtnuté, vybraný segment bude odstránený. V opačnom prípade bude vybraný segment prežiť a zostávajúce segmenty budú odstránené.</translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">Odstrániť vybrané</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Vzdialenosť:</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">Bod zlomu medzery k bodu zlomu čiary</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Označenie čiary:</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">Veľkosť medzery:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">Bod pre medzeru na čiare</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Bez cla</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">Označenie medzery:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">Začiatok</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">Stredná</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">Koniec</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">Bez cla</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">Začiatok</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">Stredná</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">Koniec</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">Veľkosť PIck medzery z výkresu</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">Vzdialenosť od bodu zlomu</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Vyberte vzdialenosť od výkresu</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">Veľkosť medzery, ak nie je voľná</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">Ak je cheched, veľkosť medzery je určená myšou</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">Ak je zaškrtnuté, zrkadlo vykoná vybraná priamka.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">Zrkadlo na vybranom riadku</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Ak sa nekontroluje, pôvodné subjekty budú odstránené, inak prežijú.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Ponechať originály</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Ak je zaškrtnuté, aktuálne atribúty sa použijú pre zrkadlové subjekty, inak - pôvodné.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Použiť aktuálne atribúty</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Ak je zaškrtnuté, zrkadlové jednotky budú umiestnené na aktuálnej vrstve, inak budú umiestnené do pôvodných vrstiev.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Aktuálna vrstva užívateľa</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23345,234 +21226,6 @@ Zadajte inú hodnotu.</translation>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation type="unfinished">Použiť aktuálnu hladinu</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Presunúť možnosti otočenia</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">Voľný výber faktora by mala vykonať myš, ak je kontrolovaná.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Bez cla</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Ak je zaškrtnuté, na aktuálnu vrstvu sa umiestnia nové enties, inak budú v pôvodných vrstvách.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Použiť aktuálnu vrstvu</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">Ak absolútny, referenčný bod bude otočený, ale jednotka bude otočená iba druhým uhlom, inak uhly budú sčítať</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">Absolútne</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">Uhol na otáčanie jednotky okolo stredu otáčania</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">Ak je zaškrtnuté, aktuálne atribúty budú aplikované na vytvorené subjekty, budú použité pôvodné.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Použiť aktuálne atribúty</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">Ak je zaškrtnuté, druhá rotácia je okolo referenčného bodu</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">Otočiť dvakrát</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">Uhol pre dodatočnú rotáciu okolo bodu lomu</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Vyberte uhol otáčania z výkresu</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">Ak sa skontroluje, pôvodné subjekty prežijú, inak budú odstránené.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Ponechať originály</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorí sa viacero kópií.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Viaceré kópie</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">Uhol otáčania:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Určuje, či je uhol definovaný zadanou hodnotou alebo pozíciou myši</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">Vybrať uhol druhej rotácie z výkresu</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Počet kópií</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Presunúť možnosti otočenia</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorí sa viacero kópií.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Viaceré kópie</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">Ak je zaškrtnuté, použije sa rovnaký faktor stupnice pre os X a Y.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">Izotropická</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Ak sa skontroluje, pôvodné subjekty prežijú, inak budú odstránené.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Ponechať originály</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Počet kópií</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Ak je zaškrtnuté, aktuálne atribúty sa použijú na vytvorené subjekty, inak sa použijú pôvodné.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Použiť aktuálne atribúty</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">Koeficient mierky pre os Y</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Faktor mierky:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorené jednotky budú umiestnené do aktuálnej vrstvy. Inak budú umiestnené do pôvodných vrstiev.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Použiť aktuálnu vrstvu</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">Ak je zaškrtnuté, faktor bude slobodne vybraný myšou. V opačnom prípade sa použijú špecifikované hodnoty faktorov.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Bez cla</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">Koeficient mierky pre os X</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Ak sa skontroluje, pôvodné subjekty prežijú, inak budú odstránené.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">Ponechať originály</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorené jednotky budú umiestnené do aktuálnej vrstvy. Inak budú umiestnené do pôvodných vrstiev.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Použiť aktuálnu vrstvu</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Počet kópií</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">Ak je zaškrtnuté, aktuálne atribúty budú použité pre vytvorené entity, budú použité aj pôvodné.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Použiť aktuálne atribúty</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Ak sa skontroluje, pôvodné subjekty prežijú, inak budú odstránené.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Ponechať originály</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorí sa viacero kópií.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Viaceré kópie</translation>
     </message>
 </context>
 <context>
@@ -23888,14 +21541,6 @@ Zadajte inú hodnotu.</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>...</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">Filtrovanie pohľadov podľa názvu</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Filter...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24331,45 +21976,6 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
         <source>Control Points</source>
         <translation>Kontrolné body</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Kontrolné body paraboly nemôžu byť kolineárne</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">Ak je zvolený, bod subjekt použitý ako bod vloženia sa po operácii pasty odstráni. Inak to prežije.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">Odstrániť bod</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Faktor mierky</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Koeficient mierky pre papierované subjekty</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Uhol rotácie pre lepené subjekty</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24445,89 +22051,6 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">Uhol výberu z výkresu</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Uhol rotácie pre lepené subjekty</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">Presahovanie medzi subjektmi vložením bodov do riadkov.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">Rozstup polí od X od výkresu</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Faktor mierky</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">Uhol poľa z výkresu</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">Uhol otáčania pre pole.</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">Číslo riadkov.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">Rozstup medzi anténami podľa Y z výkresu</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">Ak je zaškrtnuté, pre každú jednotlivú pastu a celú sústavu sa použije rovnaký uhol rotácie. Inak sa použijú rôzne uhly.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">Rovnaké uhly</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Medzera:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">Číslo stĺpcov.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">Ak je zaškrtnuté, na paste sa vytvoria polia kópií.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">Name</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">Uhol poľa:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Koeficient mierky pre papierované subjekty</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">Prekročenie medzi bodmi vloženia subjektov do stĺpcov.</translation>
     </message>
 </context>
 <context>
@@ -25149,17 +22672,9 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
         <translation>Názov šírky čiary</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Farby</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>Farba pozadia pre prvok pera momentálne upravený v tabuľke pera</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">Farba mriežky pre zoznam pier</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25181,10 +22696,6 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>Celý riadok tabuľky je tučný pre aktívne pero</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">Farba mriežky:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25277,17 +22788,9 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
         <translation>Ak je to možné, prirodzený názov</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">Ak je vybraný, ďalšie správy budú zobrazené ako súčasť operácií súvisiacich s perom</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>Zobraziť informačnú správu, ak perom nemožno vybrať žiadne subjekty</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">Pri dvojitom kliknutí na stôl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25510,12 +23013,6 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">[KONTEXT: LC_PenPaletteWidget] Umiestnenie súboru pier bolo zmenené, reštartujte aplikáciu, aby sa použil nový súbor pier.
-Všimnite si, že ak uložíte pero prostredníctvom editora bez reštartu, aktuálne perá z palety sa uložia do nového súboru, a preto sa prepíše existujúci obsah.</translation>
-    </message>
 </context>
 <context>
     <name>LC_PointPickButton</name>
@@ -25561,37 +23058,6 @@ Všimnite si, že ak uložíte pero prostredníctvom editora bez reštartu, aktu
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>Vyberte pozíciu z výkresu</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">Počet bodov podľa smeru lattice Y (počet riadkov lattice)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">Počet riadkov:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">Počet stĺpcov:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">Počet bodov podľa smeru X lattice (počet stĺpcov lattice)</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">Ak je vybraná, posledný bod lattice bude nastavený na polohu prvého bodu, takže lattice bude rekt alebo štvoruholník</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">Upraviť posledný bod na prvý</translation>
     </message>
 </context>
 <context>
@@ -32858,10 +30324,6 @@ Všimnite si, že ak uložíte pero prostredníctvom editora bez reštartu, aktu
         <translation>Priemer</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">Obvod</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="740"/>
@@ -33850,10 +31312,6 @@ p, li { biely priestor: pre- wrap; }
         <translation>Informácie o subjekte</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Ak je vybraná, podrobnejšie informácie o líniách a oblúkoch, ktoré sú súčasťou polylinky sa zobrazí v Entity Info widget. &lt;br/&gt; V opačnom prípade sa zobrazí iba informácia o vertexes/bulges</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
@@ -33902,205 +31360,6 @@ p, li { biely priestor: pre- wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>Zvýraznenie bodov pera</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Hrany:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">Ak je zaškrtnuté, udáva sa, že bod zlomu by sa mal posunúť polomerom rohov.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Posun západu</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">Dĺžka úkosového rohu pre smer Y.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Definuje, ktoré hrany obdĺžnika by mali byť vypracované (takže je možné vytvoriť len dve rovnobežné priamky namiesto obdĺžnika)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Obe</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikálne</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontálne</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">Šírka obdĺžnika</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">Ovláda, ako by sa mali čerpať rohy obdĺžnika.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Rovno</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Okrúhle</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">Ak je zaškrtnuté, obdĺžnik sa otáča na určenom uhle.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Základný uhol:</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">Ak je zaškrtnuté, špecifikovaná výška a šírka obdĺžnika vymedzuje vzdialenosť medzi stredmi oblúkov pre zaoblenie rohov. Inak tieto hodnoty definujú vonkajšiu veľkosť obdĺžnika.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">Veľkosť vnútorného</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Dĺžka Y:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">Ak je zaškrtnuté, obdĺžnik bude vytvorený ako polylínia namiesto jednotlivých segmentov.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylín</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Snap:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Výška:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Polomer:</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">Dĺžka úkosového rohu pre X smer.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Dĺžka X:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">Výška obdĺžnika</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Polomer zaoblených rohov.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">Bod obdĺžnika wich bude umiestnený do bodu vloženia.</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">Vľavo hore</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Hore</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">Vpravo hore</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Vľavo</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Stredná</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Správne</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">Dole vľavo</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Dole</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">Vpravo dole</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Vyberte uhol otáčania z výkresu</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Vyberte polomer zaoblených rohov z výkresu.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Uhol otáčania</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">Výška výberu obdĺžnika z výkresu</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">Pick šírka obdĺžnika z výkresu</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Šírka:</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Rohy:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">Vyberte dĺžku úkosového rohu pre X smer z výkresu.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">Vyberte dĺžku úkosového rohu pre Y smer z výkresu.</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">Ak je zaškrtnuté, uhol bude špecifikovaný pozíciou myši. Inak sa použije špecifikovaná hodnota.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Bez cla</translation>
     </message>
 </context>
 <context>
@@ -34470,153 +31729,6 @@ p, li { biely priestor: pre- wrap; }
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Definuje, ktoré hrany obdĺžnika by mali byť vypracované (takže je možné vytvoriť len dve rovnobežné priamky namiesto obdĺžnika)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Obe</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikálne</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontálne</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">Definuje, ktorý bod obdĺžnika by mal byť umiestnený do polohy začiatočného bodu.</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">Roh</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">Stredne vertical</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">Strednehorizontálne</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Stredná</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">Vyberte obdĺžnikový uhol rotácie z výkresu</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">Vyberte polomer zaoblených rohov z výkresu.</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Rohy:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">Definuje, ktorý bod obdĺžnika by mal byť umiestnený do polohy koncového bodu.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Vyberte dĺžku úkosu v smere X z výkresu.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Hrany:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">Vyberte dĺžku úkosu v smere Y z výkresu.</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">Štart Snap:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Dĺžka úkosu v smere Y.</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Ak je zaškrtnuté, upresnite, že body zalomenia by sa mali posunúť polomerom rohov.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Posun západu</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Dĺžka X:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Polomer:</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">Ak je zaškrtnuté, umožňuje špecifikovať uhol otáčania pre obdĺžnik.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Základný uhol:</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">Obdĺžnikový uhol otáčania.</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">Koncový západ:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">Definuje, ako rohy obdĺžnika by mali byť vypracované.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Rovno</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Okrúhle</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">Polomer zaoblených rohov.</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Dĺžka Y:</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">Ak je označené, celý obdĺžnik sa nakreslí ako polylínia.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylín</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Dĺžka skosenia v smere X.</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -34874,145 +31986,6 @@ p, li { biely priestor: pre- wrap; }
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation type="unfinished">Vyberte dĺžku úkosu v smere Y z výkresu.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">Vnútorný uhol štvoruholníka.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">Ak je zaškrtnuté, vnútorný uhol štvoruholníka sa pripevní na určenú hodnotu.</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">Pevný vnútorný uhol:</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">Základný uhol obdĺžnika.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Dĺžka X:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Dĺžka skosenia v smere X.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">Definuje, ako rohy by mali byť ťahané pre obdĺžnik.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Rovno</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Okrúhle</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Rohy:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Ak je zaškrtnuté, upresnite, že body zalomenia by sa mali posunúť polomerom rohov.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Posun západu</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Dĺžka Y:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Dĺžka úkosu v smere Y.</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Polomer zaoblených rohov.</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Polomer:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">Ak je zaškrtnuté, tvar bude vytvorený ako polylínia.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylín</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">Vyberte si vnútorný uhol štvoruholníka z výkresu.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Hrany:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Vyberte polomer zaoblených rohov z výkresu.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Vyberte dĺžku úkosu v smere X z výkresu.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">Vyberte dĺžku úkosu v smere Y z výkresu.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Definuje, ktoré hrany obdĺžnika by mali byť vypracované (takže je možné vytvoriť len dve rovnobežné priamky namiesto obdĺžnika)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Obe</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikálne</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontálne</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">Vyberte základný uhol obdĺžnika z výkresu</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">Ak je zaškrtnuté, obdĺžnik sa otočí na určený základný uhol. Inak bude základný uhol definovaný uhlom medzi prvým a druhým bodom obdĺžnika.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">Pevný základný uhol:</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">Ak je zaškrtnuté, namiesto obdĺžnika sa vytvorí štvoruholník.</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">Quadrangle</translation>
     </message>
 </context>
 <context>
@@ -35661,100 +32634,6 @@ p, li { biely priestor: pre- wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">Prepáčte, pri kontrole novej verzie došlo k nejakej chybe siete.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">Nepodarilo sa spracovať odpoveď zo servera</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Presunúť možnosti otočenia</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">Určuje whetether kópie budú vložené do aktuálnej alebo pôvodnej vrstvy</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Použiť aktuálnu vrstvu</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">Nastavte sekundárny uhol, takže súčet uhlov (relatívny uhol otáčania) je 0. S takýmto nastavením jednotka bude presunutá, ale nie rotačný.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">Uhly zrkadlené</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">Vyberte primárny uhol z výkresu</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">Definuje, či sa použijú aktuálne alebo pôvodné atribúty kreslenia</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Použiť aktuálne atribúty</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">Vyberte sekundárny uhol z výkresu</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">Uhol otáčania nad absolútnym referenčným bodom</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorí sa viacero kópií.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Viaceré kópie</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">Počet kópií na vytvorenie</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">Sekundárny uhol:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">Ak je označené, pre všetky kópie sa použije rovnaký uhol. V opačnom prípade sa zvýši úmerne k počtu kópií.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">Rovnaký sekundárny uhol pre kópie</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Ak sa skontroluje, pôvodné subjekty prežijú, inak budú odstránené.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Ponechať originály</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">Primárny uhol:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">Uhol otáčania nad sekundárnym referenčným bodom</translation>
     </message>
 </context>
 <context>
@@ -36749,141 +33628,6 @@ p, li { biely priestor: pre- wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">Spustiť uhol kruhu:</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">Štart uhol pre kruh, z ktorého kliešte začnú.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Posun:</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">Offset prelomového bodu k priesečníkovému bodu.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Vzdialenosť od výkresu</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Vzdialenosť:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">Vzdialenosť medzi kliešťami.</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">Ak je zaškrtnuté, vybraný subjekt bude vydelený kliešťovými priesečníkmi.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Rozdeliť</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">Vybrať posun kliešťa z výkresu</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">Dĺžka tiku.</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">Uhol kliešťa z výkresu</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">Tik snap:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">Dĺžka tiku z výkresu</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">Pick spustiť uhol kruhu z výkresu</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">Uhol medzi zaškrtnutím a vybranou jednotkou.</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">Ak je zaškrtnuté, uhol kliešťa súvisí s vybraným subjektom, inak je to absolútny uhol.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">Tik dĺžka:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">Určuje, ktorý bod kliešťa by sa mal umiestniť do priesečníka s vybraným subjektom.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Začiatok</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Stredná</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Koniec</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">Ak je zaškrtnuté, použije sa stanovená pevná vzdialenosť medzi kliešťami. V opačnom prípade sa vzdialenosť vypočíta na základe dĺžky subjektu a počtu kliešťov.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">Pevné</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">Počet kliešťov medzi hranami vybraného subjektu.</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">Počet:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">Devines, ako kliešte na okraje by mali byť umiestnené.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Žiadne</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Obe</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">Označiť okraj:</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37203,57 +33947,6 @@ p, li { biely priestor: pre- wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">Definuje počet riadkových segmentov, ktoré sa majú vytvoriť pre každú spline-fit spline-fit polylín</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Ak sa nekontroluje, pôvodný spline bude odstránený, inak to prežije.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Ponechať originály</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Ak je zaškrtnuté, aktuálne atribúty sa použijú pre vytvorené subjekty, inak - pôvodné.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Použiť aktuálne atribúty</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorené subjekty budú umiestnené na aktuálnej vrstve, inak budú umiestnené do pôvodných vrstiev.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Použiť aktuálnu vrstvu</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">Ak je zaškrtnuté, je možné zadať vlastné množstvo riadkových segmentov. Inak sa použije hodnota z nastavení aktuálneho výkresu.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">Vlastný počet segmentov</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">Ak je zaškrtnuté, úsečky budú súčasťou polylínie. V opačnom prípade to budú jednotlivé riadky</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">Polylín</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -37377,61 +34070,6 @@ p, li { biely priestor: pre- wrap; }
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
         <translation type="unfinished">Polylín</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorené subjekty budú umiestnené na aktuálnej vrstve, inak budú umiestnené do pôvodných vrstiev.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Aktuálna vrstva užívateľa</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">Množstvo stredných bodov polylínového segmentu, ktoré budú pridané do spline.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">Definuje stupeň spline</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Ak sa nekontroluje, odstráni sa pôvodná polylínia, inak prežije.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Stupeň:</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Ponechať originály</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">Stredné body:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Ak je zaškrtnuté, aktuálne atribúty sa použijú pre vytvorené subjekty, inak - pôvodné.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Použiť aktuálne atribúty</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">Ak je zaškrtnuté, polylínne vertexy sú považované za spline body a spline podľa bodov budú vytvorené. V opačnom prípade sa považujú za kontrolné body a vytvoria sa močové spline.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">Vertexes sú spline body</translation>
     </message>
 </context>
 <context>
@@ -37835,69 +34473,6 @@ p, li { biely priestor: pre- wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>Stupeň použitý na približný spline</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorí sa symetrická hviezda.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Symetrické</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">Polomer pre vnútorné okraje.</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Počet:</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">Vyberte vonkajší polomer z výkresu</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">Vyberte vnútorný polomer z výkresu</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">Počet lúčov.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">Ak je zaškrtnuté, vonkajšie hrany budú zaoblené.</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">Polomer</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">Ak je zaškrtnuté, vnútorné hrany budú zaoblené.</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">Vnútorný polomer</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">Ak je označené, hviezda bude nakreslená ako polylínia.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylín</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">Polomer pre vonkajšie raje (brucho).</translation>
     </message>
 </context>
 <context>
@@ -38788,14 +35363,6 @@ p, li { biely priestor: pre- wrap; }
         <translation>Nastavenie</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">Filtrovanie užívateľských súradníc podľa mena</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Filter...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>&lt;Žiadny názov&gt;</translation>
@@ -38896,33 +35463,6 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>Odstrániť &amp; UCS</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Forma</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">Uhlová os X nového súradnicového systému</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Určuje, či je uhol X-Axis definovaný zadanou hodnotou alebo pozíciou myši</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Bez cla</translation>
     </message>
 </context>
 <context>
@@ -39538,33 +36078,6 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     </message>
 </context>
 <context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Alternatívny uhol čiary</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Medzera:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">Vzdialenosť od pôvodnej polylínie</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">Kópie:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Počet kópií</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">Rozstup medzi výberom a kreslením</translation>
-    </message>
-</context>
-<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="38"/>
@@ -39602,39 +36115,14 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="839"/>
-        <source>Creating new file...</source>
-        <translation>Vytváram nový súbor...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="775"/>
         <source>unnamed document %1</source>
         <translation>Bez názvu %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1867"/>
-        <source>Opening recent file...</source>
-        <translation>Otváram nedávno použitý súbor...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
         <source>Loaded document: </source>
         <translation>Nahrávam dokument:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1068"/>
-        <source>Opening aborted</source>
-        <translation>Otváranie prerušené</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1398"/>
-        <source>Printing...</source>
-        <translation>Tlačím...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1501"/>
-        <source>Exiting application...</source>
-        <translation>Ukončujem program...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -39647,19 +36135,9 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
         <translation>Vytvorený nový výkres.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing...</source>
-        <translation>Ukladám výkres...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="276"/>
         <source>Saved drawing: %1</source>
         <translation>Výkres uložený: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1402"/>
-        <source>Printing complete</source>
-        <translation>Tlač kompletná</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="771"/>
@@ -39674,11 +36152,6 @@ Please check the permissions.</source>
         <translation>Nemôžem otvoriť súbor
 %1
 Prosím skontrolujte prístupové práva.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1230"/>
-        <source>Auto-saving drawing...</source>
-        <translation>Automaticky úsporný výkres...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
@@ -39744,11 +36217,6 @@ Prosím skontrolujte jeho existenciu a povolenia.</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1067"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>Súbor &apos;%1&apos; neexistuje. Otvorenie prerušené</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing: %1</source>
-        <translation>Ukladanie výkresu:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="271"/>
@@ -39817,12 +36285,6 @@ Prosím skontrolujte jeho existenciu a povolenia.</translation>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="196"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>uniknúť</translation>
-    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
@@ -39858,11 +36320,6 @@ Prosím skontrolujte jeho existenciu a povolenia.</translation>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="69"/>
         <source>Name of the block</source>
         <translation>Názov poľa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="77"/>
-        <source>Renaming Block</source>
-        <translation>Premenovanie bloku</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="78"/>
@@ -40063,12 +36520,6 @@ Prosím skontrolujte jeho existenciu a povolenia.</translation>
         <translation>História a výstup príkazu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="260"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>uniknúť</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="54"/>
         <source>...</source>
         <translation>...</translation>
@@ -40243,73 +36694,6 @@ Prosím skontrolujte jeho existenciu a povolenia.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">Oblúk</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Atribúty pera</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">X Súradnica oblúkového stredu</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">Y Súradnica oblúkového stredu</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="obsolete">Definuje, či je oblúk obrátený (v smere hodinových ručičiek)</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">Reverzné</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">V strede (y):</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="obsolete">Polomer oblúka</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="obsolete">Štartovací uhol:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Polomer:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="obsolete">Štartovací uhol oblúka</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="obsolete">Koncový uhol oblúka</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="obsolete">Koncový uhol:</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Stred (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
@@ -40347,178 +36731,6 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
         <translation>Pero</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Kruh</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Polomer:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="obsolete">Polomer kruhu</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">V strede (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">Y Súradnica stredu kruhu</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Stred (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">X Súradnica stredu kruhu</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">Lineárna dimenzia</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Vrstva rozmeru</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Atribúty pera</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Uhol:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="obsolete">Uhol otáčania rozmeru</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Rozmery</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Vrstva rozmeru</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">Atribúty pera</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">EllipseCity name (optional, probably does not need a translation)</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="obsolete">Uhol otáčania pre hlavnú os elipsy, stupne</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="obsolete">Definuje, či je oblúk obrátený</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">Reverzné</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">V strede (y):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="obsolete">Koncový uhol eliptického oblúka, stupne</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">Y Súradnica oblúkového stredu</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="obsolete">Polomer hlavnej osi elipsy</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="obsolete">v stupňoch</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="obsolete">Štartovací uhol (°):</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="obsolete">Rotácia (°):</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="obsolete">Polomer menšej osi elipsy</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="obsolete">Koncový uhol (°):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="obsolete">Štartový uhol eliptického oblúka, stupne</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="obsolete">Major:</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="obsolete">Malé:</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="obsolete">X Súradnica stredu elipsy</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Stred (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
     </message>
 </context>
 <context>
@@ -40595,81 +36807,6 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <source>Image</source>
-        <translation type="obsolete">Obrázok</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Uhol:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="obsolete">Výška:</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="obsolete">Šírka obrázku</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="obsolete">X súradnica bodu vloženia</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="obsolete">Rozlíšenie (body na palec)</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="obsolete">Cesta k obrazovému súboru</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="obsolete">Faktor mierky</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="obsolete">Veľkosť (px):</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">Uhol otáčania</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="obsolete">Súradnice bodu vloženia Y</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="obsolete">Mierka:</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="obsolete">Veľkosť obrázku v pixeloch</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">DPI</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="obsolete">Výška obrazu</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="obsolete">Vyberte obrázok</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="32"/>
@@ -40692,143 +36829,9 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
         <translation>GUI jazyk:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt; &lt;head/&gt; &lt;body &gt; &lt;p common=&quot;center&quot;&gt;&lt;span style=&quot; font-size:size; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span &gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt; Prosím vyberte jednotku, ktorú chcete použiť pre nové výkresy a preferovaný jazyk pre Ui a Command. &lt;br/&gt; &lt;/p&gt;&lt;p&gt; Tieto nastavenia môžete zmeniť neskôr. &lt;/p &gt; &lt;/body &gt; &lt;/html &gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
         <translation>Jazyk pre príkazy:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="obsolete">Vložiť písmeno y):</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="obsolete">Vložiť bod x):</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="obsolete">Počet riadkov pre kópie</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">Uhol otáčania</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="obsolete">Medzera medzi stĺpcami</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="obsolete">Koeficient mierky pomocou osi X</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="obsolete">X súradnica bodu vloženia</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="obsolete">Medzera medzi radmi</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="obsolete">Počet stĺpcov pre kópie</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="obsolete">Koeficient mierky podľa osi Y</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="obsolete">Stupnica Y:</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="obsolete">Riadok:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Uhol:</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="obsolete">Súradnice bodu vloženia Y</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="obsolete">Rovnica:</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="obsolete">Stĺpce</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="obsolete">Mierka X:</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="obsolete">Medzera kolóny:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Čiara</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="obsolete">Koncový bod x):</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="obsolete">Koncový bod X súradnica</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="obsolete">Koncové súradnice bodu Y</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="obsolete">Koncový bod (y):</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="obsolete">Počiatočný bod (y):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="obsolete">Súradnice východiskového bodu Y</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="obsolete">Počiatočný bod x):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="obsolete">Súradnice východiskového bodu X</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
     </message>
 </context>
 <context>
@@ -40999,10 +37002,6 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
         <translation>Vložiť symbol</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">Vloženie symbolu</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
         <source>Degree (°)</source>
         <translation>Stupeň (°)</translation>
@@ -41051,10 +37050,6 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>Libra (£)</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Yen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -41690,115 +37685,6 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
         <translation>Pero</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <source>Mirroring Options</source>
-        <translation type="vanished">Nastavenie zrkadlenaia</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Počet kópií</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Vymaž orginál</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Ponechaj orginál</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Použi aktuálne &amp;atribúty</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Použi aktuálnu &amp;hladinu</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Počet kópií</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Vymaž orginál</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Ponechaj orginál</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Viacnásobné kópie</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Použi aktuálne &amp;atribúty</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Použi aktuálnu &amp;hladinu</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Move/Copy Options</source>
-        <translation type="vanished">Možnosti presunu/kopírovania</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <source>Move/Rotate Options</source>
-        <translation type="vanished">Nastavenie Posunutia/Otočenia</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Počet kópií</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Uhol (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Použi aktuálne &amp;atribúty</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Použi aktuálnu &amp;hladinu</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Vymaž orginál</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Ponechaj orginál</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Viaceré kópie</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="vanished">Ctrl+S</translation>
     </message>
 </context>
 <context>
@@ -44815,10 +40701,6 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
         <translation>Relatívny nulový Marker</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">Správanie</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
         <translation>Typ siete, ktorá sa má vytiahnuť</translation>
@@ -45307,38 +41189,6 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
         <translation>Auto-Uložiť výkresy</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4935"/>
-        <source>#</source>
-        <translation>#</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4940"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5009"/>
-        <source>~</source>
-        <translation>~</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4945"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
-        <source>_</source>
-        <translation>_</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4950"/>
-        <source>__</source>
-        <translation>__</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4955"/>
-        <source>lcauto_</source>
-        <translation>lcauto</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4960"/>
-        <source>autosaved_</source>
-        <translation>autosaved</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4984"/>
         <source>Auto-save file name prefix:</source>
         <translation>Automaticky uložiť názov súboru predponu:</translation>
@@ -45347,36 +41197,6 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5001"/>
         <source>Backup file name suffix:</source>
         <translation>Prípona názvu súboru zálohy:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5014"/>
-        <source>$$</source>
-        <translation>$$</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5024"/>
-        <source>_backup</source>
-        <translation>záloha</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5029"/>
-        <source>_bak</source>
-        <translation>bak</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5034"/>
-        <source>.bak</source>
-        <translation>.bak</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5039"/>
-        <source>.backup</source>
-        <translation>. záloha</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5044"/>
-        <source>.lcb</source>
-        <translation>.lcb</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5111"/>
@@ -45874,243 +41694,6 @@ Takže predvolená hodnota kroku potrebná na pečenie</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Code</source>
-        <translation type="obsolete">Kód</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Hodnota</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Zrušiť</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Bod</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="obsolete">Poloha (y):</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="obsolete">Poloha bodu súradnicou Y</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="obsolete">Poloha x):</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="obsolete">Poloha bodu súradnicou X</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Polylín</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="obsolete">Definuje, či polylín je uzavretý obrys</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Uzavreté</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation type="vanished">Nastavenie rotácie</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Počet kópií</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Vymaž orginál</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Ponechaj orginál</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="vanished">&amp;Viacnásobné kópie:</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Uhol (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Použi aktuálne &amp;atribúty</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Použi aktuálnu &amp;hladinu</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <source>Rotate Two Options</source>
-        <translation type="vanished">Nastavenie rotácie č.2</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Počet kópií</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Vymaž orginál</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Ponechaj orginál</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Viacnásobné kópie</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;a):</source>
-        <translation type="vanished">Uhol (&amp;a):</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;b):</source>
-        <translation type="vanished">&amp;Uhol (&amp;b):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Použi aktuálne &amp;atribúty</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Použi aktuálnu &amp;hladinu</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <source>Scaling Options</source>
-        <translation type="vanished">Nastavenie mierky</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Počet kópií</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Použi aktuálne &amp;atribúty</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Použi aktuálnu &amp;hladinu</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; &lt;/p &gt; &lt;/body &gt; &lt;/html &gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Vymaž orginál</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Ponechaj orginál</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Viacnásobné kópie</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="vanished">Stupnica podľa rovnakého faktora v oboch smeroch x- aj y-</translation>
-    </message>
-    <message>
-        <source>Isotropic Scaling</source>
-        <translation type="vanished">Izotropické kalenie</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">Spline</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="obsolete">Stupeň:</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="obsolete">Definuje, či spline definuje uzavretý obrys</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Uzavreté</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="obsolete">Stupeň použitý na približný spline</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="20"/>
@@ -46258,10 +41841,6 @@ Takže predvolená hodnota kroku potrebná na pečenie</translation>
         <translation>Libra (£)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Jen (¥)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Times (×)</source>
         <translation>Krát (×)</translation>
@@ -46305,10 +41884,6 @@ Takže predvolená hodnota kroku potrebná na pečenie</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>Hladina textu</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">Zabránenie textu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -46916,10 +42491,6 @@ Takže predvolená hodnota kroku potrebná na pečenie</translation>
         <translation>Uhol:</translation>
     </message>
     <message>
-        <source>Oblique:</source>
-        <translation type="vanished">Šikmé:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
         <source>Width factor:</source>
         <translation>Faktor šírky:</translation>
@@ -47437,21 +43008,6 @@ p, li { biely priestor: pre- wrap; }
     </message>
 </context>
 <context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">Neplatná stupnica</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">Koeficient mierky papiera väčší ako maximálny pomer tlače</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">Koeficient mierky papiera menší ako min. pomer tlače</translation>
-    </message>
-</context>
-<context>
     <name>QG_RecentFiles</name>
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="183"/>
@@ -47518,10 +43074,6 @@ p, li { biely priestor: pre- wrap; }
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>World</source>
         <translation>Svet</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Snap</translation>
     </message>
 </context>
 <context>
@@ -47726,12 +43278,6 @@ Zadajte inú hodnotu.</translation>
         <translation>Odstrániť prázdne hladiny</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Vrstva (s) bez nájdených entít, napriek tomu sú filtrované a nie sú viditeľné.
-Jasná filtračná maska a opakujte.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -47793,14 +43339,6 @@ If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly 
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Nahradiť hodnotu „Podľa vrstvy“ hodnotami zdrojových vrstiev?
-Ak áno, entity s perami „Podľa vrstvy“ budú na novej vrstve vyzerať presne tak, ako na predchádzajúcich vrstvách, a hodnota „Podľa vrstvy“ bude nahradená vyriešenými perami.
-Ak nie, hodnoty „Podľa vrstvy“ zostanú a pero cieľovej vrstvy bude definovať pero pre takéto entity.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -48125,33 +43663,9 @@ Chcete ho nahradiť?</translation>
         <translation>Formát označeného súboru</translation>
     </message>
     <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">Stará výmena výkresov%1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="471"/>
         <source>dwg Drawing %1</source>
         <translation>dwg Kreslenie%1</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="85"/>
-        <source>DWG support is not complete!</source>
-        <translation>Podpora DWG nie je kompletná!</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="87"/>
-        <source>If this file fails to open try an older DWG format</source>
-        <translation>Ak sa tento súbor neotvorí, skúste starší formát DWG</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="88"/>
-        <source>or try to find a converter to make it a DXF file.</source>
-        <translation>alebo skúste nájsť prevodník, aby to DXF súbor.</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
-        <source>Information</source>
-        <translation>Informácie</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="104"/>
@@ -49413,23 +44927,6 @@ Chcete ho nahradiť?</translation>
         <translation>Najprv musíte zadať vzdialenosť.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="275"/>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>kal</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="276"/>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>výpočet</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="311"/>
-        <source>cal</source>
-        <translation>kal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="317"/>
         <source>Calculator mode: On</source>
         <translation>Režim kalkulátora: zapnuté</translation>
@@ -49688,11 +45185,6 @@ Chcete ho nahradiť?</translation>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>mpoint</translation>
-    </message>
-    <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">criclebyarc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -50625,12 +46117,6 @@ Chcete ho nahradiť?</translation>
         <translation>filet</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="799"/>
-        <source>bevel</source>
-        <comment>modify - fillet</comment>
-        <translation>bevel</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
@@ -51542,26 +47028,6 @@ Chcete ho nahradiť?</translation>
         <translation>používanie:</translation>
     </message>
     <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished">[options] [možnosti] &lt;dxf súbory&gt;</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished">*.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">-- vytlačiť všetky súbory dxf do pdf súborov s rovnakými menami.</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished">- o some.pdf *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">-- vytlačte všetky súbory dxf do súboru &apos;niektorý.pdf&apos;.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
         <source> [options] &lt;%1_files&gt;</source>
         <translation type="unfinished"></translation>
@@ -51637,16 +47103,6 @@ Chcete ho nahradiť?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Veľkosť papiera (šírka x výška) v mm.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">Rozlíšenie výstupu (DPI).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>Výstupná stupnica. Napr.: 0,01 (pre stupnicu 1:100).</translation>
@@ -51679,27 +47135,9 @@ Chcete ho nahradiť?</translation>
         <translation>Cieľový výstupný priečinok.</translation>
     </message>
     <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="177"/>
-        <source>DXF output version: r12, r14, r2000, r2004, r2007 (default), r2018.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="183"/>
-        <source>DWG output version: r2000 (default), r2004, r2010, r2013, r2018.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">&lt;dxf súbory&gt;</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">Vstupný súbor DXF (s)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -51848,11 +47286,6 @@ Chcete ho nahradiť?</translation>
         <translation>chyba pri čítaní hlavičky súboru DXF/DWG</translation>
     </message>
     <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">chyba čítanie DXF/DWG hlavička dara</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
@@ -51899,10 +47332,6 @@ Chcete ho nahradiť?</translation>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>čítanie chýb DXF/DWG kód</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">Otvorená verzia súboru dwg% 1.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -52353,10 +47782,6 @@ Chcete ho nahradiť?</translation>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">Vybrať pre vytvorenie bloku (Enter to complete)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
         <translation>Vybrať obrys</translation>
@@ -52370,66 +47795,6 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>Špecifikujte referenčný bod</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">Vybrať explodovať kontajner (Enter dokončiť)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">Vybrať a explodovať</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Špecifikujte referenčný bod</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Zadajte uhol:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Zadajte faktor:</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">Zadajte počet stĺpcov:</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">Zadajte počet riadkov:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">Zadajte vzdialenosť stĺpcov:</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">Zadajte vzdialenosť riadkov:</translation>
-    </message>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">Blok nemôže obsahovať vložku.</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished">má vnorenú vložku aktuálneho bloku v:</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">Tento blok nemožno vložiť.</translation>
     </message>
 </context>
 <context>
@@ -52681,270 +48046,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">Dĺžka akordu by nemala byť nula</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">Nesprávna dĺžka tetivy</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Zvoľte stred</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">Uveďte počiatočný bod</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternatívny oblúk</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">Uveďte dĺžku akordu (negatívna pre bod alt):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">Použiť alternatívny oblúkový bod</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">Zvoľte polomer</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">Zvoľte začiatočný uhol:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">Uveďte uhol konca alebo [uhol/chordlen]</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">Zadajte dĺžku oblúka (ako uhol):</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">Chybné údaje oblúka.</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Uveďte tretí bod</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Zvoľte druhý bod</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">Uveďte štartovací bod alebo [centrum]</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">Uveďte základný subjekt</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">Alternatívny oblúk</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">Alternatívny oblúk</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">Uveďte konečný uhol</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">Uveďte koncový bod</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Zvoľte stred</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">Uveďte bod v kružnici</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">Chybné údaje kružnice.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Zvoľte prvý bod</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Zvoľte druhý bod</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">Chybné údaje kružnice.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Zvoľte prvý bod</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Zvoľte druhý bod</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Zvoľte tretí bod</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">Zvoľte stred kružnice</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">Zvoľte polomer kružnice</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">polomer=%1 je neplatný (expresia)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">polomer=%1 je neplatný (negatívny)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">polomer=%1 je neplatný (nula)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">Uveďte prvý riadok</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">Uveďte druhý riadok</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">Uveďte tretí riadok</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">Uveďte prvý bod dotyčnice</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">Uveďte druhý bod dotyčnice</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Vyberte stred dotyčnice kruhu</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Uveďte riadok/arc/kruh</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Uveďte prvý riadok/arc/kruh</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Uveďte druhý riadok/arc/kruh</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Vyberte stred dotyčnice kruhu</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">Žiadny spoločný tangenciálny kruh pre polomer &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Uveďte riadok/arc/kruh</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">Uveďte ďalší riadok/arc/kruh</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">Uveďte bod dotyčnice kružnice</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Vyberte stred dotyčnice kruhu</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Vyberte stred dotyčnice kruhu</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Uveďte prvý riadok/arc/kruh</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">Žiadny spoločný tangenciálny kruh pre vybrané subjekty</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Uveďte druhý riadok/arc/kruh</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">Uveďte tretí riadok/arc/kruh</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
@@ -53139,125 +48240,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">@ info: tooltip</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
         <translation>Poklop ihneď po výbere</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Špecifikujte referenčný bod</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Zadajte uhol:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Zadajte faktor:</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">Zadajte dpi:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Zvoľte prvý bod</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Zvoľte ďalší bod alebo [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Zvoľte ďalší bod</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">Nie je možné zavrieť sekvenciu línií: Nie je dosť entít ešte definovaných, alebo už uzavreté.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">Nemôžem vrátiť späť: Dosiahnutý začiatok histórie</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">Nie je možné znovu: Koniec histórie dosiahol</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Zvoľte pozíciu</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">Náhradný smer</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Zadajte uhol:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">Zadajte dĺžku:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">budú vytvorené subjekty</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">Zvoľte prvú čiaru</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">Zvoľte druhú čiaru</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">Zadajte dĺžku osi:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">Zadajte počet osí:</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">Počet sektorových riadkov mimo rozsahu:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">Kliknite a ťahajte myšou pre kreslenie čiary</translation>
     </message>
 </context>
 <context>
@@ -53290,74 +48275,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Vyberte kruh, oblúk alebo elipsu</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">Zvoľ vzdialenosť &lt;%1&gt; alebo objekt alebo [%2]</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">budú vytvorené subjekty</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Zadajte počet:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Nesprávne číslo. Skúste 1..99</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">Zvoľte objekt</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">Zvoľte požadovaný bod</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">budú vytvorené subjekty</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Počet:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Nesprávne číslo. Skúste 1..99</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nesprávny výraz</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">Zadajte roh</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Zadajte prvý roh</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Zadajte druhý roh</translation>
     </message>
 </context>
 <context>
@@ -53399,29 +48316,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">Zvoľte základný objekt</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Uveďte uhol</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">Uveďte dĺžku</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Zvoľte pozíciu</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53459,17 +48353,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Uveďte bod vloženia</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Zadajte text:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
@@ -53478,108 +48361,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Uveďte prvý bod</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Zadajte ďalší bod alebo [%1]</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">Nie je možné zavrieť sekvenciu línií: Zatiaľ nie je definovaný dostatok entít.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Nie je možné vrátiť späť: Zatiaľ nie je definovaný dostatok subjektov.</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Zadajte ďalší bod</translation>
-    </message>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">Zadajte koncový bod x</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Uveďte počet polylín</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">Zadajte rovnicu, f(x)</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">Zadajte štartovací bod x</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">Zadané x je neplatné.</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">Zadaná veľkosť kroku je neplatná.</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">Zadaná hodnota x je neplatná.</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternatívny oblúk</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">Uveďte prvý kontrolný bod</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">Zadajte ďalší kontrolný bod alebo [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">Zadajte ďalší kontrolný bod</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Nie je možné vrátiť späť: Zatiaľ nie je definovaný dostatok subjektov.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">Text:</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Zvoľte bod vloženia</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Zadajte text:</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Uveďte druhý bod</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">@ info: tooltip</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -53598,10 +48380,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>Vystrihnúť hneď po výbere</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">Vybrať na kopírovať (Vstúpiť na dokončenie)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -53639,24 +48417,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Paste Multiple</source>
         <translation>Vložiť viac</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="obsolete">Nastaviť referenčný bod pasty</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">Nič sa nedá vrátiť!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">Nič nové!</translation>
     </message>
 </context>
 <context>
@@ -53877,57 +48637,6 @@ Koniec: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">Vzdialenosť:%1
-Kartezián: (%2 , %3)
-Polar: (%4 &lt; %5)
-Bod o subjekte: (%6 , %7)
-Bod: (%8, %9)</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">Zvoľte objekt</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">Nepreháňajte s detskými entitami v kontajneri</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">Relatívny bod je na subjekte</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Vzdialenosť:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">Od:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">Do:</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">Zvoľte bod</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -53973,10 +48682,6 @@ Bod: (%8, %9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">Vybrať na meranie celkovej dĺžky (Enter to complete)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="74"/>
         <source>Select contour</source>
         <translation>Vybrať obrys</translation>
@@ -54008,906 +48713,6 @@ Bod: (%8, %9)</translation>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>Zrušiť</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Špecifikujte referenčný bod</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Zadajte uhol:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Zadajte faktor:</translation>
-    </message>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">Nie je možné otvoriť súbor &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">Vybrať pre úpravu atribútov (Vstup pre dokončenie)</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">Upraviť atribúty ihneď po výbere</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Vybrať obrys</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">Vybrané čiary sú rovnobežné</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">Vybrané línie nie sú deťmi rovnakej polylínie</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Prierez:</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Bod 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Bod 2:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">Neplatná vybraná jednotka (neodstrániteľná).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">Neplatná vybraná jednotka (neatómová).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">Neplatná jednotka vybraná (neodstrániteľná s prvou jednotkou).</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Zvoľte prvý objekt</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Zvoľte druhý objekt</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">Zadajte dĺžku 1:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">Zadajte dĺžku 2:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Rozdeliť</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">Pri:</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nenašiel sa žiaden objekt.</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">Rezný bod nemusí byť koncovým ukazovateľom jednotky.</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">Zvoľte objekt pre vystrihnutie</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">Zvoľte bod vystrihnutia</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">Subjekt musí byť priamka, oblúk, kruh, elipsa alebo interpolačný spline.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">Vybrať pre vymazanie (Vstup do dokončenia)</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">Odstrániť ihneď po výbere</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Vybrať obrys</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">Zvoľte prvý bod na polyline</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">Zvoľte druhý bod na tej istej polyline</translation>
-    </message>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">Subjekty, ktoré nie sú v rovnakej polylínii.</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">Materská spoločnosť druhej účtovnej jednotky nie je polylín</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">Materská spoločnosť prvého subjektu nie je polylínou</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">Materská spoločnosť druhej účtovnej jednotky je neplatná</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">Jeden z vybraných subjektov je neplatný</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">Materská spoločnosť prvej účtovnej jednotky je neplatná</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">Prvá jednotka je neplatná</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">Druhá jednotka je neplatná</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">Kliknite na subjekt pre úpravu</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">Vybrať explodovať text (Enter dokončiť)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">Explodovať ihneď po výbere</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Zrkadlo</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">Uhol (alt):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">Riadok od:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">Riadok pre:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">Zvoľte zrkadlo (Vstup do dokončenia)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Vybrať obrys</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">Špecifikovať čiaru zrkadiel</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">Prevrátiť vertikálne</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">Prevrátiť horizontálne</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">Zadajte prvý bod zrkadlovej čiary</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">Zadajte druhý bod zrkadlovej čiary</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">Posunutie</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">Kopírovať posunutie</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Špecifikujte referenčný bod</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">Vytvoriť kópiu</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">@ title: window</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">Pohyb ihneď po výbere</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Vybrať obrys</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Zvoľte bod posunutia</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">Pohyb s rotáciou</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">Zdroj:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">Cieľ:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Posun:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Špecifikujte referenčný bod</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">Zvoľte pre pohyb a otáčanie (Vstup na dokončenie)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">Pohybovať a otáčať ihneď po výbere</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Vybrať obrys</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Zvoľte bod posunutia</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">Zadajte uhol natočenia:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">Posun</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Vzdialenosť:</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">Uveďte smer posunu</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">Uveďte referenčný bod pre smer posunu</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">Vyberte čiaru, polylíniu, kružnicu alebo oblúk pre vytvorenie ofsetu (Vstup na dokončenie)</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">Offset ihneď po výbere</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Vybrať obrys</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">Vybrať pre vrátenie smeru (Vstúpiť do dokončenia)</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">Vrátiť okamžite po výbere</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Vybrať obrys</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Špecifikujte referenčný bod</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">Rotácia</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Zdrojový bod:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Cieľový bod:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Posun:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Referenčný bod:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">Stredový bod:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">Druhý uhol:</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">Otočiť (Vstúpiť na dokončenie)</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">Otočiť ihneď po výbere</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Vybrať obrys</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Snap do centra výberu</translation>
-    </message>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">Zadajte rotačné centrum</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">Uveďte cieľový bod na otáčanie</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">Uveďte cieľový bod otáčania okolo referenčného bodu</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">Otočenie dvakrát</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">Centrum 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">Uhol 1:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">Centrum 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">Uhol 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">Vybrať pre dve osi rotácie (Enter dokončiť)</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">Otočiť 2 os ihneď po výbere</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Vybrať obrys</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">Zvoľte absolútny referenčný bod</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">Zvoľte relatívny referenčný bod</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Okrúhle</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Bod 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Bod 2:</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">Zvoľte druhý objekt</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">Zadajte polomer:</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">Zadajte prvý subjekt alebo zadajte polomer &lt;%1&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Mierka</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Centrum:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Zdrojový bod:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Cieľový bod:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Posun:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">Mierka podľa X:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">Mierka podľa Y:</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">Zadajte stred stupnice</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Snap do centra výberu</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">Uveďte východiskový bod</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Uveďte cieľový bod</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">Voľný zásah</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">Vybrať do stupnice (Vstúpiť do konca)</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">Mierka ihneď po výbere</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Vybrať obrys</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Zvoľte prvú hranu</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Zvoľte druhú hranu</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">Natiahnuť</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">Spustiť roh:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">Koncový roh:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Referenčný bod:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Cieľový bod:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Posun:</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Špecifikujte referenčný bod</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Zvoľte bod predĺženia</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">Zvoľte prvý objekt na orezanie</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">Zvoľte objekt po ktorý orezávať</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">Trim dva</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Prierez:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">Prierez 2:</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">Zvoľte druhý objekt na orezanie</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">Zvoľte objekt na orezanie</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">Žiadna entita sa nenašla.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">Zvolený objekt nie je nerozložiteľný alebo ho nie je možné orezať.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">Vyberte čiaru/arc na vyčnievanie OR zadajte hodnotu dĺžky:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nenájdený subjekt.</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">Vybrať subjekty (Enter to Complete)</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">Objednať ihneď po výbere</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Vybrať obrys</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">Vyberte entitu pre poradie</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nenájdený subjekt.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Subjekt musí byť polylínia.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">Pridanie bodu je neplatné.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">Pridanie bodu nie je na subjekt.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">Špecifikujte polylín na pridanie uzlov</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">Zadajte bod pridania uzla</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nenájdený subjekt.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Subjekt musí byť polylínia.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">Kliknite niekde v blízkosti začiatku alebo konca existujúcej polylinky.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Uveďte počet polylín</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">Zadajte polylinku niekde v blízkosti začiatku alebo konca</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">Nemôžem pripojiť uzly v uzavretej polylínii.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Nie je možné vrátiť späť: Zatiaľ nie je definovaný dostatok subjektov.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nenájdený subjekt.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Subjekt musí byť polylínia.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">Zadajte polylín pre odstránenie uzla</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">Zadajte bod vymazania uzla</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Vymazanie je neplatné.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Vymazanie nie je na subjekte.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nenájdený subjekt.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Subjekt musí byť polylínia.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Vymazanie nie je na subjekte.</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">Nenašla sa žiadna polylínia.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">Medzi vybranými bodmi by mali byť aspoň dva segmenty polylín.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">Zadajte polylín na odstránenie medzi dvoma uzlami</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">Zadajte prvý uzol</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">Zadajte druhý uzol</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Vymazanie je neplatné.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nenájdený subjekt.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Subjekt musí byť polylínia.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">Vyberte originálnu polylíniu</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nenájdený subjekt.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">Vyberte jeden zo segmentov na pôvodnom polylíne</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">Subjekt nemôže byť uzavretá polylínia.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">Vytvorená polylínia</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Nenájdený subjekt.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Subjekt musí byť polylínia.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">Prvý segment by mal byť na vybranej polylínii.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">Druhý segment by mal byť na vybranej polylínii a nemal by sa rovnať prvému.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">Špecifikujte polylíniu na trim</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">Zadajte prvý segment</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">Uveďte druhý segment</translation>
     </message>
 </context>
 <context>
@@ -54984,113 +48789,11 @@ Bod: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="obsolete">Žiadna jednotka nebola vybraná!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectBase</name>
     <message>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">Objekt musí byť nerozložiteľný.</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Zadajte typ jednotky, ktorú chcete vybrať</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">Zvoľte prvý bod pretínajúcej čiary</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">Vyberte pretínajúci sa subjekt</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">Vybrať detské subjekty</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">Zvoľte druhý bod pretínajúcej čiary</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">Zadajte jednotku s požadovanou vrstvou</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Zadajte typ jednotky, ktorú chcete vybrať</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Vybrať obrys</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">Zrušenie výberu</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">Výber</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">subjekty</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">ktorý sa pretína s krabicou</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">ktoré sú v rámčeku</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">Zvoľte druhý okraj</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">Vyberte prienik</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">Vybrané subjekty</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">Vybrať jednotky</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">De-select pretínanie</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">Kliknite a pretiahnite pre okno výberu</translation>
     </message>
 </context>
 <context>
@@ -55398,150 +49101,6 @@ Bod: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Možnosti oblúka</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Proti smeru hodinových ručičiek</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Hodinové</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">Tangenciálne možnosti oblúka</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">Ak sa zvolí, vytvorí sa tangentný oblúk so špecifikovaným polomerom</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">Radius tangenciálneho oblúka</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">Ak je vybraný, vytvorí sa oblúk so špecifikovaným uhlom</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">Celkový uhol sklonu tangenciálneho oblúka</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Vyberte polomer formulára výkres</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Polomer</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Uhol</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">Comment</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">Zaškrtnite, aby sa oba subjekty pristrihli ku skoseniu</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">Dĺžka 1:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Dĺžka skosenia v smere X.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">Vyberte si výkres prvej dĺžky formulára</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">Dĺžka 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Dĺžka úkosu v smere Y.</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">Vyberte druhú dĺžku formulára výkres</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">Možnosti kruhu</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Polomer:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Polomer kruhu</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Vyberte polomer z výkresu</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">Možnosti Circle Tangencial2</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Polomer tangenciálnej kružnice nakresliť &lt;/p &gt; &lt;/body &gt; &lt;/html &gt;</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Polomer:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">Polomer tangenciálneho kruhu</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Vyberte polomer z výkresu</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Uhol:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -55678,849 +49237,6 @@ Bod: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Vložiť možnosti</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Uhol otáčania</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Faktor mierky:</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">DPI:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Faktor mierky</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">DPI obrázku</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Vložiť možnosti</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Uhol otáčania</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Faktor:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Faktor mierky</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">Poplach:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">Počet stĺpcov</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">Počet riadkov</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">Rozstup riadkov od výkresu</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">Vyberte vzdialenosť stĺpcov z výkresu</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Medzera:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">Medzera stĺpcov</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">Rozstup riadkov</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">Vložiť možnosti knižnice</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Uhol otáčania</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Faktor:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Faktor mierky</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">Možnosti uhlu čiary</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">Bod na vytvorenej čiare, ktorý bude vložený do bodu vloženia</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Uhol čiary</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Dĺžka:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Dĺžka trate</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">Bod zarovnania:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">Uhol čiary z výkresu</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Začiatok</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Stredná</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Koniec</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">Dĺžka čiary PIck od výkresu</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">Ak je zvolená, priamka bude ortogonálna k osi uhlovej základne. Inak - na os obrazovky</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">K uhlu základu</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">Možnosti čiarový bisector</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Dĺžka:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">Dĺžka bisektora</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">Dĺžka čiary od výkresu</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Počet:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">Počet bisektorov na vytvorenie</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Možnosti riadku</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Vytvorte uzavretý obrys z vyznačených čiar</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Zavrieť</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Vrátiť späť posledný obrázok riadku</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Vrátiť späť</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Znovu posledný riadok výkres</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Znovu</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Možnosti riadku</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">Smer:</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">Vytvorí polylinku z riadkových segmentov</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylín</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">Vertikálna čiara</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">Čiara podľa špecifikovaného uhla</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Uhol</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">Horizontálna čiara</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">Ak je zaškrtnuté, uhol je vo vzťahu k predchádzajúcemu segmentu</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Vrátiť späť posledný obrázok riadku</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Vrátiť späť</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Vytvorte uzavretý obrys z vyznačených čiar</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Zavrieť</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Znovu posledný riadok výkres</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Znovu</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Uhol čiary</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">Čiara k ľubovoľnému bodu</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Bod</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">Comment</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Vzdialenosť:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">Vzdialenosť od pôvodnej jednotky</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Vzdialenosť od výkresu</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Počet:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Počet paralel</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">Priamka paralelná s možnosťami</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">Ak je zaškrtnuté, paralely budú vytvorené na oboch stranách subjektu</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Symetrické</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Počet:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Počet paralel</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Možnosti polygónu</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Počet:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Počet hrán</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Možnosti polygónu</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Počet:</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">Ak je zaškrtnuté, vertexy polygónu budú zaoblené.</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">Polomer</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">Ak je označené, polygón sa nakreslí ako polylín. Inak budú vytvorené jednotlivé subjekty.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylín</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Vyberte polomer z výkresu</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">Počet hrán</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">Okrúhly polomer pre vertex bevel.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">Ak je vybraný, referenčné body sú pre vertexy polygónu. V opačnom prípade sú pre stredný bod hrán.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">Vrchol na vrchol</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Alternatívny uhol čiary</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Uhol čiary</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Dĺžka:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Dĺžka trate</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Dĺžka výberu z výkresu</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Možnosti textu</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Text:</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">Text na vloženie</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Uhol otáčania</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">Zmeniť možnosti Offset</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">Vzdialenosť pre vyrovnanie od pôvodnej účtovnej jednotky</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorené subjekty budú umiestnené do aktuálnej vrstvy, inak budú v pôvodných vrstvách.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Použiť aktuálnu vrstvu</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Počet kópií.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Ak sa skontroluje, pôvodné subjekty prežijú, inak budú odstránené.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Ponechať originály</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">Ak je zaškrtnuté, použije sa nastavenie vzdialenosti ofsetu, inak bude definované myšou.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Pevná vzdialenosť</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Ak je zaškrtnuté, aktuálne atribúty sa použijú na vytvorené subjekty, inak sa použijú pôvodné.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Použiť aktuálne atribúty</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">Vybrať vzdialenosť od výkresu</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorí sa viacero kópií.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Viaceré kópie</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Presunúť možnosti otočenia</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Ak je zaškrtnuté, aktuálne atribúty sa použijú na vytvorené subjekty, inak sa použijú pôvodné.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Použiť aktuálne atribúty</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorí sa viacero kópií.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Viaceré kópie</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">Ak je zaškrtnuté, všetky kópie sa striedajú rovnakým agle. V opačnom prípade bude uhol úmerný počtu jednotlivých kópií.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">Rovnaký uhol pre kópie</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">Uhol otáčania.</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Počet kópií.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">Ak je zaškrtnuté, uhol otáčania je definovaný myšou. Inak sa použije špecifikovaná hodnota.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Bez cla</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">Ak je zaškrtnuté, vytvorené subjekty budú umiestnené do aktuálnej vrstvy, inak budú v pôvodných vrstvách.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Použiť aktuálnu vrstvu</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Ak sa skontroluje, pôvodné subjekty prežijú, inak budú odstránené.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Ponechať originály</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">Možnosti polylín</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">Spája konce polylinky tak uzavretý obrys je vytvorený</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Zavrieť</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">Vrátiť späť pre predchádzajúci vertex</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Vrátiť späť</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">Typ segmentu:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">Definuje, ktorý segment polylínu by mal byť vytvorený</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Čiara</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">Tangenciálne</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">Polomer dotyčnice</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">Uhol Tan</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Uhol</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">Tangenciálny oblúk</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">Tangentálny oblúk s pevným polomerom</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">Tangentálny oblúk s pevným uhlom</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">Oblúk s uhlom</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Polomer:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Polomer oblúka</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Vyberte polomer formulára výkres</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">Uhol oblúka</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">Počítadlo hodín</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Hodinové</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">Možnosti náhľadu tlače</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">Orientácia krajiny</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">Nastavenie výkresov</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Mierka:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt; &lt; hlava/&gt; &lt; telo &gt; &lt; p &gt; tlačená veľkosť: veľkosť výkresu &lt;/p &gt; &lt;/body &gt; &lt;/html &gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt; &lt;head/&gt; &lt;body &gt; &lt;p&gt;Print Scale je zamknutá na aktuálnu hodnotu &lt;/p &gt; &lt;/body &gt; &lt;/html &gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">pevné</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">Prepnúť čierny / biely režim</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">Použiť mierku tlače na šírku čiary</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">Krajina Orientácia papiera</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">Portrét Orientácia papiera</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">Strana v strede výkresu</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">Zväčšiť oblasť tlače</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">Prispôsobiť na 1 stránku</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">Ak je povolené, papierový priestor bude zahŕňať špecifikované množstvo stránok organizovaných v stĺpcoch a riadkoch</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">Vylepšená tlač</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">Stránky Riadky:</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">Počet stĺpcov strán</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">Stránky Stĺpce:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">Počet riadkov strán</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">Vypočítajte počet strán potrebných na vytvorenie výkresu</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">Možnosti kola</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">Zaškrtnite pre orezanie oboch hrán na zaokrúhľovanie</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Polomer:</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">Okrúhly polomer</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Vyberte polomer z výkresu</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56559,99 +49275,6 @@ Bod: (%8, %9)</translation>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>Počet rovnocenných deliacich bodov</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">Možnosti spline</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Stupeň:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">Spline stupeň používaný na aproximáciu medzi bodmi</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">Ak je vybraný, vytvorí sa uzavretý spline</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Uzavreté</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">Vrátiť späť predchádzajúci bod</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Vrátiť späť</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Možnosti textu</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Text:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Uhol:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Uhol otáčania</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Uhol výberu z výkresu</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">Voľby strednej hodnoty</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">Vzdialenosť. Negatívne hodnoty pre orezávanie, kladné hodnoty pre rozšírenie.</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">Spolu</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Dĺžka:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">Vzdialenosť. Negatívne hodnoty pre orezávanie, kladné hodnoty pre rozšírenie. Negatívny znak je ignorovaný pri orezávaní na konečnú celkovú dĺžku.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Dĺžka výberu z výkresu</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">Ak je zaškrtnuté, trim/roztiahnutie sa vykonáva pre obidve strany čiary.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Symetrické</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">Vstupná dĺžka sa používa ako celková dĺžka po orezávaní, namiesto predĺženia dĺžky</translation>
     </message>
 </context>
 </TS>

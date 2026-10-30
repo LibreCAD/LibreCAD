@@ -23,6 +23,11 @@
 #ifndef LC_GRAPHICVIEWPORTRENDERER_H
 #define LC_GRAPHICVIEWPORTRENDERER_H
 
+#include <QHash>
+#include <QVector>
+
+#include <cstdint>
+
 #include "lc_rect.h"
 #include "rs_color.h"
 #include "rs_pen.h"
@@ -68,6 +73,11 @@ class LC_GraphicViewportRenderer{
      *  that need to mask using the viewport background.  Tracks
      * setBackgroundColor() in concrete renderer subclasses. */
     RS_Color getBackgroundColor() const { return m_colorBackground; }
+
+    /** The dashes a named pen draws from the drawing's line type table, or
+     *  nullptr when the pen's enum decides. The pointer stays valid until the
+     *  next setupPainter(). */
+    const QVector<qreal>* resolveDashPattern(const RS_Pen& pen, qreal* phaseOffset = nullptr);
 
   protected:
     QPaintDevice* m_paintDevice = nullptr;
@@ -138,6 +148,18 @@ class LC_GraphicViewportRenderer{
 
 
     void updateAnglesBasis(const RS_Graphic *g);
+
+private:
+    struct DashPattern {
+        QVector<qreal> dashes;
+        qreal phaseOffset = 0.0;
+    };
+
+    void buildDashPatternCache();
+
+    // Named line type dashes of the drawing, by fold id, built once per pass.
+    QHash<std::uint16_t, DashPattern> m_dashByFold;
+    bool m_dashCacheBuilt = false;
 };
 
 #endif

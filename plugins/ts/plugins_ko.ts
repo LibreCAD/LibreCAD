@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>옵션을 클릭하여 설정/해제하고, &apos;확인&apos;을 눌러 적용하고 정렬을 시작합니다.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">‘원래 객체 유지’가 선택된 경우, 정렬은 선택한 객체를 이동하는 대신 복사합니다.
-‘기준점 먼저 지정’이 선택된 경우, 정렬은 기준점, 두 번째 기준점, 첫 번째 대상, 두 번째 대상 순서로 정렬 지점을 묻습니다.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>제1 기준점</translation>
