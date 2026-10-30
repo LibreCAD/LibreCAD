@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W187, superseding W186 and earlier below): implementation slices A-core
+Current status (W188, superseding W187 and earlier below): implementation slices A-core
 through T3 and the local A-core through C-check audit are closed. Direct
 synchronous `fileImport`, stream, and byte filter imports validate offset
 carriers through the worker. W158-W160 requalify qmake6 and staged installed
@@ -78,7 +78,8 @@ synchronous file/stream/byte filter APIs. The current exact-head Linux/Windows
 x64/ARM64 DWG/DXF/helper and Pixi workflows pass. Deployed-package checks, full
 visible UI, external-CAD interoperability, broader W0-W2 platform acceptance,
 and final R integration remain open.
-Latest recorded slice: W187 records the current-source GUI launch,
+Latest recorded slice: W188 records full H6 roadmap validation and the stalled
+visible-app follow-up; W187 records the current-source GUI launch,
 Finder-mediated AC1032 DWG load/render, and direct-dialog accessibility failure;
 W186 records the complete exact-head Linux/Windows x64/ARM64 DWG/DXF/helper pass;
 W185 records the Windows ARM64 exact-head pass;
@@ -7290,3 +7291,36 @@ supported Qt/macOS accessibility fix. Remaining gates are the full visible
 interaction matrix, screenshot/DPR receipt, external-CAD visual inspection,
 deployed-package acceptance, broader W0-W2 platform acceptance, and final R
 integration.
+
+## 146. W188 Full Roadmap Validation and Visible-App Stall
+
+The current product sources remain unchanged from the exact-head-qualified
+implementation; this checkpoint is documentation and validation evidence only.
+After the user approved the isolated app, the visible check was resumed. The
+app remained in LibreCAD's `Closing Drawing` state after a close request, and
+the CUA screenshot endpoint reported that the screenshot was unavailable. The
+selection/property pane still did not confirm a selected entity, so no GUI
+edit, undo/redo, or save/reopen result is claimed. The isolated test process
+was left untouched rather than terminating another LibreCAD instance; the
+Activity Monitor search used to inspect it was cleared afterward.
+
+The complete offset roadmap/H6 parser-inventory suite passes on this checkout:
+94 tests, zero failures, zero skips. It reconciles 93 unique obligations (71
+original, 93 executable) with zero pending declarations and zero production
+mismatches. `git diff --check` also passes. This validates the roadmap inventory
+and developer-runner refusal/evidence checks; it is not product GUI or geometry
+acceptance.
+
+| W188 check | Result |
+|---|---|
+| Full `test-refusal-inventory.js` suite | PASS; 94/94, zero failures/skips |
+| Obligation inventory | PASS; 93 unique, 0 pending, 0 mismatches |
+| Isolated app state | BLOCKED; remained at `Closing Drawing`, screenshot endpoint unavailable |
+| Selection/edit/undo/redo/save/reopen | OPEN; no successful current-source interaction recorded |
+| Product-source changes | None |
+
+Visible acceptance remains open. Retry with a healthy test-app process and a
+supported macOS accessibility/screenshot route; retain screenshot and DPR
+receipts, then complete selection/property inspection, edit, undo/redo and GUI
+save/reopen. External-CAD visual review, deployed-package acceptance, broader
+W0-W2 platform acceptance and final R integration also remain open.
