@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-10-29. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W172, superseding W171 and earlier below): implementation slices A-core
+Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W182, superseding W181 and earlier below): implementation slices A-core
 through T3 and the local A-core through C-check audit are closed. Direct
 synchronous `fileImport`, stream, and byte filter imports validate offset
 carriers through the worker. W158-W160 requalify qmake6 and staged installed
@@ -72,7 +72,8 @@ qualifications recorded in W1-W169. W156 closes local routing for the public
 synchronous file/stream/byte filter APIs. Exact-head platform/format CI,
 deployed-package checks, full visible UI, external-CAD interoperability, and
 final W0-W2/R integration remain open.
-Latest recorded slice: W172 records the current-source DXF matrix and ACadSharp
+Latest recorded slice: W182 records a headless raster check of the qmake6 renderer;
+W181 records the published roadmap and exact-head rerun; W172 records the current-source DXF matrix and ACadSharp
 results; W171 records fresh current-source DWG generation and independent-reader
 results; W170 records Windows ARM64 qualification-fixture fixes
 and the pending exact-head rerun; W169 records fresh qmake6/CMake app builds, bundled helper
@@ -7029,6 +7030,37 @@ The roadmap parser remains 5/5. At this checkpoint, the exact-head CI runs have
 not completed; record their terminal outcomes before claiming remote
 qualification. Visible GUI/external-CAD visual acceptance, deployed-package
 qualification, and final W0-W2/R integration remain open.
+
+## 140. W182 Headless Raster Rendering Check
+
+Used the freshly built qmake6 application from W178 in console `dxf2png` mode
+with `QT_QPA_PLATFORM=offscreen` and a private HOME. The output route uses the
+application's drawing viewport and painter. The bundled `dim_sample.dxf`
+rendered at 1200x800 with its boundary/linework, arcs, circles, dimensions,
+MTEXT, solids and polylines visible in the raster. The W172 current-source
+AC1032 degree-3 spline DXF also rendered successfully. That regression fixture
+has an intentionally very narrow ellipse (DXF extents approximately
+0.0000625 by 0.0124998), so its raster is a thin vertical curve; this is
+consistent with the fixture geometry, not evidence of a rendering failure.
+
+An initial SVG-export look at that narrow fixture was not used as viewport
+evidence: the SVG export path only emits a subset of entity types, and its
+thin result is expected for this aspect ratio. A separate `dim_sample.dxf`
+PNG was visually inspected and confirms a nonblank, legible multi-entity
+render. This headless raster check is not a visible GUI interaction receipt,
+does not measure display/DPR, and does not replace external-CAD visual review.
+
+| W182 evidence | Result / SHA256 |
+|---|---|
+| qmake6 `dxf2png` render of bundled dimension sample, `/private/tmp/offset-W182-svg-render/dim_sample.png` | PASS; 1200x800; `c9253a3230c301636278ed7099c203a06251a66e3d6bdd9e8f46c4467782d948` |
+| qmake6 `dxf2png` render of W172 AC1032 degree-3 output, `/private/tmp/offset-W182-svg-render/offset-matrix-write-dxf-R2018-d3_actual.png` | PASS; 1200x800; `90a0b3a61c4293ae20168aa6a3f92379e1a7eb4fd622708f2c924641d3595e1c` |
+| Roadmap inventory parser | PASS; 5/5 tests |
+| Exact-head DWG/DXF workflow `41003855350` | Still building on Linux, Windows x64 and Windows ARM64; no test result yet |
+| Exact-head Pixi workflow `41003830885` | Still running on all five platforms |
+
+The current exact-head CI and Pixi runs are not complete. Visible GUI acceptance,
+display/DPR capture, external-CAD visual review, deployed-package qualification,
+and final W0-W2/R integration remain open.
 
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
 
