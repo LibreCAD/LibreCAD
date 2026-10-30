@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W205; the chronological evidence ledger follows): planned product
+Current status (W207; the chronological evidence ledger follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check audit
 are present and locally qualified. This includes the shipped native geometry
 worker, Modify Offset creation/repeat, native Trim preview/commit, staged GUI
@@ -37,10 +37,11 @@ W196 records a full merged-source CMake Release run (6,380 cases, zero failures
 or errors, 75 skips not qualified), deterministic full-selector ASan requalification
 (1,027 declarations / 1,354 JUnit cases, zero failures or errors, one legacy-DXF
 skip; leak detection disabled), worker CTest 9/9, and the Node validation suite
-412/412. The W205 product-validation baseline was
-`cdafedf9f70717e0d6460ba66ff5b157d26df5b3`, based on master
-`d66b7e1379990224a6a897105683463692b05549`. On that head, Headless ON passed;
-Headless OFF, C++ analysis, fast DWG/DXF verification, Windows x64 and ARM64
+412/412. The W198 qmake6 product build is from code head
+`2c4f26b378f201135227403cbb0575e510f88550`; no product-path commits follow it
+through PR head `b086c780e3aed99fe80eadc949e379d8e740ad9b`, based on master
+`d66b7e1379990224a6a897105683463692b05549`. On `b086c780e`, Headless ON/OFF
+passed; C++ analysis, fast DWG/DXF verification, Windows x64 and ARM64
 verification, and Pixi platform builds were pending. The CodeQL Security scan
 was skipped by workflow policy. The qmake6 application
 and native worker were rebuilt from the exact pre-W198 documentation head; the
@@ -56,9 +57,9 @@ rendered view: an earlier accessibility-driven confirmation crashed, and a
 keyboard-driven retry recognized about 233 entities but left the viewport blank
 after Fit All and returned to FreeCAD's first-start page. Independent FreeCAD
 visual review of the separate W193 DXF remains recorded above; it does not close
-that W171-derived visual check. W206 verifies the isolated app is controllable
-and the unchanged W193 source still renders; its documentation-only PR head
-`417d6b4ec653be2cc3089eee996e9bc5708096fe` has no checks reported yet.
+that W171-derived visual check. W206 reverified app access and the unchanged
+W193 rendering. W207 adds a create/property-edit/undo-redo GUI interaction on
+that product-equivalent app build; it does not close the remaining GUI matrix.
 
 The PR is open and draft, blocked on required checks/review, and requires an
 approving review. Acceptance remains open: exact-head workflows, the rest of the
@@ -7900,6 +7901,45 @@ interaction paths, or external CAD rendering of the W171-derived DWG output.
 | GUI refusal and broader interaction matrix | OPEN |
 | FreeCAD visual check of W171-derived DXF | OPEN; no rendered viewport verified after accessibility-path crash |
 | Exact PR-head workflows | IN PROGRESS; head `f54e7f760`; Text Foundations ON/OFF passed, other checks running, Security scan skipped by policy |
+| PR state | OPEN; draft, merge state blocked, approving review required |
+| Product-source changes | None; visible-app validation/documentation checkpoint |
+
+## 165. W207 Editable Offset Creation and Property Undo/Redo
+
+Used the approved isolated qmake6 bundle
+`/private/tmp/LibreCAD-PR3193-visible.app`, built from W198 product head
+`2c4f26b378f201135227403cbb0575e510f88550`. Product paths are unchanged through
+PR head `b086c780e3aed99fe80eadc949e379d8e740ad9b`. The staged app and worker
+SHA256 values are `df35f8adef5c2ef6ec16aeecd8cb1ecaa7401557da012b02ea09eec0a6903966`
+and `ecc00959fdce4f105a6f6c909e4ab554f1f966f58579ad889fde9fb058605c5b`.
+
+Opened W193 and used Tools > Modify > Offset. `Editable Offset Curve` was
+checked, with fixed distance 0.5. Selecting an existing ellipse-derived offset
+contour and choosing its outward side created a new `Offset Curve`; its
+property sheet showed distance 1.5. Editing the new entity to 2.0, then 1.75,
+was reported as one changed entity each time. Undo restored 2.0 and Redo
+restored 1.75. Subsequent Undo operations restored the intermediate value and
+removed the test-created offset, returning the canvas to the original six
+contours. Closed the disposable drawing and chose No at the save prompt; no
+drawing was saved. W193's on-disk SHA256 remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+This qualifies one nested editable-offset creation and property-history path.
+It is not an independent plain-RS_Ellipse creation test (W192 covers that
+separately), multi-selection, layer/attribute combinations, Trim, Update or
+Restore workflows. Screenshots were observed in-session only; no standalone
+image or display-DPR receipt was retained.
+
+| W207 check | Result |
+|---|---|
+| qmake6 app/worker identity | PASS; bundle hashes recorded above; product paths match W198 code head through PR head `b086c780e` |
+| Editable Offset creation | PASS; `Editable Offset Curve` enabled; new `Offset Curve` entity visible and selectable |
+| Property edit | PASS; 1.5 to 2.0, then 1.75; each reported one changed entity |
+| Property Undo/Redo | PASS; Undo restored 2.0; Redo restored 1.75 |
+| Test cleanup | PASS; subsequent Undo restored prior value and removed test entity; drawing closed with No/save-discard |
+| W193 artifact integrity | PASS; SHA256 unchanged |
+| Screenshot / display-DPR | OPEN; observed in-session, not retained; DPR unavailable |
+| Exact PR-head checks at capture (`b086c780e`) | Headless ON/OFF PASS; analysis, DWG/DXF Linux/Windows x64/ARM64, and Pixi pending; Security scan skipped by policy |
 | PR state | OPEN; draft, merge state blocked, approving review required |
 | Product-source changes | None; visible-app validation/documentation checkpoint |
 
