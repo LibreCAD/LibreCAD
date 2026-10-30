@@ -3196,9 +3196,9 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   relocated-worker checks. The old workflow `40979668978` was canceled before
   Linux/x64 completed. New head `7bd61bd24` is running workflow `40998099806`
   across Linux, Windows x64 and ARM64 with the Linux Release configuration; as
-  of W179, Linux remains in its bounded-test step and Windows x64/ARM64 remain
-  in their configure/build steps; the active-job API has not surfaced terminal
-  logs/results. The CTest selector includes source identity. Pixi workflows
+  of W180, Linux and Windows x64/ARM64 are in their bounded-test steps, with
+  all three configure/build steps successful; the active-job API has not
+  surfaced terminal logs/results. The CTest selector includes source identity. Pixi workflows
   `40979669043` and `40998099821` passed on all five platforms. W175 aligns the
   Linux bounded lane with the Windows Release configuration without reducing
   the exhaustive test set; the next exact-head run must verify it. W177/W179
@@ -3228,8 +3228,8 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   current-source DXF rows through ODA, and W178 adds a fresh current-source
   qmake6 app/helper build. The c043 workflow
   `40979668978` passed Windows ARM64 and was canceled before Linux/x64 completed;
-  new-head DWG/DXF workflow `40998099806` remains active on Linux bounded tests
-  and Windows x64/ARM64 builds. Exact-head Pixi `40998099821` passed on all five
+  new-head DWG/DXF workflow `40998099806` remains active in bounded tests on
+  Linux and Windows x64/ARM64; both Windows build steps passed. Exact-head Pixi `40998099821` passed on all five
   platforms; prior Pixi run `40979669043` also passed on all five. CodeQL
   `40973686197` passed on the preceding
   product-equivalent head `4df7229ca`; this test-only follow-up did not trigger a
@@ -6974,6 +6974,23 @@ bounded tests and Windows x64/ARM64 builds; Pixi `40998099821` passed all five
 platforms. Keep the product head unchanged until DWG/DXF jobs finish, then
 record terminal results before pushing accumulated roadmap-only commits. Visible
 GUI/external-CAD review, direct-DWG visual acceptance, deployed-package
+qualification and final W0-W2/R closure remain open.
+
+## 138. W180 Exact-Head DWG/DXF CI Phase Transition
+
+Rechecked workflow `40998099806` on product head
+`7bd61bd24ba729d779822928d818c3a93cbc4938`. The Linux Release lane completed
+configure/build and is running bounded tests (job `123876195069`). Windows x64
+and ARM64 both completed configure/build successfully and entered the bounded
+test step (jobs `123876195326` and `123876194781`). All three jobs remain active;
+the Actions API and job-log endpoint have not supplied terminal output yet, so
+no test or worker-install result is claimed for these lanes. Exact-head Pixi
+workflow `40998099821` passed all five platform jobs.
+
+No product code changed for this checkpoint. Keep the PR head at
+`7bd61bd24ba729d779822928d818c3a93cbc4938` until the three DWG/DXF jobs finish;
+then record their actual outcomes before pushing the accumulated roadmap-only
+commits. Visible GUI/external-CAD visual acceptance, deployed-package
 qualification and final W0-W2/R closure remain open.
 
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
