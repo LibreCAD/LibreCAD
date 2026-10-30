@@ -6732,6 +6732,34 @@ The full visible workflow, signed/deployed package acceptance, current-source
 external-CAD checks (including AC1021's reader limitation), and final W0-W2/R
 acceptance remain open.
 
+## 131. W173 Windows Source Identity Fixture Determinism
+
+Exact-head workflow `40973686209` exposed one Windows ARM64 failure in
+`librecad_offset_import_identity_tests` after the CMake test lanes built
+successfully. The Windows-only open-handle test rewrote one byte without
+changing file size, then expected metadata captured from the open descriptor
+and the path to differ. That assertion depends on observing a same-size
+timestamp update and failed on ARM64; the production identity guard was not
+changed.
+
+The fixture now opens a separate append handle and writes one byte. This gives
+the identity comparison a deterministic size change while retaining the
+original stamped descriptor open and checking both descriptor and path
+identity. POSIX same-size rewrite coverage remains in its dedicated test,
+including restoring mtime and asserting that change-time detects the rewrite.
+
+| W173 validation | Result |
+|---|---|
+| Local macOS CMake build of `librecad_tests` | PASS |
+| Local `librecad_offset_import_identity_tests` | PASS; 1/1 |
+| Windows ARM64 exact-head rerun | Pending; the failing workflow `40973686209` predates this fixture adjustment |
+| Windows x64 and Linux exact-head format lanes | Pending on the prior run; superseded by the fix push |
+
+W173 is a test-fixture portability correction only. Do not close Windows
+source-identity acceptance until the new exact-head ARM64 selector passes.
+Visible LibreCAD UI acceptance remains blocked by app-specific CUA approval;
+the user has approved it, but the control tool is not available to this task.
+
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
 
 Regenerated the bounded DWG matrix from the current checkout's Release
