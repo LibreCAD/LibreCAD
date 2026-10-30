@@ -7524,3 +7524,39 @@ remaining platform-specific W0-W2 gates, PR conflict resolution, and final R
 integration remain open. The PR currently reports a conflict against master;
 the checks connector returned no statuses for the observed head, so neither
 condition is treated as a passing integration gate.
+
+## 152. W194 Offset Preview and Cancellation Attempt
+
+On the reopened W193 drawing in the isolated qmake6 app, started Modify Offset,
+selected one existing offset carrier, and pressed Escape at the direction
+prompt before choosing a side. LibreCAD returned to its default action with no
+selection and no document edit; the saved W193 DXF remained byte-identical.
+
+A second attempt used a held GUI click at a side point to capture the active
+red offset preview. The preview was visible while the action still displayed
+the direction prompt. The click released and completed the offset before the
+subsequent Escape could be delivered; the document became undoable. Undo then
+returned the app to its saved state and disabled Undo. The W193 on-disk artifact
+remains unchanged at SHA256
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d` with two
+`ELLIPSE`, four `SPLINE`, and four owned markers. This records visible preview
+and successful post-commit recovery, **not** cancellation of an active preview.
+The CUA bridge serialized the cancellation input after the held click released,
+so an in-preview Escape remains unqualified.
+
+| W194 check | Result |
+|---|---|
+| Cancel Modify Offset before direction selection | PASS; returned to Default with no selection |
+| Fixed-distance preview rendering | PASS; red preview visible during held click at 1920x982 |
+| Cancel while preview is active | OPEN; Escape arrived after button release/operation completion |
+| Undo after the held-click completion | PASS; Undo became disabled after restoring saved state |
+| W193 output integrity | PASS; unchanged SHA256 and entity/marker counts |
+| Roadmap parser/inventory | PASS; parser 5/5; H6 refusal/inventory 94/94, 93 obligations, no pending or mismatches |
+| Screenshot/DPR receipt | Partial; preview observed in-session, not retained; DPR unavailable |
+| Product-source changes | None; documentation-only validation checkpoint |
+
+W194 does not close preview cancellation or refusal. Continue with a reliable
+in-preview cancellation input, explicit invalid/unsupported-input refusal,
+independent external-CAD inspection, installed/deployed-bundle qualification,
+retained screenshot/DPR receipts, remaining platform-specific W0-W2 gates,
+PR conflict resolution, and final R integration.
