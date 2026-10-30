@@ -10351,7 +10351,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="29"/>
         <source>Object ID: 121</source>
-        <translation>物件代碼: 121</translation>
+        <translation>物件ID: 121</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="64"/>
@@ -10361,7 +10361,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="76"/>
         <source>Name:</source>
-        <translation>姓名:</translation>
+        <translation>名稱:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
@@ -10381,52 +10381,52 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="181"/>
         <source>Line Properties</source>
-        <translation>行屬性</translation>
+        <translation>線條屬性</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="187"/>
         <source>Arc Properties</source>
-        <translation>弧屬性</translation>
+        <translation>圓弧屬性</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="193"/>
         <source>Circle Properties</source>
-        <translation>圓形屬性</translation>
+        <translation>圓屬性</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="199"/>
         <source>Ellipse Properties</source>
-        <translation>椭圆屬性</translation>
+        <translation>橢圓屬性</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="205"/>
         <source>Hyperbola Properties</source>
-        <translation>二相( 二相) 屬性</translation>
+        <translation>雙曲線屬性</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="211"/>
         <source>Polyline Properties</source>
-        <translation>多行屬性</translation>
+        <translation>聚合線屬性</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="217"/>
         <source>Parabola Properties</source>
-        <translation>Parabola 屬性</translation>
+        <translation>拋物線屬性</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="223"/>
         <source>Spline Properties</source>
-        <translation>相片屬性</translation>
+        <translation>雲形線屬性</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="229"/>
         <source>Spline Points Properties</source>
-        <translation>Spline 點屬性</translation>
+        <translation>雲形線點屬性</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="235"/>
         <source>Image Properties</source>
-        <translation>相片屬性</translation>
+        <translation>圖片屬性</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="241"/>
@@ -10446,7 +10446,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="259"/>
         <source>Hatch Properties</source>
-        <translation>填充屬性</translation>
+        <translation>剖面線屬性</translation>
     </message>
 </context>
 <context>
@@ -10454,12 +10454,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="14"/>
         <source>Advanced Icons Styling</source>
-        <translation>高级圖示</translation>
+        <translation>進階圖示樣式</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="20"/>
         <source>Disabled Icon</source>
-        <translation>已關閉的圖示</translation>
+        <translation>停用圖示</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="26"/>
@@ -10467,7 +10467,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="694"/>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="990"/>
         <source>State ON: </source>
-        <translation>就地取出:</translation>
+        <translation>啟用狀態：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="33"/>
@@ -10479,7 +10479,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="997"/>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="1106"/>
         <source>Main color for specfic icon state</source>
-        <translation>Specfic 圖示狀態的主要顏色</translation>
+        <translation>特定圖示狀態的主要顏色</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="42"/>
@@ -10538,7 +10538,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="1174"/>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="1215"/>
         <source>Click to select color</source>
-        <translation>點擊以選擇顏色</translation>
+        <translation>按一下以選擇顏色</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="74"/>
@@ -10550,7 +10550,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="1038"/>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="1147"/>
         <source>Accent color for specfic icon state</source>
-        <translation>Specfic 圖示狀態的 ACCent 顏色</translation>
+        <translation>特定圖示狀態的強調顏色</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="135"/>
@@ -10558,7 +10558,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="803"/>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="1099"/>
         <source>State OFF:</source>
-        <translation>已關閉:</translation>
+        <translation>停用狀態：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="224"/>
@@ -10570,7 +10570,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="1188"/>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="1229"/>
         <source>Background color for specfic icon state</source>
-        <translation>Specfic 圖示狀態的背景顏色</translation>
+        <translation>特定圖示狀態的背景顏色</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="289"/>
@@ -10580,17 +10580,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="315"/>
         <source>Default Accent color for all states</source>
-        <translation>所有相關相關相關相關的預設顏色</translation>
+        <translation>所有狀態的預設強調顏色</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="333"/>
         <source>All States</source>
-        <translation>所有州</translation>
+        <translation>所有狀態</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="360"/>
         <source>Default Main color all states</source>
-        <translation>預設所有狀態的主顏色</translation>
+        <translation>所有狀態的預設主要顏色</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="398"/>
@@ -10600,27 +10600,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="419"/>
         <source>Active Icon</source>
-        <translation>活性圖示</translation>
+        <translation>作用中圖示</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="688"/>
         <source>Selected Icon</source>
-        <translation>所選取的圖示</translation>
+        <translation>選取的圖示</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="970"/>
         <source>Main Color    |  Accent Color   |  Back Color</source>
-        <translation>主顏色 QCent 顏色 QCent 相接回顏色</translation>
+        <translation>主要顏色 | 強調顏色 | 背景顏色</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="977"/>
         <source>Reset to Defaults</source>
-        <translation>重置到預設值</translation>
+        <translation>重設為預設值</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="984"/>
         <source>Normal Icon</source>
-        <translation>普通圖示</translation>
+        <translation>一般圖示</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.cpp" line="548"/>
@@ -10638,52 +10638,52 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="212"/>
         <source> Click with desired combination to set invocation shortcut. </source>
-        <translation>有需要的相接點擊以設定引用捷徑 .</translation>
+        <translation>使用所需的組合按鍵或點擊來設定呼叫快捷鍵。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="215"/>
         <source>Invocation Shortcut (click to set components)</source>
-        <translation>使用捷徑 (按下設定元件)</translation>
+        <translation>呼叫快捷鍵 (點擊以設定組合)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="221"/>
         <source>Resulting invocation shortcut. Click with desired combination to set. </source>
-        <translation>因此引出捷徑 。 有需要的相接相關相關的點擊 .</translation>
+        <translation>生成的呼叫快捷鍵。使用所需的組合按鍵或點擊來設定。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="224"/>
         <source>CTRL+ALT+SHIFT+Middle Button Double-Click</source>
-        <translation>CTRL+ALT+SHIFT+中按鍵 二分點</translation>
+        <translation>CTRL+ALT+SHIFT+中鍵雙擊</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="26"/>
         <source>Note:</source>
-        <translation>注:</translation>
+        <translation>注意：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="37"/>
         <source>This shortcut is already assigned to &quot;Dimensions My&quot; menu!</source>
-        <translation>此捷徑已被指定為&quot; Dimensions My&quot; 選單 !</translation>
+        <translation>此快捷鍵已分配給「Dimensions My」功能表！</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="163"/>
         <source>Entity Context</source>
-        <translation>实体背景</translation>
+        <translation>物件內文</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="169"/>
         <source>Applicable if invoked for:</source>
-        <translation>2. 适用于:</translation>
+        <translation>適用於呼叫條件：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="176"/>
         <source>Defines the context for menu and whether click on specific entity will trigger menu invocation. </source>
-        <translation>定義選單的上下文并點擊特定單位是否會被選單引用 .</translation>
+        <translation>定義功能表的內容，以及點擊特定物件是否會觸發功能表呼叫。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="186"/>
         <source>Defines type of mouse click for invocation</source>
-        <translation>取用鼠标的類型</translation>
+        <translation>定義呼叫的滑鼠點擊類型</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="189"/>
@@ -10693,7 +10693,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="195"/>
         <source>Single Click (Release)</source>
-        <translation>單一點擊 (放出)</translation>
+        <translation>單擊 (釋放)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="202"/>
@@ -10703,12 +10703,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="130"/>
         <source>Specify pressed key modifier(s)</source>
-        <translation>指定按鍵變更符</translation>
+        <translation>指定按下的修飾鍵</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="133"/>
         <source>Key</source>
-        <translation>密钥</translation>
+        <translation>按鍵</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="139"/>
@@ -10718,77 +10718,77 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="146"/>
         <source>SHIFT</source>
-        <translation>(相克)</translation>
+        <translation>SHIFT</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="153"/>
         <source>ALT</source>
-        <translation>低地</translation>
+        <translation>ALT</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="76"/>
         <source>Defines which mouse button is part of menu invocation</source>
-        <translation>定義選單引用的滑鼠按鍵</translation>
+        <translation>定義哪個滑鼠按鈕是功能表呼叫的一部分</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="79"/>
         <source>Mouse Button</source>
-        <translation>滑鼠按鍵</translation>
+        <translation>滑鼠按鈕</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="85"/>
         <source>Left </source>
-        <translation>左</translation>
+        <translation>左鍵</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="92"/>
         <source>Middle</source>
-        <translation>中間</translation>
+        <translation>中鍵</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="99"/>
         <source>Right</source>
-        <translation>有呀</translation>
+        <translation>右鍵</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="106"/>
         <source>Back</source>
-        <translation>后退</translation>
+        <translation>後退鍵</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="113"/>
         <source>Forward</source>
-        <translation>前進</translation>
+        <translation>前進鍵</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="120"/>
         <source>Task</source>
-        <translation>工作</translation>
+        <translation>任務</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="103"/>
         <source>Menu Assignment - &quot;%1&quot; Menu</source>
-        <translation>選單指定 - &quot;%1&quot; 選單</translation>
+        <translation>功能表指派 - 「%1」功能表</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="107"/>
         <source>Either Absent or Any Entity</source>
-        <translation>缺席或任何实体</translation>
+        <translation>無物件或任意物件</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="108"/>
         <source>Absent Entity</source>
-        <translation>缺席实体</translation>
+        <translation>無物件</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="109"/>
         <source>Any Entity</source>
-        <translation>任何实体</translation>
+        <translation>任意物件</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="110"/>
         <source>Line</source>
-        <translation>行</translation>
+        <translation>直線</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="111"/>
@@ -10798,27 +10798,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="112"/>
         <source>Arc</source>
-        <translation>弧</translation>
+        <translation>圓弧</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
         <source>Polyline</source>
-        <translation>多行</translation>
+        <translation>聚合線</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="114"/>
         <source>Spline</source>
-        <translation>相片</translation>
+        <translation>雲形線</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="115"/>
         <source>Spline By Points</source>
-        <translation>以接點相接</translation>
+        <translation>點構雲形線</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="116"/>
         <source>Ellipse</source>
-        <translation>椭圆</translation>
+        <translation>橢圓</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="117"/>
@@ -10833,12 +10833,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="119"/>
         <source>Image</source>
-        <translation>相片</translation>
+        <translation>圖片</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="120"/>
         <source>Hatch</source>
-        <translation>抓取</translation>
+        <translation>剖面線</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="121"/>
@@ -10848,72 +10848,72 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="122"/>
         <source>Dimension Linear</source>
-        <translation>尺寸行</translation>
+        <translation>線性標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="123"/>
         <source>Dimension Aligned</source>
-        <translation>尺寸相通</translation>
+        <translation>對齊標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="124"/>
         <source>Dimension Diametric</source>
-        <translation>尺寸</translation>
+        <translation>直徑標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="125"/>
         <source>Dimension Radial</source>
-        <translation>尺寸等距</translation>
+        <translation>半徑標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="126"/>
         <source>Dimension Ordinate</source>
-        <translation>尺寸</translation>
+        <translation>座標標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="127"/>
         <source>Dimension Arc</source>
-        <translation>尺寸弧</translation>
+        <translation>弧長標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
         <source>Leader</source>
-        <translation>領導</translation>
+        <translation>引線</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="231"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Properties&apos;.</source>
-        <translation>注:選單被忽略了 。 它被保留到&quot;实体屬性&quot; .</translation>
+        <translation>注意：功能表指派將被忽略。此組合保留給「物件屬性」。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="234"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Select&apos;.</source>
-        <translation>注:選單被忽略了 。 它被保留到&quot;实体選擇&quot; .</translation>
+        <translation>注意：功能表指派將被忽略。此組合保留給「物件選取」。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="237"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Pan&apos;.</source>
-        <translation>注:選單被忽略了 。 它被保留了&quot;潘&quot;.</translation>
+        <translation>注意：功能表指派將被忽略。此組合保留給「平移」。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="243"/>
         <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
-        <translation>注: 此相接被預設上下文選單所保留并可能防止被引用 !</translation>
+        <translation>注意：此組合保留給預設快顯功能表，可能會阻止其呼叫！</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="251"/>
         <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
-        <translation>注意: 此捷徑已被指派到 &quot;%1&quot; 選單上, 而選單將被取出 !</translation>
+        <translation>注意：此快捷鍵已指派給「%1」功能表，儲存時將解除該功能表的指派！</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="255"/>
         <source>Shortcut is valid to use.</source>
-        <translation>快捷鍵可以使用 .</translation>
+        <translation>快捷鍵有效可用。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="260"/>
         <source>Note: make sure that selected button is supported by your mouse device.</source>
-        <translation>注意: 确保您所選取的按鍵被您的滑鼠裝置所支持 .</translation>
+        <translation>注意：請確保所選的按鈕支援您的滑鼠裝置。</translation>
     </message>
 </context>
 <context>
@@ -10921,7 +10921,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="14"/>
         <source>Named Views Settings</source>
-        <translation>有命名的檢視設定</translation>
+        <translation>具名檢視設定</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="20"/>
@@ -10931,12 +10931,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="26"/>
         <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation>如果選取此選項，則在移除檢視時會顯示確認對話方塊。否則，檢視會靜默地移除。</translation>
+        <translation>若勾選，移除檢視時會顯示確認對話框。否則，將直接靜默移除檢視。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="39"/>
         <source>Silently update existing view with same name by created one</source>
-        <translation>用已建立的名字悄悄地更新已存在的相關檢視Name</translation>
+        <translation>建立檢視時，若同名則直接靜默更新現有檢視</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="49"/>
@@ -10946,12 +10946,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="68"/>
         <source>View Details column</source>
-        <translation type="unfinished"></translation>
+        <translation>檢視詳細資訊欄</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="98"/>
         <source>Toolip with view details for table items</source>
-        <translation>有表格項目檢視細節的 Tolip</translation>
+        <translation>表格項目顯示檢視詳細資訊的工具提示</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="78"/>
@@ -10961,42 +10961,42 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
-        <translation>網格型態圖示列</translation>
+        <translation>網格類型圖示欄</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Type icon column</source>
-        <translation>類型圖示列</translation>
+        <translation>類型圖示欄</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
         <source>If checked, the column with details of view&apos;s coordinate system will be shown.</source>
-        <translation>如果勾選，將顯示視圖坐標系詳情欄。</translation>
+        <translation>若勾選，將顯示檢視座標系統詳細資訊欄。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="85"/>
         <source>If checked, type of grid for saved view will be shown.</source>
-        <translation>如果選取此選項，則會顯示已儲存檢視的格線類型。</translation>
+        <translation>若勾選，將顯示已儲存檢視的網格類型。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="55"/>
         <source>If checked, the column with view type icon will be shown.</source>
-        <translation>如果檢查了, 有視窗類型圖示的列會被顯示 .</translation>
+        <translation>若勾選，將顯示檢視類型圖示欄。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="105"/>
         <source>If selected, grid lines will be drawn</source>
-        <translation type="unfinished"></translation>
+        <translation>若勾選，將繪製網格線</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="108"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示網格</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="115"/>
         <source>If checked, the column with icon for type of coordinate system for the view will be shown.</source>
-        <translation>如果勾選出, 有圖示的列會被顯示出 .</translation>
+        <translation>若勾選，將顯示檢視座標系統類型圖示欄。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="118"/>
@@ -11006,7 +11006,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="65"/>
         <source>If checked, the column with view details will be shown in the table.</source>
-        <translation>如果檢查了, 有檢視相關細節的列會在表格中顯示 .</translation>
+        <translation>若勾選，表格中將顯示檢視詳細資訊欄。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
@@ -11016,22 +11016,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="147"/>
         <source>On double-click:</source>
-        <translation>雙擊時:</translation>
+        <translation>雙擊時：</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="197"/>
         <source>Restore view on single click of table item</source>
-        <translation>單擊表格項目還原視圖</translation>
+        <translation>單擊表格項目即還原檢視</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
         <source>Defines which action should be performed on double click on view item of the table.</source>
-        <translation>定義在雙擊表格中的檢視項目時，應該執行的動作。</translation>
+        <translation>定義連點兩下表格中的檢視項目時所要執行的動作。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="158"/>
         <source>Do Nothing</source>
-        <translation>不做任何事情</translation>
+        <translation>不採取任何動作</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="163"/>
@@ -11046,27 +11046,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="173"/>
         <source>Restore View</source>
-        <translation>回復檢視</translation>
+        <translation>還原檢視</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="194"/>
         <source>If enabled, click on the view table item will restore view. Otherwise, view should be restored explicitly.</source>
-        <translation>如果啟用, 點擊取表項會恢復檢視 。 此外,需要明确恢复看法.</translation>
+        <translation>若啟用，單擊檢視表格項目即可還原檢視。否則，須明確執行還原。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
-        <translation>如果顯示，則表格項目會顯示包含關於視窗之其他資訊的工具提示。</translation>
+        <translation>若顯示，表格項目將顯示包含檢視額外資訊的工具提示。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
-        <translation>如果已檢查, 在建立中已存在已輸入名的檢視, 它會被新位置所更新 。 否則需要取出新取景的獨特名稱 .</translation>
+        <translation>若勾選，當建立檢視時所輸入的名稱已存在，將以新位置更新。否則，將要求輸入不重複的檢視名稱。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
         <source>Ask for confirmation before views removal</source>
-        <translation>在去除觀點前要求確認</translation>
+        <translation>移除檢視前先要求確認</translation>
     </message>
 </context>
 <context>
@@ -11075,22 +11075,22 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.ui" line="14"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.cpp" line="50"/>
         <source>New Custom Property</source>
-        <translation>新自訂屬性</translation>
+        <translation>新增自訂屬性</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.ui" line="36"/>
         <source>Name:</source>
-        <translation>姓名:</translation>
+        <translation>名稱:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.ui" line="43"/>
         <source>Value:</source>
-        <translation>值 :</translation>
+        <translation>值:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.cpp" line="50"/>
         <source>Property with provided name already exists. Please specify unique name.</source>
-        <translation>有所提供名稱的地產已存在 。 請指定獨有名稱 .</translation>
+        <translation>已有相同名稱的屬性。請指定唯一的名稱。</translation>
     </message>
 </context>
 <context>
@@ -11100,82 +11100,82 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>New Dimension Style</source>
-        <translation>新尺寸樣式</translation>
+        <translation>新增標註型式</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="20"/>
         <source>Use For:</source>
-        <translation>用于:</translation>
+        <translation>用於:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="30"/>
         <source>Defines which type of dimensions are controlled by this style.</source>
-        <translation>定義由此樣式所控制的大小類型 .</translation>
+        <translation>定義此型式控制的標註類型。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="34"/>
         <source>All Dimensions</source>
-        <translation>所有尺寸</translation>
+        <translation>所有標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="39"/>
         <source>Linear Dimensions</source>
-        <translation>線性尺寸</translation>
+        <translation>線性標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="44"/>
         <source>Angular Dimensions</source>
-        <translation>角尺寸</translation>
+        <translation>角度標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="49"/>
         <source>Radius Dimensions</source>
-        <translation>半徑尺寸</translation>
+        <translation>半徑標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="54"/>
         <source>Diameter Dimensions</source>
-        <translation>相距</translation>
+        <translation>直徑標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="59"/>
         <source>Ordinate Dimensions</source>
-        <translation>整數尺寸</translation>
+        <translation>座標標註</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
         <source>Leader And Tolerances</source>
-        <translation>領袖和容忍</translation>
+        <translation>引線與公差</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="95"/>
         <source>Based on Style:</source>
-        <translation>根据樣式:</translation>
+        <translation>基於型式:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="105"/>
         <source>Existing dimension style which new style is based on</source>
-        <translation>新風格所基于的现有尺寸樣式</translation>
+        <translation>新型式所依據的現有標註型式</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="112"/>
         <source>New Style Name:</source>
-        <translation>新樣式名稱 :</translation>
+        <translation>新型式名稱:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="128"/>
         <source>Name of new dimension style</source>
-        <translation>新尺寸樣式名稱</translation>
+        <translation>新標註型式的名稱</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
         <source>Empty name of style is not allowed.</source>
-        <translation>禁止空取樣式名稱 .</translation>
+        <translation>不允許空白的型式名稱。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>提供尺寸樣式 (%1) 的名稱不是唯一的 ! 請再入一入.</translation>
+        <translation>輸入的標註型式名稱 (%1) 已存在！請輸入其他名稱。</translation>
     </message>
 </context>
 <context>
@@ -11183,35 +11183,35 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="14"/>
         <source>New Version Available</source>
-        <translation>有新版本</translation>
+        <translation>有新版本可用</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="46"/>
         <source>Latest Pre-release Version</source>
-        <translation>最新版本</translation>
+        <translation>最新預覽版本</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="52"/>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="228"/>
         <source>Click to open release page on GitHub</source>
-        <translation>在 GitHub 上點擊以開啟放行頁面</translation>
+        <translation>按一下以開啟 GitHub 發布頁面</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="55"/>
         <source>2.2.0.3-alpha</source>
-        <translation>2.2.0.3-α</translation>
+        <translation>2.2.0.3-alpha</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="65"/>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="241"/>
         <source>Version:</source>
-        <translation>版本 :</translation>
+        <translation>版本:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="72"/>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="248"/>
         <source>Published:</source>
-        <translation>公布:</translation>
+        <translation>發布日期:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="79"/>
@@ -11226,7 +11226,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="86"/>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="262"/>
         <source>Check if you prefer not to be notified about this update on subsequent version checks</source>
-        <translation>在相關版本檢查中檢查您是否不想被通知此更新</translation>
+        <translation>若您不想在後續檢查版本時收到此更新通知，請勾選此項</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="89"/>
@@ -11237,17 +11237,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="99"/>
         <source>Nothing to update</source>
-        <translation>沒有要更新的</translation>
+        <translation>沒有可更新的內容</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="105"/>
         <source>There is no newer version, you are using the latest one.</source>
-        <translation>有新版本了 有最新版本了.</translation>
+        <translation>沒有更新的版本，您使用的是最新版本。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="115"/>
         <source>However, if you&apos;d like to check the most recent and fresh features included into pre-release builds, disable &quot;Ignore pre-release updates&quot; checkbox below.</source>
-        <translation>但是, 如果您想檢查放行前所包含的最新和新功能, 就禁用下方的&quot;忽略放行前更新&quot;收視框 .</translation>
+        <translation>但是，如果您想查看預覽版本中包含的最新功能，請取消勾選下方的「忽略預覽版本更新」。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="141"/>
@@ -11257,47 +11257,47 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="147"/>
         <source>If checked, notifications about pre-release updates will not be shown.</source>
-        <translation>如果檢查了, 就不會顯示出 关于放行前更新的通知 .</translation>
+        <translation>若勾選，將不會顯示預覽版本更新的通知。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="153"/>
         <source>Ignore pre-release updates</source>
-        <translation>忽略放出前的更新</translation>
+        <translation>忽略預覽版本更新</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="160"/>
         <source>Check to disable automatic version check on startup</source>
-        <translation>在啟動時檢查以禁用自動版本</translation>
+        <translation>勾選以關閉啟動時自動檢查版本</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="163"/>
         <source>Check for new version on startup</source>
-        <translation>在啟動時檢查新版本</translation>
+        <translation>啟動時檢查新版本</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="177"/>
         <source>Ignored Pre-Release</source>
-        <translation>已忽略前放行</translation>
+        <translation>已忽略的預覽版本</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="191"/>
         <source>Current Version:</source>
-        <translation>目前版本 :</translation>
+        <translation>目前版本:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="198"/>
         <source>Ignored Release:</source>
-        <translation>被忽略放出 :</translation>
+        <translation>已忽略的正式版本:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="222"/>
         <source>Lateat Release Version</source>
-        <translation>后期放出版本</translation>
+        <translation>最新正式版本</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="231"/>
         <source>&lt;a href=&quot;https://api.github.com/repos/LibreCAD/LibreCAD/releases/176244221&quot;&gt;2.2.0.2-rc-alpha&lt;/a&gt;</source>
-        <translation>2.2.0.2-rc-alpha</translation>
+        <translation>&lt;a href=&quot;https://api.github.com/repos/LibreCAD/LibreCAD/releases/176244221&quot;&gt;2.2.0.2-rc-alpha&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.cpp" line="111"/>
@@ -11325,22 +11325,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="39"/>
         <source>Menu Name:</source>
-        <translation>選單名稱 :</translation>
+        <translation>選單名稱:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="41"/>
         <source>Unique name of menu to create.</source>
-        <translation>要建立菜單的唯一名稱 .</translation>
+        <translation>要建立的選單唯一名稱。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="45"/>
         <source>Toolbar Name:</source>
-        <translation>工具列名稱 :</translation>
+        <translation>工具列名稱:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="46"/>
         <source>Unique name of toolbar to create.</source>
-        <translation>要建立的工具列唯一名稱 .</translation>
+        <translation>要建立的工具列唯一名稱。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="67"/>
@@ -11351,12 +11351,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="67"/>
         <source>Please enter a name.</source>
-        <translation>請入一出名.</translation>
+        <translation>請輸入名稱。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
-        <translation>名稱不是獨有的. 請輸入獨有名稱 .</translation>
+        <translation>名稱非唯一。請輸入唯一的名稱。</translation>
     </message>
 </context>
 <context>
@@ -11364,92 +11364,92 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="14"/>
         <source>Property Sheet Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>屬性表屬性</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="20"/>
         <source>Entities View</source>
-        <translation type="unfinished"></translation>
+        <translation>物件檢視</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="26"/>
         <source>If enabled, calculated properties for entities will be also shown (if any exists)</source>
-        <translation type="unfinished"></translation>
+        <translation>若啟用，也將顯示物件的計算屬性（若存在）</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="29"/>
         <source>Show calculated properties</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示計算屬性</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="36"/>
         <source>If selected, if there is one or more entities selected, the list of entity set modification commands will be shown (if any applicable).</source>
-        <translation type="unfinished"></translation>
+        <translation>若選取，當選取一個或多個物件時，將顯示物件集修改指令清單（若適用）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="39"/>
         <source>Show multiple entities modification commands</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示多個物件修改指令</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="46"/>
         <source>If selected, in case there is only on entity in sheet, the list for commands that are relevant for entity will be shown (if any applicable).</source>
-        <translation type="unfinished"></translation>
+        <translation>若選取，當表中僅有一個物件時，將顯示與該物件相關的指令清單（若適用）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="49"/>
         <source>Show single entity commands</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示單一物件指令</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="59"/>
         <source>No Selection View</source>
-        <translation type="unfinished"></translation>
+        <translation>無選取檢視</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="65"/>
         <source>Settings for generic rendering of drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>圖面通用繪製設定</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="68"/>
         <source>Graphic View</source>
-        <translation type="unfinished"></translation>
+        <translation>圖形檢視</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="75"/>
         <source>Named view selection and operations</source>
-        <translation type="unfinished"></translation>
+        <translation>具名檢視選取與操作</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="78"/>
         <source>Named Views</source>
-        <translation type="unfinished">已命名的檢視</translation>
+        <translation>具名檢視</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="85"/>
         <source>Linear and angular units settings for the drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>圖面的線性與角度單位設定</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="88"/>
         <source>Drawing Units</source>
-        <translation type="unfinished"></translation>
+        <translation>圖面單位</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="95"/>
         <source>Workspace selection and saving section</source>
-        <translation type="unfinished"></translation>
+        <translation>工作區選取與儲存區段</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="98"/>
         <source>Workspace</source>
-        <translation type="unfinished"></translation>
+        <translation>工作區</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="105"/>
         <source>User coordinates system sleection and related operations</source>
-        <translation type="unfinished"></translation>
+        <translation>使用者座標系統選取與相關操作</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="108"/>
@@ -11459,92 +11459,92 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="115"/>
         <source>Active layer selection, properties and commands</source>
-        <translation type="unfinished"></translation>
+        <translation>作用中圖層選取、屬性與指令</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="118"/>
         <source>Active Layer</source>
-        <translation type="unfinished">作用中圖層</translation>
+        <translation>作用中圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="125"/>
         <source>Grid settings for drawing view</source>
-        <translation type="unfinished"></translation>
+        <translation>圖面檢視的格線設定</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="128"/>
         <source>Grid</source>
-        <translation type="unfinished">网格</translation>
+        <translation>格線</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="135"/>
         <source>Active pen settings section</source>
-        <translation type="unfinished"></translation>
+        <translation>作用中畫筆設定區段</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="138"/>
         <source>Active Pen</source>
-        <translation type="unfinished">有活性筆</translation>
+        <translation>作用中畫筆</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="145"/>
         <source>Sections that should be visible if there are no selected entities</source>
-        <translation type="unfinished"></translation>
+        <translation>未選取物件時應顯示的區段</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="148"/>
         <source>Visible sections:</source>
-        <translation type="unfinished"></translation>
+        <translation>可見區段:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="168"/>
         <source>General</source>
-        <translation type="unfinished">一般</translation>
+        <translation>一般</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="174"/>
         <source>points</source>
-        <translation type="unfinished"></translation>
+        <translation>點</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="194"/>
         <source>Font size:</source>
-        <translation type="unfinished">字型大小 :</translation>
+        <translation>字型大小:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="201"/>
         <source>Size of the font, in points, that is used by properties sheet</source>
-        <translation type="unfinished"></translation>
+        <translation>屬性表所使用的字型大小（以點為單位）</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="217"/>
         <source>If enabled, property sheet will include links to command actions, that are relevant to specific properties or sections</source>
-        <translation type="unfinished"></translation>
+        <translation>若啟用，屬性表將包含連結至與特定屬性或區段相關的指令動作</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="220"/>
         <source>Include command links</source>
-        <translation type="unfinished"></translation>
+        <translation>包含指令連結</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="227"/>
         <source>If enabled, generic selection-related actions will be included into the widget toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>若啟用，通用選取相關動作將包含在元件工具列中</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="230"/>
         <source>Show generic selection actions button in toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>在工具列顯示通用選取動作按鈕</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="237"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, fields for current tool options (usually shown in &lt;span style=&quot; font-style:italic;&quot;&gt;Tool Options&lt;/span&gt; toolbar) will also be shown in property sheet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;若選取，目前工具選項的欄位（通常顯示於 &lt;span style=&quot; font-style:italic;&quot;&gt;工具選項&lt;/span&gt; 工具列中）也將顯示於屬性表中。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="240"/>
         <source>Show tool options</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示工具選項</translation>
     </message>
 </context>
 <context>
@@ -11552,223 +11552,223 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="14"/>
         <source>Quick Select</source>
-        <translation type="unfinished"></translation>
+        <translation>快速選取</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="20"/>
         <source>If selected, matched entities will be added to the current selection. Otherwise, current selection will be replaced by new one.</source>
-        <translation type="unfinished"></translation>
+        <translation>若選取，符合的物件將新增至目前的選取。否則，目前的選取將被新的選取取代。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="23"/>
         <source>Append to current selection set</source>
-        <translation type="unfinished"></translation>
+        <translation>加到目前的選取集</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="30"/>
         <source>Properties:</source>
-        <translation type="unfinished"></translation>
+        <translation>屬性:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="37"/>
         <source>Logical operation applied to the property&apos;s value</source>
-        <translation type="unfinished"></translation>
+        <translation>套用至屬性值的邏輯運算</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="44"/>
         <source>Entity Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>物件類型:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="88"/>
         <source>Layer of entity to match</source>
-        <translation type="unfinished"></translation>
+        <translation>要比對的物件圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="117"/>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="146"/>
         <source>Color of line to match</source>
-        <translation type="unfinished"></translation>
+        <translation>要比對的線條顏色</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="178"/>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="207"/>
         <source>Type of line to match</source>
-        <translation type="unfinished"></translation>
+        <translation>要比對的線型</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="236"/>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="265"/>
         <source>Width of line to match</source>
-        <translation type="unfinished"></translation>
+        <translation>要比對的線寬</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="294"/>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="317"/>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="380"/>
         <source>Value to match</source>
-        <translation type="unfinished"></translation>
+        <translation>要比對的值</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="321"/>
         <source>Yes</source>
-        <translation type="unfinished">有</translation>
+        <translation>是</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="326"/>
         <source>No</source>
-        <translation type="unfinished">有</translation>
+        <translation>否</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="399"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">从畫取角度</translation>
+        <translation>從圖面拾取角度</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="425"/>
         <source>Pick distance from drawing</source>
-        <translation type="unfinished">从畫取相距</translation>
+        <translation>從圖面拾取距離</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="451"/>
         <source>Pick X coordinate of point  from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>從圖面拾取點的 X 座標</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="477"/>
         <source>Pick Y coordinate of point  from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>從圖面拾取點的 Y 座標</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="509"/>
         <source>Tolerance:</source>
-        <translation type="unfinished"></translation>
+        <translation>公差:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="534"/>
         <source>Tolerance range used for floating-point values comparison. Values considered equal, if the absolute unsigned difference between them is within this range. </source>
-        <translation type="unfinished"></translation>
+        <translation>用於浮點數比較時的公差範圍。若兩者之間的無符號絕對差值在此範圍內，則視為相等。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="553"/>
         <source>Update tolerance based on the document unit precision settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>依據文件單位精確度設定更新公差。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="571"/>
         <source>Operator:</source>
-        <translation type="unfinished"></translation>
+        <translation>運算子:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="578"/>
         <source>How to Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>如何套用</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="584"/>
         <source>If checked, the object with matched value will be included into new selection set.</source>
-        <translation type="unfinished"></translation>
+        <translation>若勾選，符合數值的物件將包含在新的選取集中。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="587"/>
         <source>Include in new selection set</source>
-        <translation type="unfinished"></translation>
+        <translation>包含在新的選取集中</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="594"/>
         <source>If checked, object that does not match the condition will be included into selection set.</source>
-        <translation type="unfinished"></translation>
+        <translation>若勾選，不符合條件的物件將包含在選取集中。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="597"/>
         <source>Exclude from new selection set</source>
-        <translation type="unfinished"></translation>
+        <translation>從新的選取集中排除</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="607"/>
         <source>Manual selection of entities</source>
-        <translation type="unfinished"></translation>
+        <translation>手動選取物件</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="621"/>
         <source>Defines to which objects selection conditions should be applied to</source>
-        <translation type="unfinished"></translation>
+        <translation>定義選取條件應套用至哪些物件</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="641"/>
         <source>Value:</source>
-        <translation type="unfinished">值 :</translation>
+        <translation>值:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="671"/>
         <source>Type of the entity to match</source>
-        <translation type="unfinished"></translation>
+        <translation>要比對的物件類型</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="678"/>
         <source>Apply To:</source>
-        <translation type="unfinished"></translation>
+        <translation>套用至:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="688"/>
         <source>TextLabel</source>
-        <translation type="unfinished">文字標籤</translation>
+        <translation>文字標籤</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.cpp" line="51"/>
         <source>Entire Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>整個圖面</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.cpp" line="53"/>
         <source>Current Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>目前的選取內容</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.cpp" line="164"/>
         <source>Please provide non empty value to match</source>
-        <translation type="unfinished"></translation>
+        <translation>請提供非空白的比對值</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.cpp" line="169"/>
         <source>Please provide non empty value of precision</source>
-        <translation type="unfinished"></translation>
+        <translation>請提供非空白的精確度數值</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.cpp" line="190"/>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.cpp" line="195"/>
         <source>Multiple</source>
-        <translation type="unfinished"></translation>
+        <translation>多個</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.cpp" line="411"/>
         <source>= Equals</source>
-        <translation type="unfinished"></translation>
+        <translation>= 等於</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.cpp" line="412"/>
         <source>&lt;&gt; Not Equals</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;&gt; 不等於</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.cpp" line="413"/>
         <source>&gt; Greater than</source>
-        <translation type="unfinished"></translation>
+        <translation>&gt; 大於</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.cpp" line="414"/>
         <source>&lt; Less than</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt; 小於</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.cpp" line="415"/>
         <source>* Wildcard match</source>
-        <translation type="unfinished"></translation>
+        <translation>- 萬用字元比對</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.cpp" line="416"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>全選</translation>
     </message>
 </context>
 <context>
@@ -11776,22 +11776,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="14"/>
         <source>Feature Control Frame</source>
-        <translation>特性控制框架</translation>
+        <translation>幾何公差框</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>標註所在的圖層</translation>
+        <translation>標註圖層</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
         <source>Pen attributes</source>
-        <translation>Pen 屬性</translation>
+        <translation>畫筆屬性</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
         <source>Layer:</source>
-        <translation>圖層：</translation>
+        <translation>圖層:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="91"/>
@@ -11801,12 +11801,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="117"/>
         <source>Composite</source>
-        <translation>复合</translation>
+        <translation>複合公差</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="127"/>
         <source>Stated Tolerance</source>
-        <translation>第 二 章 分 出</translation>
+        <translation>標註公差</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="133"/>
@@ -11817,17 +11817,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="191"/>
         <source>Primary Datum</source>
-        <translation>初等大數</translation>
+        <translation>主要基準</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="240"/>
         <source>Secondary Datum</source>
-        <translation>二度數值</translation>
+        <translation>次要基準</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="289"/>
         <source>Tertiary Datum</source>
-        <translation>三等大通</translation>
+        <translation>第三基準</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.cpp" line="76"/>
@@ -11850,12 +11850,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="26"/>
         <source>If сhecked, the tooltip with additional information about UCS will be shown for table item.</source>
-        <translation>若勾選，將顯示表格項目中關於使用者座標系 (UCS) 的附加工具提示。</translation>
+        <translation>若勾選，將為表格項目顯示關於 UCS 的附加資訊工具提示。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
         <source>Type icon column</source>
-        <translation>類型圖示列</translation>
+        <translation>類型圖示欄位</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -11865,7 +11865,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="59"/>
         <source>Grid Type column</source>
-        <translation>网格型態列</translation>
+        <translation>格線類型欄位</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
@@ -11900,7 +11900,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="105"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
-        <translation>如果已檢查, 在建立中已存在已輸入名的檢視, 它會被新位置所更新 。 否則需要取出新取景的獨特名稱 .</translation>
+        <translation>若勾選，且建立時輸入名稱的檢視已存在，則會更新為新位置。否則需為新檢視指定唯一名稱。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="108"/>
@@ -11915,12 +11915,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="131"/>
         <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied.</source>
-        <translation>定義套用使用者座標系(UCS)後圖面視圖視窗的調整方式</translation>
+        <translation>定義套用使用者座標系(UCS)後圖面視圖視窗的調整方式.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="135"/>
         <source>Zoom Auto</source>
-        <translation>縮放自動</translation>
+        <translation>自動縮放</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="140"/>
@@ -11935,7 +11935,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="153"/>
         <source>If enabled, click on the table item will apply coordinates system. Otherwise, coordinates system should be applied explicitly.</source>
-        <translation>如果被開啟, 點擊表格項目會被套用地標系統 。 此外地標系統也應被明确使用.</translation>
+        <translation>若啟用，按一下表格項目將套用座標系統。否則需手動套用。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="156"/>
@@ -11965,17 +11965,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="170"/>
         <source>Defines which action should be performed on double click on the item of the table.</source>
-        <translation>定義雙擊表格項目時應該執行的操作。</translation>
+        <translation>定義雙擊表格項目時所要執行的動作。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="66"/>
         <source>If selected, grid lines will be drawn</source>
-        <translation type="unfinished"></translation>
+        <translation>若選取，將繪製格線</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="69"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示格線</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="95"/>
@@ -12015,22 +12015,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="216"/>
         <source> ms</source>
-        <translation>毫</translation>
+        <translation> 毫秒</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="235"/>
         <source>Blink:</source>
-        <translation>閃烁:</translation>
+        <translation>閃爍：</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="242"/>
         <source>Blink Delay:</source>
-        <translation>閃烁延遲 :</translation>
+        <translation>閃爍延遲：</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="252"/>
         <source> times</source>
-        <translation>倍</translation>
+        <translation> 次</translation>
     </message>
 </context>
 <context>
@@ -12045,17 +12045,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="37"/>
         <source>Info</source>
-        <translation>信息</translation>
+        <translation>資訊</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="43"/>
         <source>X-Axis Angle:</source>
-        <translation>X 轴角 :</translation>
+        <translation>X 軸角度:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="50"/>
         <source>X-Axis Direction:</source>
-        <translation>X 轴方向 :</translation>
+        <translation>X 軸方向:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="62"/>
@@ -12068,12 +12068,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="69"/>
         <source>Origin:</source>
-        <translation>出自:</translation>
+        <translation>原點:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="88"/>
         <source>Grid Type:</source>
-        <translation>网格型態 :</translation>
+        <translation>格線類型:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="141"/>
@@ -12088,7 +12088,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="51"/>
         <source>Name contains not allowed characters</source>
-        <translation>名稱中不包含被允許的字元</translation>
+        <translation>名稱包含不允許的字元</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="97"/>
@@ -12104,7 +12104,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="104"/>
         <source>Right</source>
-        <translation>有呀</translation>
+        <translation>右</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="109"/>
@@ -12122,27 +12122,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="360"/>
         <source>Available Actions:</source>
-        <translation>有可用的動作 :</translation>
+        <translation>可用動作：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="131"/>
         <source>Action Group:</source>
-        <translation>動作群組:</translation>
+        <translation>動作群組：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="144"/>
         <source>Select action group with actions</source>
-        <translation>選擇有動作的動作群組</translation>
+        <translation>選擇包含動作的動作群組</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="318"/>
         <source>Actions that are included. Use drag-n-drop to reorder, double-click for remove item from the list.</source>
-        <translation>已包含的動作。 使用拖放重排, 有雙擊取出清單項目 .</translation>
+        <translation>已包含的動作。使用拖放重新排序，雙擊從列表中移除項目。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="285"/>
         <source>Define a custom menu by specifing the set of included actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
-        <translation>指定自訂選單 : 選單一被用到選單引用捷徑, 就被顯示为畫面中的彈出 .</translation>
+        <translation>透過指定包含的動作集合來定義自訂選單。呼叫選單快捷鍵後，選單將立即在繪圖區中顯示為快顯選單。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="35"/>
@@ -12152,17 +12152,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="65"/>
         <source>Widget Name: </source>
-        <translation>元件名稱 :</translation>
+        <translation>小工具名稱：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="72"/>
         <source>Destroy</source>
-        <translation>毀滅</translation>
+        <translation>銷毀</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="176"/>
         <source>Remove selected item from the list of used actions</source>
-        <translation>从用過的動作清單中移除所選取的項目</translation>
+        <translation>從已用動作清單中移除選取的項目</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="179"/>
@@ -12172,57 +12172,57 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="268"/>
         <source>Used Actions:</source>
-        <translation>已用動作 :</translation>
+        <translation>已使用的動作：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="103"/>
         <source>Available actions. Double click on item to add it to the list of used actions.</source>
-        <translation>有可用的動作 。 雙擊項目以新增到已用動作清單中 .</translation>
+        <translation>可用動作。雙擊項目可將其新增至已使用動作清單。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="192"/>
         <source>Menu Assignment</source>
-        <translation>選單指定</translation>
+        <translation>選單指派</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="198"/>
         <source>NONE</source>
-        <translation>有</translation>
+        <translation>無</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="205"/>
         <source>Removes menu assignment. Menu itself is not deleted.</source>
-        <translation>移除選單指定 。 選單本身不是被刪除的 .</translation>
+        <translation>移除選單指派。選單本身不會被刪除。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="208"/>
         <source>Unassign</source>
-        <translation>未指定</translation>
+        <translation>取消指派</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="221"/>
         <source>Note: for single-action menus, popup invocation directly triggers the action instead of menu.</source>
-        <translation>注意: 对于單一動作選單, 彈出引出直接啟動動作而不是選單 .</translation>
+        <translation>注意：對於單一動作的選單，彈出觸發時將直接執行該動作而非顯示選單。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="231"/>
         <source>Assign menu activation shortcut.</source>
-        <translation>指定選單啟動捷徑 .</translation>
+        <translation>指派選單啟動快速鍵。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="234"/>
         <source>Assign</source>
-        <translation>指定</translation>
+        <translation>指派</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="261"/>
         <source>Separator &gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>分隔線 &gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="344"/>
         <source>Add selected item to the list of used actions</source>
-        <translation>在用過的動作清單中新增所選取的項目</translation>
+        <translation>將選取項目新增至已使用動作清單</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="347"/>
@@ -12232,32 +12232,32 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="425"/>
         <source>Import settings from file</source>
-        <translation type="unfinished">从檔案匯入設定值</translation>
+        <translation>從檔案匯入設定</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="428"/>
         <source>Import from file...</source>
-        <translation type="unfinished"></translation>
+        <translation>從檔案匯入...</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="439"/>
         <source>Exports settings to file</source>
-        <translation type="unfinished"></translation>
+        <translation>匯出設定至檔案</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="442"/>
         <source>Export to file...</source>
-        <translation type="unfinished"></translation>
+        <translation>匯出至檔案...</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="275"/>
         <source>Remove ALL items from the list of used actions</source>
-        <translation>移除已用動作清單中的所有項目</translation>
+        <translation>移除已使用動作清單中的所有項目</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="278"/>
         <source>&lt;&lt;</source>
-        <translation>第 二 部 分</translation>
+        <translation>&lt;&lt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="367"/>
@@ -12267,12 +12267,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="373"/>
         <source>Put new toolbars to </source>
-        <translation>新增工具列到</translation>
+        <translation>將新工具列放置於</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="380"/>
         <source>Specifies docking area that is used to initial placement of created toolbar. Make sure that this area is enabled.</source>
-        <translation>指定用于初始放置已建立工具列的對接區域 。 确保此區域被開啟 .</translation>
+        <translation>指定用於建立工具列初始放置的停靠區域。請確保已啟用該區域。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="384"/>
@@ -12297,62 +12297,62 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="61"/>
         <source>Destroy Menu</source>
-        <translation>毀滅選單</translation>
+        <translation>刪除功能表</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="62"/>
         <source>New Menu</source>
-        <translation>新選單</translation>
+        <translation>新增功能表</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="64"/>
         <source>Define a custom menu by specifying the set of used actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
-        <translation>指定已用動作集以自訂選單 。 選單一被用到選單引用捷徑, 就被顯示为畫面中的彈出 .</translation>
+        <translation>透過指定已用動作集合來定義自訂功能表。只要觸發功能表呼叫快速鍵，功能表就會在繪圖區顯示為快顯功能表。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="59"/>
         <source>Custom Menu Creator</source>
-        <translation>自訂選單建立者</translation>
+        <translation>自訂功能表建立器</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="60"/>
         <source>Menu Name:</source>
-        <translation>選單名稱 :</translation>
+        <translation>功能表名稱：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="63"/>
         <source>Name of Custom Nenu</source>
-        <translation>自訂的 Nenu 名稱</translation>
+        <translation>自訂功能表名稱</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="69"/>
         <source>Export custom menus setup to file</source>
-        <translation type="unfinished"></translation>
+        <translation>匯出自訂功能表設定至檔案</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="70"/>
         <source>Import custom  menus setup from file</source>
-        <translation type="unfinished"></translation>
+        <translation>從檔案匯入自訂功能表設定</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="73"/>
         <source>Custom Toolbar Creator</source>
-        <translation>自訂工具列建立者</translation>
+        <translation>自訂工具列建立器</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="74"/>
         <source>Toolbar Name:</source>
-        <translation>工具列名稱 :</translation>
+        <translation>工具列名稱：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="75"/>
         <source>Destroy toolbar</source>
-        <translation>毀滅工具列</translation>
+        <translation>刪除工具列</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="76"/>
         <source>New Toolbar</source>
-        <translation>新工具列</translation>
+        <translation>新增工具列</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="77"/>
@@ -12362,27 +12362,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="78"/>
         <source>Define a custom toolbar by specifying the set of used actions. Once created, the custom toolbar will behave exactly as built-in ones.</source>
-        <translation>指定已用動作集以自訂工具列 。 有自訂工具列被建立后, 它的行為會和內建工具列一模一樣 .</translation>
+        <translation>透過指定已用動作集合來定義自訂工具列。建立完成後，自訂工具列的行為將與內建工具列完全相同。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="87"/>
         <source>Export custom toolbars setup to file</source>
-        <translation type="unfinished"></translation>
+        <translation>匯出自訂工具列設定至檔案</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="88"/>
         <source>Import custom  toolbars setup from file</source>
-        <translation type="unfinished"></translation>
+        <translation>從檔案匯入自訂工具列設定</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="224"/>
         <source>Unassign menu</source>
-        <translation>未指定選單</translation>
+        <translation>取消分配功能表</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="225"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation>您確定要取出選單%1 嗎 ? 注意: 只取取取捷徑而選單不被刪除 .</translation>
+        <translation>您確定要取消分配 &quot;%1&quot; 功能表嗎？注意：僅會移除呼叫快速鍵，功能表本身不會被刪除。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="238"/>
@@ -12390,12 +12390,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="415"/>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="489"/>
         <source>NOT ASSIGNED</source>
-        <translation>未指定</translation>
+        <translation>未分配</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="451"/>
         <source>menu</source>
-        <translation>選單</translation>
+        <translation>功能表</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="454"/>
@@ -12405,12 +12405,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="457"/>
         <source>Remove %1</source>
-        <translation>移除%1</translation>
+        <translation>移除 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="458"/>
         <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation>您確定要移除%2&quot;%1 嗎 ?</translation>
+        <translation>您確定要移除 %2&quot;%1&quot; 嗎？</translation>
     </message>
 </context>
 <context>
