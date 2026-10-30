@@ -7447,3 +7447,38 @@ inspection of this copy. Retained screenshot/DPR receipts, visible
 creation/repeat, preview, cancellation, refusal and multi-entity workflows,
 installed/deployed-bundle qualification, external-CAD output, the remaining
 platform-specific W0-W2 gates, and final R integration remain open.
+
+## 150. W192 Visible Ellipse Creation and Offset Re-Entry
+
+Using the isolated current-source qmake6 application, created two ellipses in
+an unnamed disposable drawing through the GUI command field (`ea`), repeating
+the ellipse-axis action without restarting the application. Started Modify
+Offset through its GUI command route (`o`) twice, selecting one ellipse each
+time. The `Editable Offset Curve` option was visibly enabled; fixed distance
+was 1 and the source ellipses were retained. The canvas showed both source
+ellipses and their two offset boundaries, and the property selector identified
+the selected output as `Offset Curve (1)`. Saved only the disposable drawing
+to `/private/tmp/offset-W192-create-repeat.dxf` using the DXF 2018 filter. A
+group-code scan reports two source `ELLIPSE` records, two exported `SPLINE`
+records, and two `LC_OFFSET_CURVE` XDATA markers. The file SHA256 is
+`b70383658d096e54df8e038a43632a3fc73d1be1051e6276912ea1aec615dbff`.
+The GUI observation was 1920x982; DPR was unavailable and no standalone
+screenshot was retained. This is a current-source visual creation/re-entry
+receipt, not external-CAD validation or a reopened-copy claim.
+
+| W192 check | Result |
+|---|---|
+| Repeated ellipse-axis GUI action | PASS; two ellipses visibly created |
+| Modify Offset GUI command re-entry | PASS; invoked twice, one source per invocation |
+| Editable Offset Curve option | PASS; visibly checked for both invocations |
+| Offset geometry and semantic type | PASS; two offset boundaries visible; selected property type `Offset Curve (1)` |
+| DXF 2018 output | PASS; 2 `ELLIPSE`, 2 `SPLINE`, 2 `LC_OFFSET_CURVE` markers; SHA256 recorded above |
+| Screenshot/DPR receipt | Partial; 1920x982 observed in-session, not retained; DPR unavailable |
+| Product-source changes | None; documentation-only validation checkpoint |
+
+W192 closes the focused ellipse create/repeat and second Modify Offset command
+entry path. It does not close preview/cancel/refusal or multi-entity GUI
+workflows, independent external-CAD inspection, installed/deployed-bundle
+qualification, retained screenshot/DPR evidence, platform-specific W0-W2
+gates, or final R integration. The W193 queue remains these open acceptance
+items; do not infer full plan completion from the ellipse-only workflow.
