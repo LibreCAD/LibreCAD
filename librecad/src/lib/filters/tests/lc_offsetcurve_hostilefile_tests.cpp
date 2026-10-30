@@ -1001,7 +1001,7 @@ TEST_CASE("Windows staged source identity binds its open handle",
     QFile file(QString::fromStdString(path.string())); REQUIRE(file.open(QIODevice::ReadOnly));
     REQUIRE(stamp.matchesDescriptor(file.handle()));
     {
-        QFile writer(QString::fromStdString(path.string())); REQUIRE(writer.open(QIODevice::ReadWrite));
+        QFile writer(QString::fromStdString(path.string())); REQUIRE(writer.open(QIODevice::Append));
         REQUIRE(writer.write("X", 1) == 1); REQUIRE(writer.flush());
     }
     CHECK_FALSE(stamp.matchesDescriptor(file.handle()));
