@@ -3190,13 +3190,15 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   caller/adoption/failure acceptance. W170 passes the targeted local Debug,
   Release and ASan worker fixture suites. W171/W172 freshly qualify current-source
   DWG/DXF matrices with LibreDWG and ACadSharp. On exact head `c0438532b`,
-  workflow `40979668978` has Linux and Windows ARM64 bounded tests running and
-  Windows x64 configuring/building; the CTest selector includes source identity.
+  Windows ARM64 job `123816799173` passed all bounded tests and relocated-worker
+  checks; Linux and Windows x64 remain active in the combined test step under
+  workflow `40979668978`. The CTest selector includes source identity.
   Pixi workflow `40979669043` has passed on all five platforms. Reuse the
   qualified geometry-entry
   W157 extends the DWG/DXF matrix to build and execute `[sync-api]` on Linux and
-  Windows x64/ARM64; those new-head checks must finish before cross-platform
-  qualification. Reuse the qualified geometry-entry timeout/helper/client/reply
+  Windows x64/ARM64; ARM64 passed, while the Linux and Windows x64 exact-head
+  checks remain pending before cross-platform qualification. Reuse the qualified
+  geometry-entry timeout/helper/client/reply
   modules; do not redo them as absent. Keep Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
   DXF/DWG, source and trim implementation with any new worker/publication changes.
@@ -3211,9 +3213,10 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   inherited behavior on a fresh `origin/master` build; do not attribute them to
   the offset changes. W170 adds targeted current-source Debug/Release/ASan worker
   fixtures and a full 6,381-case headless Release pass; W171/W172 add fresh
-  current-source cross-reader DWG/DXF matrix results. The exact-head Windows,
-  Linux format/helper workflow `40979668978` and Pixi workflow `40979669043` are
-  active as detailed under W0-W2. CodeQL `40973686197` passed on the preceding
+  current-source cross-reader DWG/DXF matrix results. Exact-head workflow
+  `40979668978` passed Windows ARM64; Linux and Windows x64 are active, while
+  Pixi workflow `40979669043` passed on all five platforms. CodeQL
+  `40973686197` passed on the preceding
   product-equivalent head `4df7229ca`; this test-only follow-up did not trigger a
   new CodeQL run. Review scoped commits, preserve reproducible evidence and close
   every required gap.
