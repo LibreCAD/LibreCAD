@@ -73,15 +73,6 @@ Ok to accept and start alignment.</source>
         <translation>Feu clic a les opcions per activar/desactivar, feu clic a Acceptar per acceptar i iniciar l&apos;alineació.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Si està marcada l&apos;opció &apos;Conserva els objectes originals&apos;, la funció &apos;Alinea&apos; copiarà en lloc de moure els objectes seleccionats.
-Si està marcada l&apos;opció &apos;Especifica els punts base primer&apos;, la funció &apos;Alinea&apos; sol·licitarà els punts d&apos;alineació en l&apos;ordre següent: primer punt base, segon punt base, primer punt objectiu, segon punt objectiu.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>primer punt d&apos;origen:</translation>

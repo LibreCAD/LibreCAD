@@ -39,190 +39,11 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">框架</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt; 翻译:</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">输入名称，然后按 +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">保存</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">框架</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">保存</translation>
-    </message>
-</context>
-<context>
-    <name>DlgParabola</name>
-    <message>
-        <source>Parabola</source>
-        <translation type="vanished">帕拉博拉语Name</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">几何</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">Spline 上的点</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">控制点</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>SplinePoints</source>
-        <translation type="vanished">样条点</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">几何</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">闭合</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="vanished">如果选中, 则使用示意图点</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="vanished">样条曲线点</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="vanished">如果选中, 将使用控制点</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">控制点</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">Spline 上的点</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
         <translation>起始点可能只设置在距离或点状态</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">待创建:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">矩形</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">宽度 :</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">高度 :</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">中间 :</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">无效的角度</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">无效半径</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">无效的值</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">指定插入点</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">指定角度</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">指定大小( 宽度, 高度)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">指定角类型
-[轮回]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">指定角贝长度 (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">指定角半径</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">指定边缘模式
-[双双相]</translation>
     </message>
 </context>
 <context>
@@ -469,73 +290,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">弧度高 (和弦和上弧点之间的干支)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">高度 :</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">逆时针</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">弧的半径</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">半径 :</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">时针</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">弧的中央角</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">弧长</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">长度 :</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">从绘图中选择半径</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">从绘图中选择高度</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">从绘图中选择长度</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -747,10 +501,6 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">选择要绑定框的实体( 要填入)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation type="unfinished"></translation>
@@ -805,31 +555,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">对所选点而言半径=%1太小
-两点之间的距离=%2大于直径=%3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">从两个可能的圆心中选择</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">指定第一点</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">指定第二点</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">选择圆心</translation>
     </message>
 </context>
 <context>
@@ -1078,13 +803,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">选择圆、弧或椭圆</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1128,10 +846,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>选择中心</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">未指定中心 .</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1526,154 +1240,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">指定第一点</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">指定第二点
-或 [数字xyyangleangle|p|e|] 距离]</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">指定第二点
-或 [数目]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">指定行向
-[x|yangleangle|p|距离]</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">指定行向角度
-或 [x|y|p| number 数字 | edge 相去相去</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">指定边缘点模式
-[没有一个开始 结束 双相]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">指定点之间的固定距离
-或[x|ypp| 数字|</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">页:1</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">回来</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">指定距离 (%1)
-或 [%2]</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">指定距离( 角%1 deg)
-或 [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">指定点数</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">指定第二个角</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">指定第二个正切值</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">指定第一个角</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">指定第一个正切值</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">无效号码 。 试试1.9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">四舍五入半径的值无效</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">输入编号 :</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">输入圆形半径 :</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">指定中心</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">待创建:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">中间 :</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">起始角度 :</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">半径 :</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">半径内置 :</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">多边形</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">指定切线</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1917,29 +1483,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">选择第一个实体</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">选择第二个实体</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">备选终点</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">输入偏移值</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="190"/>
@@ -2092,13 +1635,6 @@ or [x|y|p|number|edges|distance]</source>
 [没有一个开始 结束 双相]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="unfinished">指定点之间的固定距离
-或[x|ypp| 数字|</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Specify distance (%1)
@@ -2122,13 +1658,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="620"/>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="unfinished">指定距离( 角%1 deg)
-或 [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="625"/>
@@ -2287,11 +1816,6 @@ or [%2]</source>
         <translation>指定宽度</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="396"/>
-        <source>Specify size (width, height))</source>
-        <translation>指定大小( 宽度, 高度)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
         <translation>指定參考點 [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</translation>
@@ -2357,11 +1881,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="619"/>
         <source>Specify height</source>
         <translation>指定高度</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="622"/>
-        <source>Specify start point)</source>
-        <translation>指定起始点)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="625"/>
@@ -3113,12 +2632,6 @@ or [%2]</source>
         <translation>全部关闭</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="929"/>
-        <source>Ctrl+D</source>
-        <comment>Toggle Draft Mode</comment>
-        <translation>Ctrl+D</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="707"/>
         <source>Re-dock Widgets</source>
         <translation>重停靠部件</translation>
@@ -3502,26 +3015,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="657"/>
         <source>Device Options</source>
         <translation>设备选项</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">左</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">右</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">上</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">下</translation>
-    </message>
-    <message>
-        <source>Floating</source>
-        <translation type="vanished">浮动</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
@@ -4127,10 +3620,6 @@ or [%2]</source>
         <translation>提示</translation>
     </message>
     <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">在网格上同步</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>中键手动</translation>
@@ -4391,11 +3880,6 @@ or [%2]</source>
         <translation>取消全选(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="910"/>
-        <source>Ctrl+K</source>
-        <translation>Ctrl+K</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="745"/>
         <source>Invert Selection</source>
         <translation>反选</translation>
@@ -4591,12 +4075,6 @@ or [%2]</source>
         <translation>选择指针( S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="927"/>
-        <source>Ctrl+G</source>
-        <comment>Toggle Grid</comment>
-        <translation>Ctrl+G</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>&amp;Draft</source>
         <translation>草图(&amp;D)</translation>
@@ -4605,12 +4083,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="606"/>
         <source>&amp;Statusbar</source>
         <translation>状态栏(&amp;S)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="930"/>
-        <source>Ctrl+I</source>
-        <comment>Hide Statusbar</comment>
-        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
@@ -5247,10 +4719,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">选择要对齐的实体( 输入完成)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>选择和对齐</translation>
@@ -5282,10 +4750,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
         <translation>缩放 :</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">选择对齐( 输入要完成)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -5968,22 +5432,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished">距离 :</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="237"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="244"/>
-        <source>Specify direction of offset</source>
-        <translation type="unfinished">指定偏移方向</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="240"/>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="unfinished">指定冲抵方向的参考点</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="253"/>
-        <source>Select line, polyline, ellipse, circle or arc to create offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="254"/>
         <source>Select contour</source>
         <translation type="unfinished">选择轮廓</translation>
@@ -6276,13 +5724,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="430"/>
         <source>Scale immediately after selection</source>
         <translation type="unfinished">选择后立即缩放</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">没有选择实体 !</translation>
     </message>
 </context>
 <context>
@@ -7259,18 +6700,6 @@ Point: (%8 , %9)</source>
         <translation>无法读取所提供的文件 - 请检查它是否存在, 并且允许从它读取 .</translation>
     </message>
     <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">未导入快捷键映射 。
-如果文件确实存在, 但是它并不包含 LibreCAD 快捷键映射 .</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">未导入快捷键映射 。
-XML 解析错误发生在文件处理中 .</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
         <translation>快捷键映射已成功保存 .</translation>
@@ -7279,12 +6708,6 @@ XML 解析错误发生在文件处理中 .</translation>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
         <translation>无法写入提供的文件 - 请检查是否允许它写入文件 .</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">未导入快捷键映射 。
-XML 生成过程中发生了一些错误 .</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -8685,74 +8108,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">如果选中, 将删除原始弧</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">替换弧</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">创建圆形的图层</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">活动</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">原文</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">活动</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">原文</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">原决定</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">从绘图中选择偏移值</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">笔:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">用于创建圆的笔</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层 :</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">三角圈半径到弧线半径</translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">半径移动 :</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -9047,76 +8402,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>工具栏 :%1 (海关)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">十点:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">类型</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">交叉的横向维度</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">从绘图中选择 X 值</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">定义如何应用交叉的维度</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">延长</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">总长度</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">百分比</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">从绘图中选择 Y 值</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">十字的垂直维度</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">中间交叉的旋转角度</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">添加或删除操作</translation>
     </message>
 </context>
 <context>
@@ -9480,45 +8765,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="vanished">坐标标注</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">维度层</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">笔名属性</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">几何</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="vanished">整形</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">画笔</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -9580,11 +8826,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
         <translation>基线间隔 :</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">设置基线维度的尺寸线之间的间隔。 入一相间. 关于基线维度的信息,见DIMBASELINE。 (DIMDLI系统变量)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -11233,10 +10474,6 @@ Are you sure you are going to discard changes?</source>
         <source>Hatch Properties</source>
         <translation>填充属性</translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">属性?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -11685,19 +10922,9 @@ Are you sure you are going to discard changes?</source>
         <translation>注:菜单任务将被忽略。 是为&quot;潘&quot;保留的.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="240"/>
-        <source>NNOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
-        <translation>菜单任务将被忽略 。 它被保留给“ 选择轮廓 ” .</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="243"/>
         <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
         <translation>注: 此组合为默认上下文菜单所保留,并可能防止其被引用!</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="246"/>
-        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored</source>
-        <translation>注意:这个组合是留给潘的! 菜单任务将被忽略</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="251"/>
@@ -11758,10 +10985,6 @@ Are you sure you are going to discard changes?</source>
         <translation>UCS 细节栏</translation>
     </message>
     <message>
-        <source>If checked, type of grid for saved view will be shown</source>
-        <translation type="vanished">如果选中, 将会显示保存视图的网格类型</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
         <translation>网格类型图标列</translation>
@@ -11770,18 +10993,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Type icon column</source>
         <translation>类型图标列</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation type="vanished">如果选中的话, 将显示带有视图坐标系统的细列</translation>
-    </message>
-    <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">包含表格项的视图详细信息的工具提示</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">如果选中，则会显示包含视图坐标系详细信息的列。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
@@ -11824,10 +11035,6 @@ Are you sure you are going to discard changes?</source>
         <translation>如果选中的话, 带有视图细节的一栏将在表格中显示 .</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">详细情况栏</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>业务</translation>
@@ -11843,17 +11050,9 @@ Are you sure you are going to discard changes?</source>
         <translation>单击表格项目恢复视图</translation>
     </message>
     <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">双击表格项目</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
         <source>Defines which action should be performed on double click on view item of the table.</source>
         <translation>定义在双击表格中的视图项时应执行的操作。</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table. </source>
-        <translation type="vanished">定义在双击表格视图项目时应当执行的动作.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="158"/>
@@ -11881,10 +11080,6 @@ Are you sure you are going to discard changes?</source>
         <translation>如果启用, 点击视图表格项将恢复视图 。 否则,应明确恢复观点.</translation>
     </message>
     <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">按表格项目恢复单击视图</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
         <translation>如果显示, 表格项目将显示含有视图额外信息的工具提示.</translation>
@@ -11893,10 +11088,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
         <translation>如果选中的话, 在创建期间, 有输入名称的视图已经存在, 将会通过新位置更新 。 否则,需要新视图的独特名称.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">如果选中, 在删除视图时将显示确认对话框 。 否则,会默默地去掉视图.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
@@ -12192,17 +11383,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation>名称不独有. 请输入独有名称 .</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">画笔</translation>
-    </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Parabola 控制点不能为连线</translation>
     </message>
 </context>
 <context>
@@ -12618,13 +11798,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DlgSplinePoints</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">画笔</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgTolerance</name>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="14"/>
@@ -12706,17 +11879,9 @@ Are you sure you are going to discard changes?</source>
         <translation>如果 \ hecked , 表格项目将显示附加 UCS 信息的工具提示 .</translation>
     </message>
     <message>
-        <source>Toolip with UCS details for table items</source>
-        <translation type="vanished">带有表格项目 UCS 细节的 Tolip</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
         <source>Type icon column</source>
         <translation>类型图标列</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation type="vanished">如果选中, 表格中将显示带有 UCS 来源和角度细节的列</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -12732,10 +11897,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
         <source>Editing</source>
         <translation>编辑</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">如果选中, 在删除视图时将显示确认对话框 。 否则,会默默地去掉视图.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"/>
@@ -12756,10 +11917,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
         <translation>如果选中，则会显示包含 UCS 网格类型的列。</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">如果选中，则在删除视图时会显示确认对话框。否则，视图将静默删除。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12827,26 +11984,6 @@ Are you sure you are going to discard changes?</source>
         <translation>定义 UCS 标记闪烁的次数，用于突出显示 UCS。</translation>
     </message>
     <message>
-        <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation type="vanished">定义在双击表格项目时应采取的行动.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">按表格项目单击恢复统一控制系统</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation type="vanished">如果选中, 表格中将显示带有UCS类型图标的列.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation type="vanished">如果选中, 将显示带有UCS 网格类型的列</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied</source>
-        <translation type="vanished">定义 UCS 应用后如何调整绘图视图窗口</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
         <source>On double-click on table item</source>
         <translation>双击表格项目</translation>
@@ -12902,10 +12039,6 @@ Are you sure you are going to discard changes?</source>
         <translation>UCS 突出显示</translation>
     </message>
     <message>
-        <source>Defines delay between UCS marker blinks</source>
-        <translation type="vanished">定义 UCS 标记闪烁之间的延迟</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="216"/>
         <source> ms</source>
         <translation>分钟</translation>
@@ -12919,10 +12052,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="242"/>
         <source>Blink Delay:</source>
         <translation>闪烁延迟 :</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation type="vanished">定义显示 UCS 标记的闪烁量</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="252"/>
@@ -13319,45 +12448,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">偏移 :</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">如果选中, 将创建整个选择的边框 。 否则,将为个别实体设立.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">选择为组</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">从绘图中选择偏移</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">如果选中的话, 将只绘制角点用于边框 。 否则会划出边缘线.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">仅指角点</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">如果选中, 边框将绘制为多线</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">复线</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13451,86 +12541,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation type="unfinished">从绘图中选择偏移</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">垂直抵消原实体的重复</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">横向抵消原实体的重复</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">从绘图取出 X 来抵消</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">笔:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">如果选中的话, 复制将位于原坐标</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">在正处</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">从绘图中取出 Y 来抵消</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层 :</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">用于创建复制的笔</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">活动</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">原文</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">原决定</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">重复的层</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">活动</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">原文</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">偏移 Y :</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">偏移 X :</translation>
     </message>
 </context>
 <context>
@@ -13712,69 +12722,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">小半径 :</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">主要半径角值</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">如果选中, 可指定主要半径角</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">基准角度 :</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">逆时针</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">从绘图中选择主要动作</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">如果选中, 鼠标指定了主要半径角度</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">免费</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">椭圆主要半径长度</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">从绘图中选择小半径</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">主半径 :</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">椭圆小半径长度</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">时针</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13913,21 +12860,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">从绘图中取出角度</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">弧形选项</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">时针</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">逆时针</translation>
     </message>
 </context>
 <context>
@@ -14490,11 +13422,6 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_ExportToImageService</name>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="52"/>
-        <source>Exporting drawing...</source>
-        <translation>导出绘图...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="59"/>
         <source>Exported: %1</source>
         <translation>导出 :%1</translation>
@@ -14818,30 +13745,6 @@ Are you sure you are going to discard changes?</source>
         <source>Eccentricity:</source>
         <translation>偏心性 :</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">无效的双曲线定义</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">中心必须是不同的</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">无效的中心坐标</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">主半径必须是正的</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">无效的旋转角度</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">比率或小半径必须是正数</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -15013,10 +13916,6 @@ Are you sure you are going to discard changes?</source>
         <translation>宽度 :</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">图像宽度</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>从绘图中选择宽度值</translation>
@@ -15027,21 +13926,9 @@ Are you sure you are going to discard changes?</source>
         <translation>高度 :</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">图像高度</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>从绘图中选择高度值</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">缩放 :</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">缩放因数</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -15053,10 +13940,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>角度 :</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">旋转角度</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -15088,22 +13971,6 @@ Are you sure you are going to discard changes?</source>
         <source>Select an image file</source>
         <translation>选择图像文件</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">大小( px) :</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">图像大小, 像素</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">新闻部</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">分辨率(每英寸)</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -15116,21 +13983,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">如果选中, 点将总是在选定的实体内</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">在实体上同步</translation>
     </message>
 </context>
 <context>
@@ -15508,14 +14360,6 @@ Are you sure you are going to discard changes?</source>
         <translation>用于将图层的内部名称拆分为各层级名称的分隔符</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">图层名称分隔符</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">第二层后缀</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15546,10 +14390,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>图层名称的后缀，表示该图层为替代位置图层。</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">复制名称</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15692,17 +14532,9 @@ Are you sure you are going to discard changes?</source>
         <translation>各种颜色设置</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">颜色</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>图层树中选中项的背景颜色。</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">层树视图中分隔线的颜色</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15741,10 +14573,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>虚拟图层背景颜色</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">三视图项目分隔网格</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15800,10 +14628,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>替代位置图层</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">网格</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16293,118 +15117,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">如果选中的话, 行长由鼠标位置而不是设置来定义</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">免费</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">从绘图中选择坐标距离</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">从相交点抵消勾选秒点</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">从绘图中选择长度</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">从绘图中选择偏移</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">如果选中的话, 原始实体会被相交点分隔 .</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">除号</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">偏移 :</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">相交点与指定线接点的距离</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">定义创建线条的哪一部分会断接到相交点</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">开始</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">中间</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">结束</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">勾选 :</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">行对齐 :</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">线长</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">如果选中, 角度相对于选定实体的角度</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">调值</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">长度 :</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">创建线和源实体之间相交点位置的坐标点( 在原线内)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">免费</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">坐标距离 :</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">直线角度</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16711,93 +15423,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation type="unfinished">要创建的双扇区数</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">大小 :</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">页:1</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">从相交点抵消已创建的行</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">创建行的坐标点</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">开始</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">中间</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">结束</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">长度 :</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">创建行的固定长度</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">坐标 :</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">从绘图中选择长度</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">从绘图中选择偏移</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">定义创建的线条是交叉点还是应该有固定长度</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">切换到交叉</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">固定长度</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">如果选中的话, 创建的行将垂直到选定的行</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">正弦</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">原行之间角并创建一条</translation>
     </message>
 </context>
 <context>
@@ -17183,81 +15808,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">如果选中的话, 将创建多行线而不是单个行</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">创建多线</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">该行的政策被选择为第二位</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">扩展/三边</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">添加线段</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">无变动</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">第1行:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">第2行:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">首先选择的加入行的政策</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">定义如何将笔应用于创建的实体</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">活笔</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">1号线</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">2号线</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">两行</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">属性 :</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">如果选中, 将删除原始行</translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">删除正本</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17639,85 +16189,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">控制边缘上的点(起始/结束点)应如何创建.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">无</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">两者</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">开始</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">结束</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">从绘图中选择距离</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">要创建的分数</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">边缘点 :</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">指定所有点是否应该适合起始点/终点之间的行距,或者是否根据点数和点间距离计算出行距.</translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">匹配线条</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">点之间的距离.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">如果选中, 将绘制指定角度的点行</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">点数 :</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">如果选中的话, 将会使用指定点之间的固定距离 。 否则,将计算出距离.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">固定距离</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">直线角度</translation>
     </message>
 </context>
 <context>
@@ -21967,433 +20438,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">帮助( H)</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">在线 Docs( L)</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">维基( W)</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">用户手册( M)</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">命令( C)</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">样式工作表( S)</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">部件( G)</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">关于</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">论坛( F)</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">苏利普和聊天</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">提交错误( S)</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">请求特性( A)</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">释放页面( R)</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">捐赠( D)</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">行( L)</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">诗歌 &amp; t</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">循环( C)</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">打开 弧形</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">多边形( G)</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">斯普林( E)</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">椭圆( S)</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">聚合线( P)</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">其他( O)</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">绘图( D)</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">椭圆( E)</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">缩写( H)</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">修改( M)</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">顺序( L)</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">数字( D)</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">信息( I)</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">工具( T)</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">选择( S)</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">数字化( N)</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">文件夹( F)</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">最近的文件</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">导入</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">导出</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">选项( O)</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">编辑( E)</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">查看( V)</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">查看恢复( P)</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">Pl和ugins 语句</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">工作空间( W)</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">挂起区域</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">CAD 部件( G)</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">绘图( D)</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">A. 背景情况</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">工具栏</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">部件</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">CAD 部件</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">CAD 工具栏</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">选择</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">近期</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">修改</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">更多修改</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">绘制</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">线条</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">复线</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">点</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">圆形</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">弧形</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">多边形</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">多线/分线</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">椭圆</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">其它</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">添加尺寸</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">对齐</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">绘制顺序</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">层</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">资讯</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">编辑</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">选项</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">名称视图( N)</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">编辑属性</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">修改通用</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">修改行</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">绘制行</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">绘制圆形</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">绘制其它</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">修改圆形</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">修改弧</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">修改多行</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">修改 Spline</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">修改 Spline 点</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">修改文本</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">修改 MTex</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">编辑块</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">顺序</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">工具栏( T)</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">&amp; CAD 工具栏</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">工作空间( W)</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Tab 模式</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">窗口模式( W)</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">拉尤特( L)</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">已四舍五入</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">三角形</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">北区</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">南部</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">东</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">西部</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">排列( A)</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">最大化( M)</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">卡斯卡德( C)</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">处理( T)</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">拼贴和虚拟</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">线条和范围</translation>
-    </message>
-</context>
-<context>
     <name>LC_MenuFactoryBase</name>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
@@ -23009,21 +21053,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">偏移 :</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">从绘图中选择偏移</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23160,197 +21189,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">如果选中, 当前属性将被用于镜像实体, 否则 - 原始实体 .</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">使用当前属性</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">如果不加制止,原始实体将被移除,否则它们会活下来.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">保留原件</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">如果选中的话, 镜像实体将被放入当前图层, 否则会被放入原始图层 .</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">用户当前图层</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">如果选中, 必要时将缩放实体 。 否则,他们将只是定位和轮换.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">缩放</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">如果选中的话, 将删除交叉点之间的交汇点 。 如果不加控制 - 实体会被分出相交点.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">删除片段</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">如果选中, 将删除选中的片段 。 否则,选定的部分将活下来,其余部分将被去除.</translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">删除选中内容</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">坐标距离 :</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">相差点到行夹点</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">行对齐 :</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">缺口大小 :</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">线上缺口的坐标点</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">免费</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">空白坐标 :</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">开始</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">中间</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">结束</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">免费</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">开始</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">中间</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">结束</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">绘图的 PICK 空格大小</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">距离坐标点</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">从绘图中选择坐标距离</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">空白的大小, 如果不是空的话</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">如果切除, 空隙大小由鼠标决定</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">如果选中的话, 镜像将由选中的行实体执行 .</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">镜像到选中行</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">如果不加制止,原始实体将被移除,否则它们会活下来.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">保留原件</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">如果选中, 当前属性将被用于镜像实体, 否则 - 原始实体 .</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">使用当前属性</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">如果选中的话, 镜像实体将被放入当前图层, 否则会被放入原始图层 .</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">用户当前图层</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23396,234 +21234,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation type="unfinished">使用当前图层</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">移动旋转选项</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">如果选中的话, 由鼠标自由选择因子 .</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">免费</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">如果选中的话, 新的 entys 将被放入当前图层, 否则它们将被放在原图层中 .</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">使用当前图层</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">如果绝对, 引用点将被旋转, 但实体将只被第二个角度所旋转, 否则角度会归纳</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">绝对</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">围绕旋转中心点旋转实体的角度</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">如果选中的话, 当前属性将被应用到创建的实体中, 将使用 opthewise 原始属性 .</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">使用当前属性</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">如果选中, 第二次旋转在参考点周围</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">旋转两次</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">重现点周围的额外旋转角度</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">从绘图中选择旋转角度</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">如果选中的话, 原始实体将幸存下来, 否则会被移除 .</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">保留原件</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">如果选中的话, 将会创建多个副本 .</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">多个副本</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">旋转角度 :</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">指定角度是由输入值还是由鼠标位置定义</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">从绘图中选择第二个旋转角度</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">份数</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">移动旋转选项</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">如果选中, 将会创建多个副本 .</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">多个副本</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">十点:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">如果选中的话, 将会对 X 和 Y 轴使用相同的缩放系数 .</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">异热带</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">如果选中的话, 原始实体将会存活下来, 否则它们会被删除 .</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">保留原件</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">份数</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">如果选中, 当前属性将被应用到创建的实体, 否则将使用原始属性 .</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">使用当前属性</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">Y 轴的缩放系数</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">缩放因子 :</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">如果选中的话, 创建的实体将被放置到当前层 。 否则,它们将被放入原地层.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">使用当前图层</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">如果选中此项, 将会由鼠标自由选择 。 否则,将使用特定因素值.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">免费</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">X 轴的缩放系数</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">如果选中的话, 原始实体将会存活下来, 否则它们会被删除 .</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">保留原件</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">如果选中的话, 创建的实体将被放置到当前层 。 否则,它们将被放入原地层.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">使用当前图层</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">份数</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">如果选中的话, 当前属性将被应用到创建的实体中, 则使用原始属性 .</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">使用当前属性</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">如果选中的话, 原始实体将会存活下来, 否则它们会被删除 .</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">保留原件</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">如果选中, 将会创建多个副本 .</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">多个副本</translation>
     </message>
 </context>
 <context>
@@ -23939,14 +21549,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>.</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">按名称过滤视图</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">过滤...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24382,45 +21984,6 @@ Warning: this action can NOT be undone!</source>
         <source>Control Points</source>
         <translation>控制点</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Parabola 控制点不能为连线</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">如果选中, 用作插入点的点实体将在粘贴操作后被删除 。 否则,它就会活下来.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">删除点</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">缩放因数</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">粘贴实体的缩放因子</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">粘贴实体的旋转角度</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24496,89 +22059,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">从绘图中取出角度</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">粘贴实体的旋转角度</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">实体间行插入点的间距 .</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">由 X 从绘图中选择阵列间隔</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">缩放因数</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">从绘图中取出阵列角度</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">数组的旋转角度 .</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">串行数.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">由 Y 从绘图中选择数组间隔</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">如果选中, 单个粘贴和整个阵列都使用相同的旋转角度 。 否则,使用不同角度.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">相同的角度</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">间距 :</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">阵列编号 .</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">如果选中, 将会在粘贴上创建复制数组 .</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">阵列</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">矩阵角度 :</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">粘贴实体的缩放因子</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">列中实体插入点之间的间距.</translation>
     </message>
 </context>
 <context>
@@ -25200,17 +22680,9 @@ Warning: this action can NOT be undone!</source>
         <translation>线条宽度名称</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">颜色</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>笔元素的背景颜色</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">笔名列表的网格颜色</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25232,10 +22704,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>全表行粗体为活笔</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">网格颜色 :</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25328,17 +22796,9 @@ Warning: this action can NOT be undone!</source>
         <translation>在可能的情况下,自然名称</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">如果选中的话, 其他信件将作为笔操作的一部分显示</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>如果无法用笔选择任何实体, 则显示信息信息</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">双击表格项目</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25563,12 +23023,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
 
 请注意，如果您在不重启的情况下通过编辑器保存画笔，当前调色板中的画笔将保存到新文件中，并覆盖其现有内容。</translation>
     </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">笔头文件位置更改, 请重新启动应用程序, 因此将使用新笔头文件 。
-请注意,如果通过编辑器不重启地保存出笔,调色板上的当前笔会被保存入新文件,因此其已存在的内容会被覆盖.</translation>
-    </message>
 </context>
 <context>
     <name>LC_PointPickButton</name>
@@ -25614,37 +23068,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>从绘图中选择位置</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">按纹章 Y 取向的分数( 纹章行数)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">行数 :</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">列数 :</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">按 X 纹章方向( 纹章列数) 的分数</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">如果选中的话, 窗帘的最后一点会被调整为第一分的位置, 因此窗帘将是矩形或四角形</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">将倒数第一点调整</translation>
     </message>
 </context>
 <context>
@@ -32911,10 +30334,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>直径</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">循环</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="740"/>
@@ -33903,10 +31322,6 @@ p, li { white-space: pre-wrap; }
         <translation>实体信息</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">页面存档备份,存于互联网档案馆 p. 如果选中, 将会在实体 Info 部件中显示属于多线的行和弧的更详细信息 。 &lt; br/&gt; 否则,只显示顶点/起伏点的信息。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;如果选中，实体信息控件中将显示构成多段线的直线和弧段的更多详细信息。&lt;br/&gt;否则，仅显示顶点/凸出信息。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -33955,205 +31370,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>点高亮笔</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">边缘 :</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">如果选中此项, 请指定坐标点应被角半径移动 .</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">调整</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">Y方向的贝花角长度.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">定义矩形的哪些边缘应该被绘制( 这样可以只创建两条平行行而不是矩形)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">两者</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">垂直</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">水平</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">长方形宽度</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">控制矩角的绘制方式.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">直线</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">回合</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">贝维尔</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">如果选中, 矩形将在指定角度旋转 .</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">基准角度 :</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">如果选中的话, 指定矩形的高度和宽度会定义圆角弧中心之间的距离 。 否则,这些值会定义矩形的外大小.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">内部大小</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">长度 Y :</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">如果选中, 矩形将作为多线而不是单个片段创建 .</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">复线</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">坐标 :</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">高度 :</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">半径 :</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">X方向的贝花角长度 .</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">长度 X :</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">长方形高度</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">圆角半径.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">矩形的wich会放置在插入点上.</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">左上边</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">顶</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">右上边</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">左边</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">中间</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">对</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">左下边</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">底层</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">右下边</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">从绘图中选择旋转角度</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">从画取圆角半径.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">旋转角度</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">从绘图中选择矩高</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">从绘图中选择矩形宽度</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">宽度 :</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">转角 :</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">从绘图中选择 X 方向的贝花角长度 .</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">从绘图中选择 Y 方向的 Bevel 角长度 .</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">如果选中, 角度将按鼠标位置指定 。 否则,将使用指定的值.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">免费</translation>
     </message>
 </context>
 <context>
@@ -34523,153 +31739,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">定义矩形的哪些边缘应该被绘制( 这样可以只创建两条平行行而不是矩形)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">两者</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">垂直</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">水平</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">定义将矩形的哪个点置于起始点位置.</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">转角</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">中证</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">中线</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">中间</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">从绘图中选择矩形旋转角度</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">从画取圆角半径.</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">转角 :</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">定义将矩形的哪个点置于终点位置.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">从绘图中选择 X 方向的贝壳长度 .</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">边缘 :</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">从画取Y方向的贝花长度.</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">开始抓取 :</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">以Y为方向的活体长度.</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">如果选中, 请指定坐标点应被角半径所移动 .</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">调整</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">长度 X :</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">半径 :</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">如果选中, 允许指定矩形的旋转角度 .</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">基准角度 :</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">矩形自转角度.</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">结束坐标 :</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">定义矩形角的绘制方式.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">直线</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">回合</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">贝维尔</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">圆角半径.</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">长度 Y :</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">如果选中的话, 整个矩形将被绘制为多线 .</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">复线</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">X方向的波浪长度.</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -34927,145 +31996,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation type="unfinished">从画取Y方向的贝花长度.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">四角内角.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">如果选中的话, 四角内角将固定为指定的值 .</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">固定内角 :</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">长方形基角.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">长度 X :</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">X方向的波浪长度.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">定义矩形的角绘制方式.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">直线</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">回合</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">贝维尔</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">转角 :</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">如果选中, 请指定坐标点应被角半径所移动 .</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">调整</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">长度 Y :</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">以Y为方向的活体长度.</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">圆角半径.</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">半径 :</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">如果选中的话, 形状将被创建为多线 .</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">复线</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">从画取四角内角.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">边缘 :</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">从画取圆角半径.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">从绘图中选择 X 方向的贝壳长度 .</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">从画取Y方向的贝花长度.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">定义矩形的哪些边缘应该被绘制( 这样可以只创建两条平行行而不是矩形)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">两者</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">垂直</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">水平</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">从画取矩形的基角</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">如果选中的话, 矩形将旋转到指定的基准角度 。 否则,会用长方形第一和第二点之间的角度来定义基角.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">固定基角 :</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">如果选中的话, 将创建四边形而不是矩形 .</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">四边形</translation>
     </message>
 </context>
 <context>
@@ -35714,100 +32644,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">抱歉, 在检查新版本时发生了一些网络错误 .</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">无法解析服务器的响应</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">移动旋转选项</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">指定要插入到当前或原图层的文本位置</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">使用当前图层</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">调整二次角,所以角(相对自转角)的总和为0. 使用此设置实体将移动但不会旋转 .</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">镜像角度</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">从绘图中取出主角度</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">定义是否将应用当前或原始绘图属性</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">使用当前属性</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">从绘图中选择次要角度</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">绝对参考点的旋转角度</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">如果选中, 将会创建多个副本 .</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">多个副本</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">要创建的副本数量</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">二次角 :</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">如果选中, 所有副本将使用相同角度 。 否则,将按比例增加复制数量.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">副本的相同二次角度</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">如果选中的话, 原始实体将会存活下来, 否则它们会被删除 .</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">保留原件</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">主角度 :</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">从次要参考点旋转角度</translation>
     </message>
 </context>
 <context>
@@ -36802,141 +33638,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">开始圆角 :</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">开始角度为会从中开始的圆 .</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">偏移 :</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">切换到相交点.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">从绘图中选择距离</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">距离 :</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">滴答之间的距离 .</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">如果选中的话, 选定的实体将被勾选的交叉点分隔 .</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">除号</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">从绘图中选择勾选</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">滴答长度 .</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">从绘图中选择勾选角度</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">滴答坐标 :</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">从绘图中选择勾选长度</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">PICK 从绘图开始的圆角</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">勾选到选中实体之间的角度 .</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">如果选中, 勾选角与所选实体相关, 否则是绝对角 .</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">调值</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">勾选长度 :</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">定义与选定实体相交点的勾选点.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">开始</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">中间</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">结束</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">如果选中的话, 将会使用指定的勾选之间的固定距离 。 否则,会根据实体长度和勾选计数计算距离.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">固定</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">选定实体边缘之间的勾选数.</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">计数 :</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">研究如何在实体边缘放置滴答.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">无</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">两者</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">边缘勾选 :</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37256,57 +33957,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">定义每个 spline-fit spline-fit 多线要生成的行段数</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">如果不加控制,则会去掉原始的相片,否则它会活下来.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">保留原件</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">如果选中, 当前属性将被用于创建的实体, 否则 - 原始实体 .</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">使用当前属性</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">如果选中的话, 创建的实体将被放入当前图层, 否则它们将被放入原始图层 .</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">使用当前图层</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">如果选中, 可以指定行段的自定义量 。 否则,将使用当前绘图的设置值.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">自定义段数</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">如果选中, 线段将成为多线的一部分 。 不然的话,就是单行</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">到多线</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -37430,65 +34080,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
         <translation type="unfinished">到多线</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">如果选中的话, 创建的实体将被放入当前图层, 否则它们将被放入原始图层 .</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">用户当前图层</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">将添加到分线中线段的中点数 .</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">定义线条的度</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">如果不加控制,原多线会被取出,否则会活下来.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">学位 :</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and ordinary spline will be created.</source>
-        <translation type="vanished">如果选中，多段线顶点将被视为样条曲线点并创建过点样条曲线。否则，它们将被视为控制点并创建普通样条曲线。</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">保留原件</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">中点 :</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">如果选中, 当前属性将被用于创建的实体, 否则 - 原始实体 .</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">使用当前属性</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">如果选中的话, 多线顶点将被视为分线点, 并按分线建立分线点 。 否则,它们被视作控制点,或者会被创建出正线.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">Vertexs 是分线点</translation>
     </message>
 </context>
 <context>
@@ -37745,10 +34336,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_SplinePropertiesEditingWidget</name>
     <message>
-        <source>Form</source>
-        <translation type="vanished">表格</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="14"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="17"/>
         <source>Spline Properties Editor</source>
@@ -37896,69 +34483,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>用于大致示意图的度</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">如果选中, 将创建对称星 .</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">对称</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">半径表示内缘.</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">数量 :</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">从绘图中选择外半径</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">从绘图中选择内半径</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">射线数.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">如果选中的话, 外缘会被四舍五入 .</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">外半径</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">如果选中的话, 内边缘会被四舍五入 .</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">半径内置</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">如果选中的话, 将绘制星等为多线 .</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">复线</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">外射线半径(对接).</translation>
     </message>
 </context>
 <context>
@@ -38849,14 +35373,6 @@ p, li { white-space: pre-wrap; }
         <translation>设置</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">按名称过滤用户坐标</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">过滤...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>&lt; 无名称&gt;</translation>
@@ -38957,33 +35473,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>删除 A&amp;ll UCS</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">表单</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">新坐标系统的角 X 轴</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">指定 X 轴角度是由输入值还是由鼠标位置定义</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">免费</translation>
     </message>
 </context>
 <context>
@@ -39599,33 +36088,6 @@ Warning: this action can NOT be undone!</source>
     </message>
 </context>
 <context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">相对角度选项</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">间距:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">距原多线段距离</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">副本:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">份数</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">从绘图中选择间隔</translation>
-    </message>
-</context>
-<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="38"/>
@@ -39663,11 +36125,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing: %1</source>
-        <translation>保存图纸: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="271"/>
         <source>Save cancelled</source>
         <translation>保存已取消</translation>
@@ -39691,11 +36148,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="412"/>
         <source>Save %1 &amp;as...</source>
         <translation>将%1另存为(&amp;A)...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="839"/>
-        <source>Creating new file...</source>
-        <translation>新建文件...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="771"/>
@@ -39735,11 +36187,6 @@ Warning: this action can NOT be undone!</source>
         <translation>关闭全部已取消</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1867"/>
-        <source>Opening recent file...</source>
-        <translation>最近打开文件...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1075"/>
         <source>Warning: File already opened : </source>
         <translation>警告: 文件已被打开.</translation>
@@ -39757,16 +36204,6 @@ Please check the permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
         <source>Loaded document: </source>
         <translation>已加载文档: </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1068"/>
-        <source>Opening aborted</source>
-        <translation>打开中止</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing...</source>
-        <translation>保存图纸...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="276"/>
@@ -39810,11 +36247,6 @@ Please check its existence and permissions.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1230"/>
-        <source>Auto-saving drawing...</source>
-        <translation>自动保存图纸...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
         <source>Auto-saved drawing</source>
         <translation>自动保存的图纸</translation>
@@ -39836,24 +36268,9 @@ Auto-save disabled.</source>
         <translation>自动保存失败</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1398"/>
-        <source>Printing...</source>
-        <translation>打印...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1402"/>
-        <source>Printing complete</source>
-        <translation>打印所有</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
         <source>Print preview for %1</source>
         <translation>%1 打印预览</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1501"/>
-        <source>Exiting application...</source>
-        <translation>退出程序...</translation>
     </message>
 </context>
 <context>
@@ -39875,12 +36292,6 @@ Auto-save disabled.</source>
         <location filename="../src/ui/qg_actionhandler.cpp" line="187"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="196"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>退出</translation>
     </message>
 </context>
 <context>
@@ -39917,11 +36328,6 @@ Auto-save disabled.</source>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="69"/>
         <source>Name of the block</source>
         <translation>块名称</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="77"/>
-        <source>Renaming Block</source>
-        <translation>重命名图块</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="78"/>
@@ -40143,12 +36549,6 @@ Auto-save disabled.</source>
         <translation>命令别名文件 :%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="260"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>退出</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="342"/>
         <source>Float</source>
         <translation>浮动</translation>
@@ -40302,81 +36702,6 @@ Auto-save disabled.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">弧形</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层:</translation>
-    </message>
-    <message>
-        <source>Layer of arc</source>
-        <translation type="vanished">弧的图层</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">笔名属性</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">几何</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="vanished">X 弧心坐标</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">Y 弧心坐标</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="vanished">定义弧是否倒转( 顺时针)</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">反转</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">中心(y):</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">弧的半径</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">开始角度 :</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">半径:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="vanished">弧的起角</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="vanished">弧的端角</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">结束角度 :</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">中心( x) :</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">画笔</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
@@ -40414,198 +36739,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
         <translation>笔</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">圆形</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">几何</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">半径:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">圆形半径</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">中心(y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="vanished">Y 圆心坐标</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">中心( x) :</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="vanished">X 圆心坐标</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">画笔</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">线性尺寸</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">维度层</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">笔名属性</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">几何</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="vanished">维度旋转角度</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">画笔</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">尺寸</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">维度层</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层:</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">笔名属性</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">画笔</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">椭圆</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层:</translation>
-    </message>
-    <message>
-        <source>Layer of ellipse</source>
-        <translation type="vanished">椭圆的图层</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">几何</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="vanished">椭圆主轴旋转角度,度</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="vanished">定义弧是否被反转</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">反转</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">中心(y):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="vanished">椭圆弧后角,度</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">Y 弧心坐标</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="vanished">椭圆主轴半径</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="vanished">以度为单位</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="vanished">开始角度( ° ) :</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="vanished">旋转( °):</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="vanished">椭圆小轴的半径</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="vanished">结束角度( °):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="vanished">椭圆弧起角,度</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="vanished">主体 :</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="vanished">细数 :</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="vanished">X 椭圆中心坐标</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">中心( x) :</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">画笔</translation>
     </message>
 </context>
 <context>
@@ -40682,105 +36815,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <source>Image</source>
-        <translation type="vanished">图像</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层:</translation>
-    </message>
-    <message>
-        <source>Layer of image</source>
-        <translation type="vanished">图像的图层</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">几何</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">高度:</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="vanished">图像宽度</translation>
-    </message>
-    <message>
-        <source>insert (y):</source>
-        <translation type="vanished">插入 (y):</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">X 插入点坐标</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">分辨率(每英寸)</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="vanished">图像文件路径</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">缩放因数</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">大小( px) :</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">旋转角度</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">Y 插入点坐标</translation>
-    </message>
-    <message>
-        <source>path:</source>
-        <translation type="vanished">路径:</translation>
-    </message>
-    <message>
-        <source>insert (x):</source>
-        <translation type="vanished">插入 (x):</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">比例:</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">图像大小, 像素</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">新闻部</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">宽度:</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="vanished">图像高度</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="vanished">选择图像文件</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">画笔</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="32"/>
@@ -40803,167 +36837,9 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>界面语言:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;head/&gt;&lt;body&gt;&lt;p 校正=&quot;center&quot; &gt;&lt;span 样式=&quot;字体大小:大;字体重:700;&quot;&quot;欢迎使用 LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt; 请选择您想要用于新绘图的单位, 以及您想要用于 Ui 和 Command 的首选语言 。 &lt; br/% @%\\ p&gt; 您可以在稍后更改这些设置 。 &lt;/p%\ body%\/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
         <translation>命令语言:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <source>Insert</source>
-        <translation type="vanished">插入</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层:</translation>
-    </message>
-    <message>
-        <source>Layer of insert</source>
-        <translation type="vanished">插入块的图层</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">几何</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="vanished">插入点(y):</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="vanished">插入点(x):</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="vanished">复制行数</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">旋转角度</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="vanished">列之间的间隔</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="vanished">由 X 轴缩放系数</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">X 插入点坐标</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="vanished">各行之间的间隔</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="vanished">印本栏数</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="vanished">Y 轴的缩放系数</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="vanished">缩放 Y :</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="vanished">行数 :</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度:</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">Y 插入点坐标</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="vanished">行间距 :</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="vanished">列数 :</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="vanished">缩放 X :</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="vanished">列间距 :</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">画笔</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">直线</translation>
-    </message>
-    <message>
-        <source>ID: </source>
-        <translation type="vanished">ID: </translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层:</translation>
-    </message>
-    <message>
-        <source>Layer of line</source>
-        <translation type="vanished">直线的图层</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">几何</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="vanished">终点(x):</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="vanished">终点 X 坐标</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="vanished">终点 Y 坐标</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="vanished">终点(y):</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="vanished">起点(y):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="vanished">Y坐标起点</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="vanished">起始点 (x):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="vanished">X坐标起点</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">画笔</translation>
     </message>
 </context>
 <context>
@@ -41164,10 +37040,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>要插入的文本行</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">符号插入</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="876"/>
         <source>Diameter (⌀)</source>
         <translation>直径 (⌀)</translation>
@@ -41221,10 +37093,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>英镑 (£)</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">日元 (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -41825,115 +37693,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
         <translation>笔</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <source>Mirroring Options</source>
-        <translation type="vanished">镜像选项</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">复制数目</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">删除原始(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">保留原始(&amp;K)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">使用当前属性(&amp;a)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">使用当前图层(&amp;l)</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Move/Copy Options</source>
-        <translation type="vanished">移动/复制选项</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">复制数目</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">删除原始(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">保留原始(&amp;K)</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">多重复制(&amp;M)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">使用当前属性(&amp;a)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">使用当前图层(&amp;l)</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <source>Move/Rotate Options</source>
-        <translation type="vanished">移动/旋转选项</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="vanished">Ctrl+S</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">角度(&amp;A):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">使用当前属性(&amp;a)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">使用当前图层(&amp;l)</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">复制数目</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">删除原始(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">保留原始(&amp;K)</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">多个副本</translation>
     </message>
 </context>
 <context>
@@ -44810,10 +40569,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>相对零标记</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">行为</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
         <translation>要绘制的网格类型</translation>
@@ -45307,38 +41062,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>自动保存绘图</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4935"/>
-        <source>#</source>
-        <translation>{\fn方正粗倩简体\fs12\an8\1cHFFFF00\b0}</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4940"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5009"/>
-        <source>~</source>
-        <translation>~ (法语)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4945"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
-        <source>_</source>
-        <translation>编号</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4950"/>
-        <source>__</source>
-        <translation>__</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4955"/>
-        <source>lcauto_</source>
-        <translation>长发</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4960"/>
-        <source>autosaved_</source>
-        <translation>自动保存</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4984"/>
         <source>Auto-save file name prefix:</source>
         <translation>自动保存文件名前缀 :</translation>
@@ -45347,36 +41070,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5001"/>
         <source>Backup file name suffix:</source>
         <translation>备份文件名后缀 :</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5014"/>
-        <source>$$</source>
-        <translation>(单位:美元)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5024"/>
-        <source>_backup</source>
-        <translation>备份( b)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5029"/>
-        <source>_bak</source>
-        <translation>关闭( b)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5034"/>
-        <source>.bak</source>
-        <translation>.bak (英语)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5039"/>
-        <source>.backup</source>
-        <translation>备份</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5044"/>
-        <source>.lcb</source>
-        <translation>(单位:千美元)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5111"/>
@@ -46009,287 +41702,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">图形变量</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">变量</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">代码</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">数值</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">确定(&amp;O)</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">取消</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">点</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层:</translation>
-    </message>
-    <message>
-        <source>Layer of point</source>
-        <translation type="vanished">点的图层</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">几何</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="vanished">职位(y):</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="vanished">Y 坐标的点位置</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="vanished">位置 (x):</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="vanished">X坐标的点位置</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">画笔</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">复线</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层:</translation>
-    </message>
-    <message>
-        <source>Layer of polyline</source>
-        <translation type="vanished">多段线的图层</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">几何</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="vanished">定义多线是否为闭合轮廓</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">闭合</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">画笔</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation type="vanished">旋转选项</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">复制数量</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">删除原始(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">保留原始(&amp;K)</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="vanished">多重复制(&amp;M):</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">角度(&amp;A):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">使用当前属性(&amp;a)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">使用当前图层(&amp;l)</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <source>Rotate Two Options</source>
-        <translation type="vanished">两点旋转选项</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">复制数量</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">删除原始(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">保留原始(&amp;K)</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">多重复制(&amp;M)</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;a):</source>
-        <translation type="vanished">角度(&amp;a):</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;b):</source>
-        <translation type="vanished">角度(&amp;b):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">使用当前属性(&amp;a)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">使用当前图层(&amp;l)</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <source>Scaling Options</source>
-        <translation type="vanished">缩放选项</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="vanished">x向和y向等比例缩放</translation>
-    </message>
-    <message>
-        <source>Isotropic Scaling</source>
-        <translation type="vanished">各向等比例缩放</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">使用当前属性(&amp;a)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">使用当前图层(&amp;l)</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">页面存档备份,存于互联网档案馆 p. 按参考点和目标点查找中心周围的缩放比例。 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">复制数量</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">删除原始(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">保留原始(&amp;K)</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">多重复制(&amp;M)</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">支线</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">图层:</translation>
-    </message>
-    <message>
-        <source>Layer of spline</source>
-        <translation type="vanished">样条曲线的图层</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">几何</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">次数:</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="vanished">定义线条是否定义了闭合轮廓</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">闭合</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="vanished">用于大致示意图的度</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">画笔</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="20"/>
@@ -46402,10 +41814,6 @@ so default step value required for baking</source>
         <translation>角度:</translation>
     </message>
     <message>
-        <source>Oblique:</source>
-        <translation type="vanished">倾斜：</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
         <source>Width factor:</source>
         <translation>宽度系数：</translation>
@@ -46514,10 +41922,6 @@ so default step value required for baking</source>
         <translation>英镑 (£)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">日元 (¥)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Times (×)</source>
         <translation>乘 (×)</translation>
@@ -46561,10 +41965,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>文本所在的图层</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">文本的读取</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -47616,21 +43016,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">提供了无效的缩放</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">纸张比例大于最大打印比例</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">纸张比例小于分钟打印比例</translation>
-    </message>
-</context>
-<context>
     <name>QG_RecentFiles</name>
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="183"/>
@@ -47697,58 +43082,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>World</source>
         <translation>世界</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">坐标</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="vanished">捕捉到端点</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="vanished">捕捉到实体等分点</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="vanished">捕捉到圆心</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="vanished">自动捕捉到交点</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="vanished">捕捉到实体最近点</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="vanished">捕捉到距端点指定距离的点</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="vanished">手动捕捉到交点</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="vanished">捕捉到栅格</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="vanished">水平限制</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="vanished">垂直限制</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="vanished">移动相对零点</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="vanished">锁定相对零点</translation>
     </message>
 </context>
 <context>
@@ -47949,12 +43282,6 @@ Please specify a different value.</source>
         <translation>移除空图层</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">没有找到实体的图层, 但是这些图层被过滤而不可见 。
-清除过滤口罩并重复.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -48022,14 +43349,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 如果是——具有&quot;随层&quot;画笔的实体在新图层上的外观与在原图层上完全相同，&quot;随层&quot;值将被解析后的画笔替换。
 
 如果否——&quot;随层&quot;值保持不变，目标图层的画笔将定义此类实体的画笔。</translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">将“ 按层” 值替换为源层值 ?
-如果是 - 有&quot;By Layer&quot;笔的实体会像以前分层一样在新分层上看,&quot;By Layer&quot;值会被解析出笔来取而代之.
-如果不是 - “ by Layer” 值仍然保留, 因此目标层的笔将定义此类实体的笔 .</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -48638,10 +43957,6 @@ Do you want to replace it?</source>
 确定要覆盖吗?</translation>
     </message>
     <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">旧DXF文件%1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="468"/>
         <source>Drawing Exchange %1</source>
         <translation>图形交换 %1</translation>
@@ -48735,11 +44050,6 @@ Do you want to replace it?</source>
         <translation>读取 DXF/ DWG 文件头出错</translation>
     </message>
     <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">读取 DXF/DWG 标题后出现错误</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
@@ -48786,10 +44096,6 @@ Do you want to replace it?</source>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>读取 DXF/DWG 代码出错</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">已打开DWG文件，版本 %1</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -48920,30 +44226,6 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12459"/>
         <source>error reading objects in dwg file</source>
         <translation>在 dwg 文件读取对象出错</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="85"/>
-        <source>DWG support is not complete!</source>
-        <translation>未完全支持DWG格式！</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="87"/>
-        <source>If this file fails to open try an older DWG format</source>
-        <translation>如果此文件无法打开，请尝试使用旧版DWG格式</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="88"/>
-        <source>or try to find a converter to make it a DXF file.</source>
-        <translation>或尝试使用转换器使其转为DXF文件。</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
-        <source>Information</source>
-        <translation>信息</translation>
-    </message>
-    <message>
-        <source>DWG support is not complete; if this file fails to open try an older DWG format or convert it to DXF.</source>
-        <translation type="vanished">DWG 支持不完整；如果此文件无法打开，请尝试较旧的 DWG 格式或将其转换为 DXF。</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="104"/>
@@ -49671,11 +44953,6 @@ Do you want to replace it?</source>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>点</translation>
-    </message>
-    <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">丙烯酸酯</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -50630,12 +45907,6 @@ Do you want to replace it?</source>
         <source>fillet</source>
         <comment>modify - fillet</comment>
         <translation>平头</translation>
-    </message>
-    <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="799"/>
-        <source>bevel</source>
-        <comment>modify - fillet</comment>
-        <translation>湾</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="804"/>
@@ -51931,23 +47202,6 @@ Do you want to replace it?</source>
         <translation>输入计算器出错 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="275"/>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>口径</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="276"/>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>计算</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="311"/>
-        <source>cal</source>
-        <translation>口径</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="317"/>
         <source>Calculator mode: On</source>
         <translation>计算模式: 打开</translation>
@@ -52002,26 +47256,6 @@ Do you want to replace it?</source>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="85"/>
         <source>usage: </source>
         <translation>用法: </translation>
-    </message>
-    <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished">[options] [选项] &lt;dxf files&gt;</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished"> *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">-- 打印所有 dxf 文件到同名的 pdf 文件 .</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished">-o some.pdf *.dxf (英语)</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">-- 打印所有 dxf 文件到“ some.pdf” 文件 .</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
@@ -52099,16 +47333,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">纸张尺寸 (Width x Height) 为毫米.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">输出分辨率(DPI).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>产出规模。 例如:0.01(1:100比额表).</translation>
@@ -52141,27 +47365,9 @@ Do you want to replace it?</source>
         <translation>目标输出目录.</translation>
     </message>
     <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="177"/>
-        <source>DXF output version: r12, r14, r2000, r2004, r2007 (default), r2018.</source>
-        <translation>DXF 输出版本：r12, r14, r2000, r2004, r2007（默认），r2018。</translation>
-    </message>
-    <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="183"/>
-        <source>DWG output version: r2000 (default), r2004, r2010, r2013, r2018.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation>输入 %1 个文件。</translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">&lt;dxf files&gt; (中文(简体) )</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">输入DXF文件</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -52574,10 +47780,6 @@ Do you want to replace it?</source>
         <translation>[Override] [覆盖]</translation>
     </message>
     <message>
-        <source>Draft</source>
-        <translation type="vanished">草稿</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="86"/>
         <source>%2 - command for &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
@@ -52585,10 +47787,6 @@ Do you want to replace it?</source>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
-    <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">选择要创建块( 输入要完成)</translation>
-    </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
@@ -52603,66 +47801,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>指定参照点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">选择爆炸容器( 输入完成)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">选择并爆炸</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">块不能包含插入本身 .</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished">已嵌入当前块 :</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">无法插入此块 .</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">指定参照点</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">输入角度:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">输入因子:</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">输入列数:</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">输入行数:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">输入列距:</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">输入行距:</translation>
     </message>
 </context>
 <context>
@@ -52914,270 +48052,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">和弦长度应为非零</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">无效弦长</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">指定中心</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">指定起始点</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">指定端角或 [角/和弦]</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">替代弧</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">指定和弦长度( 替代点为负数) :</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">使用替代弧点</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">指定半径</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">指定起始角度:</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">指定夹角:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">无效圆弧数据.</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">指定起始点或中心</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">指定第三点</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">指定第二点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">指定基准实体</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">备用弧</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">备用弧</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">指定终止角度</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">指定终点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">指定中心</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">在圆上指定点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">圆参数无效.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">指定第一点</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">指定第二点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">圆参数无效.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">指定第一点</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">指定第二点</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">指定第三点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">半径%1 无效( 表达式)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">半径%1 无效( 负数 )</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">半径%1 无效( 0)</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">指定圆心</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">指定半径</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">指定第一条线</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">指定第二条线</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">指定第三条线</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">指定一线或圆</translation>
-    </message>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">指定一圆上点</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">指定圆上第二个点</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">选择相切圆圆心</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">半径 “%1” 没有常见的近似圆</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">指定第一线/弧/圆</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">指定第二线/弧/圆</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">指定切圆圆心</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">指定一线/弧/圆</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">指定另一行/弧/圆</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">指定切圆上一点</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">选择切圆圆心</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">选定实体没有常见的切入圆</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">指定第一线/弧/圆</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">指定第二线/弧/圆</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">指定第三条线，弧，或第三个圆</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">选择公切圆圆心</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="170"/>
@@ -53372,125 +48246,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">选择要孵出( 进入完成)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
         <translation>选中后立即抓取</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">指定参照点</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">输入角度:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">输入因子:</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">输入分辨率DPI：</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">指定第一个点</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">指定下一点或[%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">指定下一点</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">不能封闭折线。没有足够多线段或是已经是封闭折线。</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">无法撤消: 已到达历史的开始</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">无法重做: 已到达历史结束</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">指定位置</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">替代方向</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">输入角度:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">输入长度:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">将创建实体</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">未在幅度内的扇形线数 :</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">选择第一条线</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">选择第二条线</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">输入角均分线长度:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">输入角均分线数量:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">单击并拖动绘制线</translation>
     </message>
 </context>
 <context>
@@ -53523,74 +48281,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>选择圆、圆弧或椭圆</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">指定距离&lt;%1&gt; 或 选择实体 或 [%2]</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">将创建实体</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">输入数值:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">无效数值. 请输入1..99</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">选择实体</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">指定通过点</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">将创建实体</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">数值:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">无效数值. 请输入1..99</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">指定角点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">指定第一角点</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">指定第二角点</translation>
     </message>
 </context>
 <context>
@@ -53632,29 +48322,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">选择基准实体</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">指定角度</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">指定长度</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">指定位置</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53692,17 +48359,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">指定插入点</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">输入文本:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
@@ -53711,108 +48367,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">输入终点 x</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">输入多行数</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">输入等式, f( x)</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">页:1</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">输入起始点 x</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">输入的 x 无效 .</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">输入的步法大小无效 .</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">输入的 x 值无效 .</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">指定第一点</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">替代弧</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">指定下一点或[%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">指定下一点</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">无法闭合直线序列. 实体数目尚不足.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">无法撤消: 实体数目尚不足.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">指定第一控制点</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">指定下一控制点或[%1]</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">指定下一控制点</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">无法撤消: 实体数目尚不足.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">指定插入点</translation>
-    </message>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">文本 :</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">指定第二点</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">输入文本:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">选择要剪切的 (输入要完成)</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -53831,10 +48386,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>选择后切入</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">选择要复制( 输入要完成)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -53872,24 +48423,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Paste Multiple</source>
         <translation>粘贴多块</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="vanished">设置粘贴参考点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">无操作可撤销!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">无操作可重做!</translation>
     </message>
 </context>
 <context>
@@ -54110,57 +48643,6 @@ End: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">距离 :%1
-笛卡尔 :%2,%3
-极: (%4 &lt;%5)
-点对实体 :%6,%7
-点 :%8,%9</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">指定实体</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">不向容器中的儿童实体按键</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">相对点在实体上</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">资讯</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">距离 :</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">发讯人:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">改为:</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">指定点</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -54206,10 +48688,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">选择以测量总长度( 输入完成)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="74"/>
         <source>Select contour</source>
         <translation>选择轮廓</translation>
@@ -54241,917 +48719,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>取消</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">无法打开文件 &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">指定参照点</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">输入角度:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">输入因子:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">选择要修改的属性( 要完成输入)</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">选择后立即修改属性</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">选择轮廓</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">选中行为平行</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">选中的行不是同一多线的子</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">曲线</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">相交区 :</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">第1点:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">第2点:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">选中的无效实体( 不可切换) .</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">选中的无效实体( 非原子) .</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">选中的无效实体( 与第一个实体不可切换) .</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">指定第一实体</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">指定第二实体</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">输入长度1:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">输入长度2:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">除号</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">时间:</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">未发现实体。</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">实体必须是线、圆弧、圆、椭圆或插值样条线。</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">切点可能不是实体的终点.</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">指定待剪切实体</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">指定剪切点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">选择要删除( 输入要完成)</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">选择后立即删除</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">选择轮廓</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">实体不属于同一多段线.</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">第二个实体的父对象不是多段线</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">第一个实体的父对象不是多段线</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">第二实体的父为无效</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">被选中的实体之一为无效</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">第一个实体的父为无效</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">第一实体是无效的</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">第二个实体为空</translation>
-    </message>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">指定多段线上的第一个打断点</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">指定同一多段线上的第二个打断点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Pick entity to delete</source>
-        <translation type="vanished">选择要删除的实体</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">单击实体进行修改</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">选择要爆炸的文字( 输入完成)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">选定后立即爆炸</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">镜像</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">角度 (alt) :</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">行从:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">行至:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">选择要镜像( 输入要完成)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">选择轮廓</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">指定镜像行</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">垂直翻转</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">水平翻转</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">指定镜像轴第一点</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">指定镜像轴第二点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">移动偏移</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">复制偏移</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">指定参照点</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">创建复制</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">选择要移动( 输入要完成)</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">选择后立即移动</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">选择轮廓</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">指定目标点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">随旋转移动</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">资料来源:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">目标:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">偏移 :</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">指定参照点</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">选择移动和旋转( 输入完成)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">选中后立即移动并旋转</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">选择轮廓</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">指定目标点</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">输入旋转角度:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">折减</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">距离 :</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">指定偏移方向</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">指定冲抵方向的参考点</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle, arc or ellipse to create offset (Enter to complete)</source>
-        <translation type="vanished">选择直线、多段线、圆、弧或椭圆以创建偏移（Enter 完成）</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">选择要创建偏移的行、 多行、 圆或弧( Enter to find)</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">选定后立即抵消</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">选择轮廓</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">选择返回方向( 输入完成)</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">选择后立即恢复</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">选择轮廓</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">指定旋转中心</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">指定参照点</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">旋转</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">源点 :</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">目标点:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">偏移 :</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">参考点 :</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">中心点 :</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">第二角 :</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">选择要旋转( 输入要完成)</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">选择后立即旋转</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">选择轮廓</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">与选择中心对齐</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">指定旋转目标点</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">指定围绕参考点旋转的目标点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">旋转两次</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">中心1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">角 1 :</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">中心 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">角度 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">选择两个轴旋转( 输入完成)</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">选定后立即旋转 2 轴</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">选择轮廓</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">指定绝对参照点</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">指定相对参照点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">回合</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">第1点:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">第2点:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">指定第一个实体或输入半径%1&gt;</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">指定第二实体</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">输入半径:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">缩放</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">中间 :</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">源点 :</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">目标点:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">偏移 :</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">按 X 缩放 :</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">按 Y 缩放 :</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">指定缩放中心</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">与选择中心对齐</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">指定源点</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">指定目标点</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">免费抓取</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">选择要缩放( 输入要完成)</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">选择后立即缩放</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">选择轮廓</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">指定第一角点</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">指定第二角点</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">伸缩</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">开始角 :</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">结束角 :</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">参考点 :</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">目标点:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">偏移 :</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">指定参照点</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">指定目标点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">选择第一个修剪实体</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">选择限制实体</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">曲线</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">二号线</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">相交区 :</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">第2节:</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">选择第二个修剪实体</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">选择待修剪实体</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">没有找到实体 .</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">所选实体不是元实体或无法修剪.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">无效表达式</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">选择修剪或输入长度的行/ arc 值 :</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">未发现实体.</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">选择实体( 要完成输入)</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">选择后立即排序</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">选择轮廓</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">选择要排序的实体</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">未发现实体.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">实体类型必须为多段线.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">添加点无效.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">添加点不在实体上.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">指定待添加节点多段线</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">指定添加节点点位</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">未发现实体.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">实体类型必须为多段线.</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">无法向闭合多段线追加节点.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">点击现有多段线起点或终点的附近区域.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">输入多行数</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">在起点或终点的附近区域指定多段线</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">无法撤消: 实体数目尚不足.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">未发现实体.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">实体类型必须为多段线.</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">无效删除点</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">删除点不在实体上.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">指定待删除节点多段线</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">指定删除节点点位</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">未发现实体.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">实体类型必须为多段线.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">删除点不在实体上.</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">删除点无效</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">未找到多线 .</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">至少有两个多线段应位于选定的点之间.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">指定多段线以删除两节点间</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">指定第一个节点</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">指定第二个节点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">未发现实体.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">实体类型必须为多段线.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">选择原始多段线</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">未发现实体.</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">实体不能是封闭多线段</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">已创建多线段</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">选择原始多段线上的某一分段</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">未发现实体.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">实体类型必须为多段线.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">第一部分应位于选定的多线上.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">第二段应位于选定的多线上,不等于第一段.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">指定待修剪多段线</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">指定第一分段</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">指定第二分段</translation>
     </message>
 </context>
 <context>
@@ -55228,113 +48795,11 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">没有选择实体 !</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectBase</name>
     <message>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">实体类型必须为元实体.</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">指定要选择的实体</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">选择相交直线的第一点</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">选择交叉实体</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">选择儿童实体</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">选择相交直线的第二点</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">指定具有理想层的实体</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">指定要选择的实体</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">选择轮廓</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">除选</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">选择</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">实体</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">与框相交的部分</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">框内</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">点击拖动以定义选择窗口</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">选择第二条边</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">选择交叉</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">除选实体</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">选择实体</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">非选择相交</translation>
     </message>
 </context>
 <context>
@@ -55642,158 +49107,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">弧形选项</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">逆时针</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">时针</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">切向弧选项</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">如果选中, 将创建指定半径的正弧</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">相切弧的半径</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">如果选中, 将创建带有指定角度的弧</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">相切弧的总子边角</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">选择半径窗体绘图</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">半径</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">角度</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">Bevel 选项</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">检查是否将两个实体修剪到天花板</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">曲线</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">长度 1:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">X方向的波浪长度.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">选择第一个长度窗体绘图</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">长度2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">以Y为方向的活体长度.</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">选择第二个长度窗体绘图</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">圆形选项</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">半径 :</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">圆形半径</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">从绘图中选择半径</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">圆切入2 选项</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">页面存档备份,存于互联网档案馆 p. 绘制出 &lt;/p&gt;&lt;/body&gt;&lt;/html &gt; 的微小圆的半径</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">半径 :</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">相近圆的半径</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">从绘图中选择半径</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="vanished">线性标注选项</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度:</translation>
-    </message>
-    <message>
-        <source>Angle of dimension</source>
-        <translation type="vanished">标注角度</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -55930,849 +49243,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">插入选项</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">旋转角度</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">缩放因子 :</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">新闻部:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">缩放因数</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">图像的DPI</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">插入选项</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">旋转角度</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">因素 :</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">缩放因数</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">矩阵 :</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">列数</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">行数</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">从绘图中选择行距</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">从绘图中选择列间隔</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">间距 :</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">列间距</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">行间距</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">库插入选项</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">旋转角度</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">因素 :</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">缩放因数</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">行角选项</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">在已创建的线上将放置入入点的点</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">行角</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">长度 :</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">线长</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">坐标点 :</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">从绘图中取出行角</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">开始</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">中间</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">结束</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">绘图时的 PICK 行长</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">如果选中的话, 线会是 orhotogonal 到角度的轴 。 否则 - 要屏幕轴</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">到角度基准</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">线双扇区选项</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">长度 :</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">二段长度</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">从绘图中选择行长</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">数量：</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">要创建的双扇区数</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">线选项</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">从所画行组成闭合轮廓</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">闭合</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">撤消上一段线的绘制</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">撤销</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">重做上一段线的绘制</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">重做</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">行选项</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">方向 :</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">从行段创建多线</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">复线</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">垂直线</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">按指定角度排列的行</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">角度</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">水平线</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">页:1</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">如果选中, 角度相对于上一段</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">调值</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">撤消最后一行绘图</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">撤销</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">从所画行组成闭合轮廓</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">关闭</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">重做最后一行画</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">重做( R)</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">直线角度</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">直线到任意点</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">点</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">并行选项</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">距离 :</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">与原实体的距离</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">从绘图中选择距离</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">数量：</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">要创建的并行数</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">通过选项平行行</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">如果选中的话, 将会在实体两侧创建平行</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">对称</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">数量：</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">要创建的并行数</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">多边形选项</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">数量:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">边数</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">多边形选项</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">数量：</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">如果选中的话, 多边形的顶点会被四舍五入 .</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">半径</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">如果选中的话, 多边形将被绘制为多线 。 否则,将设立个别实体.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">复线</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">从绘图中选择半径</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">边数</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">圆形半径为顶点贝.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">如果选中, 引用点是多边形的顶点 。 否则,它们就是为了边缘的中点.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">从Vertex到Vertex</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">相对角度选项</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">行角</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">长度 :</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">线长</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">从绘图中选择长度</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">文本选项</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">文本 :</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">要插入的案文</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">旋转角度</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">修改偏移选项</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">由原实体抵消的距离</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">如果选中的话, 创建的实体将被放入当前图层, 否则它们将被放入原图层 .</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">使用当前图层</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">所发之数.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">如果选中的话, 原始实体将会存活下来, 否则它们会被删除 .</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">保留原件</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">如果选中的话, 将使用抵消距离的校正, 否则由鼠标定义 .</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">固定距离</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">如果选中, 当前属性将被应用到创建的实体, 否则将使用原始属性 .</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">使用当前属性</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">从绘图中选择距离</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">如果选中, 将会创建多个副本 .</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">多个副本</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">移动旋转选项</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">如果选中, 当前属性将被应用到创建的实体, 否则将使用原始属性 .</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">使用当前属性</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">如果选中, 将会创建多个副本 .</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">多个副本</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">如果选中的话, 所有副本都会由同一角度旋转 。 否则,角度将与每份副本的数量成正比.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">副本的相同角度</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">旋转角.</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">所发之数.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">如果选中的话, 旋转角度由鼠标定义 。 否则,则使用指定的值.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">免费</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度 :</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">如果选中的话, 创建的实体将被放入当前图层, 否则将会是原图层 .</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">使用当前图层</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">如果选中的话, 原始实体将会存活下来, 否则它们会被删除 .</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">保留原件</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">多段线选项</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">连接多线的端口, 从而创建闭合的轮廓</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">闭合</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">撤消上一个顶点</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">撤销</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">片段类型 :</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">定义应创建多线的哪一段</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">线</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">切圆弧</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">半径相切</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">谭角</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">角度</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">切向弧</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">有固定半径的正弦弧</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">有固定角度的正弦弧</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">有角度的弧</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">半径:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">弧的半径</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">选择半径窗体绘图</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">弧形角度</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">逆时针</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">顺时针</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">打印预览选项</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">景观方向</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">纸张的地平面方向</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">纸张取向</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">绘图设置</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">缩放 :</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;头/&gt;&lt;body&gt;&lt;p&gt;打印大小:绘图大小 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;头/&gt;&lt;body&gt;&lt;p&gt; 缩放被锁定到当前值 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">已固定</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">将打印缩放应用到行宽</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">切换黑色/ 白色模式</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">绘图中页</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">缩放到打印区域</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">适合1页</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">如果启用, 纸张空间将包含按列和行排列的指定页数</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">平铺打印</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">页行 :</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">页数</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">页面列 :</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">页数</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">计算包含绘图所需的页数</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">回合选项</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">选中可修剪两边到圆形</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">曲线</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">半径 :</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">四舍五入半径</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">从绘图中选择半径</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56811,99 +49281,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>等距除点数</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">样条线选项</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">阶数:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">Spline 的学位用于点之间的相近</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">如果选中, 将创建封闭的示意图</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">闭合</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">撤消上一个点</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">撤销</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">文本选项</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">文本:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">旋转角度</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">从绘图中取出角度</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">调整金额选项</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">相去相远. 修剪的负值, 延伸的正值 .</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">共计</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">长度 :</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">相去相远. 修剪的负值, 延伸的正值 。 将正负符号调整为最终总长度时会被忽略.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">从绘图中选择长度</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">如果选中的话, 将进行线条两侧的修剪/ 延伸 .</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">对称</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">修剪后输入长度作为总长度使用,而不是长度增加</translation>
     </message>
 </context>
 </TS>

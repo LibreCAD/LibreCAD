@@ -47,72 +47,6 @@
     </message>
 </context>
 <context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Создаваемый Объект:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">Прямоугольник</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Ширина:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Высота:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Центр:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">Некорректный Угол</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">Некорректный радиус</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">Некорректное значение</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Укажите точку вставки</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Укажите угол</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">Укажите размер (ширина,высота)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">Укажите тип углов
-[str|round|bevels]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">Укажите длину сторон фаски (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">Укажите радиус скругления</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">Укажите режим граней [both|hor|vert]</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionWithPreview</name>
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="644"/>
@@ -358,73 +292,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">Высота дуги (расстояние между хордой и верхней точкой дуги)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Высота:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Против часовой стрелке</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Радиус дуги</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Радиус:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">По часовой стрелке</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">Центральный угол дуги</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Центральный Угол:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">Длина дуги</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Длина:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Измерить радиус на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">Измерить высоту на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Измерить длину на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -636,10 +503,6 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">Выберите объекты для охватывающего прямоугольника  (Enter - завершает выбор)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation>Выберите объекты для создания рамки</translation>
@@ -694,31 +557,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Выделите окружность, дугу или эллипс</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">радиус=%1 слишком мал для выбранных точек
-расстояние между точками=%2 больше диаметра=%3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">Выберите из двух возможных центров</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Укажите первую точку</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Укажите вторую точку</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">Укажите центр окружности</translation>
     </message>
 </context>
 <context>
@@ -964,13 +802,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="529"/>
         <source>Select the center of the tangent circle</source>
         <translation>Укажите центр касательной окружности</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">Выделите окружность, дугу или эллипс</translation>
     </message>
 </context>
 <context>
@@ -1411,148 +1242,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">Укажите начальную точку</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">Укажите конечную точку или \n [number|x|y|angle|p|edges|distance]</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">Укажите конечную точку точку или [number]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">Укажите режим направления прямой</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">Укажите угол прямой</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">Укажите режим конечных точек</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">Укажите расстояние между точками</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">Укажите расстояние (%1)
-или [%2]&quot;)</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Укажите  дистанцию (угол %1 град.)
-или [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">Укажите количество точек</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Укажите вторую вершину</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">Укажите вторую касательную</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Укажите первую вершину</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">Укажите первую касательную</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Недопустимое число вне диапазона 1..9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">Недопустимое значение радиуса скругления</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Введите число вершин:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">Укажите радиус скругления:</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Укажите центр</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Создаваемый Объект:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Центр:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">Начальный угол:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Радиус:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">Радиус вписаный:</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Многоугольник</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">Укажите касательную</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1616,10 +1305,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>line</source>
         <translation>line</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="obsolete">Зафиксировать</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="184"/>
@@ -1787,61 +1472,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLineToPerspectivePoint</name>
-    <message>
-        <source>Resulting line is too short</source>
-        <translation type="vanished">Результирующая прямая слишком короткая</translation>
-    </message>
-    <message>
-        <source>line</source>
-        <translation type="vanished">линия</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>y</source>
-        <translation type="vanished">y</translation>
-    </message>
-    <message>
-        <source>point</source>
-        <translation type="vanished">point</translation>
-    </message>
-    <message>
-        <source>free</source>
-        <translation type="vanished">free</translation>
-    </message>
-    <message>
-        <source>Invalid radiant point number.</source>
-        <translation type="vanished">Недопустимый индекс центральной точки.</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">Укажите начальную точку</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Укажите вторую точку</translation>
-    </message>
-    <message>
-        <source>Specify radiant point position</source>
-        <translation type="vanished">Укажите позицию центральной точки</translation>
-    </message>
-    <message>
-        <source>Specify line length</source>
-        <translation type="vanished">Укажите длину</translation>
-    </message>
-    <message>
-        <source>Specify line length type [%1|%2|%3|%4|%5]</source>
-        <translation type="obsolete">Укажите тип длины </translation>
-    </message>
-    <message>
-        <source>Specify number of radiant point to use [1-4]</source>
-        <translation type="vanished">Укажите номер активируемой центральной точки [1-4]</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawMText</name>
     <message>
         <location filename="../src/actions/drawing/draw/text/lc_action_draw_mtext.cpp" line="194"/>
@@ -1852,29 +1482,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/text/lc_action_draw_mtext.cpp" line="198"/>
         <source>Enter text:</source>
         <translation>Введите текст:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Выберите первый объект</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Выберите второй объект</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">Использовать другие концы объектов</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">Укажите значение смещения</translation>
     </message>
 </context>
 <context>
@@ -3007,10 +2614,6 @@ or [%2]</source>
         <translation>Ассистент Относительной Точки</translation>
     </message>
     <message>
-        <source>Parameters of relative point assitant</source>
-        <translation type="vanished">Параметры Ассистента Относительной Точки</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
         <source>Centerline</source>
         <translation>Центральная линия</translation>
@@ -3332,10 +2935,6 @@ or [%2]</source>
         <translation>Подсказка команды</translation>
     </message>
     <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">К сетке</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>К середине вручную</translation>
@@ -3369,10 +2968,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
         <source>Snap Intersection</source>
         <translation>К точкам пересечения</translation>
-    </message>
-    <message>
-        <source>Relative Angle</source>
-        <translation type="obsolete">Относительный угол</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="525"/>
@@ -3575,11 +3170,6 @@ or [%2]</source>
         <translation>Отменить &amp;выделение</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="910"/>
-        <source>Ctrl+K</source>
-        <translation>Ctrl+K</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="745"/>
         <source>Invert Selection</source>
         <translation>Инвертировать выделение</translation>
@@ -3695,12 +3285,6 @@ or [%2]</source>
         <translation>&amp;Сетка</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="927"/>
-        <source>Ctrl+G</source>
-        <comment>Toggle Grid</comment>
-        <translation>Ctrl+G</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>&amp;Draft</source>
         <translation>&amp;Черновик</translation>
@@ -3709,12 +3293,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="606"/>
         <source>&amp;Statusbar</source>
         <translation>С&amp;трока состояния</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="930"/>
-        <source>Ctrl+I</source>
-        <comment>Hide Statusbar</comment>
-        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
@@ -3961,14 +3539,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Additional Snaps</source>
         <translation>Дополнительный привязки</translation>
-    </message>
-    <message>
-        <source>Entering relative position</source>
-        <translation type="vanished">Ввод относительной точки</translation>
-    </message>
-    <message>
-        <source>Relative Point</source>
-        <translation type="vanished">Относительная точка</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="81"/>
@@ -4271,18 +3841,6 @@ or [%2]</source>
         <translation>К сетке</translation>
     </message>
     <message>
-        <source>Add guiding line</source>
-        <translation type="vanished">Добавить опорную прямую</translation>
-    </message>
-    <message>
-        <source>Add guiding circle</source>
-        <translation type="vanished">Добавить опрорную окружность</translation>
-    </message>
-    <message>
-        <source>Add guiding point</source>
-        <translation type="vanished">Добавить опорную точку</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"/>
         <source>To WCS</source>
         <translation>К Мировой Системе Координат</translation>
@@ -4476,12 +4034,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Selection Pointer</source>
         <translation>&amp;Указатель</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="929"/>
-        <source>Ctrl+D</source>
-        <comment>Toggle Draft Mode</comment>
-        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
@@ -5186,10 +4738,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="267"/>
         <source>Click or Enter to finish align</source>
         <translation>Кликните мышью или Enter для подтвержения выравнивания</translation>
-    </message>
-    <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">Выберите объекты для выравнивания </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="276"/>
@@ -5908,26 +5456,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="145"/>
         <source>Distance:</source>
         <translation>Расстояние:</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="237"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="244"/>
-        <source>Specify direction of offset</source>
-        <translation>Укажите направление смещения</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="240"/>
-        <source>Specify reference point for direction of offset</source>
-        <translation>Задайте базовую точку для направленя смещения</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="253"/>
-        <source>Select line, polyline, ellipse, circle or arc to create offset</source>
-        <translation>Выберите прямую, ломаную, эллипс, круг или дугу для создания смещения</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset</source>
-        <translation type="vanished">Выберите прямаю, ломаную, круг или дугу для создания смещения</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="254"/>
@@ -7262,10 +6790,6 @@ Some error occurred during XML generation.</source>
         <translation>Сочетание клавиш создает потенциальные конфликты. &lt;a href=\&quot;show\&quot;&gt;Посмотреть.&lt;/a&gt;</translation>
     </message>
     <message>
-        <source>Key sequence has potential conflicts. &lt;a href=&quot;#conflicts&quot;&gt;Show.&lt;/a&gt;</source>
-        <translation type="vanished">Сочетание клавиш создает потенциальные конфликты. &lt;a href=\&quot;#conflicts\&quot;&gt;Посмотреть.&lt;/a&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="409"/>
         <source>Some mappings are modified.
 Are you sure you are going to discard changes?</source>
@@ -8426,11 +7950,6 @@ Are you sure you are going to discard changes?</source>
         <translation>Форма</translation>
     </message>
     <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="obsolete">Если выбрано, то сегменты определенные точками пересечения будут удаляться.
-Иначе. объект будет разделен в точках пересечения.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_widget.ui" line="45"/>
         <source>If checked, segments between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
         <translation>Если выбрано, то сегменты определенные точками пересечения будут удаляться.
@@ -8623,74 +8142,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="241"/>
         <source>Pick angle from drawing</source>
         <translation>Измерить угол на чертеже</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">Оставлять или заменять оригинальную дугу</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">Заменить дугу</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">Слой, в который нужно поместить созданную окружность</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Активный</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Cлой дуги</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Активное</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Оригинальное</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Оригинальное Результирующее</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">Измерить смещение на чертеже</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Перо:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">Перо которое нужно применить к создаваемой окружности</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Слой:</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">Разница между радиусом оригинальной дуги и создаваемой окружности </translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">Смещение радиуса:</translation>
     </message>
 </context>
 <context>
@@ -8988,69 +8439,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>Панель Инструментов: %1 (Польз.)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">Тип размера:</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">Размер перекрестья по горизонтали</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">Измерить значение X на чертеже</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">Опряделяет как трактовать заданые размеры</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">Расширение</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">Полная длина</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">Проценты</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">Измерить значение Y на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">Размер перекрестья по вертикали</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">Угол поворота перекрестья относительно центра</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
     </message>
 </context>
 <context>
@@ -11637,10 +11025,6 @@ Are you sure you are going to discard changes?</source>
         <translation>Восстанавливать вид при одиночном клике на строке таблицы</translation>
     </message>
     <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">Если выбрано, будет показана колонка с деталями системы координат вида</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="85"/>
         <source>If checked, type of grid for saved view will be shown.</source>
         <translation>Если выбрано, будет показана колонка с типом сетки сохраненного вида</translation>
@@ -11666,10 +11050,6 @@ Are you sure you are going to discard changes?</source>
         <translation>Показывать колонку детелей системы координат</translation>
     </message>
     <message>
-        <source>If checked, type of grid for saved view will be shown</source>
-        <translation type="vanished">Если выбрано, будет показана колонка с типом сетки сохраненного вида</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
         <translation>Показывать столбец с типом сетки</translation>
@@ -11678,10 +11058,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Type icon column</source>
         <translation>Показвать колонку с иконкой типа</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation type="vanished">Если выбрано, будет показана колонка с деталями системы координат вида</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="55"/>
@@ -11709,10 +11085,6 @@ Are you sure you are going to discard changes?</source>
         <translation>Если выбрано, то будет показана колонка деталей.</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">Показывать колонку деталей</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="105"/>
         <source>If selected, grid lines will be drawn</source>
         <translation>Если выбрано, сетка будет отрисовываться</translation>
@@ -11726,14 +11098,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>Операции</translation>
-    </message>
-    <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">При двойном щелчке мышью на элементе таблицы</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table. </source>
-        <translation type="vanished">Определяет, какое действие должно быть выполнено по двойному щелчку мышью на строке вида в таблице.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="158"/>
@@ -11762,10 +11126,6 @@ Are you sure you are going to discard changes?</source>
 Иначе, вид должен быть восстановлен явно через вызов меню или нажатие на кнопку.</translation>
     </message>
     <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">Восстанавливать вид при одиночном клике на строке таблицы</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
         <translation>Если выбрано, при наведении на строку таблицы видов будет показана подсказка с деталями вида. </translation>
@@ -11775,11 +11135,6 @@ Are you sure you are going to discard changes?</source>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
         <translation>Если выбрано в во время создания вида будет введено имя существующего вида, то 
 позиция существующего вида будет обновлена. Иначе, для создания нового вида будет требоваться уникальное имя вида.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Если выбранно,перед удаленеим будет показан диалог для подтверждения удаления.
-Иначе, вид будет удален немедленно. </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
@@ -12090,10 +11445,6 @@ Are you sure you are going to discard changes?</source>
         <translation>Вид при отсутствии выделения</translation>
     </message>
     <message>
-        <source>Select sections that in should be shown properties sheet if there are no entities are selected</source>
-        <translation type="vanished">Выбор секций, которые будут показаны если на чертеже нет выделенных объектов.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="125"/>
         <source>Grid settings for drawing view</source>
         <translation>Настройки сетки чертежа</translation>
@@ -12142,14 +11493,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="138"/>
         <source>Active Pen</source>
         <translation>Текущее перо</translation>
-    </message>
-    <message>
-        <source>Paper format and margins for printing</source>
-        <translation type="vanished">Настройка формата бумаги и полей печати</translation>
-    </message>
-    <message>
-        <source>Print Paper</source>
-        <translation type="vanished">Бумага и печать</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="105"/>
@@ -12276,14 +11619,6 @@ Are you sure you are going to discard changes?</source>
         <source>Show generic selection actions button in toolbar</source>
         <translation>Показывать общие команды выделения</translation>
     </message>
-    <message>
-        <source>If enabled, computed properties for entities will be also shown (if any exists)</source>
-        <translation type="vanished">Если включено, таблица будет включать не только редактируемые свойства объектов, но также те, которые вычисляются на основании других свойств.</translation>
-    </message>
-    <message>
-        <source>Show computed properties</source>
-        <translation type="vanished">Показывать вычисляемые свойства</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgQuickSelection</name>
@@ -12356,17 +11691,9 @@ Are you sure you are going to discard changes?</source>
         <translation>Измерить расстояние на чертеже</translation>
     </message>
     <message>
-        <source>Pick coordinate component from drawing</source>
-        <translation type="vanished">Измерить компонент координаты на чертеже</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="509"/>
         <source>Tolerance:</source>
         <translation>Точность:</translation>
-    </message>
-    <message>
-        <source>Tolearance range used for floating-point values comparison. Values considered equal, if the absolute unsigned difference between them is within this range. </source>
-        <translation type="vanished">Диапазон точности используемый при сравнения чисел с плавающей точкой. Значения считаются равными, если их абсолютная (беззнаковая) разность меньше заданного диапазона.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="553"/>
@@ -12594,10 +11921,6 @@ Are you sure you are going to discard changes?</source>
         <translation>Внешний вид</translation>
     </message>
     <message>
-        <source>Toolip with UCS details for table items</source>
-        <translation type="vanished">Показывать всплывающую подсказку для строк таблицы</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="26"/>
         <source>If сhecked, the tooltip with additional information about UCS will be shown for table item.</source>
         <translation>Если выбрано, будет показываться всплывающая подсказка с иформацией о системе координат.</translation>
@@ -12616,10 +11939,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
         <source>Type icon column</source>
         <translation>Показвать столбец с иконкой типа</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation type="vanished">Если выбрано, будет показана колонка с деталями базовой точки и угла системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -12650,11 +11969,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
         <source>Editing</source>
         <translation>Редактирование</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Если выбранно,перед удаленеим будет показан диалог для подтверждения удаления.
-Иначе, система координт будет удалена немедленно. </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="95"/>
@@ -12729,29 +12043,9 @@ Are you sure you are going to discard changes?</source>
         <translation>Определяет количество миганий маркера системы координат для ее подсветки</translation>
     </message>
     <message>
-        <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation type="vanished">Определяет что должно произойти при двойном щелчке мышью на строке таблицы систем координат</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">Применять систему координат при одиночном клике на элемент таблицы</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
         <source>On double-click on table item</source>
         <translation>При двойном щелчке мышью на элементе таблицы</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation type="vanished">Если выбрано, будет показываться колонка с иконкой типа системы координат (пользовательская/мировая)</translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation type="vanished">Если выбрано, будет показываться колонка с типом сетки для системы координат</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied</source>
-        <translation type="vanished">Определяет как нужно обновить вид в окне чертежа после применения системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="174"/>
@@ -12784,11 +12078,6 @@ Are you sure you are going to discard changes?</source>
         <translation>Если выбрано, будет показана колонка с деталями базовой точки и угла системы координат</translation>
     </message>
     <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="obsolete">Если выбранно,перед удалением будет показан диалог для подтверждения удаления.
-Иначе,  будет удален немедленно. </translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="170"/>
         <source>Defines which action should be performed on double click on the item of the table.</source>
         <translation>Определяет что должно произойти при двойном щелчке мышью на строке таблицы систем координат</translation>
@@ -12797,10 +12086,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="207"/>
         <source>UCS Highlight</source>
         <translation>Подсветка Системы Координат</translation>
-    </message>
-    <message>
-        <source>Defines delay between UCS marker blinks</source>
-        <translation type="vanished">Задает интервал задержки между миганием маркера</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="216"/>
@@ -12816,10 +12101,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="242"/>
         <source>Blink Delay:</source>
         <translation>Интервал мигания: </translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation type="vanished">Определяет количество миганий маркера системы координат для ее подсветки</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="252"/>
@@ -13216,47 +12497,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Смещение:</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">Если выбрано, то будет создан охватывающий прямоугольник для всего выделения.
-Иначе, прямоугольники будут созданы для каждого выделенного объекта.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">Как группа целиком</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Измерить смещение на чертеже</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">Если выбрано,то будут созданы точки в вершинах охватывающего прямоугольника.
-Иначе, будут созданы линии граней. </translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">Только точки по углам</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">Если выбрано, то охватывающий прямоугольник будет одной ломаной, иначе будут созданы индивидуальные объекты</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">В ломаную</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13354,86 +12594,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation>Измерить смещение на чертеже</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">Смещение относительно оригинального объекта по вертикали</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">Смещение относительно оригинального объекта по горизонтали</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">Измерить смещение по горизонтали на чертеже</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Перо:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">Если выбран, дублика будет создан в той же позиции, что и оригинальный объект</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">По месту</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">Измерить смещение по вертикали на чертеже</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Слой:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">Перо которое нужно применить к дубликату</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Активное</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Оригинальное</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Оригинальное Результирующее</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">Слой, в который нужно поместить дубликат</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Активный</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Слой оригинала</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">Смещение по Y:</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">Смещение по X:</translation>
     </message>
 </context>
 <context>
@@ -13615,69 +12775,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">Малая ось:</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">Значения угла наклона главной оси</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">Если выбран, то можно задать угол наклона большой оси относительно оси Х</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Угол наклона</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Против часовой стрелке</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">Измерить радиус большой оси на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">Если выбран, то угол наклона большой оси выбирается интерактивно мышью</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Вручную</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">Длина радиуса большой оси эллипса</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">Измерить радиус малой оси на чертеже</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">Большая ось:</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">Длина радиуса малой оси</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">По часовой стрелке</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13816,21 +12913,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation>Измерить угол на чертеже</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Параметры дуги</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">По часовой стрелке</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Против часовой стрелке</translation>
     </message>
 </context>
 <context>
@@ -14130,14 +13212,6 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_EntityTypePropertiesProvider</name>
     <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="60"/>
         <source>Geometry</source>
         <translation>Геометрия</translation>
@@ -14148,14 +13222,6 @@ Are you sure you are going to discard changes?</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <source>Text attributes</source>
-        <translation type="vanished">Свойства текста</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Прочее</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="60"/>
         <source>Geometrical properties</source>
         <translation>Геометрические свойства</translation>
@@ -14164,10 +13230,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="65"/>
         <source>Text properties</source>
         <translation>Свойства текста</translation>
-    </message>
-    <message>
-        <source>Other properties</source>
-        <translation type="vanished">Другие свойства</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="70"/>
@@ -14270,17 +13332,9 @@ Are you sure you are going to discard changes?</source>
         <translation>Дублировать</translation>
     </message>
     <message>
-        <source>Duplicating selection</source>
-        <translation type="vanished">Дублировать выделение</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
         <source>Mirror</source>
         <translation>Отразить</translation>
-    </message>
-    <message>
-        <source>Mirroring selection</source>
-        <translation type="vanished">Отразить выделение</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="99"/>
@@ -14332,10 +13386,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="109"/>
         <source>Move rotate</source>
         <translation>Сдвиг и поворот</translation>
-    </message>
-    <message>
-        <source>Moving and rotating selection</source>
-        <translation type="vanished">Перемещение и поворот выделения</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="110"/>
@@ -14424,11 +13474,6 @@ Are you sure you are going to discard changes?</source>
 </context>
 <context>
     <name>LC_ExportToImageService</name>
-    <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="52"/>
-        <source>Exporting drawing...</source>
-        <translation>Экспорт чертежа...</translation>
-    </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="59"/>
         <source>Exported: %1</source>
@@ -14753,30 +13798,6 @@ Are you sure you are going to discard changes?</source>
         <source>Eccentricity:</source>
         <translation>Эксцентриситет:</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">Некорректное определение гиперболы</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">Точки фокуса должны быть разные</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">Некорректные координаты центра</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">Главный радиус должен быть больше 0</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">Некорректный угол поворота</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">Отношение радиусов или младший радиус дожны быть позитивны</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -14948,10 +13969,6 @@ Are you sure you are going to discard changes?</source>
         <translation>Ширина:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">Ширина изображения</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>Измерить ширину на чертеже</translation>
@@ -14962,21 +13979,9 @@ Are you sure you are going to discard changes?</source>
         <translation>Высота:</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">Высота изображения</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>Измерить высоту на чертеже</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Масштаб:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">Коэффициент масштабирования</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -14988,10 +13993,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>Угол наклона:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Угол наклона относительно оси X</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -15023,22 +14024,6 @@ Are you sure you are going to discard changes?</source>
         <source>Select an image file</source>
         <translation>Выберите файл изображения</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">Размер (px):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">Размер изображения в пикселях</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">Разрешение (количество точек на дюйм)</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -15051,21 +14036,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation>Y</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">Если выбран, то точка будет всегда внутри выбраного объекта</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">Привязка к объекту</translation>
     </message>
 </context>
 <context>
@@ -15443,14 +14413,6 @@ Are you sure you are going to discard changes?</source>
         <translation>Строка-разделитель уровней в иерархии слоев</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">Раделитель названия слоя</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">Суффиксы вторичных слоев</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15481,10 +14443,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>Суффикс имени слоя, который определяет, что слой является слоем альтернативного положения.</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">Дублирующиеся имена</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15627,17 +14585,9 @@ Are you sure you are going to discard changes?</source>
         <translation>Настройки различных цветов</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Цвета</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>Цвет фона выбранных элементов в дереве слоев.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">Цвет линии разделителя элементов в дереве слоев</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15676,10 +14626,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>Фон виртуального слоя</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">Линия разделителя в дереве</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15735,10 +14681,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>Слой альтернативного положения</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">разделительной сетки</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16228,119 +15170,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">Если выбрано, длина создаваемой прямой задается интерактивно с помощью мыши</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Вручную</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Измерить расстояние привязки на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">Смещение точки привязки создаваемой прямой относительно точки пересечения прямых</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Измерить длину на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Измерить смещение на чертеже</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">Если выбрано, то базовая прямая будет разделена точкой пересечения на отдельные прямые</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Разделить</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Смещение:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">Расстояние точки пересечения прямых от точки привязки базовой прямой</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">Определяет какая точка создаваемой прямой окажется в точке пересечения с базовой прямой.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Начало</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Середина</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Конец</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">В точке пересечения:</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Где в прямой:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Длина прямой</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">Если выбрано, заданый угол будет относительным (от базовой прямой).
-Иначе, заданный угол будет относительно оси X.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Относительный</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Длина:</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">Положение точки пересечения прямых в базовой прямой</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">Вручную</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">От привязки:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Угол прямой</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16649,93 +15478,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation>Количество создаваемых биссектрис</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">Длина:</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">Смещение в конце:</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">Смещение конца созданной прямой относительно точки пересечения</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">Режим точки привязки для создаваемой прямой</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Начало</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Середина</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Конец</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Длина:</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">Фиксированная длина созданой прямой</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Привязка:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Измерить длину на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Измерить смещение на чертеже</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">Определяет нужно ли продлить линию до точки пересечения прямых или же ее длина должна быть фиксирована</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">До пересечения</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">Фиксированная</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">Если выбрано, создаст прямую ортогональную выбранному объекту</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">Ортогональ</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">Угол между оригинальным объектов прямой и создаваемой прямой</translation>
     </message>
 </context>
 <context>
@@ -17121,81 +15863,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">Если выбрано, то вместо индивидуальных прямых будет создана ломаная</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">В ломаную</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">Политика изменения для второй выбраной прямой</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">Продлить/Обрезать</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">Добавить сегмент</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">Не менять</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">Прямая 1:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">Прямая 2:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">Политика изменения для первой выбраной прямой</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">Определяет как нужно применять атрибуты к созданым объектам</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">Текущее перо</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">Как в прямой 1</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">Как в прямой 2</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">Из обоих</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">Аттрибуты:</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">Если выбрано, оригинальные прямые будут удалены. </translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">&amp;Удалить оригинал</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17577,87 +16244,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation>Внутри</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">Определяет, как нужно создавать точки в начале и конце линии</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Нет</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Оба</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Начало</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Конец</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Измерить расстояние на чертеже</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">Количество создаваемых точек</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">Концы:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">Если выбрано, то все точки будут только между началом и концом заданой линии.
-Иначе, длина созданой линии точек будет вычисляться основываясь на количестве точек и расстоянии между ними. </translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">Вместить</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">Дистанция между точками</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">Если выбрано, линия точек будет создана под определенным углом</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">Количество точек:</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">Если выбрано, то между точками будет фиксированное расстояние.
-Иначе, расстояние межу точками будет вычисляться по длине линии и количеству точек.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Дистанция</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Угол наклона линии относительно оси Х</translation>
     </message>
 </context>
 <context>
@@ -18276,93 +16862,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_LineToPerspectivePointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="vanished">1</translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="vanished">2</translation>
-    </message>
-    <message>
-        <source>3</source>
-        <translation type="vanished">3</translation>
-    </message>
-    <message>
-        <source>4</source>
-        <translation type="vanished">4</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Length of line to draw</source>
-        <translation type="vanished">Длина создаваемой прямой</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Длина:</translation>
-    </message>
-    <message>
-        <source>Pick radiant point coordinates from drawing</source>
-        <translation type="vanished">Выбор позиции центральной точки на чертеже</translation>
-    </message>
-    <message>
-        <source>X coordinate of radiant point</source>
-        <translation type="vanished">Координата центральной точки по оси X</translation>
-    </message>
-    <message>
-        <source>Pick X coordinate of radiant point from drawing</source>
-        <translation type="vanished">Измерить X координатy центральной точки на чертеже</translation>
-    </message>
-    <message>
-        <source>To point</source>
-        <translation type="vanished">К центру</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>Defines how to handle length parameter</source>
-        <translation type="vanished">Определяет, как трактовать заданную длину</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Отрезок</translation>
-    </message>
-    <message>
-        <source>By X</source>
-        <translation type="vanished">По X</translation>
-    </message>
-    <message>
-        <source>By Y</source>
-        <translation type="vanished">По Y</translation>
-    </message>
-    <message>
-        <source>To Point</source>
-        <translation type="vanished">К центру</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Вручную</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Измерить длину на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick Y coordinate of radiant point from drawing</source>
-        <translation type="vanished">Измерить Y координатy центральной точки на чертеже</translation>
-    </message>
-</context>
-<context>
     <name>LC_MTextOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/text/lc_m_text_options_filler.cpp" line="31"/>
@@ -18624,10 +17123,6 @@ Please specify a different value.</source>
         <translation>Угловая длина дуги</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">Длина окружности</translation>
-    </message>
-    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="74"/>
         <source>Circumference of arc</source>
         <translation>Длина окружности дуги</translation>
@@ -18808,10 +17303,6 @@ Please specify a different value.</source>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="45"/>
         <source>Diameter of circle</source>
         <translation>Диаметр окружности</translation>
-    </message>
-    <message>
-        <source>Circumference</source>
-        <translation type="vanished">Длина окружности</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="49"/>
@@ -20561,10 +19052,6 @@ Please specify a different value.</source>
         <translation>Угол поворота главной оси эллипса, в градусах</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">Длина окружности</translation>
-    </message>
-    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="57"/>
         <source>Circumference of the ellipse</source>
         <translation>Длина окружности эллипса</translation>
@@ -20804,10 +19291,6 @@ Please specify a different value.</source>
         <translation>Отношение радиусов гиперболы</translation>
     </message>
     <message>
-        <source>Ratio of ellipse axes</source>
-        <translation type="obsolete">Отношение радиусов эллипса</translation>
-    </message>
-    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="66"/>
         <source>Angle</source>
         <translation>Угол</translation>
@@ -20858,17 +19341,9 @@ Please specify a different value.</source>
         <translation>Начальный угол</translation>
     </message>
     <message>
-        <source>Arc Start X</source>
-        <translation type="obsolete">Начальная дуги X</translation>
-    </message>
-    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="70"/>
         <source>X coordinate for start point</source>
         <translation>Координата начальной точки по оси X</translation>
-    </message>
-    <message>
-        <source>Arc Start Y</source>
-        <translation type="obsolete">Начальная дуги Y</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="74"/>
@@ -20876,38 +19351,14 @@ Please specify a different value.</source>
         <translation>Координата начальной точки по оси Y</translation>
     </message>
     <message>
-        <source>Arc End X</source>
-        <translation type="obsolete">Конечная дуги X</translation>
-    </message>
-    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="78"/>
         <source>X coordinate for end point</source>
         <translation>Координата конечной точки по оси X</translation>
     </message>
     <message>
-        <source>Arc End Y</source>
-        <translation type="obsolete">Конечная дуги Y </translation>
-    </message>
-    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="82"/>
         <source>Y coordinate for end point</source>
         <translation>Координата конечной точки по оси Y</translation>
-    </message>
-    <message>
-        <source>Arc Start Angle</source>
-        <translation type="obsolete">Начальный угол</translation>
-    </message>
-    <message>
-        <source>Start angle of arc</source>
-        <translation type="obsolete">Начальный угол дуги</translation>
-    </message>
-    <message>
-        <source>Arc End Angle</source>
-        <translation type="obsolete">Конечный угол</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="obsolete">Конечный угол дуги</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="94"/>
@@ -21341,10 +19792,6 @@ Please specify a different value.</source>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="47"/>
         <source>Style</source>
         <translation>Стиль</translation>
-    </message>
-    <message>
-        <source>Name of the text style</source>
-        <translation type="vanished">Название текстового стиля</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="47"/>
@@ -21943,10 +20390,6 @@ Please specify a different value.</source>
         <translation>Стиль</translation>
     </message>
     <message>
-        <source>Name of the text style</source>
-        <translation type="vanished">Название текстового стиля</translation>
-    </message>
-    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="62"/>
         <source>Name of the text style)</source>
         <translation>Название текстового стиля</translation>
@@ -22049,445 +20492,6 @@ Please specify a different value.</source>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_tolerance.cpp" line="29"/>
         <source>Tolerance Frame</source>
         <translation>Панель допусков</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Помощь</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">Онлайн документация</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;Вики</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">Руководство &amp;пользователя</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp;Команды</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">&amp;Таблица стилей</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">&amp;Инструменты</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">О программе</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp;Форум</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">Zulip &amp;Чат</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">Сообщить об ошибке</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">Запросить функционал</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">Страница релизов</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp;Пожертвовать</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Прямая</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">&amp;Точки</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Окружность</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">&amp;Дуга</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">Много&amp;угольник</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">Спл&amp;айн</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">Эллипс</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Ломаная</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">Прочее</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">Рисовать</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;Эллипс</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">Прочее</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">Из&amp;менить</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp;Порядок</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">&amp;Размеры</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Информация</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp;Инструменты</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;Выбор</translation>
-    </message>
-    <message>
-        <source>&amp;Dev Snapshot Release</source>
-        <translation type="vanished">Версия в разработке</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">&amp;Размеры</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;Файл</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Недавние файлы</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Импорт</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Экспорт</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;Настройки</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp;Правка</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;Вид</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">Восстановить Вид</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">&amp;Дополнения</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">Рабочее Пространство</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Области стыковки</translation>
-    </message>
-    <message>
-        <source>Toolbar Areas</source>
-        <translation type="vanished">Области панелей инструментов</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">Компоненты СА&amp;ПР</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">&amp;Чертежи</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">Контекстное меню</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Панели</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">Компоненты</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">Компоненты САПР</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">Панели САПР</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Выбор объектов</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">Недавние</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Изменить</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">Изменить еще</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Рисовать</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Прямая</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Ломаная</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Точка</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Окружность</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Дуга</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Многоугольник</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">Рисовать Ломаную/Кривую</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Эллипс</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Прочее</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">Добавить Размеры</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">Выравнивание</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">Порядок</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Слои</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Информация</translation>
-    </message>
-    <message>
-        <source>Workspaces</source>
-        <translation type="vanished">Рабочие Пространства</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Правка</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">Настройки</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">Именованные Виды</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">Свойства Объекта</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">Изменить </translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">Изменить Прямую</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">Рисовать Прямую</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">Рисовать Окружность</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">Рисовать прочее</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">Изменить Окружность</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">Исменить Дугу</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">Изменить Ломаную</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">Изменить Сплайн</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">Изменить Сплайн По Точкам</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">Изменить Текст</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">Изменить МТекст</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">Редактировать Блок</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Порядок</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;Панели</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">&amp;Панели САПР</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">Рабочие Пространства</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">&amp;Режим вкладок</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">&amp;Оконный режим</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp;Расположение</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">Скругленное</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">Треугольное</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">Север</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">Юг</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">Восток</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">Запад</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp;Упорядоченный</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp;Увеличенный</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;Стопкой</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Мозаика</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Мозаика по &amp;вертикали</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Мозаика по &amp;горизонтали</translation>
     </message>
 </context>
 <context>
@@ -23106,21 +21110,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Смещение:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Измерить смещение на чертеже</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23259,202 +21248,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов. </translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">С текущими &amp;аттрибутами</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся, иначе они будут удалены</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">&amp;Сохранить оригиналы</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">В &amp;текущий слой</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">Если выбрано, то объекты будут масштабироваться с коэффициентом, зависящим от отношения расстояний исходных и конечных точек.
-Иначе, их размеры будут сохранены.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Масштабировать</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">Если выбрано, то сегменты определенные точками пересечения будут удаляться.
-Иначе. объект будет разделен в точках пересечения.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">Удалять сегменты</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">Если выбрано, то выбраные сегменты будут удалены.
-Иначе, выбраные сегменты останутся, и будут удалены остальные. </translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">Выбраные</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Дистанция привязки:</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">Точка привязки разрыва относительно точки привязки в прямой</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Где в прямой:</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">Длина разрыва:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">Позиция разрыва в прямой - может быть плавающей и задаваться вручную мышью, или же быть одной из точек прямой</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Вручную</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">Привязка разрыва:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">Начало</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">Середина</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">Конец</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">Вручную</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">Начало</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">Середина</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">Конец</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">Измерить значение разрыва на чертеже</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">Расстояние от точки привязки в прямой до точки привязки разрыва</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Измерить смещение расстояние от точки привязки на прямой до точки привязки разрыва на чертеже</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">Фиксированная длина разрыва если она не задается вручную</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">Если выбрано, то длина разрыва определяется вручную с помощью мыши</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">Если выбрано, то объекты будут отражены относительно выбранной прямой.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">От прямой</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся, иначе они будут удалены</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">&amp;Сохранить оригиналы</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов. </translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">С текущими &amp;аттрибутами</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">В &amp;текущий слой</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23501,265 +21294,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation>В текущий слой</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Параметры сдвига и поворота</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">Если выбрано, второй угол поворота будет задаваться интерактивно.
-Иначе, будет использовано введенное значение.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Вручную</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">В &amp;текущий слой</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">Если выбрано, то произойдет поворот относительно базовой точки, но сам объект будет повернут только на второй угол.
-Иначе,объект будет повернут на сумму двух углов.</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">Абсолютный</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">Угол поворота объектов относительно точки центра вращения</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">С текущими &amp;аттрибутами</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">Если выбрано, объекты также будут повернуты относительно базовой точки</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">Вращать дважды</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Угол поворота</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">Угол поворота объектов относительно базовой точки</translation>
-    </message>
-    <message>
-        <source>Relative</source>
-        <translation type="vanished">Относительный</translation>
-    </message>
-    <message>
-        <source>If selected, first it is necessary to specify center point. Otherwise - reference point. </source>
-        <translation type="vanished">Если выбрано, то сначала нужно указать точку центара вращения. Иначе -базовую точку.</translation>
-    </message>
-    <message>
-        <source>By Center</source>
-        <translation type="vanished">От Центра</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Измерить угол поворота относительно центра вращения на чертеже</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся, иначе они будут удалены</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">&amp;Сохранить оригиналы</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">Если выбрано, будет создано несколько копий объектов.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Несколько копий</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">Угол Поворота:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Если выбрано, угол поворота задается интерактивно с помощью мыши</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">Измерить угол поворота относительно базовой точки на чертеже</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Количество копий</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Параметры масштабирования</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">Если выбрано, будет создано несколько копий объектов.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Несколько копий</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">Если выбрано,то один коэффициент масштабирования будет применен для масштабирования по оси X и Y.
-Иначе будут использованы разные коэффициенты.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">Одинаковый</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся.
-Иначе они будут удалены.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">&amp;Сохранить оригиналы</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Количество копий</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">С текущими &amp;аттрибутами</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">Коэффициент масштабирования по оси Y</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Масштаб</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">Если выбрано, созданые объекты будут созданы в активном слое
-Иначе они будут слоях объектов-оригиналов. </translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">В &amp;текущий слой</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">Если выбрано, то коэффициенты масштабирования будут задаваться интерактивно мышью.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Вручную</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">Коэффициент масштабирования по оси X</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся.
-Иначе они будут удалены.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">&amp;Сохранить оригиналы</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">Если выбрано, созданые объекты будут созданы в активном слое
-Иначе они будут слоях объектов-оригиналов. </translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">В &amp;текущий слой</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Количество копий</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов. </translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">С текущими &amp;аттрибутами</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся.
-Иначе они будут удалены.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">&amp;Сохранить оригиналы</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Если выбрано, будет создано несколько копий объектов.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Несколько копий</translation>
     </message>
 </context>
 <context>
@@ -23878,10 +21412,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_filler.cpp" line="32"/>
         <source>Free Angle</source>
         <translation>Свободный угол</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">Если выбрано, угол поворота задается интерактивно с помощью мыши</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_filler.cpp" line="32"/>
@@ -24089,14 +21619,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>...</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">Фильтрация видов по имени</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Фильтр...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24351,11 +21873,6 @@ Warning: this action can NOT be undone!</source>
         <translation>Фиксированное Расстояние</translation>
     </message>
     <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="obsolete">Если выбрано, то будет использована заданая величина смещения.
-Иначе, расстояние смещение будет задаваться интерактивно с помощью мыши.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="34"/>
         <source>If checked, fixed distance of offset will be used, otherwise it will be defined by mouse.</source>
         <translation>Если выбрано, то будет использована заданая величина смещения.
@@ -24457,11 +21974,6 @@ Warning: this action can NOT be undone!</source>
         <translation>В текущий слой</translation>
     </message>
     <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">Если выбрано, то будет использована заданая величина смещения.
-Иначе, расстояние смещение будет задаваться интерактивно с помощью мыши.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="109"/>
         <source>If checked, fixed distance of offset will be used, otherwise it will be defined by mouse.</source>
         <translation>Если выбрано, то будет использована заданая величина смещения.
@@ -24547,45 +22059,6 @@ Warning: this action can NOT be undone!</source>
         <source>Control Points</source>
         <translation>Контрольные точки</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Контрольные точки параболы не могут быть коллинеарными</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">Если выбрано, то объект точка будет удален после вставки. Иначе, он останется в чертеже.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">Удалять точку</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Масштаб:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Коэфиициент масштабирования вставляемых объектов (1.0 -без изменения масштаба)</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Угол поворота вставляемого объекта относительно точки вставки</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24661,90 +22134,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation>Измерить угол на чертеже</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Угол поворота вставляемого объекта относительно точки вставки</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">Расстояния между точками вставки объектов в строки решетки</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">Измерить расстояние между столбцами на чертеже</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Масштаб:</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">Измерить угол решетки на чертеже</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">Угол наколона решетки относительно оси Х</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">Количество строк решетки.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">Измерить расстояние между строками на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">Если выбрано, то будет использоваться одинаковое значение угла для наклона решетки и поворота объектов.
-Иначе, углы решетки и поворота объектов будут разными.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">Тот же угол</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Промежутки:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">Количество колонок решетки.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">Если выбрано, то будет создана решетка из копий вставляемых объектов с колонками и строками, повернутая под заданым углом.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">Решетка</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">Угол решетки:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Коэффициент масштабирования вставляемых объектов (1.0 -без изменения масштаба)</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">Расстояния между точками вставки объектов в столбцы решетки</translation>
     </message>
 </context>
 <context>
@@ -25368,17 +22757,9 @@ Warning: this action can NOT be undone!</source>
         <translation>Название толщины линии</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Цвета</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>Цвет фона сроки активного пера в таблица</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">Цвет сетки вокруг элементов таблицы перьев</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25401,10 +22782,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>Показыть всю строку таблицы жирным шрифтом для активного пера</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">Таблица:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25497,17 +22874,9 @@ Warning: this action can NOT be undone!</source>
         <translation>Название, если возможно</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">Если выбрано, операции с перьями будут показывать дополнительные информационные сообщения</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>Показывать сообщение если нет объектов с заданым пером для выделения</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">При двойном щелчке мышью на элементе таблицы</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25778,38 +23147,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>Измерить координаты точки на чертеже</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">Количество строк решетки во втором направлении</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">Строки:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">Столбцы:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">Количество колонок решетки в первом направлении</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">Если выбрано, то последняя точка будет автоматически выравнена по первой, и решетка будет в форме прямоугольника или параллелограмма.
-Иначе, положение последней точки не фиксировано.</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">Выравнивать последнюю точку</translation>
     </message>
 </context>
 <context>
@@ -26225,10 +23562,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="78"/>
         <source>Close</source>
         <translation>Замкнуть</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">Соединяет концы ломаной, образуя замкнутый контур</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="78"/>
@@ -26773,10 +24106,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Цвет</translation>
     </message>
     <message>
-        <source>Color of active layer</source>
-        <translation type="obsolete">Цвет активного слоя</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="60"/>
         <source>Color of active pen</source>
         <translation>Цвет текущего пера</translation>
@@ -26990,14 +24319,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Касательная окружность (2 О, 1 Т)</translation>
     </message>
     <message>
-        <source>Slice or divide a line</source>
-        <translation type="obsolete">Поделить прямуюу</translation>
-    </message>
-    <message>
-        <source>Break or divide the line by intesection points</source>
-        <translation type="obsolete">Разбить прямую в точках пересечения с другими объектами</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="178"/>
         <source>Create elipse inscribed</source>
         <translation>Создать вписанный эллипс</translation>
@@ -27006,10 +24327,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="179"/>
         <source>Create bounding box for arc</source>
         <translation>Создание рамки вокруг дуги</translation>
-    </message>
-    <message>
-        <source>Create of diametrci dimension for arc</source>
-        <translation type="obsolete">Создать диаметричческий размер для окружности</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="184"/>
@@ -27127,10 +24444,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Создание прямой, касательной к дуге</translation>
     </message>
     <message>
-        <source>Create tangental orthogonal line to line</source>
-        <translation type="obsolete">Создать прямую, касательную к эллипсу и ортогональную к прямой</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="168"/>
         <source>Create line with relative angle to arc</source>
         <translation>Создать прямую под относительным углом к этой дуге</translation>
@@ -27151,17 +24464,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Подогнать</translation>
     </message>
     <message>
-        <source>Creation of circle tangental to circle</source>
-        <translation type="obsolete">Создание окружностей, касательных к окружности</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="152"/>
         <source>Creation of circle tangental</source>
         <translation>Создание касательной окружности</translation>
-    </message>
-    <message>
-        <source>Tangent Circle(3 E)</source>
-        <translation type="vanished">Касательная окружность (3 О)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="154"/>
@@ -27281,10 +24586,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Разм. Дуговой</translation>
     </message>
     <message>
-        <source>Center marks and circless creation</source>
-        <translation type="vanished">Создание центральной метки или окружности</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="200"/>
         <source>Center mark</source>
         <translation>Центральная метка</translation>
@@ -27303,10 +24604,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="205"/>
         <source>Revert direction</source>
         <translation>Изменить направление</translation>
-    </message>
-    <message>
-        <source>Circumference</source>
-        <translation type="vanished">Длина дуги</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="87"/>
@@ -27531,10 +24828,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Создание рамки вокруг окружности</translation>
     </message>
     <message>
-        <source>Create diametrci dimension for circle</source>
-        <translation type="obsolete">Создать диаметричческий размер для окружности</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="119"/>
         <source>Create radial dimension for circle</source>
         <translation>Создать радиальный размер для окружности</translation>
@@ -27657,10 +24950,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Рамка вокруг</translation>
     </message>
     <message>
-        <source>Creation of bounding box for circle</source>
-        <translation type="obsolete">Создать рамку вокруг окружности</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="117"/>
         <source>Creation of dimension, diametric or radial</source>
         <translation>Создание размера, диаметрального или радиального</translation>
@@ -27696,10 +24985,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Выноска</translation>
     </message>
     <message>
-        <source>Creation of leader for circle</source>
-        <translation type="vanished">Создание выноски для окружности</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="135"/>
         <source>Center marks creation</source>
         <translation>Создание центральной метки</translation>
@@ -27708,14 +24993,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="136"/>
         <source>Center mark</source>
         <translation>Центральная метка</translation>
-    </message>
-    <message>
-        <source>Creates center mark for selected circles, ellipses and arcs</source>
-        <translation type="vanished">Создать центральную ментку для выделенных окружностей, дуг или эллипсов</translation>
-    </message>
-    <message>
-        <source>Circumference</source>
-        <translation type="vanished">Длина окружности</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="49"/>
@@ -28597,46 +25874,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Пересоздать размеры</translation>
     </message>
     <message>
-        <source>1.00</source>
-        <translation type="vanished">1.00</translation>
-    </message>
-    <message>
-        <source>0.1</source>
-        <translation type="vanished">0.1</translation>
-    </message>
-    <message>
-        <source>0.01</source>
-        <translation type="vanished">0.01</translation>
-    </message>
-    <message>
-        <source>0.001</source>
-        <translation type="vanished">0.001</translation>
-    </message>
-    <message>
-        <source>0.0001</source>
-        <translation type="vanished">0.0001</translation>
-    </message>
-    <message>
-        <source>0.00001</source>
-        <translation type="vanished">0.00001</translation>
-    </message>
-    <message>
-        <source>0.000001</source>
-        <translation type="vanished">0.000001</translation>
-    </message>
-    <message>
-        <source>0.0000001</source>
-        <translation type="vanished">0.0000001</translation>
-    </message>
-    <message>
-        <source>0.00000001</source>
-        <translation type="vanished">0.00000001</translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="vanished">1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="233"/>
         <source>Scientific</source>
         <translation>Научный</translation>
@@ -28665,10 +25902,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="238"/>
         <source>Architectural (metric)</source>
         <translation>Архитектурный (метрический)</translation>
-    </message>
-    <message>
-        <source>0.10</source>
-        <translation type="vanished">0.10</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="219"/>
@@ -29388,10 +26621,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Выбрать по СК</translation>
     </message>
     <message>
-        <source>Select with similar base</source>
-        <translation type="vanished">Выбрать с такой же базой</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="102"/>
         <source>Selects all ordinate dimensions with the same base</source>
         <translation>Выбирает все ординатные размеры с такой же базой</translation>
@@ -29617,10 +26846,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Создать центральную метку для выделенных окружностей, дуг или эллипсов</translation>
     </message>
     <message>
-        <source>Creation line orthogonal to ellipse</source>
-        <translation type="vanished">Создать прямую, ортогональную к эллипсу</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="122"/>
         <source>Tangent Orthogonal</source>
         <translation>Касательная ортогональ</translation>
@@ -29644,10 +26869,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="132"/>
         <source>Fillet</source>
         <translation>Скругление</translation>
-    </message>
-    <message>
-        <source>Creates fillet for ellipse</source>
-        <translation type="vanished">Создать скругление</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="135"/>
@@ -29680,14 +26901,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Центральная метка</translation>
     </message>
     <message>
-        <source>Creates center mark for selected circles, ellipses and arcs</source>
-        <translation type="vanished">Создать центральную ментку для выделенных окружностей, дуг или эллипсов</translation>
-    </message>
-    <message>
-        <source>Circumference</source>
-        <translation type="vanished">Длина</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="94"/>
         <source>Circumference of ellipse</source>
         <translation>Длина окружности эллипса/дуги</translation>
@@ -29714,17 +26927,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Конечная точка эллиптической дуги</translation>
     </message>
     <message>
-        <source>Circumference of circle</source>
-        <translation type="obsolete">Длина окружности</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="101"/>
         <source>Area</source>
         <translation>Площадь</translation>
-    </message>
-    <message>
-        <source>Area of circle</source>
-        <translation type="obsolete">Площадь окружности</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="107"/>
@@ -29732,17 +26937,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Начальная точка</translation>
     </message>
     <message>
-        <source>Start point of arc</source>
-        <translation type="vanished">Конечная точка дуги</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="111"/>
         <source>End</source>
         <translation>Конечная точка</translation>
-    </message>
-    <message>
-        <source>End point of arc</source>
-        <translation type="vanished">Конечная точка дуги</translation>
     </message>
 </context>
 <context>
@@ -30692,10 +27889,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Создать рамку вокруг гиперболы</translation>
     </message>
     <message>
-        <source>Clockwise direction if reversed, counterclockwise otherwise</source>
-        <translation type="obsolete">При обратном направлении, дуга направлена по часовой стрелке. Иначе -дуга расположена против часовой стрелки.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp" line="104"/>
         <source>Eccentricity</source>
         <translation>Эксцентриситет</translation>
@@ -30740,10 +27933,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp" line="127"/>
         <source>End</source>
         <translation>Конец</translation>
-    </message>
-    <message>
-        <source>End point of hyperbola </source>
-        <translation type="vanished">Конечная точка гиперболы</translation>
     </message>
 </context>
 <context>
@@ -30849,40 +28038,16 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Угол поворота изображения</translation>
     </message>
     <message>
-        <source>Width pixels</source>
-        <translation type="vanished">Ширина, px</translation>
-    </message>
-    <message>
-        <source>Width of image in pixels</source>
-        <translation type="vanished">Ширина изображения в пикселах</translation>
-    </message>
-    <message>
-        <source>Height pixels</source>
-        <translation type="vanished">Высота, px</translation>
-    </message>
-    <message>
-        <source>Height of image in pixels</source>
-        <translation type="vanished">Высота изображения в пикселах</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="112"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="147"/>
         <source>Width</source>
         <translation>Ширина</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">Ширина изображения</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="113"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="148"/>
         <source>Height</source>
         <translation>Высота</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="vanished">Высота изображения</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="167"/>
@@ -30993,10 +28158,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Редактировать блок из объекта вставки</translation>
     </message>
     <message>
-        <source>Amount of array rols</source>
-        <translation type="obsolete">Количество колонок решетки</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="102"/>
         <source>Spacing X</source>
         <translation>Промежуток по X</translation>
@@ -31083,14 +28244,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Конечная точка прямой</translation>
     </message>
     <message>
-        <source>Reverse line direction</source>
-        <translation type="vanished">Изменить направление</translation>
-    </message>
-    <message>
-        <source>Swaps start and end point of line</source>
-        <translation type="vanished">Меняет местами начальную и конечную точки примой</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="49"/>
         <source>Length</source>
         <translation>Длина</translation>
@@ -31119,10 +28272,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="61"/>
         <source>Angle from 0.0 to second point of line</source>
         <translation>Угол прямой в конечной точке</translation>
-    </message>
-    <message>
-        <source>Line related operations</source>
-        <translation type="vanished">Операции с прямой</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
@@ -31264,10 +28413,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="160"/>
         <source>Create circle tangental to 3 entities</source>
         <translation>Создать окружность, касательную к трем объектам</translation>
-    </message>
-    <message>
-        <source>Tangential Cicle (2E, R)</source>
-        <translation type="vanished">Касательная Окружнсть (2О, Р)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="161"/>
@@ -31511,18 +28656,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Изменить направление</translation>
     </message>
     <message>
-        <source>Changes direction of line by swapping start and end points</source>
-        <translation type="vanished">Изменить направление прямой, поменяв начальную и конечную точки</translation>
-    </message>
-    <message>
-        <source>Inclination</source>
-        <translation type="vanished">Угол наклона</translation>
-    </message>
-    <message>
-        <source>Angle of the line inclination to x-axis</source>
-        <translation type="vanished">Угол наклона прямой к оси X</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="77"/>
         <source>Delta</source>
         <translation>Разница</translation>
@@ -31741,10 +28874,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Создание рамки вокруг текста</translation>
     </message>
     <message>
-        <source>Explodes text into letters</source>
-        <translation type="vanished">Разбить текст на отдельные буквы</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="155"/>
         <source>Other text operations</source>
         <translation>Другие операции с текстом</translation>
@@ -31753,10 +28882,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="152"/>
         <source>Explode</source>
         <translation>Разбить</translation>
-    </message>
-    <message>
-        <source>Explodes text to indiviual strokes</source>
-        <translation type="vanished">Разбивает текст на инидвидуальные штрихи</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="156"/>
@@ -31817,21 +28942,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Создать рамку вокруг параболы</translation>
     </message>
     <message>
-        <source>vertex</source>
-        <translation type="vanished">Вершина</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
         <source>Vertex of parabola</source>
         <translation>Точка вершины параболы</translation>
-    </message>
-    <message>
-        <source>Start Angle</source>
-        <translation type="vanished">Начальный угол</translation>
-    </message>
-    <message>
-        <source>Start angle of arc</source>
-        <translation type="obsolete">Начальный угол дуги</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="51"/>
@@ -32451,10 +29564,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Создать касательную в точке сплайна</translation>
     </message>
     <message>
-        <source>Inserts point of spline</source>
-        <translation type="vanished">Вставить точку сплайна</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="99"/>
         <source>Spline points adding</source>
         <translation>Добавление точек сплайна</translation>
@@ -32540,10 +29649,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Изменить направление сплайна, поменяв начальную и конечную точки</translation>
     </message>
     <message>
-        <source>Creates rounding box around spline</source>
-        <translation type="vanished">Создать рамку вокруг сплайна</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="127"/>
         <source>Reverting direction</source>
         <translation>Изменить направление</translation>
@@ -32552,18 +29657,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="128"/>
         <source>Revert direction</source>
         <translation>Изменить направление</translation>
-    </message>
-    <message>
-        <source>Changes direction of line by swapping start and end points</source>
-        <translation type="vanished">Изменить направление сплайна, поменяв начальную и конечную точки</translation>
-    </message>
-    <message>
-        <source>Vertex</source>
-        <translation type="obsolete">Вершина</translation>
-    </message>
-    <message>
-        <source>Index of current vertex of polyline</source>
-        <translation type="obsolete">Индекс текущей вершины ломаной</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="78"/>
@@ -32785,10 +29878,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Создание рамки вокруг текста</translation>
     </message>
     <message>
-        <source>Explodes text into letters</source>
-        <translation type="vanished">Разбить текст на отдельные буквы</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="144"/>
         <source>Other text operations</source>
         <translation>Другие операции с текстом</translation>
@@ -32797,10 +29886,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="142"/>
         <source>Explode</source>
         <translation>Разбить</translation>
-    </message>
-    <message>
-        <source>Explodes text to indiviual strokes</source>
-        <translation type="vanished">Разбивает текст на инидвидуальные штрихи</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="144"/>
@@ -32819,11 +29904,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/lib/view/lc_property_view.cpp" line="246"/>
         <source>Click to collapse</source>
         <translation>Кликните, чтобы распахнуть</translation>
-    </message>
-    <message>
-        <source>R</source>
-        <comment>Reset button text</comment>
-        <translation type="obsolete">R</translation>
     </message>
 </context>
 <context>
@@ -32886,13 +29966,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/properties/double/lc_property_double_interactivepick_view.cpp" line="181"/>
         <source>Pick value as distance from drawing</source>
         <translation>Измерить значение как расстояние на чертеже</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PropertyMulti</name>
-    <message>
-        <source>(Multiple Values)</source>
-        <translation type="vanished">(Разные)</translation>
     </message>
 </context>
 <context>
@@ -33345,10 +30418,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="692"/>
         <source>Diameter</source>
         <translation>Диаметр</translation>
-    </message>
-    <message>
-        <source>Circumference</source>
-        <translation type="vanished">Длина окружности</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
@@ -34341,12 +31410,6 @@ p, li { white-space: pre-wrap; }
         <translation>Детали Объекта</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">Если выбрано, будет показана более детальная информация о индивидуальных 
-сегментах (прямые, дуги) ломаной.
-Иначе, будет включена только информация о вершинах и выпуклостях ломаной.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Если выбрано, будет показана более детальная информация о индивидуальных 
@@ -34400,297 +31463,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>Перо подсветки точек</translation>
-    </message>
-</context>
-<context>
-    <name>LC_RadiantLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Pick radiant point coordinates from drawing</source>
-        <translation type="vanished">Выбор позиции центральной точки на чертеже</translation>
-    </message>
-    <message>
-        <source>Selection of radiant (center) point draw to</source>
-        <translation type="vanished">Выбор центральной точки к поторой напралены прямые</translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="vanished">1</translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="vanished">2</translation>
-    </message>
-    <message>
-        <source>3</source>
-        <translation type="vanished">3</translation>
-    </message>
-    <message>
-        <source>4</source>
-        <translation type="vanished">4</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Length of line to draw</source>
-        <translation type="vanished">Длина создаваемой прямой</translation>
-    </message>
-    <message>
-        <source>X coordinate of radiant point</source>
-        <translation type="vanished">Координата центральной точки по оси X</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Длина:</translation>
-    </message>
-    <message>
-        <source>Pick X coordinate of radiant point from drawing</source>
-        <translation type="vanished">Измерить X координатy центральной точки на чертеже</translation>
-    </message>
-    <message>
-        <source>To point</source>
-        <translation type="vanished">К центру</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>Defines how to handle length parameter</source>
-        <translation type="vanished">Определяет, как трактовать заданную длину</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Отрезок</translation>
-    </message>
-    <message>
-        <source>By X</source>
-        <translation type="vanished">По X</translation>
-    </message>
-    <message>
-        <source>By Y</source>
-        <translation type="vanished">По Y</translation>
-    </message>
-    <message>
-        <source>To Point</source>
-        <translation type="vanished">К центру</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Вручную</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Измерить длину на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick Y coordinate of radiant point from drawing</source>
-        <translation type="vanished">Измерить Y координатy центральной точки на чертеже</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Грани:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">Если выбрано,то положение точки привязки будет смещено на радиус скругления углов</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Сдвиг привязки</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">Длина фаски по вертикали</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Определяет стороны прямоугольника которые должны быть созданы</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Все</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Вертикальные</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Горизонтальные</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">Ширина прямоугольника</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">Определяет как нужно рисовать углы прямоугольника</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Прямые</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Скругление</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Фаска</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">Если выбрано, прямоугольник будет с наклоном на заданный угол относительно оси X</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Угол наклона:</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">Если выбрано,то заданные размеры представляют собой размеры между центрами радиусов скругления углов.
-Иначе это внешние размеры прямоугольника.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">Размеры внутри</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Фаска Y:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">Если выбрано, то вместо индивидуальных объектов будет создана ломаная</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">В ломаную</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Точка привязки:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Высота:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Радиус:</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">Длина фаски по горизонтали</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Фаска X:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">Высота прямоугольника</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Радиус скругления углов прямоугольника</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">Область прямоугольника которая будет в точке вставки</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">Верх-левый</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Верх</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">Верх-правый</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Левый</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Середина</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Правый</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">Низ-левый</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Низ</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">Низ правый</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Измерить угол поворота прямоугольника на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Измерить радиус скругления углов на чертеже</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Угол наклона относительно оси X</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">Измерить высоту на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">Измерить ширину на чертеже</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Ширина:</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Углы:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">Измерить длину фаски по горизонтали на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">Измерить длину фаски по вертикали на чертеже</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">Если выбрано, угол наклона задается интерактивно с помощью мыши</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Вручную</translation>
     </message>
 </context>
 <context>
@@ -35061,153 +31833,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Определяет стороны прямоугольника которые должны быть созданы</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Все</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Вертикальные</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Горизонтальные</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">Определяет точку прямоуголника которая окажется в первой базовой точке</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">Угол</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">Центр-Верт</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">Центр-Гор</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Середина</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">Измерить угол наклона прямоугольника на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">Измерить радиус скругления углов на чертеже</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Углы:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">Определяет точку прямоуголника которая окажется во второй базовой точке</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Измерить длину фаски по горизонтали на чертеже</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Грани:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">Измерить длину фаски по вертикали на чертеже</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">Начальная привязка:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Длина фаски по вертикали</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Если выбрано,то положение точки привязки будет смещено на радиус скругления углов</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Сдвиг привязки</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Фаска X:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Радиус:</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">Если выбрано, прямоугольник будет с наклоном на заданный угол относительно оси X</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Угол наклона:</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">Угол наклона прямоугольника относительно оси X</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">Конечная привязка:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">Определяет как нужно рисовать углы прямоугольника</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Прямые</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Скругление</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Фаска</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">Радиус скругления углов прямоугольника</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Фаска Y:</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">Если выбрано, то вся фигура будет одной ломаной, иначе будут созданы индивидуальные объекты</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">В ломаную</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Длина фаски по горизонтали</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -35465,147 +32090,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation>Измерить длину фаски по вертикали на чертеже</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">Внутренний угол параллелограмма</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">Если выбрано, внутренний угол параллелограмма будет фиксирован и равен заданному значению.
-Иначе он будет определяться на основании позиций вершин.</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">Фиксированный внутренний угол</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">Угол наклона прямоугольника относительно оси X</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Фаска X:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Длина фаски по горизонтали</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">Определяет как нужно рисовать углы прямоугольника</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Прямые</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Скругление</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Фаска</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Углы:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Если выбрано,то положение точки привязки будет смещено на радиус скругления углов</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Сдвиг привязки</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Фаска Y:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Длина фаски по вертикали</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Радиус скругления углов прямоугольника</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Радиус:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">Если выбрано, то вся фигура будет одной ломаной, иначе будут созданы индивидуальные объекты</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">В ломаную</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">Измерить внутренний угол параллелограмма на чертеже</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Грани:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Измерить радиус скругления углов на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Измерить длину фаски по горизонтали на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">Измерить длину фаски по вертикали на чертеже</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Определяет стороны прямоугольника которые должны быть созданы</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Все</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Вертикальные</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Горизонтальные</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">Измерить угол наклона прямоугольника на чертеже</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">Если выбрано, угол наклона прямоугольника будет фиксирован и равен введеному значению.
-Иначе, он будет определяться с помощью позиций вершин.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">Фиксированный угол наклона</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">Если выбрано, то будет создаваться параллелограмм вместо прямоугольника</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">Параллелограмм</translation>
     </message>
 </context>
 <context>
@@ -35977,10 +32461,6 @@ p, li { white-space: pre-wrap; }
         <translation>Форма</translation>
     </message>
     <message>
-        <source>Base point coordinates, relative coordinates will be calculated against this point</source>
-        <translation type="vanished">Координаты базовой точки - относительно ее.на основании введенных параметров будет рассчитана ожидаемая точка</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="51"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Base point:</source>
@@ -36068,10 +32548,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="239"/>
         <source>Click to edit absolute Y coordinate for new point</source>
         <translation>Нажмите для редактирования значения абсолютной координаты относительной точки по Y</translation>
-    </message>
-    <message>
-        <source>If checked, relative coordinates mode (the offset from base point) will be used. Otherwise - absolute coordinates mode.</source>
-        <translation type="vanished">&lt;p&gt;Если выбрано,будет использоваться режим относительных координат (смещение относительно базовой точки).&lt;br&gt;Иначе, режим абсолютных координат.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="200"/>
@@ -36269,114 +32745,11 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">Во время проверки наличия новой версии возникла сетевая ошибка.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">Невозможно разобрать ответ от сервера.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Параметры сдвига и поворота</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся.
-Иначе они будут удалены.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">В &amp;текущий слой</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">Подогнать значение второго угла таким образом, что сумма углов (относительный угол поворота) равен нулю.
-При этой настройке объекты будут размещаться по кругу, но без поворота.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">Отражение углов</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">Измерить угол поворота относительно абсолютной базовой точки на чертеже</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся.
-Иначе они будут удалены.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">С текущими &amp;аттрибутами</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">Измерить угол поворота относительно относительной базовой точки на чертеже</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">Угол поворота относительно абсолютной базовой точки</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Если выбрано, будет создано несколько копий объектов.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Несколько копий</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">Количество создаваемых точек</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">Второй Угол:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">Если выбрано, то одно значеие второго угла поворота будет использовано для всех копий.
-Иначе, второй угол будет увеличиваться пропрорцонально номеру копии.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">Второй угол и для копий</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся, иначе они будут удалены</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">&amp;Сохранить оригиналы</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">Первый Угол:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">Угол поворота относительно вспомогательной базовой точки</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rotate2OptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="34"/>
         <source>Angles mirrored</source>
         <translation>Отражение углов</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">Подогнать значение второго угла таким образом, что сумма углов (относительный угол поворота) равен нулю.
-При этой настройке объекты будут размещаться по кругу, но без поворота.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="35"/>
@@ -36571,10 +32944,6 @@ p, li { white-space: pre-wrap; }
         <translation>От Центра</translation>
     </message>
     <message>
-        <source>If selected, first it is necessary to specify center point. Otherwise - reference point. </source>
-        <translation type="vanished">Если выбрано, то сначала нужно указать точку центара вращения. Иначе -базовую точку.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="42"/>
         <source>Free Angle</source>
         <translation>Свободный угол</translation>
@@ -36608,10 +32977,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="72"/>
         <source>Rotate Twice</source>
         <translation>Вращать дважды</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point </source>
-        <translation type="vanished">Если выбрано, объекты также будут повернуты относительно базовой точки</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="35"/>
@@ -37390,143 +33755,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">Начальный угол:</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">Начальный угол с которого начинаются лучи в окружности</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Смещение:</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">Смещение точки пересечения луча и базового объекта в направлении луча</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол луча:</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Измерить расстояние на чертеже</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Промежуток:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">Расстояние между лучами</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">Если выбрано, то базовый объект будет разделен на несколько точками пересечения с лучами.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Разделить</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">Измерить смещение луча на чертеже</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">Длина луча</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">Измерить угол луча на чертеже</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">Привязка луча:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">Измерить длину прямой на чертеже</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">Измерить начальный угол окружности на чертеже</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">Угол между лучом и базовым объектом</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">Если выбрано, то используется относительный угол между базовым объектом и лучом.
-Иначе, это угол между лучем и осью координат X.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Относительный</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">Длина луча:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">Определяет какая точка луча должна оказаться в точке пересечения с базовым объектом</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Начало</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Середина</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Конец</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">Если выбрано, то между лучами будет фиксированное растояние.
-Иначе, расстояние будет рассчитано исходя из длины базового объекта и количества лучей.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">Фиксированное</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">Количество лучей между концами выбранного объекта</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">Количество:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">Определяет как создавать лучи для конечных точек объекта</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Нет</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Оба</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">Концы:</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37850,62 +34078,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">Определяет количество прямых для сегмента сплайна которые будут сгенерированы.
-Чем выше значение - тем точнее аппроксимация.</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся, иначе они будут удалены</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">&amp;Сохранить оригиналы</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к созданным объектам будут применены аттрибуты оригинальных объектов. </translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">С текущими &amp;аттрибутами</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Если выбрано, созданые объекты будут созданы в активном слое
-Иначе они будут слоях объектов-оригиналов. </translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">В &amp;текущий слой</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">Если выбранно, то можно задать количество сегментов между вершинами сплайна.
-Иначе, будет использоваться значение из настроек чертежа.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">Заданное число сегментов</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">Если выбрана, будет создана одна ломаная из сегментов сплайна.
-Иначе, будут созданны отдельные прямые. </translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">В ломаную</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -38040,64 +34212,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Если выбрано, созданый сплайн будет создан в активном слое
-Иначе он будет в слое оригинальной кривой. </translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">В &amp;текущий слой</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">Количество средних равномерно распределенных точек из сегмента ломаной которые будут добавлены в сплайн.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">Определяет степень сплайна</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Если выбрано, то оригинальнaя ломаная останется, иначе она будет удалена</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Степень:</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">&amp;Сохранить оригиналы</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">Средних точек:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к созданным объектам будут применены аттрибуты оригинальных объектов. </translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">С текущими &amp;аттрибутами</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">Если выбрано, то точки из ломаной будут точками сплана и будет создан Сплайн по Точкам.
-Иначе, точки из ломаной это контрольные точки и будет содан Сплайн.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">Вершины как точки сплайн</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineFromPolylineOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="31"/>
@@ -38139,10 +34253,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="51"/>
         <source>If unchecked, original polyline will be removed, otherwise it will survive</source>
         <translation>Если выбрано, то оригинальнaя ломаная останется, иначе она будет удалена</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive</source>
-        <translation type="obsolete">Если выбрано, то оригинальный сплайн останется, иначе он будет удален</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="60"/>
@@ -38229,11 +34339,6 @@ p, li { white-space: pre-wrap; }
         <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and ordinary spline will be created.</source>
         <translation>Если выбрано, то точки из ломаной будут точками сплана и будет создан Сплайн по Точкам.
 Иначе, точки из ломаной это контрольные точки и будет создан Сплайн.</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">Если выбрано, то точки из ломаной будут точками сплана и будет создан Сплайн по Точкам. 
-Иначе, точки из ломаной это контрольные точки и будет содан Сплайн.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="105"/>
@@ -38363,10 +34468,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>LC_SplinePropertiesEditingWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="14"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="17"/>
@@ -38515,69 +34616,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>Степень уравнения аппроксимации кривой между точками</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">Если выбрано, то создаваемая звезда будет симметричной</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Симметрия</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">Радиус скругления впадин между лучами</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Лучи:</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">Измерить радиус внешнего скругления на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">Измерить радиус внутреннего скругления на чертеже</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">Количество лучей звезды</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">Если выбрано, то вершины звезды будут со скруглением</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">Радиус вершин</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">Если выбрано, то впадины лучей будут скруглены</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">Радиус впадин</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">Если выбрано, то вся фигура будет одной ломаной, иначе будут созданы индивидуальные объекты</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">В ломаную</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">Радиус скругления вершин лучей</translation>
     </message>
 </context>
 <context>
@@ -39470,14 +35508,6 @@ p, li { white-space: pre-wrap; }
         <translation>Настройки</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">Фильтр систем координат по имени</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Фильтр...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>*БЕЗЫМЯННАЯ*</translation>
@@ -39578,33 +35608,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>Удалить Все </translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Форма</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">Угол оси Х для новой Пользовательской Системы Координат</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Если выбрано, угол наклона оси Х задается интерактивно с помощью мыши</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Вручную</translation>
     </message>
 </context>
 <context>
@@ -40220,33 +36223,6 @@ Warning: this action can NOT be undone!</source>
     </message>
 </context>
 <context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Параметры прямой с относительным углом наклона</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Расстояние:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">Расстояние от исходной ломаной</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">Копий:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Количество копий</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">Измерить расстояние от исходной на чертеже</translation>
-    </message>
-</context>
-<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="38"/>
@@ -40284,39 +36260,14 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="839"/>
-        <source>Creating new file...</source>
-        <translation>Создание нового файла...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="775"/>
         <source>unnamed document %1</source>
         <translation>безымянный документ %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1867"/>
-        <source>Opening recent file...</source>
-        <translation>Открытие последнего файла...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
         <source>Loaded document: </source>
         <translation>Документ загружен: </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1068"/>
-        <source>Opening aborted</source>
-        <translation>Открытие прервано</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1398"/>
-        <source>Printing...</source>
-        <translation>Печать...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1501"/>
-        <source>Exiting application...</source>
-        <translation>Выход из программы...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -40329,19 +36280,9 @@ Warning: this action can NOT be undone!</source>
         <translation>Был создан новый чертёж.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing...</source>
-        <translation>Сохранение чертежа...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="276"/>
         <source>Saved drawing: %1</source>
         <translation>Чертёж сохранен: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1402"/>
-        <source>Printing complete</source>
-        <translation>Печать завершена</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="771"/>
@@ -40356,11 +36297,6 @@ Please check the permissions.</source>
         <translation>Невозможно открыть файл
 %1
 Пожалуйста, проверьте, права доступа.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1230"/>
-        <source>Auto-saving drawing...</source>
-        <translation>Автосохранение чертежа...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
@@ -40426,11 +36362,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1067"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>Файл &apos;%1&apos; не существует. Операция прервана</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing: %1</source>
-        <translation>Сохранение чертежа: % 1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="271"/>
@@ -40499,12 +36430,6 @@ Please check its existence and permissions.</source>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation>Пробел: временно установлен режим свободной привязки</translation>
     </message>
-    <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="196"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>отмена</translation>
-    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
@@ -40540,11 +36465,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="69"/>
         <source>Name of the block</source>
         <translation>Имя блока</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="77"/>
-        <source>Renaming Block</source>
-        <translation>Переименование блока</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="78"/>
@@ -40743,12 +36663,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="102"/>
         <source>Command history and output</source>
         <translation>История команд и вывода</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="260"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>отмена</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="54"/>
@@ -41052,21 +36966,6 @@ This recursively modifies all entities of the Block itself.</source>
 &lt;br/&gt;&lt;/p&gt;&lt;p&gt;Вы сможете поменять эти настройки позже.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-Please choose the unit you want to use for new drawings
-&lt;br&gt;
-and your preferred language for Ui and Command.&lt;br&gt;
-(You can changes these settings later.)</source>
-        <translation type="vanished">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Добро пожаловать в LibreCAD!&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;&lt;br&gt;
-Пожалуйста выберите единицы измерения, которые вы хотите использовать для новых чертежей
-и язык, который вы предпочитаете для интерфейса и команд.&lt;br&gt;&lt;br&gt;
-Вы сможете поменять эти настройки позже.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="231"/>
         <source>Default Unit:</source>
         <translation>Единицы измерения по умолчанию:</translation>
@@ -41075,10 +36974,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="143"/>
         <source>GUI Language:</source>
         <translation>Язык интерфейса:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Добро пожаловать в LibreCAD!&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Пожалуйста выберите единицы измерения, которые вы хотите использовать для новых чертежей и язык, который вы предпочитаете для интерфейса и команд.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Вы сможете поменять эти настройки позже.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
@@ -41255,10 +37150,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Вставить символ</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">Выбор символа для вставки в текст</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
         <source>Degree (°)</source>
         <translation>° (Градус)</translation>
@@ -41307,10 +37198,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>£ (Фунт стерлинг)</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">¥ (Иена)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -45299,10 +41186,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Маркер Относительного Нуля</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">Поведение</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1577"/>
         <source>Snap Marker</source>
         <translation>Маркер Привязки</translation>
@@ -45523,26 +41406,14 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Визуальная привязка</translation>
     </message>
     <message>
-        <source>Document entity in visual snap</source>
-        <translation type="vanished">Объекты документа в визуальной привязке</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2275"/>
         <source>Highlighted point size</source>
         <translation>Размер выделенной точки</translation>
     </message>
     <message>
-        <source>px</source>
-        <translation type="vanished">px</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2356"/>
         <source>If checked, snap point requested by command and specified by the user will be added to visual snap automatically. Otherwise, it should be added manually.</source>
         <translation>&lt;p&gt;Если выбрано, то точки привязки выбранные пользователем во время исполнения команды будут добавлены в визуальную привязку автоматически.&lt;br&gt;Иначе, если необходимо, их нужно добавлять вручную&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Add snapped point automatically</source>
-        <translation type="vanished">Добавлять выбранные точки привязки автоматически</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2256"/>
@@ -45563,18 +41434,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2392"/>
         <source>Manual adding points with CTRL key</source>
         <translation>Ручное добавление точек с клавишей CTRL </translation>
-    </message>
-    <message>
-        <source>If checked, visual snap will also consider rays for enpoints of guiding entities with step, similar to angle snap. Otherwise, only tangential and normal rays will be considered for vertexes.</source>
-        <translation type="vanished">&lt;p&gt;Если выбрано, визуальная привязка также включает лучи для конечных точек опорных объектов с шагом угловой привязки.&lt;br&gt;Иначе, учитываются только касательные и ортогональные лучи.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Angle snap step relative guiding rays for entities</source>
-        <translation type="vanished">Направляющие лучи с шагом привязки по углу, относительные углы</translation>
-    </message>
-    <message>
-        <source>ms</source>
-        <translation type="vanished">ms</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2295"/>
@@ -45612,21 +41471,9 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Задержка добавления/удаления объектов документа</translation>
     </message>
     <message>
-        <source>Projected snap point adding delay</source>
-        <translation type="vanished">Задержка добавления возможных точек привязки</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2121"/>
         <source>Projected snap</source>
         <translation>Возможная привязка</translation>
-    </message>
-    <message>
-        <source>If checked, visual snap will also consider rays from guiding points with step, similar to angle snap. Otherwise, only vertical and horizontal rays will be considered for vertexes.</source>
-        <translation type="vanished">&lt;p&gt;Если выбрано, визуальная привязка также включает лучи для опорных точек с шагом угловой привязки.&lt;br&gt;Иначе, учитываются только вертикальные и горизонтальные лучи.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Angle snap step guiding rays for guiding points</source>
-        <translation type="vanished">Направляющие лучи с шагом привязки по углу, абсолютные углы</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2225"/>
@@ -45637,10 +41484,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2514"/>
         <source>If selected, guiding circles for distances between guiding points will be included into visual snap. Otherwise, they will be ignored. </source>
         <translation>&lt;p&gt;Если выбрано, то будут учитываться опорные окружнсти расстояний между опорными точками.&lt;br&gt;Иначе, они будут игнорироваться.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Dynamic distance circles for guiding points</source>
-        <translation type="vanished">Динамические окружности расстояний между опорными точками</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2128"/>
@@ -45663,10 +41506,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Размер точки возможной привязки</translation>
     </message>
     <message>
-        <source>Snap point adding/removal delay</source>
-        <translation type="vanished">Задержка добавления/удаления точек</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2165"/>
         <source>Color of guide points in visual snap</source>
         <translation>Цвет опорных точек в визуальной привязке</translation>
@@ -45682,14 +41521,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Расстояние в пикселях, которое используется для захвата объектов визуальной привязки</translation>
     </message>
     <message>
-        <source>Relative Position Assistant</source>
-        <translation type="vanished">Ассистент Относительной Точки</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;If selected, on invocation assistant will be in relative coordinates (offset) mode. &lt;br/&gt;Otherwise, it will prompt to enter absolute coordinates.&lt;/p&gt;</source>
-        <translation type="vanished">&lt;p&gt;Если выбрано, при вызове ассистента будет использован режим ввода относительных координат (смещений относительно базовой точки)&lt;br/&gt;Иначе, будут использован режим ввода абсолютных координат.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2712"/>
         <source>Start in coordinates offset mode</source>
         <translation>Начинать в режиме смещений</translation>
@@ -45698,18 +41529,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2719"/>
         <source>Background:</source>
         <translation>Фон</translation>
-    </message>
-    <message>
-        <source>Color for relative position input assistant font</source>
-        <translation type="vanished">Цвет шрифта, используемого во всплывающем окне ассистента относительной точки</translation>
-    </message>
-    <message>
-        <source>Color for relative position input assistant popup background</source>
-        <translation type="vanished">Цвет фона всплывающего окна ассистента относительной точки</translation>
-    </message>
-    <message>
-        <source>Font size for relative position input assistant, in points</source>
-        <translation type="vanished">Размер шрифта, используемого во всплывающем окне ассистента относительной точки, в поинтах</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2622"/>
@@ -45722,38 +41541,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Запоминать последний использовавшийся режим координат</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4935"/>
-        <source>#</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4940"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5009"/>
-        <source>~</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4945"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
-        <source>_</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4950"/>
-        <source>__</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4955"/>
-        <source>lcauto_</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4960"/>
-        <source>autosaved_</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4984"/>
         <source>Auto-save file name prefix:</source>
         <translation>Префикс имени файла автосохранения:</translation>
@@ -45762,36 +41549,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5001"/>
         <source>Backup file name suffix:</source>
         <translation>Суффикс файла резервной копии:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5014"/>
-        <source>$$</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5024"/>
-        <source>_backup</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5029"/>
-        <source>_bak</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5034"/>
-        <source>.bak</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5039"/>
-        <source>.backup</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5044"/>
-        <source>.lcb</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5111"/>
@@ -46033,12 +41790,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Преобразуйте штриховые/точечные линии в контур SVG</translation>
     </message>
     <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation type="vanished">MakerCAM по состоянию на ноябрь 2014 года не скрывает содержимое SVG&#xa0;
-которое было установлено невидимым (&quot;отображение: нет&quot; или &quot;видимость: скрыто&quot;).</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="31"/>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
@@ -46080,24 +41831,6 @@ which can be useful in lasercut of plywood or for papercraft. </source>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
         <translation>Ширина элементов по умолчанию может влиять на некоторые редакторы CAM/SVG,&#xa0;
-но игнорироваться другими</translation>
-    </message>
-    <message>
-        <source>Exported images can be useful in SVG editors (Inkscape, etc),
-but avoided in some CAM&apos;s.</source>
-        <translation type="vanished">Экспортированные изображения могут быть использованы в SVG редакторах (Inkscape и т.д.),&#xa0;
-но некоторые CAM&apos;ы будут отброшены.</translation>
-    </message>
-    <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style,
-which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation type="vanished">Многие CAM&apos;ы(MakerCAM, EleskCAM, LaserWeb) игнорируют стиль пунктирной линии,&#xa0;
-который может быть полезен при лазерной резке фанеры или для изготовления поделок из бумаги. </translation>
-    </message>
-    <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors,
-but ignored by other</source>
-        <translation type="vanished">Ширина элементов по умолчанию может влиять на некоторые редакторы CAM/SVG,&#xa0;
 но игнорироваться другими</translation>
     </message>
     <message>
@@ -46261,10 +41994,6 @@ so default step value required for baking</source>
         <translation>£ (Фунт стерлингов)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">¥ (Йена)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Times (×)</source>
         <translation>× (Умножение)</translation>
@@ -46309,10 +42038,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>Слой текста</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">Наклон букв</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -46920,10 +42645,6 @@ so default step value required for baking</source>
         <translation>Угол:</translation>
     </message>
     <message>
-        <source>Oblique:</source>
-        <translation type="vanished">Наклон:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
         <source>Width factor:</source>
         <translation>Коэффициент ширины:</translation>
@@ -47238,29 +42959,6 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
 </context>
 <context>
-    <name>QG_LineAngleOptions</name>
-    <message>
-        <source>Fixed</source>
-        <translation type="obsolete">Фиксированна</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Прямая</translation>
-    </message>
-    <message>
-        <source>By X</source>
-        <translation type="vanished">По X</translation>
-    </message>
-    <message>
-        <source>By Y</source>
-        <translation type="vanished">По Y</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Вручную</translation>
-    </message>
-</context>
-<context>
     <name>QG_LineTypeBox</name>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="83"/>
@@ -47461,21 +43159,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="45"/>
         <source>Line type</source>
         <translation>Тип линии</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">Задано некорректное значение масштаба </translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">Коэффициент масштабирования бумаги больше максимального коэффициента печати</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">Коэффициент масштабирования бумаги меньше минимального коэффициента печати</translation>
     </message>
 </context>
 <context>
@@ -48258,14 +43941,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="799"/>
         <source>Tagged Image File Format</source>
         <translation>Теговый формат растровых изображений</translation>
-    </message>
-    <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">Старый DXF %1</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">Открыт файл DWG версии %1.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -49643,23 +45318,6 @@ Do you want to replace it?</source>
         <translation>Сначала введите расстояние.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="275"/>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished">калк</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="276"/>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="311"/>
-        <source>cal</source>
-        <translation>cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="317"/>
         <source>Calculator mode: On</source>
         <translation>Режим расчета: Включен</translation>
@@ -50862,12 +46520,6 @@ Do you want to replace it?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="799"/>
-        <source>bevel</source>
-        <comment>modify - fillet</comment>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
@@ -51648,26 +47300,6 @@ Do you want to replace it?</source>
         <translation>арка e</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="85"/>
-        <source>DWG support is not complete!</source>
-        <translation>Поддержка DWG не завершена!</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="87"/>
-        <source>If this file fails to open try an older DWG format</source>
-        <translation>Если этот файл не открывается, попробуйте старый формат DWG</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="88"/>
-        <source>or try to find a converter to make it a DXF file.</source>
-        <translation>или попытаться найти конвертер, чтобы сделать его DXF-файлом.</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
-        <source>Information</source>
-        <translation>Сведения</translation>
-    </message>
-    <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="104"/>
         <source>Error</source>
         <comment>fileImport</comment>
@@ -51734,11 +47366,6 @@ Do you want to replace it?</source>
         <translation>ошибка чтения заголовка файла DXF/DWG</translation>
     </message>
     <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">ошибка чтения DXF/DWG заголовка dara</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
@@ -51796,26 +47423,6 @@ Do you want to replace it?</source>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="85"/>
         <source>usage: </source>
         <translation>использование: </translation>
-    </message>
-    <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished"> [опции] &lt;dxf_files&gt;</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished"> *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">-- печать всех dxf-файлов в pdf-файлы с одинаковыми именами.</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished"> -o некоторые файлы.pdf *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">-- распечатать все dxf-файлы в файл &apos;some.pdf&apos;.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
@@ -51893,16 +47500,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Размер бумаги (ширина x высота) в мм.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">Выходное разрешение (DPI).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>Выходная шкала. Например: 0,01 (для масштаба 1:100).</translation>
@@ -51935,27 +47532,9 @@ Do you want to replace it?</source>
         <translation>Целевой выходной каталог.</translation>
     </message>
     <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="177"/>
-        <source>DXF output version: r12, r14, r2000, r2004, r2007 (default), r2018.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="183"/>
-        <source>DWG output version: r2000 (default), r2004, r2010, r2013, r2018.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">&lt;dxf_files&gt;</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">Вход DXF файл(ов)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -52388,17 +47967,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container</source>
-        <translation type="vanished">Выберите объекты для разбиения</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">Разобрать сразу после выделения</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionBlocksSave</name>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockssave.cpp" line="98"/>
@@ -52647,270 +48215,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">Длина хорды должна быть больше нуля</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">Недопустимая длина хорды</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Укажите центр</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">Укажите начальную точку</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Альтернативная дуга</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">Укажите длину хорды (меньше нуля - вторая точка):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">Альтернативное решение</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">Укажите радиус</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">Укажите начальный угол:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">Укажите конечный угол или [угол/длину хорды]</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">Укажите внутренний угол:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">Некорректные данные дуги.</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Укажите третью точку</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Укажите вторую точку</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">Укажите начальную точку или [центр]</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">Укажите базовый объект</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">Альтернативная дуга</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">Альтернативная дуга</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">Укажите конечный угол</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">Укажите конечную точку</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Укажите центр</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">Указать точку на круге</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">Некорректные данные окружности.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Укажите первую точку</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Укажите вторую точку</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">Некорректные данные окружности.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Укажите первую точку</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Укажите вторую точку</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Укажите третью точку</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">Укажите центр окружности</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">Укажите радиус окружности</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">радиус=%1 недействителен (выражение)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">радиус=% 1 недопустим (отрицательный)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">радиус=% 1 недопустим (ноль)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">Укажите первую линию</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">Укажите вторую линию</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">Укажите третью линию</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">Укажите первую точку касательной к окружности</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">Укажите вторую точку касательной к окружности</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Укажите центр касательной к окружности</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Укажите линию, дугу или окружность</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Укажите первую прямую, дугу или окружность</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Укажите вторую прямую, дугу или окружность</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Укажите центр касательной к окружности</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">Нет общей касательной к окружности для радиуса &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Укажите прямую, дугу или окружность</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">Укажите вторую прямую, дугу или окружность</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">Укажите точку на окружности</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Укажите центр окружности</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Укажите центр окружности</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Укажите первую линию, дугу или окружность</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">Не существует общей тангенциальной окружности для выбранных объектов</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Укажите вторую линию, дугу или окружность</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">Укажите третью линию, дугу или окружность</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
@@ -53111,170 +48415,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Укажите базовую точку</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Введите угол:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Введите коэффициент:</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">Введите DPI:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Укажите первую точку</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Укажите следующую точку или [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Укажите следующую точку</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">Невозможно замкнуть последовательность отрезков — выбрано недостаточно объектов или уже замкнуто.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">Невозможно отменить: достигнуто начало истории</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">Невозможно повторить: Достигнут конец истории</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Not a valid expression for angle</source>
-        <translation type="vanished">Недопустимое выражение для угла</translation>
-    </message>
-    <message>
-        <source>Not a valid expression for length</source>
-        <translation type="vanished">Недопустимое выражение для длины</translation>
-    </message>
-    <message>
-        <source>s</source>
-        <translation type="vanished">s</translation>
-    </message>
-    <message>
-        <source>m</source>
-        <translation type="vanished">m</translation>
-    </message>
-    <message>
-        <source>e</source>
-        <translation type="vanished">e</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="obsolete">Зафиксировать</translation>
-    </message>
-    <message>
-        <source>line</source>
-        <translation type="vanished">line</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>y</source>
-        <translation type="vanished">y</translation>
-    </message>
-    <message>
-        <source>free</source>
-        <translation type="vanished">free</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Укажите положение</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">Альтернативное направление</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Введите угол:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">Введите длину:</translation>
-    </message>
-    <message>
-        <source>Enter length type </source>
-        <translation type="vanished">Введите режим длины линии</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Укажите вторую точку</translation>
-    </message>
-    <message>
-        <source>Enter snap type </source>
-        <translation type="vanished">Введите тип точки привязки</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished"> объектов будет создано</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">Выделите первую линию</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">Выделите вторую линию</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">Укажите длину биссектрисы:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">Укажите количество биссектрис:</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">Количество биссектрис не в диапазоне: </translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">Щелкните мышью и потяните, чтобы нарисовать линию</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineHorVert</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="116"/>
@@ -53304,74 +48444,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Выделите окружность, дугу или эллипс</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished"> объектов будет создано</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Введите число:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Недопустимое число. Попробуйте от 1..99</translation>
-    </message>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">Укажите расстояние &lt;%1&gt; или выберите объект или [%2]</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">Выберите объект</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">Укажите сквозную точку</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished"> объектов будет создано</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Число:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Недопустимое число. Попробуйте от 1..99</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">Укажите вершину</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Укажите первую вершину</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Укажите вторую вершину</translation>
     </message>
 </context>
 <context>
@@ -53413,29 +48485,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">Выберите базовый объект</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Укажите угол</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">Укажите длину</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Укажите положение</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53473,119 +48522,11 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Укажите точку вставки</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Введите текст:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
         <source>Specify location</source>
         <translation>Укажите местоположение</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Укажите первую точку</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Укажите следующую точку или [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Укажите следующую точку</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">Невозможно замкнуть последовательность линий. Указано недостаточно элементов.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Невозможно отменить. Недостаточно элементов.</translation>
-    </message>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">Введите конечную точку x</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Введите количество ломаных</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">Введите уравнение, f(x)</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">Введите начало x</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">Введенное x является недействительным.</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">Введенный размер шага недействителен.</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">Введенное значение x является недействительным.</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Альтернативная дуга</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">Укажите первую контрольную точку</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">Укажите следующую контрольную точку или [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">Укажите следующую контрольную точку</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Невозможно отменить. Недостаточно элементов.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">Текст: </translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Укажите точку вставки</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Введите текст:</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Укажите вторую точку</translation>
     </message>
 </context>
 <context>
@@ -53645,17 +48586,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Paste Multiple</source>
         <translation>Вставить несколько</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">Нечего отменять!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">Нечего повторять!</translation>
     </message>
 </context>
 <context>
@@ -53873,53 +48803,6 @@ End: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">Расстояние: %1\nКартезианские: (%2 , %3)\nПолярные: (%4 &lt; %5)\nТочка в объекте: (%6 , %7)\nТочка: (%8 , %9)&quot;</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">Укажите объект</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">Не привязываться к объектам в контейнере</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">Перемещать точку Относительного Нуля внутри объекта</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Информация</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Расстояние:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">Из точки:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">В точку:</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">Укажите точку</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -53996,832 +48879,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Укажите базовую точку</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Введите угол:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Введите коэффициент:</translation>
-    </message>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">Невозможно открыть файл &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Разделение</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">В точке:</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Объект не найден.</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">Точка обрезки не может быть конечной точкой объекта</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">Укажите объект для разделения</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">Укажите точку разделения</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">Объект должен быть линией, дугой, окружностью, эллипсом или интерполированной кривой.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete</source>
-        <translation type="vanished">Выберите объекты для удаления</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">Удалить сразу после выделения</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Выбрать контур</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">Укажите первую точку разделения ломаной</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">Укажите вторую точку разделения на той же ломаной</translation>
-    </message>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">Объекты не принадлежат ломаной.</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">Второй родительский объект не является ломаной</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">Родитель первого объекта — не ломаная</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">Родителем второго объекта является nullptr</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">Одним из выбранных объектов является nullptr</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">Родителем первого объекта является nullptr</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">Первый объект nullptr</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">Второй объект является nullptr</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">Нажмите на объект для изменения</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">Разбить сразу после выделения</translation>
-    </message>
-    <message>
-        <source>Select to explode text</source>
-        <translation type="vanished">Выберите объекты для разбиения до букв</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Отражение</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">Угол (дополняющий): </translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">Конец оси:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">Начало оси:</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Выбрать контур</translation>
-    </message>
-    <message>
-        <source>Select to mirror</source>
-        <translation type="vanished">Выберите объекты для отражения</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">Выберите прямую которая будет осью симметрии</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">Перевернуть Вертикально</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">Перевернуть Горизонтально</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">Укажите первую точку на оси симметрии</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">Укажите вторую точку на оси симметрии</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">Смещение перемещения</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">Смещение копии</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Укажите базовую точку</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">Создать копию</translation>
-    </message>
-    <message>
-        <source>Select to move</source>
-        <translation type="vanished">Выберите объекты для перемещения</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">Передвинуть сразу после выделения</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Выбрать контур</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Укажите точку назначения</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">Сдвиг с поворотом</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">Исходная точка:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">Точка назначения:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Смещение:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Укажите базовую точку</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate</source>
-        <translation type="vanished">Выберите объекты для перемещения и поворота</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">Передвинуть и повернуть сразу после выбора</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Выбрать контур</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Укажите точку назначения</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">Введите угол поворота:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">Смещение:</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Расстояние:</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">Укажите направление смещения</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">Задайте базовую точку для направленя смещения</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset</source>
-        <translation type="vanished">Выберите прямаю, ломаную, круг или дугу для создания смещения</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">Сместить сразу после выбора</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Выбрать контур</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction</source>
-        <translation type="vanished">Выберите объекты для изменения направления</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">Изменить направление сразу после выбора</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Выбрать контур</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Укажите базовую точку</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">Поворот</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Исходная точка:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Точка назначения:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Смещение:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Базовая точка:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">Центр поворота:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">Второй Угол:</translation>
-    </message>
-    <message>
-        <source>Select to rotate</source>
-        <translation type="vanished">Выберите объекты для поворота</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">Повернуть сразу после выбора</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Выбрать контур</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Использовать центр выделения как базовую точку</translation>
-    </message>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">Укажите центр вращения</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">Укажите целевую точку вращения</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">Задайте точку назначения для поворота вокруг базовой точки</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">Двойное вращение</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">Центр 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">Угол 1:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">Центр 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">Угол 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation</source>
-        <translation type="vanished">Выберите объекты для вращения</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">Повернуть сразу после выбора</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Выбрать контур</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">Укажите абсолютную базовую точку</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">Укажите относительную базовую точку</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Скругление</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Точка 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Точка 2:</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">Укажите второй объект</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">Введите радиус:</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">Указать первый объект или выбрать радиус &lt;%1&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Масштабирование</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Центр: </translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Исходная точка:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Точка назначения:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Смещение:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">Масштаб по X</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">Масштаб по Y:</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">Укажите центральную точку масштабирования</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Использовать центр выделения как базовую точку</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">Укажите исходную точку</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Укажите конечную точку</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">Свободная привязка</translation>
-    </message>
-    <message>
-        <source>Select to scale</source>
-        <translation type="vanished">Выберите объекты для масштабирования</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">Масштабировать сразу после выделения</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Выбрать контур</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Укажите первый угол</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Укажите второй угол</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">Растяжение</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">Начальный угол области:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">Конечный угол области:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Базовая точка:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Точка назначения:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Смещение:</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Укажите базовую точку</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Укажите точку назначения</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">Выберите первый объект для подгонки</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">Выберите ограничивающий объект</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Подгонка</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">Подогнать по двум</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Точка пересечения:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">Точка пересечения 2:</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">Выберите второй объект для подгонки</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">Выберите объект для подгонки</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">Объект на найден.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">Выбранный объект не является элементарным объектом или его невозможно подогнать.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">Выберите прямую/дугу для подгонки ИЛИ укажите значение длины</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Объекты не найдены.</translation>
-    </message>
-    <message>
-        <source>Choose entities</source>
-        <translation type="vanished">Выберите объекты для изменения порядка</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">Упорядочить сразу после выбора</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Выбрать контур</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">Укажите объекты для упорядочивания</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Объект не найден.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Объект должен быть ломаной.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">Точка не может быть добавлена.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">Добавленная точка не принадлежит объекту.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">Укажите ломаную для добавления вершин</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">Укажите точку добавляемой вершины</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Объект не найден.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Объект должен быть ломаной.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">Щёлкните рядом с началом или концом существующей ломаной.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Введите количество ломаных</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">Укажите ломаную рядом с началом или концом точки</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">Нельзя прикрепить узел к замкнутой ломаной.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Не могу отменить: мало объектов.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Объект не найден.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Объект должен быть ломаной.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">Укажите ломаную для удаления вершины</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">Укажите удаляемую вершину</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Некорректная удаляемая точка.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Удаляемая точка не принадлежит объекту.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Объект не найден.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Объект должен быть ломаной.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Удаляемая точка не принадлежит объекту.</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">Ломаная не найдена</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">Как минимум два сегмента ломаной должны быть между выбраными точками</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">Укажите ломаную для удаления отрезка между двумя вершинами</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">Укажите первый узел</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">Укажите вторую вершину</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Некорректная удаляемая точка.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Объект не найден.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Объект должен быть ломаной.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">Укажите исходную ломаную</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Объект не найден.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">Выберите один из отрезков на исходной ломаной</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">Объект не может быть замкнутой ломаной.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">Ломаная создана</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Объект не найден.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Объект должен быть ломаной.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">Первый сегмент должен быть на выбраной ломаной</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">Второй сегмент должен быть на выбраной ломаной и не равен первому выбраному</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">Укажите ломаную для подгонки</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">Укажите первый отрезок</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">Укажите второй отрезок</translation>
     </message>
 </context>
 <context>
@@ -54903,101 +48960,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation>(Enter или CTRL+LKM клик для завершения)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">Объект должен быть элементарным.</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Укажите объект для выделения</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">Укажите первую точку линии пересечения</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">Выбрать пересекающий объект</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">Выбирать дочерние объекты</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">Укажите вторую точку линии пересечения</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">Укажите объект с желаемым слоем для выделения</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Укажите объект для выделения</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Выбрать контур</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">Снятие выделения</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">Выделение</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished"> объектов </translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">которых пересекает рамка</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">которые внутри рамки</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">Выберите вторую грань</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">Выбрать пересекающиеся</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">Снять выделение</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">Выделение объекто</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">Снять выделение пересекающихся</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">Нажмите и растяните рамку для выбора</translation>
     </message>
 </context>
 <context>
@@ -55185,10 +49147,6 @@ Point: (%8 , %9)</source>
         <translation>Расстояние (Точка)</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation type="vanished">Нет</translation>
-    </message>
-    <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1380"/>
         <source>Angle Ray</source>
         <translation>Луч угла</translation>
@@ -55210,25 +49168,9 @@ Point: (%8 , %9)</source>
         <translation>Луч прямой</translation>
     </message>
     <message>
-        <source>Vertex-Vertex</source>
-        <translation type="vanished">Вершина-Вершина</translation>
-    </message>
-    <message>
-        <source>Endpoint Tangent</source>
-        <translation type="vanished">Касательная вершины</translation>
-    </message>
-    <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1417"/>
         <source>Endpoint Normal</source>
         <translation>Нормаль вершины</translation>
-    </message>
-    <message>
-        <source>Tangent One</source>
-        <translation type="vanished">Касательная к одному</translation>
-    </message>
-    <message>
-        <source>Tangent Two</source>
-        <translation type="vanished">Касательная к двум</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1426"/>
@@ -55246,10 +49188,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1432"/>
         <source>Distance (Explicit)</source>
         <translation>Дистанция (Заданная)</translation>
-    </message>
-    <message>
-        <source>Distance (Vertex)</source>
-        <translation type="vanished">Дистанция (Вершина)</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1441"/>
@@ -55326,143 +49264,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/components/textfileviewer.ui" line="14"/>
         <source>Frame</source>
         <translation>Рамка</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Параметры дуги</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Против часовой стрелке</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">По часовой стрелке</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">Параметры тангенциальной дуги</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">Если выбрано, создаст тангенциальную дугу с заданым углом дуги</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">Радиус касательной к дуге</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">Если выбрано, создаст тангенциальную дугу с заданым радиусом</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">Общий угол наклона касательной к дуге</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Измерить радиус на чертеже</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Радиус</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Угол</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">Параметры фаски</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">Установите, чтобы подогнать два объекта к фаске</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Подогнать</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">Длина 1:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Длина фаски по горизонтали</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">Измерить длину фаски по горизонтали на чертеже</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">Длина 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Длина фаски по вертикали</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">Измерить длину фаски по вертикали на чертеже</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">Параметры окружности</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Радиус:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Радиус окружности</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Измерить радиус на чертеже</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">Касательная к окружности 2 варианта</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нарисовать радиус касательной к окружности&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Радиус:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">Радиус касательной к окружности</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Измерить радиус на чертеже</translation>
     </message>
 </context>
 <context>
@@ -55602,856 +49403,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Параметры вставки</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Угол поворота</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Масштаб:</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">Разрешение (DPI):</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Коэффициент масштабирования</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">DPI (количество точек на дюйм) для изображения</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Параметры вставки</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Угол поворота</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Коэффициент:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Коэффициент масштабирования</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">Массив:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">Число столбцов</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">Число рядов</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">Измерить расстояние между строками на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">Измерить расстояние между столбцами на чертеже</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Промежуток:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">Расстояние между столбцами</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">Расстояние между рядами</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">Параметры вставки библиотечного элемента</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Угол поворота</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Коэффициент:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Коэффициент масштабирования</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">Параметры прямой под заданным углом</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Угол линии</translation>
-    </message>
-    <message>
-        <source>Specifies how to handle length parameter.</source>
-        <translation type="vanished">Определяет, как трактовать заданную длину</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Прямая</translation>
-    </message>
-    <message>
-        <source>By X</source>
-        <translation type="vanished">По X</translation>
-    </message>
-    <message>
-        <source>By Y</source>
-        <translation type="vanished">По Y</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Вручную</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Длина:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Длина линии</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">Точка привязки:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">Измерить угол прямой на чертеже</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Начало</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Середина</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Конец</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">Измерить длину прямой на чертеже</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">Если выбрано, то прямая будет ортогональна к оси базиса углов. Иначе. к оси координат.</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">К Базису углов</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">Параметры биссектрисы</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Длина:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">Длина биссектрисы</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">Измерить длину биссектриссы на чертеже</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Количество:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">Количество создаваемых биссектрис</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Параметры прямой</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Создать замкнутый контур из существующих линий</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Замкнуть</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Отменить последнюю начерченную линию</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Отменить</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Повторить последнюю начерченную линию</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Повторить</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Параметры прямой</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">Направление:</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">Объединить все нарисованные прямые в ломаную</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">В ломаную</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">Вертикаль</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">Прямая под фиксированным углом.</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Угол</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">Горизонталь</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">Если выбрано,использовать угол относительный к предыдущей прямой</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Относительный</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Отменить последнюю начерченную линию</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Отменить</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Создать замкнутый контур из существующих линий</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Замкнуть</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Повторить последнюю начерченную линию</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Повторить</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Угол наклона линии (относительно оси Х или базового объекта)</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">Рисовать прямую к произвольной точке</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Точка</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">Параметры параллельной прямой</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Расстояние:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">Расстояние до исходного объекта</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Измерить расстояние на чертеже</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Количество:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Количество создаваемых параллельных прямых</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">Параметры параллельной через точку</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">Если выбрано, параллельные будет созданы с двух сторон от объекта</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Симметрично</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Количество:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Количество создаваемых параллельных линий</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Параметры многоугольника</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Количество:</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">Если выбрано, то вершины многоугольника будут со скруглением</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">Радиус скругления</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">Если выбрана, будет создана одна ломаная для всего многоугольника.
-Иначе, будут созданны отдельные объекты. </translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">В ломаную</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Измерить радиус на чертеже</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">Количество граней</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">Радиус скругления вершин</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">Если выбрано, то в заданных точках будут вершины многоугольника. Иначе, в них будут средние точки ребер. </translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">Вершина к Вершине</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Параметры прямой под относительным углом</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Угол прямой</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Длина:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Длина прямой</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Измерить длину на чертеже</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Параметры текста</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Текст:</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">Текст для вставки</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Угол наклона относительно оси X</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">Изменить параметры смещения</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">Дистанция смещения относительно оригинального объекта</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">В &amp;текущий слой</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Количество копий</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся, иначе они будут удалены</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">&amp;Сохранить оригиналы</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">Если выбрано, то будет использована заданая величина смещения.
-Иначе, расстояние смещение будет задаваться интерактивно с помощью мыши.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Фиксированное Расстояние</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">С текущими &amp;аттрибутами</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">Измерить смещение на чертеже</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Если выбрано, будет создано несколько копий объектов.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Несколько копий</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Параметры сдвига и поворота</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">С текущими &amp;аттрибутами</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Если выбрано, будет создано несколько копий объектов</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Несколько копий</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">Если выбрано, созданые объекты будут повернуты на одинаковый угол.
-Иначе, угол поворота будет пропорционален номеру копии. </translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">Тот же угол для копий</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">Угол поворота</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Количество копий</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">Если выбрано, угол поворота задается интерактивно с помощью мыши</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Вручную</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">В &amp;текущий слой</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Если выбрано, то оригинальные объекты останутся, иначе они будут удалены</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">&amp;Сохранить оригинал</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">Параметры ломаной</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">Соединяет концы ломаной, образуя замкнутый контур</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Замкнуть</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">Отменяет предыдущую вершину</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Отменить</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">Тип сегмента:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">Определяет, какой именно тип сегмента ломаной будет создан</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Прямая</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">Касательная</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">Касательная дуга с радиусом</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">Касательная дуга с углом</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Угол</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">Касательная дуга</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">Тангенциальная дуга с заданным радиусом</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">Тангенциальная дуга с заданным углом</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">Дуга с углом</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Радиус:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Радиус дуги</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Измерить радиус на чертеже</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">Угол дуги</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">Против часовой стрелки</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">По часовой стрелке</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">Параметры предварительного просмотра</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">Альбомная ориентация</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">Настройки чертежа</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Масштаб:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;размер печати : размер чертежа&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Зафиксировать масштаб печати на текущем значении&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">Зафиксировать</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">Переключить чёрно-белый режим</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">Альбомная ориентация листа бумаги</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">Портрертная ориентация листа бумаги</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">Применить Шкалу печати к ширине линии</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">Поместить страницу в центр чертежа</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">Масштабировать до размера области печати</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">Вместить в 1 страницу</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">Если выбрано, чертеж будет напечатан на наскольких страницах плиткой.
-Пространство бумаги будет включать в себя несколько страниц с заданными чистом колонок и столбцов.</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">Печать плиткой</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">Строки:</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">Количество страниц в ширину</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">Колонки:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">Количество страниц в высоту</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">Рассчитать количество страниц, необходимых для удержания чертежа</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">Параметры скругления</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">Включите, чтобы подогнать грани при скруглении</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Подогнать</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Радиус:</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">Радиус скругления</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Измерить радиус на чертеже</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56490,326 +49441,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>Число точек разделяющих кривую на равные отрезки</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">Параметры сплайна</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Степень:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">Степень уравнения аппроксимации кривой между точками</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">Если выбрано, то создается замкнутый контур сплайна</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Закрытый</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">Отменяет предыдущую точку</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Отменить</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Параметры текста</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Текст:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Угол наклона относительно оси X</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">Параметры подгонки на величину</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">Расстояние. Отрицательные значения для обрезки, положительные для удлинения.</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">Общая</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Длина:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">Расстояние. Отрицательные значения для обрезки, положительные для удлинения. Отрицательный знак не учитывается, когда установлена окончательная длина отрезка.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Измерить длину на чертеже</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">Если выбрано, то подгонка прямой будет выполнена для двух ее концов</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Симметрично</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">Используется введенная длина как окончательная длина отрезка после обрезки, вместо размера увеличения</translation>
-    </message>
-</context>
-<context>
-    <name>lc_action_block_insert.</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Укажите базовую точку</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Введите угол:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Введите коэффициент:</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">Введите количество столбцов:</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">Введите количество рядов:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">Введите промежуток между столбцами:</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">Введите промежуток между рядами:</translation>
-    </message>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">Блок не может содержать вставки сам по себе.</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished"> вложена вставка из текущего блока в:
-</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">
-Этот блок нельзя вставить.</translation>
-    </message>
-</context>
-<context>
-    <name>lc_action_modify_align_ref.</name>
-    <message>
-        <source>Align References</source>
-        <translation type="vanished">Выравнивание по точкам</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Смещение:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Угол:</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Масштаб:</translation>
-    </message>
-    <message>
-        <source>Align immediately after selection</source>
-        <translation type="vanished">Выровнять сразу после выделения</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Выбрать контур</translation>
-    </message>
-    <message>
-        <source>Select to align</source>
-        <translation type="vanished">Выберите объекты для выравнивания</translation>
-    </message>
-    <message>
-        <source>Select first reference point</source>
-        <translation type="vanished">Укажите первую исходную точку</translation>
-    </message>
-    <message>
-        <source>Select first target point</source>
-        <translation type="vanished">Укажите первую точку назначения</translation>
-    </message>
-    <message>
-        <source>Select second reference point</source>
-        <translation type="vanished">Укажите вторую исходную точку</translation>
-    </message>
-    <message>
-        <source>Select second target point</source>
-        <translation type="vanished">Укажите вторую точку назначения</translation>
-    </message>
-</context>
-<context>
-    <name>lc_action_modify_align_single.</name>
-    <message>
-        <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation type="vanished">Команда поддерживает только Мировую Систему Координат, и не может быть выполнена если активна Пользовательская Система Координат</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Смещение:</translation>
-    </message>
-    <message>
-        <source>Align to </source>
-        <translation type="vanished">Выровнивание по </translation>
-    </message>
-    <message>
-        <source>Entity</source>
-        <translation type="vanished">Объекту</translation>
-    </message>
-    <message>
-        <source>Position</source>
-        <translation type="vanished">Позиции</translation>
-    </message>
-    <message>
-        <source>Drawing</source>
-        <translation type="vanished">Чертежу</translation>
-    </message>
-    <message>
-        <source>Reference: </source>
-        <translation type="vanished">Назначение:</translation>
-    </message>
-    <message>
-        <source>Select base alignment entity</source>
-        <translation type="vanished">Выберите базовый объект выравнивания</translation>
-    </message>
-    <message>
-        <source>Specify base alignment point</source>
-        <translation type="vanished">Укажите базовую точку выравнивания</translation>
-    </message>
-    <message>
-        <source>Select entity to align</source>
-        <translation type="vanished">Выберите объект для выравнивания</translation>
-    </message>
-    <message>
-        <source>Finish alignment after selection</source>
-        <translation type="vanished">Выровнять и закончить после выбора объекта</translation>
-    </message>
-    <message>
-        <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
-        <translation type="vanished">Координата задается только при выравнивании к координате</translation>
-    </message>
-</context>
-<context>
-    <name>lc_action_modify_attributes.</name>
-    <message>
-        <source>Select to modify attributes</source>
-        <translation type="vanished">Выберите объекты для изменения аттрибутов</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">Изменить аттрибуты сразу после выделения</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Выбрать контур</translation>
-    </message>
-</context>
-<context>
-    <name>lc_action_modify_bevel.</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">Выбраные прямые параллельны</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">Выбраные прямые не принадлежат одной ломаной</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Подогнать</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Точка пересечения: </translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Точка 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Точка 2:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">Выбран некорректный объект который не поддерживает обрезку</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">Выбраный некорректный объект который не атомарный</translation>
-    </message>
-    <message>
-        <source>Both selected entities should be lines</source>
-        <translation type="vanished">Оба выбраных объекта должны быть прямыми</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">Выбран некорректный объект который не может быть обрезан первым объектом</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимое выражение</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Выберите первый объект</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Выберите второй объект</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">Введите длину 1:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">Введите длину 2:</translation>
     </message>
 </context>
 </TS>

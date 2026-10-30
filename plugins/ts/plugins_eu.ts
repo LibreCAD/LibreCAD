@@ -71,14 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>Klik egin aukeretan ezarpenak egiteko/desegiteko, eta egin klik Ados lerrokatzea hasteko.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">&quot;Jatorrizko objektuak mantendu&quot; aukera markatuta badago, Lerrokatu funzioak objektuak kopiatuko ditu, ez mugituko.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>jatorrizko lehen puntua</translation>

@@ -39,190 +39,11 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">제품 정보</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">·</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;&gt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">이름을 입력하고 + 를 누르세요</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">제품 정보</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">제품 정보</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">제품 정보</translation>
-    </message>
-</context>
-<context>
-    <name>DlgParabola</name>
-    <message>
-        <source>Parabola</source>
-        <translation type="vanished">파라볼라</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">레이어:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">기하학</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">Spline의 포인트</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">제어 포인트</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>SplinePoints</source>
-        <translation type="vanished">스플라인 점</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">레이어:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">기하학</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">(주)</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="vanished">선택하면 스플라인 포인트가 사용됩니다</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="vanished">스플라인 포인트</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="vanished">선택된 경우, 컨트롤 포인트가 사용됩니다</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">제어 포인트</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">Spline의 포인트</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
         <translation>출발점은 거리 또는 지점 상태 만 설정할 수 있습니다</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">생성하기:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">관련 상품</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">폭:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">고도:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">센터:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">잘못된 각도</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">잘못된 반경</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">잘못된 값</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">삽입 점</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">크기 지정 (폭, 높이)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">코너 유형 지정
-[str|둥근|베벨]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">코너 베벨 길이 지정 (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">코너 반경 지정</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">연락처
-[버튼]</translation>
     </message>
 </context>
 <context>
@@ -469,73 +290,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">아크의 높이 ( chord와 top arc point 사이의 distanсe)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">고도:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">그림에서 각을 선택합니다</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">아크의 반경</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">반경:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">시계방향</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">아크의 중앙 각</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">아크의 길이</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">길이:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">그림에서 득점 반경</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">그림에서 고도를 선택하십시오</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">드로잉 길이</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -747,10 +501,6 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">고정 박스에 대한 엔티티티를 선택하십시오 (완료하려면 엔터)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation type="unfinished"></translation>
@@ -805,30 +555,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished">원, 아크 또는 엘립스 선택</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">선택한 점들에 비해 반지름=%1이 너무작습니다.점들=%2사이의 거리가 지름=%3보다 큽니다.</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">두개 가능한 원의 중심에서 선택</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">첫 위치 지정</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">둘째 점 지정</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">원의 중심 선택</translation>
     </message>
 </context>
 <context>
@@ -1076,13 +802,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">원, 아크 또는 엘립스 선택</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1126,10 +845,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>선택 센터</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">지정된 센터 없음.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1524,154 +1239,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">첫 번째 포인트</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">두 번째 지점 지정
-또는 [number|x|y|angle|p|edges|거리]</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">두 번째 지점 지정
-또는 [숫자]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">선 방향 지정
-[x|y|angle|p|거리]</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">연락처
-또는 [x|y|p|number|edges|거리]</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">가장자리 점 형태를 지정하십시오
-[none|start|end|both|거리]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">점 사이의 고정 거리 지정
-또는[x|y|p|number|edges]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">사이트맵</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">거리 지정 (%1)
-또는 [%2]</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">₢ 킹</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">거리를 지정하십시오 (angle %1 deg)
-또는 [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">포인트 수</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">두 번째 코너 지정</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">두번째 tangent를 지정하십시오</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">첫 번째 코너</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">첫번째 tangent를 지정하십시오</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">유효 번호가 없습니다. 시험 1..9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">Rounding 반경의 잘못된 값</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">입력 번호:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">둥근 반경을 입력하십시오:</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">호텔 찾기</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">생성하기:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">센터:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">시작 각:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">반경:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">반경 안:</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">폴리곤</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1915,29 +1482,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">첫 번째 법인 선택</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">두 번째 법인 선택</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">인턴십</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">오프셋값을 입력</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="190"/>
@@ -2090,13 +1634,6 @@ or [x|y|p|number|edges|distance]</source>
 [none|start|end|both|거리]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="unfinished">점 사이의 고정 거리 지정
-또는[x|y|p|number|edges]</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Specify distance (%1)
@@ -2120,13 +1657,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Y</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="620"/>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="unfinished">거리를 지정하십시오 (angle %1 deg)
-또는 [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="625"/>
@@ -2285,11 +1815,6 @@ or [%2]</source>
         <translation>지정 폭</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="396"/>
-        <source>Specify size (width, height))</source>
-        <translation>크기 지정 (폭, 높이)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
         <translation>참조 지점 [topl|topr|left|middle|right|bottoml|bottom|bottomr</translation>
@@ -2355,11 +1880,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="619"/>
         <source>Specify height</source>
         <translation>높이 지정</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="622"/>
-        <source>Specify start point)</source>
-        <translation>시작점 지정)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="625"/>
@@ -4034,10 +3554,6 @@ or [%2]</source>
         <translation>지원하다</translation>
     </message>
     <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">격자에 스냅</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>스냅 중간 설명서</translation>
@@ -4303,11 +3819,6 @@ or [%2]</source>
         <translation>선택 &amp;all</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="910"/>
-        <source>Ctrl+K</source>
-        <translation>사이트맵</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="745"/>
         <source>Invert Selection</source>
         <translation>연락처</translation>
@@ -4408,12 +3919,6 @@ or [%2]</source>
         <translation>&amp;Grid 정보</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="927"/>
-        <source>Ctrl+G</source>
-        <comment>Toggle Grid</comment>
-        <translation>Ctrl + G</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>&amp;Draft</source>
         <translation>&amp;Draft의 특징</translation>
@@ -4424,12 +3929,6 @@ or [%2]</source>
         <translation>·Statusbar</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="930"/>
-        <source>Ctrl+I</source>
-        <comment>Hide Statusbar</comment>
-        <translation>Ctrl + I</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
         <source>Focus on &amp;Command Line</source>
         <translation>&amp;Command 선에 초점</translation>
@@ -4438,26 +3937,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>Widget Options</source>
         <translation>Widget 옵션</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">왼쪽</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">지원하다</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source>Floating</source>
-        <translation type="vanished">기타 제품</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
@@ -4533,12 +4012,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Selection Pointer</source>
         <translation>&amp;Selection 포인터</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="929"/>
-        <source>Ctrl+D</source>
-        <comment>Toggle Draft Mode</comment>
-        <translation>Ctrl + D에</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
@@ -5245,10 +4718,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">정렬할 수 있는 entities 선택하기 (Enter to complete)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>선택 및 정렬</translation>
@@ -5280,10 +4749,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
         <translation>크기:</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">정렬 선택 (Enter to complete)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -5966,22 +5431,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished">거리:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="237"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="244"/>
-        <source>Specify direction of offset</source>
-        <translation type="unfinished">오프셋의 방향</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="240"/>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="unfinished">오프셋의 방향에 대한 참조 지점</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="253"/>
-        <source>Select line, polyline, ellipse, circle or arc to create offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="254"/>
         <source>Select contour</source>
         <translation type="unfinished">연락처</translation>
@@ -6274,13 +5723,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="430"/>
         <source>Scale immediately after selection</source>
         <translation type="unfinished">선택 후에 가늠자</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">선택 없음!</translation>
     </message>
 </context>
 <context>
@@ -7257,18 +6699,6 @@ Point: (%8 , %9)</source>
         <translation>제공된 파일을 읽을 수 없습니다 - 존재하고 그것을 읽을 수 있음을 확인하십시오.</translation>
     </message>
     <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">짧은 맵핑은 수입되지 않았습니다.
-제공된 파일은 존재하지만 LibreCAD Shortcuts mapping을 포함하지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">짧은 맵핑은 수입되지 않았습니다.
-XML 파일 처리 중에 오류가 발생했습니다.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
         <translation>Shortcuts mappings는 성공적으로 저장되었습니다.</translation>
@@ -7277,12 +6707,6 @@ XML 파일 처리 중에 오류가 발생했습니다.</translation>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
         <translation>제공된 파일에 쓰기 할 수 없습니다 - 그것을 쓸 수 있음을 확인하십시오.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">짧은 맵핑은 수입되지 않았습니다.
-XML 발생시 오류가 발생했습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -8683,74 +8107,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">확인되면, 원래 아크가 제거됩니다</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">아크 교체</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">원을 만들려면 레이어를 배치해야합니다</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">지원하다</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">지원하다</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">원래 해결</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">그림에서 오프셋값을 선택</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">펜:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">창조적인 원형에 적용하는 펜</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">층:</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">아크의 반경에 원형의 반경의 델타</translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">반경 교대:</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -9045,76 +8401,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>도구 모음: %1 (사용자 정의)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">크기:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">크로스의 수평 치수</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">그림에서 X 값을 선택합니다</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">교차의 차원을 적용하는 방법</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">제품 정보</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">총 길이</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">퍼센트</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">그림에서 Y 값 선택</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">크로스의 수직 치수</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">센터의 주위에 십자가를 위한 교체 각</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">그렇습니다:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">동작 추가 또는 제거</translation>
     </message>
 </context>
 <context>
@@ -9478,45 +8764,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="vanished">좌표 치수</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">레이어:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">차원의 층</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Pen 속성</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">기하학</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">펜</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -9578,11 +8825,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
         <translation>기본 간격:</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">기본 치수의 치수 라인 사이의 간격을 설정합니다. 주변 명소 보기 기본 차원에 대한 정보는 DIMBASELINE을 참조하십시오. (DIMDLI 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -11231,10 +10473,6 @@ Are you sure you are going to discard changes?</source>
         <source>Hatch Properties</source>
         <translation>해치 속성</translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">재산?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -11683,19 +10921,9 @@ Are you sure you are going to discard changes?</source>
         <translation>참고 : 메뉴 할당은 무시됩니다. &apos;패널&apos;을 예약하고 있습니다.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="240"/>
-        <source>NNOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
-        <translation>NNOTE: 메뉴 할당은 무시됩니다. &apos;Select Contour&apos;에 대해 알려드립니다.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="243"/>
         <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
         <translation>참고 : 이 조합은 기본 컨텍스트 메뉴에 대한 예약이며, 그것을 주장 할 수 있습니다!</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="246"/>
-        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored</source>
-        <translation>주의: 이 조합은 팬을 위해 예약됩니다! 메뉴 할당은 무시됩니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="251"/>
@@ -11756,10 +10984,6 @@ Are you sure you are going to discard changes?</source>
         <translation>UCS 세부사항 란</translation>
     </message>
     <message>
-        <source>If checked, type of grid for saved view will be shown</source>
-        <translation type="vanished">체크된 경우, 저장된 전망에 대한 그리드의 유형이 표시됩니다</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
         <translation>그리드 유형 아이콘 열</translation>
@@ -11768,18 +10992,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Type icon column</source>
         <translation>유형 아이콘 열</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation type="vanished">체크된 경우, 볼의 좌표계의 세부사항을 가진 란은 보여줄 것입니다</translation>
-    </message>
-    <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">테이블 항목에 대한 뷰 세부 정보가 있는 도구 설명</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">선택한 경우, 뷰의 좌표계 세부 정보가 있는 열이 표시됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
@@ -11822,10 +11034,6 @@ Are you sure you are going to discard changes?</source>
         <translation>체크된 경우, 표시된 열은 테이블에 표시됩니다.</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">VIew 세부사항 란</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>영업 시간</translation>
@@ -11841,17 +11049,9 @@ Are you sure you are going to discard changes?</source>
         <translation>테이블 항목을 한 번 클릭하여 뷰 복원</translation>
     </message>
     <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">테이블 아이템을 더블 클릭</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
         <source>Defines which action should be performed on double click on view item of the table.</source>
         <translation>테이블의 뷰 항목을 두 번 클릭할 때 수행할 작업을 정의합니다.</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table. </source>
-        <translation type="vanished">테이블의 보기 아이템을 더블 클릭으로 수행해야 하는 동작을 무시한다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="158"/>
@@ -11879,10 +11079,6 @@ Are you sure you are going to discard changes?</source>
         <translation>활성화된 경우, 보기 테이블 아이템을 클릭해 볼 수 있습니다. 그렇지 않으면, 전망은 명시적으로 복원되어야한다.</translation>
     </message>
     <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">테이블 아이템으로 한 번의 클릭으로 다시보기</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
         <translation>표시되면, View에 대한 추가 정보가 표시된 도구가 테이블 아이템에 표시됩니다.</translation>
@@ -11891,10 +11087,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
         <translation>이미 입력된 이름을 가진 보기를 창조하는 경우에, 그것은 새로운 위치에 의해 새롭게 할 것입니다. 그렇지 않으면, 새로운 전망의 유일한 이름은 요구될 것입니다.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">선택된 경우, 확인 대화상자는 보기의 제거에 표시됩니다. 그렇지 않으면, 전망은 조용히 제거됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
@@ -12190,17 +11382,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation>이름은 독특하지 않습니다. 자주 묻는 질문.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">펜</translation>
-    </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Parabola 통제 점은 충돌할 수 없습니다</translation>
     </message>
 </context>
 <context>
@@ -12616,13 +11797,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DlgSplinePoints</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">펜</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgTolerance</name>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="14"/>
@@ -12704,17 +11878,9 @@ Are you sure you are going to discard changes?</source>
         <translation>Сhecked 경우, UCS에 대한 추가 정보가 테이블 아이템에 표시됩니다.</translation>
     </message>
     <message>
-        <source>Toolip with UCS details for table items</source>
-        <translation type="vanished">테이블 항목에 대한 UCS 세부 사항과 도구</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
         <source>Type icon column</source>
         <translation>유형 아이콘 열</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation type="vanished">확인되면, UCS 기원과 각도의 세부 사항이 테이블에 표시됩니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -12730,10 +11896,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
         <source>Editing</source>
         <translation>관련 기사</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">선택된 경우, 확인 대화상자는 보기의 제거에 표시됩니다. 그렇지 않으면, 전망은 조용히 제거됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"/>
@@ -12754,10 +11916,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
         <translation>선택한 경우, UCS에 대한 그리드 유형이 있는 열이 표시됩니다.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">선택한 경우, 뷰를 제거할 때 확인 대화 상자가 표시됩니다. 그렇지 않으면 뷰가 자동으로 제거됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12825,26 +11983,6 @@ Are you sure you are going to discard changes?</source>
         <translation>UCS 강조 표시를 위한 UCS 마커의 깜박임 횟수를 정의합니다.</translation>
     </message>
     <message>
-        <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation type="vanished">작업이 테이블의 항목에 더블 클릭에 수행되어야합니다.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">한 번의 클릭으로 UCS 복원</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation type="vanished">체크된 경우, UCS 유형의 아이콘이 테이블에 표시됩니다.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation type="vanished">확인되면, UCS에 대한 그리드 유형의 열이 표시됩니다</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied</source>
-        <translation type="vanished">UCS가 적용된 후 도면의 보기 창을 어떻게 조정해야 하는지</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
         <source>On double-click on table item</source>
         <translation>테이블 아이템을 더블 클릭</translation>
@@ -12900,10 +12038,6 @@ Are you sure you are going to discard changes?</source>
         <translation>UCS 하이라이트</translation>
     </message>
     <message>
-        <source>Defines delay between UCS marker blinks</source>
-        <translation type="vanished">UCS 마커 blinks 사이의 지연</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="216"/>
         <source> ms</source>
         <translation>사이트맵</translation>
@@ -12917,10 +12051,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="242"/>
         <source>Blink Delay:</source>
         <translation>Blink 지연:</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation type="vanished">UCS의 UCS 마커의 양을 강조</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="252"/>
@@ -13317,45 +12447,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">공급 능력:</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">체크된 경우, 전체 선택의 경계 박스가 생성됩니다. 그렇지 않다면, 그것은 개인적 entities를 위해 창조될 것입니다.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">그룹 선택</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">그림에서 상쇄</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">선택된 경우에만 코너 포인트만 묶을 수 있습니다. 그렇지 않으면, 가장자리 선은 그려질 것입니다.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">코너 포인트 만</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">선택된 경우, 경계 상자는 폴린으로 그려집니다</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13449,86 +12540,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation type="unfinished">그림에서 상쇄</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">Original entity에서 중복의 수직 오프셋</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">원래 법인에서 중복의 수평 오프셋</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">그림에서 X로 상쇄</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">펜:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">체크된 경우, 중복은 원래의 좌표에 위치합니다</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">내 계정</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">그림에서 Y로 상쇄</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">층:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">Duplicate를 만들려면 Pen</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">지원하다</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">원래 해결</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">중복할 수 있는 층</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">지원하다</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">오프셋 Y:</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">오프셋 X:</translation>
     </message>
 </context>
 <context>
@@ -13710,69 +12721,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">Minor 반경:</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">주요 반경을 위한 각의 가치</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">검사된 경우에, 주요 반경을 위한 각은 지정될지도 모릅니다</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">기본적인 각:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">그림에서 중요한 작업을 선택</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">확인되면, 주요 반경 각도는 마우스에 의해 지정됩니다</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">무료 다운로드</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">Ellipse의 주요 반경의 길이</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">그림에서 미성년자 반경 선택</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">주요 반경:</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">Ellipse의 사소한 반경의 길이</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">시계방향</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13911,21 +12859,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">그림에서 선택 각</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Arc 옵션</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">시계방향</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">자주 묻는 질문</translation>
     </message>
 </context>
 <context>
@@ -14488,11 +13421,6 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_ExportToImageService</name>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="52"/>
-        <source>Exporting drawing...</source>
-        <translation>수출 그림...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="59"/>
         <source>Exported: %1</source>
         <translation>수출: %1</translation>
@@ -14816,30 +13744,6 @@ Are you sure you are going to discard changes?</source>
         <source>Eccentricity:</source>
         <translation>동심도:</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">잘못된 하이퍼볼라 정의</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">Foci는 명백해야 합니다</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">잘못된 중심 좌표</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">주요 반경은 긍정적이어야 합니다</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">잘못된 회전 각도</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">비율 또는 미성년자 반경은 긍정이어야 합니다</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -15011,10 +13915,6 @@ Are you sure you are going to discard changes?</source>
         <translation>폭:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">이미지의 폭</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>그림에서 폭 가치 선택</translation>
@@ -15025,21 +13925,9 @@ Are you sure you are going to discard changes?</source>
         <translation>고도:</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">이미지의 높이</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>그림에서 높이 값을 선택합니다</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">크기:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">확장 계수</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -15051,10 +13939,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>유형:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">회전 각도</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -15086,22 +13970,6 @@ Are you sure you are going to discard changes?</source>
         <source>Select an image file</source>
         <translation>이미지 파일 선택</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">크기 (px):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">픽셀의 이미지 크기</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">사이트맵</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">해결책 (인치 당 점)</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -15114,21 +13982,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">체크된 경우, 포인트는 항상 선택한 법인 내에서</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">Entity에 스냅</translation>
     </message>
 </context>
 <context>
@@ -15506,14 +14359,6 @@ Are you sure you are going to discard changes?</source>
         <translation>레이어의 내부 이름을 계층 이름으로 분할하는 데 사용되는 구분자</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">층 수준 이름 분리기</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">두 번째 레이어 스프록스</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15544,10 +14389,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>레이어가 대체 위치 레이어임을 나타내는 레이어 이름의 접미사.</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">제품 이름</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15690,17 +14531,9 @@ Are you sure you are going to discard changes?</source>
         <translation>다양한 색상 설정</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">색상 :</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>레이어 트리에서 선택한 항목에 대한 배경 색상.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">층 나무 전망에 있는 분리기 선을 위한 색깔</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15739,10 +14572,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>가상 레이어 배경색</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">3view 품목 분리기 격자</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15798,10 +14627,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>대체 위치 레이어</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">제품정보</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16291,118 +15116,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">체크하면, 라인의 길이는 설정 대신 마우스 위치에 의해 정의됩니다</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">무료 다운로드</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">그림에서 스냅 거리</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">교차점에서 tick snap point의 상쇄</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">드로잉 길이</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">그림에서 상쇄</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">체크된 경우, 본래 법인은 교차점으로 나뉩니다.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">한국어</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">공급 능력:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">지정된 선 스냅 포인트에서 교차점의 거리</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">생성된 선의 일부가 교차점에 흠뻑 빠질 것</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">지원하다</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">Tick 스냅:</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">선 스냅:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">선의 길이</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">확인된 경우, 각은 선택한 기관의 각도에 관계됩니다</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">릴라</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">길이:</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">생성된 선과 근원체 사이 교차점의 위치를 위한 스냅 점 (원래 선에서)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">무료 다운로드</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">스냅 거리:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">선의 각</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16709,93 +15422,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation type="unfinished">Bisectors의 수</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">크기:</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">끝 분파:</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">교차점에서 생성된 선을 위한 상쇄</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">생성된 선을 위한 스냅 점</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">지원하다</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">길이:</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">생성된 선의 고정 길이</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">스냅:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">드로잉 길이</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">그림에서 상쇄</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">생성된 선이 교차점으로 만들거나 고정 길이가 있어야 함</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">본문 바로가기</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">고정 길이</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">선택된 라인은 선택된 라인에 직각선이 될 것입니다</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">본래 선 사이 각과 창조한 것</translation>
     </message>
 </context>
 <context>
@@ -17181,81 +15807,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">체크된 경우, 폴린은 개별 라인 대신 생성됩니다</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">Polyline 만들기</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">선의 정책은 두 번째로 선정되었습니다</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">확장/Trim</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">기타 제품</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">변경 없음</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">선 1:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">선 2:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">선택된 선에 가입하는 정책</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">펜이 엔티티티티티에 적용되어야 하는 방법</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">활성 펜</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">라인 1</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">라인 2</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">두 배 선</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">특성:</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">체크된 경우, 본래 선은 제거될 것입니다</translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17637,85 +16188,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">가장자리에 점(start/end point)가 생성되어야 합니다.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">둘 다</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">지원하다</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">그림에서 거리</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">포인트 수</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">가장자리 점:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">라인의 시작/엔드 포인트 또는 라인의 길이가 점과 거리를 기준으로 계산되는지 여부를 지정합니다.</translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">점 사이 거리.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">확인된 경우, 포인트의 선은 지정된 각도로 그려집니다</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">점의 수:</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">체크하면 포인트 사이의 고정 지정된 거리가 사용됩니다. 그렇지 않으면 거리가 계산됩니다.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">고정 거리</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">선의 각</translation>
     </message>
 </context>
 <context>
@@ -21965,433 +20437,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;도움</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">On&amp;line 문서</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;위키</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">사용자 및 관리</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp;Commands의</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">&amp;Style 시트</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">다운로드</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp;포럼</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">Zulip 및 채팅</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">&amp;Submit 오류</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">&amp;Request 기능</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">&amp;리뷰 페이지</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp;문</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;라인</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">프로모션</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Circle는</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">·</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">폴리&amp;곤</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">프로모션</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">엘립&amp;세</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp; 폴리라인</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">&amp;기타</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">&amp; 끌기</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;엘립스</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">프로젝트</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Modify</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp; 주문</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">&amp;디멘션</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;정보</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">및 도구</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;선택</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">디메&amp;nsion</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp; 파일</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">최근 파일</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">수출입</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;옵션</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">·Edit</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;보기</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">&amp;Views 저장소</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">프로모션</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">&amp; 작업 공간</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">도크 지역</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">CAD 위젯</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">관련 기사</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">설정하기</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">도구 모음</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">다운로드</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">CAD 위젯</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">CAD 툴바</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">수정하기</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">더 보기</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">드로잉</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">팟캐스트</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">한국어</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">·</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">폴리곤</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">Polyline/스플라인</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">엘립스</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">추가 차원</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">사이트맵</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">Draw 주문</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">사이트맵</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">- 한국어</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">제품 설명</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">&amp;이름보기</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">편집 속성</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">Generic을 수정</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">Draw 원형</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">기타</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">Arc 수정</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">Polyline 수정</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">Spline을 수정</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">Spline 포인트 수정</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">본문 바로가기</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">MText 수정</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">편집 블록</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">및 도구 모음</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">&amp;CAD 도구 모음</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">&amp; 작업 공간</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Ta&amp;b 형태</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">&amp;Window 모드</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp;Layout 정보</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">분류: 분류</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">한국어</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">담당자: Ms</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">- 한국어</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">(주)</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp; 연락처</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp;최대화</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;카스</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">·Tile</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">도와 &amp;Vertically</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">도와 &amp;Horizontally</translation>
-    </message>
-</context>
-<context>
     <name>LC_MenuFactoryBase</name>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
@@ -23007,21 +21052,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">공급 능력:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">그림에서 상쇄</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23158,197 +21188,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">체크된 경우, 현재 속성은 미러링 된 엔티티티를 위해 사용되며, 그렇지 않으면 - Original ones.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">현재 속성 사용</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">확인되지 않은 경우, 원래 엔티티티가 제거 될 것입니다, 그렇지 않으면 그들은 살아남을 것입니다.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">확인되면, 미러링 엔티티티는 현재 레이어에 배치됩니다. 그렇지 않으면 원래 레이어에 배치됩니다.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">사용자 현재 층</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">확인된 경우, 필수 항목이 확장됩니다. 그렇지 않으면, 그들은 다만 위치되고 자전될 것입니다.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">체크된 경우, 교차점 사이의 하수는 제거됩니다. unchecked 경우 - entitiy는 교차점에서 나뉩니다.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">Segments 제거</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">확인되면, 선택된 세그먼트가 제거됩니다. 그렇지 않으면, 선택된 세그먼트는 생존하고 나머지 세그먼트는 제거될 것입니다.</translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">스냅 거리:</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">선 스냅 포인트에 간격의 스냅 포인트</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">선 스냅:</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">Gap 크기:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">선에 간격을 위한 스냅 점</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">무료 다운로드</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">Gap 스냅:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">지원하다</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">무료 다운로드</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">지원하다</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">그림에서 PIck 간격 크기</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">스냅 포인트에서 거리</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">그림에서 스냅 거리</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">틈의 크기, 그렇지 않으면</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">Cheched 경우에, 간격의 크기는 쥐에 의해 결정됩니다</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">체크된 경우, 미러가 선택한 라인 엔터티에 의해 수행됩니다.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">선택된 선에 거울</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">확인되지 않은 경우, 원래 엔티티티가 제거 될 것입니다, 그렇지 않으면 그들은 살아남을 것입니다.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">체크된 경우, 현재 속성은 미러링 된 엔티티티를 위해 사용되며, 그렇지 않으면 - Original ones.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">현재 속성 사용</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">확인되면, 미러링 엔티티티는 현재 레이어에 배치됩니다. 그렇지 않으면 원래 레이어에 배치됩니다.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">사용자 현재 층</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23394,234 +21233,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation type="unfinished">현재 레이어 사용</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Rotate 옵션 이동</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">인자의 무료 선택은 마우스에 의해 수행되어야한다.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">무료 다운로드</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">검사되면, 새로운 enties는 현재 층에 둘 것입니다, 그렇지 않으면 그들은 본래 층에 있을 것입니다.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">현재 층을 사용하십시오</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">절대로, 참고 점은 자전될 것입니다 그러나 법인은 두번째 각에 의해 자전될 것입니다, 그렇지 않으면 각은 위로 summ</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">지원하다</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">회전 중심점의 주변을 회전시키는 각도</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">체크된 경우, 현재 속성은 생성 된 엔티티티에 적용되며, 현명한 원본은 사용됩니다.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">현재 속성 사용</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">체크된 경우에, 두번째 교체는 참조점의 주위에 입니다</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">회전 두 번</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">Refrence 점의 주위에 추가 교체를 위한 각</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">그림에서 회전 각도 선택</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">확인된 경우, 원본 엔티티티는 살아남을 것입니다. 그렇지 않으면 제거됩니다.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">여러 복사본이 확인되면 생성됩니다.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">다수 Copies</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">교체 각:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">각이 값을 입력하거나 마우스 위치에 의해 정의된지 여부를 지정합니다</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">그림에서 두 번째 회전 각도를 선택</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">번호</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Rotate 옵션 이동</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">그렇습니다:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">확인된 경우, 여러 사본이 생성됩니다.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">다수 Copies</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">크기:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">체크하면 X 및 Y 축의 동일한 스케일링 요소가 적용됩니다.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">Isotropic의</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">확인된 경우, 원본 엔티티티는 살아남을 것입니다. 그렇지 않으면 제거됩니다.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">번호</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">체크된 경우, 현재 속성은 생성 된 엔티티티에 적용됩니다. 그렇지 않으면 원래 것들이 사용됩니다.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">현재 속성 사용</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">Y 축선을 위한 가늠자 요인</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">가늠자 요인:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">체크된 경우, 생성된 entities는 현재 층에 둘 것입니다. 그렇지 않으면 원래 층에 배치됩니다.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">현재 층을 사용하십시오</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">확인되면, 인자는 마우스로 자유롭게 선택됩니다. 그렇지 않으면, 인자의 지정된 값은 사용됩니다.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">무료 다운로드</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">X 축선을 위한 가늠자 요인</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">확인된 경우, 원본 엔티티티는 살아남을 것입니다. 그렇지 않으면 제거됩니다.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">체크된 경우, 생성된 entities는 현재 층에 둘 것입니다. 그렇지 않으면 원래 층으로 배치됩니다.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">현재 층을 사용하십시오</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">번호</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">체크된 경우, 현재 속성은 생성된 엔티티티에 적용되며, owtherwise Original ones가 사용됩니다.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">현재 속성 사용</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">확인된 경우, 원본 엔티티티는 살아남을 것입니다. 그렇지 않으면 제거됩니다.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">확인된 경우, 여러 사본이 생성됩니다.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">다수 Copies</translation>
     </message>
 </context>
 <context>
@@ -23937,14 +21548,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>·.</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">필터링 조회 by name</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">필터 ...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24380,45 +21983,6 @@ Warning: this action can NOT be undone!</source>
         <source>Control Points</source>
         <translation>제어 포인트</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Parabola 통제 점은 충돌할 수 없습니다</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">선택된 경우, 삽입점으로 사용되는 점은 붙여넣기 가동 후에 삭제될 것입니다. 그렇지 않으면 살아남을 것입니다.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">관련 상품</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">가늠자 요인</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">과거 entities를 위한 가늠자 요인</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">과거에 entities를 위한 교체 각</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24494,89 +22058,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">그림에서 선택 각</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">과거에 entities를 위한 교체 각</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">연속 삽입 점 사이의 간격.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">그림에서 X에 의해 배열 간격을 두기</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">가늠자 요인</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">그림에서 배열 각을 비추십시오</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">배열을 위한 교체 각.</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">배열 줄 수.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">그림에서 Y에 의해 배열 간격을 두기</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">체크된 경우에, 동일한 교체 각은 각 개인적인 풀 및 전체적인 배열을 위해 이용됩니다. 그렇지 않으면 다른 각도가 사용됩니다.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">동일한 각</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">간격:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">배열 란 수.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">체크된 경우, 사본의 배열은 풀에 창조될 것입니다.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">지원하다</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">배열 각:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">과거 entities를 위한 가늠자 요인</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">열에 있는 entities의 삽입 점 사이 간격.</translation>
     </message>
 </context>
 <context>
@@ -25198,17 +22679,9 @@ Warning: this action can NOT be undone!</source>
         <translation>선 폭 이름</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">색상 :</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>펜 요소의 배경 색상은 현재 펜 테이블에서 편집</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">펜 명부를 위한 격자의 색깔</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25230,10 +22703,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>전체 테이블 행은 적극적인 펜을 위해 대담합니다</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">격자 색깔:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25326,17 +22795,9 @@ Warning: this action can NOT be undone!</source>
         <translation>가능한 자연 이름</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">선택한 경우, 추가 메시지는 펜 관련 작업의 일부로 표시됩니다</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>펜에 의해 선택 될 수없는 경우 정보 메시지 표시</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">테이블 아이템을 더블 클릭</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25561,12 +23022,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
 
 다시 시작하지 않고 편집기를 통해 펜을 저장하면 팔레트의 현재 펜이 새 파일에 저장되어 기존 내용을 덮어씁니다.</translation>
     </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">펜 파일 위치가 변경되었습니다. 새 펜 파일을 사용하려면 응용 프로그램을 다시 시작하십시오.
-편집기를 통해 펜을 저장하고 다시 시작하지 않으면 팔레트의 현재 펜이 새 파일에 저장되고 새 파일의 기존 내용이 덮어쓰여질 수 있습니다.</translation>
-    </message>
 </context>
 <context>
     <name>LC_PointPickButton</name>
@@ -25612,37 +23067,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>그림에서 위치</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">Lattice Y 방향의 포인트 수 ( 격자 줄의 카운트)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">줄 조사:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">란 조사:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">X 격자 방향의 포인트 수 ( 격자 기둥의 카운트)</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">선택된 경우, 격자의 마지막 점은 첫번째 점의 위치에 조정 accoriding일 것입니다, 그래서 격자는 rect 또는 사각형일 것입니다</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">마지막 점을 첫번째로 조정하십시오</translation>
     </message>
 </context>
 <context>
@@ -32909,10 +30333,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>제품 정보</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="740"/>
@@ -33901,10 +31321,6 @@ p, li { 흰색 공간 : 사전 랩; }
         <translation>기업 정보</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; 선택된 경우, 선과 아크에 대한 자세한 정보는 Entity Info 위젯에 표시됩니다.&lt;br/&gt; 그렇지 않으면, vertexes/bulges에 대한 정보는 표시됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;선택하면 폴리선을 구성하는 선과 호에 대한 더 자세한 정보가 개체 정보 위젯에 표시됩니다.&lt;br/&gt;그렇지 않으면 꼭짓점/돌출부 정보만 표시됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -33953,205 +31369,6 @@ p, li { 흰색 공간 : 사전 랩; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>포인트 하이라이트 펜</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">가장자리:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">체크하면 스냅 포인트가 코너 반경으로 이동해야합니다.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">스냅 이동</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">Y 방향을 위한 베벨 구석의 길이.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">사각형의 가장자리가 그려야 함 (그래서 직사각형 대신 두 개의 평행선을 만들 수 있습니다)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">둘 다</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">수직</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">직사각형의 폭</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">직사각형의 모서리가 그려져 있는지 제어합니다.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">뚱 베어</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">베벨</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">체크된 경우에, 직사각형은 지정된 각에 자전될 것입니다.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">기본적인 각:</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">체크된 경우, 지정된 높이와 폭의 직사각형은 둥근 구석을 위한 아크의 센터 사이 거리를 정의합니다. 그렇지 않으면, 이 값은 직사각형의 외부 크기를 정의합니다.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">크기 안</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">길이 Y:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">체크하면, 직사각형은 개별 세그먼트 대신 폴리 라인으로 만들 것입니다.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">스냅:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">고도:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">반경:</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">X 방향의 베벨 코너 길이.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">길이 x:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">직사각형의 고도</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">둥근 구석의 반경.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">직사각형의 점은 삽입 점에 둘 것입니다.</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">맨 위로</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">맨 위로</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">왼쪽</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">지원하다</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">하단 왼쪽</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">맨 위로</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">그림에서 회전 각도 선택</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">그림에서 둥근 구석의 절경.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">회전 각도</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">그림에서 장방형의 고도</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">그림에서 사각형의 폭</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">폭:</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">코너:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">그림에서 X 방향을위한 베벨 코너의 길이를 선택합니다.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">그림에서 Y 방향을위한 베벨 코너의 길이를 선택합니다.</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">체크된 경우에, 각은 쥐 위치에 의해 지정될 것입니다. 그렇지 않으면 지정된 값이 사용됩니다.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">무료 다운로드</translation>
     </message>
 </context>
 <context>
@@ -34521,153 +31738,6 @@ p, li { 흰색 공간 : 사전 랩; }
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">사각형의 가장자리가 그려야 함 (그래서 직사각형 대신 두 개의 평행선을 만들 수 있습니다)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">둘 다</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">수직</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">직사각형의 점이 시작점 위치로 배치되어야합니다.</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">기타</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">중력</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">미드호리존탈</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">그림에서 rectangle 교체 각도를 선택</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">그림에서 둥근 구석의 절경.</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">코너:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">사각형의 점이 끝 지점 위치로 배치되어야합니다.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">그림에서 X 방향에서 베벨의 길이를 선택합니다.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">가장자리:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">그림에서 Y 방향에서 베벨의 길이를 선택합니다.</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">시작 스냅:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Y 방향에서 베벨의 길이.</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">체크하면 스냅 포인트가 코너 반경으로 이동해야합니다.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">스냅 이동</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">길이 x:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">반경:</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">체크된 경우, 직사각형의 회전 각도를 지정할 수 있습니다.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">기본적인 각:</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">Rectangle 교체 각.</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">끝 스냅:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">사각형의 모서리가 그려져야하는 방법.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">뚱 베어</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">베벨</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">둥근 구석의 반경.</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">길이 Y:</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">체크하면 전체 직사각형이 폴리 라인으로 그려집니다.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">X 방향의 베벨 길이.</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -34925,145 +31995,6 @@ p, li { 흰색 공간 : 사전 랩; }
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation type="unfinished">그림에서 Y 방향에서 베벨의 길이를 선택합니다.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">사각형의 안 각.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">검사한 경우에, 사각형의 안 각은 지정된 가치에 조정될 것입니다.</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">조정 안 각:</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">직사각형의 기본적인 각.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">길이 x:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">X 방향의 베벨 길이.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">모서리가 직사각형에 그려져야하는 방법.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">뚱 베어</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">베벨</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">코너:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">체크하면 스냅 포인트가 코너 반경으로 이동해야합니다.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">스냅 이동</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">길이 Y:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Y 방향에서 베벨의 길이.</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">둥근 구석의 반경.</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">반경:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">체크된 경우, 모양은 polyline로 창조될 것입니다.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">그림에서 사각형의 안 각을 선택합니다.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">가장자리:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">그림에서 둥근 구석의 절경.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">그림에서 X 방향에서 베벨의 길이를 선택합니다.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">그림에서 Y 방향에서 베벨의 길이를 선택합니다.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">사각형의 가장자리가 그려야 함 (그래서 직사각형 대신 두 개의 평행선을 만들 수 있습니다)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">둘 다</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">수직</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">그림에서 사각형의 기본 각도를 선택합니다</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">체크된 경우에, 직사각형은 지정된 기본적인 각에 자전될 것입니다. 그렇지 않으면, 기본적인 각은 직사각형의 첫번째 그리고 두번째 점 사이 각에 의해 정의될 것입니다.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">조정 기초 각:</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">확인되면, 사각형은 사각형 대신 만들 것입니다.</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">채용정보</translation>
     </message>
 </context>
 <context>
@@ -35712,100 +32643,6 @@ p, li { 흰색 공간 : 사전 랩; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">죄송합니다, 일부 네트워크 오류는 새 버전 검사 중에 발생했습니다.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">서버에서 응답을 파기 할 수 없습니다</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Rotate 옵션 이동</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">Whetether 사본은 현재 또는 본래 층에 삽입될 것입니다</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">현재 층을 사용하십시오</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">이차 각을 조정하십시오 그래서 각의 합계 (관계적인 교체 각)는 0입니다. 그런 세팅 엔터티티가 이동하지만 회전되지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">그림에서 1 차적인 각을 선택하십시오</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">현재 또는 원래 그림 속성이 적용 될지 여부를 결정</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">현재 속성 사용</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">그림에서 2 차 각을 비추십시오</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">절대적인 참고 점에 교체를 위한 각</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">확인된 경우, 여러 사본이 생성됩니다.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">다수 Copies</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">복사의 수</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">공급 능력:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">체크된 경우, 동일한 각도는 모든 사본에 사용됩니다. 그렇지 않으면 복사 번호로 비례가 증가합니다.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">사본을 위한 동일한 이차 각</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">확인된 경우, 원본 엔티티티는 살아남을 것입니다. 그렇지 않으면 제거됩니다.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">공급 능력:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">각은 이차 참고 점 이상 자전합니다</translation>
     </message>
 </context>
 <context>
@@ -36800,141 +33637,6 @@ p, li { 흰색 공간 : 사전 랩; }
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">시작 원형 각:</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">진드기가 시작될 때 원형을 위한 각을 시작하십시오.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">공급 능력:</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">틱 스냅 포인트의 상쇄 교차점.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">그림에서 거리</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">거리:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">진드기 사이 거리.</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">체크된 경우, 선택한 엔터티가 진드기 교차점으로 나뉩니다.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">한국어</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">그림에서 틱 오프셋 선택</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">진드기의 길이.</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">그림에서 tick 각을 비추십시오</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">Tick 스냅:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">그림에서 tick 길이를 선택하십시오</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">그림에서 PICK 시작 원형 각</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">진드기와 선택된 법인 사이 각.</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">체크된 경우, 진드기 각도는 선택한 엔터티티와 관련이 있습니다. 그렇지 않으면 절대 각도입니다.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">릴라</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">Tick 길이:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">진드기의 점은 선택한 엔티티티와 교차점에 배치해야합니다.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">지원하다</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">체크된 경우, 틱스 사이 지정된 고정 거리가 사용됩니다. 그렇지 않으면, 거리는 엔티티티티 길이와 진드기를 기준으로 계산됩니다.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">기타 제품</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">선택된 기업의 가장자리 사이 진드기의 조사.</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">실체 가장자리에 어떻게 진드기를 배치해야합니다.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">둘 다</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">가장자리 Tick:</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37254,57 +33956,6 @@ p, li { 흰색 공간 : 사전 랩; }
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">각 스플라인핏 스플라인핏 폴리라인을 위해 생성되는 라인 세그먼트의 수를 비롯</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">검사되지 않은 경우, 원래 스플라인이 제거됩니다, 그렇지 않으면 살아남을 것입니다.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">체크된 경우, 현재 속성은 생성 된 엔티티티에 사용되며, 그렇지 않으면 - 원래의 것.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">현재 속성 사용</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">검사된 경우, 생성된 entities는 현재 층에, 그렇지 않으면 본래 층으로 둘 것입니다.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">현재 층을 사용하십시오</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">체크하면, 라인 세그먼트의 사용자 지정 금액을 지정할 수 있습니다. 그렇지 않으면 현재 그림에 대한 설정에서 값이 사용됩니다.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">주문 세그먼트 조사</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">검사된 경우, 선 세그먼트는 polyline의 부분일 것입니다. 그렇지 않으면 개별 줄이 될 것입니다</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">Polyline에</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -37428,65 +34079,6 @@ p, li { 흰색 공간 : 사전 랩; }
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
         <translation type="unfinished">Polyline에</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">검사된 경우, 생성된 entities는 현재 층에, 그렇지 않으면 본래 층으로 둘 것입니다.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">사용자 현재 층</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">스플라인에 추가 될 polyline 세그먼트의 중간 지점의 금액.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">스플라인의 정도</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">검사되지 않은 경우, 원래 폴리 라인 제거 될 것입니다, 그렇지 않으면 살아남을 것입니다.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">정도:</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and ordinary spline will be created.</source>
-        <translation type="vanished">선택하면 폴리선의 꼭짓점이 스플라인 점으로 간주되어 점 통과 스플라인이 생성됩니다. 그렇지 않으면 제어점으로 간주되어 일반 스플라인이 생성됩니다.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">중간 점:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">체크된 경우, 현재 속성은 생성 된 엔티티티에 사용되며, 그렇지 않으면 - 원래의 것.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">현재 속성 사용</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">체크된 경우, 폴린 vertexes는 포인트에 의해 스플라인 포인트와 스플라인으로 간주됩니다. 그렇지 않으면, 그들은 제어 포인트와 orinary 스플라인으로 간주됩니다.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">Vertexes는 스플라인 포인트입니다</translation>
     </message>
 </context>
 <context>
@@ -37890,69 +34482,6 @@ p, li { 흰색 공간 : 사전 랩; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>대략적인 spline에 사용된 정도</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">체크된 경우, 비대칭 별이 생성됩니다.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">관련 기사</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">내부 가장자리에 반경.</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">번호:</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">그림에서 외부 반경을 선택하십시오</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">그림에서 안 반경을 비추십시오</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">광선의 수.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">체크된 경우, 외부 가장자리는 돌릴 것입니다.</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">Radius 외부</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">검사된 경우에, 안 가장자리는 돌릴 것입니다.</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">Radius 내부</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">체크된 경우, 별은 폴린으로 그려질 것입니다.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">외부 광선을 위한 반경 (edges).</translation>
     </message>
 </context>
 <context>
@@ -38843,14 +35372,6 @@ p, li { 흰색 공간 : 사전 랩; }
         <translation>계정 설정</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">필터링 사용자 좌표 by name</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">필터 ...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>&lt;이름 없음&gt;</translation>
@@ -38951,33 +35472,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>A&amp;ll UCS 제거</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">새로운 협조 체계의 각 X 축선</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">X-Axis 각도가 값을 입력하거나 마우스 위치에 의해 정의 여부를 지정합니다</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">무료 다운로드</translation>
     </message>
 </context>
 <context>
@@ -39593,33 +36087,6 @@ Warning: this action can NOT be undone!</source>
     </message>
 </context>
 <context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">선 관계되는 각 선택권</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">간격:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">본래 polyline에서 거리</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">경찰:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">번호</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">그림에서 간격을 두기</translation>
-    </message>
-</context>
-<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="38"/>
@@ -39657,39 +36124,14 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="839"/>
-        <source>Creating new file...</source>
-        <translation>새 파일 만들기...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="775"/>
         <source>unnamed document %1</source>
         <translation>이름없는 문서%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1867"/>
-        <source>Opening recent file...</source>
-        <translation>최근 파일 열기...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
         <source>Loaded document: </source>
         <translation>읽은 문서:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1068"/>
-        <source>Opening aborted</source>
-        <translation>열기 취소</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1398"/>
-        <source>Printing...</source>
-        <translation>인쇄하기...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1501"/>
-        <source>Exiting application...</source>
-        <translation>응용프로그램 종료...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -39702,19 +36144,9 @@ Warning: this action can NOT be undone!</source>
         <translation>새 도면 작성.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing...</source>
-        <translation>도면 저장하기...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="276"/>
         <source>Saved drawing: %1</source>
         <translation>저장 도면 : %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1402"/>
-        <source>Printing complete</source>
-        <translation>인쇄 완료</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="771"/>
@@ -39729,11 +36161,6 @@ Please check the permissions.</source>
         <translation>파일을 열수 없습니다.
 %1
 권한을 점검해 보십시오.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1230"/>
-        <source>Auto-saving drawing...</source>
-        <translation>도면 자동 저장...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
@@ -39801,11 +36228,6 @@ Please check its existence and permissions.</source>
         <translation>파일 &apos;%1&apos;이 존재하지 않습니다. 파일열기가 취소되었습니다.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing: %1</source>
-        <translation>저축 그림: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="271"/>
         <source>Save cancelled</source>
         <translation>자주 묻는 질문</translation>
@@ -39870,12 +36292,6 @@ Please check its existence and permissions.</source>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="196"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>뚱 베어</translation>
-    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
@@ -39911,11 +36327,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="69"/>
         <source>Name of the block</source>
         <translation>블록의 이름</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="77"/>
-        <source>Renaming Block</source>
-        <translation>블록 이름변경</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="78"/>
@@ -40116,12 +36527,6 @@ Please check its existence and permissions.</source>
         <translation>명령 기록과 출력</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="260"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>나가기</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="54"/>
         <source>...</source>
         <translation>·.</translation>
@@ -40296,81 +36701,6 @@ Please check its existence and permissions.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">·</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">레이어:</translation>
-    </message>
-    <message>
-        <source>Layer of arc</source>
-        <translation type="vanished">호 레이어</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Pen 속성</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">기하학</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="vanished">X 아크의 중심</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">Y 아크 센터 좌표</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="vanished">아크가 반전되는지 여부를 결정 (시 방향)</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">분류: 분류</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">센터 (y):</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">아크의 반경</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">시작 각:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">반경:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="vanished">아크의 시작 각</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="vanished">아크의 끝 각</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">끝 각:</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">중심 (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">펜</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
@@ -40408,198 +36738,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
         <translation>뚱 베어</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">한국어</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">레이어:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">기하학</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">반경:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">원형의 반경</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">센터 (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="vanished">Y 원 센터의 좌표</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">중심 (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="vanished">X 원형의 중심</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">펜</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">선형 차원</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">레이어:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">차원의 층</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Pen 속성</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">기하학</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">각도:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="vanished">차원의 교체 각</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">펜</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">크기 (mm)</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">차원의 층</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">레이어:</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Pen 속성</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">펜</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">엘립스</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">레이어:</translation>
-    </message>
-    <message>
-        <source>Layer of ellipse</source>
-        <translation type="vanished">타원 레이어</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">기하학</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="vanished">Ellipse의 주요 축선을 위한 교체 각, 도</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="vanished">Arc가 반전되는지 여부</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">분류: 분류</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">센터 (y):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="vanished">Elliptic 아크의 끝 각, 도</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">Y 아크 센터 좌표</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="vanished">Ellipse의 주요 축선의 반경</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="vanished">도에서</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="vanished">시작 각 (°):</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="vanished">회전 (°):</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="vanished">Ellipse의 미성년자 축선의 반경</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="vanished">끝 각 (°):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="vanished">Elliptic 아크의 시작 각, 도</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="vanished">주요 :</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="vanished">X ellipse의 중심</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">중심 (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">펜</translation>
     </message>
 </context>
 <context>
@@ -40676,105 +36814,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <source>Image</source>
-        <translation type="vanished">(주)</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">레이어:</translation>
-    </message>
-    <message>
-        <source>Layer of image</source>
-        <translation type="vanished">이미지 레이어</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">기하학</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">각도:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">높이:</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="vanished">이미지의 폭</translation>
-    </message>
-    <message>
-        <source>insert (y):</source>
-        <translation type="vanished">삽입 (y):</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">삽입 점의 X 좌표</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">해결책 (인치 당 점)</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="vanished">이미지 파일 경로</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">확장 계수</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">크기 (px):</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">회전 각도</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">삽입 점의 Y 협조</translation>
-    </message>
-    <message>
-        <source>path:</source>
-        <translation type="vanished">경로:</translation>
-    </message>
-    <message>
-        <source>insert (x):</source>
-        <translation type="vanished">삽입 (x):</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">크기:</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">픽셀의 이미지 크기</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">사이트맵</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">너비:</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="vanished">이미지의 높이</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="vanished">이미지 파일 선택</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">펜</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="32"/>
@@ -40797,167 +36836,9 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>GUI 언어:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">Dollmania   Upload   이용 약관   개인 정보 보호 정책   쿠키 정책   모든 사이트 RSS   연락처 새로운 드로잉 및 Ui 및 Command에 대한 선호하는 언어를 사용하려는 장치를 선택하십시오.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;이 설정을 나중에 변경할 수 있습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
         <translation>명령 언어:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <source>Insert</source>
-        <translation type="vanished">삽입</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">레이어:</translation>
-    </message>
-    <message>
-        <source>Layer of insert</source>
-        <translation type="vanished">삽입 레이어</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">기하학</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="vanished">삽입 점 (y):</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="vanished">삽입 점 (x):</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="vanished">복사를 위한 행의 금액</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">회전 각도</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="vanished">열 사이 간격</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="vanished">X 축선에 의하여 확장 인자</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">삽입 점의 X 좌표</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="vanished">행 사이 간격</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="vanished">복사열의 수량</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="vanished">Y 축선에 의하여 확장 인자</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="vanished">가늠자 Y:</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="vanished">줄:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">각도:</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">삽입 점의 Y 협조</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="vanished">줄 간격:</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="vanished">란:</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="vanished">가늠자 X:</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="vanished">란 간격:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">펜</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source>ID: </source>
-        <translation type="vanished">ID: </translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">레이어:</translation>
-    </message>
-    <message>
-        <source>Layer of line</source>
-        <translation type="vanished">선 레이어</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">기하학</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="vanished">끝 점 (x):</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="vanished">종료 점 X 협조</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="vanished">종료 점 Y 협조</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="vanished">끝 점 (y):</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="vanished">시작점 (y):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="vanished">시작점 Y 좌표</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="vanished">시작점 (x):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="vanished">시작점 X 좌표</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">펜</translation>
     </message>
 </context>
 <context>
@@ -41128,10 +37009,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>기호 삽입</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">기호 삽입</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
         <source>Degree (°)</source>
         <translation>각도 (°)</translation>
@@ -41180,10 +37057,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>파운드 (£)</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">엔 (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -41819,115 +37692,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
         <translation>뚱 베어</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <source>Mirroring Options</source>
-        <translation type="vanished">미러 옵션</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">복사 개수</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">원본 삭제(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">원본 유지(&amp;K)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">현재 속성(&amp;A) 사용</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">현재 레이어(&amp;L) 사용</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">복사 개수</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">원본 삭제(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">원본 유지(&amp;K)</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">다중 복사(&amp;M)</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">현재 속성(&amp;A) 사용</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">현재 레이어(&amp;L) 사용</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Move/Copy Options</source>
-        <translation type="vanished">이동/복사 옵션</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <source>Move/Rotate Options</source>
-        <translation type="vanished">이동/회전 옵션</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">복사 개수</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">각도(&amp;A):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">현재 속성(&amp;A) 사용</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">현재 레이어(&amp;L) 사용</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">원본 삭제(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">원본 유지(&amp;K)</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">다수 Copies</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="vanished">Ctrl+S</translation>
     </message>
 </context>
 <context>
@@ -44944,10 +40708,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>상대 영 감적</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">채용 정보</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
         <translation>그려지는 격자의 유형</translation>
@@ -45436,38 +41196,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>자동 득점방해 그림</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4935"/>
-        <source>#</source>
-        <translation>₢ 킹</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4940"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5009"/>
-        <source>~</source>
-        <translation>·</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4945"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
-        <source>_</source>
-        <translation>한국어</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4950"/>
-        <source>__</source>
-        <translation>·</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4955"/>
-        <source>lcauto_</source>
-        <translation>사이트맵</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4960"/>
-        <source>autosaved_</source>
-        <translation>자동 정렬</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4984"/>
         <source>Auto-save file name prefix:</source>
         <translation>자동 득점 파일 이름 접두사:</translation>
@@ -45476,36 +41204,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5001"/>
         <source>Backup file name suffix:</source>
         <translation>백업 파일 이름 suffix:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5014"/>
-        <source>$$</source>
-        <translation>$의 $</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5024"/>
-        <source>_backup</source>
-        <translation>백업</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5029"/>
-        <source>_bak</source>
-        <translation>바크</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5034"/>
-        <source>.bak</source>
-        <translation>.바크</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5039"/>
-        <source>.backup</source>
-        <translation>.백업</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5044"/>
-        <source>.lcb</source>
-        <translation>사이트맵</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5111"/>
@@ -46003,287 +41701,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">도면 변수</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">변수</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">* 이름</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">확인(&amp;O)</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">팟캐스트</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">레이어:</translation>
-    </message>
-    <message>
-        <source>Layer of point</source>
-        <translation type="vanished">점 레이어</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">기하학</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="vanished">위치 (y):</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="vanished">Y 좌표로 포인트의 위치</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="vanished">위치 (x):</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="vanished">X 좌표로 포인트의 위치</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">펜</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">레이어:</translation>
-    </message>
-    <message>
-        <source>Layer of polyline</source>
-        <translation type="vanished">폴리선 레이어</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">기하학</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="vanished">Polyline이 오염되는지 여부를 결정합니다</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">(주)</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">펜</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation type="vanished">회전 옵션</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">복사 개수</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">원본 삭제(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">원본 유지(&amp;K)</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="vanished">다중 복사(&amp;M)</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">각도(&amp;a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">현재 속성(&amp;a) 사용</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">현재 레이어(&amp;l) 사용</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <source>Rotate Two Options</source>
-        <translation type="vanished">회전2 옵션</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">복사 개수</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">원본 삭제(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">원본 유지(&amp;K)</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">다중 복사(&amp;M)</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;a):</source>
-        <translation type="vanished">각도(&amp;a):</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;b):</source>
-        <translation type="vanished">각도(&amp;b):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">현재 속성(&amp;A) 사용</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">현재 레이어(&amp;L) 사용</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <source>Scaling Options</source>
-        <translation type="vanished">축척 옵션</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">복사 개수</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">현재 속성(&amp;A) 사용</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">현재 레이어(&amp;L) 사용</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; 참조점과 대상점으로 중심의 스케일링 비율을 찾습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">원본 삭제(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">원본 유지(&amp;K)</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">다중 복사(&amp;M)</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="vanished">x-, y- 방향에서 같은 비율로 축척한다.</translation>
-    </message>
-    <message>
-        <source>Isotropic Scaling</source>
-        <translation type="vanished">등방 축척</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">관련 상품</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">레이어:</translation>
-    </message>
-    <message>
-        <source>Layer of spline</source>
-        <translation type="vanished">스플라인 레이어</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">기하학</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">정도:</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="vanished">Spline이 닫히는 contour를 정의하는지 결정합니다</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">(주)</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="vanished">대략적인 spline에 사용된 정도</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">펜</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="20"/>
@@ -46431,10 +41848,6 @@ so default step value required for baking</source>
         <translation>파운드 (£)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">엔 (¥)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Times (×)</source>
         <translation>배수 (×)</translation>
@@ -46478,10 +41891,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>문자의 레이어</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">텍스트의 Obligue</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -47089,10 +42498,6 @@ so default step value required for baking</source>
         <translation>각도:</translation>
     </message>
     <message>
-        <source>Oblique:</source>
-        <translation type="vanished">Oblique:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
         <source>Width factor:</source>
         <translation>폭 요인:</translation>
@@ -47610,21 +43015,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">잘못된 스케일 제공</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">최대 인쇄 비율 보다는 더 큰 종이 가늠자</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">최소 인쇄 비율보다 작음</translation>
-    </message>
-</context>
-<context>
     <name>QG_RecentFiles</name>
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="183"/>
@@ -47691,58 +43081,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>World</source>
         <translation>- 한국어</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">기본 정보</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="vanished">끝점에 스냅</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="vanished">개체의 등간격 점에 스냅</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="vanished">중심점에 스냅</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="vanished">교차점에 자동 스냅</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="vanished">개체의 가장 가까운 점에 스냅</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="vanished">끝점에서 지정 거리의 점에 스냅</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="vanished">교차점에 수동 스냅</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="vanished">격자에 스냅</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="vanished">수평 제한</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="vanished">수직 제한</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="vanished">상대 원점 이동</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="vanished">상대 원점 잠금</translation>
     </message>
 </context>
 <context>
@@ -47943,12 +43281,6 @@ Please specify a different value.</source>
         <translation>빈 레이어 제거</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">발견하지 않고 층 (s), 아직 필터링하고 보이지 않습니다.
-명확한 거르는 가면 및 반복.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -48016,14 +43348,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 예 — &quot;레이어별&quot; 펜을 가진 엔티티는 새 레이어에서 이전 레이어와 동일하게 보이며 &quot;레이어별&quot; 값은 실제 펜 값으로 바뀝니다.
 
 아니요 — &quot;레이어별&quot; 값이 그대로 유지되어 대상 레이어의 펜이 해당 엔티티의 펜을 정의합니다.</translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">&quot;레이어별&quot; 값을 소스 레이어 값으로 대체하시겠습니까?
-예를 선택하면 &quot;레이어별&quot; 펜이 있는 엔터티가 새 레이어에서 이전 레이어와 정확히 동일하게 표시되고 &quot;레이어별&quot; 값이 해결된 펜으로 대체됩니다.
-아니요를 선택하면 &quot;레이어별&quot; 값이 유지되므로 대상 레이어의 펜이 해당 엔터티에 대한 펜을 정의합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -48667,10 +43991,6 @@ Do you want to replace it?</source>
         <translation>태그 이미지 파일 형식</translation>
     </message>
     <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">이전 버전의 그리기 교환 %1</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1003"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
@@ -48705,11 +44025,6 @@ Do you want to replace it?</source>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>오류 판독 DXF/DWG 파일 헤더</translation>
-    </message>
-    <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">오류 판독 DXF/DWG 헤더 dara</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
@@ -48758,10 +44073,6 @@ Do you want to replace it?</source>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>오류 읽기 DXF / DWG 코드</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">dwg 파일 버젼 %1 을 열었습니다.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -48897,30 +44208,6 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1499"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation>(%2, %3) 과 (%4, %5) 사이에서 gap=%1 에 의해 해칭을 실패했다.</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="85"/>
-        <source>DWG support is not complete!</source>
-        <translation>DWG 지원은 완료되지 않습니다!</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="87"/>
-        <source>If this file fails to open try an older DWG format</source>
-        <translation>이 파일이 오래된 DWG 형식을 시도하지 못하면</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="88"/>
-        <source>or try to find a converter to make it a DXF file.</source>
-        <translation>또는 DXF 파일을 만들기 위해 변환기를 찾으십시오.</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
-        <source>Information</source>
-        <translation>- 연혁</translation>
-    </message>
-    <message>
-        <source>DWG support is not complete; if this file fails to open try an older DWG format or convert it to DXF.</source>
-        <translation type="vanished">DWG 지원이 완전하지 않습니다. 이 파일이 열리지 않으면 이전 DWG 형식을 사용하거나 DXF로 변환하세요.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="104"/>
@@ -50197,23 +45484,6 @@ Do you want to replace it?</source>
         <translation>먼저 거리를 입력해야합니다.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="275"/>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>사이트맵</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="276"/>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>제품 설명</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="311"/>
-        <source>cal</source>
-        <translation>사이트맵</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="317"/>
         <source>Calculator mode: On</source>
         <translation>계산기 형태: 에</translation>
@@ -50472,11 +45742,6 @@ Do you want to replace it?</source>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>사이트맵</translation>
-    </message>
-    <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">채용정보</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -51409,12 +46674,6 @@ Do you want to replace it?</source>
         <translation>이름 *</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="799"/>
-        <source>bevel</source>
-        <comment>modify - fillet</comment>
-        <translation>뚱 베어</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
@@ -52002,26 +47261,6 @@ Do you want to replace it?</source>
         <translation>사용법:</translation>
     </message>
     <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished">[options] [옵션] &lt;dxf files&gt;</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished">사이트맵</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">-- 같은 이름과 pdf 파일에 모든 dxf 파일을 인쇄합니다.</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished">-o 일부.pdf *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">-- &apos;some.pdf&apos; 파일에 모든 dxf 파일을 인쇄합니다.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
         <source> [options] &lt;%1_files&gt;</source>
         <translation type="unfinished"></translation>
@@ -52097,16 +47336,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">용지 크기 (폭 x 높이) mm.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">산출 해결책 (DPI).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>산출 가늠자. E.g.: 0.01 (1:100 가늠자를 위해).</translation>
@@ -52139,27 +47368,9 @@ Do you want to replace it?</source>
         <translation>Target 출력 디렉토리.</translation>
     </message>
     <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="177"/>
-        <source>DXF output version: r12, r14, r2000, r2004, r2007 (default), r2018.</source>
-        <translation>DXF 출력 버전: r12, r14, r2000, r2004, r2007 (기본값), r2018.</translation>
-    </message>
-    <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="183"/>
-        <source>DWG output version: r2000 (default), r2004, r2010, r2013, r2018.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation>입력 파일 %1개.</translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">&lt;dxf 파일&gt;</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">입력 DXF 파일 (s)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -52568,10 +47779,6 @@ Do you want to replace it?</source>
         <translation>[Override] [자산]</translation>
     </message>
     <message>
-        <source>Draft</source>
-        <translation type="vanished">초안</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="86"/>
         <source>%2 - command for &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
@@ -52579,10 +47786,6 @@ Do you want to replace it?</source>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
-    <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">블록을 만들기 위해 선택 (Enter to complete)</translation>
-    </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
@@ -52597,66 +47800,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>기준 점 지정</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">Explode 컨테이너 선택 (완료시)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">선택 및 폭발</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현이 아닙니다.</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">기준 점 지정</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">각도 입력:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">공급 능력:</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">열 입력:</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">행 입력:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">열 간격 입력:</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">행 간격 입력:</translation>
-    </message>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">블록은 삽입을 포함 할 수 없습니다.</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished">현재 구획의 배열된 삽입이 안으로 있습니다:</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">이 구획은 삽입될 수 없습니다.</translation>
     </message>
 </context>
 <context>
@@ -52908,270 +48051,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">Chord의 길이는 비 zero이어야한다</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">유효한 chord 길이 아닙니다</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">호텔 찾기</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">시작하기</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">대안 Arc</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">Chord 길이를 지정하십시오 (alt 점을 위한 부정):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">대안 arc point 사용</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">시작 각을 지정하십시오:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">끝 각을 지정하거나 [angle/chordlen]</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">지정된 각:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">잘못된 아크 데이터.</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">세 번째 지점 지정</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">두 번째 지점 지정</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">Startpoint 또는 [center] 지정</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">기본 정보</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">Alternate 아크</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">Alternate 아크</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">정의 끝 각</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">정의 끝 점</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">호텔 찾기</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">원시 지정점</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">잘못된 Circle 데이터.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">첫 번째 지점</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">두 번째 지점 지정</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">잘못된 원 데이터.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">첫 번째 지점</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">두 번째 지점 지정</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">세 번째 지점 지정</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">원 센터</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">원형 반경 지정</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">반경=%1은 유효하지 않습니다 (압축)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">반경=%1은 유효하지 않습니다 (필수)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">반경=%1은 무효 (제로)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">첫번째 선을 지정하십시오</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">두 번째 라인 지정</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">세 번째 라인 지정</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">Tangent 원형의 첫 지점을 지정하십시오</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">Tangent 원형의 두 번째 지점을 지정하십시오</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Tangent 원형의 중심을 선택하십시오</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">라인/arc/circle 지정</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">첫번째 선/arc/circle 지정</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">두번째 선/arc/circle 지정</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Tangent 원형의 중심을 선택하십시오</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">반경 &apos;%1&apos;을 위한 일반적인 탄화수소 원형 없음</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">라인/arc/circle 지정</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">다른 선/arc/circle를 지정하십시오</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">Tangent 원형의 지점 지정</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Tangent 원형의 중심을 선택하십시오</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Tangent 원형의 중심을 선택하십시오</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">첫번째 선/arc/circle 지정</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">선택된 entities를 위한 일반적인 tangential 원형 없음</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">두번째 선/arc/circle 지정</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">3선/arc/circle 지정</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
@@ -53366,125 +48245,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">해치(Enter to complete) 선택</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
         <translation>선택 후 즉시 배치</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">참고 사항</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">입력 각도:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">공급 능력:</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">Dpi를 입력하십시오:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">첫 번째 지점</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">다음 포인트 또는 [%1] 지정</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">다음 지점</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">줄의 순서를 닫을 수 없습니다: 아직 정의된 충분한 entities, 또는 이미 닫히는.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">할 수 없습니다: 역사의 시작</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">Cannot redo : 역사의 끝</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">Alternate 방향</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">입력 각도:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">입력 길이:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">entities가 생성됩니다</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">첫번째 선을 선택하십시오</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">두 번째 라인 선택</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">Bisector 길이를 입력하십시오:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">Bisectors의 수를 입력하십시오:</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">범위에 없는 번호 분야 선:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">선을 그리기 위해 클릭하고 드래그</translation>
     </message>
 </context>
 <context>
@@ -53517,74 +48280,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>원, 아크 또는 엘립스 선택</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">거리 지정 &lt;%1&gt; 또는 단체 선택 또는 [%2]</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">entities가 생성됩니다</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">입력 번호:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">유효 번호가 없습니다. 다운로드</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">회사 소개</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">본문 바로가기</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">entities가 생성됩니다</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">번호:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">유효 번호가 없습니다. 다운로드</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">연락하기</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">첫 번째 코너</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">두 번째 코너 지정</translation>
     </message>
 </context>
 <context>
@@ -53626,29 +48321,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">기본 정보</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">길이 지정</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53686,17 +48358,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">삽입 점</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">본문 바로가기:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
@@ -53705,108 +48366,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">첫 번째 지점</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">다음 포인트 또는 [%1] 지정</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">다음 지점</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">줄의 순서를 닫을 수 없습니다: 아직 정의된 충분한 entities.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">아직 정의되지 않음: 충분하지 않다.</translation>
-    </message>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">끝점 x를 입력하십시오</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Polylines의 수를 입력하십시오</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">방정식 입력, f(x)</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">₢ 킹</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">시작점 x를 입력</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">입력된 x는 유효하지 않습니다.</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">입력된 단계 크기는 유효하지 않습니다.</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">입력된 값은 유효하지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">대안 Arc</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">첫 번째 제어 지점 지정</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">다음 컨트롤 포인트 또는 [%1] 지정</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">다음 제어 지점 지정</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">아직 정의되지 않음: 충분하지 않다.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">이름:</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">삽입 점</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">본문 바로가기:</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">두 번째 지점 지정</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">절단 선택 (완료)</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -53825,10 +48385,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>선택 후 올바른 절단</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">복사하기 (Enter to complete)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -53866,24 +48422,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Paste Multiple</source>
         <translation>페이스 북</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="vanished">Set 풀 참조 지점</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">아무것도 할 수 없습니다!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">다시 할 수 없습니다!</translation>
     </message>
 </context>
 <context>
@@ -54104,57 +48642,6 @@ End: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">거리: %1
-백과 사전: (%2, %3)
-분극: (%4 &lt; %5)
-불평점: (%6, %7)
-포인트: (%8, %9)</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">회사 소개</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">용기에 아이 엔티티티에 스냅하지 마십시오</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">상대점은 법인에 있습니다</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">- 한국어</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">거리:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">가격 :</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">에:</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">관련 상품</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -54200,10 +48687,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">총 길이를 측정하기 위해 선택 (완료)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="74"/>
         <source>Select contour</source>
         <translation>연락처</translation>
@@ -54235,917 +48718,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>이름 *</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">참고 사항</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">입력 각도:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">공급 능력:</translation>
-    </message>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">파일을 열 수 없습니다 &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">속성을 수정하기 위해 선택 (Enter to complete)</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">선택 후 즉시 속성을 수정</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">선택된 선은 평행합니다</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">선정된 선은 동일한 폴리라인의 아이들이 아닙니다</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">뚱 베어</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">내부:</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">점 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">점 2:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">(non-trimmable)를 선택했습니다.</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">(non-atomic)를 선택했습니다.</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">무효성체 선택 (최체로 무효).</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">첫 번째 법인 선택</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">두 번째 법인 선택</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">길이를 입력하십시오 1:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">길이를 입력 2:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">한국어</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">다음 :</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">발견되지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">절단 포인트는 기업의 엔드포인트가 될 수 없습니다.</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">본문 바로가기</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">절단 지점</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">Entity는 선, 아크, 원형, ellipse 또는 interpolation 스플라인이어야 합니다.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">삭제하기 (Enter to complete)</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">선택 후 즉시 삭제</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">Polyline에 첫번째 틈 점을 지정하십시오</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">동일한 폴리라인의 두 번째 휴식 지점 지정</translation>
-    </message>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">같은 폴리라인에 의거하지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">두 번째 사람의 부모는 폴리 라인이 아닙니다</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">첫 번째 사람의 부모는 폴리 라인이 아닙니다</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">두 번째의 부모는 nullptr입니다</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">선택된 entities 중 하나는 nullptr입니다</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">첫번째 법인의 부모는 nullptr입니다</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">첫번째 법인은 nullptr입니다</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">두번째 법인은 nullptr입니다</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Pick entity to delete</source>
-        <translation type="vanished">삭제할 개체 선택</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">본문 바로가기</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">Explode 텍스트 선택 (완료하려면 입력하세요)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">선택 후 바로 Explode</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">기타 제품</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">각 (alt):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">선에서:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">선에:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">거울에 선택 (완료)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">미러 라인</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">플립 수직으로</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">플립 수평으로</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">거울 선의 첫 번째 지점 지정</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">미러 라인의 두 번째 지점 지정</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">이동 상쇄</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">회사 소개</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">참고 사항</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">본문 바로가기</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">이동을 선택 (완료하려면)</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">선택 후 즉시 이동</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">지정 대상점</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">회전으로 이동</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">근원:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">대상 :</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">공급 능력:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">참고 사항</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">이동 및 회전 선택 (완료하려면 입력)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">선택 후 즉시 이동 및 회전</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">지정 대상점</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">교체 각을 입력하십시오:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">거리:</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">오프셋의 방향</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">오프셋의 방향에 대한 참조 지점</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle, arc or ellipse to create offset (Enter to complete)</source>
-        <translation type="vanished">간격 띄우기를 만들 선, 폴리선, 원, 호 또는 타원을 선택하세요 (Enter로 완료)</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">라인, 폴리라인, 원형 또는 아크를 선택하여 오프셋(Enter to complete)</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">선택 후에 즉각 상쇄</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">방향을 뒤집기 (Enter to complete)</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">선택 후 즉시 재생</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">참고 사항</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">회전 속도</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">근원 점:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">표적 점:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">공급 능력:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">참고 점:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">중심 점:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">두번째 각:</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">회전 선택 (완료하려면 입력하세요)</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">선택 후 즉시 회전</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">선택 센터에 스냅</translation>
-    </message>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">회전 할 대상 포인트를 지정</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">참조 지점의 회전에 대한 대상 지점 지정</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">센터 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">각 1:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">센터 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">각 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">두 축 회전 선택 (완료)</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">선택 후에 2 축선을 즉각 자전하십시오</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">절대 참조 지점 지정</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">관계되는 참고 점</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">점 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">점 2:</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">두 번째 법인 지정</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">입력 반경:</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">첫번째 법인 또는 입력 반경 &lt;%1&gt;를 지정하십시오</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">센터:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">근원 점:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">표적 점:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">공급 능력:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">X의 규모:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">Y에 의해 가늠자:</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">스케일 센터</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">선택 센터에 스냅</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">관련 링크</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">지정 대상점</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">무료 스냅</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">가늠자 선택 (완료하려면)</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">선택 후에 가늠자</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">첫 번째 코너</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">두 번째 코너 지정</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">뚱 베어</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">시작 코너:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">끝 구석:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">참고 점:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">표적 점:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">공급 능력:</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">참고 사항</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">지정 대상점</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">첫 번째 트리덴셜 선택</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">제한 된 법인 선택</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">뚱 베어</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">트림 2</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">내부:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">중간 2:</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">두 번째 트리덴티를 선택</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">본문 바로가기</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">찾을 수 없습니다.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">선택된 엔티티티는 원자체가 아니며 트리밍할 수 없습니다.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">유효한 표현</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">줄/arc를 선택하여 손질하거나 길이값을 입력합니다:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">발견되지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">Entities(Enter to Complete)를 선택하십시오</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">순서 선택 후에 즉각</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">회사 소개</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">발견되지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entity는 polyline이어야 합니다.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">추가 포인트는 유효하지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">추가 포인트는 엔티티티티에 없습니다.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">Polyline을 지정하여 노드를 추가합니다</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">노드의 포인트 추가</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">발견되지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entity는 polyline이어야 합니다.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">기존 폴린의 시작 또는 끝 근처에 어딘가를 클릭하십시오.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Polylines의 수를 입력하십시오</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">처음이나 끝점 근처에 있는 폴리라인을 지정하십시오</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">닫히는 폴리라인에 노드를 추가할 수 없습니다.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">아직 정의되지 않음: 충분하지 않다.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">발견되지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entity는 polyline이어야 합니다.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">노드를 삭제하기 위해 polyline을 지정하십시오</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">Deleting 노드의 지점 지정</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">삭제 포인트는 유효하지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">삭제 포인트는 법인에 없습니다.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">발견되지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entity는 polyline이어야 합니다.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">삭제 포인트는 법인에 없습니다.</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">찾을 수 없습니다.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">폴리라인의 최소 2개의 세그먼트는 선택된 점 사이에서 있어야 합니다.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">Polyline을 2개의 노드 사이에 삭제합니다</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">첫 번째 노드 지정</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">두번째 노드 지정</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">삭제 포인트는 유효하지 않습니다.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">발견되지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entity는 polyline이어야 합니다.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">본래 폴리라인을 선택하십시오</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">발견되지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">Original polyline의 세그먼트 중 하나를 선택하십시오</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">Entity는 닫히는 polyline일 수 없습니다.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">Polyline 생성</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">발견되지 않습니다.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entity는 polyline이어야 합니다.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">첫번째 세그먼트는 선정한 폴리라인에 있어야 합니다.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">두 번째 세그먼트는 선택된 폴 리 라인에 있어야 하 고 첫 번째 것 같다.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">연락처 세부 사항</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">첫번째 세그먼트를 지정하십시오</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">두 번째 세그먼트 지정</translation>
     </message>
 </context>
 <context>
@@ -55222,113 +48794,11 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">선택 없음!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectBase</name>
     <message>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">Entity는 Atomic Entity이어야 합니다.</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">선택하기</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">교차선의 첫 번째 지점을 선택하십시오</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">Intersecting 기업 선택</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">자녀의 입장</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">교차선의 두 번째 지점을 선택하십시오</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">원하는 층을 가진 법인을 지정하십시오</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">선택하기</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">선택 사항</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">그것은 상자와 intersect</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">그것은 상자 안에</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">두번째 가장자리를 선택하십시오</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">Intersecting 선택</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">선택 사항</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">선택 사항</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">De-select 연동</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">선택 창을 클릭하고 드래그</translation>
     </message>
 </context>
 <context>
@@ -55636,158 +49106,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Arc 옵션</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">시계방향</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">Tangential 아크 옵션</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">선택한 경우 지정된 반경이있는 tangental arc가 생성됩니다</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">Tangential 아크의 반경</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">선택하면 지정된 각도로 아크가 생성됩니다</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">탄화수소 아크의 총 잠수 각</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">공급 업체</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">채용정보</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">Bevel 옵션</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">베벨에 entities를 둘 다 손질하기 위하여 체크</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">뚱 베어</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">길이 1:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">X 방향의 베벨 길이.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">첫번째 길이 모양 그림</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">길이 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Y 방향에서 베벨의 길이.</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">두번째 길이 모양 그림 선택</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">원형 옵션</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">반경:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">원형의 반경</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">그림에서 득점 반경</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">Circle Tangential2 옵션</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; 의 반경 의 tangential 원형을 그리기&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">반경:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">Tangential 원형의 반경</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">그림에서 득점 반경</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="vanished">선형 치수 옵션</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">각도:</translation>
-    </message>
-    <message>
-        <source>Angle of dimension</source>
-        <translation type="vanished">치수 각도</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -55924,849 +49242,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">삽입 옵션</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">회전 각도</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">가늠자 요인:</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">DPI:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">가늠자 요인</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">이미지의 DPI</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">삽입 옵션</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">회전 각도</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">공급 능력:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">가늠자 요인</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">배열:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">열의 수</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">줄의 수</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">그림에서 두 간격을 두십시오</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">그림에서 열 간격을 두십시오</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">간격:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">열 간격</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">줄 간격</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">Library 삽입 옵션</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">회전 각도</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">공급 능력:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">가늠자 요인</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">라인 각도 옵션</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">인서트 포인트로 배치됩니다</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">선 각</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">길이:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">선의 길이</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">스냅 점:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">그림에서 선 각을 비추십시오</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">지원하다</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">그림에서 PIck 선 길이</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">선택된 경우, 선은 각의 축선에 orhotogonal 일 것입니다. 그렇지 않으면 - 스크린 축</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">각 Basis에</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">Line Bisector 옵션</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">길이:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">학사과정</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">그림에서 선 길이를 선택하십시오</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">번호:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">Bisectors의 수</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">라인 옵션</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">라인에서 닫힌 윤곽을 형성</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">마지막 선 그림</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Redo 마지막 선 그림</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">레드오</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">라인 옵션</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">방향:</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">라인 세그먼트에서 polyline 생성</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">수직 선</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">₢ 킹</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">지정된 각에 의하여 선</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">수평선</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">사이트맵</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">검사된 경우에, 각은 이전 세그먼트에 관계됩니다</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">릴라</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">마지막 선 그림</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">라인에서 닫힌 윤곽을 형성</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Redo 마지막 선 그림</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">레드오</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">선의 각</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">Arbitrary 점에 선</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">팟캐스트</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">라인 병렬 옵션</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">거리:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">원래에 거리</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">그림에서 거리</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">번호:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">병렬의 수</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">Line Parallel 옵션</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">확인되면 병렬은 양쪽에 생성됩니다</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">관련 기사</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">번호:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">병렬의 수</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Polygon 옵션</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">번호:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">가장자리의 수</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Polygon 옵션</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">번호:</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">검사되면, 다각형의 vertexes는 돌릴 것입니다.</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">채용정보</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">검사되면, 다각형은 폴린으로 그려질 것입니다. 그렇지 않으면, 개별 관계가 만들어집니다.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">그림에서 득점 반경</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">가장자리의 수</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">Vertex 베벨의 원형 반경.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">선택된 경우, 참고 포인트는 다각형의 vertexes입니다. 그렇지 않으면, 그들은 가장자리의 중간 지점입니다.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">Vertex에 Vertex</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">선 관계되는 각 선택권</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">선 각</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">길이:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">선의 길이</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">드로잉 길이</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">텍스트 옵션</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">이름:</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">텍스트 삽입</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">회전 각도</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">오프셋 옵션 수정</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">Original entity에서 오프셋을 위한 거리</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">검사된 경우, 생성된 entities는 현재 층으로, 그렇지 않으면 본래 층에 있을 것입니다.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">현재 층을 사용하십시오</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">사본의 수.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">확인된 경우, 원본 엔티티티는 살아남을 것입니다. 그렇지 않으면 제거됩니다.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">체크된 경우, 오프셋의 거리의 수정은 사용되며, 그렇지 않으면 마우스에 의해 정의됩니다.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">고정 거리</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">체크된 경우, 현재 속성은 생성 된 엔티티티에 적용됩니다. 그렇지 않으면 원래 것들이 사용됩니다.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">현재 속성 사용</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">그림에서 거리</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">확인된 경우, 여러 사본이 생성됩니다.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">다수 Copies</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Rotate 옵션 이동</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">체크된 경우, 현재 속성은 생성 된 엔티티티에 적용됩니다. 그렇지 않으면 원래 것들이 사용됩니다.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">현재 속성 사용</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">확인된 경우, 여러 사본이 생성됩니다.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">다수 Copies</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">체크된 경우, 모든 사본은 동일한 agle에 의해 자전될 것입니다. 그렇지 않으면, 각은 각 사본의 수에 비례할 것입니다.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">사본을 위한 동일한 각</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">회전 각도.</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">사본의 수.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">체크된 경우, 회전 각도는 마우스에 의해 정의됩니다. 그렇지 않으면 지정된 값이 사용됩니다.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">무료 다운로드</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">체크된 경우, 생성된 entities는 현재 층으로, 그렇지 않으면 본래 층에 있을 것입니다.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">현재 층을 사용하십시오</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">확인된 경우, 원본 엔티티티는 살아남을 것입니다. 그렇지 않으면 제거됩니다.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">자주 묻는 질문</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">Polyline 옵션</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">연결은 폴린의 끝 그래서 닫히는 윤곽은 창조됩니다</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">이전 vertex에 대한 Undo</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">세그먼트 유형:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">Polyline의 세그먼트가 생성되어야 함</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">제품정보</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">제품 정보</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">탄 반경</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">탄 각</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">주요 특징</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">Tangential 아크</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">고정 반경을 가진 Tangental 아크</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">조정 각을 가진 Tangental 아크</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">각을 가진 아크</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">반경:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">아크의 반경</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">공급 업체</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">아크의 각</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">카운터 시계방향</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">시계방향</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">인쇄 미리보기 옵션</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">조경 방향</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">그림 설정</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">크기:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;인쇄 크기 : 그림 크기&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale은 현재 값&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;으로 고정됩니다</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">설치하기</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">토글 블랙 / 화이트 모드</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">종이의 조경 방향</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">종이의 초상화</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">인쇄 가늠자를 선 폭에 적용하십시오</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">그림의 중심의 페이지</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">인쇄 영역에 Zoom</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">1 페이지에 적합</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">활성화된 경우, 종이 공간은 열과 행에 조직된 페이지의 지정된 양을 포함합니다</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">연락처</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">페이지 행::</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">페이지 열의 수량</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">페이지 기둥:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">페이지 줄의 수량</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">도면을 포함해야 페이지 수 계산</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">둥근 선택권</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">연락처 세부 사항</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">뚱 베어</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">반경:</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">둥근 반경</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">그림에서 득점 반경</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56805,99 +49280,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>분기점수</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">Spline 옵션</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">정도:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">스플라인의 점간의 약도 사용</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">선택한 경우, 닫힌 스플라인이 생성됩니다</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">(주)</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">이전 지점</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">이름 *</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">텍스트 옵션</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">이름:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">유형:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">회전 각도</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">그림에서 선택 각</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">트림 금액 옵션</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">거리. 트리밍을위한 부정적인 값, 확장을위한 긍정적 인 값.</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">·</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">길이:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">거리. 트리밍을위한 부정적인 값, 확장을위한 긍정적 인 값. 부정적인 표시는 최종 총 길이로 트리밍 할 때 무시됩니다.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">드로잉 길이</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">검사되면, 손질/내구는 선의 양측을 위해 실행됩니다.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">관련 기사</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">입력 길이는 길이 증가 대신 트리밍 후 총 길이로 사용됩니다</translation>
     </message>
 </context>
 </TS>

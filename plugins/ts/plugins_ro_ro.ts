@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>Faceți clic pe opțiuni pentru a seta/anula, apoi faceți clic pe „OK” pentru a accepta și a începe alinierea.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Dacă este bifată opțiunea „Păstrați obiectele originale”, alinierea va copia, în loc să mute, obiectele selectate.
-Dacă este bifată opțiunea „Specificați mai întâi punctele de bază”, alinierea va solicita punctele de aliniere în următoarea ordine: prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>Primul punct de bază:</translation>

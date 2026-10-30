@@ -39,166 +39,11 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">กรอบ</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="obsolete">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="obsolete">&lt;</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">บันทึก</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">กรอบ</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">บันทึก</translation>
-    </message>
-</context>
-<context>
-    <name>DlgParabola</name>
-    <message>
-        <source>Parabola</source>
-        <translation type="obsolete">พาราโบลา</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">เรขาคณิต</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">จุดบนเส้นรุ้ง</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">จุดควบคุม</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">เรขาคณิต</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">ปิด</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="obsolete">หากเลือกใช้ จะใช้จุดเส้นประ</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="obsolete">จุดลายเส้น</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="obsolete">หากเลือกใช้ จะใช้จุดควบคุม</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">จุดควบคุม</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">จุดบนเส้นรุ้ง</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
         <translation>จุดเริ่มอาจกําหนดในระยะทางหรือจุดเท่านั้น</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">เพื่อถูกสร้างขึ้น:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">สี่เหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">ความกว้าง:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">ความสูง:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">ศูนย์:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">มุมไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">รัศมีไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">ค่าไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">ระบุจุดแทรก</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">แสดงมุม</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">กําหนดขนาด (ความกว้าง, ความสูง)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">กําหนดประเภทของมุม
-[รอบข้าง]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">กําหนดความยาวมุมเบเวล (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">แสดงรัศมีมุม</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">โหมดขอบระบุ
-[ทั้งสองไ</translation>
     </message>
 </context>
 <context>
@@ -445,73 +290,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">ความสูงของส่วนโค้ง (ระยะเยื้องระหว่างคอร์ดกับจุดบนของส่วนโค้ง)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">ความสูง:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">ตามเข็มนาฬิกา</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">เลือกมุมจากภาพวาด</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">รัศมีของส่วนโค้ง</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">รัศมี:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">ตามเข็มนาฬิกา</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">มุมกลางของส่วนโค้ง</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">ความยาวส่วนโค้ง</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">ความยาว:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">เลือกรัศมีจากการวาด</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">เลือกความสูงจากการวาด</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">เลือกความยาวจากการวาด</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -723,10 +501,6 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">เลือกคุณสมบัติสําหรับกล่องเชื่อมต่อ (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation type="unfinished"></translation>
@@ -781,31 +555,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished">เลือกวงกลม, ส่วนโค้งหรือวงรี</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">รัศมี =%1 เล็กเกินไปสําหรับจุดที่เลือกไว้
-ระยะห่างระหว่างจุด=%2 มากกว่าเส้นผ่าศูนย์กลาง = %3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">เลือกจากศูนย์วงกลม 2 แบบที่เป็นไปได้</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">ระบุจุดแรก</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">ระบุจุดที่สอง</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">เลือกศูนย์กลางวงกลม</translation>
     </message>
 </context>
 <context>
@@ -1054,13 +803,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">เลือกวงกลม, ส่วนโค้งหรือวงรี</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1104,10 +846,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>เลือกศูนย์</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">ยังไม่ได้ระบุศูนย์.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1502,154 +1240,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">ระบุจุดแรก</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">ระบุจุดที่สอง
-หรือ [หมายเลข]</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">ระบุจุดที่สอง
-หรือ [จํานวน]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">กําหนดทิศทางของบรรทัด
-[xCHE]</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">กําหนดมุมของเส้น
-หรือ [xChyphyps numbers]</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">กําหนดโหมดจุดขอบ
-[NONKTHESTESTING] BOBLE]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">ระบุระยะห่างคงที่ระหว่างจุด
-หรือ[xxs////N ตัวเลข]</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">กําหนดระยะห่าง (%1)
-หรือ [%2]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">กลับ</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">ระยะห่างที่ระบุ (มุม%1 dg)
-หรือ [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">จํานวนจุดระบุ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">ระบุมุมที่สอง</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">ระบุเส้นสัมผัสที่สอง</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">ระบุมุมแรก</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">ระบุเส้นสัมผัสแรก</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">หมายเลขไม่ถูกต้อง ลอง 1.9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">ค่าของรัศมีรอบไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">หมายเลขป้อน:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">หมุน &amp; 90</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">ระบุศูนย์</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">เพื่อถูกสร้างขึ้น:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">ศูนย์:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">มุมเริ่มต้น:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">รัศมี:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">รัศมีอินเนอร์:</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">รูปหลายเหลี่ยม</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">ระบุเส้นสัมผัส</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1893,29 +1483,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">เลือกรายการแรก</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">เลือกรายการที่สอง</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">จุดปลายแบบต่อเนื่อง</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">ป้อนค่าตรงข้าม</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="190"/>
@@ -2068,13 +1635,6 @@ or [x|y|p|number|edges|distance]</source>
 [NONKTHESTESTING] BOBLE]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="unfinished">ระบุระยะห่างคงที่ระหว่างจุด
-หรือ[xxs////N ตัวเลข]</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Specify distance (%1)
@@ -2098,13 +1658,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="620"/>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="unfinished">ระยะห่างที่ระบุ (มุม%1 dg)
-หรือ [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="625"/>
@@ -2263,11 +1816,6 @@ or [%2]</source>
         <translation>กําหนดความกว้าง</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="396"/>
-        <source>Specify size (width, height))</source>
-        <translation>กําหนดขนาด (ความกว้าง, สูง)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
         <translation>2549. จุดอ้างอิงระบุ [ท็อปท็อปท็อปสตาร์] Jammydaily Jazzhelp (พ.ศ</translation>
@@ -2333,11 +1881,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="619"/>
         <source>Specify height</source>
         <translation>กําหนดความสูง</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="622"/>
-        <source>Specify start point)</source>
-        <translation>กําหนดจุดเริ่ม)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="625"/>
@@ -4037,10 +3580,6 @@ or [%2]</source>
         <translation>ถาม</translation>
     </message>
     <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">อยู่เหนือเส้นกริด</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>หมุน &amp; 90</translation>
@@ -4306,11 +3845,6 @@ or [%2]</source>
         <translation>ยกเลิกการเลือกทั้งหมด</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="910"/>
-        <source>Ctrl+K</source>
-        <translation>Ctrl+K</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="745"/>
         <source>Invert Selection</source>
         <translation>กลับค่าการเลือก</translation>
@@ -4411,12 +3945,6 @@ or [%2]</source>
         <translation>ความทึบแสง</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="927"/>
-        <source>Ctrl+G</source>
-        <comment>Toggle Grid</comment>
-        <translation>Ctrl+G</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>&amp;Draft</source>
         <translation>ตัวขีดเส้นใต้</translation>
@@ -4427,12 +3955,6 @@ or [%2]</source>
         <translation>แถบข้อมูล</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="930"/>
-        <source>Ctrl+I</source>
-        <comment>Hide Statusbar</comment>
-        <translation>Ctrl+I</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
         <source>Focus on &amp;Command Line</source>
         <translation>โฟกัสไปที่บรรทัด บังคับ</translation>
@@ -4441,26 +3963,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>Widget Options</source>
         <translation>ตัวเลือกของวิดเจ็ต</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">ซ้าย</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">ขวา</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">บน</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">ล่าง</translation>
-    </message>
-    <message>
-        <source>Floating</source>
-        <translation type="vanished">การลอย</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
@@ -4511,12 +4013,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Selection Pointer</source>
         <translation>ตัวชี้ของการเลือก</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="929"/>
-        <source>Ctrl+D</source>
-        <comment>Toggle Draft Mode</comment>
-        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
@@ -5223,10 +4719,6 @@ Cartesian: (%2)%3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">เลือกวัตถุที่จะเรียงชิด (ป้อนไปเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>เลือกและจัดลําดับ</translation>
@@ -5258,10 +4750,6 @@ Cartesian: (%2)%3
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
         <translation>ค่า</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">เลือกลําดับ (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -5944,22 +5432,6 @@ Cartesian: (%2)%3
         <translation type="unfinished">ระยะห่าง:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="237"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="244"/>
-        <source>Specify direction of offset</source>
-        <translation type="unfinished">กําหนดทิศทางของการปรับค่า</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="240"/>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="unfinished">ระบุจุดอ้างอิงสําหรับทิศทางของการปรับค่า</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="253"/>
-        <source>Select line, polyline, ellipse, circle or arc to create offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="254"/>
         <source>Select contour</source>
         <translation type="unfinished">เลือกขอบเขต</translation>
@@ -6252,13 +5724,6 @@ Cartesian: (%2)%3
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="430"/>
         <source>Scale immediately after selection</source>
         <translation type="unfinished">ปรับขนาดทันทีที่เลือกแล้ว</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">ยังไม่ได้เลือกรายการ!</translation>
     </message>
 </context>
 <context>
@@ -7235,18 +6700,6 @@ Cartesian: (%2)%3
         <translation>ไม่สามารถอ่านแฟ้มที่จัดให้ได้ - โปรดตรวจสอบว่ามีแฟ้มอยู่หรือไม่ และอนุญาตให้อ่านได้.</translation>
     </message>
     <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">การจับคู่ปุ่มพิมพ์ลัดไม่ถูกนําเข้า
-มีแฟ้มที่จัดให้อยู่ อย่างไรก็ตามมันยังไม่มีการจับคู่ปุ่มพิมพ์ลัดแบบ LibreCAD อยู่ด้วย.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">การจับคู่ปุ่มพิมพ์ลัดไม่ถูกนําเข้า
-การวิเคราะห์ XML เกิดข้อผิดพลาดระหว่างการประมวลผลแฟ้ม.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
         <translation>การจับคู่ปุ่มพิมพ์ลัดได้ถูกบันทึกเรียบร้อยแล้ว.</translation>
@@ -7255,12 +6708,6 @@ XML parsing error occurred during file processing.</source>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
         <translation>ไม่สามารถเขียนเพื่อกําหนดแฟ้ม - กรุณาตรวจสอบว่าสามารถเขียนไปยังมันได้.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">การจับคู่ปุ่มพิมพ์ลัดไม่ถูกนําเข้า
-เกิดข้อผิดพลาดขึ้นระหว่างรุ่น XML.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -8655,74 +8102,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">หากกาเลือกไว้ ส่วนโค้งเดิมจะถูกลบ</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">แทนที่ส่วนโค้ง</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">เพิ่มเลเยอร์..</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">ทํางาน</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">ดั้งเดิม</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">ทํางาน</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">ดั้งเดิม</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Resolived เดิม</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">เลือกค่าตรงข้ามจากการวาด</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">ปากกา:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">ปากกาที่จะปรับใช้กับวงกลมที่สร้าง</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">เดลต้าของรัศมีวงกลมไปยังรัศมีส่วนโค้ง</translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">ระยะเยื้อง:</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -9017,69 +8396,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>แถบเครื่องมือ:%1 (Custom)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">เอ็กซ์:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">ชนิด</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">ไล่ระดับสีในแนวนอน</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">เลือก X จากการวาด</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">กําหนดขนาดของการข้าม</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">ส่วนขยาย</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">ความยาวรวม</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">ร้อยละ</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">เลือกค่า Y จากการวาด</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">มิติทางแนวตั้งของกางเขน</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">มุมการหมุนของเส้นการลาก</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
     </message>
 </context>
 <context>
@@ -9443,45 +8759,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="obsolete">ขนาดของออร์ดิเนชัน</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">ชั้นของมิติ</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">คุณสมบัติของปากกา</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">เรขาคณิต</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="obsolete">ออร์ดิเนชัน</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ปากกา</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -9543,11 +8820,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
         <translation>ช่องว่างของเส้นฐาน:</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">ตั้งค่าช่องว่างระหว่างเส้นมิติของมิติฐาน ใส่ระยะทาง. สําหรับข้อมูลเกี่ยวกับมิติพื้นฐาน ดูที่ DMBSEline. ตัวแปรของระบบ DMDI)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -11194,10 +10466,6 @@ Are you sure you are going to discard changes?</source>
         <source>Hatch Properties</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">คุณสมบัติ?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -11646,19 +10914,9 @@ Are you sure you are going to discard changes?</source>
         <translation>หมายเหตุ: การมอบหมายเมนูจะถูกละทิ้ง สงวนไว้สําหรับ &apos;พาน&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="240"/>
-        <source>NNOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
-        <translation>NNOTE: การมอบหมายเมนูจะถูกละทิ้ง มันสงวนไว้สําหรับ &apos;เลือก&apos;.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="243"/>
         <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
         <translation>หมายเหตุ: การรวมกันนี้ถูกจองไว้สําหรับเมนูคลิกขวาปริยาย และอาจจะทําให้ไม่สามารถทําการวิงวอนได้!</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="246"/>
-        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored</source>
-        <translation>หมายเหตุ: รหัสนี้สงวนไว้สําหรับแพน! การกําหนดเมนูจะถูกละทิ้ง</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="251"/>
@@ -11719,10 +10977,6 @@ Are you sure you are going to discard changes?</source>
         <translation>คอลัมน์รายละเอียดของ UCSS</translation>
     </message>
     <message>
-        <source>If checked, type of grid for saved view will be shown</source>
-        <translation type="vanished">หากกาเลือก จะมีการแสดงประเภทของตารางสําหรับมุมมองที่บันทึกไว้</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
         <translation>คอลัมน์ของไอคอนแบบตาราง</translation>
@@ -11731,18 +10985,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Type icon column</source>
         <translation>ชนิดคอลัมน์ของไอคอน</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation type="vanished">หากกาเลือกไว้ คอลัมน์ที่มีรายละเอียดของระบบพิกัดมุมมองจะถูกแสดง</translation>
-    </message>
-    <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">คำอธิบายส่วนหัวสำหรับรายการในตาราง</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">หากเลือกตัวเลือกนี้ ระบบจะแสดงคอลัมน์ที่มีรายละเอียดเกี่ยวกับระบบพิกัดของมุมมอง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
@@ -11785,10 +11027,6 @@ Are you sure you are going to discard changes?</source>
         <translation>หากกาเลือกไว้ จะแสดงคอลัมน์ที่มีรายละเอียดของมุมมองในตาราง.</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">แสดงรายละเอียด</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>ปฏิบัติการ</translation>
@@ -11804,17 +11042,9 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">เมื่อดับเบิลคลิกบนรายการของตาราง</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
         <source>Defines which action should be performed on double click on view item of the table.</source>
         <translation>กำหนดการดำเนินการที่จะเกิดขึ้นเมื่อดับเบิลคลิกที่รายการมุมมองในตาราง</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table. </source>
-        <translation type="vanished">กําหนดการกระทําที่จะให้กระทําเมื่อมีการคลิกดับเบิลคลิกบนรายการในมุมมองของตาราง.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="158"/>
@@ -11842,10 +11072,6 @@ Are you sure you are going to discard changes?</source>
         <translation>หากเปิดใช้ จะมีการเรียกดูรายการของตารางมุมมอง มิ ฉะนั้น แล้ว จะ มี การ ฟื้นฟู ภาพ ใหม่ โดย ตรง.</translation>
     </message>
     <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">เรียกคืนมุมมองเมื่อคลิกหนึ่งครั้งโดยรายการตาราง</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
         <translation>หากแสดง จะเป็นการทูลทิปกับข้อมูลเพิ่มเติมเกี่ยวกับมุมมอง จะแสดงสําหรับรายการของตาราง.</translation>
@@ -11854,10 +11080,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
         <translation>หากกาเลือกและในระหว่างการสร้างมุมมอง โดยใช้ชื่อที่ป้อนมาอยู่แล้ว มันจะปรับปรุงโดยตําแหน่งใหม่ มิฉะนั้น ชื่อเฉพาะของมุมมองใหม่จะจําเป็น.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">หากเลือกตัวเลือกนี้ จะมีการแสดงกล่องยืนยันเมื่อมีการลบมุมมอง มิ ฉะนั้น จะ มี การ ลบ ภาพ ออก อย่าง เงียบ ๆ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
@@ -12153,17 +11375,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation>ชื่อไม่ซ้ํากัน โปรดป้อนชื่อที่ไม่ซ้ํากัน.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ปากกา</translation>
-    </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="obsolete">จุดควบคุมพาราโบลาไม่สามารถเป็นแนวเดียวกันได้</translation>
     </message>
 </context>
 <context>
@@ -12579,13 +11790,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DlgSplinePoints</name>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ปากกา</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgTolerance</name>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="14"/>
@@ -12667,17 +11871,9 @@ Are you sure you are going to discard changes?</source>
         <translation>หากปิดการตกแต่งทูลทิปด้วยข้อมูลเพิ่มเติมเกี่ยวกับ UCS จะแสดงสําหรับรายการตาราง.</translation>
     </message>
     <message>
-        <source>Toolip with UCS details for table items</source>
-        <translation type="vanished">ตัดกับรายละเอียดของรายการตาราง</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
         <source>Type icon column</source>
         <translation>ชนิดคอลัมน์ของไอคอน</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation type="vanished">หากกาเลือกไว้ จะแสดงคอลัมน์ที่มีรายละเอียดของแหล่งกําเนิด UCS และมุมในตาราง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -12693,10 +11889,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
         <source>Editing</source>
         <translation>กําลังแก้ไข</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">หากเลือกตัวเลือกนี้ จะมีการแสดงกล่องยืนยันเมื่อมีการลบมุมมอง มิ ฉะนั้น จะ มี การ ลบ ภาพ ออก อย่าง เงียบ ๆ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"/>
@@ -12717,10 +11909,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
         <translation>หากเลือกรายการนี้ จะแสดงคอลัมน์ที่มีชนิดของกริดสำหรับ UCS</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">หากเลือกรายการนี้ ระบบจะแสดงกล่องโต้ตอบเพื่อยืนยันเมื่อลบมุมมอง มิฉะนั้น มุมมองจะถูกลบโดยไม่มีการแจ้งเตือน</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12788,26 +11976,6 @@ Are you sure you are going to discard changes?</source>
         <translation>กำหนดจำนวนครั้งที่ตัวบ่งชี้ UCS จะกะพริบเพื่อเน้น UCS</translation>
     </message>
     <message>
-        <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation type="vanished">กําหนดการกระทําที่จะให้กระทําเมื่อมีการคลิกซ้อนบนรายการของตาราง.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">เรียกคืนข้อมูล UCSS เมื่อคลิกหนึ่งครั้งโดยรายการตาราง</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะแสดงคอลัมน์ที่มีไอคอนสําหรับชนิดของ UCSS ในตาราง.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation type="vanished">หากกาเลือกไว้ จะแสดงคอลัมน์ที่มีชนิดของตารางสําหรับ UCSS</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied</source>
-        <translation type="vanished">กําหนดวิธีปรับหน้าต่างมุมมองการวาดหลังจากปรับใช้ UCSS แล้ว</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
         <source>On double-click on table item</source>
         <translation>เมื่อดับเบิลคลิกบนรายการของตาราง</translation>
@@ -12863,10 +12031,6 @@ Are you sure you are going to discard changes?</source>
         <translation>เน้นแบบ UCSS</translation>
     </message>
     <message>
-        <source>Defines delay between UCS marker blinks</source>
-        <translation type="vanished">กําหนดความหน่วงระหว่างการกระพริบของเครื่องหมาย UCSS</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="216"/>
         <source> ms</source>
         <translation>%s</translation>
@@ -12880,10 +12044,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="242"/>
         <source>Blink Delay:</source>
         <translation>หน่วงเวลาการกระพริบ:</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation type="vanished">กําหนดปริมาณการพริบตาของเครื่องหมาย UCSS สําหรับการเน้น UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="252"/>
@@ -13280,45 +12440,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ออฟเซต:</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">หากกาเลือก จะมีการสร้างกล่องส่วนเชื่อมโยงสําหรับการเลือกทั้งหมด มิ ฉะนั้น จะ มี การ สร้าง สําหรับ ปัจเจกบุคคล.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">การเลือกเป็นกลุ่ม</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">เลือกปรับค่าจากการวาด</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">หากเลือกไว้ จะมีเพียงจุดมุมเท่านั้นที่จะวาดสําหรับกล่องผูกพัน ไม่งั้น จะวาดเส้นขอบ.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">มุมของจุดเท่านั้น</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">หากเลือกใช้ตัวเลือกนี้ จะมีการวาดกล่องแบบเส้นต่อเนื่อง</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">เส้นต่อเนื่อง</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13412,86 +12533,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation type="unfinished">เลือกปรับค่าจากการวาด</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">ออฟเซต:</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">ไล่ระดับสีในแนวนอน</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">เลือกปรับค่า X จากการวาด</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">ปากกา:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">หากเลือกไว้ จะทําการคัดลอกไปยังตําแหน่งเดิม</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">ในสถานที่</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">เลือกปรับค่าโดย Y จากการวาด</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">ปากกาที่จะปรับใช้กับข้อความที่ซ้ํากัน</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">ทํางาน</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">ดั้งเดิม</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Resolived เดิม</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">เพิ่มเลเยอร์..</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">ทํางาน</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">ดั้งเดิม</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">ออฟเซต:</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">ออฟเซต:</translation>
     </message>
 </context>
 <context>
@@ -13673,69 +12714,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">รัศมีน้อย:</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">ค่าของมุมสําหรับรัศมีหลัก</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">หากกาเลือก จะกําหนดมุมสําหรับรัศมีหลัก</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">มุมฐาน:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">ตามเข็มนาฬิกา</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">เลือกการกระทําหลักจากการวาด</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">หากกาเลือกไว้ จะระบุมุมหลักของรัศมีด้วยเมาส์</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ว่าง</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">ความยาวรัศมีหลักของวงรี</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">เลือกรัศมีเล็กน้อยจากการวาด</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">รัศมีหลัก:</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">ความยาวรัศมีเล็ก ๆ ของวงรี</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">ตามเข็มนาฬิกา</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13874,21 +12852,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">เลือกมุมจากการวาด</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">ตัวเลือกของสี่เหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">ตามเข็มนาฬิกา</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">ตามเข็มนาฬิกา</translation>
     </message>
 </context>
 <context>
@@ -14451,11 +13414,6 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_ExportToImageService</name>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="52"/>
-        <source>Exporting drawing...</source>
-        <translation>กําลังส่งออกรูปภาพ...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="59"/>
         <source>Exported: %1</source>
         <translation>ส่งออก:%1</translation>
@@ -14779,30 +13737,6 @@ Are you sure you are going to discard changes?</source>
         <source>Eccentricity:</source>
         <translation>ความจุ:</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">นิยามไฮเปอร์โบลาไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">Foci ต้องแตกต่างกัน</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">พิกัดตรงกลางไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">รัศมีหลักต้องเป็นบวก</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">มุมการหมุนไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">รัศมีหรือรัศมีน้อย ต้องเป็นบวก</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -14974,10 +13908,6 @@ Are you sure you are going to discard changes?</source>
         <translation>ความกว้าง:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">ความกว้างของรูปภาพ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>เลือกค่าความกว้างจากการเลือก</translation>
@@ -14988,21 +13918,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ความสูง:</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">ความสูงของภาพ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>เลือกค่าความสูงจากภาพ</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">ค่า</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">ตัวเลข</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -15014,10 +13932,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>มุม:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">มุมการหมุน</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -15049,22 +13963,6 @@ Are you sure you are going to discard changes?</source>
         <source>Select an image file</source>
         <translation>เลือกแฟ้มอิมเมจ</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">ขนาด (px):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">ขนาดของภาพ หน่วยเป็นพิกเซล</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">จุดต่อนิ้ว</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">ความละเอียด (จุดต่อนิ้ว)</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -15077,21 +13975,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">หากกาเลือกไว้ จุดนี้จะอยู่ภายในรายการที่เลือกเสมอ</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">ปรับ ตัว ให้ เข้า กับ ความ สม่ําเสมอ</translation>
     </message>
 </context>
 <context>
@@ -15469,14 +14352,6 @@ Are you sure you are going to discard changes?</source>
         <translation>ตัวแบ่งที่ใช้แยกชื่อภายในของเลเยอร์ออกเป็นชื่อตามลำดับชั้น</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">เลเยอร์%1</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">เลเยอร์ถัดไป</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15507,10 +14382,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>ส่วนต่อท้ายของชื่อเลเยอร์ที่ระบุว่าเลเยอร์นั้นเป็นเลเยอร์ตำแหน่งทางเลือก.</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">ชื่อการจําลอง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15653,17 +14524,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ตั้งค่าสีต่าง ๆ</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">สี</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>สีพื้นหลังของรายการที่เลือกในต้นไม้เลเยอร์.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">สีของเส้นแบ่งชั้นในมุมมองต้นไม้ชั้น ๆ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15702,10 +14565,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>สีพื้นหลังเลเยอร์เสมือน</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">ตารางตัวแบ่งรายการแบบแยกภาพสามมุมมอง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15761,10 +14620,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>เลเยอร์ตำแหน่งทางเลือก</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">ตาราง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16254,118 +15109,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">หากกาเลือกไว้ ความยาวของบรรทัดจะถูกนิยามโดยตําแหน่งเมาส์แทนการตั้งค่า</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ว่าง</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">เลือกระยะห่างจากการวาด</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">จุดตัดของจุดจับติ๊ก จากจุดตัด</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">เลือกความยาวจากการวาด</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">เลือกปรับค่าจากการวาด</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">หากกาเลือกไว้ ตัวดั้งเดิมจะถูกหารด้วยจุดตัด.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">หาร</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ออฟเซต:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">ระยะห่างของจุดตัดจากจุดจับบรรทัดที่ระบุ</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">กําหนดส่วนใดของเส้นที่สร้างขึ้นจะถูก snapped ไปยังจุดตัด</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">เริ่ม</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">กลาง</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">จบ</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">สแน็ปของติ๊ก:</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">จับเส้น:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">ความยาวเส้น</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">หากกาเลือกไว้ มุมจะสัมพันธ์กับมุมของรายการที่เลือก</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">ความยาว:</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">จุดยึดเหนี่ยวสําหรับตําแหน่งจุดตัดระหว่างบรรทัดที่สร้างขึ้น (อยู่ในบรรทัดดั้งเดิม)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">ว่าง</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">ระยะห่างการเกาะ:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">มุมของเส้น</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16672,93 +15415,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation type="unfinished">จํานวนตัวอักษรที่จะแทนที่</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">ขนาด:</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">ออฟเซต:</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">ออฟเซตส์สําหรับเส้นสร้างจากจุดตัด</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">จุดยึดเหนี่ยวสําหรับบรรทัดที่สร้าง</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">เริ่ม</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">กลาง</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">จบ</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">ความยาว:</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">ความยาวความกว้างคงที่ของเส้นที่สร้าง</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">จับ:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">เลือกความยาวจากการวาด</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">เลือกปรับค่าจากการวาด</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">กําหนดว่าบรรทัดที่สร้างจะสร้างจุดตัดหรือควรมีความยาวคงที่</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">การแยก</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">ความยาวความกว้างคงที่</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">หากกาเลือกไว้ บรรทัดที่สร้าง จะอยู่ระหว่างบรรทัดที่เลือก</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">ออร์โธโกลบอล</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">มุมระหว่างบรรทัดดั้งเดิมและการสร้างหนึ่ง</translation>
     </message>
 </context>
 <context>
@@ -17144,81 +15800,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการสร้างโพลีไลน์แทนบรรทัดแต่ละบรรทัด</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">สร้างเส้นต่อเนื่อง</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">ข้อกําหนดสําหรับบรรทัดถูกเลือกที่สอง</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">ขยาย/ ขอบ</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">เพิ่มส่วนของเส้นตรง</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">ไม่มีการเปลี่ยนแปลง</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">บรรทัดที่ 1:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">บรรทัดที่ 2:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">ข้อกําหนดสําหรับเข้าร่วมบรรทัดที่เลือกก่อน</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">กําหนดว่าจะให้ใช้ปากกากับองค์กรใดบ้าง</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">ปากกาที่ทํางานอยู่</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">ไลน์ 1</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">ไลน์ 2</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">ทั้งสองบรรทัด</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">แอททริบิวต์:</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">หากกาเลือกไว้ บรรทัดดั้งเดิมจะถูกลบทิ้ง</translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">เอาภาพต้นฉบับออก</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17600,85 +16181,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">ควบคุมวิธีการที่จุดบนขอบ (เริ่ม/ ปลายจุด) ที่ควรจะถูกสร้างขึ้น.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">ไม่มี</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">ทั้งคู่</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">เริ่ม</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">จบ</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">เลือกระยะห่างจากการวาด</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">จํานวนจุดที่จะสร้าง</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">จุดขอบ:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">กําหนดว่าจุดทุกจุดควรอยู่ระหว่างจุดเริ่ม/จุดปลายของเส้นตรงหรือไม่ หรือความยาวของเส้นตรงคํานวณตามจํานวนจุดกับระยะห่างระหว่างจุด.</translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">พอดีกับบรรทัด</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">ระยะห่างระหว่างจุด.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">หากกาเลือก จะวาดบรรทัดของจุดด้วยมุมที่กําหนด</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">จํานวนของคะแนน:</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะใช้ระยะห่างที่กําหนดระหว่างจุดต่าง ๆ มิฉะนั้น ระยะทางจะถูกคํานวณ.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">ระยะห่างคงที่</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">มุมของเส้น</translation>
     </message>
 </context>
 <context>
@@ -21928,433 +20430,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp; ช่วยเหลือ</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">On&amp;line Doctors</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp; Wiki</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">ผู้ใช้</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp; คําสั่ง</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">แผ่นบาง ๆ</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">ความกว้าง:</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">เกี่ยวกับ</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp; ฟรอม</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">Zulip &amp; Chart</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">การย่อยผิดพลาด</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">คุณสมบัติการขอข้อมูล</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">&amp; ลบหน้า</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">แสดง</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">สี</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">Pin&amp;t</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">วงกลม</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">&amp; สี่เหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">รูปหลายเหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">Splin&amp;e</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">วงรี</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">เส้นพริ้วไหว</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">&amp; อื่น ๆ</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">วาดรูปภาพ</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp; วงรี</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">Ot&amp;her</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">ลบทั้งเธรด</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">ตัวเรียง</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">ความแตกต่าง</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp; อินโฟ</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp; เครื่องมือ</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">เลือก</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">Dime&amp;ssion</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">แฟ้ม</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">แฟ้มที่เคยเรียกใช้</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">นําเข้า</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">ส่งออก</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp; การชดเชย</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">แก้ไข</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">มุมมอง</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">มุมมองการเรียกคืน</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">PI&amp;ugins</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">ขอบเขตสี</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">พื้นที่จัดเก็บ</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">CAD ความกว้าง:</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">วาดภาพ</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">บริบท</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">แถบเครื่องมือ</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">วิดเจ็ต</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">วิดเจ็ต CAD</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">แถบเครื่องมือ CAD</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">เลือก</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">ล่าสุด</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">แก้ไข</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">แก้ไขเพิ่มเติม</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">วาด</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">เส้น</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">เส้นต่อเนื่อง</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">จุด</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">วงกลม</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">สี่เหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">รูปหลายเหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">เส้นต่อเนื่อง/ เส้นต่อเนื่อง</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">วงรี</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">อื่นๆ</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">เพิ่มขนาด</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">จัดวาง</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">วาดลําดับ</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">ข้อมูล</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">แก้ไข</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">ตัวเลือก</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">มุมมองที่มีชื่อ</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">คุณสมบัติ</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">แก้ไขค่าทั่วไป</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">แก้ไขบรรทัด</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">วาดเส้น</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">วาดวงกลม</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">วาดอย่างอื่น</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">แก้ไขวงกลม</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">แก้ไขสี่เหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">ลบรูปภาพ</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">แก้ไขเส้นกริด</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">แก้ไขจุดเชื่อมโยง</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">แก้ไขข้อความ</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">แก้ไขข้อความ M</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">แก้ไขบล็อค</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">ลําดับ</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">แถบเครื่องมือ</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">แถบเครื่องมือ &amp; CAD</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">ขอบเขตสี</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">โหมด Ta&amp;b</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">โหมดวินโดว์</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp; ลาว</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">รอบ</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">เส้นต่อเนื่อง</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">เหนือ</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">ใต้</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">ฝั่งตะวันออก</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">ตะวันตก</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp; Arrange</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">ย่อหาย</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp; กาชาด</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp; ลาก</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">สี่เหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">สี่เหลี่ยม</translation>
-    </message>
-</context>
-<context>
     <name>LC_MenuFactoryBase</name>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
@@ -22970,21 +21045,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ออฟเซต:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">เลือกปรับค่าจากการวาด</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23121,197 +21181,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะใช้คุณสมบัติปัจจุบันกับองค์กรที่แสดงกระจกเงา ไม่เช่นนั้น - คุณสมบัติดั้งเดิม.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ใช้แอททริบิวต์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">ถ้าปราศจากการควบคุม องค์กรดั้งเดิมจะถูกถอดออกไป มิฉะนั้นพวกเขาจะอยู่รอด.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะทําการวางโครงสร้างกระจกเงาบนเลเยอร์ปัจจุบัน ไม่เช่นนั้นก็จะถูกนําไปวางไว้ในชั้นเดิม.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">เลเยอร์ปัจจุบันของผู้ใช้</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">หากกาเลือก จะทําการปรับขนาดขององค์กรหากจําเป็น ไม่อย่างนั้น, พวกมันก็แค่ตําแหน่งและหมุน.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">ค่า</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">หากกาเลือก จะทําการลดจุดตัด ถ้าหยุดไม่ได้ - entiy จะแบ่งในจุดตัด.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">ลบช่องสี</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">หากกาเลือกไว้ ส่วนที่เลือกไว้จะถูกลบออกไป มิ ฉะนั้น ส่วน ที่ เลือก ไว้ จะ อยู่ รอด และ ส่วน ที่ เหลือ จะ ถูก ขจัด ออก ไป.</translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">ลบรายการที่เลือก</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">ระยะห่างการเกาะ:</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">จุดจับต้องของช่องว่างที่จุดจับเส้น</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">จับเส้น:</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">ขนาดช่องว่าง:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">จุดจับสําหรับช่องว่างบนบรรทัด</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ว่าง</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">ช่องช่อง:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">เริ่ม</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">กลาง</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">จบ</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">ว่าง</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">เริ่ม</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">กลาง</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">จบ</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">ขนาดช่องว่างจากภาพ</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">ระยะห่างจากจุดจับ</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">เลือกระยะห่างจากการวาด</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">ขนาดของช่องว่าง ถ้าไม่ว่าง</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">ถ้า หด ตัว ขนาด ของ ช่อง ว่าง จะ กําหนด โดย หนู</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะแสดงกระจกด้วยรายการบรรทัดที่เลือก.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">ทํากระจกเงาไปยังบรรทัดที่เลือก</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">ถ้าปราศจากการควบคุม องค์กรดั้งเดิมจะถูกถอดออกไป มิฉะนั้นพวกเขาจะอยู่รอด.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะใช้คุณสมบัติปัจจุบันกับองค์กรที่แสดงกระจกเงา ไม่เช่นนั้น - คุณสมบัติดั้งเดิม.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ใช้แอททริบิวต์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะทําการวางโครงสร้างกระจกเงาบนเลเยอร์ปัจจุบัน ไม่เช่นนั้นก็จะถูกนําไปวางไว้ในชั้นเดิม.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">เลเยอร์ปัจจุบันของผู้ใช้</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23357,234 +21226,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation type="unfinished">ใช้เลเยอร์ปัจจุบัน</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">ตัวเลือกการหมุนภาพ</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">การเลือกตัวประกอบที่ว่างอยู่ ควรกระทําโดยเมาส์หากเลือก.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ว่าง</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการวางค่าความเข้มสีไว้ในเลเยอร์ปัจจุบัน ไม่เช่นนั้นก็จะอยู่ในเลเยอร์เดิม.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">ใช้เลเยอร์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">หากสมบูรณ์ จุดอ้างอิงจะถูกหมุน แต่ตัวแปลงจะถูกหมุนเป็นมุมที่สองเท่านั้น ไม่เช่นนั้นมุมจะรวมกัน</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">สัมบูรณ์</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">มุมของการหมุนวัตถุรอบจุดหมุน</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะทําการปรับใช้แอตทริบิวต์ปัจจุบันกับองค์กรที่ถูกสร้างมา จะใช้แอนิบิวต์ othesult แทน.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ใช้แอททริบิวต์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">หากกาเลือก การหมุนครั้งที่สองคือรอบจุดอ้างอิง</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">หมุนสองครั้ง</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">มุมสําหรับการหมุนเพิ่มเติมรอบจุดรีเรนซ์</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">เลือกมุมการหมุนจากการวาด</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">หากกาเลือกแล้ว ตัวดั้งเดิมจะอยู่รอด ไม่เช่นนั้นก็จะถูกลบออกไป.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">จะสร้างหลายสําเนาหากตรวจสอบ.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">หลายสําเนา</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">มุมการหมุน:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">กําหนดว่ามุมจะถูกนิยามโดยค่าที่ป้อนเข้าไป หรือโดยตําแหน่งเมาส์</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">เลือกมุมการหมุนที่สองจากภาพวาด</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">จํานวนสําเนา</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">ตัวเลือกการหมุนภาพ</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">หากกาเลือก จะมีการสร้างหลายสําเนา.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">หลายสําเนา</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">เอ็กซ์:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">หากกาเลือก จะใช้ตัวคูณการปรับขนาดของแกน X และ Y แบบเดียวกัน.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">ไอโซโทรปิก</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">หากกาเลือกไว้ ตัวดั้งเดิมจะอยู่รอด ไม่เช่นนั้นก็จะถูกลบออกไป.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">จํานวนสําเนา</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการปรับใช้แอตทริบิวต์ปัจจุบันกับองค์กรที่ถูกสร้างมา ไม่เช่นนั้นก็จะใช้ลักษณะดั้งเดิมแทน.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ใช้แอททริบิวต์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">องค์ประกอบการปรับขนาดสําหรับแกน Y</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">ตั้งค่า</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการวางโฟลเดอร์ที่ถูกสร้างไปยังเลเยอร์ปัจจุบัน มิ ฉะนั้น จะ ถูก วาง ไว้ ใน ชั้น ดิน เดิม.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">ใช้เลเยอร์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะทําการเลือกตัวประกอบด้วยเมาส์อย่างอิสระ ไม่เช่นนั้น จะใช้ค่าของตัวประกอบที่กําหนด.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ว่าง</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">ตัวคูณการปรับขนาดสําหรับแกน X</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">หากกาเลือกไว้ ตัวดั้งเดิมจะอยู่รอด ไม่เช่นนั้นก็จะถูกลบออกไป.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">รักษาภาพต้นฉบับ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการวางโฟลเดอร์ที่ถูกสร้างไปยังเลเยอร์ปัจจุบัน มิฉะนั้นแล้ว มันจะรวมเป็นชั้น ๆ.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">ใช้เลเยอร์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">จํานวนสําเนา</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะทําการปรับใช้แอตทริบิวต์ปัจจุบันกับองค์กรที่ถูกสร้างมา จะใช้ภาพต้นฉบับแบบ Octerentive.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ใช้แอททริบิวต์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">หากกาเลือกไว้ ตัวดั้งเดิมจะอยู่รอด ไม่เช่นนั้นก็จะถูกลบออกไป.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">หากกาเลือก จะมีการสร้างหลายสําเนา.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">หลายสําเนา</translation>
     </message>
 </context>
 <context>
@@ -23900,14 +21541,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>...</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">กําลังกรองมุมมองโดยใช้ชื่อ</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">กรอง...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24343,45 +21976,6 @@ Warning: this action can NOT be undone!</source>
         <source>Control Points</source>
         <translation>จุดควบคุม</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">จุดควบคุมพาราโบลาไม่สามารถเป็นแนวเดียวกันได้</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">หากเลือกตัวเลือกนี้ ตัวชี้ที่ใช้เป็นจุดแทรก จะถูกลบหลังจากปฏิบัติการวาง ไม่งั้นมันจะรอด.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">ลบจุด</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">ตั้งค่า</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">องค์ประกอบการปรับขนาดสําหรับองค์กรที่วางจําหน่ายแล้ว</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">มุมการหมุนสําหรับองค์กรที่แปะ</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24457,89 +22051,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">เลือกมุมจากการวาด</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">มุมการหมุนสําหรับองค์กรที่แปะ</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">ช่องว่างระหว่างจุดแทรกตัวในแถว.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">เลือกช่องว่างจาก X จากการวาด</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">ตั้งค่า</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากรูปภาพ</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">มุมการหมุนสําหรับอาร์เรย์.</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">เลขแถวอาร์เรย์.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">เลือกช่องว่างโดย Y จากการวาด</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะใช้มุมการหมุนเดียวกันกับแต่ละวาง และอาร์เรย์ทั้งหมด ไม่อย่างนั้น จะใช้มุมต่างๆ กัน.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">มุมเดียวกัน</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">ช่องว่าง:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">เลขคอลัมน์อาร์เรย์.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">หากกาเลือกตัวเลือกนี้ จะมีการสร้างอาร์เรย์ของสําเนาเมื่อวางอยู่.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">อาร์เรย์</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">มุมอาร์เรย์:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">องค์ประกอบการปรับขนาดสําหรับองค์กรที่วางจําหน่ายแล้ว</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">ช่องว่างระหว่างจุดแทรกของวัตถุในคอลัมน์.</translation>
     </message>
 </context>
 <context>
@@ -25161,17 +22672,9 @@ Warning: this action can NOT be undone!</source>
         <translation>ชื่อบรรทัด</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">สี</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>สีพื้นหลังสําหรับองค์ประกอบปากกาในปัจจุบันแก้ไขในตารางปากกา</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">สีของตารางสําหรับรายการปากกา</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25193,10 +22696,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>แถวของตารางทั้งหมดเป็นตัวหนาสําหรับปากกาที่ทํางานอยู่</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">สีเส้นกริด:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25289,17 +22788,9 @@ Warning: this action can NOT be undone!</source>
         <translation>ชื่อธรรมชาติ ที่เป็นไปได้</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">หากเลือกไว้ จะแสดงจดหมายอื่น ๆ เป็นส่วนของปฏิบัติการเกี่ยวกับปากกา</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>แสดงข้อความข้อมูลหากยังไม่มีส่วนที่เลือกไว้ผ่านทางปากกา</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">เมื่อคลิกซ้อนบนรายการของตาราง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25522,12 +23013,6 @@ Warning: this action can NOT be undone!</source>
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">ตําแหน่งของแฟ้มปากกามีการเปลี่ยนแปลง โปรดเริ่มการทํางานโปรแกรมใหม่อีกครั้งเพื่อให้ใช้แฟ้มปากกาตัวใหม่
-โปรดสังเกตว่า หากคุณบันทึกปากกาผ่านทางเครื่องมือแก้ไขโดยไม่เริ่มการทํางานใหม่ ปากกาปัจจุบันจากจานสีจะถูกบันทึกไว้ในแฟ้มใหม่ และเนื้อหาที่มีอยู่จะถูกแทนที่.</translation>
-    </message>
 </context>
 <context>
     <name>LC_PointPickButton</name>
@@ -25573,37 +23058,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>เลือกตําแหน่งจากภาพวาด</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">จํานวนของจุดตามแกน Y (จํานวนแถวของเส้นพริ้วไหว)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">จํานวนแถว:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">จํานวนคอลัมน์:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">จํานวนจุดตามแกน X</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">ถ้าเลือกจุดสุดท้ายของตาข่ายจะถูกปรับความต่อเนื่องในตําแหน่งของจุดแรก ดังนั้นตาข่ายจะเป็นสี่เหลี่ยมหรือสี่เหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">ปรับจุดสุดท้ายไปยังจุดแรก</translation>
     </message>
 </context>
 <context>
@@ -32870,10 +30324,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>เส้นต่อเนื่อง</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">ความแหลม:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="740"/>
@@ -33862,10 +31312,6 @@ p, li {white- space: pre- wrap;}
         <translation>ข้อมูลความจุ</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt; &lt; หัว/&gt; หากเลือกไว้ จะแสดงรายละเอียดเพิ่มเติมเกี่ยวกับบรรทัดและส่วนโค้งที่เป็นส่วนหนึ่งของโพลีไลน์ในวิดเจ็ต Entity India. &lt;br &gt; มิฉะนั้น จะแสดงเฉพาะข้อมูลเกี่ยวกับจุดยอด/ แท่งเสียงเท่านั้น</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
@@ -33914,205 +31360,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>จุดเน้นปากกา</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">ขอบ:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">หากกาเลือก จะกําหนดจุดจับให้เลื่อนไปตามรัศมีของมุม.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">หมุน &amp; 90</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">ความยาวของมุมระฆังสําหรับทิศ Y.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">กําหนดขอบของสี่เหลี่ยมควรวาด (จึงเป็นไปได้ที่จะสร้างเส้นขนานแค่สองเส้น แทนที่จะเป็นสี่เหลี่ยม)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">ทั้งคู่</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">แนวตั้ง</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">ไล่ระดับสีในแนวนอน</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">ความกว้างของสี่เหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">ควบคุมมุมของสี่เหลี่ยม.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">ตรง</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">รอบ</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">ระฆัง</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">หากกาเลือกไว้ สี่เหลี่ยมจะถูกหมุนไปบนพื้นที่ที่ระบุไว้.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">มุมฐาน:</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะทําการกําหนดค่าความสูงและความกว้างของสี่เหลี่ยม ให้มีความยาวระหว่างศูนย์กลางส่วนโค้งสําหรับมุมโค้ง มิ ฉะนั้น ค่า เหล่า นี้ จะ นิยาม ขนาด นอก ของ สี่เหลี่ยม.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">ขนาดภายใน</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">ความยาว Y:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">หากกาเลือกไว้ สี่เหลี่ยมจะถูกสร้างเป็นโพลีเมนต์แทนส่วนต่าง ๆ.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">เส้นต่อเนื่อง</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">จับ:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">ความสูง:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">รัศมี:</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">ความยาวของมุมระฆังสําหรับทิศ X.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">ความยาว X:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">ความสูงของสี่เหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">รัศมีของมุมโค้ง.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">จุดต่อสี่เหลี่ยม จะถูกวางเอาไว้ที่จุดแทรก.</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">บนซ้าย</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">บน</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">บนขวา</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">ซ้าย</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">กลาง</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">ขวา</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">ล่างซ้าย</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">ล่าง</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">ล่างขวา</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">เลือกมุมการหมุนจากการวาด</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">เลือกรัศมีของมุมโค้งจากการวาด.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">มุมการหมุน</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">เลือกค่าความสูงของสี่เหลี่ยมจากการเลือก</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">เลือกความกว้างของสี่เหลี่ยมจากภาพวาด</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">ความกว้าง:</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">เลือกมุมโค้งสําหรับทิศ X จากการวาด.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">เลือกมุมโค้งสําหรับ Y จากการวาด.</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการระบุมุมด้วยตําแหน่งเมาส์ ไม่เช่นนั้น ค่าที่ระบุจะถูกใช้.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ว่าง</translation>
     </message>
 </context>
 <context>
@@ -34482,153 +31729,6 @@ p, li {white- space: pre- wrap;}
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">กําหนดขอบของสี่เหลี่ยมควรวาด (จึงเป็นไปได้ที่จะสร้างเส้นขนานแค่สองเส้น แทนที่จะเป็นสี่เหลี่ยม)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">ทั้งคู่</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">แนวตั้ง</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">ไล่ระดับสีในแนวนอน</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">กําหนดจุดใดของสี่เหลี่ยม ควรวางตําแหน่งเริ่มจุด.</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">มุม</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">พิมพ์แบบกลาง</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">ตรงกลาง</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">กลาง</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">เลือกมุมการหมุนสี่เหลี่ยมจากภาพวาด</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">เลือกรัศมีของมุมโค้งจากการวาด.</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">กําหนดจุดใดของสี่เหลี่ยม ควรวางตําแหน่งจุดปลาย.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">เลือกความยาวของเบเวลในทิศ x จากการวาด.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">ขอบ:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">เลือกความยาวระฆังในทิศ Y จากการวาด.</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">ผุด:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">ความยาวของระฆังในทิศ Y.</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">หากกาเลือกไว้ ให้ระบุจุดจับต้องเลื่อนไปตามรัศมีของมุม.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">หมุน &amp; 90</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">ความยาว X:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">รัศมี:</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">หากกาเลือก จะอนุญาตให้ระบุมุมการหมุนของสี่เหลี่ยมได้.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">มุมฐาน:</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">มุมการหมุนรูปสี่เหลี่ยม.</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">สแน็ปสิ้นสุด:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">กําหนดมุมของสี่เหลี่ยม.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">ตรง</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">รอบ</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">ระฆัง</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">รัศมีของมุมโค้ง.</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">ความยาว Y:</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">หากกาเลือกไว้ สี่เหลี่ยมทั้งหมดจะถูกวาดเป็นโพลีเมนต์.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">เส้นต่อเนื่อง</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">ความยาวของเบเวลในทิศ x.</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -34886,145 +31986,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation type="unfinished">เลือกความยาวระฆังในทิศ Y จากการวาด.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">มุมภายในของสี่เหลี่ยม.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">หากกาเลือกไว้ มุมในของสี่เหลี่ยมจะถูกคงไว้ตามค่าที่กําหนด.</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">มุมอินเนอร์คงที่:</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">มุมฐานของสี่เหลี่ยมมุมฉาก.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">ความยาว X:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">ความยาวของเบเวลในทิศ x.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">กําหนดมุมที่จะใช้วาดสี่เหลี่ยม.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">ตรง</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">รอบ</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">ระฆัง</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">หากกาเลือกไว้ ให้ระบุจุดจับต้องเลื่อนไปตามรัศมีของมุม.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">หมุน &amp; 90</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">ความยาว Y:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">ความยาวของระฆังในทิศ Y.</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">รัศมีของมุมโค้ง.</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">รัศมี:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">หากกาเลือก จะมีการสร้างรูปร่างเป็นโพลีไลน์.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">เส้นต่อเนื่อง</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">เลือกมุมข้างในของสี่เหลี่ยมจากการวาด.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">ขอบ:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">เลือกรัศมีของมุมโค้งจากการวาด.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">เลือกความยาวของเบเวลในทิศ x จากการวาด.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">เลือกความยาวระฆังในทิศ Y จากการวาด.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">กําหนดขอบของสี่เหลี่ยมควรวาด (จึงเป็นไปได้ที่จะสร้างเส้นขนานแค่สองเส้น แทนที่จะเป็นสี่เหลี่ยม)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">ทั้งคู่</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">แนวตั้ง</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">ไล่ระดับสีในแนวนอน</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">เลือกมุมฐานของสี่เหลี่ยมจากภาพวาด</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการหมุนสี่เหลี่ยมไปเป็นมุมฐานที่ระบุ ไม่อย่างนั้น มุมฐานจะถูกนิยามด้วยมุม ระหว่างจุดแรกกับจุดที่สองของสี่เหลี่ยม.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">มุมฐานคงที่:</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">หากกาเลือก จะสร้างสี่เหลี่ยมแทนสี่เหลี่ยม.</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">สี่เหลี่ยม</translation>
     </message>
 </context>
 <context>
@@ -35673,100 +32634,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">ขออภัย มีข้อผิดพลาดในเครือข่าย ระหว่างการตรวจสอบรุ่นใหม่.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">ไม่สามารถวิเคราะห์การตอบกลับจากเซิร์ฟเวอร์ได้</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">ตัวเลือกการหมุนภาพ</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">กําหนดสําเนาที่จะแทนที่จะถูกแทรกไปยังเลเยอร์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">ใช้เลเยอร์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">ปรับแก้มุมที่สอง แล้วผลรวมของมุม (มุมการหมุนโดยสมบูรณ์) เป็น 0 ตัวตั้งค่าดังกล่าวจะถูกย้าย แต่จะไม่ถูกหมุน.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">มุมของภาพ</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">เลือกมุมหลักจากภาพวาด</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">กําหนดว่าจะให้ใช้คุณสมบัติปัจจุบันหรือภาพต้นฉบับหรือไม่</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ใช้แอททริบิวต์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">เลือกมุมที่สองจากการวาด</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">มุมสําหรับการหมุนเหนือจุดอ้างอิงแบบสมบูรณ์</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">หากกาเลือก จะมีการสร้างหลายสําเนา.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">หลายสําเนา</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">จํานวนสําเนาที่จะสร้าง</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">มุมที่สอง:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">หากกาเลือก จะใช้มุมเดียวกันกับทุกสําเนา มิ ฉะนั้น จะ มี การ เพิ่ม จํานวน ตาม สัดส่วน.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">มุมที่สองเดียวกันสําหรับสําเนา</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">หากกาเลือกไว้ ตัวดั้งเดิมจะอยู่รอด ไม่เช่นนั้นก็จะถูกลบออกไป.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">มุมหลัก:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">มุมที่จะหมุนมากกว่าจุดอ้างอิงรอง</translation>
     </message>
 </context>
 <context>
@@ -36761,141 +33628,6 @@ p, li {white- space: pre- wrap;}
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">มุมเริ่มต้น:</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">เริ่มมุมสําหรับวงเวียนจากที่คลิกเริ่มต้น.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ออฟเซต:</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">จุดตัดของติ๊กจับจุดตัด.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">เลือกระยะห่างจากการวาด</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">ระยะห่าง:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">ระยะห่างระหว่างเห็บ.</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการหารด้วยจุดตัดของเห็บ.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">หาร</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">เลือกปรับค่าติ๊กจากการวาด</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">ความยาวของติ๊ก.</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">เลือกมุมเมื่อวาด</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">กระเด้งกระดอน:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">เลือกความยาวของการวาด</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">มุมเริ่มต้นวงกลม PICK จากการวาด</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">มุมระหว่างกาเลือกกาเลือกกับกาเลือก.</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการปรับสีให้ใช้กับรายการที่เลือก ไม่เช่นนั้นมันจะเป็นมุมสัมบูรณ์.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">ความยาวการติ๊ก:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">กําหนดจุดตัดกับค่าที่เลือกไว้.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">เริ่ม</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">กลาง</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">จบ</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะใช้ค่าระยะห่างคงที่ระหว่างค่าแต่ละค่า มิ ฉะนั้น จะ มี การ คํานวณ ระยะ โดย อาศัย ความ ยาว ของ ตัว เอง และ การ นับ ของ เห็บ.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">หนัก</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">นับถอยหลังระหว่างขอบของรายการที่เลือก.</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">จํานวนนับ:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">ควร ใส่ เห็บ บน ขอบ ของ ตัว เอง อย่าง ไร.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">ไม่มี</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">ทั้งคู่</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">ติ๊กขอบ:</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37215,57 +33947,6 @@ p, li {white- space: pre- wrap;}
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">กําหนดจํานวนของส่วนของเส้นตรงที่จะถูกสร้างขึ้นสําหรับ spline-fit spiline-fit polyline</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">ถ้า ไม่ มี การ ควบคุม เส้น ด้าย ดั้งเดิม จะ ถูก ขจัด ออก ไป มิ ฉะนั้น จะ รอด ชีวิต.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะใช้คุณสมบัติปัจจุบันกับองค์กรที่สร้างเอง ไม่เช่นนั้น - คุณสมบัติดั้งเดิม.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ใช้แอททริบิวต์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการวางโครงสร้างต่าง ๆ ไว้ในเลเยอร์ปัจจุบัน ไม่เช่นนั้นก็จะถูกนําไปวางไว้ในเลเยอร์เดิม.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">ใช้เลเยอร์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะกําหนดจํานวนบรรทัดที่กําหนดเองได้ มิฉะนั้น ค่าจากค่าที่ตั้งไว้สําหรับภาพวาดปัจจุบันจะถูกใช้.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">จํานวนสัญลักษณ์กําหนดเอง</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">หากกาเลือก ส่วนของเส้นตรงจะเป็นส่วนหนึ่งของโพลีไลน์ มิ ฉะนั้น พวก เขา จะ เป็น ราย บุคคล</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">เส้นต่อเนื่อง</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -37389,61 +34070,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
         <translation type="unfinished">เส้นต่อเนื่อง</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการวางโครงสร้างต่าง ๆ ไว้ในเลเยอร์ปัจจุบัน ไม่เช่นนั้นก็จะถูกนําไปวางไว้ในเลเยอร์เดิม.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">เลเยอร์ปัจจุบันของผู้ใช้</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">ยอดของจุดกึ่งกลางของส่วนโพลีลีน ที่จะถูกเพิ่มเข้ากับเส้นประ.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">กําหนดระดับของกราฟ</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">ถ้า ไม่ มี การ ควบคุม โพลีไลน์ ดั้งเดิม จะ ถูก ขจัด ออก ไป มิ ฉะนั้น จะ รอด ชีวิต.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">ระดับความชอบ:</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">จุดกึ่งกลาง:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะใช้คุณสมบัติปัจจุบันกับองค์กรที่สร้างเอง ไม่เช่นนั้น - คุณสมบัติดั้งเดิม.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ใช้แอททริบิวต์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะถือว่าจุดยอดของโพลีลีนคือ จุดประสม และขีดเส้นด้วยจุดต่างๆ จะถูกสร้างขึ้น มิ ฉะนั้น จะ มี การ คิด กัน ว่า พวก เขา เป็น จุด ควบคุม และ จะ มี การ สร้าง จุด เปราะ สําคัญ.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">เวอเท็กซ์ส์คือจุดเชื่อมโยง</translation>
     </message>
 </context>
 <context>
@@ -37847,69 +34473,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>ค่าเบี่ยงเบนมาตรฐาน</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">หากกาเลือก จะสร้างดาวสมมาตร.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">สมมาตร</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">รัศมีสําหรับขอบภายใน.</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">จํานวน:</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">เลือกรัศมีภายนอกจากการวาด</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">เลือกรัศมีภายในจากการวาด</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">จํานวนรังสี.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการปัดขอบนอกให้รอบ.</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการปัดขอบด้านใน.</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">รัศมีอินเนอร์</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">หากกาเลือกไว้ ดวงดาวจะถูกวาดเป็นโพลีไลน์.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">เส้นต่อเนื่อง</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">รัศมีสําหรับรังสีภายนอก (เอดจ์).</translation>
     </message>
 </context>
 <context>
@@ -38800,14 +35363,6 @@ p, li {white- space: pre- wrap;}
         <translation>ตั้งค่า</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">กําลังกรองพิกัดผู้ใช้โดยใช้ชื่อ</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">กรอง...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>&lt;/i&gt;</translation>
@@ -38908,33 +35463,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>เอารายการออก</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">รูปแบบ</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">มุมแกน X ของระบบพิกัดใหม่</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">กําหนดว่ามุม X- axis จะนิยามโดยค่าที่ป้อนเข้าไป หรือโดยตําแหน่งเมาส์</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ว่าง</translation>
     </message>
 </context>
 <context>
@@ -39550,33 +36078,6 @@ Warning: this action can NOT be undone!</source>
     </message>
 </context>
 <context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">ตัวเลือกด้านมุมสัมพัทธ์ของบรรทัด</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">ช่องว่าง:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">ระยะห่างจากโพลีไลน์ดั้งเดิม</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">จํานวนสําเนา:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">จํานวนสําเนา</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">เลือกช่องว่างจากการวาด</translation>
-    </message>
-</context>
-<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="38"/>
@@ -39614,11 +36115,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="839"/>
-        <source>Creating new file...</source>
-        <translation>กำลังสร้างแฟ้มใหม่...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="775"/>
         <source>unnamed document %1</source>
         <translation>เอกสารไม่มีชื่อ %1</translation>
@@ -39627,21 +36123,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
         <source>Loaded document: </source>
         <translation>โหลดเอกสาร: </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1068"/>
-        <source>Opening aborted</source>
-        <translation>ล้มเลิกการเปิด</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1398"/>
-        <source>Printing...</source>
-        <translation>กำลังพิมพ์...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1501"/>
-        <source>Exiting application...</source>
-        <translation>กำลังออกจากแอปพลิเคชัน...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -39654,19 +36135,9 @@ Warning: this action can NOT be undone!</source>
         <translation>สร้างงานเขียนแบบแผ่นใหม่แล้ว</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing...</source>
-        <translation>กำลังบันทึกงานเขียนแบบ...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="276"/>
         <source>Saved drawing: %1</source>
         <translation>บันทึกงานเขียนแบบแล้ว: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1402"/>
-        <source>Printing complete</source>
-        <translation>พิมพ์เสร็จสมบูรณ์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="771"/>
@@ -39681,11 +36152,6 @@ Please check the permissions.</source>
         <translation>ไม่สามารถเปิดแฟ้ม
 %1
 กรุณาตรวจสอบการอนุญาตสิทธิ์</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1230"/>
-        <source>Auto-saving drawing...</source>
-        <translation>กำลังบันทึกงานเขียนแบบโดยอัตโนมัติ...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
@@ -39753,16 +36219,6 @@ Please check its existence and permissions.</source>
         <translation>ไม่มีแฟ้ม &apos;%1&apos; อยู่ จึงล้มเลิกการเปิด</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1867"/>
-        <source>Opening recent file...</source>
-        <translation>กําลังเปิดเอกสารที่เคยเรียกใช้...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing: %1</source>
-        <translation>กำลังบันทึกงานเขียนแบบ: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="271"/>
         <source>Save cancelled</source>
         <translation>ยกเลิกการบันทึก</translation>
@@ -39827,12 +36283,6 @@ Please check its existence and permissions.</source>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="196"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>หนี</translation>
-    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
@@ -39868,11 +36318,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="69"/>
         <source>Name of the block</source>
         <translation>ชื่อของบล็อก</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="77"/>
-        <source>Renaming Block</source>
-        <translation>บล็อกเปลี่ยนชื่อ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="78"/>
@@ -40073,12 +36518,6 @@ Please check its existence and permissions.</source>
         <translation>ประวัติและผลลัพธ์ของคําสั่ง</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="260"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>หนี</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="54"/>
         <source>...</source>
         <translation>...</translation>
@@ -40253,77 +36692,6 @@ Please check its existence and permissions.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">สี่เหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">คุณสมบัติของปากกา</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">เรขาคณิต</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">พิกัด x ของศูนย์กลางส่วนโค้ง</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">พิกัดของศูนย์กลางส่วนโค้ง</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="obsolete">กําหนดว่าจะให้ส่วนโค้งย้อนกลับหรือไม่ (ตามเข็มนาฬิกา)</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">กลับค่าเดิม</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">ศูนย์ (y):</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="obsolete">รัศมีของส่วนโค้ง</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="obsolete">มุมเริ่มต้น:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">รัศมี:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="obsolete">เริ่มมุมของส่วนโค้ง</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="obsolete">มุมสิ้นสุดของส่วนโค้ง</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="obsolete">มุมสิ้นสุด:</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">ศูนย์ (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ปากกา</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
@@ -40361,194 +36729,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
         <translation>ปากกา</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">วงกลม</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">เรขาคณิต</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">รัศมี:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="obsolete">รัศมีของวงกลม</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">ศูนย์ (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">พิกัดของศูนย์กลางวงกลม</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">ศูนย์ (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">พิกัด X ของศูนย์กลางวงกลม</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ปากกา</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">ขนาดลายเส้น</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">ชั้นของมิติ</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">คุณสมบัติของปากกา</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">เรขาคณิต</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">มุม:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="obsolete">มุมการหมุนของมิติ</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ปากกา</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">ขนาด</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">ชั้นของมิติ</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="obsolete">คุณสมบัติของปากกา</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ปากกา</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">วงรี</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">เรขาคณิต</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="obsolete">มุมการหมุนสําหรับแกนเอกของวงรี, องศา</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="obsolete">กําหนดว่าจะให้ส่วนโค้งย้อนกลับหรือไม่</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="obsolete">กลับค่าเดิม</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="obsolete">ศูนย์ (y):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="obsolete">มุมสิ้นสุดของเส้นโค้งแบบวงรี, องศา</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">พิกัดของศูนย์กลางส่วนโค้ง</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="obsolete">รัศมีของแกนเอกของวงรี</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="obsolete">องศา</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="obsolete">มุมเริ่มต้น (*):</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="obsolete">การหมุน</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="obsolete">รัศมีของแกนเล็กของวงรี</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="obsolete">มุมสิ้นสุด (*):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="obsolete">มุมเริ่มต้นของเส้นโค้งแบบวงรี, องศา</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="obsolete">หัวหน้า:</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="obsolete">น้อยที่สุด:</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="obsolete">พิกัด x ของศูนย์กลางวงรี</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">ศูนย์ (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ปากกา</translation>
     </message>
 </context>
 <context>
@@ -40625,89 +36805,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <source>Image</source>
-        <translation type="obsolete">ภาพ</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">เรขาคณิต</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">มุม:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="obsolete">ความสูง:</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="obsolete">ความกว้างของรูปภาพ</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="obsolete">พิกัด X ของจุดแทรก</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="obsolete">ความละเอียด (จุดต่อนิ้ว)</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="obsolete">พาธของแฟ้มอิมเมจ</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="obsolete">ตัวเลข</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="obsolete">ขนาด (px):</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">มุมการหมุน</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="obsolete">พิกัด y ของจุดแทรก</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="obsolete">ค่า</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="obsolete">ขนาดของภาพ หน่วยเป็นพิกเซล</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">จุดต่อนิ้ว</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="obsolete">ความกว้าง:</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="obsolete">ความสูงของภาพ</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="obsolete">เลือกแฟ้มอิมเมจ</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ปากกา</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="32"/>
@@ -40730,155 +36827,9 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>ภาษากราฟิก:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt; &lt; หัว/&gt; &lt;/ body&gt; &lt;pSupport=&quot;center&quot;&gt; &lt;span state=&quot; แบบอักษร-size: ขยาย; แบบอักษร-น้ําหนัก:00;&quot;&gt; ยินดีต้อนรับสู่ LibreCADCSpan&gt;&lt;br /&gt; โปรดเลือกหน่วยที่คุณต้องการใช้สําหรับการวาดใหม่ และภาษาที่ต้องการสําหรับ Ui และคําสั่ง &lt;br/p&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
         <translation>ภาษาคําสั่ง:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <source>Insert</source>
-        <translation type="obsolete">แทรก</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">เรขาคณิต</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="obsolete">จุดแทรก (y):</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="obsolete">จุดแทรก (x):</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="obsolete">จํานวนแถวที่จะคัดลอก</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">มุมการหมุน</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="obsolete">ช่องว่างระหว่างคอลัมน์</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="obsolete">แยกตัวประกอบด้วยแกน X</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="obsolete">พิกัด X ของจุดแทรก</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="obsolete">ช่องว่างระหว่างแถว</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="obsolete">จํานวนคอลัมน์ของสําเนา</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="obsolete">แยกตัวประกอบโดยแกน Y</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="obsolete">ปรับขนาด Y:</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="obsolete">แถว:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">มุม:</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="obsolete">พิกัด y ของจุดแทรก</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="obsolete">ช่องว่างแถว:</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="obsolete">คอลัมน์:</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="obsolete">ปรับขนาด X:</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="obsolete">ช่องว่างของคอลัมน์:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ปากกา</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">เส้น</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">เรขาคณิต</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="obsolete">จุดสิ้นสุด (x):</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="obsolete">พิกัดปลายจุด X</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="obsolete">พิกัดจุดปลาย Y</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="obsolete">จุดสิ้นสุด (y):</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="obsolete">จุดเริ่ม (y):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="obsolete">พิกัดจุดเริ่มของ Y</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="obsolete">จุดเริ่ม (x):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="obsolete">พิกัดจุดเริ่ม X</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ปากกา</translation>
     </message>
 </context>
 <context>
@@ -41049,10 +37000,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>แทรกสัญลักษณ์</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">แทรกสัญลักษณ์</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
         <source>Degree (°)</source>
         <translation>องศา (s)</translation>
@@ -41101,10 +37048,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>ปอนด์ (ซ้าค)</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">ยี็ง (ซ้าค)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -41740,115 +37683,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
         <translation>ปากกา</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <source>Mirroring Options</source>
-        <translation type="vanished">ตัวเลือกการกลับภาพ</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">จํานวนสําเนา</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp; ลบภาพต้นฉบับ</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">ใช้รายการปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">ใช้ตัวเล่นปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">จํานวนสําเนา</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp; ลบภาพต้นฉบับ</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">สําเนาหลายเหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">ใช้รายการปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">ใช้ตัวเล่นปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Move/Copy Options</source>
-        <translation type="vanished">ตัวเลือกการย้าย/คัดลอก</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <source>Move/Rotate Options</source>
-        <translation type="vanished">ตัวเลือกการย้าย/ การย้ายภาพ</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">จํานวนสําเนา</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp; แองเกิล (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">ใช้รายการปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">ใช้ตัวเล่นปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp; ลบภาพต้นฉบับ</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">หลายสําเนา</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="vanished">Ctrl+S</translation>
     </message>
 </context>
 <context>
@@ -44865,10 +40699,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>ตัวทําเครื่องหมายแบบสัมพัทธ์</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">พฤติกรรม</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
         <translation>ชนิดของกริดที่จะใช้วาด</translation>
@@ -45357,38 +41187,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>วาดภาพอัตโนมัติ</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4935"/>
-        <source>#</source>
-        <translation>#</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4940"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5009"/>
-        <source>~</source>
-        <translation>~</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4945"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
-        <source>_</source>
-        <translation>_</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4950"/>
-        <source>__</source>
-        <translation>แ สดง</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4955"/>
-        <source>lcauto_</source>
-        <translation>lcauto</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4960"/>
-        <source>autosaved_</source>
-        <translation>บันทึกอัตโนมัติ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4984"/>
         <source>Auto-save file name prefix:</source>
         <translation>นําหน้าชื่อแฟ้มโดยอัตโนมัติ:</translation>
@@ -45397,36 +41195,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5001"/>
         <source>Backup file name suffix:</source>
         <translation>ส่วนต่อท้ายชื่อแฟ้มสํารองข้อมูล:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5014"/>
-        <source>$$</source>
-        <translation>บาท</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5024"/>
-        <source>_backup</source>
-        <translation>แ ก้ไข</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5029"/>
-        <source>_bak</source>
-        <translation>เ กม</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5034"/>
-        <source>.bak</source>
-        <translation>. บัค</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5039"/>
-        <source>.backup</source>
-        <translation>. สํารอง</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5044"/>
-        <source>.lcb</source>
-        <translation>. acb</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5111"/>
@@ -45924,255 +41692,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Code</source>
-        <translation type="obsolete">รหัส</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">ค่า</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">ยกเลิก</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">จุด</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">เรขาคณิต</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="obsolete">ตําแหน่ง (y):</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="obsolete">ตําแหน่งของจุดโดยพิกัด y</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="obsolete">ตําแหน่ง (x):</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="obsolete">ตําแหน่งของจุดโดยพิกัด X</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ปากกา</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">เส้นต่อเนื่อง</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">เรขาคณิต</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="obsolete">กําหนดว่าโพลีไลน์ถูกปิด</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">ปิด</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ปากกา</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation type="vanished">ตัวเลือกการหมุน</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">จํานวนสําเนา</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp; ลบภาพต้นฉบับ</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="vanished">&amp; แว่นขยาย:</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp; แองเกิล (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">ใช้รายการปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">ใช้ตัวเล่นปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <source>Rotate Two Options</source>
-        <translation type="vanished">หมุนภาพสองตัวเลือก</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">จํานวนสําเนา</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp; ลบภาพต้นฉบับ</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">สําเนาหลายเหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;a):</source>
-        <translation type="vanished">มุม (&amp;a):</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;b):</source>
-        <translation type="vanished">มุม (&amp;b):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">ใช้รายการปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">ใช้ตัวเล่นปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <source>Scaling Options</source>
-        <translation type="vanished">ตัวเลือกการไล่สี</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">จํานวนสําเนา</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">ใช้รายการปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">ใช้ตัวเล่นปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt; &lt; หัว/&gt; หาอัตราส่วนการปรับขนาดรอบศูนย์ โดยจุดอ้างอิงและจุดเป้าหมาย</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp; ลบภาพต้นฉบับ</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">สําเนาหลายเหลี่ยม</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="vanished">ปรับขนาดด้วยตัวประกอบเดียวกันทั้ง x และ y</translation>
-    </message>
-    <message>
-        <source>Isotropic Scaling</source>
-        <translation type="vanished">การไล่ระดับสี</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">เส้นพริ้วไหว</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">เลเยอร์</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">เรขาคณิต</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="obsolete">ระดับความชอบ:</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="obsolete">กําหนดว่า spline จะกําหนดค่าระดับการปิดหรือไม่</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">ปิด</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="obsolete">ค่าเบี่ยงเบนมาตรฐาน</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ปากกา</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="20"/>
@@ -46320,10 +41839,6 @@ so default step value required for baking</source>
         <translation>ปอนด์ (ซ้าค)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">ยี็ง (ซ้าค)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Times (×)</source>
         <translation>คูณ (x)</translation>
@@ -46367,10 +41882,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>เลเยอร์ของข้อความ</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">ไม่ปรากฏข้อความ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -46978,10 +42489,6 @@ so default step value required for baking</source>
         <translation>มุม:</translation>
     </message>
     <message>
-        <source>Oblique:</source>
-        <translation type="vanished">โอบลิเก:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
         <source>Width factor:</source>
         <translation>ตัวประกอบความกว้าง:</translation>
@@ -47499,21 +43006,6 @@ p, li {white- space: pre- wrap;}
     </message>
 </context>
 <context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">ค่าระดับไม่ถูกต้องที่จัดให้</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">สัดส่วนกระดาษมีขนาดใหญ่กว่าสัดส่วนการพิมพ์สูงสุด</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">สัดส่วนกระดาษ เล็กกว่าสัดส่วนการพิมพ์นาที</translation>
-    </message>
-</context>
-<context>
     <name>QG_RecentFiles</name>
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="183"/>
@@ -47580,10 +43072,6 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>World</source>
         <translation>โลก</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">จับ</translation>
     </message>
 </context>
 <context>
@@ -47784,12 +43272,6 @@ Please specify a different value.</source>
         <translation>ลบเลเยอร์ที่ว่างเปล่า</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">ไม่พบเลเยอร์แล้ว
-ล้างหน้ากากกรองแล้วทําซ้ํา.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -47851,14 +43333,6 @@ If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly 
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">แทนที่ค่าที่ &quot; by elefile&quot; ไปยังค่าชั้นแหล่งหรือไม่?
-หากใช้ปากกา &quot;โดยทางเลเยอร์&quot; ให้ค้นหาในเลเยอร์ใหม่เหมือนกับบนเลเยอร์ก่อนหน้า และแทนที่ด้วยปากกาที่แก้ไขแล้ว
-หากไม่มี - &quot;โดยชั้น&quot; ค่าที่เหลือ และปากกาของชั้นเป้าหมาย จะกําหนดปากกาสําหรับองค์กรดังกล่าว.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -48176,10 +43650,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="799"/>
         <source>Tagged Image File Format</source>
         <translation>รูปแบบแฟ้มรูปภาพที่แนบมาด้วย</translation>
-    </message>
-    <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">แลกเปลี่ยนภาพเก่า%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="471"/>
@@ -49410,23 +44880,6 @@ Do you want to replace it?</source>
         <translation>คุณต้องใส่ระยะห่างก่อน.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="275"/>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>ปฏิทิน</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="276"/>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>คํานวณ</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="311"/>
-        <source>cal</source>
-        <translation>ปฏิทิน</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="317"/>
         <source>Calculator mode: On</source>
         <translation>โหมดเครื่องคิดเลข: on</translation>
@@ -49685,11 +45138,6 @@ Do you want to replace it?</source>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>จุด</translation>
-    </message>
-    <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">ต้อ หิน</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -50622,12 +46070,6 @@ Do you want to replace it?</source>
         <translation>เลเยอร์</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="799"/>
-        <source>bevel</source>
-        <comment>modify - fillet</comment>
-        <translation>เบล</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
@@ -51215,26 +46657,6 @@ Do you want to replace it?</source>
         <translation>การใช้งาน:</translation>
     </message>
     <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished">[options] [ตัวเลือ</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished">*.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">-- พิมพ์แฟ้ม dxf ทั้งหมดเป็นแฟ้ม pdf ที่มีชื่อเดียวกัน.</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished">-o บาง.pdf *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">-- พิมพ์แฟ้ม dxf ทั้งหมดเป็นแฟ้ม &apos;some.pdf&apos;.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
         <source> [options] &lt;%1_files&gt;</source>
         <translation type="unfinished"></translation>
@@ -51310,16 +46732,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">ขนาดกระดาษ (ความสูงเท่ากับ x) ในหน่วย ม. ม.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">ความละเอียดการแสดงผล (DPI).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>มาตราผลลัพธ์ E.g.:0.01 (สําหรับ 1: 100 มาตรา).</translation>
@@ -51352,27 +46764,9 @@ Do you want to replace it?</source>
         <translation>ไดเรกทอรีส่งภาพเป้าหมาย.</translation>
     </message>
     <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="177"/>
-        <source>DXF output version: r12, r14, r2000, r2004, r2007 (default), r2018.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="183"/>
-        <source>DWG output version: r2000 (default), r2004, r2010, r2013, r2018.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">&lt;dxf files&gt;</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">นําเข้าแฟ้ม DXF</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -51815,26 +47209,6 @@ Do you want to replace it?</source>
         <translation>ลบ</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="85"/>
-        <source>DWG support is not complete!</source>
-        <translation>การรองรับ DWG ยังไม่สําเร็จ!</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="87"/>
-        <source>If this file fails to open try an older DWG format</source>
-        <translation>หากแฟ้มนี้ล้มเหลว ลองฟอร์แมตแบบ DWG ที่เก่ากว่า</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="88"/>
-        <source>or try to find a converter to make it a DXF file.</source>
-        <translation>หรือพยายามหาตัวแปลงเพื่อให้เป็นแฟ้ม DXF.</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
-        <source>Information</source>
-        <translation>ข้อมูล</translation>
-    </message>
-    <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="104"/>
         <source>Error</source>
         <comment>fileImport</comment>
@@ -51906,11 +47280,6 @@ Do you want to replace it?</source>
         <translation>เกิดข้อผิดพลาดในการอ่านหัวแฟ้ม DXF/DWG</translation>
     </message>
     <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">เกิดความผิดพลาดในการอ่าน DXF/DWG ส่วนหัว Dra</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
@@ -51957,10 +47326,6 @@ Do you want to replace it?</source>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>เกิดข้อผิดพลาดในการอ่านรหัส DXF/DWG</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">เปิดการใช้งานแฟ้ม dwg รุ่น% 1 แล้ว.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -52407,10 +47772,6 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">เลือกเพื่อสร้างบล็อก (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
         <translation>เลือกขอบเขต</translation>
@@ -52424,66 +47785,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>จุดอ้างอิงที่ระบุ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">เลือกแบบอักษรที่จะสั่งระเบิด (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">เลือกและระเบิด</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">จุดอ้างอิงที่ระบุ</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">ป้อนมุม:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">เพิ่มตัวประกอบ:</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">เติมคอลัมน์:</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">เติมแถว:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">ป้อนช่องว่างของคอลัมน์:</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">ป้อนช่องว่างแถว:</translation>
-    </message>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">บล็อคไม่สามารถบรรจุการแทรกของตัวมันเองได้.</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished">มีการแทรกบล็อกปัจจุบันเป็น:</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">ไม่สามารถแทรกบล็อกนี้ได้.</translation>
     </message>
 </context>
 <context>
@@ -52735,270 +48036,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">ความยาวคอร์ดควรไม่เป็น 0</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">ไม่มีความยาวคอร์ดที่ใช้ได้</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">ระบุศูนย์</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">รัศมีระบุ</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">ระบุจุดเริ่ม</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">แสดงมุมเริ่มต้น:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">กําหนดมุมจบ หรือ [สี่เหลี่ยม]</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">สี่เหลี่ยมด้านทางเลือก</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">ระบุมุมรวม:</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">กําหนดความยาวคอร์ด (ค่าลบสําหรับจุดเยื้อง):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">ใช้จุดส่วนโค้งทางเลือก</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">ข้อมูลส่วนโค้งไม่ถูกต้อง.</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">ระบุจุดที่สอง</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">ระบุจุดที่สาม</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">ระบุจุดตั้งต้น [ศูนย์]</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">ระบุโดเมนพื้นฐาน</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">ระบุมุมสิ้นสุด</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">สี่เหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">กําหนดจุดสิ้นสุด</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">สี่เหลี่ยม</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">ระบุศูนย์</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">จุดระบุบนวงกลม</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">ข้อมูลวงกลมไม่ถูกต้อง.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">ระบุจุดแรก</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">ระบุจุดที่สอง</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">ข้อมูลวงกลมไม่ถูกต้อง.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">ระบุจุดแรก</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">ระบุจุดที่สอง</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">ระบุจุดที่สาม</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">ระบุศูนย์วงกลม</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">กําหนดรัศมีวงกลม</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">รัศมี =%1 ไม่ถูกต้อง (การคลายแฟ้ม)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">รัศมี =%1 ไม่ถูกต้อง (ลบ)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">รัศมี =%1 ไม่ถูกต้อง (ศูนย์)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">ระบุบรรทัดแรก</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">ระบุบรรทัดที่สอง</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">ระบุบรรทัดที่สาม</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">ระบุจุดแรกบนเส้นสัมผัส</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">ระบุจุดที่สองบนเส้นสัมผัส</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">เลือกศูนย์กลางของวงกลมสัมผัส</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">แสดงบรรทัด/ อักขระ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">กําหนดบรรทัด/ อักขระแรก</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">กําหนดบรรทัดที่สอง/ arc/ circle</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">เลือกศูนย์กลางของวงกลมสัมผัส</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">ไม่มีวงกลมสัมผัสทั่วไปสําหรับรัศมี &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">แสดงบรรทัด/ อักขระ</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">กําหนดบรรทัด/ อักขระอื่น</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">ระบุจุดบนวงกลมสัมผัส</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">เลือกศูนย์กลางของวงกลมสัมผัส</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">เลือกศูนย์กลางของวงกลมสัมผัส</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">กําหนดบรรทัด/ อักขระแรก</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">ไม่มีวงกลมสัมผัสร่วมกันสําหรับองค์กรที่เลือก</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">กําหนดบรรทัดที่สอง/ arc/ circle</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">แสดงบรรทัดที่สาม/ arc/ circle</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
@@ -53193,125 +48230,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">เลือกเพื่อฟัก (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
         <translation>แฮ็ทช์ทันทีที่เลือก</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">จุดอ้างอิงที่ระบุ</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">ป้อนมุม:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">เพิ่มตัวประกอบ:</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">ป้อน:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">ระบุจุดแรก</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">ระบุจุดต่อไป [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">ระบุจุดต่อไป</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">ไม่สามารถปิดลําดับของบรรทัดได้: ตัวระบุหรือปิดอยู่แล้ว ยังไม่เพียงพอ.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">ไม่สามารถยกเลิกได้: เริ่มจากประวัติการใช้</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">ไม่สามารถทําซ้ําได้:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">ระบุตําแหน่ง</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">ทิศทางการค้นหา</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">ป้อนมุม:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">ความยาวป้อน:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">บุคคลต่าง ๆ จะถูกสร้างขึ้น</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">เลือกบรรทัดแรก</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">เลือกบรรทัดที่สอง</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">ป้อนความยาวของกล่องข้อมูล:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">ป้อนจํานวนของกลไก:</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">จํานวนบรรทัดไม่อยู่ในช่วงที่:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">คลิกและลากเพื่อวาดเส้น</translation>
     </message>
 </context>
 <context>
@@ -53344,74 +48265,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>เลือกวงกลม, ส่วนโค้งหรือวงรี</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">บุคคลต่าง ๆ จะถูกสร้างขึ้น</translation>
-    </message>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">ระบุระยะห่าง &lt;%1 &gt; หรือเลือกรายการหรือ [%2]</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">หมายเลขป้อน:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">หมายเลขไม่ถูกต้อง ลอง 1.99</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">บุคคลต่าง ๆ จะถูกสร้างขึ้น</translation>
-    </message>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">เลือกรายการ</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">ระบุผ่านจุด</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">จํานวน:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">หมายเลขไม่ถูกต้อง ลอง 1.99</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">ระบุมุม</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">ระบุมุมแรก</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">ระบุมุมที่สอง</translation>
     </message>
 </context>
 <context>
@@ -53453,29 +48306,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">เลือกรายการพื้นฐาน</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">ระบุตําแหน่ง</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">แสดงมุม</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">ความยาวที่ระบุ</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53513,17 +48343,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">ระบุจุดแทรก</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">ป้อนข้อความ:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
@@ -53532,108 +48351,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">ระบุจุดแรก</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">สี่เหลี่ยมด้านทางเลือก</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">ระบุจุดต่อไป [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">ระบุจุดต่อไป</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">ไม่สามารถปิดลําดับของบรรทัดได้: มีส่วนที่กําหนดไม่พอ.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">ไม่สามารถยกเลิกได้: ยังตั้งค่าองค์กรได้ไม่เพียงพอ.</translation>
-    </message>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">ป้อนจุดปลาย x</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">ป้อนจํานวนเส้นต่อเนื่อง</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">ใส่สมการ, f(x)</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">เติมจุดเริ่ม x</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">ค่า x ที่ป้อนมาไม่ถูกต้อง.</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">ขนาดขั้นที่ป้อนมาไม่ถูกต้อง.</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">ค่า x ที่ป้อนมาไม่ถูกต้อง.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">ระบุจุดควบคุมแรก</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">ระบุจุดควบคุมถัดไป [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">ระบุจุดควบคุมถัดไป</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">ไม่สามารถยกเลิกได้: ยังตั้งค่าองค์กรได้ไม่เพียงพอ.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">ข้อความ:</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">ระบุจุดแทรก</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">ป้อนข้อความ:</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">ระบุจุดที่สอง</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">เลือกที่จะตัด (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -53652,10 +48370,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>ตัดหลังจากเลือกแล้ว</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">เลือกเพื่อคัดลอก (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -53693,24 +48407,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Paste Multiple</source>
         <translation>วางหลาย ๆ ตัว</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="obsolete">ตั้งค่าจุดอ้างอิงแบบวาง</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">ไม่มีแบบอักษรที่จะเลิกทํา!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">ไม่มีอะไรให้พูดอีกแล้ว!</translation>
     </message>
 </context>
 <context>
@@ -53931,57 +48627,6 @@ Cartesian: (%2)%3
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">ระยะห่าง:%1
-Cartesian: (%2)%3
-โพลา: (%4 &lt;%5)
-จุดบนความจุ: (%6, %7)
-จุด: (%8, %9)</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">ตัวระบุ</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">อย่าจับเข้ากับองค์กรเด็กในกล่อง</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">จุดสัมพัทธ์อยู่บนองค์กร</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">จุดระบุ</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">ข้อมูล</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">ระยะห่าง:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">จาก:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">ถึง:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -54027,10 +48672,6 @@ Cartesian: (%2)%3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">เลือกเพื่อวัดความยาวรวม (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="74"/>
         <source>Select contour</source>
         <translation>เลือกขอบเขต</translation>
@@ -54062,906 +48703,6 @@ Cartesian: (%2)%3
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>ยกเลิก</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">จุดอ้างอิงที่ระบุ</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">ป้อนมุม:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">เพิ่มตัวประกอบ:</translation>
-    </message>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">ไม่สามารถเปิดแฟ้ม &apos;%1&apos; ได้</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">เลือกที่จะแก้ไขคุณลักษณะ (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">แก้ไขคุณลักษณะทันทีหลังจากเลือก</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">เลือกขอบเขต</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">บรรทัดที่เลือกขนานกัน</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">เส้นที่เลือกไม่ใช่ลูกของโพลีไลน์เดียวกัน</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">ทริม</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">อินเตอร์เซก:</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">จุด 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">จุด 2:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">ข้อความที่ถูกเลือกไม่ถูกต้อง (ไม่สามารถแก้ไขได้).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">ที่เลือกไว้ไม่ถูกต้อง (ไม่ใช่โมเลกุล).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">ข้อความที่ถูกเลือกไว้ไม่ถูกต้อง (ไม่สามารถตัดกับจดหมายแรก).</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">เลือกรายการแรก</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">เลือกรายการที่สอง</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">ป้อนความยาวของ 1:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">ป้อนความยาว 2:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">หาร</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">ที่:</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">ไม่พบความสอดคล้อง.</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">จุดตัดอาจไม่ใช่ จุดปลายขององค์กร.</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">ระบุรายการที่จะตัด</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">ระบุจุดตัด</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">ความหนาแน่นต้องเป็นเส้นตรง ส่วนโค้ง วงกลม วงรี หรือเส้นตรง.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">เลือกเพื่อลบ (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">ลบทันทีที่เลือกแล้ว</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">เลือกขอบเขต</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">ระบุจุดพักแรกบนโพลีไลน์</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">ระบุจุดพักที่สองบนโพลีไลน์เดียวกัน</translation>
-    </message>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">ความอิ่มตัวไม่เท่ากัน.</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">ผู้ปกครององค์กรที่สองไม่ใช่โพลีไลน์</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">ผู้ปกครองขององค์กรแรกไม่ใช่โพลีไลน์</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">ผู้ปกครองขององค์กรที่สองเป็นว่างptr</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">หนึ่งในองค์กรที่เลือกคือ สเปซว่าง</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">ผู้ปกครองขององค์กรแรกเป็นว่างงาน</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">โดเมนแรกเป็นว่างงาน</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">นิติ บุคคล ที่ สอง เป็น โมฆะ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">คลิกบนรายการเพื่อแก้ไข</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">เลือกเพื่อระเบิดข้อความ (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">เริ่มทํางานทันทีหลังจากการเลือก</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">กระจก</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">มุม (ด้าน):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">เส้นจาก:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">เส้นถึง:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">เลือกเพื่อกระจก (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">เลือกขอบเขต</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">ระบุบรรทัดกระจก</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">พลิกภาพทางแนวตั้ง</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">พลิกภาพทางแนวนอน</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">ระบุจุดแรกของบรรทัดกระจก</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">ระบุจุดที่สองของเส้นกระจก</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">การย้ายร่องเสียง</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">ออฟเซต:</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">จุดอ้างอิงที่ระบุ</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">สร้างสําเนา</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">เลือกเพื่อย้าย (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">ย้ายทันทีที่เลือกแล้ว</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">เลือกขอบเขต</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">ระบุเป้าหมาย</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">จุดอ้างอิงที่ระบุ</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">เลือกเพื่อย้ายและหมุน (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">ย้ายและหมุนทันทีหลังจากการเลือก</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">เลือกขอบเขต</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">ระบุเป้าหมาย</translation>
-    </message>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">กําลังย้ายตามการหมุน</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">แหล่ง:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">เป้าหมาย:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ออฟเซต:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">ป้อนมุมการหมุน:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">ออฟเซต:</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">ระยะห่าง:</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">กําหนดทิศทางของการปรับค่า</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">ระบุจุดอ้างอิงสําหรับทิศทางของการปรับค่า</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">เลือกเส้นตรง, โพลีไลน์, วงกลม, หรือส่วนโค้ง เพื่อสร้างออฟเซ็ต (ป้อนเพื่อให้สมบูรณ์)</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">ออฟเซต:</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">เลือกขอบเขต</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">เลือกเพื่อย้อนกลับทิศทาง (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">ประมวลผลทันทีหลังจากการเลือก</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">เลือกขอบเขต</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">จุดอ้างอิงที่ระบุ</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">เลือกการหมุนภาพ (ป้อนไปเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">หมุน</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">จุดต้นฉบับ:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">จุดปลายทาง:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ออฟเซต:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">จุดอ้างอิง:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">จุดกึ่งกลาง:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">มุมที่สอง:</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">หมุนทันทีที่เลือกแล้ว</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">เลือกขอบเขต</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">ปรับตั้งเป็นศูนย์กลางการเลือก</translation>
-    </message>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">กําหนดศูนย์การหมุน</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">ระบุเป้าหมายที่จะหมุนไป</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">ระบุจุดพิกัดสําหรับการหมุนรอบจุดอ้างอิง</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">หมุนภาพสองครั้ง</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">ศูนย์ 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">มุม 1:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">ศูนย์ 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">มุม 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">เลือกสําหรับการหมุนแกนสอง (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">หมุน 2 Axis ทันทีหลังจากการเลือก</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">เลือกขอบเขต</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">ระบุจุดอ้างอิงสัมบูรณ์</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">ระบุจุดอ้างอิง</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">รอบ</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">จุด 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">จุด 2:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">ระบุรายการที่สอง</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">รัศมีป้อน:</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">ระบุรายการแรกหรือป้อนรัศมี &lt;%1 &gt;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">ค่า</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">ศูนย์:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">จุดต้นฉบับ:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">จุดปลายทาง:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ออฟเซต:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">ปรับขนาดโดย X:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">ปรับขนาดโดย Y:</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">กําหนดค่าศูนย์ปรับขนาด</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">ปรับตั้งเป็นศูนย์กลางการเลือก</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">ระบุแหล่งกําเนิด</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">ระบุเป้าหมาย</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">จับภาพอิสระ</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">เลือกขนาด (ป้อนเพื่อเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">ปรับขนาดทันทีที่เลือกแล้ว</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">เลือกขอบเขต</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">ขยาย</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">มุมเริ่มต้น:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">มุมสิ้นสุด:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">จุดอ้างอิง:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">จุดปลายทาง:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">ออฟเซต:</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">ระบุมุมแรก</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">ระบุมุมที่สอง</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">จุดอ้างอิงที่ระบุ</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">ระบุเป้าหมาย</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">ทริม</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">ทริมที่ 2</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">อินเตอร์เซก:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">อินเตอร์เซก 2:</translation>
-    </message>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">เลือกรายการ share</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">เลือกรายการจํากัด</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">เลือกรายการชั้นที่ 2</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">เลือกรายการต่าง ๆ ที่จะทําการแบ่งชั้น</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">ไม่พบรายการใด ๆ.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">เอนติตี้ที่ถูกเลือก ไม่ใช่ธาตุอะตอม หรือไม่สามารถตัดออกได้.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">นิพจน์ไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">เลือกบรรทัด/ arc เพื่อปรับแยกค่าระหว่างระยะเยื้องของค่า OCE:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">ไม่พบความสอดคล้อง.</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">เลือกองค์กร (ป้อนไปเสร็จสมบูรณ์)</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">ลําดับทันทีที่เลือก</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">เลือกขอบเขต</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">เลือกรายการสําหรับลําดับ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">ไม่พบความสอดคล้อง.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">ความสอดคล้องต้องเป็นโพลีไลน์.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">การเพิ่มจุดไม่ถูกต้อง.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">การเพิ่มจุดไม่ได้อยู่บนโดเมน.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">กําหนดโพลีไลน์ที่จะใช้เพิ่มโหนด</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">ระบุจุดเพิ่มโหนด</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">ไม่พบความสอดคล้อง.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">ความสอดคล้องต้องเป็นโพลีไลน์.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">คลิกตรงไหนซักที่ใกล้ ๆ จุดเริ่มต้นหรือปลายโพลีไลน์ที่มีอยู่.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">ป้อนจํานวนเส้นต่อเนื่อง</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">ระบุโพลีไลน์บางใกล้จุดเริ่มต้นหรือจุดสิ้นสุด</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">ไม่สามารถต่อโหนดในโพลีไลน์ปิดได้.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">ไม่สามารถยกเลิกได้: ยังตั้งค่าองค์กรได้ไม่เพียงพอ.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">ไม่พบความสอดคล้อง.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">ความสอดคล้องต้องเป็นโพลีไลน์.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">กําหนดโพลีเมนต์เพื่อลบโหนด</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">ระบุจุดการลบโหนด</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">การลบจุดไม่ถูกต้อง.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">การลบจุดไม่ได้อยู่บนองค์กร.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">ไม่พบความสอดคล้อง.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">ความสอดคล้องต้องเป็นโพลีไลน์.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">การลบจุดไม่ได้อยู่บนองค์กร.</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">ไม่พบโพลีไลน์.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">เส้น โพลีไลน์อย่างน้อยสองส่วน ควรอยู่ระหว่างจุดที่เลือก.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">กําหนดเส้นโพลีเพื่อลบระหว่างโหนดสองอัน</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">ระบุโหนดแรก</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">ระบุโหนดตัวที่สอง</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">การลบจุดไม่ถูกต้อง.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">ไม่พบความสอดคล้อง.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">ความสอดคล้องต้องเป็นโพลีไลน์.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">เลือกโพลีไลน์ดั้งเดิม</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">ไม่พบความสอดคล้อง.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">เลือกส่วนของโพลีไลน์ต้นฉบับ</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">ความสอดคล้องไม่สามารถเป็นโพลีไลน์ปิดได้.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">เส้นต่อเนื่องถูกสร้าง</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">ไม่พบความสอดคล้อง.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">ความสอดคล้องต้องเป็นโพลีไลน์.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">ส่วนแรกควรอยู่บนโพลีไลน์ที่เลือก.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">ส่วนที่สองควรอยู่บนโพลีไลน์ที่เลือก และไม่เท่ากับส่วนแรก.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">กําหนดสีโพลีเมนต์</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">ระบุส่วนแรก</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">ระบุส่วนที่สอง</translation>
     </message>
 </context>
 <context>
@@ -55038,113 +48779,11 @@ Cartesian: (%2)%3
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="obsolete">ยังไม่ได้เลือกรายการ!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectBase</name>
     <message>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">ความเป็นนิสิตต้องมาจากอะตอม.</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">ระบุรายการที่จะเลือก</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">เลือกจุดแรกของเส้นตัด</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">เลือกรายการที่ตัดกัน</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">เลือกองค์กรเด็ก</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">เลือกจุดตัดเส้นที่สอง</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">ระบุรายการที่มีเลเยอร์ที่ต้องการ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">ระบุรายการที่จะเลือก</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">เลือกขอบเขต</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">การเลือก</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">การเลือก</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">องค์กร</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">ที่ตัดกับกล่อง</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">ที่อยู่ในกรอบ</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">เลือกขอบที่สอง</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">เลือกอินเตอร์เซก</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">คุณสมบัติการเลือก</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">เลือกโฟลเดอร์</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">การเลือก</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">คลิกและลากหน้าต่างที่เลือก</translation>
     </message>
 </context>
 <context>
@@ -55452,150 +49091,6 @@ Cartesian: (%2)%3
     </message>
 </context>
 <context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">ตัวเลือกของสี่เหลี่ยม</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">ตามเข็มนาฬิกา</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">ตามเข็มนาฬิกา</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">ตัวเลือกการไล่ระดับสี</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">หากเปิดใช้งาน จะมีการสร้างเส้นโค้งแบบ tangental ด้วยรัศมีที่ระบุ</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">รัศมีของส่วนโค้งสัมผัส</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">หากเลือกไว้ จะสร้างส่วนโค้งด้วยมุมที่กําหนด</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">มุมที่รองรับของส่วนโค้งสัมผัสทั้งหมด</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">เลือกรูปภาพแบบรัศมี</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">รัศมี</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">มุม</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">ตัวเลือกการไล่ระดับสี</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">Check เพื่อตัดส่วนต่าง ๆ ขององค์กรไปยังระฆัง</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">ทริม</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">ความยาว 1:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">ความยาวของเบเวลในทิศ x.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">เลือกรูปภาพแบบยาวชุดแรก</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">ความยาว 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">ความยาวของระฆังในทิศ Y.</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">เลือกรูปแบบความยาวที่สอง</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">ตัวเลือกวงกลม</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">รัศมี:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">รัศมีของวงกลม</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">เลือกรัศมีจากการวาด</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">ตัวเลือกวงกลม</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt; &lt; หัว/&gt; รัศมีของวงกลมสัมผัสที่จะวาด</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">รัศมี:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">รัศมีของวงกลมสัมผัส</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">เลือกรัศมีจากการวาด</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">มุม:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -55732,849 +49227,6 @@ Cartesian: (%2)%3
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">ตัวเลือกการแทรก</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">มุมการหมุน</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">ตั้งค่า</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">จุดต่อนิ้ว:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">ตั้งค่า</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">DPI ของอิมเมจ</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">ตัวเลือกการแทรก</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">มุมการหมุน</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">องค์ประกอบ:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">ตั้งค่า</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">อาร์เรย์:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">จํานวนคอลัมน์:</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">จํานวนแถว:</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">เลือกช่องว่างแถวจากการวาด</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">เลือกช่องว่างของคอลัมน์จากการวาด</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">ช่องว่าง:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">ช่องว่างในคอลัมน์</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">ช่องว่างแถว</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">ตัวเลือกการแทรกของไลบรารี</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">มุมการหมุน</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">องค์ประกอบ:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">ตั้งค่า</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">ตัวเลือกการไล่ระดับสี</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">จุดบนบรรทัดที่สร้างขึ้นที่จะวางลงในจุดแทรก</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">มุมเส้น</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">ความยาว:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">ความยาวเส้น</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">จุดจับ:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากเส้น</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">เริ่ม</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">กลาง</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">จบ</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">ความยาวเส้นประจากการวาด</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">หากเลือกไว้ เส้นจะเป็นแกนของมุม ไม่เช่นนั้น - แกนหน้าจอ</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">มุม</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">ตัวเลือกการไล่ระดับสี</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">ความยาว:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">ความยาวของเวกเตอร์</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">เลือกความยาวเส้นจากการวาด</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">จํานวน:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">จํานวนตัวอักษรที่จะแทนที่</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">ตัวเลือกเส้น</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">รูปแบบเส้นการลาก</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">ปิด</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">เลิกทําการวาดบรรทัดสุดท้าย</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">เลิกทํา</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">ทําซ้ําการวาดบรรทัดสุดท้าย</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">ทําซ้ํา</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">ตัวเลือกเส้น</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">ทิศทาง:</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">สร้างโพลีไลน์จากส่วนของเส้นตรง</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">เส้นต่อเนื่อง</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">เส้นทางแนวตั้ง</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">เส้นตามมุมที่ระบุ</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">มุม</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">เส้นทางแนวนอน</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">หากกาเลือกไว้ มุมจะสัมพันธ์กับส่วนก่อนหน้า</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">เลิกทําการวาดบรรทัดสุดท้าย</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">เลิกทํา</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">รูปแบบเส้นการลาก</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">ปิด</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">ทําซ้ําการวาดบรรทัดสุดท้าย</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">ทําซ้ํา</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">มุมของเส้น</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">เส้นตรงไปยังจุดใด ๆ</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">จุด</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">ตัวเลือกการไล่ระดับสี</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">ระยะห่าง:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">ระยะห่างไปยังรายการต้นฉบับ</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">เลือกระยะห่างจากการวาด</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">จํานวน:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">จํานวนตัวอักษรที่จะแทนที่</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">เส้นขนานโดยใช้ตัวเลือก</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการสร้างความเปรียบต่างของทั้ง 2 ด้าน</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">สมมาตร</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">จํานวน:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">จํานวนตัวอักษรที่จะแทนที่</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">ตัวเลือกการไล่ระดับสี</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">จํานวน:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">จํานวนหน้า</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">ตัวเลือกการไล่ระดับสี</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">จํานวน:</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">หากกาเลือกไว้ จุดยอดของรูปหลายเหลี่ยมจะถูกล้อมรอบ.</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">รัศมี</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะวาดรูปหลายเหลี่ยมเป็นโพลีเมนต์ มิฉะนั้น ปัจเจกบุคคล จะถูกสร้างขึ้น.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">เส้นต่อเนื่อง</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">เลือกรัศมีจากการวาด</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">จํานวนหน้า</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">รัศมีวงเวียนของจุดยอด.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">หากเลือกไว้ จุดอ้างอิงคือจุดยอดของรูปหลายเหลี่ยม ไม่อย่างนั้น มันจะอยู่กึ่งกลางของขอบ.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">เวอร์เท็กซ์ถึงเวอร์เท็กซ์</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">ตัวเลือกด้านมุมสัมพัทธ์ของบรรทัด</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">มุมเส้น</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">ความยาว:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">ความยาวเส้น</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">เลือกความยาวจากการวาด</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">ตัวเลือกข้อความ</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">ข้อความ:</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">ข้อความที่จะแทรก</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">มุมการหมุน</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">ตัวเลือกการไล่ระดับสี</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">ระยะห่างสําหรับปรับค่าจากรายการดั้งเดิม</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการจัดวางในเลเยอร์ปัจจุบัน ไม่เช่นนั้นก็จะอยู่ในเลเยอร์เดิม.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">ใช้เลเยอร์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">จํานวนสําเนา.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">หากกาเลือกไว้ ตัวดั้งเดิมจะอยู่รอด ไม่เช่นนั้นก็จะถูกลบออกไป.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะใช้แก้ไขระยะห่างของการปรับค่า ไม่เช่นนั้นก็จะถูกกําหนดโดยเมาส์.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">ระยะห่างคงที่</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการปรับใช้แอตทริบิวต์ปัจจุบันกับองค์กรที่ถูกสร้างมา ไม่เช่นนั้นก็จะใช้ลักษณะดั้งเดิมแทน.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ใช้แอททริบิวต์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">เลือกระยะห่างจากภาพวาด</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">หากกาเลือก จะมีการสร้างหลายสําเนา.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">หลายสําเนา</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">ตัวเลือกการหมุนภาพ</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะมีการปรับใช้แอตทริบิวต์ปัจจุบันกับองค์กรที่ถูกสร้างมา ไม่เช่นนั้นก็จะใช้ลักษณะดั้งเดิมแทน.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">ใช้แอททริบิวต์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">หากกาเลือก จะมีการสร้างหลายสําเนา.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">หลายสําเนา</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">หากกาเลือกแล้ว ทุกสําเนาจะถูกหมุนเป็นมุมเดียวกัน ไม่อย่างนั้น มุมจะเป็นสัดส่วนกับจํานวนของแต่ละสําเนา.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">มุมเดียวกันกับสําเนา</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">มุมหมุน.</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">จํานวนสําเนา.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">หากกาเลือก มุมการหมุนจะถูกนิยามโดยเมาส์ ไม่เช่นนั้น จะใช้ค่าที่กําหนด.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">ว่าง</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">หากกาเลือกไว้ จะทําการฝังเป็นเลเยอร์ปัจจุบัน.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">ใช้เลเยอร์ปัจจุบัน</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">หากกาเลือกไว้ ตัวดั้งเดิมจะอยู่รอด ไม่เช่นนั้นก็จะถูกลบออกไป.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">คงภาพต้นฉบับไว้</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">ตัวเลือกการไล่ระดับสี</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">การเชื่อมต่อปลายโพลีไลน์เพื่อปิด</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">ปิด</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">เลิกทําสําหรับจุดยอดก่อนหน้านี้</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">เลิกทํา</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">ประเภท seckment:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">กําหนดส่วนของโพลีไลน์</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">เส้น</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">แทนเจนท์</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">เส้นทแยง</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">มุมทัน</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">มุม</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">อาร์คแทนเจนต์</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">ส่วนโค้งด้านเท่ามีรัศมีคงที่</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">ส่วนโค้งมุมคงที่</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">สี่เหลี่ยมด้วยมุม</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">รัศมี:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">รัศมีของส่วนโค้ง</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">เลือกรูปภาพแบบรัศมี</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">มุมของส่วนโค้ง</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">ทวนเข็มนาฬิกา</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">ตามเข็มนาฬิกา</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">ตัวเลือกการพิมพ์</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">แนวนอน</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">ตั้งค่าการวาดภาพ</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">ค่า</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt; &lt; หัว/&gt; &lt;b&gt; ขนาดที่พิมพ์: ขนาดการวาด (ppp)</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt; &lt; หัว/&gt; &lt;b&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">คงที่</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">สลับโหมดสีดํา/ ขาว</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">ปรับใช้ขนาดการพิมพ์กับความกว้างเส้น</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">แนวนอนของกระดาษ</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">การจัดวางหน้ากระดาษ</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">หน้าตรงกลางภาพวาด</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">ขยายไปยังพื้นที่การพิมพ์</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">พอดีกับ 1 หน้า</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">หากเปิดใช้ จะมีการรวมจํานวนหน้าที่ถูกจําแนกเป็นคอลัมน์และแถวด้วย</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">พิมพ์แบบเติมสี</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">แถวของหน้ากระดาษ:</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">จํานวนคอลัมน์ของหน้ากระดาษ</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">คอลัมน์หน้ากระดาษ:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">จํานวนหน้า</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">คํานวณจํานวนหน้าที่จําเป็นในการบรรจุภาพวาด</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">ตัวเลือกการปัดเกลี่ย</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">ตรวจสอบเพื่อตัดขอบทั้งสองไปที่รอบ</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">ทริม</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">รัศมี:</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">รัศมีรอบ</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">เลือกรัศมีจากการวาด</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56613,99 +49265,6 @@ Cartesian: (%2)%3
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>จํานวนตัวอักษรที่จะแทนที่</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">ตัวเลือกการขอข้อมูล</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">ระดับความชอบ:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">ปริญญาของสเปไลน์ที่ใช้ประมาณระหว่างจุด</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">หากเลือกไว้ จะทําการสร้างส่วนเชื่อมโยงแบบปิด</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">ปิด</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">เลิกทําจุดก่อนหน้า</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">เลิกทํา</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">ตัวเลือกข้อความ</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">ข้อความ:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">มุม:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">มุมการหมุน</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">เลือกมุมจากการวาด</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">ตัวเลือก TrimAmount</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">ระยะทาง ค่าเชิงลบสําหรับการเลือก, ค่าบวกสําหรับการขยาย.</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">รวม</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">ความยาว:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">ระยะทาง ค่าเชิงลบสําหรับการเลือก, ค่าบวกสําหรับการขยาย เครื่องหมาย ลบ จะ ถูก ละเลย เมื่อ ชดเชย ความ ยาว ทั้ง หมด.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">เลือกความยาวจากการวาด</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">หากกาเลือกไว้ จะทําการแบ่งส่วนย่อย/ extension สําหรับทั้งสองฝั่งของบรรทัด.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">สมมาตร</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">ความยาวนําเข้าจะถูกใช้เป็นความยาวรวมหลังจากการคัดสรร แต่ใช้แทนความยาว</translation>
     </message>
 </context>
 </TS>

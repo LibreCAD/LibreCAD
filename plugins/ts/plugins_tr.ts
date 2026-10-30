@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>Seçeneklere tıklayarak ayarlayın/ayarlamayı kaldırın, ardından kabul etmek ve hizalamayı başlatmak için Tamam&apos;a tıklayın.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">&quot;Orijinal nesneleri koru&quot; seçeneği işaretliyse, Hizalama seçilen nesneleri taşımak yerine kopyalayacaktır.
-&quot;Önce temel noktaları belirt&quot; seçeneği işaretliyse, Hizalama hizalama noktalarını şu sırayla isteyecektir: önce temel, ikinci temel, ilk hedef, ikinci hedef.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>ilk temel nokta:</translation>

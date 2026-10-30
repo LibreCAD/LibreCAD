@@ -2818,6 +2818,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreemodel_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
+        librecad/src/lib/gui/tests/lc_linetype_render_tests.cpp
         librecad/src/lib/gui/tests/lc_scrollmodel_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewport_zoomauto_tests.cpp
         librecad/src/ui/view/tests/qg_graphicview_scroll_tests.cpp
@@ -3476,7 +3477,8 @@ if (BUILD_TESTS)
         librecad_painter_tests
         librecad/src/lib/gui/tests/rs_painter_tests.cpp)
     target_sources(librecad_painter_tests PRIVATE
-        librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp)
+        librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
+        librecad/src/lib/gui/tests/lc_linetype_render_tests.cpp)
     add_librecad_filter_micro_test(
         librecad_dock_layout_tests
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp)
