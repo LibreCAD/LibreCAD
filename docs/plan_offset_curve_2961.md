@@ -6724,7 +6724,7 @@ LF and CRLF. No product behavior changed in this slice.
 | `git diff --check` | PASS |
 | Code commit | `4e107daba` (`fix offset worker Windows test fixtures`) |
 | Exact-head Windows x64/ARM64 and Linux rerun | Historical workflow `40971000486` was superseded; current exact-head run `40979668978` is tracked in W173 |
-| Visible LibreCAD app control | Still unavailable: app-specific CUA approval remains denied despite the user's approval action; no alternate UI path used |
+| Visible LibreCAD app control | Still unavailable: this task exposes no computer-use control tool. The user said they will approve the app; no alternate UI path used |
 
 The code and plan commits are `4e107daba` and `091686cd7`; their exact-head
 workflows were superseded by later pushes. W170 closes the local test-fixture
@@ -6761,8 +6761,9 @@ including restoring mtime and asserting that change-time detects the rewrite.
 
 W173 is a test-fixture portability correction only. Do not close Windows
 source-identity acceptance until the new exact-head ARM64 selector passes.
-Visible LibreCAD UI acceptance remains blocked by app-specific CUA approval;
-the user has approved it, but the control tool is not available to this task.
+Visible LibreCAD UI acceptance remains open. The user said they will approve the
+test app, but this task exposes no computer-use control tool; no alternate UI
+path was used.
 
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
 
