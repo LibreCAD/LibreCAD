@@ -6832,6 +6832,36 @@ the Release configuration; verify its Linux lane from terminal logs.
 | Whitespace/error check | PASS; git diff --check |
 | Exact-head Linux Release run | Active; workflow `40998099806` |
 
+## 134. W176 Current-Source Validation-Tool Regression
+
+Ran the complete optional Node validation-tool regression suite against product
+source `7bd61bd24ba729d779822928d818c3a93cbc4938` (worktree head
+`654d83fca68e1b111621e09e90166ad8c5050ffc`; the only local change relative to
+the PR head is this roadmap checkpoint). Node `v26.12.0` on macOS arm64 passed
+all 412 tests with zero failures, skips, cancellations, or TODO cases. The
+roadmap-inventory parser also passed all five focused parser tests. The
+`dwg-dxf-verify.yml` workflow passed `actionlint 1.7.12`, and `git diff --check`
+was clean before this checkpoint edit.
+
+The retained full-suite output is `/private/tmp/offset-W176-node-suite.log`
+(695 lines; SHA256
+`572458b6a9a7da6af33e4b50527f9703ba654f63693d9e3645c8825d83474cbe`).
+This covers developer validation tooling only; it is not product/GUI or
+cross-platform runtime acceptance. At capture time, exact-head DWG/DXF workflow
+`40998099806` remained active on Linux Release and Windows x64/ARM64, and Pixi
+workflow `40998099821` remained active on all five platforms. Preserve the
+current head until these runs finish, then record terminal job outcomes before
+deciding whether another push is warranted. Visible GUI/external-CAD review,
+deployed-package acceptance, and final W0-W2/R closure remain open.
+
+| W176 check | Result |
+|---|---|
+| Full validation-tool Node regression | PASS; 412/412, zero skipped; Node 26.12.0/macOS arm64 |
+| Roadmap inventory parser | PASS; 5/5 |
+| DWG/DXF workflow syntax | PASS; actionlint 1.7.12 |
+| Exact-head Linux/Windows x64/ARM64 CI | Active; workflow `40998099806` |
+| Exact-head Pixi matrix | Active; workflow `40998099821`, five platforms |
+
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
 
 Regenerated the bounded DWG matrix from the current checkout's Release
