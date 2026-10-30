@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W186, superseding W185 and earlier below): implementation slices A-core
+Current status (W187, superseding W186 and earlier below): implementation slices A-core
 through T3 and the local A-core through C-check audit are closed. Direct
 synchronous `fileImport`, stream, and byte filter imports validate offset
 carriers through the worker. W158-W160 requalify qmake6 and staged installed
@@ -45,9 +45,13 @@ current-source DXFs: ACadSharp parsed all 32 modern ASCII/binary spline rows
 with valid knot layouts; both R12 rows parsed as the expected geometry-only
 POLYLINE representation. Focused local Release and ASan checks and the
 6,381-case headless suite pass. Exact-head Linux/Windows x64/ARM64 DWG/DXF/helper
-CI and five-platform Pixi checks pass. Broader platform and package/deployment
-acceptance, full visible UI, external-CAD visual acceptance, and final W0-W2/R
-integration remain open.
+CI and five-platform Pixi checks pass. W187 made the current-source qmake6 app
+available in the approved isolated test bundle. LibreCAD's Qt open-file dialog
+crashes under macOS 27 accessibility traversal, but the Finder Open With route
+successfully loaded and visibly rendered an AC1032/R2018 DWG. Current-source
+selection/property editing and save/reopen are still unqualified. Full visible
+UI, screenshot/DPR evidence, external-CAD visual acceptance, deployed-package
+qualification, and final W0-W2/R integration remain open.
 W164 independently parsed the actual W163 AC1032 DXF output with ACadSharp,
 preserving both owned markers and valid spline knot layouts. W171 supersedes
 the retained W134 matrix evidence with a fresh current-source DWG matrix.
@@ -74,8 +78,10 @@ synchronous file/stream/byte filter APIs. The current exact-head Linux/Windows
 x64/ARM64 DWG/DXF/helper and Pixi workflows pass. Deployed-package checks, full
 visible UI, external-CAD interoperability, broader W0-W2 platform acceptance,
 and final R integration remain open.
-Latest recorded slice: W186 records the complete exact-head Linux/Windows x64/ARM64
-DWG/DXF/helper pass; W185 records the Windows ARM64 exact-head pass;
+Latest recorded slice: W187 records the current-source GUI launch,
+Finder-mediated AC1032 DWG load/render, and direct-dialog accessibility failure;
+W186 records the complete exact-head Linux/Windows x64/ARM64 DWG/DXF/helper pass;
+W185 records the Windows ARM64 exact-head pass;
 W184 records the Linux exact-head DWG/DXF/helper pass;
 W183 records successful five-platform Pixi checks and the
 active exact-head format-test phase; W182 records a headless raster check of the qmake6 renderer;
@@ -103,8 +109,6 @@ Remote/platform CI, full deployed-package acceptance, visible interaction,
 external-CAD visual acceptance and final W0-W2/R acceptance remain open.
 The user explicitly confirmed that the shipped native geometry worker is required,
 in addition to the Node developer validation runner. W0-W2 are mandatory.
-The prior temporary checkout and test artifacts disappeared after interruption;
-its observations are not durable acceptance. Retest affected changes here.
 Implementation owner: `/Users/dli/.codex/worktrees/offset-2961-runtime/LibreCAD`,
 branch `codex/offset-2961-native-worker`, initially pinned to
 `df0c891ad5a0bb5b0d0e864f4cd9cdd8036d5f83`. Build/evidence root:
@@ -7236,6 +7240,53 @@ all five OS/architecture jobs. CodeQL
 `40973686197` passed on the preceding product-equivalent head `4df7229ca`; no
 exact-`c0438532b` CodeQL run was
 triggered for the fixture/documentation-only follow-up. Recheck active runs
-before closing cross-platform acceptance. Visible CAD interaction remains
-unavailable because this task has no computer-use control tool; the user said
-they will approve the test app, and no alternate UI-control path was used.
+before closing cross-platform acceptance. This W130 snapshot predates the
+W187 computer-use attempt; it is retained as historical status, not the current
+GUI acceptance result.
+
+## 145. W187 Current-Source GUI Launch and macOS File-Dialog Blocker
+
+Refreshed the already-approved isolated app at
+`/private/tmp/LibreCAD-PR3193-visible.app` with the qmake6 application and
+worker built for W178. The executable hashes match the retained W178 build.
+W178's product source is `7bd61bd24ba729d779822928d818c3a93cbc4938`; the
+product-source diff through the CI-qualified product head
+`498a5deee690187a50ad776ad2e5df63fc51f1c5` is empty, and the later branch head
+`9f83601dce2e7d576cd4cfd79653170d8e259a1e` changes documentation only. Thus the
+binary is product-equivalent to the exact-head-tested implementation, though it
+was not rebuilt from the documentation-only tip.
+
+The isolated app launched and showed its main window at 1920x982 pixels. macOS
+reported no usable display-pixel-ratio value through this path. Opening the
+Qt file dialog caused the app to terminate while the computer-use accessibility
+bridge traversed the dialog hierarchy. Two crash reports,
+`~/Library/Logs/DiagnosticReports/LibreCAD-2026-10-30-103113.ips` and
+`LibreCAD-2026-10-30-103225.ips`, identify
+`-[QMacAccessibilityElement accessibilitySelectedChildren]` during
+`QG_FileDialog::getOpenFile`. Bypassing that dialog with Finder's explicit
+Open With chooser loaded the W171 AC1032/R2018 matrix drawing into this exact
+test app; LibreCAD reported the AC1032/R2018 version and the narrow spline was
+visible in the canvas. Selection/property inspection did not resolve the entity
+in the property sheet, so no edit, undo/redo, or GUI save/reopen result is
+claimed. Earlier W163 edit/save interactions remain tied to their older source
+commit and are not upgraded by this launch.
+
+| W187 artifact | Result / SHA256 |
+|---|---|
+| Isolated qmake6 app binary | `/private/tmp/LibreCAD-PR3193-visible.app/Contents/MacOS/LibreCAD`; matches W178 `7bb1e9f0ae37f037592cf7248b1e07e3adfdcd8c9b5e60b397120a1a0600b7b4` |
+| Bundled worker | `/private/tmp/LibreCAD-PR3193-visible.app/Contents/MacOS/LibreCADOffsetWorker`; matches W178 `b70df2b40abfaae7cba0d3267c86cf3b3c1d3ae96c2778aed636cc1690fd2e6d` |
+| Product source under test | W178 `7bd61bd24ba729d779822928d818c3a93cbc4938`; product files identical through qualified head `498a5deee690187a50ad776ad2e5df63fc51f1c5` |
+| Visible app launch | PASS; main window observed at 1920x982; DPR unavailable |
+| Direct Qt file dialog | BLOCKED by reproducible macOS Qt accessibility hierarchy crash |
+| Finder Open With: AC1032 DWG load/render | PASS; `offset-matrix-write-dwg-R2018-d3_actual.dwg`; SHA256 `aed066088fab728aff6224481accdd9900ce0b08e2e63c96dd729d28a2838842` |
+| Current-source selection/property edit and GUI save/reopen | OPEN; no successful selection or edit recorded |
+| Screenshot/DPR receipt | OPEN; screenshot observed in-session but not retained as a file; DPR unavailable |
+| Roadmap inventory check | PASS; 1/1 targeted parser test; 93 obligations reconcile; 0 pending declarations / mismatches |
+| Repo state | No product source changes; documentation receipt only |
+
+W187 does not close visible UI acceptance. Continue the selection/property,
+edit, undo/redo, and GUI save/reopen checks through Finder-mediated input or a
+supported Qt/macOS accessibility fix. Remaining gates are the full visible
+interaction matrix, screenshot/DPR receipt, external-CAD visual inspection,
+deployed-package acceptance, broader W0-W2 platform acceptance, and final R
+integration.
