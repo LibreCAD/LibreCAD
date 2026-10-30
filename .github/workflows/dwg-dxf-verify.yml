@@ -83,6 +83,7 @@ jobs:
       - name: Configure bounded DWG/DXF test lanes
         run: |
           cmake -S . -B format-tests -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
             -DBUILD_TESTS=ON \
             -DLIBRECAD_ENABLE_OPENTYPE=OFF \
             -DLIBDXFRW_BUILD_DOC=OFF \
