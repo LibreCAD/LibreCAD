@@ -3189,8 +3189,11 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   cross-platform failure coverage, deployed-helper acceptance, and final
   caller/adoption/failure acceptance. W170 passes the targeted local Debug,
   Release and ASan worker fixture suites. W171/W172 freshly qualify current-source
-  DWG/DXF matrices with LibreDWG and ACadSharp; exact-head Windows x64/ARM64/Linux
-  format/helper workflows `40971000486` are still running. Reuse the qualified geometry-entry
+  DWG/DXF matrices with LibreDWG and ACadSharp. On exact head `c0438532b`,
+  workflow `40979668978` has Linux and Windows ARM64 bounded tests running and
+  Windows x64 configuring/building; the CTest selector includes source identity.
+  Pixi workflow `40979669043` has Ubuntu ARM, macOS ARM, Windows, and Ubuntu x64
+  passed; macOS Intel is still building. Reuse the qualified geometry-entry
   W157 extends the DWG/DXF matrix to build and execute `[sync-api]` on Linux and
   Windows x64/ARM64; those new-head checks must finish before cross-platform
   qualification. Reuse the qualified geometry-entry timeout/helper/client/reply
@@ -3209,8 +3212,10 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   the offset changes. W170 adds targeted current-source Debug/Release/ASan worker
   fixtures and a full 6,381-case headless Release pass; W171/W172 add fresh
   current-source cross-reader DWG/DXF matrix results. The exact-head Windows,
-  Linux format/helper workflows and Pixi/CodeQL checks are pending at this
-  checkpoint. Review scoped commits, preserve reproducible evidence and close
+  Linux format/helper workflow `40979668978` and Pixi workflow `40979669043` are
+  active as detailed under W0-W2. CodeQL `40973686197` passed on the preceding
+  product-equivalent head `4df7229ca`; this test-only follow-up did not trigger a
+  new CodeQL run. Review scoped commits, preserve reproducible evidence and close
   every required gap.
 
 **Next concrete action on implementation resume:** follow all checks on the
@@ -6718,16 +6723,12 @@ LF and CRLF. No product behavior changed in this slice.
 | Roadmap parser/inventory regression | PASS; 5/5 |
 | `git diff --check` | PASS |
 | Code commit | `4e107daba` (`fix offset worker Windows test fixtures`) |
-| Exact-head Windows x64/ARM64 and Linux rerun | Workflow `40971000486` queued/running; required before closing W168/W170 cross-platform gate |
+| Exact-head Windows x64/ARM64 and Linux rerun | Historical workflow `40971000486` was superseded; current exact-head run `40979668978` is tracked in W173 |
 | Visible LibreCAD app control | Still unavailable: app-specific CUA approval remains denied despite the user's approval action; no alternate UI path used |
 
-The code and plan commits are `4e107daba` and `091686cd7`; the latter triggered
-exact-head workflow `40971000486` (DWG/DXF verification), `40971000241` (Pixi
-builds), `40971000319` (Text foundations), and `40971000501` (CodeQL). At this
-checkpoint the DWG/DXF Linux, Windows x64 and ARM64 jobs are queued/running; no
-post-fix conclusion is available. W170 closes the local test-fixture
-remediation only. Recheck the exact pushed head's format/helper workflow,
-especially ARM64, before considering it fixed.
+The code and plan commits are `4e107daba` and `091686cd7`; their exact-head
+workflows were superseded by later pushes. W170 closes the local test-fixture
+remediation only. Current cross-platform results are tracked in W173.
 The full visible workflow, signed/deployed package acceptance, current-source
 external-CAD checks (including AC1021's reader limitation), and final W0-W2/R
 acceptance remain open.
@@ -6752,8 +6753,11 @@ including restoring mtime and asserting that change-time detects the rewrite.
 |---|---|
 | Local macOS CMake build of `librecad_tests` | PASS |
 | Local `librecad_offset_import_identity_tests` | PASS; 1/1 |
-| Windows ARM64 exact-head rerun | Pending; the failing workflow `40973686209` predates this fixture adjustment |
-| Windows x64 and Linux exact-head format lanes | Pending on the prior run; superseded by the fix push |
+| Windows ARM64 exact-head rerun | Workflow `40979668978`, bounded test step active; source-identity CTest result pending |
+| Windows x64 exact-head format lane | Workflow `40979668978`, configuring/building |
+| Linux exact-head format lane | Workflow `40979668978`, bounded test step active |
+| Pixi cross-platform build | Workflow `40979669043`; Ubuntu ARM, macOS ARM, Windows, and Ubuntu x64 pass; macOS Intel active |
+| Roadmap inventory/parser | PASS; 5/5 after this checkpoint edit |
 
 W173 is a test-fixture portability correction only. Do not close Windows
 source-identity acceptance until the new exact-head ARM64 selector passes.
@@ -6823,11 +6827,14 @@ invalid=0`.
 | ACadSharp summary | SHA256 `c2d19756eb141ab7aa46e2eecfd9eacf7bce429e6a4b5aa7ae68a1fd88dc523a` |
 | Writer logs | Modern `09f67eb2644824c9008b023beb9aaff6a1c5c5067d87ee24029a6252d4783f13`; edited `7cb6bd9c6fa770c970f8b0ca9b5b00a6cd165f18b48d60c9a6098cf381c8ae68`; R12 `10f1c8015f6ebb182d003cc5d8b5f1caf436bc1e29bbb356c22a3ac0fe24e992` |
 
-The exact-head workflow set triggered by plan commit `091686cd7` remains the
-remote qualification for W170's Windows x64/ARM64/Linux helper and format
-lanes. At the last check, workflow `40971000486` was building these lanes;
-workflow `40971000319` passed Headless OFF/ON, while Pixi `40971000241` and
-CodeQL `40971000501` were still running. Recheck these results before closing
-the cross-platform gate. Visible CAD interaction remains unavailable because
-CUA still reports app-specific approval denied after the user approved it; no
-alternate UI-control path was used.
+The exact-head workflow set for `c0438532b` is the remote qualification for the
+Windows x64/ARM64 and Linux helper/format lanes. Workflow `40979668978` has
+Linux and Windows ARM64 bounded test steps running and Windows x64
+configuring/building; the source-identity CTest selector is registered in all
+three lanes. Pixi `40979669043` has Ubuntu ARM, macOS ARM, Windows, and Ubuntu
+x64 passed; macOS Intel is still building. CodeQL `40973686197` passed on the preceding
+product-equivalent head `4df7229ca`; no exact-`c0438532b` CodeQL run was
+triggered for the fixture/documentation-only follow-up. Recheck active runs
+before closing cross-platform acceptance. Visible CAD interaction remains
+unavailable because this task has no computer-use control tool, despite user
+approval; no alternate UI-control path was used.
