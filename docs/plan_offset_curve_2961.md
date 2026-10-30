@@ -3185,7 +3185,9 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   expansion. The caller remains synchronous through a bounded nested event loop;
   GUI open/templates retain their asynchronous staged session. Current-source
   Release and focused ASan direct-API selectors, broad Release format lanes, and
-  qmake6 builds of both changed filter objects pass locally. Finish Windows/native
+  qmake6 builds of both changed filter objects pass locally. W178 now adds a fresh
+  current-source qmake6 full application/helper bundle build and a bundled sibling-
+  worker client smoke (17 cases / 3,775 assertions). Finish Windows/native
   cross-platform failure coverage, deployed-helper acceptance, and final
   caller/adoption/failure acceptance. W170 passes the targeted local Debug,
   Release and ASan worker fixture suites. W171/W172 freshly qualify current-source
@@ -3193,9 +3195,11 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   `c0438532b`, Windows ARM64 job `123816799173` passed all bounded tests and
   relocated-worker checks. The old workflow `40979668978` was canceled before
   Linux/x64 completed. New head `7bd61bd24` is running workflow `40998099806`
-  across Linux, Windows x64 and ARM64 with the Linux Release configuration.
-  The CTest selector includes source identity.
-  Pixi workflow `40979669043` has passed on all five platforms. W175 aligns the
+  across Linux, Windows x64 and ARM64 with the Linux Release configuration; as
+  of W178, Linux is in its bounded-test step and Windows x64/ARM64 are building.
+  The CTest selector includes source identity. Pixi workflow `40979669043` passed
+  on all five platforms; new run `40998099821` passed Ubuntu x64, Ubuntu ARM64,
+  Windows x64 and macOS arm64 while macOS Intel remains active. W175 aligns the
   Linux bounded lane with the Windows Release configuration without reducing
   the exhaustive test set; the next exact-head run must verify it. Reuse the
   qualified geometry-entry
@@ -3211,16 +3215,19 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   recorded separately. Visible CAD interaction, full platform/package coverage,
   and final integrated acceptance remain open.
 - [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
-  including Windows, visible GUI acceptance and remaining platform/package acceptance; W79
+  including Windows, visible GUI acceptance and remaining platform/package acceptance;
+  W178 closes the fresh macOS qmake6 app/helper build row, but not these remaining gates. W79
   now covers a complete staged macOS CMake install. W149-W151 record broad local
   Release results and classify the five randomized alias assertions as the same
   inherited behavior on a fresh `origin/master` build; do not attribute them to
   the offset changes. W170 adds targeted current-source Debug/Release/ASan worker
   fixtures and a full 6,381-case headless Release pass; W171/W172 add fresh
-  current-source cross-reader DWG/DXF matrix results. The c043 workflow
+  current-source cross-reader DWG/DXF matrix results and W178 adds a fresh
+  current-source qmake6 app/helper build. The c043 workflow
   `40979668978` passed Windows ARM64 and was canceled before Linux/x64 completed;
   new-head workflow `40998099806` and Pixi `40998099821` are active. The prior
-  Pixi run `40979669043` passed on all five platforms. CodeQL
+  Pixi run `40979669043` passed on all five platforms; the new Pixi run is 4/5
+  passed with macOS Intel active. CodeQL
   `40973686197` passed on the preceding
   product-equivalent head `4df7229ca`; this test-only follow-up did not trigger a
   new CodeQL run. Review scoped commits, preserve reproducible evidence and close
@@ -6894,6 +6901,45 @@ geometry-only rows remain outside this ODA conversion slice.
 This supplements W171/W172 reader checks but does not close the direct external
 CAD display, visible GUI, deployed-package, exact-head CI, or final W0-W2/R
 gates.
+
+## 136. W178 Current-Source qmake6 App and Bundle Qualification
+
+Configured a fresh out-of-source qmake6 tree at
+`/private/tmp/offset-W178-qmake-current` from product source
+`7bd61bd24ba729d779822928d818c3a93cbc4938`. qmake 3.1 with Qt 6.12.0, AppleClang
+21, macOS SDK 27.0 and arm64 built the full application, `LibreCADOffsetWorker`,
+plugins and tools with top-level `make -j4` (exit 0). A second top-level make
+recheck also passed; the retained log reports generated targets up to date.
+The worktree stayed clean. Compilation emitted missing-field-initializer
+warnings in `lc_dwgadvancedmetadata.h`; links also warned that Homebrew QtSvg
+and freetype were built for macOS 27.0 while these targets specify 14.4. No
+compile or link error occurred.
+
+Copied the CMake-built worker-client test executable from the CMake tree
+configured against this worktree into the new qmake6 app bundle's
+`Contents/MacOS` beside the qmake-built helper. Running it from that directory
+passed all 17 worker-client test cases (3,775 assertions); this validates sibling
+helper discovery and protocol exchange for the fresh qmake bundle. It is a local
+bundle smoke, not a signed/deployed installation on another machine or a visible
+GUI receipt.
+
+| W178 artifact | Result / SHA256 |
+|---|---|
+| qmake6 application, `/private/tmp/offset-W178-qmake-current/LibreCAD.app/Contents/MacOS/LibreCAD` | PASS / `7bb1e9f0ae37f037592cf7248b1e07e3adfdcd8c9b5e60b397120a1a0600b7b4` |
+| qmake6 worker, `/private/tmp/offset-W178-qmake-current/LibreCAD.app/Contents/MacOS/LibreCADOffsetWorker` | PASS / `b70df2b40abfaae7cba0d3267c86cf3b3c1d3ae96c2778aed636cc1690fd2e6d` |
+| Top-level qmake6 recheck, `/private/tmp/offset-W178-qmake-recheck.log` | PASS; 42 lines / `a0382f5d4dc1c251c28c95ef859ea5253d5979611a0599f08a69308e3c1f60c8` |
+| Bundled worker-client smoke, `/private/tmp/offset-W178-qmake-client.log` | PASS; 17 cases / 3,775 assertions / `1fb155a3743cc24573bf087e3954b524a9bd25934ff1318b0ae388fcfd04b921` |
+| Worker-client executable | `/private/tmp/offset-W178-qmake-current/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests` / `be74f79d52fd2a4efaa65cf04b37cb670ceb0b49ba921b1373cc3925648dab93` |
+
+W178 closes the current-source local qmake6 full-build and bundled-helper smoke
+rows only. Windows/Linux CI, installed/deployed package acceptance, visible GUI
+and external-CAD visual checks, and final W0-W2/R integration remain open.
+
+| W178 remote snapshot | Result |
+|---|---|
+| DWG/DXF workflow `40998099806` | Active; Linux bounded tests running; Windows x64/ARM64 building |
+| Pixi workflow `40998099821` | 4/5 passed; macOS Intel build active |
+| CodeQL for `7bd61bd24` | No run/result yet |
 
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
 
