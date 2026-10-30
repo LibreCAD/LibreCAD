@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W182, superseding W181 and earlier below): implementation slices A-core
+Current status (W183, superseding W182 and earlier below): implementation slices A-core
 through T3 and the local A-core through C-check audit are closed. Direct
 synchronous `fileImport`, stream, and byte filter imports validate offset
 carriers through the worker. W158-W160 requalify qmake6 and staged installed
@@ -72,7 +72,8 @@ qualifications recorded in W1-W169. W156 closes local routing for the public
 synchronous file/stream/byte filter APIs. Exact-head platform/format CI,
 deployed-package checks, full visible UI, external-CAD interoperability, and
 final W0-W2/R integration remain open.
-Latest recorded slice: W182 records a headless raster check of the qmake6 renderer;
+Latest recorded slice: W183 records successful five-platform Pixi checks and the
+active exact-head format-test phase; W182 records a headless raster check of the qmake6 renderer;
 W181 records the published roadmap and exact-head rerun; W172 records the current-source DXF matrix and ACadSharp
 results; W171 records fresh current-source DWG generation and independent-reader
 results; W170 records Windows ARM64 qualification-fixture fixes
@@ -7061,6 +7062,26 @@ does not measure display/DPR, and does not replace external-CAD visual review.
 The current exact-head CI and Pixi runs are not complete. Visible GUI acceptance,
 display/DPR capture, external-CAD visual review, deployed-package qualification,
 and final W0-W2/R integration remain open.
+
+## 141. W183 Exact-Head Pixi Qualification
+
+Exact-head Pixi workflow `41003830885` completed successfully on
+`498a5deee690187a50ad776ad2e5df63fc51f1c5` on all five matrix platforms:
+Ubuntu x64, Ubuntu ARM64, Windows, macOS ARM64, and macOS Intel. The separate
+DWG/DXF verification workflow `41003855350` on the same head completed its
+Linux, Windows x64, and Windows ARM64 builds and entered the bounded test step
+on all three platforms. Capture terminal results for CTest, format selectors,
+fault sweeps, and relocated-helper checks before calling that workflow passed.
+
+| W183 check | Result |
+|---|---|
+| Exact-head Pixi workflow `41003830885` | PASS; all five platform jobs |
+| Exact-head DWG/DXF workflow `41003855350` | Builds passed on Linux, Windows x64, ARM64; bounded tests active |
+| Head tested | `498a5deee690187a50ad776ad2e5df63fc51f1c5` |
+
+This is CI/build qualification only. Visible GUI interaction, display/DPR
+capture, external-CAD visual review, deployed-package qualification, and final
+W0-W2/R integration remain open.
 
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
 
