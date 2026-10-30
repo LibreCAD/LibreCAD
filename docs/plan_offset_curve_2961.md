@@ -8102,3 +8102,37 @@ no standalone image or display/DPR receipt was retained.
 W209 closes one visible creation/repeat/undo scenario only. Screenshot/DPR,
 other GUI interaction and refusal cases, external-CAD rendering, deployed
 package, remaining cross-platform checks and final R integration remain open.
+
+## 168. W210 Current-Source CMake Creation and Portable-Cache Requalification
+
+Rebuilt from this worktree at code head `6e1dc8b3fd69ba40a81789a00959eb5db230fb07`
+(the later `f3c6e6240` commit changes only this roadmap) using the existing
+CMake Release tree `/private/tmp/offset-W166-full-build`. Its
+`CMAKE_HOME_DIRECTORY` points at this exact worktree. The `librecad_tests`
+target rebuilt successfully through all 497 Ninja steps; the separate
+`librecad_offset_worker_process_tests` target built successfully in five steps.
+Only pre-existing deprecation/nodiscard warnings were emitted.
+
+Ran the focused action creation-worker selector, including preview reuse,
+two-copy native repeat and fallback cases; the portable-cache protocol selector;
+and the standalone real helper-process selector. The latter exercises actual
+helper launches including operation 6. A first tag probe against the general
+`librecad_tests` executable found no process cases because CMake registers those
+tests in a dedicated executable; running the selector against the correct
+target passed.
+
+| W210 check | Result |
+|---|---|
+| Exact-worktree CMake Release rebuild | PASS; `librecad_tests` 497/497 build steps; helper-process test target built 5/5 |
+| Creation-worker/action repeat | PASS; 11 cases, 318 assertions |
+| Portable preview request encoding | PASS; 4 cases, 67 assertions |
+| Built helper-process cache/repeat | PASS; 4 cases, 2,326 assertions |
+| Updated roadmap parser/refusal suite | PASS; 99/99 with W209 and W210 roadmap entries present |
+| Current PR head `f3c6e6240` | Headless ON/OFF PASS; Analyze, DWG/DXF, Windows x64/ARM and Pixi jobs still pending; Security scan skipped by workflow policy |
+| PR state | OPEN; draft, review required |
+| Product-source changes | None; CMake/test requalification and roadmap receipt |
+
+W210 closes the local macOS CMake Release and real-helper requalification for
+preview-cache portability and creation/repeat. It does not close Windows or
+other platform runtime/package acceptance, remaining visible GUI interactions,
+retained screenshot/DPR evidence, external-CAD visual inspection, or final R.
