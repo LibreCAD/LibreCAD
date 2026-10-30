@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W185, superseding W184 and earlier below): implementation slices A-core
+Current status (W186, superseding W185 and earlier below): implementation slices A-core
 through T3 and the local A-core through C-check audit are closed. Direct
 synchronous `fileImport`, stream, and byte filter imports validate offset
 carriers through the worker. W158-W160 requalify qmake6 and staged installed
@@ -44,9 +44,10 @@ those same current AC1021 outputs pass LibreDWG. W172 regenerated 34
 current-source DXFs: ACadSharp parsed all 32 modern ASCII/binary spline rows
 with valid knot layouts; both R12 rows parsed as the expected geometry-only
 POLYLINE representation. Focused local Release and ASan checks and the
-6,381-case headless suite pass. Exact-head Windows x64/ARM64/Linux DWG/DXF/helper
-CI, broader cross-platform and package/deployment acceptance, full visible UI,
-external-CAD visual acceptance, and final W0-W2/R integration remain open.
+6,381-case headless suite pass. Exact-head Linux/Windows x64/ARM64 DWG/DXF/helper
+CI and five-platform Pixi checks pass. Broader platform and package/deployment
+acceptance, full visible UI, external-CAD visual acceptance, and final W0-W2/R
+integration remain open.
 W164 independently parsed the actual W163 AC1032 DXF output with ACadSharp,
 preserving both owned markers and valid spline knot layouts. W171 supersedes
 the retained W134 matrix evidence with a fresh current-source DWG matrix.
@@ -69,10 +70,12 @@ Status: **The planned product implementation is present; remaining work is
 acceptance, not an identified feature-code gap.** Worker, geometry,
 creation/repeat, trim, GUI open/template, and DXF/DWG paths have scoped local
 qualifications recorded in W1-W169. W156 closes local routing for the public
-synchronous file/stream/byte filter APIs. Exact-head platform/format CI,
-deployed-package checks, full visible UI, external-CAD interoperability, and
-final W0-W2/R integration remain open.
-Latest recorded slice: W185 records the Windows ARM64 exact-head pass;
+synchronous file/stream/byte filter APIs. The current exact-head Linux/Windows
+x64/ARM64 DWG/DXF/helper and Pixi workflows pass. Deployed-package checks, full
+visible UI, external-CAD interoperability, broader W0-W2 platform acceptance,
+and final R integration remain open.
+Latest recorded slice: W186 records the complete exact-head Linux/Windows x64/ARM64
+DWG/DXF/helper pass; W185 records the Windows ARM64 exact-head pass;
 W184 records the Linux exact-head DWG/DXF/helper pass;
 W183 records successful five-platform Pixi checks and the
 active exact-head format-test phase; W182 records a headless raster check of the qmake6 renderer;
@@ -7133,6 +7136,33 @@ No product source changed in this qualification checkpoint. The Windows x64
 terminal result is still needed for full DWG/DXF matrix qualification; visible
 GUI/external-CAD visual review, deployed-package qualification, and final
 W0-W2/R integration remain open.
+
+## 144. W186 Exact-Head Windows x64 Qualification
+
+Windows x64 job `123894558777` in workflow `41003855350` completed
+successfully on head `498a5deee690187a50ad776ad2e5df63fc51f1c5`. CTest passed
+23/23; the synchronous filter API passed 219 assertions; creation-worker tests
+passed 318 assertions in 11 cases. Cache-check allocation recovery completed
+for all fixtures across 66,594 injection points, and the installed/relocated
+worker client passed 3,974 assertions in 17 cases. Together with W184 and W185,
+the exact-head DWG/DXF verification workflow is green on Linux, Windows x64 and
+Windows ARM64. W183 records the all-green five-platform Pixi matrix.
+
+| W186 x64 check | Result |
+|---|---|
+| CTest bounded suite | PASS; 23/23 |
+| `[sync-api]` filter | PASS; 219 assertions |
+| `[lc-offsetcurve][creation-worker]` | PASS; 318 assertions / 11 cases |
+| Cache-check allocation recovery | PASS; all fixtures / 66,594 injection points |
+| Relocated worker client | PASS; 3,974 assertions / 17 cases |
+| Windows x64 exact-head job | PASS; workflow `41003855350`, job `123894558777` |
+| Linux and Windows ARM64 jobs | PASS; W184/W185 |
+
+This closes the current exact-head bounded DWG/DXF/helper CI matrix. No product
+source changed in W182-W186. Visible GUI interaction, display/DPR capture,
+external-CAD visual review, deployed-package qualification and final W0-W2/R
+integration remain acceptance gates; this session has no supported computer-use
+control tool, so the user-approved test app could not be operated here.
 
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
 
