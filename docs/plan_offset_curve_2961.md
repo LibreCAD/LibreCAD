@@ -8056,3 +8056,49 @@ unverified.
 | Exact PR-head workflows | NOT REPORTED for documentation head `417d6b4ec653be2cc3089eee996e9bc5708096fe` |
 | PR state | OPEN, draft; approving review required |
 | Product-source changes | None; visible-app validation/documentation checkpoint |
+
+## 167. W209 Current-Source Multi-Copy Creation and Undo
+
+After the user approved Device Control access for the isolated qmake6 app, used
+`/private/tmp/LibreCAD-PR3193-visible.app`, built from W198 product head
+`2c4f26b378f201135227403cbb0575e510f88550`. The bundled app and worker hashes
+remain `df35f8adef5c2ef6ec16aeecd8cb1ecaa7401557da012b02ea09eec0a6903966` and
+`ecc00959fdce4f105a6f6c909e4ab554f1f966f58579ad889fde9fb058605c5b`; the
+offset action, options widget and worker source paths are unchanged from that
+build through PR head `6e1dc8b3fd69ba40a81789a00959eb5db230fb07`.
+
+Opened W193 with its six original ellipse contours, started Modify Offset, and
+kept fixed distance `0.5` and `Editable Offset Curve` enabled. A normal visible
+mouse click on `Multiple Copies` enabled the count control; set the count to 2,
+selected the outer ellipse in the right-hand group, completed selection and
+picked the outward side. Two additional offset contours appeared around that
+source and two entities were selected. The command returned to its direction
+prompt. Escape ended the command; one Undo removed both created copies and the
+viewport returned to the original six contours. Closed the disposable drawing
+and chose No at the save prompt. The W193 on-disk SHA256 remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+An accessibility-triggered checkbox press changed its reported checked state
+without updating the dependent count control; the normal visible mouse click
+correctly fired the option handler and enabled the count. This was an input-path
+artifact, not a product defect. This pass verifies a two-copy ellipse creation
+and single-step undo, but not every repeat count, source type, layer/attribute
+combination, or save/reopen path. The screenshot was observed in-session only;
+no standalone image or display/DPR receipt was retained.
+
+| W209 check | Result |
+|---|---|
+| App and worker identity | PASS; hashes match W207; relevant product source is unchanged through `6e1dc8b3` |
+| Multiple-copy option and count | PASS; visible mouse interaction enabled the control; count set to 2 |
+| Creation/repeat | PASS; one ellipse source produced two visible offset contours; two created entities selected |
+| Undo and cleanup | PASS; one Undo removed both outputs; drawing closed with No/save-discard |
+| W193 artifact integrity | PASS; SHA256 unchanged |
+| Full validation script suite | PASS; 412 / 412, zero failures, cancellations, skips or TODO cases; 232.145 s |
+| Screenshot / display-DPR | OPEN; observed in-session only, no retained screenshot or DPR reading |
+| Current PR-head checks | Headless ON/OFF PASS; Ubuntu x64/ARM and macOS latest have passing runs. Analyze, DWG/DXF fast, Windows x64/ARM, Windows Pixi and macOS Intel remain pending; Security scan skipped by workflow policy |
+| PR state | OPEN; draft, review required, merge blocked |
+| Product-source changes | None; visible-app validation/roadmap receipt only |
+
+W209 closes one visible creation/repeat/undo scenario only. Screenshot/DPR,
+other GUI interaction and refusal cases, external-CAD rendering, deployed
+package, remaining cross-platform checks and final R integration remain open.
