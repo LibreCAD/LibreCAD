@@ -152,6 +152,8 @@ class QC_ApplicationWindow : public LC_MDIApplicationWindow {
     void restoreDockLayout(const QMap<QString, bool>& requested, bool hasRequested,
                            const QHash<int, bool>& areas, const QByteArray& state);
     QMap<QString, bool> requestedDockVisibility() const;
+    QVariantMap dockAreaSizes() const;
+    void setDockAreaSizes(const QVariantMap& sizes);
     QByteArray dockLayoutStateForSaving();
     bool dockAreaRequested(Qt::DockWidgetArea area) const;
     bool floatingDocksRequested() const;
@@ -463,6 +465,7 @@ protected:
     QMap<QString, bool> m_requestedDockVisibility;
     QMap<QString, bool> m_factoryDockVisibility;
     QHash<int, bool> m_requestedDockAreas;
+    QVariantMap m_dockAreaSizes;
     QStringList m_autoCollapsedGroups;
     QHash<QString, QString> m_collapsedSelectedTabs;
     QHash<QString, QStringList> m_collapsedGroupMembers;
