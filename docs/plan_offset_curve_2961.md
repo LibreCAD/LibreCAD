@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W199; the chronological evidence ledger follows): planned product
+Current status (W200; the chronological evidence ledger follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check audit
 are present and locally qualified. This includes the shipped native geometry
 worker, Modify Offset creation/repeat, native Trim preview/commit, staged GUI
@@ -38,24 +38,27 @@ or errors, 75 skips not qualified), deterministic full-selector ASan requalifica
 (1,027 declarations / 1,354 JUnit cases, zero failures or errors, one legacy-DXF
 skip; leak detection disabled), worker CTest 9/9, and the Node validation suite
 412/412. PR #3193 head is the roadmap-only commit
-`f04875cba404bd1ff6ecb2f2d0d8b50911d5471c`, based on master
-`d66b7e1379990224a6a897105683463692b05549`. At that head, Text Foundations
-Headless (OFF) passed; Headless (ON), Pixi Builds, CodeQL analysis, and DWG/DXF
-Linux plus Windows x64/ARM64 checks are in progress or queued. CodeQL Security
-scan is skipped by workflow policy. The qmake6 application and native worker
+`ad962708066fde6fedfb8b34f60ad506e71e9be1`, based on master
+`d66b7e1379990224a6a897105683463692b05549`. At that exact head, Text Foundations
+Headless (ON and OFF) passed; Pixi Builds, CodeQL analysis, and DWG/DXF Linux
+plus Windows x64/ARM64 checks are in progress. CodeQL Security scan is skipped
+by workflow policy. The qmake6 application and native worker
 were rebuilt from the exact pre-W198 documentation head; the build succeeds. A
 relocated client-protocol run against that worker passes 4,285 assertions / 17
 cases, and the CMake worker CTest set passes 9/9. Independent FreeCAD visual
-review now passes for the W193 DXF artifact only. Fresh macOS UI acceptance
-remains unqualified: the rebuilt bundle is not yet authorized in macOS Device
-Control and Data Access, so CUA cannot control it.
+review passes for the W193 DXF artifact only. ODA File Converter 27.1.0
+accepted the W171 AC1032 DWG and produced a temporary ACAD2018 DXF, but no
+external visual inspection of that conversion is claimed. Fresh macOS UI
+acceptance remains unqualified: the rebuilt bundle is not listed in macOS
+Device Control and Data Access, so CUA cannot control it.
 
 The PR is open, draft, mergeable, and requires an approving review. Acceptance
 still open: exact-head workflows, complete visible GUI interaction (including
 active-preview cancellation and refusal), retained screenshot/display-DPR
-evidence, independent CAD checks for outputs beyond the W193 DXF, signed/deployed
-package qualification, broader W0-W2 platform acceptance, and final R
-integration. No new LibreCAD visible-app pass is claimed for the rebuilt bundle.
+evidence, independent CAD visual checks for outputs beyond the W193 DXF,
+signed/deployed package qualification, broader W0-W2 platform acceptance, and
+final R integration. No new LibreCAD visible-app pass is claimed for the rebuilt
+bundle.
 Direct AC1021
 ACadSharp parsing is also unqualified because that reader throws on negative
 `ComprLen` before entity decoding; LibreDWG parses the current AC1021 matrix.
@@ -7760,3 +7763,43 @@ external DWG/AC1032 rendering, active-preview cancellation/refusal in LibreCAD,
 retained screenshot/DPR evidence, deployed bundles, remaining W0-W2 gates, or
 final R integration. Do not treat a successful DXF display as a full feature or
 roadmap PASS.
+
+## 158. W200 ODA Conversion of the AC1032 Fixture
+
+Copied the unchanged W171 AC1032 fixture
+`/private/tmp/offset-W171-current-dwg/offset-matrix-write-dwg-R2018-d3_actual.dwg`
+to an isolated temporary input directory and invoked the installed ODA File
+Converter 27.1.0 in command-line mode to write ACAD2018 DXF into a separate
+temporary output directory. The source and copied-input SHA256 values both
+remain `aed066088fab728aff6224481accdd9900ce0b08e2e63c96dd729d28a2838842`.
+ODA exited successfully; the output is DXF 2018 with `$ACADVER` `AC1032`, size
+93,294 bytes, SHA256
+`b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`.
+
+This verifies ODA conversion of this fixture only. No visual inspection of the
+converted DXF is claimed: FreeCAD presented its first-start configuration view,
+and no profile changes were made. The ODA converter's folder UI also reported a
+concurrent user change; its current state was left untouched. These temporary
+outputs are not product fixtures and are not committed.
+
+| W200 check | Result |
+|---|---|
+| W171 AC1032 DWG input integrity | PASS; source and temporary copy hashes match |
+| ODA File Converter 27.1.0 AC1032 DWG to 2018 DXF | PASS; exit 0, output header `AC1032` |
+| Converted output integrity | PASS; SHA256 `b696b00f...d53bf46` |
+| Independent visual inspection of converted DXF | OPEN; not performed |
+| LibreCAD rebuilt-bundle GUI acceptance | OPEN; test app is not yet listed in Device Control and Data Access |
+| Roadmap parser | PASS; 5/5 |
+| H6 refusal/inventory suite | PASS; 94/94, 93 obligations, zero pending declarations, zero mismatches |
+| Scoped DWG/DXF workflow actionlint | PASS |
+| `git diff --check` | PASS |
+| Exact PR-head GitHub checks | PARTIAL; Text Foundations ON/OFF passed; Pixi, CodeQL analysis and DWG/DXF jobs are in progress; CodeQL Security scan skipped by policy |
+| PR state | OPEN; draft and review required |
+| Product-source changes | None; external conversion/acceptance checkpoint |
+
+W200 does not close external DWG visual review, LibreCAD-specific XDATA
+semantics, active-preview cancellation/refusal, retained screenshot/DPR
+evidence, deployed-package qualification, remaining W0-W2 platform gates,
+reviewer approval, or final R integration. The exact-head workflow snapshot is
+for `ad962708066fde6fedfb8b34f60ad506e71e9be1`; the roadmap-only W200 commit
+will have a new SHA and requires its own exact-head CI result.
