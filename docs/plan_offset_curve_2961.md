@@ -3196,12 +3196,14 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   relocated-worker checks. The old workflow `40979668978` was canceled before
   Linux/x64 completed. New head `7bd61bd24` is running workflow `40998099806`
   across Linux, Windows x64 and ARM64 with the Linux Release configuration; as
-  of W178, Linux is in its bounded-test step and Windows x64/ARM64 are building.
-  The CTest selector includes source identity. Pixi workflow `40979669043` passed
-  on all five platforms; new run `40998099821` passed Ubuntu x64, Ubuntu ARM64,
-  Windows x64 and macOS arm64 while macOS Intel remains active. W175 aligns the
+  of W179, Linux remains in its bounded-test step and Windows x64/ARM64 remain
+  in their configure/build steps; the active-job API has not surfaced terminal
+  logs/results. The CTest selector includes source identity. Pixi workflows
+  `40979669043` and `40998099821` passed on all five platforms. W175 aligns the
   Linux bounded lane with the Windows Release configuration without reducing
-  the exhaustive test set; the next exact-head run must verify it. Reuse the
+  the exhaustive test set; the next exact-head run must verify it. W177/W179
+  independently convert all 34 current-source DXF matrix rows through ODA; see
+  the detailed reader classifications below. Reuse the
   qualified geometry-entry
   W157 extends the DWG/DXF matrix to build and execute `[sync-api]` on Linux and
   Windows x64/ARM64; the prior code-equivalent ARM64 job passed, while the new
