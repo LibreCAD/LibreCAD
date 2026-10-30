@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W203; the chronological evidence ledger follows): planned product
+Current status (W204; the chronological evidence ledger follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check audit
 are present and locally qualified. This includes the shipped native geometry
 worker, Modify Offset creation/repeat, native Trim preview/commit, staged GUI
@@ -37,28 +37,30 @@ W196 records a full merged-source CMake Release run (6,380 cases, zero failures
 or errors, 75 skips not qualified), deterministic full-selector ASan requalification
 (1,027 declarations / 1,354 JUnit cases, zero failures or errors, one legacy-DXF
 skip; leak detection disabled), worker CTest 9/9, and the Node validation suite
-412/412. PR #3193 current committed head is `f54e7f760590f3aa55b5bf930a0bebe1950139c2`,
-based on master `d66b7e1379990224a6a897105683463692b05549`. Text Foundations
-Headless (ON and OFF) passed at `ad9627080`; Text Foundations also passed at
-`003eeb182`. Exact-head workflows for `f54e7f760` are in progress; CodeQL
-Security scan is skipped by workflow policy. The qmake6 application and native
-worker were rebuilt from the exact pre-W198 documentation head; the build
-succeeds. A relocated client-protocol run against that worker passes 4,285
-assertions / 17 cases, and the CMake worker CTest set passes 9/9. The isolated
-LibreCAD bundle is now controllable after user approval. W193's six ellipse
-contours rendered in the app, and an Escape delivered during a visible offset
+412/412. PR #3193 committed head at the W204 observation is
+`7828c9b211e7b85cfd2ceeb7eecd526411026853`, based on master
+`d66b7e1379990224a6a897105683463692b05549`. Text Foundations ON/OFF, CodeQL
+analysis, DWG/DXF verification, and Pixi platform jobs are pending on that head;
+the CodeQL Security scan is skipped by workflow policy. The qmake6 application
+and native worker were rebuilt from the exact pre-W198 documentation head; the
+build succeeds. A relocated client-protocol run against that worker passes
+4,285 assertions / 17 cases, and the CMake worker CTest set passes 9/9. The
+isolated LibreCAD bundle is now controllable after user approval. W193's six
+ellipse contours rendered in the app, and Escape during a visible offset
 preview canceled cleanly with no selection, undoable edit, or change to the
-source DXF. FreeCAD's W171-derived DXF import still has no verified rendered
-view: its macOS accessibility action crashed before one could be observed.
-Independent FreeCAD visual review of the separate W193 DXF remains recorded
-above; it does not close that W171-derived visual check.
+source DXF. A separate text-only DXF visibly exercised the GUI's unsupported
+entity refusal; LibreCAD reported no valid entities selected and returned to
+Default without an edit. FreeCAD's W171-derived DXF import still has no verified
+rendered view: its macOS accessibility action crashed before one could be
+observed. Independent FreeCAD visual review of the separate W193 DXF remains
+recorded above; it does not close that W171-derived visual check.
 
 The PR is open and draft, blocked on required checks/review, and requires an
-approving review. Acceptance remains open: exact-head workflows, GUI refusal and
-the rest of the interaction matrix, retained screenshot/display-DPR evidence,
+approving review. Acceptance remains open: exact-head workflows, the rest of the
+GUI refusal and interaction matrix, retained screenshot/display-DPR evidence,
 independent CAD visual checks for outputs beyond the W193 DXF, signed/deployed
 package qualification, broader W0-W2 platform acceptance, and final R
-integration. W203 is a scoped visible-app pass, not full GUI acceptance.
+integration. W203-W204 are scoped visible-app passes, not full GUI acceptance.
 Direct AC1021
 ACadSharp parsing is also unqualified because that reader throws on negative
 `ComprLen` before entity decoding; LibreDWG parses the current AC1021 matrix.
@@ -7893,5 +7895,35 @@ interaction paths, or external CAD rendering of the W171-derived DWG output.
 | GUI refusal and broader interaction matrix | OPEN |
 | FreeCAD visual check of W171-derived DXF | OPEN; no rendered viewport verified after accessibility-path crash |
 | Exact PR-head workflows | IN PROGRESS; head `f54e7f760`; Text Foundations ON/OFF passed, other checks running, Security scan skipped by policy |
+| PR state | OPEN; draft, merge state blocked, approving review required |
+| Product-source changes | None; visible-app validation/documentation checkpoint |
+
+## 162. W204 Visible Unsupported-Entity Refusal
+
+Loaded the existing text-only DXF fixture
+`librecad/src/lib/filters/tests/testdata/dxf/big5_traditional.dxf` in the
+isolated current-source LibreCAD bundle. With its sole `TEXT` entity selected,
+started Modify Offset and completed entity selection. The GUI reported `No
+valid entities selected, select them first` rather than creating geometry. An
+Escape returned the action to `Default`, cleared the selection, and left Undo
+and Redo disabled. The fixture was not saved. Its SHA256 remains
+`d44c3da8a87f100f63e044b72a28cab077932ae4e5771c5f8617e5cd4b243442`; the W193
+source DXF also remains unchanged at
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+This closes one unsupported-entity refusal/recovery path only; it does not
+qualify all offset refusal reasons or the full interaction matrix. The GUI
+screenshots were observed in-session, not retained as standalone files, and
+display/DPR remains unavailable.
+
+| W204 check | Result |
+|---|---|
+| Text-only fixture and rendered `TEXT` input | PASS; one imported text entity selected |
+| Unsupported selection refusal | PASS; explicit “No valid entities selected” report |
+| Recovery and document state | PASS; Default action, no selection, Undo/Redo disabled; no save |
+| Fixture integrity | PASS; input and W193 hashes unchanged |
+| Other GUI refusal reasons / interaction matrix | OPEN |
+| Screenshot/DPR receipt | OPEN; screenshot observed in-session only, DPR unavailable |
+| Exact PR-head workflows | IN PROGRESS at `7828c9b21`; Text Foundations, CodeQL analysis, DWG/DXF, and Pixi jobs pending; Security scan skipped by policy |
 | PR state | OPEN; draft, merge state blocked, approving review required |
 | Product-source changes | None; visible-app validation/documentation checkpoint |
