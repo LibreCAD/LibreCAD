@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W204; the chronological evidence ledger follows): planned product
+Current status (W205; the chronological evidence ledger follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check audit
 are present and locally qualified. This includes the shipped native geometry
 worker, Modify Offset creation/repeat, native Trim preview/commit, staged GUI
@@ -37,11 +37,12 @@ W196 records a full merged-source CMake Release run (6,380 cases, zero failures
 or errors, 75 skips not qualified), deterministic full-selector ASan requalification
 (1,027 declarations / 1,354 JUnit cases, zero failures or errors, one legacy-DXF
 skip; leak detection disabled), worker CTest 9/9, and the Node validation suite
-412/412. PR #3193 committed head at the W204 observation is
-`7828c9b211e7b85cfd2ceeb7eecd526411026853`, based on master
-`d66b7e1379990224a6a897105683463692b05549`. Text Foundations ON/OFF, CodeQL
-analysis, DWG/DXF verification, and Pixi platform jobs are pending on that head;
-the CodeQL Security scan is skipped by workflow policy. The qmake6 application
+412/412. PR #3193 committed head at the W205 observation is
+`f7a02c22aef377db0cdc2e3b19085e699279d3f2`, based on master
+`d66b7e1379990224a6a897105683463692b05549`. Text Foundations ON/OFF, DWG/DXF
+fast/Linux and Windows x64/ARM64, and Pixi platform jobs are pending on that
+head; CodeQL analysis has not surfaced in the latest check list, and the CodeQL
+Security scan is skipped by workflow policy. The qmake6 application
 and native worker were rebuilt from the exact pre-W198 documentation head; the
 build succeeds. A relocated client-protocol run against that worker passes
 4,285 assertions / 17 cases, and the CMake worker CTest set passes 9/9. The
@@ -7897,6 +7898,31 @@ interaction paths, or external CAD rendering of the W171-derived DWG output.
 | Exact PR-head workflows | IN PROGRESS; head `f54e7f760`; Text Foundations ON/OFF passed, other checks running, Security scan skipped by policy |
 | PR state | OPEN; draft, merge state blocked, approving review required |
 | Product-source changes | None; visible-app validation/documentation checkpoint |
+
+## 163. W205 FreeCAD Visual Retry
+
+Relaunched FreeCAD 1.1.4 without completing or changing its first-start
+preferences. Opened the ODA-converted W171 AC1032 DXF
+`/private/tmp/offset-W200-oda-output/offset-matrix-write-dwg-R2018-d3_actual.dxf`.
+Its DXF Import dialog again identified approximately 233 geometric entities
+and had Individual Part shapes selected. Confirmed by keyboard Return. FreeCAD
+created a document tab, but the viewport showed no usable drawing geometry; a
+vertical line remained clipped at the edge, and both the Fit All shortcut and
+toolbar command left the viewport blank. The app later returned to its
+first-start view. No document was saved and no FreeCAD preferences were
+changed. This is not a visual pass and does not identify whether the cause is
+the importer, view state, or the uncompleted first-start flow.
+
+| W205 check | Result |
+|---|---|
+| FreeCAD recognized converted DXF | PASS; import dialog reported approximately 233 geometric entities |
+| FreeCAD visual rendering | OPEN; no contours verified; Fit All did not reveal geometry |
+| FreeCAD profile/preferences | NONE changed |
+| ODA conversion / LibreCAD source artifacts | Not modified or saved during this retry |
+| Exact PR-head workflows | IN PROGRESS at `f7a02c22a`; Text Foundations, DWG/DXF, and Pixi jobs pending; CodeQL analysis not surfaced; Security scan skipped by policy |
+| Retained screenshot / display-DPR | OPEN; observations were in-session only |
+| PR state | OPEN; draft, merge state blocked, approving review required |
+| Product-source changes | None; external-visual validation checkpoint |
 
 ## 162. W204 Visible Unsupported-Entity Refusal
 
