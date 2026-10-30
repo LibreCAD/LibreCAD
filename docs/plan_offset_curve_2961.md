@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W200; the chronological evidence ledger follows): planned product
+Current status (W201; the chronological evidence ledger follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check audit
 are present and locally qualified. This includes the shipped native geometry
 worker, Modify Offset creation/repeat, native Trim preview/commit, staged GUI
@@ -37,18 +37,19 @@ W196 records a full merged-source CMake Release run (6,380 cases, zero failures
 or errors, 75 skips not qualified), deterministic full-selector ASan requalification
 (1,027 declarations / 1,354 JUnit cases, zero failures or errors, one legacy-DXF
 skip; leak detection disabled), worker CTest 9/9, and the Node validation suite
-412/412. PR #3193 head is the roadmap-only commit
-`ad962708066fde6fedfb8b34f60ad506e71e9be1`, based on master
-`d66b7e1379990224a6a897105683463692b05549`. At that exact head, Text Foundations
-Headless (ON and OFF) passed; Pixi Builds, CodeQL analysis, and DWG/DXF Linux
-plus Windows x64/ARM64 checks are in progress. CodeQL Security scan is skipped
-by workflow policy. The qmake6 application and native worker
+412/412. PR #3193 current committed head is `003eeb18240f454a52ee78599722eddc8efde2be`,
+based on master `d66b7e1379990224a6a897105683463692b05549`. At the prior
+roadmap-only head `ad962708066fde6fedfb8b34f60ad506e71e9be1`, Text Foundations
+Headless (ON and OFF) passed; exact-head workflows for `003eeb182` are still
+running. CodeQL Security scan is skipped by workflow policy. The qmake6
+application and native worker
 were rebuilt from the exact pre-W198 documentation head; the build succeeds. A
 relocated client-protocol run against that worker passes 4,285 assertions / 17
 cases, and the CMake worker CTest set passes 9/9. Independent FreeCAD visual
 review passes for the W193 DXF artifact only. ODA File Converter 27.1.0
-accepted the W171 AC1032 DWG and produced a temporary ACAD2018 DXF, but no
-external visual inspection of that conversion is claimed. Fresh macOS UI
+accepted the W171 AC1032 DWG and produced a temporary ACAD2018 DXF; a FreeCAD
+import attempt quit before rendering, so no external visual result is claimed.
+Fresh macOS UI
 acceptance remains unqualified: the rebuilt bundle is not listed in macOS
 Device Control and Data Access, so CUA cannot control it.
 
@@ -7776,18 +7777,22 @@ ODA exited successfully; the output is DXF 2018 with `$ACADVER` `AC1032`, size
 93,294 bytes, SHA256
 `b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`.
 
-This verifies ODA conversion of this fixture only. No visual inspection of the
-converted DXF is claimed: FreeCAD presented its first-start configuration view,
-and no profile changes were made. The ODA converter's folder UI also reported a
-concurrent user change; its current state was left untouched. These temporary
-outputs are not product fixtures and are not committed.
+This verifies ODA conversion of this fixture only. FreeCAD initially presented
+its first-start configuration view; no profile changes were made. The converted
+DXF was then selected through FreeCAD's Open dialog, whose DXF import summary
+reported approximately 233 geometric entities. After choosing the default
+Individual Part shapes import mode and confirming, FreeCAD quit before rendering
+the document. No visual result or cause for the exit is claimed. The ODA
+converter's folder UI also reported a concurrent user change; its current state
+was left untouched. These temporary outputs are not product fixtures and are
+not committed.
 
 | W200 check | Result |
 |---|---|
 | W171 AC1032 DWG input integrity | PASS; source and temporary copy hashes match |
 | ODA File Converter 27.1.0 AC1032 DWG to 2018 DXF | PASS; exit 0, output header `AC1032` |
 | Converted output integrity | PASS; SHA256 `b696b00f...d53bf46` |
-| Independent visual inspection of converted DXF | OPEN; not performed |
+| Independent visual inspection of converted DXF | OPEN; FreeCAD quit during import before rendering |
 | LibreCAD rebuilt-bundle GUI acceptance | OPEN; test app is not yet listed in Device Control and Data Access |
 | Roadmap parser | PASS; 5/5 |
 | H6 refusal/inventory suite | PASS; 94/94, 93 obligations, zero pending declarations, zero mismatches |
@@ -7801,5 +7806,33 @@ W200 does not close external DWG visual review, LibreCAD-specific XDATA
 semantics, active-preview cancellation/refusal, retained screenshot/DPR
 evidence, deployed-package qualification, remaining W0-W2 platform gates,
 reviewer approval, or final R integration. The exact-head workflow snapshot is
-for `ad962708066fde6fedfb8b34f60ad506e71e9be1`; the roadmap-only W200 commit
-will have a new SHA and requires its own exact-head CI result.
+for `ad962708066fde6fedfb8b34f60ad506e71e9be1`; W200 is committed as
+`003eeb18240f454a52ee78599722eddc8efde2be`, and its exact-head workflows were
+still running when W201 began. The uncommitted W201 documentation update will
+create another head and requires its own exact-head CI result.
+
+## 159. W201 FreeCAD Import Attempt and W200 Head Status
+
+Followed the failed W200 external visual path without changing FreeCAD's
+first-start preferences. Its Open dialog selected the ODA-generated AC1032 DXF
+and reported approximately 233 geometric entities. The default Individual Part
+shapes option was selected; after confirming the import, the FreeCAD application
+quit before presenting a rendered document. This establishes neither a visual
+pass nor a product defect; no crash report was inspected. The converted DXF and
+source DWG remain disposable temporary artifacts, and the original source hash
+is unchanged.
+
+At PR head `003eeb18240f454a52ee78599722eddc8efde2be`, Text Foundations, Pixi
+Builds, CodeQL analysis, and DWG/DXF verification were still running. The CodeQL
+Security scan was skipped by workflow policy. PR #3193 remains open, draft, and
+review-required. macOS Device Control and Data Access still does not list the
+rebuilt LibreCAD test bundle; visible current-source checks remain unqualified.
+
+| W201 check | Result |
+|---|---|
+| FreeCAD DXF entity-count/import dialog | PASS; ODA DXF recognized, approximately 233 geometric entities |
+| FreeCAD visual rendering of ODA-derived DXF | OPEN; application quit before rendering |
+| FreeCAD profile changes | NONE |
+| Rebuilt LibreCAD visible GUI matrix | OPEN; privacy approval not present |
+| Exact-head CI for W200 | IN PROGRESS; all required workflows except policy-skipped Security scan |
+| Product-source changes | None; external-application acceptance attempt |
