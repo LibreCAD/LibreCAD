@@ -233,19 +233,16 @@ std::vector<std::pair<int, int>> litRuns(const QImage& image, const int row,
                                          const int from = 0, const int to = -1) {
     const int end = to < 0 ? image.width() : to;
     std::vector<std::pair<int, int>> runs;
-    int x = from;
-    while (x < end) {
-        while (x < end && !isLit(image, x, row)) {
-            ++x;
-        }
-        const int start = x;
-        while (x < end && isLit(image, x, row)) {
-            ++x;
-        }
-        if (x > start) {
+    int start = -1;
+    for (int x = from; x < end; ++x) {
+        if (isLit(image, x, row)) {
+            if (start < 0) start = x;
+        } else if (start >= 0) {
             runs.emplace_back(start, x - start);
+            start = -1;
         }
     }
+    if (start >= 0) runs.emplace_back(start, end - start);
     return runs;
 }
 
