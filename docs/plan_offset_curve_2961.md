@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W183, superseding W182 and earlier below): implementation slices A-core
+Current status (W184, superseding W183 and earlier below): implementation slices A-core
 through T3 and the local A-core through C-check audit are closed. Direct
 synchronous `fileImport`, stream, and byte filter imports validate offset
 carriers through the worker. W158-W160 requalify qmake6 and staged installed
@@ -72,7 +72,8 @@ qualifications recorded in W1-W169. W156 closes local routing for the public
 synchronous file/stream/byte filter APIs. Exact-head platform/format CI,
 deployed-package checks, full visible UI, external-CAD interoperability, and
 final W0-W2/R integration remain open.
-Latest recorded slice: W183 records successful five-platform Pixi checks and the
+Latest recorded slice: W184 records the Linux exact-head DWG/DXF/helper pass;
+W183 records successful five-platform Pixi checks and the
 active exact-head format-test phase; W182 records a headless raster check of the qmake6 renderer;
 W181 records the published roadmap and exact-head rerun; W172 records the current-source DXF matrix and ACadSharp
 results; W171 records fresh current-source DWG generation and independent-reader
@@ -7082,6 +7083,30 @@ fault sweeps, and relocated-helper checks before calling that workflow passed.
 This is CI/build qualification only. Visible GUI interaction, display/DPR
 capture, external-CAD visual review, deployed-package qualification, and final
 W0-W2/R integration remain open.
+
+## 142. W184 Exact-Head Linux DWG/DXF Qualification
+
+Linux job `123894559150` in workflow `41003855350` completed successfully on
+head `498a5deee690187a50ad776ad2e5df63fc51f1c5`. The bounded CTest suite passed
+23/23. The direct synchronous filter API passed 219 assertions; creation-worker
+coverage passed 318 assertions in 11 cases. The cache-check allocation-failure
+sweep recovered across all fixtures and 29,117 injection points. The installed
+and relocated native worker client passed 3,379 assertions in 17 cases.
+
+| W184 Linux check | Result |
+|---|---|
+| CTest bounded suite | PASS; 23/23 |
+| `[sync-api]` filter | PASS; 219 assertions |
+| `[lc-offsetcurve][creation-worker]` | PASS; 318 assertions / 11 cases |
+| Cache-check allocation recovery | PASS; all fixtures / 29,117 injection points |
+| Relocated worker client | PASS; 3,379 assertions / 17 cases |
+| Linux exact-head job | PASS; workflow `41003855350`, job `123894559150` |
+| Windows x64 and ARM64 exact-head jobs | Bounded tests still active |
+
+No product source changed in this qualification checkpoint. Windows results are
+still required before cross-platform DWG/DXF qualification can be closed;
+visible GUI, external-CAD visual, deployed-package, and final W0-W2/R gates
+remain open.
 
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
 
