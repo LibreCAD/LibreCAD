@@ -1425,18 +1425,21 @@ void RS_Painter::drawEntityPolyline(const RS_Polyline* polyline) {
             && std::abs(end.y() - start.y()) <= uiJoinTolerance;
     };
 
+    bool startNewSubpath = false;
     for (RS_Entity* entity : *polyline) {
         switch (entity->rtti()) {
             case RS2::EntityLine: {
                 const QPointF start = toGuiPointF(entity->getStartpoint());
-                if (!(penHasDashPattern() && continuesPath(start)))
+                if (startNewSubpath || !penHasDashPattern() || !continuesPath(start))
                     path.moveTo(start);
                 path.lineTo(toGuiPointF(entity->getEndpoint()));
+                startNewSubpath = false;
                 break;
             }
             case RS2::EntityArc: {
                 auto* arc = static_cast<RS_Arc*>(entity);
                 drawArcEntity(arc, path);
+                startNewSubpath = true;
                 break;
             }
             // well, actually this is just for fonts.. better to have separate entity for this. fixme - change latter
@@ -1457,6 +1460,7 @@ void RS_Painter::drawEntityPolyline(const RS_Polyline* polyline) {
                 else {
                     drawEllipseUI(uiCenter, {uiMajorRadius, uiMinorRadius}, toWorldAngleDegrees(data.angleDegrees));
                 }
+                startNewSubpath = true;
                 break;
             }
             default: LC_ERR << "Polyline may contain lines/arcs only: found rtti() =" << entity->rtti();

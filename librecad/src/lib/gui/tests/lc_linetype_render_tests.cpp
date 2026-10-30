@@ -338,16 +338,18 @@ int litColumn(const QImage& image, const int fromRow, const int toRow) {
 }
 
 // One entity drawn into a white image at factor 4, so a 12-unit dash is 48 px.
-QImage renderEntityImage(RS_Entity& entity) {
+QImage renderEntityImage(RS_Entity& entity, RS_Graphic* graphic = nullptr) {
     LC_GraphicViewport viewport;
     viewport.setSize(640, 480);
     viewport.setOffsetAndFactor(0, 380, 4.0);
+    if (graphic) viewport.setDocument(graphic);
 
     QImage image(640, 480, QImage::Format_RGB32);
     image.fill(Qt::white);
     RS_Painter painter(&image);
     LineTypeViewRenderer renderer(&viewport, &image);
     renderer.setBackground(RS_Color(Qt::white));
+    if (graphic) renderer.updateGraphicRelatedSettings(graphic);
     renderer.setupPainter(&painter);
     painter.setRenderHint(QPainter::Antialiasing, false);
     renderer.setPenForEntity(&painter, &entity, false);
@@ -1151,6 +1153,31 @@ TEST_CASE("A polyline with a gap restarts the dash phase at the gap",
     CHECK(afterGap == freshRuns);
 }
 
+TEST_CASE("A line after an arc in a dashed polyline starts fresh",
+          "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Polyline polyline;
+    polyline.addVertex(RS_Vector{0., 0.});
+    polyline.addVertex(RS_Vector{10., 0.}, 1.0);
+    polyline.addVertex(RS_Vector{20., 0.});
+    polyline.addVertex(RS_Vector{30., 0.});
+    polyline.setPen(lineTypePen(RS2::DashLine));
+
+    RS_Line fresh{RS_Vector{20., 0.}, RS_Vector{30., 0.}};
+    fresh.setPen(lineTypePen(RS2::DashLine));
+
+    const QImage freshImage = renderEntityImage(fresh);
+    const QImage polylineImage = renderEntityImage(polyline);
+    const int row = litRow(freshImage, 80, 120);
+    const auto afterArc = litRuns(polylineImage, row, 80, 120);
+    const auto freshRuns = litRuns(freshImage, row, 80, 120);
+    INFO("after arc: " << describeRuns(afterArc));
+    INFO("fresh line: " << describeRuns(freshRuns));
+    REQUIRE_FALSE(freshRuns.empty());
+    CHECK(afterArc == freshRuns);
+}
+
 TEST_CASE("A dashed polyline keeps one phase around a corner",
           "[gui][pen][linetype]") {
     (void)lc::test::application();
@@ -1218,6 +1245,31 @@ TEST_CASE("A solid polyline is drawn as before", "[gui][pen][linetype]") {
     const auto polylineRuns = litRuns(polylineImage, row);
     REQUIRE_FALSE(lineRuns.empty());
     INFO("solid polyline: " << describeRuns(polylineRuns));
+    INFO("single line: " << describeRuns(lineRuns));
+    CHECK(polylineRuns == lineRuns);
+}
+
+TEST_CASE("Contiguous segments of a named-line-type polyline keep one dash phase",
+          "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addLineType(graphic, "DASHEDM", {12., -6.});
+
+    RS_Polyline polyline = twoSegments(RS2::SolidLine);
+    polyline.setPen(namedPen("DASHEDM"));
+    RS_Line line{RS_Vector{0., 0.}, RS_Vector{20., 0.}};
+    line.setPen(namedPen("DASHEDM"));
+
+    const QImage lineImage = renderEntityImage(line, &graphic);
+    const QImage polylineImage = renderEntityImage(polyline, &graphic);
+    const int row = litRow(lineImage);
+    const auto lineRuns = litRuns(lineImage, row);
+    const auto polylineRuns = litRuns(polylineImage, row);
+    REQUIRE_FALSE(lineRuns.empty());
+    REQUIRE(lineRuns.size() >= 2);
+    INFO("named polyline: " << describeRuns(polylineRuns));
     INFO("single line: " << describeRuns(lineRuns));
     CHECK(polylineRuns == lineRuns);
 }
