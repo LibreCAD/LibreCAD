@@ -3194,12 +3194,17 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   DWG/DXF matrices with LibreDWG and ACadSharp. On code-equivalent head
   `c0438532b`, Windows ARM64 job `123816799173` passed all bounded tests and
   relocated-worker checks. The old workflow `40979668978` was canceled before
-  Linux/x64 completed. New head `7bd61bd24` is running workflow `40998099806`
-  across Linux, Windows x64 and ARM64 with the Linux Release configuration; as
-  of W180, Linux and Windows x64/ARM64 are in their bounded-test steps, with
-  all three configure/build steps successful; the active-job API has not
-  surfaced terminal logs/results. The CTest selector includes source identity. Pixi workflows
-  `40979669043` and `40998099821` passed on all five platforms. W175 aligns the
+  Linux/x64 completed. Product source `7bd61bd24` remains under DWG/DXF workflow
+  `40998099806`; W180 records all three platform tests active after successful
+  builds. The W176-W180 roadmap-only commits are now on PR head
+  `498a5deee690187a50ad776ad2e5df63fc51f1c5`; exact-head DWG/DXF dispatch
+  `41003855350` is now active on the current head, and exact-head Pixi
+  `41003830885` is active. The older DWG/DXF run was canceled during its test
+  step by the concurrency handoff. Its partial logs show CTest 23/23 and
+  `[sync-api]` / `[creation-worker]` passes (219 / 318 assertions) on all
+  platforms, but no terminal workflow result. Prior Pixi runs `40979669043` and
+  `40998099821` passed all five platforms. The CTest
+  selector includes source identity. W175 aligns the
   Linux bounded lane with the Windows Release configuration without reducing
   the exhaustive test set; the next exact-head run must verify it. W177/W179
   independently convert all 34 current-source DXF matrix rows through ODA; see
@@ -3228,9 +3233,12 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   current-source DXF rows through ODA, and W178 adds a fresh current-source
   qmake6 app/helper build. The c043 workflow
   `40979668978` passed Windows ARM64 and was canceled before Linux/x64 completed;
-  new-head DWG/DXF workflow `40998099806` remains active in bounded tests on
-  Linux and Windows x64/ARM64; both Windows build steps passed. Exact-head Pixi `40998099821` passed on all five
-  platforms; prior Pixi run `40979669043` also passed on all five. CodeQL
+  product-head DWG/DXF workflow `40998099806` was canceled in its test step
+  after all builds succeeded. Its partial logs report CTest 23/23, `[sync-api]`
+  219 assertions, and `[creation-worker]` 318 assertions on all platforms; the
+  cache/fault and relocated-helper lane did not finish everywhere. Current
+  PR-head exact DWG/DXF run `41003855350` and Pixi `41003830885` are active.
+  Prior Pixi runs `40998099821` and `40979669043` passed on all five platforms. CodeQL
   `40973686197` passed on the preceding
   product-equivalent head `4df7229ca`; this test-only follow-up did not trigger a
   new CodeQL run. Review scoped commits, preserve reproducible evidence and close
@@ -6987,11 +6995,40 @@ the Actions API and job-log endpoint have not supplied terminal output yet, so
 no test or worker-install result is claimed for these lanes. Exact-head Pixi
 workflow `40998099821` passed all five platform jobs.
 
-No product code changed for this checkpoint. Keep the PR head at
-`7bd61bd24ba729d779822928d818c3a93cbc4938` until the three DWG/DXF jobs finish;
-then record their actual outcomes before pushing the accumulated roadmap-only
-commits. Visible GUI/external-CAD visual acceptance, deployed-package
+No product code changed for this checkpoint. At W180, the intended sequence was
+to hold the branch until the three jobs finished. W181 records the subsequent
+roadmap-only push to publish these checkpoints; the original product-head run
+was canceled during its test step, and the current-PR-head dispatch is now
+active. Visible GUI/external-CAD visual acceptance, deployed-package
 qualification and final W0-W2/R closure remain open.
+
+## 139. W181 Roadmap Published and Exact-Head Requalification Started
+
+Pushed the seven roadmap-only commits (`654d83fca` through `498a5deee`) to
+PR #3193. Verified that the PR remains open/draft at head
+`498a5deee690187a50ad776ad2e5df63fc51f1c5`; the delta from the previously
+tested product head `7bd61bd24ba729d779822928d818c3a93cbc4938` is only
+`docs/plan_offset_curve_2961.md`.
+
+The product-head DWG/DXF run `40998099806` was canceled in its bounded-test
+step after all three builds passed. Its retained logs show CTest 23/23,
+`[sync-api]` 219 assertions, and `[creation-worker]` 318 assertions on Linux,
+Windows x64 and ARM64. The Linux cache-trim failure sweep emitted recovery
+markers through the `reference-six-pair-four-critical-graph` fixture (6,501
+injection points), but cache-check was terminated; Windows cache/fault sweeps
+were also interrupted, and no relocated-helper result exists for this run.
+
+Exact-head dispatch `41003855350` is active on
+`498a5deee690187a50ad776ad2e5df63fc51f1c5`; at capture, Linux was building,
+Windows x64 was installing dependencies/configuring, and ARM64 was installing
+Boost. No bounded tests had begun in this exact-head run. Pixi `41003830885` is
+active on all five platforms. Record terminal results before declaring remote
+qualification complete.
+
+The roadmap parser remains 5/5. At this checkpoint, the exact-head CI runs have
+not completed; record their terminal outcomes before claiming remote
+qualification. Visible GUI/external-CAD visual acceptance, deployed-package
+qualification, and final W0-W2/R integration remain open.
 
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
 
