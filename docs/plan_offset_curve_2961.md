@@ -6862,6 +6862,39 @@ deployed-package acceptance, and final W0-W2/R closure remain open.
 | Exact-head Linux/Windows x64/ARM64 CI | Active; workflow `40998099806` |
 | Exact-head Pixi matrix | Active; workflow `40998099821`, five platforms |
 
+## 135. W177 Current-Source ODA Conversion Matrix
+
+Used the current-source W172 modern ASCII DXF matrix from product head
+`7bd61bd24ba729d779822928d818c3a93cbc4938`. It contains 28 initial and edited
+degree-1/degree-3 SPLINE rows across R14, R2000, R2004, R2007, R2010, R2013 and
+R2018. ODA File Converter `27.1.0.0` converted all 28 to ACAD2018 DWG with
+recursive processing and audit/repair disabled, using its documented
+command-line interface ([ODA File Converter](https://www.opendesign.com/guestfiles/oda_file_converter?language=en)).
+The conversion exited 0 and produced 28 files; all 28 signatures/readback
+headers identify `AC1032`.
+
+LibreDWG `dwgread 0.14` parsed each converted DWG to JSON. The bounded semantic
+check found exactly one SPLINE and one `LC_OFFSET_CURVE` EED marker in each of
+the 28 files. ACadSharp commit
+`3a52a52047e84670759c1f9ad3916ec3ce85ff56` independently read all 28: each had
+one modelspace SPLINE, one native marker and a valid knot count. This checks an
+external DXF-to-DWG conversion path and semantic readers; it does not establish
+LibreCAD direct-DWG writer correctness, render fidelity, or visual CAD
+acceptance. The input selection is modern ASCII DXF only; binary DXF and R12
+geometry-only rows remain outside this ODA conversion slice.
+
+| W177 artifact | Result / SHA256 |
+|---|---|
+| Current-source DXF input manifest, `/private/tmp/offset-W177-oda-output/dxf-input.sha256` | 28 files / `c171014fe11bf0175496b2b23431b6b8b5ff39c82ba618796c85f251435c3ad0` |
+| ODA AC1032 output manifest, `/private/tmp/offset-W177-oda-output/oda-dwg.sha256` | 28 files / `8ea1fbd6e40ac6978bece37a05ac59685e1f01193c3d934f131d6f9faa88b250` |
+| LibreDWG semantic summary, `/private/tmp/offset-W177-oda-output/libredwg-summary.tsv` | 28/28 AC1032; one SPLINE and marker each / `b42fa9f2036d14f2c5154f69b268bbefda8027cd1fdd7d9b217e019a67997063` |
+| ACadSharp semantic summary, `/private/tmp/offset-W177-oda-output/acadsharp-summary.tsv` | 28/28 parsed; valid knots / `0e26d6df42a9a5e5cc744b7e8eabb167a99592d93e3097172560d76e52177933` |
+| Converted DWG and per-file JSON/reader logs | `/private/tmp/offset-W177-oda-output/` |
+
+This supplements W171/W172 reader checks but does not close the direct external
+CAD display, visible GUI, deployed-package, exact-head CI, or final W0-W2/R
+gates.
+
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
 
 Regenerated the bounded DWG matrix from the current checkout's Release
