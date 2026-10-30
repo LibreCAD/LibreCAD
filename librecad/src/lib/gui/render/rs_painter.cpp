@@ -1418,7 +1418,7 @@ void RS_Painter::drawEntityPolyline(const RS_Polyline* polyline) {
     // to join subpaths: a solid pen keeps one subpath per segment, with its
     // caps and joins. The comparison is in GUI pixels, the space
     // currentPosition() lives in, with a tolerance below raster detail.
-    constexpr double uiJoinTolerance = 1e-3;
+    static constexpr double uiJoinTolerance = 1e-3;
     auto continuesPath = [&path](const QPointF& start) {
         const QPointF end = path.currentPosition();
         return std::abs(end.x() - start.x()) <= uiJoinTolerance
