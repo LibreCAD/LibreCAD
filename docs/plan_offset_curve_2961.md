@@ -3189,17 +3189,19 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   cross-platform failure coverage, deployed-helper acceptance, and final
   caller/adoption/failure acceptance. W170 passes the targeted local Debug,
   Release and ASan worker fixture suites. W171/W172 freshly qualify current-source
-  DWG/DXF matrices with LibreDWG and ACadSharp. On exact head `c0438532b`,
-  Windows ARM64 job `123816799173` passed all bounded tests and relocated-worker
-  checks; Linux and Windows x64 remain active in the combined test step under
-  workflow `40979668978`. The CTest selector includes source identity.
+  DWG/DXF matrices with LibreDWG and ACadSharp. On code-equivalent head
+  `c0438532b`, Windows ARM64 job `123816799173` passed all bounded tests and
+  relocated-worker checks. The old workflow `40979668978` was canceled before
+  Linux/x64 completed. New head `7bd61bd24` is running workflow `40998099806`
+  across Linux, Windows x64 and ARM64 with the Linux Release configuration.
+  The CTest selector includes source identity.
   Pixi workflow `40979669043` has passed on all five platforms. W175 aligns the
   Linux bounded lane with the Windows Release configuration without reducing
   the exhaustive test set; the next exact-head run must verify it. Reuse the
   qualified geometry-entry
   W157 extends the DWG/DXF matrix to build and execute `[sync-api]` on Linux and
-  Windows x64/ARM64; ARM64 passed, while the Linux and Windows x64 exact-head
-  checks remain pending before cross-platform qualification. Reuse the qualified
+  Windows x64/ARM64; the prior code-equivalent ARM64 job passed, while the new
+  exact-head Linux/x64/ARM64 run remains active. Reuse the qualified
   geometry-entry timeout/helper/client/reply
   modules; do not redo them as absent. Keep Node runner scope separate.
 - [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
@@ -3215,9 +3217,10 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   inherited behavior on a fresh `origin/master` build; do not attribute them to
   the offset changes. W170 adds targeted current-source Debug/Release/ASan worker
   fixtures and a full 6,381-case headless Release pass; W171/W172 add fresh
-  current-source cross-reader DWG/DXF matrix results. Exact-head workflow
-  `40979668978` passed Windows ARM64; Linux and Windows x64 are active, while
-  Pixi workflow `40979669043` passed on all five platforms. CodeQL
+  current-source cross-reader DWG/DXF matrix results. The c043 workflow
+  `40979668978` passed Windows ARM64 and was canceled before Linux/x64 completed;
+  new-head workflow `40998099806` and Pixi `40998099821` are active. The prior
+  Pixi run `40979669043` passed on all five platforms. CodeQL
   `40973686197` passed on the preceding
   product-equivalent head `4df7229ca`; this test-only follow-up did not trigger a
   new CodeQL run. Review scoped commits, preserve reproducible evidence and close
@@ -6798,12 +6801,11 @@ not an ASan or leak-freedom claim.
 | Cache trim allocation/cancellation sweep | PASS; 2,120 allocation failures, 20 cancellations, conic and wrapper tail checks |
 | Cache-check allocation sweep | PASS; 66,594 injection points |
 | Relocated installed-worker client | PASS; 17 cases, 3,799 assertions |
-| Linux and Windows x64 exact-head jobs | Still active in the combined bounded-test step |
+| Previous c043 Linux and Windows x64 jobs | Canceled when the corrected Release configuration was pushed; no result claimed |
 
-This closes Windows ARM64 for the current exact-head workflow, not the
-cross-platform or final W0-W2/R gates. Record the Linux and Windows x64 terminal
-results before pushing the queued roadmap commits or closing platform
-acceptance. Visible GUI and external-CAD visual checks remain open.
+The Windows ARM64 pass is code-equivalent evidence from c043; the new PR head
+must pass its own three-platform workflow before cross-platform or final W0-W2/R
+closure. Visible GUI and external-CAD visual checks remain open.
 
 ## 133. W175 Linux Bounded CI Release Configuration
 
@@ -6819,16 +6821,16 @@ Linux test failure.
 Commit `2ecef4430` sets the Linux bounded lane to `CMAKE_BUILD_TYPE=Release`.
 It retains every test target and injection point and matches the Windows build
 configuration. `actionlint .github/workflows/dwg-dxf-verify.yml` and
-`git diff --check` pass locally. The in-flight workflow `40979668978` still
-uses its original c0438532b configuration; do not report it as Release. Verify
-the new configuration on the next exact-head PR workflow after the queued
-roadmap commits are pushed.
+`git diff --check` pass locally. Workflow `40979668978` was canceled after the
+push before Linux/x64 completed; neither canceled lane is counted as a result.
+The new exact-head workflow `40998099806` on `7bd61bd24` is active and contains
+the Release configuration; verify its Linux lane from terminal logs.
 
 | W175 check | Result |
 |---|---|
 | Workflow syntax | PASS; actionlint |
 | Whitespace/error check | PASS; git diff --check |
-| Exact-head Linux Release run | Pending; requires the next PR workflow |
+| Exact-head Linux Release run | Active; workflow `40998099806` |
 
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
 
