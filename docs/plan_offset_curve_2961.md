@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W198; the chronological evidence ledger follows): planned product
+Current status (W199; the chronological evidence ledger follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check audit
 are present and locally qualified. This includes the shipped native geometry
 worker, Modify Offset creation/repeat, native Trim preview/commit, staged GUI
@@ -38,22 +38,25 @@ or errors, 75 skips not qualified), deterministic full-selector ASan requalifica
 (1,027 declarations / 1,354 JUnit cases, zero failures or errors, one legacy-DXF
 skip; leak detection disabled), worker CTest 9/9, and the Node validation suite
 412/412. PR #3193 head is the roadmap-only commit
-`2c4f26b378f201135227403cbb0575e510f88550`, based on master
+`f04875cba404bd1ff6ecb2f2d0d8b50911d5471c`, based on master
 `d66b7e1379990224a6a897105683463692b05549`. At that head, Text Foundations
-passed both headless modes; Pixi Builds, CodeQL analysis, and DWG/DXF Linux plus
-Windows x64/ARM64 checks are in progress. CodeQL Security scan is skipped by
-workflow policy. The qmake6 application and native worker have now been rebuilt
-from this exact worktree; the build succeeds. A relocated client-protocol run
-against that worker passes 4,285 assertions / 17 cases, and the CMake worker
-CTest set passes 9/9. Fresh macOS UI acceptance remains unqualified: the rebuilt
-bundle has a new ad-hoc code signature and CUA is awaiting macOS approval.
+Headless (OFF) passed; Headless (ON), Pixi Builds, CodeQL analysis, and DWG/DXF
+Linux plus Windows x64/ARM64 checks are in progress or queued. CodeQL Security
+scan is skipped by workflow policy. The qmake6 application and native worker
+were rebuilt from the exact pre-W198 documentation head; the build succeeds. A
+relocated client-protocol run against that worker passes 4,285 assertions / 17
+cases, and the CMake worker CTest set passes 9/9. Independent FreeCAD visual
+review now passes for the W193 DXF artifact only. Fresh macOS UI acceptance
+remains unqualified: the rebuilt bundle is not yet authorized in macOS Device
+Control and Data Access, so CUA cannot control it.
 
 The PR is open, draft, mergeable, and requires an approving review. Acceptance
 still open: exact-head workflows, complete visible GUI interaction (including
 active-preview cancellation and refusal), retained screenshot/display-DPR
-evidence, external-CAD visual review, signed/deployed package qualification,
-broader W0-W2 platform acceptance, and final R integration. No new visible-app
-pass is claimed for the rebuilt bundle. Direct AC1021
+evidence, independent CAD checks for outputs beyond the W193 DXF, signed/deployed
+package qualification, broader W0-W2 platform acceptance, and final R
+integration. No new LibreCAD visible-app pass is claimed for the rebuilt bundle.
+Direct AC1021
 ACadSharp parsing is also unqualified because that reader throws on negative
 `ComprLen` before entity decoding; LibreDWG parses the current AC1021 matrix.
 
@@ -7729,3 +7732,31 @@ W0-W2 platform acceptance, exact-head remote checks, reviewer approval and final
 R integration open. After macOS approval, resume the GUI matrix on the rebuilt
 bundle and record outcomes separately; do not infer GUI success from worker
 tests or the older in-session app.
+
+## 157. W199 Independent FreeCAD Visual Review of W193 DXF
+
+Opened `/private/tmp/offset-W193-multi-entity.dxf` in FreeCAD 1.1.4 using its
+DXF import path and the default individual-Part-shape import mode. FreeCAD
+reported approximately 90 geometric entities and rendered both source ellipses
+with all four offset contours (six visible loops total). The test DXF remained
+byte-identical at SHA256
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`. Screenshot
+was observed in-session at 1800x977; DPR was unavailable and no standalone
+image receipt was retained. The source document was not saved from FreeCAD.
+
+| W199 check | Result |
+|---|---|
+| Independent DXF import | PASS; FreeCAD 1.1.4 accepted the W193 DXF |
+| Independent visual rendering | PASS; 2 ellipse sources and 4 offset contours visibly rendered |
+| Source artifact integrity | PASS; SHA256 unchanged |
+| Screenshot/DPR receipt | Partial; 1800x977 observed in-session, not retained; DPR unavailable |
+| Semantic XDATA/editability validation | OPEN; FreeCAD was used as a visual CAD check only |
+| LibreCAD fresh-build GUI checks | OPEN; macOS Device Control and Data Access approval remains pending |
+| Product-source changes | None; external visual acceptance checkpoint |
+
+W199 closes independent visual rendering for this one DXF artifact only. It does
+not validate LibreCAD-specific XDATA semantics, native editability in FreeCAD,
+external DWG/AC1032 rendering, active-preview cancellation/refusal in LibreCAD,
+retained screenshot/DPR evidence, deployed bundles, remaining W0-W2 gates, or
+final R integration. Do not treat a successful DXF display as a full feature or
+roadmap PASS.
