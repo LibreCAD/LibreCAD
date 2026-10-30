@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W211; the chronological evidence ledger follows): planned product
+Current status (W212; the chronological evidence ledger follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check audit
 are present and locally qualified. This includes the shipped native geometry
 worker, Modify Offset creation/repeat, native Trim preview/commit, staged GUI
@@ -70,23 +70,25 @@ and confirmed the W193 source hash unchanged. W210 rebuilt the CMake Release
 test executable from this worktree and passed the focused creation-worker,
 portable preview-cache and real helper-process suites (19 cases, 2,711
 assertions total). The full Node validation suite passed 412/412, and the
-updated roadmap/refusal inventory suite passed 99/99 with W209-W211 present.
+updated roadmap/refusal inventory suite passed 99/99 with W209-W212 present.
 
-The current PR head before this receipt is
-`0e6b8b1425becb9e1b036446e27f58da40df1bdf`; changes since the tested product
+W212 adds a selected-ellipse Shift+F10 context-menu probe and a Preview screenshot
+capture attempt; neither produced a retained menu/image. The W193 document was
+left unchanged. The current PR head before this receipt is
+`d3882fe578de386289e34ea3247e3380f358672b`; changes since the tested product
 source head `6e1dc8b3fd69ba40a81789a00959eb5db230fb07` are roadmap receipts only.
-At that head Headless OFF passed; Headless ON, C++ analysis, DWG/DXF, Windows
-x64/ARM and Pixi platform workflows were pending without results. Security scan
-is skipped by workflow policy. The PR is open and draft, mergeability is
-unknown, and an approving review is required.
+Headless ON/OFF passed on this head; C++ analysis, DWG/DXF, Windows x64/ARM and
+Pixi workflows remain pending. Security scan is skipped by workflow policy.
+The PR is open and draft, mergeability is unknown, and an approving review is
+required.
 
 Acceptance remains open: the rest of the GUI refusal and interaction matrix
-(including context menus, which did not open through the tested right-click and
-Control-click paths), retained screenshot/display-DPR evidence, independent CAD
+(including context menus, which did not open through right-click, Control-click,
+or Shift+F10), retained screenshot/display-DPR evidence, independent CAD
 visual checks for outputs beyond W193/W163, signed/deployed package
 qualification, broader W0-W2 platform acceptance, and final R integration. The mirrored external
 display reports 1920x1080 at 75 Hz, but Qt DPR was not measured and screenshots
-were observed in-session only. W203-W204, W209 and W210 are scoped visible/test
+were observed in-session only. W203-W204 and W209-W212 are scoped visible/test
 passes, not full GUI acceptance.
 Direct AC1021
 ACadSharp parsing is also unqualified because that reader throws on negative
@@ -8194,3 +8196,36 @@ W211 closes one independent visual rendering check for the W163 AC1032 DXF.
 It does not qualify DWG rendering, the W171-derived DXF, other entity/source
 types, LibreCAD context menus, retained screenshot/DPR evidence, deployed
 packages, remaining platform acceptance, or final R integration.
+
+## 170. W212 Keyboard Context Menu and Screenshot Capture Retry
+
+On the approved isolated LibreCAD app, selected an ellipse in W193 and pressed
+Shift+F10. No context menu appeared; focus moved to the command input. Escape
+restored the Default action with zero selected entities. Earlier right-click
+and Control-click attempts likewise produced no menu. The source file remains
+unchanged at SHA256
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+Tried macOS screenshot shortcuts and Preview's File > Take Screenshot > From
+Window path to retain the W163 FreeCAD view. No screenshot file was produced.
+The capture attempt surfaced FreeCAD's existing Document Recovery dialog for
+W193; Cancel was selected without starting recovery or cleanup, after which the
+computer-use bridge reported that FreeCAD had quit. No document or preference
+was saved or changed. The earlier W211 visual observation remains valid, but
+its screenshot and display-DPR evidence remain partial.
+
+| W212 check | Result |
+|---|---|
+| Selected-entity Shift+F10 context menu | OPEN; no menu; focus moved to command input |
+| Cleanup | PASS; Escape returned LibreCAD to Default with zero selected entities |
+| W193 integrity | PASS; SHA256 unchanged; no drawing saved or edited |
+| Retained screenshot | OPEN; macOS/Preview capture attempts produced no file |
+| FreeCAD recovery data | UNTOUCHED; no recovery or cleanup started; app quit after Cancel |
+| Screenshot / display-DPR | OPEN; no standalone image retained and DPR unavailable |
+| Roadmap parser/refusal suite | PASS; 99/99 with W212 present |
+| Current PR head `d3882fe` | Headless ON/OFF PASS; Analyze, DWG/DXF, Windows x64/ARM and Pixi pending; Security scan skipped by workflow policy |
+| PR state | OPEN; draft, review required, merge blocked |
+| Product-source changes | None; visible validation and roadmap receipt only |
+
+W212 does not close context-menu, screenshot/DPR, broader GUI refusal and
+interaction, external-CAD, deployed-package, W0-W2 platform or final R acceptance.
