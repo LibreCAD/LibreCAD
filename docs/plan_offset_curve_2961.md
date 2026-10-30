@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W196; the chronological evidence ledger follows): planned product
+Current status (W198; the chronological evidence ledger follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check audit
 are present and locally qualified. This includes the shipped native geometry
 worker, Modify Offset creation/repeat, native Trim preview/commit, staged GUI
@@ -37,18 +37,23 @@ W196 records a full merged-source CMake Release run (6,380 cases, zero failures
 or errors, 75 skips not qualified), deterministic full-selector ASan requalification
 (1,027 declarations / 1,354 JUnit cases, zero failures or errors, one legacy-DXF
 skip; leak detection disabled), worker CTest 9/9, and the Node validation suite
-412/412. The current PR head is roadmap-only `71ddb74ef14ab0540ba45c4b11fa1535e9c0ef83`,
-product-equivalent to merge head `8b139998c`. At that exact head, Text Foundations
+412/412. PR #3193 head is the roadmap-only commit
+`2c4f26b378f201135227403cbb0575e510f88550`, based on master
+`d66b7e1379990224a6a897105683463692b05549`. At that head, Text Foundations
 passed both headless modes; Pixi Builds, CodeQL analysis, and DWG/DXF Linux plus
-Windows x64/ARM64 checks are still running. CodeQL Security scan is skipped by
-workflow policy.
+Windows x64/ARM64 checks are in progress. CodeQL Security scan is skipped by
+workflow policy. The qmake6 application and native worker have now been rebuilt
+from this exact worktree; the build succeeds. A relocated client-protocol run
+against that worker passes 4,285 assertions / 17 cases, and the CMake worker
+CTest set passes 9/9. Fresh macOS UI acceptance remains unqualified: the rebuilt
+bundle has a new ad-hoc code signature and CUA is awaiting macOS approval.
 
 The PR is open, draft, mergeable, and requires an approving review. Acceptance
 still open: exact-head workflows, complete visible GUI interaction (including
 active-preview cancellation and refusal), retained screenshot/display-DPR
 evidence, external-CAD visual review, signed/deployed package qualification,
-broader W0-W2 platform acceptance, and final R integration. CUA continues to
-report the native Mac locked; no new visible-app pass is claimed. Direct AC1021
+broader W0-W2 platform acceptance, and final R integration. No new visible-app
+pass is claimed for the rebuilt bundle. Direct AC1021
 ACadSharp parsing is also unqualified because that reader throws on negative
 `ComprLen` before entity decoding; LibreDWG parses the current AC1021 matrix.
 
@@ -7680,3 +7685,47 @@ were still in progress; CodeQL Security scan was skipped by workflow policy.
 Native macOS controls remained unavailable because CUA reported the host locked.
 W197 is a roadmap and validation checkpoint only; it does not close any of those
 external acceptance gates.
+
+## 156. W198 Exact-Head qmake6 Rebuild and Worker Requalification
+
+On exact worktree head `2c4f26b378f201135227403cbb0575e510f88550`, rebuilt the
+qmake6 Release application and bundled worker with the worktree-local
+out-of-source build at `tmp/offset-2961-qmake-native` (`qmake6` / Qt 6.12.0,
+macOS arm64, `make -j4`). The build exited successfully. The unmodified build
+executable SHA256 values are application
+`442b28e47622ca5a14b81731875842440ee2da7132a7c55dca879c8e747fada0` and worker
+`7f1d732ebb33cd4bfc24d8d2070b762958cbf5ce43bab4f15bff91e11ae8b760`. The
+isolated app bundle was staged under `/private/tmp` and ad-hoc re-signed after
+assigning a temporary bundle identifier. Its signed executable hashes differ
+from the unmodified build artifacts, as expected after signing.
+
+The freshly built worker was placed beside the existing worker-client test
+runner in a temporary app bundle. The real client protocol suite passed 4,285
+assertions across 17 cases against that worker. The current merged-source CMake
+worker test set also passed 9/9. No tracked product source changed. CUA can see
+the rebuilt LibreCAD process, but has not obtained control; macOS approval for
+the refreshed executable/signature is still pending. No new GUI pass, image
+receipt, or refusal/cancellation result is claimed from this build.
+
+| W198 check | Result |
+|---|---|
+| Exact-head qmake6 Release application and worker build | PASS; `make -j4`, macOS arm64 |
+| qmake application / worker SHA256 | PASS; `442b28e4...fada0` / `7f1d732e...e8b760` before staging/signing |
+| Client protocol suite against fresh qmake worker | PASS; 4,285 assertions / 17 cases |
+| CMake worker CTest | PASS; 9/9 |
+| Node validation suite | PASS; 412/412 on this roadmap-only head |
+| Refusal/inventory validation | PASS; 94/94, 93 obligations, 0 pending declarations, 0 production mismatches |
+| Roadmap parser tests | PASS; 5/5 |
+| Scoped DWG/DXF workflow actionlint and `git diff --check` | PASS |
+| Exact-head GitHub checks | IN PROGRESS; Text Foundations passed both modes; Pixi, CodeQL analysis, and DWG/DXF Linux/Windows x64/ARM64 in progress; CodeQL Security scan skipped by policy |
+| PR state | OPEN; draft, blocked pending required review and checks |
+| Fresh visible UI acceptance | OPEN; waiting for macOS approval of the rebuilt test app; no pass claimed |
+| Product-source changes | None; build and acceptance checkpoint |
+
+W198 closes exact-head qmake build and fresh-worker protocol qualification only.
+Keep visible active-preview cancellation/refusal, retained screenshot/display-DPR
+evidence, external-CAD visual review, deployed-package qualification, remaining
+W0-W2 platform acceptance, exact-head remote checks, reviewer approval and final
+R integration open. After macOS approval, resume the GUI matrix on the rebuilt
+bundle and record outcomes separately; do not infer GUI success from worker
+tests or the older in-session app.
