@@ -7544,6 +7544,17 @@ and successful post-commit recovery, **not** cancellation of an active preview.
 The CUA bridge serialized the cancellation input after the held click released,
 so an in-preview Escape remains unqualified.
 
+Separately, the existing ACadSharp inspector built against revision
+`3a52a52047e84670759c1f9ad3916ec3ce85ff56` parsed W193 with exit code 0:
+six modelspace entities, four SPLINE carriers, and four owned markers. Each
+carrier is degree 3 with 88 control points and 92 knots, and ACadSharp reports
+valid knot cardinality. The product artifact was generated from the current
+qmake6 source containing product fix `4f32a89c41be3ff55f8cb78c20a60dea29df8be2`.
+This is independent parsing, not an external application's visual/render
+check. Inspector and ACadSharp assembly SHA256 values are respectively
+`de1f94078cba4f989e95ad60b2005083b1e116f1499758695cb6a1fafcf8e62e` and
+`b10896a9f13149c6ebd2a901dd4574bf62be985707471f8ae5bf5fd97696f324`.
+
 | W194 check | Result |
 |---|---|
 | Cancel Modify Offset before direction selection | PASS; returned to Default with no selection |
@@ -7551,12 +7562,13 @@ so an in-preview Escape remains unqualified.
 | Cancel while preview is active | OPEN; Escape arrived after button release/operation completion |
 | Undo after the held-click completion | PASS; Undo became disabled after restoring saved state |
 | W193 output integrity | PASS; unchanged SHA256 and entity/marker counts |
+| Independent ACadSharp DXF parse | PASS; 6 entities, 4/4 native SPLINE markers, all knot counts valid |
 | Roadmap parser/inventory | PASS; parser 5/5; H6 refusal/inventory 94/94, 93 obligations, no pending or mismatches |
 | Screenshot/DPR receipt | Partial; preview observed in-session, not retained; DPR unavailable |
 | Product-source changes | None; documentation-only validation checkpoint |
 
 W194 does not close preview cancellation or refusal. Continue with a reliable
 in-preview cancellation input, explicit invalid/unsupported-input refusal,
-independent external-CAD inspection, installed/deployed-bundle qualification,
+external-CAD visual/render inspection, installed/deployed-bundle qualification,
 retained screenshot/DPR receipts, remaining platform-specific W0-W2 gates,
 PR conflict resolution, and final R integration.
