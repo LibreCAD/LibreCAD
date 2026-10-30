@@ -37,12 +37,12 @@ W196 records a full merged-source CMake Release run (6,380 cases, zero failures
 or errors, 75 skips not qualified), deterministic full-selector ASan requalification
 (1,027 declarations / 1,354 JUnit cases, zero failures or errors, one legacy-DXF
 skip; leak detection disabled), worker CTest 9/9, and the Node validation suite
-412/412. PR #3193 current committed head is
+412/412. The W205 product-validation baseline was
 `cdafedf9f70717e0d6460ba66ff5b157d26df5b3`, based on master
-`d66b7e1379990224a6a897105683463692b05549`. At the latest check, Headless ON
-passed; Headless OFF, C++ analysis, fast DWG/DXF verification, Windows x64 and
-ARM64 verification, and Pixi platform builds are pending. The CodeQL Security
-scan is skipped by workflow policy. The qmake6 application
+`d66b7e1379990224a6a897105683463692b05549`. On that head, Headless ON passed;
+Headless OFF, C++ analysis, fast DWG/DXF verification, Windows x64 and ARM64
+verification, and Pixi platform builds were pending. The CodeQL Security scan
+was skipped by workflow policy. The qmake6 application
 and native worker were rebuilt from the exact pre-W198 documentation head; the
 build succeeds. A relocated client-protocol run against that worker passes
 4,285 assertions / 17 cases, and the CMake worker CTest set passes 9/9. The
@@ -56,7 +56,9 @@ rendered view: an earlier accessibility-driven confirmation crashed, and a
 keyboard-driven retry recognized about 233 entities but left the viewport blank
 after Fit All and returned to FreeCAD's first-start page. Independent FreeCAD
 visual review of the separate W193 DXF remains recorded above; it does not close
-that W171-derived visual check.
+that W171-derived visual check. W206 verifies the isolated app is controllable
+and the unchanged W193 source still renders; its documentation-only PR head
+`417d6b4ec653be2cc3089eee996e9bc5708096fe` has no checks reported yet.
 
 The PR is open and draft, blocked on required checks/review, and requires an
 approving review. Acceptance remains open: exact-head workflows, the rest of the
@@ -7955,3 +7957,30 @@ the importer, view state, or the uncompleted first-start flow.
 | Retained screenshot / display-DPR | OPEN; observations were in-session only |
 | PR state | OPEN; draft, merge state blocked, approving review required |
 | Product-source changes | None; external-visual validation checkpoint |
+
+## 164. W206 Restored LibreCAD Visibility
+
+After the user approved macOS control access for the isolated test bundle,
+rechecked its active W193 drawing. The screenshot visibly shows all six ellipse
+contours. Accessibility state reports `Current Action: Default`, `No Selection`,
+and zero selected entities. No command, save, preference change, or drawing edit
+was performed during this recheck. The on-disk W193 DXF SHA256 remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+This re-verifies display and idle state only; W203 remains the evidence for
+active-preview Escape cancellation and W204 for text-only refusal. The screenshot
+was observed in-session but not retained as a standalone artifact, and display
+DPR remains unavailable. The FreeCAD W171-derived DXF view is still open and
+unverified.
+
+| W206 check | Result |
+|---|---|
+| LibreCAD app access | PASS; isolated app controllable after user approval |
+| W193 drawing visibility | PASS; six ellipse contours visible |
+| Idle/editor state | PASS; Default action, no selection, zero selected entities |
+| W193 artifact integrity | PASS; SHA256 unchanged |
+| New interactive behavior or source changes | NONE; visual recheck only |
+| Screenshot/DPR receipt | OPEN; screenshot observed in-session only, DPR unavailable |
+| Exact PR-head workflows | NOT REPORTED for documentation head `417d6b4ec653be2cc3089eee996e9bc5708096fe` |
+| PR state | OPEN, draft; approving review required |
+| Product-source changes | None; visible-app validation/documentation checkpoint |
