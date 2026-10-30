@@ -6753,17 +6753,52 @@ including restoring mtime and asserting that change-time detects the rewrite.
 |---|---|
 | Local macOS CMake build of `librecad_tests` | PASS |
 | Local `librecad_offset_import_identity_tests` | PASS; 1/1 |
-| Windows ARM64 exact-head rerun | Workflow `40979668978`, build complete; combined bounded-test step active, source-identity CTest result pending |
+| Windows ARM64 exact-head rerun | PASS; workflow job `123816799173`, source-identity CTest passed in 23/23 CTest tests |
 | Windows x64 exact-head format lane | Workflow `40979668978`, build complete; combined bounded-test step active |
 | Linux exact-head format lane | Workflow `40979668978`, build complete; combined bounded-test step active |
 | Pixi cross-platform build | PASS; workflow `40979669043`, all five OS/architecture jobs |
 | Roadmap inventory/parser | PASS; 5/5 after this checkpoint edit |
 
-W173 is a test-fixture portability correction only. Do not close Windows
-source-identity acceptance until the new exact-head ARM64 selector passes.
+W173 is a test-fixture portability correction only. The exact-head Windows
+ARM64 source-identity selector now passes; cross-platform identity acceptance
+remains pending Windows x64 and Linux.
 Visible LibreCAD UI acceptance remains open. The user said they will approve the
 test app, but this task exposes no computer-use control tool; no alternate UI
 path was used.
+
+## 132. W174 Exact-Head Windows ARM64 Worker and Format Qualification
+
+The Windows ARM64 job in exact-head workflow `40979668978` completed
+successfully at `2026-10-30T02:45:48Z` (`123816799173`). Its configure/build,
+combined test step, and installed-worker exercise all passed. The passing CTest
+set contained 23/23 tests, including `librecad_offset_import_identity_tests`.
+Additional direct selectors passed: synchronous import (`[sync-api]`, 219
+assertions), Modify Offset creation/repeat (`[lc-offsetcurve][creation-worker]`,
+318 assertions in 11 cases), and the standalone worker-client suite against the
+relocated installed helper (17 cases, 3,799 assertions).
+
+Both allocation-failure processes also completed successfully on ARM64. The
+stored-cache trim sweep covered four directions, 2,120 staging allocation
+failures, 20 cancellation points, four conic allocation failures, four conic
+cancellation points, and the wrapper's last-successful-allocation cancellation.
+The cache-check sweep recovered all 66,594 allocation-injection points across
+its fixtures. This is full Release fault-sweep evidence on Windows ARM64; it is
+not an ASan or leak-freedom claim.
+
+| W174 lane | Result |
+|---|---|
+| Configure and bounded test-target build | PASS; Windows ARM64 |
+| CTest | PASS; 23/23, including source identity |
+| Synchronous import and creation/repeat selectors | PASS; 219 and 318 assertions |
+| Cache trim allocation/cancellation sweep | PASS; 2,120 allocation failures, 20 cancellations, conic and wrapper tail checks |
+| Cache-check allocation sweep | PASS; 66,594 injection points |
+| Relocated installed-worker client | PASS; 17 cases, 3,799 assertions |
+| Linux and Windows x64 exact-head jobs | Still active in the combined bounded-test step |
+
+This closes Windows ARM64 for the current exact-head workflow, not the
+cross-platform or final W0-W2/R gates. Record the Linux and Windows x64 terminal
+results before pushing the queued roadmap commits or closing platform
+acceptance. Visible GUI and external-CAD visual checks remain open.
 
 ## 129. W171 Current-Source DWG Matrix and Independent Readers
 
