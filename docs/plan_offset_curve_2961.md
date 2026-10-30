@@ -7482,3 +7482,45 @@ workflows, independent external-CAD inspection, installed/deployed-bundle
 qualification, retained screenshot/DPR evidence, platform-specific W0-W2
 gates, or final R integration. The W193 queue remains these open acceptance
 items; do not infer full plan completion from the ellipse-only workflow.
+
+## 151. W193 Multi-Entity Editable Offset GUI Workflow
+
+Continued in the same isolated qmake6 GUI build with the W192 drawing open.
+Started Modify Offset again, selected both source ellipses in one invocation,
+kept `Editable Offset Curve` enabled, used a fixed distance of 0.5, and kept
+the originals. The canvas visibly showed three boundaries for each ellipse:
+the source, the earlier distance-1 offset, and the new distance-0.5 offset.
+The property selector identified the newly selected results as
+`Offset Curve (2)`, and the command returned to its default action after
+completion. Saved this additional case separately as
+`/private/tmp/offset-W193-multi-entity.dxf`; W192's artifact was not modified.
+
+The DXF 2018 ENTITIES scan reports two `ELLIPSE` source entities, four
+`SPLINE` carriers, and four `LC_OFFSET_CURVE` markers. SHA256 is
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+Closed and reopened the separately saved W193 file in the same current-source
+LibreCAD app. All six contours rendered again, and selecting a reopened
+carrier produced the native property type `Offset Curve (1)`. The GUI view was
+observed at 1920x982; DPR was unavailable and the screenshot was not retained
+as a standalone file. This confirms LibreCAD's own write/reopen path, not an
+independent CAD reader.
+
+| W193 check | Result |
+|---|---|
+| One Modify Offset invocation over two selected ellipses | PASS |
+| Two editable offset results visibly rendered; originals retained | PASS; three boundaries per source |
+| Semantic property selector | PASS; `Offset Curve (2)` |
+| Separate DXF 2018 output | PASS; 2 `ELLIPSE`, 4 `SPLINE`, 4 `LC_OFFSET_CURVE` markers |
+| LibreCAD close/reopen and semantic import | PASS; six contours render; selected carrier is `Offset Curve (1)` |
+| Artifact hash | PASS; `05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d` |
+| Roadmap/parser validation | PASS; parser 5/5, refusal-inventory 94/94; 93 obligations, 0 pending, 0 mismatches |
+| Screenshot/DPR receipt | Partial; 1920x982 observed in-session, not retained; DPR unavailable |
+| Product-source changes | None; documentation-only validation checkpoint |
+
+W193 closes the focused multi-entity create and LibreCAD reopen workflow only.
+Preview/cancel and refusal paths, independent external-CAD inspection,
+installed/deployed-bundle qualification, retained screenshot/DPR evidence,
+remaining platform-specific W0-W2 gates, PR conflict resolution, and final R
+integration remain open. The PR currently reports a conflict against master;
+the checks connector returned no statuses for the observed head, so neither
+condition is treated as a passing integration gate.
