@@ -7614,11 +7614,101 @@ that test as passed until its exit is observed.
 | Cache-check failure injection | INTERRUPTED after more than 12 minutes at full CPU to avoid blocking; no new pass claimed; the cache checker and geometry sources are unchanged from the earlier W100 Release/ASan qualification |
 | qmake6 integration build | PASS; full current-source `make -j4` completed, including the LibreCAD app and adjacent `LibreCADOffsetWorker` |
 | Whole merge whitespace check | WARN; only upstream Lao translation trailing whitespace; resolved workflow is clean |
-| Exact-head GitHub matrix | OPEN; previous PR head's five platform checks were still in progress; merge push will create the relevant new head |
+| Exact-head GitHub matrix | IN PROGRESS on merge head `8b139998c`; Text Foundations passed; Pixi Builds, CodeQL and DWG/DXF verification are running |
 | Visible UI, active-preview cancellation, refusal, external visual inspection, screenshot/DPR | OPEN; macOS lock prevents CUA access |
-| Final PR integration | IN PROGRESS; local merge resolved the master conflict, but commit/push and fresh checks remain |
+| Final PR integration | OPEN; merge conflict resolved and pushed; PR remains draft and requires approval; exact-head checks and final acceptance remain |
 
 W195 closes the stale-base/workflow-conflict slice and qualifies the installed
 worker locally. It does not close the active-preview cancellation, GUI refusal,
 external visual review, retained screenshot/DPR, remote platform matrix, or
 final PR acceptance gates.
+
+## 154. W196 Merge-Head and PR Status Refresh
+
+The W195 merge commit `8b139998c45344e00ebaf9450d93eaefe4ce87e3` is now pushed
+to PR #3193. GitHub reports the PR open, draft, and mergeable with respect to
+base `master` at `d66b7e1379990224a6a897105683463692b05549`; merge is still
+blocked by the draft/review requirement and unfinished checks. The PR
+description now includes a W195 summary with local evidence and explicit limits.
+
+For exact merge head `8b139998c45344e00ebaf9450d93eaefe4ce87e3`, Text
+Foundations run `41089738559` passed both headless OFF and ON; Pixi Builds
+`41089738650` passed all five platform jobs; and CodeQL run `41089738642`
+passed analysis (its security-scan subjob is skipped by workflow policy).
+DWG/DXF verification `41089738574` passed the Linux fast lane, including the
+relocated-worker smoke; the Windows x64 and ARM64 test lanes remain in
+progress. These remote results are pinned to the merge head, not a later
+roadmap-only checkpoint. Record terminal outcomes for the Windows jobs before
+updating the exact-head matrix. Post-merge, the complete Node validation suite
+passes 412/412; the refusal inventory passes 94/94 (93 obligations, zero
+pending declarations, zero production mismatches), and its separate parser
+tests pass 5/5. `actionlint .github/workflows/dwg-dxf-verify.yml` passes. A whole-repository
+`actionlint` invocation remains non-clean because inherited
+`.github/workflows/build-all.yml` contains ShellCheck warnings and a custom
+`windows-11-vs2026-arm` label unknown to the locally installed actionlint; that
+workflow is outside this offset slice and was not changed. The merge-source local results and the
+cache-check interruption are recorded in W195. The full merged-source CMake
+Release `librecad_tests` run has also completed: 6,380 cases, 10,345,807
+reported assertions, zero failures/errors, and 75 skipped cases. Skips remain
+unqualified and are not converted into passes; the exact JUnit receipt is
+`/private/tmp/offset-W196-full-catch.xml` (SHA256
+`049a099663d8ad3d79f07c6a4426a7d75c52fad98fb7a790f0f9db8d2f396bfb`). The
+command was `QT_QPA_PLATFORM=offscreen
+/private/tmp/offset-2961-r-release/librecad_tests --reporter junit --out
+/private/tmp/offset-W196-full-catch.xml`; the merged-source build is at
+`/private/tmp/offset-2961-r-release`.
+
+The first full-selector CMake ASan run used Catch2's default randomized order
+and did not pass: JUnit recorded three failing cases (five failure records),
+one suite-level error and the existing legacy-DXF skip. The failed cases were
+`F Trim context maps native owners and generated chords while preview prepares
+plain fragments`, `Staged offset import requires explicit partial-read
+acceptance`, and `G matrix alternating format chains preserve edits through
+every modern version/original degree 1`. No AddressSanitizer diagnostic was
+present in the retained log. Each case passed alone, and the three passed
+together in one process (12,312 assertions; log SHA256
+`438b258d3e8d3da8c7e44bb35833d9d50c2af0e551678fbfa7a8a70976529604`). An
+initial four-shard diagnostic omitted a fixed order/seed; Catch2 warned that
+the shards could overlap and leave gaps, so those reports are not qualification
+evidence. The complete selector was then rerun as four deterministic
+`--order lex` shards with `ASAN_OPTIONS=detect_leaks=0`. All 1,027 discovered
+declarations / 1,354 JUnit cases passed: 3,999,717 assertions, zero failures
+or errors, and one existing legacy-DXF exporter skip. This deterministic full
+rerun includes all three formerly failing cases. The first failure remains
+recorded as a non-reproduced broad-run anomaly; the skip remains unqualified,
+and leak detection was disabled. Exact shard receipts:
+
+| Lexical shard | Cases | Assertions | Failures/errors/skips | JUnit SHA256 |
+|---|---:|---:|---|---|
+| 0/4 | 275 | 879,709 | 0/0/0 | `a1788ba2901db1f866e2b4c11ef73fafbe0666fcccc3b744a46b392fd1d937bd` |
+| 1/4 | 472 | 285,756 | 0/0/0 | `3530bab980b07d7dc8aef310824edd9e25d1d0733890661dd802361c1c290bc4` |
+| 2/4 | 279 | 1,923,414 | 0/0/0 | `130259e88bcd7c734d9756434cbeb65be022c2b17bc1270e75ce1017698def31` |
+| 3/4 | 328 | 910,838 | 0/0/1 | `350644ed8da58bb7b0e15bc01e887463f28b85e94404e09e1f22750268a28935` |
+
+The original randomized-run JUnit/log receipts are
+`/private/tmp/offset-W196-asan-native.xml` (SHA256
+`dbf2d4662b4e8265bb5ec81241d045ae49b1dcb9bebfe1aa6cc7c84b85dbe105`) and
+`/private/tmp/offset-W196-asan-native.log` (SHA256
+`1991a7096a53e38ca623bcdd3eb0047c3f946924df432c3d1b1008a947e7f686`). The
+ASan worker CTest also passes 9/9, including protocol, client, timeout and
+process-lifecycle cases; all ASan runs used `detect_leaks=0`.
+
+| W196 check | Result |
+|---|---|
+| Merge conflict and branch head | PASS; merge `8b139998c` pushed; PR reports mergeable against current `master` |
+| PR description | PASS; W195 evidence and limitations visible in the updated description |
+| Exact-head Text Foundations | PASS; headless OFF and ON both passed |
+| Exact-head Pixi Builds | PASS; all five platform jobs passed |
+| Exact-head CodeQL | PASS; analysis passed; Security scan skipped by policy |
+| Exact-head DWG/DXF verification | PARTIAL; Linux fast lane and relocated helper passed; Windows x64/ARM64 lanes still running |
+| Roadmap validation after merge | PASS; Node suite 412/412; refusal inventory 94/94 plus parser 5/5; scoped DWG/DXF actionlint passes. Whole-repository actionlint still reports inherited `build-all.yml` warnings/custom runner label. |
+| Full merged-source CMake Release Catch suite | PASS; 6380 cases, 10,345,807 reported assertions, zero failures/errors, 75 skips (not qualified) |
+| Current-source ASan worker/caller requalification | PASS with limits; worker CTest 9/9; deterministic four-shard full `[lc-offsetcurve]` selector 1027 declarations / 1354 cases / 3,999,717 assertions, zero failures/errors, one legacy-exporter skip. A prior randomized whole-process run failed at three cases but all passed in deterministic full coverage and focused reruns; leak detection disabled. |
+| Required approval / draft state | OPEN; PR is draft and requires an approving review |
+| Visible, external-CAD and deployed acceptance | OPEN; native macOS app controls remain unavailable while the Mac is locked |
+
+W196 corrects integration status only and changes no product code. Keep the
+roadmap implementation incomplete until the remaining W0-W2 platform/deployment
+gates and R rows have evidence. Continue with locally executable, bounded
+acceptance work while remote checks run; do not substitute a successful build
+for GUI cancellation/refusal or independent CAD visual review.
