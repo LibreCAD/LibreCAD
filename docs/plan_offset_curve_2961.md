@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W229; chronological evidence follows): planned product
+Current status (W230; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -49,10 +49,14 @@ recognized the retained DXF's approximate
 first-start settings remain untouched. W225 confirms the approved LibreCAD
 bundle renders W193 and selects an `Offset Curve (1)`. W228 isolates
 right-click probes on a selected carrier and an unselected blank canvas; neither
-showed a context menu. This is observed UI behavior, not a product failure,
-pending confirmation that such a menu is expected. W0-W2 and R remain open for
+showed a context menu. Source inspection confirms the idle, unmodified
+right-button release path should invoke a default popup and the menu factory
+contains Offset Curve-specific actions; the visible routing/settings mismatch
+is unexplained and is not yet classified as a product defect. W0-W2 and R remain open for
 acceptance, not because the Node developer runner substitutes for the native
-worker. W226 reruns the workspace qmake6 helper/client suite (17 cases, 4581
+worker. W230 traces the popup route: idle right-click should show the default
+menu unless a custom activator overrides it, so the visible no-menu result
+remains unresolved. W226 reruns the workspace qmake6 helper/client suite (17 cases, 4581
 assertions) with real helper completions, timeout, cancellation and recovery
 coverage. W227 adds two ASan publication-staleness cases (18 assertions)
 without changing product code. W229 reached the live Offset direction prompt
@@ -8799,9 +8803,13 @@ left unchanged, so no new external-CAD rendering attempt was made.
 | FreeCAD external visual review | OPEN; app accessible, but first-start configuration left untouched and no geometry viewport rechecked |
 | Product-source changes | None; visible-app validation and roadmap receipt only |
 
-W228 removes the blank-canvas ambiguity from W225 but does not establish that
-either context menu is a required LibreCAD behavior. Context-menu acceptance
-therefore remains open pending a defined expected interaction. Stale-peer
+W228 removes the blank-canvas ambiguity from W225. W230's source trace confirms
+that an idle unmodified right-button release should reach the default popup
+unless a matching custom menu activator overrides it; the Offset Curve-specific
+menu factory exists. The visible non-popup result is therefore an unresolved
+GUI routing/settings discrepancy, not evidence that menu behavior is optional
+or a confirmed product defect. Context-menu acceptance remains open pending an
+isolated-profile event-routing check. Stale-peer
 interaction, held-drag cancellation, preview/commit parity, independent
 FreeCAD rendering, durable screenshot/DPR evidence, deployed-package and W0-W2
 acceptance, reviewer approval, and final R integration remain open.
@@ -8839,3 +8847,31 @@ preview separately before committing. Held-drag cancellation, stale-peer GUI
 interaction, independent FreeCAD rendering, durable screenshot/DPR evidence,
 deployed-package and W0-W2 acceptance, review approval, and final R integration
 remain open.
+
+## 188. W230 Context-Menu Source Trace
+
+Traced the no-menu W228 observation through the current source without changing
+product code. When no current edit action is active, `QG_GraphicView` routes a
+right-button release away from the default select action and calls
+`invokeContextMenuForMouseEvent`. `LC_CreatorInvoker` recognizes an unmodified
+right-button release as the default-menu event unless a matching custom menu
+activator applies. `LC_MenuFactoryGraphicView` builds an Offset Curve-specific
+Modify submenu, and existing UI tests exercise its source actions and native
+owner normalization. Thus an idle right-click should normally present a popup,
+but a matching custom activator/settings entry or native event-delivery path
+could change that result. The approved bundle's visible no-menu observation
+remains unexplained; it is neither a pass nor a confirmed product failure.
+
+| W230 check | Result |
+|---|---|
+| Idle right-button routing source | PASS; default path invokes graphic-view popup when no edit action is active |
+| Offset Curve popup actions | PASS; factory defines Offset Curve-specific Modify actions; focused unit tests exist |
+| User custom-menu override possibility | OPEN; settings/event configuration not modified or isolated in this visible run |
+| Visible popup result | OPEN; W228 did not display a menu on selected or blank canvas |
+| Product-source changes | None; source review and roadmap refinement only |
+
+Next acceptance step: reproduce through a test-only QSettings profile or an
+event-pipeline test that asserts the idle right-button release reaches the menu
+factory and that the Offset Curve popup is shown. Do not edit the normal user
+profile to force a result. Keep context-menu integration open until that check
+separates custom-menu configuration from product event routing.
