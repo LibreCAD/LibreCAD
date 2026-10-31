@@ -8918,3 +8918,33 @@ the popup reaches `QMenu::exec`. Do not change the normal user's settings.
 FreeCAD external rendering, preview/commit parity, held-drag cancellation,
 stale-peer GUI behavior, retained screenshot/DPR evidence, deployed-package and
 W0-W2 acceptance, reviewer approval, and final R integration remain open.
+
+## 190. W232 Timed Escape Delivery Measurement
+
+Repeated Modify Offset on the disposable W193 fixture and reached the direction
+prompt after selecting one ellipse. Held a direction-point click for 3000 ms and
+scheduled Escape 500 ms after the click began. The CUA call timestamps show
+Escape requested 502 ms after start, the click resolved 3125 ms after start,
+and the Escape call resolved 3165 ms after start. Thus the bridge serialized
+the key input until about 40 ms after mouse release; it did not deliver Escape
+while the button was held. LibreCAD returned to Default with No Selection, and
+the screenshot showed the original six contours with Undo disabled. No save
+occurred; W193 still hashes to
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+| W232 check | Result |
+|---|---|
+| Direction prompt reached | PASS; selected one W193 ellipse |
+| Escape scheduling | PASS; requested at +502 ms during a 3000 ms click |
+| Key delivery before release | FAIL/UNAVAILABLE; Escape resolved at +3165 ms, after click at +3125 ms |
+| Persistent geometry | PASS; six original contours, Undo disabled |
+| UI cleanup | PASS; Default, No Selection |
+| Fixture integrity | PASS; no save, hash unchanged |
+| Product-source changes | None; timed UI probe and roadmap receipt only |
+
+W232 confirms that this CUA bridge cannot prove cancellation while a mouse
+button is held. Keep held-drag cancellation open until a native event-pipeline
+test or another input tool can interleave Escape before release. Preview/commit
+parity, context-menu routing, stale-peer GUI behavior, independent FreeCAD
+rendering, durable screenshot/DPR evidence, deployed-package and W0-W2
+acceptance, reviewer approval, and final R integration remain open.
