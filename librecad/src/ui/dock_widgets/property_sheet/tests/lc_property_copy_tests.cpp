@@ -241,6 +241,25 @@ TEST_CASE("Dimension property sheet copies its measured value and closes the edi
     editor = properties->findChild<QLineEdit*>("LCPropertyValueEditor");
     REQUIRE(editor != nullptr);
     alive = editor;
+    // Offscreen can establish focus deterministically without an active desktop.
+    if (QGuiApplication::platformName() == "offscreen") {
+        sheet.activateWindow();
+        editor->setFocus(Qt::OtherFocusReason);
+        QCoreApplication::processEvents();
+        REQUIRE(editor->hasFocus());
+        QKeyEvent tab(QEvent::KeyPress, Qt::Key_Tab, Qt::NoModifier);
+        QCoreApplication::sendEvent(editor, &tab);
+        QCoreApplication::processEvents();
+        CHECK((alive.isNull() || !alive->hasFocus()));
+        QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+        if (alive.isNull()) {
+            QKeyEvent reactivateAfterTab(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+            QCoreApplication::sendEvent(properties, &reactivateAfterTab);
+            editor = properties->findChild<QLineEdit*>("LCPropertyValueEditor");
+            REQUIRE(editor != nullptr);
+            alive = editor;
+        }
+    }
     QPointer<QMenu> menuDuringRebind(editor->createStandardContextMenu());
     menuDuringRebind->popup(QPoint(20, 20));
     QCoreApplication::processEvents();
