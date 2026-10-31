@@ -611,6 +611,89 @@ TEST_CASE("Offset preview through the view matches the released worker commit",
     view->beginClose();
 }
 
+TEST_CASE("Offset view refuses a stale peer edit and recovers on a fresh preview",
+          "[lc-offsetcurve][creation-worker][stale-peer][event-pipeline][gui]") {
+    REQUIRE(lc::test::application());
+    auto graphic = std::make_unique<Graphic>();
+    graphic->initForNewDocument();
+    CapturingContext context;
+    auto view = std::make_unique<QG_GraphicView>(nullptr, graphic.get(), &context);
+    view->resize(640, 480);
+    view->initView();
+
+    auto* source = new RS_Ellipse(graphic.get(),
+                                  RS_EllipseData{{0, 0}, {2, 0}, .5, 0, M_PI_2, false});
+    source->setLayer(graphic->getActiveLayer());
+    graphic->addEntity(source);
+    const RS_Selection selection(graphic.get(), view->getViewPort());
+    selection.selectSingle(source);
+
+    RS_SnapMode snapMode;
+    snapMode.snapFree = true;
+    view->setDefaultSnapMode(snapMode);
+
+    auto action = std::make_shared<OffsetProbe>(&context);
+    action->setDistanceFixed(false);
+    action->setKeepOriginals(true);
+    REQUIRE(view->setCurrentAction(action));
+
+    const auto uiPoint = [&](const RS_Vector& world) {
+        double x = 0.0;
+        double y = 0.0;
+        view->getViewPort()->toUI(world, x, y);
+        return QPoint(qRound(x), qRound(y));
+    };
+    const auto sendMouse = [&](const QEvent::Type type, const RS_Vector& world,
+                               const Qt::MouseButton button, const Qt::MouseButtons buttons) {
+        const QPoint position = uiPoint(world);
+        QMouseEvent event(type, QPointF(position), QPointF(view->mapToGlobal(position)), button, buttons,
+                          Qt::NoModifier);
+        QApplication::sendEvent(view.get(), &event);
+    };
+
+    const RS_Vector reference{4.0, 0.0};
+    const RS_Vector side{4.0, 1.0};
+    sendMouse(QEvent::MouseButtonPress, reference, Qt::LeftButton, Qt::LeftButton);
+    sendMouse(QEvent::MouseButtonRelease, reference, Qt::LeftButton, Qt::NoButton);
+    REQUIRE(action->getStatus() == OffsetProbe::SetPosition);
+    sendMouse(QEvent::MouseButtonPress, side, Qt::LeftButton, Qt::LeftButton);
+    sendMouse(QEvent::MouseMove, side, Qt::NoButton, Qt::LeftButton);
+    REQUIRE(action->isPreparing());
+    observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*action); });
+    lc::test::awaitCreation(*action);
+
+    sendMouse(QEvent::MouseButtonRelease, side, Qt::LeftButton, Qt::NoButton);
+    REQUIRE(action->isPreparing());
+    observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*action); });
+    source->setRatio(.75);
+    lc::test::awaitCreation(*action);
+    CHECK_FALSE(action->isPreparing());
+    CHECK(graphic->count() == 1);
+    CHECK(graphic->countUndoCycles() == 0);
+    CHECK_FALSE(source->isDeleted());
+    CHECK(source->getRatio() == Catch::Approx(.75));
+    CHECK(action->m_preview->isEmpty());
+    CHECK(context.messages.join(" ").contains("inputs changed"));
+    CHECK_FALSE(action->isFinished());
+
+    sendMouse(QEvent::MouseMove, side, Qt::NoButton, Qt::NoButton);
+    REQUIRE(action->isPreparing());
+    observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*action); });
+    lc::test::awaitCreation(*action);
+    REQUIRE_FALSE(action->m_preview->isEmpty());
+    sendMouse(QEvent::MouseButtonPress, side, Qt::LeftButton, Qt::LeftButton);
+    sendMouse(QEvent::MouseButtonRelease, side, Qt::LeftButton, Qt::NoButton);
+    REQUIRE(action->isPreparing());
+    observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*action); });
+    lc::test::awaitCreation(*action);
+
+    CHECK(graphic->count() > 1);
+    CHECK(graphic->countUndoCycles() == 1);
+    CHECK_FALSE(source->isDeleted());
+    CHECK(source->getRatio() == Catch::Approx(.75));
+    view->beginClose();
+}
+
 TEST_CASE("Offset creation worker supersedes previews and recovers after an actual process timeout",
           "[lc-offsetcurve][creation-worker][timeout][gui]") {
     OffsetFixture f; auto* source = f.ellipse(); f.select({source}); f.start(.125, true);
