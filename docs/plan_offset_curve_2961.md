@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W239; chronological evidence follows): planned product
+Current status (W240; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -46,9 +46,9 @@ helper in the app bundle and after relocating the bundle; cross-platform and
 full deployed-package acceptance remain distinct gates.
 
 For W238 head `2c9b5bcb25e50865f301ee64c2ec41df7d9eb276`, exact-head GitHub
-Headless ON and OFF both passed (run `41220922934`). The roadmap-only W239
-receipt will cause a fresh headless run; current status is tracked in the PR
-comment.
+Headless ON and OFF both passed (run `41220922934`). W239 head
+`a63a26eaf8ece575717c5c718e0ee07de96dccc7` also passed both modes (run
+`41221162702`). Current W240 head CI status is tracked in the PR comment.
 
 W220-W225 qualify selected pieces of the approved qmake6 app's GUI: normal
 Offset Curve selection, compact options at one window size, locked-layer
@@ -9153,3 +9153,25 @@ runner forces Node.js 24; the jobs themselves passed.
 This receipt does not close physical GUI, external FreeCAD rendering,
 cross-platform/full deployed-package W0-W2 acceptance, required review, or final
 R integration. Fresh CI is required for the following roadmap commit.
+
+## 198. W240 Exact-Head Headless Requalification
+
+The W239 roadmap update was pushed at
+`a63a26eaf8ece575717c5c718e0ee07de96dccc7`. Its exact-head Text Foundations
+workflow `41221162702` passed both configurations: Headless ON job
+`124595826786` completed in 2m21s and Headless OFF job `124595826617` completed
+in 4m45s. Both configured, built, ran the foundations suite, and retained test
+results successfully. The only annotation was the existing GitHub warning that
+checkout/upload-artifact actions targeting Node.js 20 are forced onto Node.js
+24 by the runner.
+
+| W240 check | Result |
+|---|---|
+| Headless ON | PASS; run `41221162702`, job `124595826786` |
+| Headless OFF | PASS; run `41221162702`, job `124595826617` |
+| Tested source head | `a63a26eaf8ece575717c5c718e0ee07de96dccc7` |
+| Product behavior changes | None; exact-head CI receipt only |
+
+Physical GUI, external rendering, cross-platform/full deployed-package W0-W2,
+required review and final R integration remain open. Fresh exact-head CI must
+qualify the next roadmap commit.
