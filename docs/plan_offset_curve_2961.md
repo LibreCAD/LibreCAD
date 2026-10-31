@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W227; chronological evidence follows): planned product
+Current status (W229; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -47,14 +47,19 @@ changed-child and freed-redo-subtree refusal cases. W224's FreeCAD retry
 recognized the retained DXF's approximate
 233-entity count but still produced no verified geometry viewport; the
 first-start settings remain untouched. W225 confirms the approved LibreCAD
-bundle renders W193 and selects an `Offset Curve (1)`; secondary-clicking that
-selected carrier showed no context menu, so menu acceptance remains open. W0-W2
-and R remain open for acceptance, not because the Node developer runner
-substitutes for the native worker. W226 reruns the workspace qmake6 helper/client
-suite (17 cases, 4581 assertions) with real helper completions, timeout,
-cancellation and recovery coverage; the desktop is currently locked, so no
-additional GUI or FreeCAD interaction was possible. W227 adds two ASan
-publication-staleness cases (18 assertions) without changing product code.
+bundle renders W193 and selects an `Offset Curve (1)`. W228 isolates
+right-click probes on a selected carrier and an unselected blank canvas; neither
+showed a context menu. This is observed UI behavior, not a product failure,
+pending confirmation that such a menu is expected. W0-W2 and R remain open for
+acceptance, not because the Node developer runner substitutes for the native
+worker. W226 reruns the workspace qmake6 helper/client suite (17 cases, 4581
+assertions) with real helper completions, timeout, cancellation and recovery
+coverage. W227 adds two ASan publication-staleness cases (18 assertions)
+without changing product code. W229 reached the live Offset direction prompt
+and canceled without editing the document; the available UI controls do not
+support a hover-only move, so the transient preview could not be separately
+captured for parity comparison. FreeCAD is accessible but remains on its
+untouched first-start screen.
 
 W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
 through merge commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`. The upstream
@@ -8763,3 +8768,74 @@ W227 closes only the local stale-publication safety cases. Visible stale-peer
 interaction, held-drag cancellation, preview/commit parity, FreeCAD rendering,
 durable screenshot/DPR evidence, deployed-package and W0-W2 acceptance,
 reviewer approval, and final R integration remain open.
+
+## 186. W228 Isolated Context-Menu Probes
+
+Resumed the user-approved isolated qmake6 LibreCAD test bundle at
+`/private/tmp/LibreCAD-PR3193-visible.app`. The W193 drawing visibly rendered
+both groups of three ellipse contours. Normal pointer mode did not select an
+entity until `Select Entities` was enabled; clicking the right-group outer
+contour then showed `Offset Curve (1)` in the property selector. A secondary
+click on that selected carrier displayed no context menu. After restoring the
+original `Select Entities`-off/no-selection state, a secondary click on blank
+canvas also displayed no context menu. The app remained responsive and the
+viewport was visually intact. No drawing save or preference change was made;
+the source fixture SHA256 remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+FreeCAD 1.1.4 is now accessible but remains on its first-start configuration
+screen. Its theme, language, unit system, navigation style, and profile were
+left unchanged, so no new external-CAD rendering attempt was made.
+
+| W228 check | Result |
+|---|---|
+| Approved app access | PASS; test bundle opened and accepted UI input |
+| W193 rendering | PASS; both groups of three ellipse contours visible |
+| Offset Curve selection | PASS after enabling Select Entities; property selector reports `Offset Curve (1)` |
+| Selected-carrier secondary click | OPEN/NOT REPRODUCED; no visible context menu |
+| Unselected blank-canvas secondary click | OPEN/NOT REPRODUCED; isolated with no selection active |
+| UI state cleanup | PASS; Select Entities restored off and property selector returned to No Selection |
+| Fixture integrity | PASS; no save, SHA256 unchanged |
+| Retained screenshot / display-DPR | OPEN; screenshots observed in-session only; no durable image or DPR measurement |
+| FreeCAD external visual review | OPEN; app accessible, but first-start configuration left untouched and no geometry viewport rechecked |
+| Product-source changes | None; visible-app validation and roadmap receipt only |
+
+W228 removes the blank-canvas ambiguity from W225 but does not establish that
+either context menu is a required LibreCAD behavior. Context-menu acceptance
+therefore remains open pending a defined expected interaction. Stale-peer
+interaction, held-drag cancellation, preview/commit parity, independent
+FreeCAD rendering, durable screenshot/DPR evidence, deployed-package and W0-W2
+acceptance, reviewer approval, and final R integration remain open.
+
+## 187. W229 Preview-Parity Interaction Limit
+
+In the approved qmake6 test app and disposable W193 drawing, started Tools >
+Modify > Offset, selected the left outer ellipse and advanced to `Specify
+direction of offset, or enter distance <0.5>`. The screenshot at that prompt
+showed the selected source but no offset preview. CUA exposes click and drag
+operations but no hover-only pointer move, so moving to a direction point would
+also deliver a button event and could commit the operation. Canceled with
+Escape before choosing a direction. LibreCAD returned to `Current Action:
+Default`, `No Selection`; the six original contours remained visible and no
+save occurred. The on-disk W193 fixture hash was rechecked as
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+FreeCAD 1.1.4 was accessible, but remained on its first-start configuration
+screen. Theme, language, unit system, navigation style and profile were left
+unchanged; the external visual check was not retried.
+
+| W229 check | Result |
+|---|---|
+| Modify Offset selection and direction prompt | PASS; selected a source ellipse and reached direction prompt |
+| Preview capture | OPEN; no preview visible at prompt; hover-only movement unavailable through CUA |
+| Cancellation and cleanup | PASS; Escape returned to Default and No Selection; no commit/save |
+| W193 fixture integrity | PASS; on-disk SHA256 unchanged |
+| FreeCAD external visual review | OPEN; app accessible, first-start settings left untouched |
+| Exact-head PR checks | IN PROGRESS; Headless ON/OFF pass; Analyze, DWG/DXF and platform builds pending |
+| Product-source changes | None; visible-app validation and roadmap receipt only |
+
+W229 does not establish preview/commit parity. A future acceptance run needs a
+safe pointer-move-only mechanism or a deterministic UI test that captures the
+preview separately before committing. Held-drag cancellation, stale-peer GUI
+interaction, independent FreeCAD rendering, durable screenshot/DPR evidence,
+deployed-package and W0-W2 acceptance, review approval, and final R integration
+remain open.
