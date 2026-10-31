@@ -24,14 +24,16 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W216; chronological evidence follows): planned product
+Current status (W218; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
 staged GUI drawing/template imports, and bounded worker validation for public
 synchronous file/stream/byte filter imports. No additional feature-code gap is
-currently identified; W0-W2 and R remain open for acceptance, not because the
-Node developer runner substitutes for the native worker.
+currently identified. The exact PR source head `71ecf102b36017d57bd30db39d0de630ac11bb75`
+has passing Headless ON/OFF, CodeQL, DWG/DXF Linux/Windows x64/ARM64, and all
+five-platform Pixi checks. W0-W2 and R remain open for acceptance, not because
+the Node developer runner substitutes for the native worker.
 
 W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
 through merge commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`. The upstream
@@ -8386,3 +8388,32 @@ qualification. It does not close visible GUI refusal/interaction, retained
 screenshot/display-DPR, independent external-CAD review of the W171-derived
 files, deployed-package or remaining W0-W2 acceptance, reviewer approval, or
 final R integration.
+
+## 176. W218 Exact-Source PR CI Qualification
+
+Rechecked PR #3193 after the W217 test-isolation commit was pushed. Its exact
+source head is `71ecf102b36017d57bd30db39d0de630ac11bb75` on base
+`5a5fe7345fe7a7ec66892e879967673b6d7a859b`. All required attached source-head
+checks completed successfully; the security-scan job was skipped by workflow
+policy. The duplicate push-triggered Pixi workflow also passed on the same
+source head.
+
+| W218 check | Result |
+|---|---|
+| Headless ON/OFF | PASS; Text Foundations run `41182640361` |
+| CodeQL analysis | PASS; run `41182640333`; security scan skipped by workflow policy |
+| DWG/DXF Linux | PASS; run `41182640320`; bounded suite 23/23, offset selector 219 assertions, creation-worker selector 318 assertions, relocated worker-client 3,389 assertions across 17 cases |
+| DWG/DXF Windows ARM64 | PASS; run `41182640320`; bounded suite 23/23, offset selector 219 assertions, creation-worker selector 318 assertions, relocated worker-client 3,969 assertions across 17 cases |
+| DWG/DXF Windows x64 | PASS; run `41182640320`; bounded suite 23/23, offset selector 219 assertions, creation-worker selector 318 assertions, relocated worker-client 3,970 assertions across 17 cases |
+| Pixi Builds | PASS; PR run `41182640166` and duplicate push run `41182637965` passed on Ubuntu x64, Ubuntu ARM64, Windows, macOS ARM64, and macOS Intel |
+| PR state | OPEN; draft, mergeable, review required |
+| Current-source visible GUI | OPEN; Device Control approval is recorded, but CUA still reports macOS locked |
+| Product source scope | None; this is CI evidence and roadmap reconciliation only |
+
+W218 closes the exact-source remote CI qualification for the W217 source head.
+It does not close the W171-derived independent CAD visual review, durable
+screenshot/display-DPR evidence, remaining GUI refusal and interaction cases,
+signed/deployed package qualification, outstanding W0-W2 external acceptance,
+reviewer approval, or final R integration. Keep the PR draft until those gates
+are explicitly resolved; do not treat CI success as visual or release
+acceptance.
