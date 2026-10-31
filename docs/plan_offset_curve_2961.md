@@ -33,23 +33,22 @@ synchronous file/stream/byte filter imports. No additional feature-code gap is
 currently identified. W218's exact product-source head
 `71ecf102b36017d57bd30db39d0de630ac11bb75` has passing Headless ON/OFF, CodeQL,
 DWG/DXF Linux/Windows x64/ARM64, and all five-platform Pixi checks. The
-follow-up commits through current PR head
-`86d1d4f227183f37f8b6aa2b6991e4066ddb6e82` are documentation-only and do not
-alter that qualified product source. Fresh checks for the current head have
-started but are not yet complete. W220 identifies the approved qmake6 app and
-worker used for bounded GUI checks; W221 confirms normal pointer selection of
-an Offset Curve. W222 also confirms the compact options strip exposes its
-configured values at the tested window size and that an offset commit can be
-undone back to the fixture state. W223 confirms a locked layer cannot advance
-the Offset source-selection step. Context-menu behavior, stale-peer behavior,
-held-drag cancellation, and preview/commit parity remain unverified. W224's
-FreeCAD retry recognized the retained DXF's approximate 233-entity count but
-still produced no verified geometry viewport; the first-start settings remain
-untouched. W225 confirms the approved LibreCAD bundle renders W193 and selects
-an `Offset Curve (1)`; secondary-clicking that selected carrier showed no
-context menu, so menu acceptance remains open. W0-W2 and R remain open for
-acceptance, not because the Node developer runner substitutes for the native
-worker.
+follow-ups W220-W225 are documentation-only and do not alter that qualified
+product source. Exact-head CI is re-run after pushed receipts; its live state
+is tracked in the PR comment rather than frozen in this summary. W220
+identifies the approved qmake6 app and worker used for bounded GUI checks;
+W221 confirms normal pointer selection of an Offset Curve. W222 also confirms
+the compact options strip exposes its configured values at the tested window
+size and that an offset commit can be undone back to the fixture state. W223
+confirms a locked layer cannot advance the Offset source-selection step.
+Stale-peer behavior, held-drag cancellation, and preview/commit parity remain
+unverified. W224's FreeCAD retry recognized the retained DXF's approximate
+233-entity count but still produced no verified geometry viewport; the
+first-start settings remain untouched. W225 confirms the approved LibreCAD
+bundle renders W193 and selects an `Offset Curve (1)`; secondary-clicking that
+selected carrier showed no context menu, so menu acceptance remains open. W0-W2
+and R remain open for acceptance, not because the Node developer runner
+substitutes for the native worker.
 
 W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
 through merge commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`. The upstream
