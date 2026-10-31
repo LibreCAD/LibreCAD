@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W235; chronological evidence follows): planned product
+Current status (W236; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -46,8 +46,10 @@ verifies the default right-release menu path; CUA's visible right-click remains
 inconclusive. W234 verifies held-drag Escape cancellation through the real
 QG_GraphicView event handler while the worker child is busy. W235 compares the
 worker-generated preview and committed geometry through that same view route,
-and confirms cache reuse and one-step history. These native event tests close
-their corresponding code-path gaps, not the remaining physical-app evidence.
+and confirms cache reuse and one-step history. W236 exercises stale-peer
+rejection and recovery through the same view route. These native event tests
+close their corresponding code-path gaps, not the remaining physical-app
+evidence.
 
 Still open: physical stale-peer interaction; visible held-drag and separate
 preview/commit screenshots; independent FreeCAD geometry rendering; durable
@@ -9035,6 +9037,33 @@ does not provide a physical-app screenshot or display-DPR record.
 | Product behavior changes | None; event-pipeline regression test and roadmap update only |
 
 Native preview/commit parity for the tested GUI request is now qualified.
-Physical screenshot/DPR evidence remains open, along with stale-peer interaction,
-independent FreeCAD rendering, deployed-package and W0-W2 acceptance, reviewer
-approval, and final R integration.
+Physical screenshot/DPR evidence remains open, along with physical stale-peer
+interaction, independent FreeCAD rendering, deployed-package and W0-W2
+acceptance, reviewer approval, and final R integration.
+
+## 194. W236 Native View-Route Stale-Peer Rejection and Recovery
+
+Added a `QG_GraphicView` event-pipeline regression test for source mutation
+while the offset commit worker is active. It establishes a preview from real
+press/move events, starts commit on release, mutates the selected ellipse
+before the worker returns, and verifies the stale request publishes no
+geometry or undo cycle, leaves the source live, clears preview state, and
+reports changed inputs. The test then drives a fresh move/press/release through
+the same view and confirms the new geometry commits in one undo cycle while
+preserving the edited source. This qualifies the native event-path behavior;
+physical app interaction and screenshot/DPR evidence remain separate gates.
+
+| W236 check | Result |
+|---|---|
+| Stale-peer edit during active commit worker | PASS; geometry edit is refused without publishing output |
+| Recovery after a fresh view preview | PASS; new request commits and preserves the edited source |
+| Document history and feedback | PASS; stale request adds no undo; successful retry adds one; changed-input message shown |
+| Focused stale-peer event-pipeline test | PASS; 39 assertions |
+| Offset creation-worker regression group | PASS; 14 cases / 398 assertions |
+| Implementation commit | `eee2cf419` (`test: cover stale offset peer through view events`) |
+| Product behavior changes | None; event-pipeline regression test and roadmap receipt only |
+
+The native stale-peer route is now covered. Physical visible stale-peer
+interaction, held-drag and preview/commit screenshots, independent FreeCAD
+rendering, durable screenshot/DPR evidence, deployed-package and W0-W2
+acceptance, reviewer approval, and final R integration remain open.
