@@ -56,8 +56,9 @@ is unexplained and is not yet classified as a product defect. W0-W2 and R remain
 acceptance, not because the Node developer runner substitutes for the native
 worker. W230 traces the popup route: idle right-click should show the default
 menu unless a custom activator overrides it. W233's deterministic Qt integration
-test confirms the default right-release path displays a menu; the CUA-driven
-visible click remains inconclusive about native input delivery. W226 reruns the workspace qmake6 helper/client suite (17 cases, 4581
+test and full dock-window GUI group confirm the default right-release path
+displays a menu; the CUA-driven visible click remains inconclusive about native
+input delivery. W226 reruns the workspace qmake6 helper/client suite (17 cases, 4581
 assertions) with real helper completions, timeout, cancellation and recovery
 coverage. W227 adds two ASan publication-staleness cases (18 assertions)
 without changing product code. W229 reached the live Offset direction prompt
@@ -8982,7 +8983,7 @@ itself remains unqualified.
 | Offset Curve owner popup actions | PASS; existing source UI test covers owner normalization and dispatch |
 | Visible CUA right-click | INCONCLUSIVE; no popup shown by UI driver |
 | Fixture integrity | PASS; W193 hash unchanged and no save occurred |
-| Build/test | PASS; CMake Release target builds and `[context-menu]` passes 8 assertions |
+| Build/test | PASS; CMake Release target builds; `[context-menu]` passes 8 assertions; `[dock-window]` passes 51 cases / 1042 assertions |
 | Source popup tests | PASS; 64 assertions across three cases |
 | Roadmap/refusal audit | PASS; 94/94 tests, 93 obligations, zero pending declarations or production mismatches |
 | Product behavior changes | None; deterministic GUI regression coverage and roadmap receipt only |
