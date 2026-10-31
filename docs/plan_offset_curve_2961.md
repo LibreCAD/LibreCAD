@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W230; chronological evidence follows): planned product
+Current status (W232; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -63,7 +63,11 @@ without changing product code. W229 reached the live Offset direction prompt
 and canceled without editing the document; the available UI controls do not
 support a hover-only move, so the transient preview could not be separately
 captured for parity comparison. FreeCAD is accessible but remains on its
-untouched first-start screen.
+untouched first-start screen. W231 confirms the observed profile has no
+right-click custom-menu activator, but the popup remains absent in the visible
+app and its event path is unresolved. W232 measured Escape serialization:
+Escape requested during a 3000 ms held click resolved after mouse release, so
+active-preview cancellation remains unqualified.
 
 W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
 through merge commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`. The upstream
