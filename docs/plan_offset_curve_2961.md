@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W244; chronological evidence follows): planned product
+Current status (W245; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -70,7 +70,7 @@ suite has two failing upstream dimension-label/property-copy cases (five
 assertions); a clean build of exact `origin/master` reproduces the same cases
 with the same RNG seed, so these are recorded as inherited baseline failures,
 not attributed to offset code. PR conflict resolution and new-head CI are
-recorded in W244 below.
+recorded in W244-W245 below.
 
 W242 fixed DXF output for the optional SPLINE/HELIX extrusion vector: the
 value-initialized zero vector is now treated as unspecified instead of being
@@ -9419,3 +9419,37 @@ review approval, and final R closeout remain open. The visible app control path
 was responsive only for the approved stale test copy; the exact-source app
 instance remained non-interactive through accessibility, so no new physical
 preview claim is made.
+
+## 203. W245 Pushed-Head and Validation-Tool Requalification
+
+W244's merge and roadmap receipt were pushed to PR #3193 as exact head
+`eed09cb2a8efd029582c98b067e0352ba58ca9cb`. GitHub now reports the PR as
+mergeable against `origin/master` `998e61dc0b994d3ecf3b5e6b529123c556dc3494`.
+The push-triggered DWG/DXF run was superseded by the PR-triggered run; the
+duplicate canceled jobs are not treated as failures.
+
+The complete documented Node validation-tool command,
+`node --test scripts/offset-curve-validation/test-*.js`, passed all 412 tests
+with zero failures, cancellations, skips or TODOs in 198.9 seconds. The run
+includes the roadmap parser, the 93-obligation refusal inventory, real child
+process/evidence publication controls, independent checker cases and worker
+pipeline regressions. It validates the optional developer tooling, not native
+GUI acceptance or external CAD rendering.
+
+| W245 check | Result |
+|---|---|
+| Roadmap validation-tool suite | PASS; 412/412; 198.9 seconds |
+| PR #3193 head | `eed09cb2a8efd029582c98b067e0352ba58ca9cb`; OPEN, draft, mergeable |
+| Headless (ON/OFF) | PASS on exact PR head |
+| DWG/DXF Linux and Windows x64/ARM64 | IN PROGRESS on exact PR head |
+| CodeQL Analyze | IN PROGRESS; Security scan skipped by workflow policy |
+| Pixi platform builds | IN PROGRESS on exact PR head |
+| Visible exact-source GUI | OPEN; CUA still reports macOS locked after the user's unlock response |
+| Product-source changes | None; merge integration and validation only |
+
+The new head is independently built and tested locally in W244, and CI is
+qualifying that same pushed head. Physical stale-peer interaction, separate
+held-drag/preview/commit screenshots with display-DPR, external W171 contour
+fidelity, deployed/cross-platform W0-W2 acceptance, reviewer approval, and final
+R integration remain open. No visual evidence is inferred from the synthetic
+tool suite or headless import results.
