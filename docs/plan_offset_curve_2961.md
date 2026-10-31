@@ -36,16 +36,20 @@ Node developer runner substitutes for the native worker.
 W213 requalifies the current source locally: the full Node suite passes 412/412,
 the roadmap/refusal gate passes 99/99 (93 obligations, no pending declarations
 or production mismatches), the CMake worker CTest set passes 9/9, and the
-installed macOS worker-client suite passes 3,715 assertions in 17 cases. On PR
-source head `440c2525058c26b4af4b4e0aece5b0d219ccd970`, Headless ON/OFF, C++
-analysis, Linux DWG/DXF, CodeQL analysis, and Ubuntu/macOS/Windows Pixi builds
-pass. Windows ARM64 passes CTest 23/23, recovers across 66,594 allocation
+installed macOS worker-client suite passes 3,715 assertions in 17 cases. On
+product-source head `440c2525058c26b4af4b4e0aece5b0d219ccd970`, Headless ON/OFF,
+C++ analysis, Linux DWG/DXF, CodeQL analysis, and Ubuntu/macOS/Windows Pixi
+builds pass. Windows ARM64 passes CTest 23/23, recovers across 66,594 allocation
 failure points, and passes relocated worker-client tests (3,902 assertions in
 17 cases). Windows x64 passes the same 23 CTests and 66,594-point recovery
 sweep, with 4,140 assertions in 17 relocated worker-client cases. Its job took
-5h38m55s, an unusually long but successful CI lane. The CodeQL Security scan is
-skipped by workflow policy. PR #3193 remains open and draft, mergeable, and
-review-required.
+5h38m55s, an unusually long but successful CI lane. The most recent GitHub
+status check, for PR head `2d17b3ca060772b6393aa0def90d5d7738275602`, showed
+CodeQL, Text Foundations, DWG/DXF, and Pixi workflows pending. All changes from
+tested product-source head `440c2525058c26b4af4b4e0aece5b0d219ccd970` through
+that PR head were confined to this roadmap file. The CodeQL Security scan is
+skipped by workflow policy. PR #3193 remains open and draft; GitHub last
+reported mergeability unknown, and review is required.
 
 The approved LibreCAD test app is now accessible. W214 visibly confirms the
 W193 drawing's six ellipse contours and idle/default state. Normal pointer
