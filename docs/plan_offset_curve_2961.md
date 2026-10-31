@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W241; chronological evidence follows): planned product
+Current status (W242; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -53,6 +53,13 @@ Headless ON and OFF both passed (run `41220922934`). W239 head
 W241 rebuilt the exact-worktree ASan test target and reran stale-peer plus the
 complete creation-worker group. The focused event test passed 38 assertions;
 all 14 worker cases passed with 398 assertions (`detect_leaks=0`).
+
+W242 fixed DXF output for the optional SPLINE/HELIX extrusion vector: the
+value-initialized zero vector is now treated as unspecified instead of being
+serialized as an invalid zero-length extrusion direction. The focused writer
+regression and complete DXF fast suite pass. FreeCAD 1.1.4 imports a fresh
+AC1032 file emitted by the exact-source application as one valid SPLINE edge,
+without the prior zero-extrusion warning.
 
 W220-W225 qualify selected pieces of the approved qmake6 app's GUI: normal
 Offset Curve selection, compact options at one window size, locked-layer
@@ -9219,3 +9226,43 @@ implementation files are unchanged.
 This does not close current-head remote CI, physical LibreCAD GUI interaction,
 independent external contour/fidelity review, cross-platform/full deployed-
 package W0-W2 acceptance, required review, or final R integration.
+
+## 200. W242 DXF Spline Extrusion and External Import Fix
+
+An external FreeCAD import of application-generated AC1032 DXF found that
+`DRW_Spline` value-initializes `normalVec` to `(0,0,0)`. Although the DXF
+extrusion vector is optional and defaults to +Z, the shared SPLINE/HELIX body
+writer serialized that zero sentinel because it only omitted explicit +Z.
+FreeCAD consequently rejected the spline with “zero-length extrusion
+direction.” Commit `151853f9a` now omits both the unspecified zero sentinel and
+explicit +Z, while preserving explicit non-default normals. Its regression
+checks SPLINE default, SPLINE non-default, and HELIX default output.
+
+The exact-worktree `librecad_dxf_fast_tests` target passed 803 cases (799
+passed, 4 skipped) and all 84,484 assertions. The focused
+`[dxf][spline][helix][writer]` selection passed 2 cases / 16 assertions. The
+roadmap inventory parser passed all 5 tests and `git diff --check` passed.
+FreeCAD 1.1.4 imported a fresh file produced by the exact-source application:
+`/private/tmp/offset-2961-normal-fix-current/offset-matrix-write-dxf-R2018-d3_actual.dxf`
+(SHA256 `c693321e30827281fbb71cd0d82d4b9a5eb7c326d4becba3f7738171009a9bd2`).
+It found one SPLINE, no unsupported features, and one valid one-edge shape; the
+zero-extrusion warning was absent. This validates file acceptance, not visual
+contour fidelity. The earlier very thin viewport trace remains inconclusive.
+
+| W242 check | Result |
+|---|---|
+| Focused SPLINE/HELIX writer regression | PASS; 2 cases / 16 assertions |
+| Complete DXF fast suite | PASS; 803 cases, 799 passed, 4 skipped, 84,484 assertions |
+| FreeCAD import of fresh application output | PASS; one SPLINE, one valid edge, no unsupported features, no zero-extrusion warning |
+| Fresh DXF evidence | `/private/tmp/offset-2961-normal-fix-current/offset-matrix-write-dxf-R2018-d3_actual.dxf`; SHA256 `c693321e30827281fbb71cd0d82d4b9a5eb7c326d4becba3f7738171009a9bd2` |
+| Code commit | `151853f9a` (`fix: omit zero spline extrusion in DXF`) |
+| Roadmap receipt commit | Pending; this W242 plan update |
+| Current PR head during validation | `b1a16f53364545e89eddfabfed439f8fdb4a3728`; Windows DWG/DXF and CodeQL still pending |
+| LibreCAD visible GUI check | BLOCKED; macOS host remains locked despite app-control approval |
+| External contour/fidelity review | OPEN; successful import does not establish visual fidelity |
+
+The code and roadmap commits are local and not pushed yet so the in-flight
+exact-head CI is not canceled. After those checks finish, push both commits and
+qualify the resulting head. Physical GUI evidence, independent contour review,
+cross-platform/full deployed-package W0-W2 acceptance, required review, and
+final R integration remain open.
