@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W242; chronological evidence follows): planned product
+Current status (W243; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -54,6 +54,14 @@ W241 rebuilt the exact-worktree ASan test target and reran stale-peer plus the
 complete creation-worker group. The focused event test passed 38 assertions;
 all 14 worker cases passed with 398 assertions (`detect_leaks=0`).
 
+W243 requalified the exact current worktree with a full CMake Release build and
+all 26 CTest entries; the application suite reports 5,083 cases, 5,057 passed,
+26 skipped, and 10,347,377 assertions passed. The qmake6/Qt 6.12.0 application
+build and bundled plus relocated worker-client suites also pass. The approved
+LibreCAD test copy visibly renders both groups of three contours in W193. Its
+binary predates the current qmake6 build, so its newly exported DXF is diagnostic
+only; exact-source FreeCAD validation remains the W242 single-SPLINE result.
+
 W242 fixed DXF output for the optional SPLINE/HELIX extrusion vector: the
 value-initialized zero vector is now treated as unspecified instead of being
 serialized as an invalid zero-length extrusion direction. The focused writer
@@ -77,9 +85,10 @@ close their corresponding code-path gaps, not the remaining physical-app
 evidence.
 
 Still open: physical stale-peer interaction; visible held-drag and separate
-preview/commit screenshots; independent FreeCAD geometry rendering; durable
-screenshot/display-DPR records; cross-platform and full deployed-package
-W0-W2 acceptance; review approval; and final R integration. W226's older
+preview/commit screenshots; independent FreeCAD rendering and contour-fidelity
+review of the W171-derived fixture; durable screenshot/display-DPR records;
+cross-platform and full deployed-package W0-W2 acceptance; review approval; and
+final R integration. W226's older
 qmake6 helper/client run passed 17 cases / 4581 assertions; W238 adds a fresh
 current-worktree bundle and relocation check. W0-W2 and R remain acceptance
 gates, not missing product features or substitutes for the native worker tests.
@@ -9256,13 +9265,78 @@ contour fidelity. The earlier very thin viewport trace remains inconclusive.
 | FreeCAD import of fresh application output | PASS; one SPLINE, one valid edge, no unsupported features, no zero-extrusion warning |
 | Fresh DXF evidence | `/private/tmp/offset-2961-normal-fix-current/offset-matrix-write-dxf-R2018-d3_actual.dxf`; SHA256 `c693321e30827281fbb71cd0d82d4b9a5eb7c326d4becba3f7738171009a9bd2` |
 | Code commit | `151853f9a` (`fix: omit zero spline extrusion in DXF`) |
-| Roadmap receipt commit | Pending; this W242 plan update |
-| Current PR head during validation | `b1a16f53364545e89eddfabfed439f8fdb4a3728`; Windows DWG/DXF and CodeQL still pending |
-| LibreCAD visible GUI check | BLOCKED; macOS host remains locked despite app-control approval |
+| Roadmap receipt commit | PASS; `97323cf5fbf2491dc9d63b8b35b8968860217f4c` |
+| PR head at the W242 validation capture | `b1a16f53364545e89eddfabfed439f8fdb4a3728`; later superseded by W243 head checks |
+| LibreCAD visible GUI check at the W242 capture | BLOCKED at that capture; W243 later verified the unlocked test copy |
 | External contour/fidelity review | OPEN; successful import does not establish visual fidelity |
 
-The code and roadmap commits are local and not pushed yet so the in-flight
-exact-head CI is not canceled. After those checks finish, push both commits and
-qualify the resulting head. Physical GUI evidence, independent contour review,
-cross-platform/full deployed-package W0-W2 acceptance, required review, and
-final R integration remain open.
+At the W242 capture, code commit `151853f9a` was already in the PR history, but
+the W242 roadmap receipt had not yet been pushed. The receipt is now included
+in W243's exact PR-head status.
+Physical GUI preview evidence, independent contour review, cross-platform/full
+deployed-package W0-W2 acceptance, required review, and final R integration
+remain open.
+
+## 201. W243 Exact-Worktree Requalification and GUI Evidence
+
+W243 rechecked exact worktree head `97323cf5fbf2491dc9d63b8b35b8968860217f4c`.
+No product source was changed. The temporary FreeCAD audit macro used during
+this pass was removed; the DXF exports and build trees remain under
+`/private/tmp`.
+
+The CMake Release rebuild completed, followed by all 26 registered CTest
+entries. `librecad_tests` reported 5,083 cases, 5,057 passed, 26 skipped, and
+10,347,377 assertions passed. The qmake6/Qt 6.12.0 build returned success with
+no rebuild work pending; its exact-worktree app bundle ran 17 worker-client
+cases with 4,829 assertions. A relocated copy ran 17 cases with 4,377
+assertions. Relocation retained identical worker and test-binary hashes.
+
+The approved visible LibreCAD test copy displayed the W193 content as two
+groups of three concentric contours. Offset selection and cancellation left the
+document geometry unchanged; a later preview probe did not produce a
+verifiable pre-commit ghost image, so separate visible preview/commit evidence
+remains open. No source fixture was overwritten. FreeCAD 1.1.4 had previously
+visibly rendered the W193 input; the current GUI import attempt exited at the
+import-dialog transition and is not counted as evidence.
+
+The test copy exported
+`/private/tmp/offset-W193-W243-current-export.dxf` (SHA256
+`8add98d9ff457f88f82e413978f939e8a0676a6eb6650002cb3f3d403c52e459`). FreeCAD
+1.1.4's headless importer read two ELLIPSE and four SPLINE entities and created
+six valid one-edge shapes, but emitted eight zero-extrusion warnings. The
+exporting test-copy executable hash (`df35f8adef5c2ef6ec16aeecd8cb1ecaa7401557da012b02ea09eec0a6903966`)
+does not match the exact qmake6 bundle executable hash
+(`587d0f0bf5514f1bc6daf389b4d1fbd55b4aba3415356671857dc3f767b19aad`); this is
+therefore a stale-bundle diagnostic, not a regression result for W242. The
+exact-source W242 SPLINE output was re-imported headlessly with no zero-length
+extrusion warning and one valid edge; its very thin bounds remain insufficient
+to establish contour fidelity. The W171-derived AC1032 DXF was also re-audited
+headlessly at its recorded SHA256
+`b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`: FreeCAD
+again reports one valid SPLINE edge, with bounds only 0.0000625 mm wide by
+0.0124998 mm high. This confirms file acceptance and explains why it cannot
+serve as a useful contour-fidelity fixture; the external visual gate remains
+open.
+
+| W243 check | Result |
+|---|---|
+| Exact-worktree CMake Release build | PASS |
+| Full CTest | PASS; 26/26 entries |
+| Main application suite | PASS; 5,083 cases, 5,057 passed, 26 skipped, 10,347,377 assertions |
+| qmake6/Qt 6.12.0 app build | PASS; no pending rebuild work |
+| Bundled worker-client suite | PASS; 17 cases / 4,829 assertions |
+| Relocated worker-client suite | PASS; 17 cases / 4,377 assertions; worker/test hashes unchanged |
+| LibreCAD W193 visible geometry | PASS; two groups, three contours each |
+| Visible preview-before-commit screenshot | OPEN; no verifiable ghost preview captured |
+| Exact-source FreeCAD spline import | PASS; one valid edge, no extrusion warning; fidelity remains open |
+| W171-derived FreeCAD re-audit | PARTIAL; one valid edge at unchanged recorded hash, but bounds are too thin to judge contour fidelity |
+| PR #3193 exact head | `97323cf5fbf2491dc9d63b8b35b8968860217f4c`; Headless ON/OFF, CodeQL, Analyze, Fast DWG/DXF, Windows x64/ARM64, relocated-worker, and Pixi checks pass; Security scan skipped by workflow policy |
+| W243 roadmap receipt | Ready for documentation-only commit after exact-head CI passed |
+
+Exact-head Windows x64 completed successfully at 2026-10-31 21:04:03Z, including
+the relocated-worker step. The W243 plan inventory parser and `git diff
+--check` pass after recording the result. Commit and push this roadmap-only
+receipt, then verify the resulting exact PR head. Physical stale-peer
+interaction, preview/commit parity screenshots, W171-derived external-CAD
+fidelity, screenshot/DPR records, deployed W0-W2 acceptance, review approval,
+and final R integration remain open.
