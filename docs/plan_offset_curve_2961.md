@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W238; chronological evidence follows): planned product
+Current status (W239; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -44,6 +44,11 @@ W238 completed a fresh qmake6/Qt 6.12.0 macOS arm64 application, plugin and
 helper build from this worktree. The worker-client suite passed against the
 helper in the app bundle and after relocating the bundle; cross-platform and
 full deployed-package acceptance remain distinct gates.
+
+For W238 head `2c9b5bcb25e50865f301ee64c2ec41df7d9eb276`, exact-head GitHub
+Headless ON and OFF both passed (run `41220922934`). The roadmap-only W239
+receipt will cause a fresh headless run; current status is tracked in the PR
+comment.
 
 W220-W225 qualify selected pieces of the approved qmake6 app's GUI: normal
 Offset Curve selection, compact options at one window size, locked-layer
@@ -9127,3 +9132,24 @@ W238 closes the fresh local qmake6 bundle/helper smoke. Visible GUI, independent
 FreeCAD rendering, durable screenshot/DPR evidence, cross-platform and full
 deployed-package W0-W2 acceptance, review approval, and final R integration
 remain open.
+
+## 197. W239 Exact-Head Headless CI Receipt
+
+The W238 qmake6 bundle and relocation validation were pushed at head
+`2c9b5bcb25e50865f301ee64c2ec41df7d9eb276`. Its exact-head Text Foundations
+workflow `41220922934` completed successfully on both required configurations:
+Headless ON job `124595108527` passed in 2m33s and Headless OFF job
+`124595108712` passed in 2m19s. GitHub emitted only the existing runner
+annotation that checkout/upload-artifact actions target Node.js 20 while the
+runner forces Node.js 24; the jobs themselves passed.
+
+| W239 check | Result |
+|---|---|
+| Headless ON | PASS; run `41220922934`, job `124595108527` |
+| Headless OFF | PASS; run `41220922934`, job `124595108712` |
+| Tested source head | `2c9b5bcb25e50865f301ee64c2ec41df7d9eb276` |
+| Product behavior changes | None; exact-head CI receipt only |
+
+This receipt does not close physical GUI, external FreeCAD rendering,
+cross-platform/full deployed-package W0-W2 acceptance, required review, or final
+R integration. Fresh CI is required for the following roadmap commit.
