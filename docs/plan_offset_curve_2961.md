@@ -24,53 +24,37 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W233; chronological evidence follows): planned product
+Current status (W235; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
 staged GUI drawing/template imports, and bounded worker validation for public
-synchronous file/stream/byte filter imports. No additional feature-code gap is
-currently identified. W218's exact product-source head
-`71ecf102b36017d57bd30db39d0de630ac11bb75` has passing Headless ON/OFF, CodeQL,
-DWG/DXF Linux/Windows x64/ARM64, and all five-platform Pixi checks. The
-follow-ups W220-W225 are documentation-only and do not alter that qualified
-product source. Exact-head CI is re-run after pushed receipts; its live state
-is tracked in the PR comment rather than frozen in this summary. W220
-identifies the approved qmake6 app and worker used for bounded GUI checks;
-W221 confirms normal pointer selection of an Offset Curve. W222 also confirms
-the compact options strip exposes its configured values at the tested window
-size and that an offset commit can be undone back to the fixture state. W223
-confirms a locked layer cannot advance the Offset source-selection step.
-Visible stale-peer interaction, held-drag cancellation, and preview/commit
-parity remain unverified. W227's ASan publication filter separately passes
-changed-child and freed-redo-subtree refusal cases. W224's FreeCAD retry
-recognized the retained DXF's approximate
-233-entity count but still produced no verified geometry viewport; the
-first-start settings remain untouched. W225 confirms the approved LibreCAD
-bundle renders W193 and selects an `Offset Curve (1)`. W228 isolates
-right-click probes on a selected carrier and an unselected blank canvas; neither
-showed a context menu. Source inspection confirms the idle, unmodified
-right-button release path should invoke a default popup and the menu factory
-contains Offset Curve-specific actions; the visible routing/settings mismatch
-is unexplained and is not yet classified as a product defect. W0-W2 and R remain open for
-acceptance, not because the Node developer runner substitutes for the native
-worker. W230 traces the popup route: idle right-click should show the default
-menu unless a custom activator overrides it. W233's deterministic Qt integration
-test and full dock-window GUI group confirm the default right-release path
-displays a menu; the CUA-driven visible click remains inconclusive about native
-input delivery. W226 reruns the workspace qmake6 helper/client suite (17 cases, 4581
-assertions) with real helper completions, timeout, cancellation and recovery
-coverage. W227 adds two ASan publication-staleness cases (18 assertions)
-without changing product code. W229 reached the live Offset direction prompt
-and canceled without editing the document; the available UI controls do not
-support a hover-only move, so the transient preview could not be separately
-captured for parity comparison. FreeCAD is accessible but remains on its
-untouched first-start screen. W231 confirms the observed profile has no
-right-click custom-menu activator. The popup remains absent under the visible
-CUA click, but W233 verifies the application's Qt event route independently.
-W232 measured Escape serialization:
-Escape requested during a 3000 ms held click resolved after mouse release, so
-active-preview cancellation remains unqualified.
+synchronous file/stream/byte filter imports. No additional product-code gap
+has been identified in the latest audit. W218's exact product-source head
+`71ecf102b36017d57bd30db39d0de630ac11bb75` passed Headless ON/OFF, CodeQL,
+DWG/DXF Linux and Windows x64/ARM64, and all five-platform Pixi checks. Exact
+head CI is re-run after pushed test/acceptance receipts; its live state is
+tracked in the PR comment.
+
+W220-W225 qualify selected pieces of the approved qmake6 app's GUI: normal
+Offset Curve selection, compact options at one window size, locked-layer
+selection refusal, and commit/Undo. W224's FreeCAD import recognized about 233
+entities but produced no verified geometry viewport; FreeCAD first-start
+settings remain untouched. W227's ASan publication filter passes changed-child
+and freed-redo-subtree refusal cases. W233's deterministic Qt integration test
+verifies the default right-release menu path; CUA's visible right-click remains
+inconclusive. W234 verifies held-drag Escape cancellation through the real
+QG_GraphicView event handler while the worker child is busy. W235 compares the
+worker-generated preview and committed geometry through that same view route,
+and confirms cache reuse and one-step history. These native event tests close
+their corresponding code-path gaps, not the remaining physical-app evidence.
+
+Still open: physical stale-peer interaction; visible held-drag and separate
+preview/commit screenshots; independent FreeCAD geometry rendering; durable
+screenshot/display-DPR records; deployed-package and W0-W2 acceptance; review
+approval; and final R integration. W226's qmake6 helper/client suite passed 17
+cases / 4581 assertions. W0-W2 and R remain acceptance gates, not missing
+product features or substitutes for the native worker tests.
 
 W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
 through merge commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`. The upstream
@@ -9025,3 +9009,32 @@ held-drag confirmation remains a UI-driver limitation.
 Preview/commit parity, stale-peer GUI behavior, independent FreeCAD rendering,
 durable screenshot/DPR evidence, deployed-package and W0-W2 acceptance,
 reviewer approval, and final R integration remain open.
+
+## 193. W235 Native View-Route Preview/Commit Parity
+
+Added a second deterministic `QG_GraphicView` event-pipeline test. It starts
+Modify Offset on a selected ellipse, sends the reference click and held-button
+direction move through the real Qt view, waits for the worker preview, and
+captures entity type and geometry data before releasing at the same point. The
+commit is also routed through the view and worker. The comparator checks
+endpoints, bounds, and shape-specific ellipse, spline, or polyline data when
+those result types are emitted. It verifies that the committed batch reuses the
+cached preview result, preserves the source, and adds exactly one undo cycle.
+This proves native action/event-path preview parity for the tested request; it
+does not provide a physical-app screenshot or display-DPR record.
+
+| W235 check | Result |
+|---|---|
+| Worker preview captured before commit | PASS; view-routed held-button move and asynchronous completion |
+| Geometry comparison | PASS; preview and committed shapes have matching types and captured geometry data |
+| Cache behavior | PASS; commit reports zero engine reruns and one reused cache result |
+| Document history and source | PASS; one undo cycle; original ellipse remains live |
+| Focused parity test | PASS; 25 assertions |
+| Offset creation-worker regression group | PASS; 13 cases / 359 assertions |
+| Implementation commit | `d72d9dd23` (`test: verify offset preview parity through view events`) |
+| Product behavior changes | None; event-pipeline regression test and roadmap update only |
+
+Native preview/commit parity for the tested GUI request is now qualified.
+Physical screenshot/DPR evidence remains open, along with stale-peer interaction,
+independent FreeCAD rendering, deployed-package and W0-W2 acceptance, reviewer
+approval, and final R integration.
