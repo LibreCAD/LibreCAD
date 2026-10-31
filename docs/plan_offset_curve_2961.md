@@ -8420,3 +8420,49 @@ signed/deployed package qualification, outstanding W0-W2 external acceptance,
 reviewer approval, or final R integration. Keep the PR draft until those gates
 are explicitly resolved; do not treat CI success as visual or release
 acceptance.
+
+## 177. W219 Approved-App Multi-Copy Undo/Redo Recheck
+
+After the user approved control access, used the isolated LibreCAD test app at
+`/tmp/LibreCAD-PR3193-current.app` (bundle ID
+`org.librecad.librecad.pr3193current`, version `2.2.2`, executable SHA256
+`1267fb562519199156079642b8356ba202a143f5b875a57b59e647337dd81071`). Opened
+the disposable W193 fixture, whose original SHA256 is
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+The drawing rendered six ellipse contours in two groups. Started Tools > Modify
+> Offset with fixed distance `0.5`, two copies, editable ellipse offsets,
+Keep Originals, and current attributes/layer enabled. Selected the outer
+ellipse in the right group, completed selection, and chose the inward side.
+Two additional contours appeared and the action remained available at its
+direction prompt. Escape returned to `Default`; one Undo removed both copies,
+Redo restored both, and a second Undo returned to the six original contours.
+The final idle state had no selection and Undo disabled. Closed the drawing and
+chose No at the save prompt. The fixture hash still matches its original value.
+
+The in-session screenshot confirms the visible geometry and history transitions,
+but no standalone screenshot or display-DPR evidence was retained. The app
+bundle identity and executable hash were captured; its exact build commit and
+worker hash were not independently established in this pass, so this is not an
+exact-binary qualification. FreeCAD was left at its first-start screen without
+changing preferences; independent external-CAD rendering remains open.
+
+| W219 check | Result |
+|---|---|
+| LibreCAD drawing render | PASS; six original ellipse contours visible |
+| Offset options and source selection | PASS; fixed `0.5`, two copies, editable mode; one outer ellipse selected |
+| Multi-copy creation and repeat-ready state | PASS; two additional contours visible; action returned to direction prompt |
+| Escape, Undo, Redo, cleanup | PASS; Escape returned to Default; Undo removed both, Redo restored both, final Undo restored original geometry |
+| Disposable fixture integrity | PASS; SHA256 unchanged at `05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d` |
+| App binary provenance | PARTIAL; isolated bundle ID/version and executable hash recorded, exact build commit/worker hash unverified |
+| Screenshot / display-DPR | OPEN; observed in-session only, no retained screenshot; DPR unavailable |
+| Independent FreeCAD rendering | OPEN; first-start screen left untouched; no geometry view verified |
+| PR #3193 head `4700af06a` checks at capture | Headless ON/OFF and Ubuntu Pixi jobs PASS; remaining Pixi, CodeQL analysis, DWG/DXF fast and Windows jobs IN PROGRESS; Security scan skipped by policy |
+| PR state | OPEN; draft, review required |
+| Product-source changes | None; visible-app validation and roadmap receipt only |
+
+W219 adds one approved-app multi-copy creation/undo/redo observation. It does
+not close exact-binary GUI qualification, independent external-CAD rendering,
+retained screenshot/DPR evidence, remaining GUI refusal/interaction cases,
+deployed-package and W0-W2 acceptance, reviewer approval, or final R
+integration.
