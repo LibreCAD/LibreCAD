@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W218; chronological evidence follows): planned product
+Current status (W221; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -33,9 +33,14 @@ synchronous file/stream/byte filter imports. No additional feature-code gap is
 currently identified. W218's exact product-source head
 `71ecf102b36017d57bd30db39d0de630ac11bb75` has passing Headless ON/OFF, CodeQL,
 DWG/DXF Linux/Windows x64/ARM64, and all five-platform Pixi checks. The
-follow-up W218 roadmap commits are documentation-only and do not alter that
-qualified product source. W0-W2 and R remain open for acceptance, not because
-the Node developer runner substitutes for the native worker.
+follow-up commits through current PR head
+`86d1d4f227183f37f8b6aa2b6991e4066ddb6e82` are documentation-only and do not
+alter that qualified product source. Fresh checks for the current head have
+started but are not yet complete. W220 identifies the approved qmake6 app and
+worker used for bounded GUI checks; W221 confirms normal pointer selection of
+an Offset Curve. Context-menu behavior remains unverified. W0-W2 and R remain
+open for acceptance, not because the Node developer runner substitutes for
+the native worker.
 
 W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
 through merge commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`. The upstream
@@ -69,13 +74,16 @@ that PR head were confined to this roadmap file. The CodeQL Security scan is
 skipped by workflow policy. At that capture PR #3193 was open and draft, with
 mergeability unknown and review required.
 
-The approved LibreCAD test app was accessible for W214, which visibly confirms the
-W193 drawing's six ellipse contours and idle/default state. Normal pointer
-clicks did not select a contour, but enabling the explicit Select Entities
-control and clicking did select one native Offset Curve with its grips.
-Right-click and Control-click on that selected entity still did not open a
-context menu. The selection was cleared; no drawing edit or save occurred. Earlier W193
-interaction and W211/W163 FreeCAD rendering receipts remain scoped results.
+The approved LibreCAD test app was accessible for W214, which visibly confirms
+the W193 drawing's six ellipse contours and idle/default state. At W214, normal
+pointer clicks did not select a contour until the explicit Select Entities
+control was enabled. W221 later confirms that a normal primary-pointer click
+selects the native Offset Curve and exposes its grips/property row in the
+approved qmake6 bundle. Right-click/Control-click on the selected entity and
+right-click on blank canvas did not visibly open a menu; these probes do not
+establish a product defect. Selection was cleared; no drawing edit or save
+occurred. Earlier W193 interaction and W211/W163 FreeCAD rendering receipts
+remain scoped results.
 W171-derived external DXF/DWG rendering is still unverified: FreeCAD previously
 recognized about 233 entities but produced no verified rendered view. The
 screenshot was observed in-session but not retained, and display-DPR evidence
