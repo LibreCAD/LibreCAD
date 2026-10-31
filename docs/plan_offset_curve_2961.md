@@ -50,9 +50,9 @@ review-required.
 The approved LibreCAD test app is now accessible. W214 visibly confirms the
 W193 drawing's six ellipse contours and idle/default state. Normal pointer
 clicks did not select a contour, but enabling the explicit Select Entities
-control and clicking did select one native Offset Curve with its grips. A
-right-click on that selected entity still did not open a context menu. The
-selection was cleared; no drawing edit or save occurred. Earlier W193
+control and clicking did select one native Offset Curve with its grips.
+Right-click and Control-click on that selected entity still did not open a
+context menu. The selection was cleared; no drawing edit or save occurred. Earlier W193
 interaction and W211/W163 FreeCAD rendering receipts remain scoped results.
 W171-derived external DXF/DWG rendering is still unverified: FreeCAD previously
 recognized about 233 entities but produced no verified rendered view. The
@@ -8257,6 +8257,7 @@ this is a capture size, not a measurement of Qt or display DPR.
 | Normal pointer pick at two visible contour locations | OPEN/NOT REPRODUCED; selection count stayed zero |
 | Explicit Select Entities mode and pick | PASS; one native Offset Curve selected; highlight and grips visible |
 | Right-click on selected Offset Curve | OPEN/NOT REPRODUCED; no context menu appeared |
+| Control-click on selected Offset Curve | OPEN/NOT REPRODUCED; no context menu appeared |
 | Recovery / document state | PASS; exited Select Entities and Escape cleared selection; Default action, zero selected entities, Undo/Redo disabled; no edit or save |
 | Screenshot / DPR retention | OPEN; image observed in-session but not retained; DPR not exposed/measured |
 | Product-source changes | None; GUI validation and roadmap receipt only |
