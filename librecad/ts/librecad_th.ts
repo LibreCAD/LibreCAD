@@ -4143,14 +4143,15 @@ or [%2]</source>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
+        <extracomment>%4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.</extracomment>
         <translation>มุม:%1
 คอมพลีเมนต์:%2
 ความอิ่มตัว:%3
-ตัวเลือก:%4
+หนึ่งรอบ − มุม: %4
 จุดเริ่มขอบ: (%5, %6)
 จุดตัด (%7, %8)
 จุดสิ้นสุด: (%9, %10)</translation>
@@ -4178,8 +4179,9 @@ End Edge Point: (%9 , %10)</source>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="211"/>
-        <source>Alternative: </source>
-        <translation>ตัวเลือก:</translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>หนึ่งรอบ − มุม:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
@@ -4387,8 +4389,9 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="163"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="321"/>
-        <source>Alternative: </source>
-        <translation>ตัวเลือก:</translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>หนึ่งรอบ − มุม:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
@@ -48416,25 +48419,27 @@ Do you want to replace it?</source>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 </source>
+        <extracomment>%4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.</extracomment>
         <translation>มุม:%1
 คอมพลีเมนต์:%2
 ความอิ่มตัว:%3
-ตัวเลือก:%4</translation>
+หนึ่งรอบ − มุม: %4</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="139"/>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
+        <extracomment>%4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.</extracomment>
         <translation>มุม:%1
 คอมพลีเมนต์:%2
 ความอิ่มตัว:%3
-ตัวเลือก:%4
+หนึ่งรอบ − มุม: %4
 อินเตอร์เซก: (%5, %6)
 อินเตอร์เซก: @(%7, %8)</translation>
     </message>
@@ -48491,8 +48496,9 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="291"/>
-        <source>Alternative: </source>
-        <translation>ตัวเลือก:</translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>หนึ่งรอบ − มุม:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
