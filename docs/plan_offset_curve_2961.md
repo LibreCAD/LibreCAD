@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W226; chronological evidence follows): planned product
+Current status (W227; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -41,8 +41,10 @@ W221 confirms normal pointer selection of an Offset Curve. W222 also confirms
 the compact options strip exposes its configured values at the tested window
 size and that an offset commit can be undone back to the fixture state. W223
 confirms a locked layer cannot advance the Offset source-selection step.
-Stale-peer behavior, held-drag cancellation, and preview/commit parity remain
-unverified. W224's FreeCAD retry recognized the retained DXF's approximate
+Visible stale-peer interaction, held-drag cancellation, and preview/commit
+parity remain unverified. W227's ASan publication filter separately passes
+changed-child and freed-redo-subtree refusal cases. W224's FreeCAD retry
+recognized the retained DXF's approximate
 233-entity count but still produced no verified geometry viewport; the
 first-start settings remain untouched. W225 confirms the approved LibreCAD
 bundle renders W193 and selects an `Offset Curve (1)`; secondary-clicking that
@@ -51,7 +53,8 @@ and R remain open for acceptance, not because the Node developer runner
 substitutes for the native worker. W226 reruns the workspace qmake6 helper/client
 suite (17 cases, 4581 assertions) with real helper completions, timeout,
 cancellation and recovery coverage; the desktop is currently locked, so no
-additional GUI or FreeCAD interaction was possible.
+additional GUI or FreeCAD interaction was possible. W227 adds two ASan
+publication-staleness cases (18 assertions) without changing product code.
 
 W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
 through merge commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`. The upstream
@@ -8727,3 +8730,36 @@ packaged, cross-platform or full GUI acceptance. FreeCAD visual rendering,
 context-menu acceptance, preview/commit parity, held-drag cancellation,
 durable screenshot/DPR evidence, deployed-package verification, required
 review approval and final R integration remain open.
+
+## 185. W227 ASan Stale Publication Refusal
+
+Ran the current-worktree CMake build's `librecad_offset_creation_publication_tests`
+ASan executable from `/private/tmp/librecad-offset-2961-wire-asan` with the
+`[stale]` filter and `ASAN_OPTIONS=detect_leaks=0`. Its CMake cache identifies
+this worktree as the source directory. Both matching cases passed with 18
+assertions:
+
+- Offset creation publication rejects changed child membership before reading retired addresses.
+- Offset creation publication refuses changed redo subtrees without touching freed children.
+
+The tested executable SHA256 is
+`d2a649e495645556a92e639e7b08e9a6cf196753254d5f3d4e33f1fce6e1cae4`. The
+worktree source diff since the qualified product-source pin is documentation-only;
+the binary itself has no embedded commit stamp. These cases strengthen stale
+publication/freed-address safety but do not qualify visible stale-peer GUI
+behavior. The Mac remained locked for this pass, preventing further desktop
+interaction; no document or preference was changed.
+
+| W227 check | Result |
+|---|---|
+| ASan stale publication filter | PASS; 2 test cases / 18 assertions |
+| Changed child membership | PASS; stale membership rejected before retired-address read |
+| Freed redo subtree | PASS; redo refusal leaves freed children untouched |
+| Product-source delta | PASS; documentation-only since qualified product pin |
+| Exact build commit stamp | OPEN; CMake source path verified, executable has no commit stamp |
+| Visible stale-peer interaction | OPEN; ASan tests do not replace physical GUI interaction |
+
+W227 closes only the local stale-publication safety cases. Visible stale-peer
+interaction, held-drag cancellation, preview/commit parity, FreeCAD rendering,
+durable screenshot/DPR evidence, deployed-package and W0-W2 acceptance,
+reviewer approval, and final R integration remain open.
