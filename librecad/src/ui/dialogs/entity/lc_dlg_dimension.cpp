@@ -25,6 +25,7 @@
 
 #include <QMenu>
 #include <QMessageBox>
+#include <memory>
 
 #include "lc_dimordinate.h"
 #include "lc_dimstylepreviewgraphicview.h"
@@ -45,6 +46,36 @@ LC_DlgDimension::LC_DlgDimension(QWidget* parent, LC_GraphicViewport* viewport, 
     , ui(new Ui::LC_DlgDimension){
     ui->setupUi(this);
     setEntity(dim);
+    connect(ui->leAngle, &QLineEdit::textChanged, this, &LC_DlgDimension::updateMeasuredValue);
+    connect(ui->rbOrdinateX, &QRadioButton::toggled, this, &LC_DlgDimension::updateMeasuredValue);
+    updateMeasuredValue();
+}
+
+void LC_DlgDimension::updateMeasuredValue() const {
+    if (m_entity == nullptr) {
+        ui->leMeasuredValue->clear();
+        return;
+    }
+    if (m_entity->rtti() == RS2::EntityDimLinear) {
+        double angle = 0.0;
+        if (!toDoubleAngle(ui->leAngle->text(), angle, 0.0, false)) {
+            ui->leMeasuredValue->clear();
+            return;
+        }
+        std::unique_ptr<RS_Entity> copy(m_entity->clone());
+        auto* dimension = static_cast<RS_DimLinear*>(copy.get());
+        dimension->setAngle(toWCSAngle(ui->leAngle, dimension->getAngle()));
+        ui->leMeasuredValue->setText(dimension->getMeasuredValueText());
+    }
+    else if (m_entity->rtti() == RS2::EntityDimOrdinate) {
+        std::unique_ptr<RS_Entity> copy(m_entity->clone());
+        auto* dimension = static_cast<LC_DimOrdinate*>(copy.get());
+        dimension->setForXDirection(ui->rbOrdinateX->isChecked());
+        ui->leMeasuredValue->setText(dimension->getMeasuredValueText());
+    }
+    else {
+        ui->leMeasuredValue->setText(m_entity->getMeasuredValueText());
+    }
 }
 
 LC_DlgDimension::~LC_DlgDimension(){

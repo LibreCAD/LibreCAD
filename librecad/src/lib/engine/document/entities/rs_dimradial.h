@@ -81,6 +81,7 @@ public:
 
     RS_VectorSolutions getRefPoints() const override;
     QString getMeasuredLabel() override;
+    std::optional<double> getMeasuredValue() const override;
 
     RS_Vector getRadialDefinitionPoint() const {
         return m_dimRadialData.definitionPoint;

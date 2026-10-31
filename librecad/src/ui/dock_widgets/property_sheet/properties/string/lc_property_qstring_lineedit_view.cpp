@@ -47,6 +47,7 @@ const QByteArray LC_PropertyQStringLineEditView::VIEW_NAME = LC_PropertyViewUtil
 const QByteArray LC_PropertyQStringLineEditView::ATTR_MULTILINE_EDIT = QByteArrayLiteral("multilineEdit");
 const QByteArray LC_PropertyQStringLineEditView::ATTR_MAX_LENGTH = QByteArrayLiteral("maxLength");
 const QByteArray LC_PropertyQStringLineEditView::ATTR_PLACEHOLDER = QByteArrayLiteral("placeholder");
+const QByteArray LC_PropertyQStringLineEditView::ATTR_COPYABLE_READ_ONLY = QByteArrayLiteral("copyableReadOnly");
 
 class LC_PropertyQStringMultilineEditBttnHandler : public LC_PropertyEditorButtonHandler<LC_PropertyQString, LC_PropertyLineEditWithButton> {
 public:
@@ -211,6 +212,15 @@ void LC_PropertyQStringLineEditView::doApplyAttributes(const LC_PropertyViewDesc
     info.load(ATTR_MULTILINE_EDIT, m_multiline);
     info.load(ATTR_PLACEHOLDER, m_placeholder);
     info.load(ATTR_MAX_LENGTH, m_maxLength);
+    info.load(ATTR_COPYABLE_READ_ONLY, m_copyableReadOnly);
+}
+
+bool LC_PropertyQStringLineEditView::doGetToolTip(QString& strValue) {
+    if (m_copyableReadOnly) {
+        strValue = getProperty()->getDescription();
+        return !strValue.isEmpty();
+    }
+    return Inherited::doGetToolTip(strValue);
 }
 
 bool LC_PropertyQStringLineEditView::doAcceptKeyPressedForInplaceEdit(QKeyEvent* keyEvent) const {
@@ -222,6 +232,15 @@ bool LC_PropertyQStringLineEditView::doAcceptKeyPressedForInplaceEdit(QKeyEvent*
 }
 
 QWidget* LC_PropertyQStringLineEditView::doCreateValueEditor(QWidget* parent, const QRect& rect, const EditActivationContext* ctx) {
+    if (!isEditableByUser() && m_copyableReadOnly && !isMultiValue() && !propertyValue().isEmpty()) {
+        auto* editor = createValueEditorLineEdit(parent, rect, true, ctx);
+        QObject::connect(this, &QObject::destroyed, editor, &QWidget::deleteLater);
+        QObject::connect(getStateProperty(), &QObject::destroyed, editor, &QWidget::deleteLater);
+        if (getStateProperty() != getProperty()) {
+            QObject::connect(getProperty(), &QObject::destroyed, editor, &QWidget::deleteLater);
+        }
+        return editor;
+    }
     if (isEditableByUser()) {
         if (m_multiline) {
             const auto leB = new LC_PropertyLineEditWithButton(parent);

@@ -50,6 +50,7 @@ protected:
     void createGVMenuView(QMenu* ctxMenu) const;
     void createGVMenuFiles(QMenu* ctxMenu) const;
     void createGVMenuEntitySpecific(QMenu* contextMenu, QG_GraphicView* graphicView, RS_Entity* entity, const RS_Vector& pos);
+    void createGVDimensionCopyActions(QMenu* menu, const RS_Entity* entity) const;
     void createGVEditPropertiesAction(QMenu* menu, QG_GraphicView* graphicView, RS_Entity* entity);
     void createGVEditPropertiesAction(QMenu* menu, QG_GraphicView* graphicView, RS_Entity* entity, const QString &actionText);
     void createGVMenuModifyGeneral(QMenu* contextMenu, QG_GraphicView* graphicView, RS_Entity* entity, const RS_Vector& pos,

@@ -104,6 +104,7 @@ public:
     RS_Vector getLeaderPt2() const { return m_dimArcData.leaderPt2; }
 
     QString getMeasuredLabel()  override;
+    std::optional<double> getMeasuredValue() const override;
 
     void update() override;
 
