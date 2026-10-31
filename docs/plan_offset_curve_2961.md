@@ -8989,7 +8989,39 @@ itself remains unqualified.
 | Product behavior changes | None; deterministic GUI regression coverage and roadmap receipt only |
 
 The context-menu application route is no longer a known implementation gap.
-Keep visible native-input confirmation as a test limitation. Held-drag
-cancellation, preview/commit parity, stale-peer GUI behavior, independent
-FreeCAD rendering, durable screenshot/DPR evidence, deployed-package and W0-W2
-acceptance, reviewer approval, and final R integration remain open.
+Keep visible native-input confirmation as a test limitation. Native held-drag
+cancellation remained open at this point and is addressed by W234; visible
+held-drag interaction is still unverified. Preview/commit parity, stale-peer GUI
+behavior, independent FreeCAD rendering, durable screenshot/DPR evidence,
+deployed-package and W0-W2 acceptance, reviewer approval, and final R
+integration remain open.
+
+## 192. W234 Native Held-Drag Escape Event Pipeline
+
+Added an offset-action regression test using a real `QG_GraphicView`, its normal
+event handler, a selected ellipse, and the offset creation worker. The test
+places the reference point, presses at the direction point, moves with
+`Qt::LeftButton` still held, waits until the worker child is busy, dispatches
+Escape through the view before releasing the mouse, waits for worker shutdown,
+then sends the delayed left-button release. The action finishes, the source
+remains live, and no output entity is published. This closes the native
+held-drag cancellation test gap; it does not claim visible CUA input proof.
+
+| W234 check | Result |
+|---|---|
+| Active child during held-button move | PASS; worker busy before Escape |
+| Escape through the view event handler before release | PASS; action finishes and preparation cancels |
+| Delayed left release after cancellation | PASS; no offset output is published |
+| Source and drawing integrity | PASS; selected ellipse remains live and entity count unchanged |
+| Offset worker regression group | PASS; 12 cases / 334 assertions, including active-child cancellation |
+| Focused event-pipeline test | PASS; 16 assertions |
+| Visible app-control attempt | UNAVAILABLE; user approved the isolated bundle, but the Mac still reports locked |
+| Refusal-inventory validation | PASS; 94/94 tests, 93 obligations, zero pending declarations or production mismatches |
+| Implementation commit | `c8b2f2d5` (`test: cover held offset preview cancellation through view events`) |
+| Product behavior changes | None; event-pipeline regression test and roadmap receipt only |
+
+The CMake Release `librecad_tests` target rebuilt from this worktree. Visible
+held-drag confirmation remains a UI-driver limitation.
+Preview/commit parity, stale-peer GUI behavior, independent FreeCAD rendering,
+durable screenshot/DPR evidence, deployed-package and W0-W2 acceptance,
+reviewer approval, and final R integration remain open.
