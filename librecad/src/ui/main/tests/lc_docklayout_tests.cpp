@@ -942,9 +942,11 @@ TEST_CASE("Dimension popup restores temporary highlighting", "[gui][clipboard][p
     const auto children = dimension->getEntityList();
     const auto measurement = dimension->getMeasurement();
     const auto undoCount = graphic.countUndoCycles();
+    const QString previousClipboard = clipboard->text();
 
     std::unique_ptr<QMenu> menu(LC_DockLayoutTestAccess::dimensionPopup(window, &view, dimension));
     REQUIRE(menu != nullptr);
+    CHECK(clipboard->text() == previousClipboard);
     CHECK(selected->isSelected());
     CHECK(dimension->isSelected());
     int copyActions = 0;

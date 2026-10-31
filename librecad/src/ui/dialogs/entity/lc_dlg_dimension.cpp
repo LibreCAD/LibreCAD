@@ -25,7 +25,6 @@
 
 #include <QMenu>
 #include <QMessageBox>
-#include <memory>
 
 #include "lc_dimordinate.h"
 #include "lc_dimstylepreviewgraphicview.h"
@@ -36,6 +35,7 @@
 #include "rs_dimension.h"
 #include "rs_dimlinear.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 #include "rs_settings.h"
 #include "ui_lc_dlg_dimension.h"
 
@@ -57,21 +57,26 @@ void LC_DlgDimension::updateMeasuredValue() const {
         return;
     }
     if (m_entity->rtti() == RS2::EntityDimLinear) {
-        double angle = 0.0;
-        if (!toDoubleAngle(ui->leAngle->text(), angle, 0.0, false)) {
-            ui->leMeasuredValue->clear();
-            return;
+        const auto* source = static_cast<const RS_DimLinear*>(m_entity);
+        auto data = source->getEData();
+        // The angle editor rounds its text; retain the exact angle until edited.
+        if (ui->leAngle->text() != toUIAngleDeg(source->getAngle())) {
+            double angle = 0.0;
+            if (!toDoubleAngle(ui->leAngle->text(), angle, 0.0, false)) {
+                ui->leMeasuredValue->clear();
+                return;
+            }
+            data.angle = RS_Math::correctAngle(toWCSAngle(ui->leAngle, source->getAngle()));
         }
-        std::unique_ptr<RS_Entity> copy(m_entity->clone());
-        auto* dimension = static_cast<RS_DimLinear*>(copy.get());
-        dimension->setAngle(toWCSAngle(ui->leAngle, dimension->getAngle()));
-        ui->leMeasuredValue->setText(dimension->getMeasuredValueText());
+        const RS_DimLinear dimension(nullptr, source->getGenericData(), data);
+        ui->leMeasuredValue->setText(dimension.getMeasuredValueText());
     }
     else if (m_entity->rtti() == RS2::EntityDimOrdinate) {
-        std::unique_ptr<RS_Entity> copy(m_entity->clone());
-        auto* dimension = static_cast<LC_DimOrdinate*>(copy.get());
-        dimension->setForXDirection(ui->rbOrdinateX->isChecked());
-        ui->leMeasuredValue->setText(dimension->getMeasuredValueText());
+        const auto* source = static_cast<const LC_DimOrdinate*>(m_entity);
+        auto data = source->getEData();
+        data.ordinateForX = ui->rbOrdinateX->isChecked();
+        const LC_DimOrdinate dimension(nullptr, source->getGenericData(), data);
+        ui->leMeasuredValue->setText(dimension.getMeasuredValueText());
     }
     else {
         ui->leMeasuredValue->setText(m_entity->getMeasuredValueText());
@@ -92,13 +97,10 @@ void LC_DlgDimension::saveDimensionTypeDependentProperties() const {
         }
         case RS2::EntityDimLinear: {
             const auto dimLinear = static_cast<RS_DimLinear*>(m_entity);
-            const RS_DimLinear* original = dynamic_cast<RS_DimLinear*>(m_entity);
-            if (original != nullptr) {
-                dimLinear->setAngle(toWCSAngle(ui->leAngle, original->getAngle()));
+            if (ui->leAngle->text() != toUIAngleDeg(dimLinear->getAngle())) {
+                dimLinear->setAngle(toWCSAngle(ui->leAngle, dimLinear->getAngle()));
             }
-            else {
-                dimLinear->setAngle(toWCSAngle(ui->leAngle, 0.0));
-            }
+            break;
         }
         default:
             break;

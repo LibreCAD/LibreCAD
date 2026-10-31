@@ -34,7 +34,6 @@
 #include "lc_propertysheet_widget_options.h"
 #include "lc_propertysheetwidget.h"
 #include "lc_undosection.h"
-#include "qg_graphicview.h"
 #include "rs_dimaligned.h"
 #include "rs_dimlinear.h"
 #include "rs_graphic.h"
@@ -57,9 +56,8 @@ private:
 
 class DimensionMenuFactory : public LC_MenuFactoryGraphicView {
 public:
-    explicit DimensionMenuFactory(LC_ActionGroupManager* actions = nullptr) : LC_MenuFactoryGraphicView(nullptr, actions, nullptr) {}
+    DimensionMenuFactory() : LC_MenuFactoryGraphicView(nullptr, nullptr, nullptr) {}
     using LC_MenuFactoryGraphicView::createGVDimensionCopyActions;
-    using LC_MenuFactoryGraphicView::createGVMenuEntitySpecific;
 };
 }
 
@@ -401,6 +399,49 @@ TEST_CASE("Dimension dialog reflects pending geometry without modifying its enti
     CHECK(ordinate.isForXDirection());
 }
 
+TEST_CASE("Dimension dialog preserves the exact angle until its text changes", "[gui][properties][clipboard]") {
+    (void)lc::test::application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    graphic.addDimStyle(new LC_DimStyle("Standard"));
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    RS_DimensionData data;
+    data.definitionPoint = RS_Vector(0, 3);
+    data.middleOfText = RS_Vector(5, 3);
+    data.style = "Standard";
+    for (const double ucsAngle : {0.0, M_PI_2}) {
+        view.getViewPort()->createUCS(RS_Vector(0, 0), ucsAngle);
+        for (const double originalAngle : {1e-9, 0.123456789123456}) {
+            CAPTURE(ucsAngle, originalAngle);
+            RS_DimLinear dimension(&graphic, data, {RS_Vector(0, 0), RS_Vector(0, 1e6), originalAngle, 0});
+            dimension.update();
+            const QString measurement = dimension.getMeasuredValueText();
+            LC_DlgDimension dialog(nullptr, view.getViewPort(), &dimension);
+            auto* value = dialog.findChild<QLineEdit*>("leMeasuredValue");
+            auto* angle = dialog.findChild<QLineEdit*>("leAngle");
+            REQUIRE(value != nullptr);
+            REQUIRE(angle != nullptr);
+            const QString originalText = angle->text();
+            CHECK(value->text() == measurement);
+            angle->setText("invalid angle");
+            CHECK(value->text().isEmpty());
+            angle->setText(originalText);
+            CHECK(value->text() == measurement);
+            dialog.updateEntity();
+            CHECK(dimension.getAngle() == originalAngle);
+            CHECK(dimension.getMeasuredValueText() == measurement);
+            LC_DlgDimension editedDialog(nullptr, view.getViewPort(), &dimension);
+            editedDialog.findChild<QLineEdit*>("leAngle")->setText("45");
+            const QString pendingValue = editedDialog.findChild<QLineEdit*>("leMeasuredValue")->text();
+            CHECK_FALSE(pendingValue.isEmpty());
+            editedDialog.updateEntity();
+            CHECK(dimension.getAngle() != originalAngle);
+            CHECK(dimension.getMeasuredValueText() == pendingValue);
+        }
+    }
+}
+
 TEST_CASE("Dimension menu actions copy snapshots of the context entity", "[gui][properties][clipboard]") {
     (void)lc::test::application();
     ClipboardGuard clipboardGuard;
@@ -464,41 +505,4 @@ TEST_CASE("Dimension menu actions copy snapshots of the context entity", "[gui][
     CHECK_FALSE(invalidMenu.actions().at(1)->isEnabled());
     invalidMenu.actions().at(0)->trigger();
     CHECK(QApplication::clipboard()->text() == "preserve");
-}
-
-TEST_CASE("Dimension-specific menu includes copy actions without changing the document", "[gui][properties][clipboard]") {
-    (void)lc::test::application();
-    ClipboardGuard clipboardGuard;
-    struct TestGraphic : RS_Graphic { using RS_Undo::countUndoCycles; } graphic;
-    graphic.initForNewDocument();
-    LC_ActionContext context;
-    LC_ActionGroupManager actions(nullptr);
-    QG_GraphicView view(nullptr, &graphic, &context);
-    RS_DimensionData data;
-    data.definitionPoint = RS_Vector(0, 3);
-    data.middleOfText = RS_Vector(5, 3);
-    data.style = "Standard";
-    data.text = "fixed label";
-    auto* dimension = new RS_DimAligned(&graphic, data, {RS_Vector(0, 0), RS_Vector(10, 0)});
-    graphic.addEntity(dimension);
-    dimension->update();
-    graphic.setModified(false);
-    const auto childCount = dimension->count();
-    const auto measurement = dimension->getMeasurement();
-    const auto undoCount = graphic.countUndoCycles();
-
-    DimensionMenuFactory factory(&actions);
-    QMenu menu;
-    QApplication::clipboard()->setText("untouched");
-    factory.createGVMenuEntitySpecific(&menu, &view, dimension, RS_Vector(0, 0));
-    REQUIRE(menu.actions().size() >= 2);
-    CHECK(menu.actions().at(0)->text() == "Copy value");
-    CHECK(menu.actions().at(1)->text() == "Copy formatted");
-    CHECK(QApplication::clipboard()->text() == "untouched");
-    menu.actions().at(1)->trigger();
-    CHECK(QApplication::clipboard()->text() == "fixed label");
-    CHECK_FALSE(graphic.isModified());
-    CHECK(graphic.countUndoCycles() == undoCount);
-    CHECK(dimension->count() == childCount);
-    CHECK(dimension->getMeasurement() == measurement);
 }
