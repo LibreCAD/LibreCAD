@@ -184,6 +184,13 @@ void RS_DimLinear::doUpdateDim() {
  * @return Automatically created label for the default
  * measurement of this dimension.
  */
+std::optional<double> RS_DimLinear::getMeasuredValue() const {
+    if (!validMeasurementPoint(m_dimGenericData.definitionPoint) || !validMeasurementPoint(m_dimLinearData.extensionPoint1) ||
+        !validMeasurementPoint(m_dimLinearData.extensionPoint2) || !std::isfinite(m_dimLinearData.angle)) return std::nullopt;
+    const RS_Vector delta = m_dimLinearData.extensionPoint2 - m_dimLinearData.extensionPoint1;
+    return finiteMeasurement(std::abs(delta.x * std::cos(m_dimLinearData.angle) + delta.y * std::sin(m_dimLinearData.angle)));
+}
+
 QString RS_DimLinear::getMeasuredLabel()  {
     // direction of dimension line
     const RS_Vector dirDim = RS_Vector::polar(100.0, m_dimLinearData.angle);

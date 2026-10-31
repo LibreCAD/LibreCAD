@@ -35,6 +35,7 @@ public:
     static const QByteArray ATTR_MULTILINE_EDIT;
     static const QByteArray ATTR_MAX_LENGTH;
     static const QByteArray ATTR_PLACEHOLDER;
+    static const QByteArray ATTR_COPYABLE_READ_ONLY;
 
     explicit LC_PropertyQStringLineEditView(LC_PropertyQString* property);
 
@@ -44,6 +45,7 @@ protected:
     bool doAcceptKeyPressedForInplaceEdit(QKeyEvent* keyEvent) const override;
     QWidget* doCreateValueEditor(QWidget* parent, const QRect& rect, const EditActivationContext* ctx) override;
     bool doPropertyValueToStr(QString& strValue) const override;
+    bool doGetToolTip(QString& strValue) override;
     bool isPlaceholderColor() const override;
 
     bool isShowPlaceholderForEmptyText(const QString& strValue) const {
@@ -52,6 +54,7 @@ protected:
 
     int m_maxLength;
     bool m_multiline;
+    bool m_copyableReadOnly = false;
     QString m_placeholder;
 };
 

@@ -2652,6 +2652,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_circletests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_arctests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_dimarc_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_dimension_clipboard_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_polylineclosing_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_dimarrowtests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
@@ -2803,6 +2804,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dock_widgets/layer_widget/tests/lc_layerblockwidgets_tests.cpp
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucsviewsselectiondocks_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_property_copy_tests.cpp
         librecad/src/actions/dock_widgets/block/tests/lc_actionblockssave_tests.cpp
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucslistmodel_tests.cpp
         librecad/src/ui/dock_widgets/views_list/tests/lc_namedviewsmodel_tests.cpp
@@ -3489,6 +3491,18 @@ if (BUILD_TESTS)
         LIBRECAD_TEST_TRANSLATION_DIR="${CMAKE_CURRENT_BINARY_DIR}")
     add_dependencies(librecad_dock_layout_tests librecad_test_translations)
     add_librecad_filter_micro_test(
+        librecad_dimension_clipboard_tests
+        librecad/src/lib/engine/document/entities/tests/lc_dimension_clipboard_tests.cpp)
+    target_sources(librecad_dimension_clipboard_tests PRIVATE
+        librecad/src/lib/engine/document/entities/tests/lc_dimarc_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_property_copy_tests.cpp
+        librecad/src/ui/main/tests/lc_docklayout_tests.cpp
+        ${LIBRECAD_RES})
+    set_target_properties(librecad_dimension_clipboard_tests PROPERTIES AUTORCC ON)
+    target_compile_definitions(librecad_dimension_clipboard_tests PRIVATE
+        LIBRECAD_TEST_TRANSLATION_DIR="${CMAKE_CURRENT_BINARY_DIR}")
+    add_dependencies(librecad_dimension_clipboard_tests librecad_test_translations)
+    add_librecad_filter_micro_test(
         librecad_printing_tests
         librecad/src/lib/printing/tests/lc_printingtests.cpp)
     add_librecad_filter_micro_test(
@@ -3784,6 +3798,12 @@ if (BUILD_TESTS)
             TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
+        add_test(NAME librecad_dimension_clipboard_tests
+            COMMAND $<TARGET_FILE:librecad_dimension_clipboard_tests> "[clipboard]" --reporter compact)
+        set_tests_properties(librecad_dimension_clipboard_tests PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+            LABELS dimension-clipboard TIMEOUT 120)
         add_test(NAME librecad_painter_tests
             COMMAND $<TARGET_FILE:librecad_painter_tests> --reporter compact)
         set_tests_properties(librecad_painter_tests PROPERTIES

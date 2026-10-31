@@ -83,6 +83,7 @@ public:
     RS_VectorSolutions getRefPoints() const override;
 
     QString getMeasuredLabel()  override;
+    std::optional<double> getMeasuredValue() const override;
 
     RS_Vector getDiametricDefinitionPoint() const {
         // fixme - sand - review

@@ -35,6 +35,7 @@
 #include "rs_dimension.h"
 #include "rs_dimlinear.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 #include "rs_settings.h"
 #include "ui_lc_dlg_dimension.h"
 
@@ -45,6 +46,41 @@ LC_DlgDimension::LC_DlgDimension(QWidget* parent, LC_GraphicViewport* viewport, 
     , ui(new Ui::LC_DlgDimension){
     ui->setupUi(this);
     setEntity(dim);
+    connect(ui->leAngle, &QLineEdit::textChanged, this, &LC_DlgDimension::updateMeasuredValue);
+    connect(ui->rbOrdinateX, &QRadioButton::toggled, this, &LC_DlgDimension::updateMeasuredValue);
+    updateMeasuredValue();
+}
+
+void LC_DlgDimension::updateMeasuredValue() const {
+    if (m_entity == nullptr) {
+        ui->leMeasuredValue->clear();
+        return;
+    }
+    if (m_entity->rtti() == RS2::EntityDimLinear) {
+        const auto* source = static_cast<const RS_DimLinear*>(m_entity);
+        auto data = source->getEData();
+        // The angle editor rounds its text; retain the exact angle until edited.
+        if (ui->leAngle->text() != toUIAngleDeg(source->getAngle())) {
+            double angle = 0.0;
+            if (!toDoubleAngle(ui->leAngle->text(), angle, 0.0, false)) {
+                ui->leMeasuredValue->clear();
+                return;
+            }
+            data.angle = RS_Math::correctAngle(toWCSAngle(ui->leAngle, source->getAngle()));
+        }
+        const RS_DimLinear dimension(nullptr, source->getGenericData(), data);
+        ui->leMeasuredValue->setText(dimension.getMeasuredValueText());
+    }
+    else if (m_entity->rtti() == RS2::EntityDimOrdinate) {
+        const auto* source = static_cast<const LC_DimOrdinate*>(m_entity);
+        auto data = source->getEData();
+        data.ordinateForX = ui->rbOrdinateX->isChecked();
+        const LC_DimOrdinate dimension(nullptr, source->getGenericData(), data);
+        ui->leMeasuredValue->setText(dimension.getMeasuredValueText());
+    }
+    else {
+        ui->leMeasuredValue->setText(m_entity->getMeasuredValueText());
+    }
 }
 
 LC_DlgDimension::~LC_DlgDimension(){
@@ -61,13 +97,10 @@ void LC_DlgDimension::saveDimensionTypeDependentProperties() const {
         }
         case RS2::EntityDimLinear: {
             const auto dimLinear = static_cast<RS_DimLinear*>(m_entity);
-            const RS_DimLinear* original = dynamic_cast<RS_DimLinear*>(m_entity);
-            if (original != nullptr) {
-                dimLinear->setAngle(toWCSAngle(ui->leAngle, original->getAngle()));
+            if (ui->leAngle->text() != toUIAngleDeg(dimLinear->getAngle())) {
+                dimLinear->setAngle(toWCSAngle(ui->leAngle, dimLinear->getAngle()));
             }
-            else {
-                dimLinear->setAngle(toWCSAngle(ui->leAngle, 0.0));
-            }
+            break;
         }
         default:
             break;

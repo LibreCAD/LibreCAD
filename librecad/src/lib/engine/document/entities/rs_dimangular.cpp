@@ -105,6 +105,7 @@ RS_DimAngular::RS_DimAngular(RS_EntityContainer* parent, const RS_DimensionData&
 
 RS_DimAngular::RS_DimAngular(const RS_DimAngular& other)
     : RS_Dimension(other), m_dimAngularData{other.m_dimAngularData} {
+    calcDimension();
 }
 
 RS_Entity* RS_DimAngular::clone() const {
@@ -116,6 +117,13 @@ RS_Entity* RS_DimAngular::clone() const {
  * @return Automatically created label for the default
  * measurement of this dimension.
  */
+std::optional<double> RS_DimAngular::getMeasuredValue() const {
+    if (!validMeasurementPoint(dimCenter) || !validMeasurementPoint(m_dimGenericData.definitionPoint) ||
+        !validMeasurementPoint(m_dimAngularData.definitionPoint1) || !validMeasurementPoint(m_dimAngularData.definitionPoint2) ||
+        !validMeasurementPoint(m_dimAngularData.definitionPoint3) || !validMeasurementPoint(m_dimAngularData.definitionPoint4)) return std::nullopt;
+    return finiteMeasurement(dimAngle);
+}
+
 QString RS_DimAngular::getMeasuredLabel() {
     const int dimaunit{getGraphicVariableInt(QStringLiteral("$DIMAUNIT"), 0)};
     const int dimadec{getGraphicVariableInt(QStringLiteral("$DIMADEC"), 0)};
