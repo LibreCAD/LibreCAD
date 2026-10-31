@@ -30,9 +30,11 @@ audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
 staged GUI drawing/template imports, and bounded worker validation for public
 synchronous file/stream/byte filter imports. No additional feature-code gap is
-currently identified. The exact PR source head `71ecf102b36017d57bd30db39d0de630ac11bb75`
-has passing Headless ON/OFF, CodeQL, DWG/DXF Linux/Windows x64/ARM64, and all
-five-platform Pixi checks. W0-W2 and R remain open for acceptance, not because
+currently identified. W218's exact product-source head
+`71ecf102b36017d57bd30db39d0de630ac11bb75` has passing Headless ON/OFF, CodeQL,
+DWG/DXF Linux/Windows x64/ARM64, and all five-platform Pixi checks. The
+follow-up W218 roadmap commits are documentation-only and do not alter that
+qualified product source. W0-W2 and R remain open for acceptance, not because
 the Node developer runner substitutes for the native worker.
 
 W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
@@ -8406,9 +8408,10 @@ source head.
 | DWG/DXF Windows ARM64 | PASS; run `41182640320`; bounded suite 23/23, offset selector 219 assertions, creation-worker selector 318 assertions, relocated worker-client 3,969 assertions across 17 cases |
 | DWG/DXF Windows x64 | PASS; run `41182640320`; bounded suite 23/23, offset selector 219 assertions, creation-worker selector 318 assertions, relocated worker-client 3,970 assertions across 17 cases |
 | Pixi Builds | PASS; PR run `41182640166` and duplicate push run `41182637965` passed on Ubuntu x64, Ubuntu ARM64, Windows, macOS ARM64, and macOS Intel |
-| PR state | OPEN; draft, mergeable, review required |
+| PR state at source-head CI capture | OPEN; draft, mergeable, review required |
 | Current-source visible GUI | OPEN; Device Control approval is recorded, but CUA still reports macOS locked |
 | Product source scope | None; this is CI evidence and roadmap reconciliation only |
+| Follow-up documentation head | `628477a13e44b5ebea051d9fd182397eb3ea3c5f`; no product-source changes; Pixi run `41206813474` queued |
 
 W218 closes the exact-source remote CI qualification for the W217 source head.
 It does not close the W171-derived independent CAD visual review, durable
