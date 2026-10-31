@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W224; chronological evidence follows): planned product
+Current status (W225; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -45,8 +45,11 @@ the Offset source-selection step. Context-menu behavior, stale-peer behavior,
 held-drag cancellation, and preview/commit parity remain unverified. W224's
 FreeCAD retry recognized the retained DXF's approximate 233-entity count but
 still produced no verified geometry viewport; the first-start settings remain
-untouched. W0-W2 and R remain open for acceptance, not because the Node
-developer runner substitutes for the native worker.
+untouched. W225 confirms the approved LibreCAD bundle renders W193 and selects
+an `Offset Curve (1)`; secondary-clicking that selected carrier showed no
+context menu, so menu acceptance remains open. W0-W2 and R remain open for
+acceptance, not because the Node developer runner substitutes for the native
+worker.
 
 W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
 through merge commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`. The upstream
@@ -8655,3 +8658,36 @@ W224 does not close the external-CAD rendering gate. The W171-derived DWG/DXF
 viewport, saved screenshot/DPR evidence, remaining GUI interaction matrix,
 deployed-package acceptance, reviewer approval, and final R integration remain
 open.
+
+## 183. W225 Approved-Bundle Offset Selection and Context Menu
+
+Reconnected to the approved isolated qmake6 app at
+`/private/tmp/LibreCAD-PR3193-visible.app`. Its W193 canvas visibly rendered
+the two groups of three ellipse contours. A primary click on the right-hand
+carrier changed the property selector to `Offset Curve (1)`. Secondary-clicking
+that selected carrier left the selection and canvas unchanged; a screenshot
+showed no context menu. An exploratory blank-canvas click/secondary-click also
+showed no popup, but the existing selection remained, so this does not qualify
+the unselected blank-canvas case. A measurement prompt surfaced during an
+additional pointer probe; Escape cancelled it, and a second Escape cleared the
+selection. The app returned to Default with no selected entities. No drawing
+was saved. The fixture SHA256 remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+| W225 check | Result |
+|---|---|
+| Approved LibreCAD bundle | PASS; visible app and W193 document were accessible |
+| W193 viewport | PASS; the ellipse contours rendered in the approved bundle |
+| Offset carrier selection | PASS; property selector reports `Offset Curve (1)` |
+| Selected-carrier secondary-click | OPEN; screenshot confirms no visible context menu; invocation-path/product behavior remains unclassified |
+| Unselected blank-canvas secondary-click | OPEN; not isolated because the prior selection remained |
+| Cleanup and file integrity | PASS; prompt cancelled, selection cleared, Default restored, no save, fixture hash unchanged |
+| Screenshot / display-DPR | PARTIAL; screenshots observed in-session, not retained as durable evidence; DPR unavailable |
+| Product-source changes | None; visible validation and roadmap receipt only |
+
+W225 strengthens the approved-bundle selection evidence and captures the
+selected-offset context-menu result, but does not close context-menu acceptance.
+Preview/commit parity, held-drag cancellation, remaining GUI refusal/interaction
+cases, independent external-CAD rendering of the W171-derived drawing, durable
+screenshot/DPR evidence, deployed-package and W0-W2 acceptance, reviewer
+approval, and final R integration remain open.
