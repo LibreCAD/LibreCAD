@@ -36,7 +36,8 @@ Node developer runner substitutes for the native worker.
 W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
 through merge commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`. The upstream
 delta is the linetype dash-phase fix and its tests; the focused painter/render
-CTest passes on the merged source. The PR head before this merge was
+CTest and the full qmake6 application/worker build pass on the merged source.
+The PR head before this merge was
 `5129ca3cb71b3446466141838ccc56b6669dbf81`, with Headless ON/OFF passing and
 CodeQL, DWG/DXF, Windows, and Pixi checks still running. PR #3193 remains open,
 draft, and review-required. The merge and roadmap receipt were pushed as
@@ -8336,6 +8337,7 @@ without altering the offset-curve implementation.
 | Current upstream integration | PASS; origin/master `5a5fe7345fe7a7ec66892e879967673b6d7a859b` merged cleanly |
 | Affected build | PASS; `librecad_painter_tests` rebuilt, including `rs_painter.cpp` and `lc_linetype_render_tests.cpp` |
 | Focused render CTest | PASS; `librecad_painter_tests`, 1/1 |
+| qmake6 application/worker build | PASS; full retained qmake6 Release tree rebuilt `rs_painter.cpp` and linked app/helper successfully; no tracked build artifacts |
 | Roadmap/refusal gate | PASS; 99/99; 93 obligations, zero pending declarations and zero production mismatches |
 | PR checks before merge | Headless ON/OFF PASS; CodeQL, DWG/DXF, Windows x64/ARM64, and Pixi IN_PROGRESS; security scan skipped by policy |
 | PR state before push | OPEN; draft; review required; mergeable |
