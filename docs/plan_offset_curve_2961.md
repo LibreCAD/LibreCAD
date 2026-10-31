@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W221; chronological evidence follows): planned product
+Current status (W222; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -38,9 +38,12 @@ follow-up commits through current PR head
 alter that qualified product source. Fresh checks for the current head have
 started but are not yet complete. W220 identifies the approved qmake6 app and
 worker used for bounded GUI checks; W221 confirms normal pointer selection of
-an Offset Curve. Context-menu behavior remains unverified. W0-W2 and R remain
-open for acceptance, not because the Node developer runner substitutes for
-the native worker.
+an Offset Curve. W222 also confirms the compact options strip exposes its
+configured values at the tested window size and that an offset commit can be
+undone back to the fixture state. Context-menu behavior, held-drag cancellation,
+and preview/commit parity remain unverified. W0-W2 and R remain open for
+acceptance, not because the Node developer runner substitutes for the native
+worker.
 
 W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
 through merge commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`. The upstream
@@ -8559,3 +8562,40 @@ bounded pass. It does not close context-menu acceptance, the remaining visible
 refusal/interaction matrix, independent external-CAD rendering, screenshot/DPR
 evidence, deployed-package and W0-W2 acceptance, reviewer approval, or final R
 integration.
+
+## 180. W222 Compact Offset Options and Commit/Undo Recheck
+
+In the approved isolated qmake6 app from W220, opened Tools > Modify > Offset
+on the disposable W193 drawing. At the captured 1920x975 app viewport, the
+compact options strip displayed Fixed Distance `0.5`, Keep Originals, Multiple
+Copies `2`, Use Current Attributes, Use Current Layer, and Editable Offset
+Curve without visible clipping. The Action Options property pane exposed the
+same settings. This is a scoped layout observation at one viewport size, not a
+display-DPR or responsive-size qualification.
+
+Selected an existing offset ellipse, completed selection, and used the
+direction prompt. An offset output became visible after the action was exited;
+Escape returned to Default and one Undo restored the original visible
+three-contour groups. The W193 file was not saved. Its SHA256 remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+Because the transient preview was not separately captured before commit, this
+does not establish preview/commit geometric parity. The UI tool also does not
+expose a held mouse-down / move / Escape sequence, so held-drag cancellation
+remains open.
+
+| W222 check | Result |
+|---|---|
+| Compact option visibility | PASS at the observed viewport; all configured option labels/values visible in the toolbar strip and action property pane |
+| Offset commit and Undo | PASS; offset output became visible, then one Undo restored the baseline geometry |
+| Escape and cleanup | PASS; action returned to Default; drawing was not saved |
+| W193 fixture integrity | PASS; SHA256 unchanged at `05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d` |
+| Preview/commit parity | OPEN; no stable separate preview snapshot before commit |
+| Held-drag cancellation | OPEN; CUA interaction does not provide a held-button move/cancel sequence |
+| Screenshot / display-DPR | OPEN; in-session screenshot only; Qt DPR not measured |
+| Product-source changes | None; visible validation and roadmap receipt only |
+
+W222 closes one compact-options layout observation and one commit/undo
+recovery case only. Context menus, held-drag cancellation, preview/commit
+parity, remaining refusal/interaction cases, independent external-CAD
+rendering, durable screenshot/DPR evidence, deployed-package and W0-W2
+acceptance, reviewer approval, and final R integration remain open.
