@@ -3912,6 +3912,11 @@ target_compile_definitions(libdxfrw_json_dump PRIVATE DWGSUPPORT)
 
 if(BUILD_TESTS)
     find_package(Python3 COMPONENTS Interpreter QUIET)
+    if(Python3_Interpreter_FOUND)
+        add_test(NAME librecad_angle_translation_catalogs
+            COMMAND ${Python3_EXECUTABLE}
+                ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test_angle_translation_catalogs.py)
+    endif()
     if(Python3_Interpreter_FOUND AND LIBRECAD_REGISTER_CROSS_READ_SMOKE)
         add_test(NAME libdxfrw_cross_read_smoke
             COMMAND ${Python3_EXECUTABLE}
