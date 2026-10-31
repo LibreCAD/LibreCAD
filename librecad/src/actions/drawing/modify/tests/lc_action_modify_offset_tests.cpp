@@ -27,6 +27,7 @@
 
 #include <cmath>
 #include <memory>
+#include <vector>
 
 #include <QSettings>
 #include <QStringList>
@@ -470,6 +471,143 @@ TEST_CASE("Offset preview Escape cancels a held-drag through the view event pipe
     CHECK(graphic->count() == 1);
     CHECK_FALSE(source->isDeleted());
     CHECK(view->getCurrentAction() != action.get());
+    view->beginClose();
+}
+
+TEST_CASE("Offset preview through the view matches the released worker commit",
+          "[lc-offsetcurve][creation-worker][preview-parity][event-pipeline][gui]") {
+    REQUIRE(lc::test::application());
+    auto graphic = std::make_unique<Graphic>();
+    graphic->initForNewDocument();
+    CapturingContext context;
+    auto view = std::make_unique<QG_GraphicView>(nullptr, graphic.get(), &context);
+    view->resize(640, 480);
+    view->initView();
+
+    auto* source = new RS_Ellipse(graphic.get(),
+                                  RS_EllipseData{{0, 0}, {2, 0}, .5, 0, M_PI_2, false});
+    source->setLayer(graphic->getActiveLayer());
+    graphic->addEntity(source);
+    const RS_Selection selection(graphic.get(), view->getViewPort());
+    selection.selectSingle(source);
+
+    RS_SnapMode snapMode;
+    snapMode.snapFree = true;
+    view->setDefaultSnapMode(snapMode);
+
+    auto action = std::make_shared<OffsetProbe>(&context);
+    action->setDistanceFixed(false);
+    action->setKeepOriginals(true);
+    action->setEditableOffsetCurve(false);
+    REQUIRE(view->setCurrentAction(action));
+
+    const auto uiPoint = [&](const RS_Vector& world) {
+        double x = 0.0;
+        double y = 0.0;
+        view->getViewPort()->toUI(world, x, y);
+        return QPoint(qRound(x), qRound(y));
+    };
+    const auto sendMouse = [&](const QEvent::Type type, const RS_Vector& world,
+                               const Qt::MouseButton button, const Qt::MouseButtons buttons) {
+        const QPoint position = uiPoint(world);
+        QMouseEvent event(type, QPointF(position), QPointF(view->mapToGlobal(position)), button, buttons,
+                          Qt::NoModifier);
+        QApplication::sendEvent(view.get(), &event);
+    };
+
+    struct Shape {
+        RS2::EntityType type;
+        std::vector<RS_Vector> points;
+        std::vector<double> values;
+    };
+    const auto shapeOf = [](const RS_Entity& entity) {
+        Shape shape{entity.rtti(), {entity.getStartpoint(), entity.getEndpoint(), entity.getMin(), entity.getMax()}, {}};
+        if (entity.rtti() == RS2::EntityEllipse) {
+            const auto& ellipse = static_cast<const RS_Ellipse&>(entity);
+            const auto& data = ellipse.getData();
+            shape.points.push_back(data.center);
+            shape.points.push_back(data.majorP);
+            shape.values = {data.ratio, data.angle1, data.angle2, data.reversed ? 1.0 : 0.0};
+        }
+        else if (entity.rtti() == RS2::EntitySpline) {
+            const auto& data = static_cast<const RS_Spline&>(entity).getData();
+            shape.points.insert(shape.points.end(), data.controlPoints.begin(), data.controlPoints.end());
+            shape.points.insert(shape.points.end(), data.fitPoints.begin(), data.fitPoints.end());
+            shape.values = {static_cast<double>(data.degree), static_cast<double>(data.type),
+                            static_cast<double>(data.savedOpenType), data.m_closedFlag ? 1.0 : 0.0,
+                            data.m_periodicFlag ? 1.0 : 0.0};
+            shape.values.insert(shape.values.end(), data.knotslist.begin(), data.knotslist.end());
+            shape.values.insert(shape.values.end(), data.weights.begin(), data.weights.end());
+            shape.values.insert(shape.values.end(), data.savedOpenKnots.begin(), data.savedOpenKnots.end());
+        }
+        else if (entity.rtti() == RS2::EntityPolyline) {
+            const auto& polyline = static_cast<const RS_Polyline&>(entity);
+            shape.values.push_back(polyline.isClosed() ? 1.0 : 0.0);
+            for (const RS_Entity* segment : polyline) {
+                shape.values.push_back(static_cast<double>(segment->rtti()));
+                shape.points.push_back(segment->getStartpoint());
+                shape.points.push_back(segment->getEndpoint());
+                if (segment->rtti() == RS2::EntityArc) {
+                    shape.points.push_back(segment->getCenter());
+                    shape.values.push_back(segment->getRadius());
+                }
+            }
+        }
+        return shape;
+    };
+    const auto capture = [&](const auto& entities, const RS_Entity* excluded) {
+        std::vector<Shape> shapes;
+        for (const RS_Entity* entity : entities) {
+            if (entity != excluded && !entity->isDeleted()) shapes.push_back(shapeOf(*entity));
+        }
+        return shapes;
+    };
+    const auto samePoint = [](const RS_Vector& a, const RS_Vector& b) {
+        return a.valid == b.valid && (!a.valid || a.distanceTo(b) <= 1e-9);
+    };
+    const auto sameShapes = [&](const std::vector<Shape>& a, const std::vector<Shape>& b) {
+        if (a.size() != b.size()) return false;
+        for (std::size_t i = 0; i < a.size(); ++i) {
+            if (a[i].type != b[i].type || a[i].points.size() != b[i].points.size() ||
+                a[i].values.size() != b[i].values.size()) return false;
+            for (std::size_t j = 0; j < a[i].points.size(); ++j) {
+                if (!samePoint(a[i].points[j], b[i].points[j])) return false;
+            }
+            for (std::size_t j = 0; j < a[i].values.size(); ++j) {
+                if (!std::isfinite(a[i].values[j]) || !std::isfinite(b[i].values[j]) ||
+                    std::abs(a[i].values[j] - b[i].values[j]) > 1e-9) return false;
+            }
+        }
+        return true;
+    };
+
+    const RS_Vector reference{4.0, 0.0};
+    const RS_Vector side{4.0, 1.0};
+    sendMouse(QEvent::MouseButtonPress, reference, Qt::LeftButton, Qt::LeftButton);
+    sendMouse(QEvent::MouseButtonRelease, reference, Qt::LeftButton, Qt::NoButton);
+    REQUIRE(action->getStatus() == OffsetProbe::SetPosition);
+    sendMouse(QEvent::MouseButtonPress, side, Qt::LeftButton, Qt::LeftButton);
+    sendMouse(QEvent::MouseMove, side, Qt::NoButton, Qt::LeftButton);
+    REQUIRE(action->isPreparing());
+    observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*action); });
+    lc::test::awaitCreation(*action);
+
+    const std::vector<Shape> preview = capture(*action->m_preview, nullptr);
+    REQUIRE_FALSE(preview.empty());
+    const int undoCyclesBefore = graphic->countUndoCycles();
+
+    sendMouse(QEvent::MouseButtonRelease, side, Qt::LeftButton, Qt::NoButton);
+    REQUIRE(action->isPreparing());
+    observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*action); });
+    lc::test::awaitCreation(*action);
+
+    const std::vector<Shape> committed = capture(*graphic, source);
+    CHECK(sameShapes(preview, committed));
+    CHECK(graphic->countUndoCycles() == undoCyclesBefore + 1);
+    CHECK_FALSE(source->isDeleted());
+    REQUIRE(action->workerReport().sources.size() == 1);
+    CHECK(action->workerReport().sources.front().cacheEngineRuns == 0);
+    CHECK(action->workerReport().sources.front().reusedCacheCopies == preview.size());
     view->beginClose();
 }
 
