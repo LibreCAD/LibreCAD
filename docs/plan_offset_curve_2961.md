@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W215; chronological evidence follows): planned product
+Current status (W216; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -32,6 +32,16 @@ staged GUI drawing/template imports, and bounded worker validation for public
 synchronous file/stream/byte filter imports. No additional feature-code gap is
 currently identified; W0-W2 and R remain open for acceptance, not because the
 Node developer runner substitutes for the native worker.
+
+W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
+through merge commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`. The upstream
+delta is the linetype dash-phase fix and its tests; the focused painter/render
+CTest passes on the merged source. The PR head before this merge was
+`5129ca3cb71b3446466141838ccc56b6669dbf81`, with Headless ON/OFF passing and
+CodeQL, DWG/DXF, Windows, and Pixi checks still running. PR #3193 remains open,
+draft, and review-required. Device Control approval for the isolated test app
+was confirmed, but macOS remains locked, so the W171-derived FreeCAD visual
+recheck is still open.
 
 W213 requalifies the current source locally: the full Node suite passes 412/412,
 the roadmap/refusal gate passes 99/99 (93 obligations, no pending declarations
@@ -8307,3 +8317,30 @@ current cross-platform PR checks, external visual inspection of the W171-derived
 DXF/DWG, retained screenshot/DPR evidence, deployed-package qualification,
 remaining visible GUI refusal/interaction cases, reviewer approval, or final R
 integration.
+
+## 174. W216 Current-Master Integration and Painter Requalification
+
+Fetched `origin/master` at
+`5a5fe7345fe7a7ec66892e879967673b6d7a859b`. It contained one commit beyond the
+previous PR base, #3212's contiguous-polyline dash-phase fix and painter tests.
+The branch had no conflicting modifications in either touched path. Merged
+master with commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`; no conflict
+resolution was needed. This advances the PR branch to the current upstream tip
+without altering the offset-curve implementation.
+
+| W216 check | Result |
+|---|---|
+| Current upstream integration | PASS; origin/master `5a5fe7345fe7a7ec66892e879967673b6d7a859b` merged cleanly |
+| Affected build | PASS; `librecad_painter_tests` rebuilt, including `rs_painter.cpp` and `lc_linetype_render_tests.cpp` |
+| Focused render CTest | PASS; `librecad_painter_tests`, 1/1 |
+| Roadmap/refusal gate | PASS; 99/99; 93 obligations, zero pending declarations and zero production mismatches |
+| PR checks before merge | Headless ON/OFF PASS; CodeQL, DWG/DXF, Windows x64/ARM64, and Pixi IN_PROGRESS; security scan skipped by policy |
+| PR state before push | OPEN; draft; review required; mergeable |
+| Approved-app visible check | OPEN; Device Control approval confirmed, but CUA reports macOS locked |
+| Product source scope | Upstream painter fix and tests only; offset-curve product code unchanged |
+
+The merge and focused painter test close the current-master integration check.
+The PR must be pushed and its checks observed on the new head. This does not
+close the W171-derived external visual check, retained screenshot/display-DPR,
+remaining GUI interaction/refusal cases, deployed-package and W0-W2 acceptance,
+reviewer approval, or final R integration.
