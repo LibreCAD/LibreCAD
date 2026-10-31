@@ -160,7 +160,8 @@ void LC_ActionInteractivePickAngle::updateInfoCursor2(const RS_Vector &point2, c
         .rawAngle(tr("Angle:"), angle)
         .rawAngle(tr("Complementary:"), angleComplementary)
         .rawAngle(tr("Supplementary:"), angleSupplementary)
-        .rawAngle(tr("Alternative: "), angleAlt)
+        //: Completes one full turn with the measured angle (2*pi - angle).
+        .rawAngle(tr("Explementary angle: "), angleAlt)
         .vector(tr("Intersection:"), intersection)
                .wcsAngle(tr("Line 1 Angle:"), angle1)
                .wcsAngle(tr("Line 2 Angle:"), angle2)
@@ -318,7 +319,8 @@ void LC_ActionInteractivePickAngle::updateInfoCursor(const RS_Vector &mouse, con
             .rawAngle(tr("Angle:"), angle)
             .rawAngle(tr("Complementary:"), angleComplementary)
             .rawAngle(tr("Supplementary:"), angleSupplementary)
-            .rawAngle(tr("Alternative: "), angleAlt)
+            //: Completes one full turn with the measured angle (2*pi - angle).
+            .rawAngle(tr("Explementary angle: "), angleAlt)
             .vector(tr("From:"), startPoint)
             .vector(tr("Intersection:"), point2)
             .vector(tr("To:"), mouse)

@@ -2669,14 +2669,15 @@
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
+        <extracomment>%4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.</extracomment>
         <translation>ມຸມ: %1
 ມຸມພາກສ່ວນເຕັມ: %2
 ມຸມຄົບສ່ວນ: %3
-ມຸມທາງເລືອກ: %4
+ໜຶ່ງຮອບ − ມຸມ: %4
 ຈຸດເລີ່ມຂອບ: (%5 , %6)
 ຈຸດຕັດ: (%7, %8)
 ຈຸດສິ້ນສຸດຂອບ: (%9 , %10)</translation>
@@ -2704,8 +2705,9 @@ End Edge Point: (%9 , %10)</source>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="208"></location>
-        <source>Alternative: </source>
-        <translation>ທາງເລືອກ: </translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>ໜຶ່ງຮອບ − ມຸມ: </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="210"></location>
@@ -2851,8 +2853,9 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"></location>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="321"></location>
-        <source>Alternative: </source>
-        <translation>ທາງເລືອກ: </translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>ໜຶ່ງຮອບ − ມຸມ: </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"></location>
@@ -25177,12 +25180,13 @@ Do you want to replace it?</source>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 </source>
+        <extracomment>%4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.</extracomment>
         <translation>ມຸມ: %1
 ມຸມປະກອບໜຶ່ງສາກ: %2
 ມຸມປະກອບສອງສາກ: %3
-ມຸມທາງເລືອກ: %4
+ໜຶ່ງຮອບ − ມຸມ: %4
 </translation>
     </message>
     <message>
@@ -25190,13 +25194,14 @@ Alternative: %4
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
+        <extracomment>%4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.</extracomment>
         <translation>ມຸມ: %1
 ມຸມປະກອບໜຶ່ງສາກ: %2
 ມຸມປະກອບສອງສາກ: %3
-ມຸມທາງເລືອກ: %4
+ໜຶ່ງຮອບ − ມຸມ: %4
 ຈຸດຕັດ: (%5 , %6)
 ຈຸດຕັດ ສຳພັນ: @(%7, %8)</translation>
     </message>
@@ -25253,8 +25258,9 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="276"></location>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="298"></location>
-        <source>Alternative: </source>
-        <translation>ມຸມທາງເລືອກ: </translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>ໜຶ່ງຮອບ − ມຸມ: </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="277"></location>
