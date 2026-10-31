@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W237; chronological evidence follows): planned product
+Current status (W238; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -39,6 +39,11 @@ tracked in the PR comment.
 W237 requalified the current test-only head with the full CMake application
 suite: 5,155 cases, 5,080 passed, 75 skipped, and 10,348,250 assertions passed.
 All nine registered CTest worker lanes passed as well.
+
+W238 completed a fresh qmake6/Qt 6.12.0 macOS arm64 application, plugin and
+helper build from this worktree. The worker-client suite passed against the
+helper in the app bundle and after relocating the bundle; cross-platform and
+full deployed-package acceptance remain distinct gates.
 
 W220-W225 qualify selected pieces of the approved qmake6 app's GUI: normal
 Offset Curve selection, compact options at one window size, locked-layer
@@ -57,10 +62,11 @@ evidence.
 
 Still open: physical stale-peer interaction; visible held-drag and separate
 preview/commit screenshots; independent FreeCAD geometry rendering; durable
-screenshot/display-DPR records; deployed-package and W0-W2 acceptance; review
-approval; and final R integration. W226's qmake6 helper/client suite passed 17
-cases / 4581 assertions. W0-W2 and R remain acceptance gates, not missing
-product features or substitutes for the native worker tests.
+screenshot/display-DPR records; cross-platform and full deployed-package
+W0-W2 acceptance; review approval; and final R integration. W226's older
+qmake6 helper/client run passed 17 cases / 4581 assertions; W238 adds a fresh
+current-worktree bundle and relocation check. W0-W2 and R remain acceptance
+gates, not missing product features or substitutes for the native worker tests.
 
 W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
 through merge commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`. The upstream
@@ -9091,3 +9097,33 @@ This is test-only requalification; no product behavior changed.
 
 The physical GUI, external rendering, deployed-package, W0-W2, reviewer, and
 final R integration gates remain open as recorded above.
+
+## 196. W238 Fresh qmake6 Bundle and Relocated Helper Smoke
+
+Configured and built the complete qmake6 application from the current worktree
+in `/private/tmp/offset-2961-w237-qmake` using Qt 6.12.0 on macOS arm64. The
+out-of-source `qmake6 .../librecad.pro` configuration and `make -j4` completed
+with exit 0, producing LibreCAD, plugins, and the adjacent
+`LibreCADOffsetWorker`. Rebuilt the CMake worker-client test target from this
+worktree, copied only that runner into the isolated app bundle, and ran the
+protocol suite against its sibling helper. Then relocated the complete bundle
+with `ditto` and reran the suite from the new path; both runs passed. This
+proves the current bundle-relative helper lookup and protocol path locally,
+not GUI-visible use, signing/notarization, or platform-wide deployment.
+
+| W238 check | Result |
+|---|---|
+| qmake6 / Qt toolchain | PASS; qmake 3.1, Qt 6.12.0, macOS arm64 |
+| Full application/plugin/helper build | PASS; fresh out-of-source `make -j4`, exit 0 |
+| In-bundle worker-client suite | PASS; 17 cases / 3,779 assertions |
+| Relocated-bundle worker-client suite | PASS; 17 cases / 3,727 assertions |
+| LibreCAD SHA-256 | `206c319ba7dfcf29dfe7467352d1bb29b736b1315505e83517e8fc1d5d53c454` |
+| LibreCADOffsetWorker SHA-256 | `4ec36eede0e1e9caec5e0d620b1dc463e8d8e6f11cca589ffb6aeadfc8fa1b83` |
+| Client-test runner SHA-256 | `5aad800d8ea2498653715cf46b07c24ba70005ed335a64221575ef553376516f` |
+| Source head | `e42d20711ac5597853b8e23eb223b4c059f45f00` |
+| Product behavior changes | None; exact-source build and worker acceptance only |
+
+W238 closes the fresh local qmake6 bundle/helper smoke. Visible GUI, independent
+FreeCAD rendering, durable screenshot/DPR evidence, cross-platform and full
+deployed-package W0-W2 acceptance, review approval, and final R integration
+remain open.
