@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W232; chronological evidence follows): planned product
+Current status (W233; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -55,8 +55,9 @@ contains Offset Curve-specific actions; the visible routing/settings mismatch
 is unexplained and is not yet classified as a product defect. W0-W2 and R remain open for
 acceptance, not because the Node developer runner substitutes for the native
 worker. W230 traces the popup route: idle right-click should show the default
-menu unless a custom activator overrides it, so the visible no-menu result
-remains unresolved. W226 reruns the workspace qmake6 helper/client suite (17 cases, 4581
+menu unless a custom activator overrides it. W233's deterministic Qt integration
+test confirms the default right-release path displays a menu; the CUA-driven
+visible click remains inconclusive about native input delivery. W226 reruns the workspace qmake6 helper/client suite (17 cases, 4581
 assertions) with real helper completions, timeout, cancellation and recovery
 coverage. W227 adds two ASan publication-staleness cases (18 assertions)
 without changing product code. W229 reached the live Offset direction prompt
@@ -64,8 +65,9 @@ and canceled without editing the document; the available UI controls do not
 support a hover-only move, so the transient preview could not be separately
 captured for parity comparison. FreeCAD is accessible but remains on its
 untouched first-start screen. W231 confirms the observed profile has no
-right-click custom-menu activator, but the popup remains absent in the visible
-app and its event path is unresolved. W232 measured Escape serialization:
+right-click custom-menu activator. The popup remains absent under the visible
+CUA click, but W233 verifies the application's Qt event route independently.
+W232 measured Escape serialization:
 Escape requested during a 3000 ms held click resolved after mouse release, so
 active-preview cancellation remains unqualified.
 
@@ -8949,6 +8951,44 @@ occurred; W193 still hashes to
 W232 confirms that this CUA bridge cannot prove cancellation while a mouse
 button is held. Keep held-drag cancellation open until a native event-pipeline
 test or another input tool can interleave Escape before release. Preview/commit
-parity, context-menu routing, stale-peer GUI behavior, independent FreeCAD
-rendering, durable screenshot/DPR evidence, deployed-package and W0-W2
+parity, visible CUA context-menu input, stale-peer GUI behavior, independent
+FreeCAD rendering, durable screenshot/DPR evidence, deployed-package and W0-W2
+acceptance, reviewer approval, and final R integration remain open.
+
+## 191. W233 Deterministic Context-Menu Event Route
+
+After the user approved control of the isolated LibreCAD test bundle, repeated
+an unmodified right click on a visible ellipse. The CUA screenshot still showed
+no popup. This remains an inconclusive observation of the UI-driving path; it
+does not override the native event test below. The disposable W193 fixture
+remains unchanged at SHA256
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+Added a GUI regression test that creates an MDI drawing, confirms the default
+menu factory returns multiple actions, sends a `QMouseEvent::MouseButtonRelease`
+for unmodified `Qt::RightButton` through `QG_GraphicView`, observes the shown
+`QMenu`, and closes it from the nested event loop. The exact-worktree CMake
+Release build and focused test pass (8 assertions). Existing Offset Curve
+source-popup tests pass (64 assertions in three cases), verifying that a child
+display chord resolves to the native owner and dispatches the Offset Curve-
+specific action. Together these tests qualify application event routing and
+owner-context behavior without changing user settings. The external CUA click
+itself remains unqualified.
+
+| W233 check | Result |
+|---|---|
+| Default menu factory | PASS; menu exists with more than one action |
+| Qt right-button release path | PASS; `QG_GraphicView` event displays the popup |
+| Offset Curve owner popup actions | PASS; existing source UI test covers owner normalization and dispatch |
+| Visible CUA right-click | INCONCLUSIVE; no popup shown by UI driver |
+| Fixture integrity | PASS; W193 hash unchanged and no save occurred |
+| Build/test | PASS; CMake Release target builds and `[context-menu]` passes 8 assertions |
+| Source popup tests | PASS; 64 assertions across three cases |
+| Roadmap/refusal audit | PASS; 94/94 tests, 93 obligations, zero pending declarations or production mismatches |
+| Product behavior changes | None; deterministic GUI regression coverage and roadmap receipt only |
+
+The context-menu application route is no longer a known implementation gap.
+Keep visible native-input confirmation as a test limitation. Held-drag
+cancellation, preview/commit parity, stale-peer GUI behavior, independent
+FreeCAD rendering, durable screenshot/DPR evidence, deployed-package and W0-W2
 acceptance, reviewer approval, and final R integration remain open.

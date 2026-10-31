@@ -214,6 +214,32 @@ struct DockFixture {
     }
 };
 
+struct DrawingWindowCleanup {
+    QC_ApplicationWindow& window;
+    QC_MDIWindow* drawing;
+    ~DrawingWindowCleanup() {
+        if (drawing != nullptr) LC_DockLayoutTestAccess::closeDrawing(window, drawing);
+    }
+};
+
+class PopupObserver final : public QObject {
+public:
+    bool shown {false};
+    int actionCount {0};
+
+protected:
+    bool eventFilter(QObject* watched, QEvent* event) override {
+        if (event->type() == QEvent::Show) {
+            if (auto* menu = qobject_cast<QMenu*>(watched)) {
+                shown = true;
+                actionCount = menu->actions().size();
+                QTimer::singleShot(0, menu, &QMenu::close);
+            }
+        }
+        return QObject::eventFilter(watched, event);
+    }
+};
+
 // A window as main() builds it on the first start, shown at a realistic size. The offscreen
 // platform has an 800x600 screen unless given a larger one: run these tests with
 // QT_QPA_PLATFORM=offscreen:configfile=librecad/src/ui/main/tests/lc_docklayout_screen.json
@@ -272,6 +298,36 @@ QStringList tabOrder(QC_ApplicationWindow& window, const QString& first, const Q
     }
     return {};
 }
+}
+
+TEST_CASE("Idle right-button release reaches graphic-view popup", "[.gui][dock-window][context-menu]") {
+    DockFixture fixture;
+    auto& window = fixture.window;
+    auto* drawing = window.createNewDrawingWindow(nullptr, {});
+    REQUIRE(drawing != nullptr);
+    DrawingWindowCleanup cleanup{window, drawing};
+    drawing->show();
+    window.activateWindow(drawing);
+    settle();
+
+    auto* view = drawing->getGraphicView();
+    REQUIRE(view != nullptr);
+    const QPoint local(20, 20);
+    QMouseEvent release(QEvent::MouseButtonRelease, QPointF(local), QPointF(view->mapToGlobal(local)),
+                        Qt::RightButton, Qt::NoButton, Qt::NoModifier);
+
+    std::unique_ptr<QMenu> menu(window.createGraphicViewContentMenu(&release, view, nullptr, RS_Vector{}));
+    REQUIRE(menu != nullptr);
+    REQUIRE(menu->actions().size() > 1);
+    menu.reset();
+
+    PopupObserver observer;
+    qApp->installEventFilter(&observer);
+    QApplication::sendEvent(view, &release);
+    qApp->removeEventFilter(&observer);
+
+    CHECK(observer.shown);
+    CHECK(observer.actionCount > 1);
 }
 
 TEST_CASE("Print does not inherit the print preview checked state", "[.gui][printing][issue3105]") {
