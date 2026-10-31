@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W223; chronological evidence follows): planned product
+Current status (W224; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -42,9 +42,11 @@ an Offset Curve. W222 also confirms the compact options strip exposes its
 configured values at the tested window size and that an offset commit can be
 undone back to the fixture state. W223 confirms a locked layer cannot advance
 the Offset source-selection step. Context-menu behavior, stale-peer behavior,
-held-drag cancellation, and preview/commit parity remain unverified. W0-W2 and
-R remain open for acceptance, not because the Node developer runner substitutes
-for the native worker.
+held-drag cancellation, and preview/commit parity remain unverified. W224's
+FreeCAD retry recognized the retained DXF's approximate 233-entity count but
+still produced no verified geometry viewport; the first-start settings remain
+untouched. W0-W2 and R remain open for acceptance, not because the Node
+developer runner substitutes for the native worker.
 
 W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
 through merge commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`. The upstream
@@ -8624,3 +8626,32 @@ held-drag cancellation, context menus, preview/commit parity, remaining GUI
 refusal/interaction cases, independent external-CAD rendering, durable
 screenshot/DPR evidence, deployed-package and W0-W2 acceptance, reviewer
 approval, and final R integration remain open.
+
+## 182. W224 FreeCAD DXF Visual Retry
+
+Inspected the existing FreeCAD 1.1.4 first-start state without changing its
+settings: no theme was selected; Language was English, Unit System was Standard
+(mm, kg, s, degrees), and Navigation Style was CAD. Used its Open dialog to
+load `/private/tmp/offset-W200-oda-output/offset-matrix-write-dwg-R2018-d3_actual.dxf`.
+The DXF import dialog reported approximately 233 geometric entities and kept
+its default Individual Part shapes selection; the `Do not show this dialog
+again` option remained unchecked. After import, the document title and layer
+container appeared, but the geometry viewport was blank. Clicking Fit All did
+not produce a visible rendering. While inspecting the layer tree, the document
+view disappeared and FreeCAD returned to the Start page. No file was saved and
+no first-start preference was applied. This is an inconclusive rendering
+attempt, not evidence that the DXF is visually correct or incorrect.
+
+| W224 check | Result |
+|---|---|
+| DXF open/import | PARTIAL; FreeCAD accepted the file and reported approximately 233 geometric entities |
+| Geometry viewport | OPEN/UNVERIFIED; blank after import and Fit All; no rendered geometry confirmed |
+| FreeCAD first-start settings | PASS; theme/language/units/navigation left unchanged; import dialog preference left unchecked |
+| File integrity | PASS; source DXF opened read-only and was not saved |
+| Durable screenshot / display-DPR | OPEN; only in-session screenshot observation; Qt DPR not measured |
+| Product-source changes | None; external visual investigation and roadmap receipt only |
+
+W224 does not close the external-CAD rendering gate. The W171-derived DWG/DXF
+viewport, saved screenshot/DPR evidence, remaining GUI interaction matrix,
+deployed-package acceptance, reviewer approval, and final R integration remain
+open.
