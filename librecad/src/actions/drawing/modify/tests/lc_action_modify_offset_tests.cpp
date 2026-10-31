@@ -57,6 +57,9 @@
 #include <QEventLoop>
 #include <QTimer>
 #include <QKeyEvent>
+#include <QMouseEvent>
+
+#include "qg_graphicview.h"
 
 class LC_OffsetCreationActionTestAccess final {
 public:
@@ -398,6 +401,76 @@ TEST_CASE("Offset creation worker cancels Escape suspension and right click with
     CHECK(f.m_graphic.count() == 1); CHECK_FALSE(source->isDeleted()); CHECK(f.m_graphic.countUndoCycles() == 0);
     f.start(.125, true); f.submit(false); lc::test::awaitCreation(*f.m_action);
     CHECK(f.m_graphic.countUndoCycles() == 1);
+}
+
+TEST_CASE("Offset preview Escape cancels a held-drag through the view event pipeline",
+          "[lc-offsetcurve][creation-worker][cancel][event-pipeline][gui]") {
+    REQUIRE(lc::test::application());
+    auto graphic = std::make_unique<Graphic>();
+    graphic->initForNewDocument();
+    CapturingContext context;
+    auto view = std::make_unique<QG_GraphicView>(nullptr, graphic.get(), &context);
+    view->resize(640, 480);
+    view->initView();
+
+    auto* source = new RS_Ellipse(graphic.get(),
+                                  RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
+    source->setLayer(graphic->getActiveLayer());
+    graphic->addEntity(source);
+    const RS_Selection selection(graphic.get(), view->getViewPort());
+    selection.selectSingle(source);
+
+    RS_SnapMode snapMode;
+    snapMode.snapFree = true;
+    view->setDefaultSnapMode(snapMode);
+
+    auto action = std::make_shared<OffsetProbe>(&context);
+    action->setDistanceFixed(false);
+    action->setKeepOriginals(true);
+    REQUIRE(view->setCurrentAction(action));
+    REQUIRE(view->getCurrentAction() == action.get());
+    REQUIRE(action->m_selectionComplete);
+
+    const auto uiPoint = [&](const RS_Vector& world) {
+        double x = 0.0;
+        double y = 0.0;
+        view->getViewPort()->toUI(world, x, y);
+        return QPoint(qRound(x), qRound(y));
+    };
+    const auto sendMouse = [&](const QEvent::Type type, const RS_Vector& world,
+                               const Qt::MouseButton button, const Qt::MouseButtons buttons) {
+        const QPoint position = uiPoint(world);
+        QMouseEvent event(type, QPointF(position), QPointF(view->mapToGlobal(position)), button, buttons,
+                          Qt::NoModifier);
+        QApplication::sendEvent(view.get(), &event);
+    };
+
+    const RS_Vector reference{3.0, 0.0};
+    sendMouse(QEvent::MouseButtonPress, reference, Qt::LeftButton, Qt::LeftButton);
+    sendMouse(QEvent::MouseButtonRelease, reference, Qt::LeftButton, Qt::NoButton);
+    CHECK(view->getCurrentAction() == action.get());
+    REQUIRE(action->getStatus() == OffsetProbe::SetPosition);
+
+    const RS_Vector side{3.0, 2.0};
+    sendMouse(QEvent::MouseButtonPress, side, Qt::LeftButton, Qt::LeftButton);
+    sendMouse(QEvent::MouseMove, side, Qt::NoButton, Qt::LeftButton);
+    REQUIRE(action->isPreparing());
+    observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*action); });
+    REQUIRE(action->isPreparing());
+
+    QKeyEvent escape(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier);
+    QApplication::sendEvent(view.get(), &escape);
+    CHECK(escape.isAccepted());
+    CHECK(action->isFinished());
+    CHECK(view->getCurrentAction() != action.get());
+    observeCreation([&] { return !LC_OffsetCreationActionTestAccess::busy(*action); });
+
+    sendMouse(QEvent::MouseButtonRelease, side, Qt::LeftButton, Qt::NoButton);
+    QCoreApplication::processEvents();
+    CHECK(graphic->count() == 1);
+    CHECK_FALSE(source->isDeleted());
+    CHECK(view->getCurrentAction() != action.get());
+    view->beginClose();
 }
 
 TEST_CASE("Offset creation worker supersedes previews and recovers after an actual process timeout",
