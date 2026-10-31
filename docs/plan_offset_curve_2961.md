@@ -8512,3 +8512,42 @@ not make the bundle a whole-tree current-source build or close the external
 CAD visual review, durable screenshot/DPR capture, other GUI refusal and
 interaction cases, deployed-package and W0-W2 acceptance, reviewer approval,
 or final R integration.
+
+## 179. W221 Approved-App Pointer Selection and Context-Menu Probe
+
+After the user approved Device Control access, reconnected to the same isolated
+qmake6 bundle at `/private/tmp/LibreCAD-PR3193-visible.app`. The app/worker
+hashes remain those recorded in W220. With the disposable W193 drawing still
+open, selected the right-group outer ellipse with a normal primary
+pointer click. The property selector changed to `Offset Curve (1)` and the
+curve was highlighted with grips, confirming this selection path in the
+approved bundle.
+
+Secondary-clicks on the selected offset curve and on blank canvas produced no
+visible context menu. A secondary-click attempt in the Layers panel returned an
+accessibility capture error and showed no popup in the subsequent screenshot;
+this does not establish whether that panel event was delivered. The source
+event path has a context-menu invocation for non-default mouse releases, but
+these observations are not sufficient to attribute the absent popup to product
+behavior rather than the UI-driving path. Keep context-menu acceptance open.
+Escape cleared the selection and the app returned to an idle/default state.
+The W193 fixture SHA256 remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+| W221 check | Result |
+|---|---|
+| Approved app access | PASS; isolated qmake6 app reconnected after Device Control approval |
+| Normal pointer entity selection | PASS; property sheet reports `Offset Curve (1)` and selected contour/grips are visible |
+| Selected-entity and blank-canvas secondary-click | OPEN; no visible context menu in either case |
+| Layers-panel secondary-click | INCONCLUSIVE; accessibility capture error and no visible popup |
+| App/drawing cleanup | PASS; Escape cleared selection; no edit or save performed |
+| W193 fixture integrity | PASS; SHA256 unchanged at `05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d` |
+| Retained screenshot / display-DPR | OPEN; UI state was observed in-session but no durable screenshot or DPR record was captured |
+| PR CI at observation | IN PROGRESS; Text Foundations Headless ON/OFF passed; CodeQL analysis, DWG/DXF verification, and Pixi platform jobs were still running; Security scan skipped by policy |
+| Product-source changes | None; visible validation and roadmap receipt only |
+
+W221 upgrades normal-pointer selection from W214's unverified state to a
+bounded pass. It does not close context-menu acceptance, the remaining visible
+refusal/interaction matrix, independent external-CAD rendering, screenshot/DPR
+evidence, deployed-package and W0-W2 acceptance, reviewer approval, or final R
+integration.
