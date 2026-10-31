@@ -293,7 +293,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="62"/>
         <source>Alternate angle to outer arc</source>
-        <translation>外弧的對角</translation>
+        <translation>切換至外弧角度</translation>
     </message>
 </context>
 <context>
@@ -2444,7 +2444,7 @@ or [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>橢圓 (中心點與三點)</translation>
+        <translation>橢圓 (中心點與三點)(&amp;3)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
@@ -4145,7 +4145,7 @@ End Edge Point: (%9 , %10)</source>
         <translation>角度：%1
 餘角：%2
 補角：%3
-對角：%4
+替代角：%4
 起始邊界點：(%5 , %6)
 交點：(%7, %8)
 終止邊界點：(%9 , %10)</translation>
@@ -4174,7 +4174,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="211"/>
         <source>Alternative: </source>
-        <translation>對角：</translation>
+        <translation>替代角：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
@@ -4383,7 +4383,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="163"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="321"/>
         <source>Alternative: </source>
-        <translation>對角：</translation>
+        <translation>替代角：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
@@ -6754,7 +6754,7 @@ Some error occurred during XML generation.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="356"/>
         <source>Key sequence has potential conflicts. &lt;a href=&quot;show&quot;&gt;Show.&lt;/a&gt;</source>
-        <translation>按鍵組合存在潛在衝突。顯示。</translation>
+        <translation>按鍵組合存在潛在衝突。&lt;a href=&quot;show&quot;&gt;顯示。&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="409"/>
@@ -20435,7 +20435,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
         <source>&amp;Workspaces</source>
-        <translation>工作空間</translation>
+        <translation>工作空間(&amp;W)</translation>
     </message>
 </context>
 <context>
@@ -20902,7 +20902,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="386"/>
         <source>&amp;Views Restore</source>
-        <translation>還原視景 (Views Restore)</translation>
+        <translation>還原視景(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="399"/>
@@ -20952,7 +20952,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="593"/>
         <source>&amp;Window mode</source>
-        <translation>視窗模式 (Window mode)</translation>
+        <translation>視窗模式(&amp;W)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="598"/>
@@ -41647,14 +41647,14 @@ that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidde
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="33"/>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
 because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation>截至 2014 年 11 月的 MakerCAM 無法正確處理圖塊，因為它未考慮  中的基準點。</translation>
+        <translation>截至 2014 年 11 月的 MakerCAM 無法正確處理圖塊，因為它未考慮 &lt;use&gt; 中的基準點。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="35"/>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>截至 2015 年 3 月的 MakerCAM，當橢圓與橢圓弧是使用帶有  屬性旋轉的  標籤，或是作為使用橢圓弧線段的  建立時，將無法正確顯示。</translation>
+        <translation>截至 2015 年 3 月的 MakerCAM 無法正確顯示透過以下方式建立的橢圓與橢圓弧：使用 &lt;ellipse&gt; 標籤並在 &lt;transform&gt; 屬性中指定旋轉，或使用含有橢圓弧線段的 &lt;path&gt;。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="38"/>
@@ -43170,7 +43170,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform></numerusform>
+            <numerusform>移除 %n 個圖層</numerusform>
         </translation>
     </message>
     <message>
@@ -43215,7 +43215,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="463"/>
         <source>Remove %n block(s)</source>
         <translation>
-            <numerusform></numerusform>
+            <numerusform>移除 %n 個圖塊</numerusform>
         </translation>
     </message>
     <message>
