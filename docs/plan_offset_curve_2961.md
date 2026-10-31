@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W243; chronological evidence follows): planned product
+Current status (W244; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -61,6 +61,16 @@ build and bundled plus relocated worker-client suites also pass. The approved
 LibreCAD test copy visibly renders both groups of three contours in W193. Its
 binary predates the current qmake6 build, so its newly exported DXF is diagnostic
 only; exact-source FreeCAD validation remains the W242 single-SPLINE result.
+
+W244 integrates current `origin/master` `998e61dc0` through local merge commit
+`c9fc81575`. Fresh CMake Release build and CTest pass 25/25, including the
+merged dimension-clipboard lane. A fresh qmake6/Qt 6.12.0 app/helper rebuild
+and bundled plus relocated worker-client runs pass. The bounded aggregate app
+suite has two failing upstream dimension-label/property-copy cases (five
+assertions); a clean build of exact `origin/master` reproduces the same cases
+with the same RNG seed, so these are recorded as inherited baseline failures,
+not attributed to offset code. PR conflict resolution and new-head CI are
+recorded in W244 below.
 
 W242 fixed DXF output for the optional SPLINE/HELIX extrusion vector: the
 value-initialized zero vector is now treated as unspecified instead of being
@@ -9331,12 +9341,81 @@ open.
 | Exact-source FreeCAD spline import | PASS; one valid edge, no extrusion warning; fidelity remains open |
 | W171-derived FreeCAD re-audit | PARTIAL; one valid edge at unchanged recorded hash, but bounds are too thin to judge contour fidelity |
 | PR #3193 exact head | `97323cf5fbf2491dc9d63b8b35b8968860217f4c`; Headless ON/OFF, CodeQL, Analyze, Fast DWG/DXF, Windows x64/ARM64, relocated-worker, and Pixi checks pass; Security scan skipped by workflow policy |
-| W243 roadmap receipt | Ready for documentation-only commit after exact-head CI passed |
+| W243 roadmap receipt | Committed and pushed as `949afcb60139c6f383b64fa9393a77eb2f958a95` |
 
 Exact-head Windows x64 completed successfully at 2026-10-31 21:04:03Z, including
-the relocated-worker step. The W243 plan inventory parser and `git diff
---check` pass after recording the result. Commit and push this roadmap-only
-receipt, then verify the resulting exact PR head. Physical stale-peer
-interaction, preview/commit parity screenshots, W171-derived external-CAD
-fidelity, screenshot/DPR records, deployed W0-W2 acceptance, review approval,
-and final R integration remain open.
+the relocated-worker step. The W243 plan inventory parser and `git diff --check`
+passed after recording the result. The roadmap receipt was pushed to PR
+#3193; resulting head `949afcb60139c6f383b64fa9393a77eb2f958a95` queued five
+Pixi platform checks. The preceding product-code head's complete DWG/DXF,
+Windows, Pixi, Headless and CodeQL checks are recorded above. W244 integrates
+the newer master tip locally; its merge commit and roadmap receipt are the next
+PR update. Physical stale-peer interaction, preview/commit parity screenshots,
+W171-derived external-CAD fidelity, screenshot/DPR records, deployed W0-W2
+acceptance, review approval, and final R integration remain open.
+
+## 202. W244 Upstream Integration and Exact-Source Requalification
+
+The PR's base had advanced from `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
+to `origin/master` `998e61dc0b994d3ecf3b5e6b529123c556dc3494`, leaving PR #3193
+marked conflicting. The worktree was clean before integration. The upstream
+merge is `c9fc81575e0e5949059b40c5bde0957fd72dac35`; all upstream product,
+translation, test and workflow changes are retained. Three overlapping files
+were manually resolved: the DWG/DXF workflow keeps the unconditional PR trigger
+and offset worker lanes while adding upstream dimension paths/targets; CMake
+keeps both offset and dimension test registrations; the dock-layout test source
+keeps both staged-offset-import hooks and dimension-popup coverage. The resolved
+workflow parses as YAML, the CMake project configures, and no conflict markers
+remain.
+
+The exact merged source was rebuilt in CMake Release at
+`/private/tmp/offset-2961-r-release` with integration and offset-worker tests
+enabled. The application and dimension-clipboard executables, DWG/DXF lanes,
+and all declared native worker/fault targets built successfully. Serial CTest
+passed all 25 entries in 38.33 seconds, including worker process/fault/timeout,
+import identity, dimension clipboard, DWG/DXF, and translation-catalog tests.
+
+The full bounded application suite, seed `254215480`, ran 5,099 cases: 5,071
+passed, 26 skipped, and two failed (five assertions). Failures were in
+`Each measured dimension exposes its generated label`
+(`lc_dimension_clipboard_tests.cpp`, four assertions) and
+`Dimension menu actions copy snapshots of the context entity`
+(`lc_property_copy_tests.cpp`, one assertion). Both test sources are unchanged
+from `origin/master`. To distinguish regression from order-sensitive baseline,
+a clean detached worktree at exact `origin/master` `998e61dc0` was configured
+and built independently in `/private/tmp/offset-plan-master-baseline`; the same
+suite, environment and seed reproduced exactly those two failures and five
+assertions (3,731 cases, 3,704 passed, 25 skipped). The dimension-clipboard CTest
+lane itself passes on the merged tree. Do not hide these inherited aggregate
+failures or expand offset scope to edit the upstream dimension tests.
+
+The exact merged source was also rebuilt with qmake 3.1 / Qt 6.12.0 from
+`/private/tmp/offset-2961-w237-qmake` using `qmake6 -o Makefile
+/Users/dli/.codex/worktrees/offset-2961-runtime/LibreCAD/librecad.pro` and
+`make -j4`; both returned success. The bundled worker-client selector passed
+17 cases / 4,344 assertions, and a fresh bundle copy at
+`/private/tmp/offset-W244-relocated.yPKzEj/LibreCAD.app` passed 17 / 3,913.
+The app, helper and client executable hashes matched between original and
+relocated bundles (app `9fc9b5a8e2efccf6a4693ff4d3219ae922c9da037a96da357febf9360ca84149`,
+helper `a42cb47bcedc27ba8e7adbbf253e01f43d0692e7204c5f451c28f1b37268f1a7`,
+client `5aad800d8ea2498653715cf46b07c24ba70005ed335a64221575ef553376516f`).
+
+| W244 check | Result |
+|---|---|
+| Upstream integration | PASS locally; merge `c9fc81575`; PR conflict resolved in the local branch |
+| CMake Release build | PASS; application, clipboard, DWG/DXF and offset worker targets |
+| CTest | PASS; 25/25 |
+| Full bounded app suite | BASELINE-LIMITED; two dimension tests fail identically on clean `origin/master` with the same seed; 26 skips on merged source |
+| qmake6 / Qt 6.12.0 app/helper | PASS |
+| Bundled worker client | PASS; 17 cases / 4,344 assertions |
+| Relocated worker client | PASS; 17 cases / 3,913 assertions; app/helper/client hashes unchanged |
+| Visible exact-source preview/commit and DPR evidence | OPEN; no verified ghost screenshot or durable display/DPR record |
+| External W171 contour-fidelity review | OPEN; import acceptance is not visual fidelity |
+| PR #3193 exact merged head | Not pushed yet; push merge plus this roadmap receipt, then re-check current-head CI |
+
+Physical stale-peer interaction, separate held-drag/preview/commit evidence,
+independent external contour fidelity, deployed/cross-platform W0-W2 acceptance,
+review approval, and final R closeout remain open. The visible app control path
+was responsive only for the approved stale test copy; the exact-source app
+instance remained non-interactive through accessibility, so no new physical
+preview claim is made.
