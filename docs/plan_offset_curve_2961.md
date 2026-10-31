@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W225; chronological evidence follows): planned product
+Current status (W226; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -48,7 +48,10 @@ first-start settings remain untouched. W225 confirms the approved LibreCAD
 bundle renders W193 and selects an `Offset Curve (1)`; secondary-clicking that
 selected carrier showed no context menu, so menu acceptance remains open. W0-W2
 and R remain open for acceptance, not because the Node developer runner
-substitutes for the native worker.
+substitutes for the native worker. W226 reruns the workspace qmake6 helper/client
+suite (17 cases, 4581 assertions) with real helper completions, timeout,
+cancellation and recovery coverage; the desktop is currently locked, so no
+additional GUI or FreeCAD interaction was possible.
 
 W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
 through merge commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`. The upstream
@@ -8690,3 +8693,37 @@ Preview/commit parity, held-drag cancellation, remaining GUI refusal/interaction
 cases, independent external-CAD rendering of the W171-derived drawing, durable
 screenshot/DPR evidence, deployed-package and W0-W2 acceptance, reviewer
 approval, and final R integration remain open.
+
+## 184. W226 qmake6 Native Helper/Client Rerun
+
+Reran the workspace qmake6 bundle's
+`librecad_offset_worker_client_tests` executable. All 17 test cases passed with
+4581 assertions. The suite includes real helper completions and geometric
+refusals, timeout/cancellation of real children, recovery, and cached Produce
+reuse across a fresh helper process. The executable and adjacent helper hashes
+are recorded below. The repository diff from the qualified product-source pin
+`71ecf102b36017d57bd30db39d0de630ac11bb75` remains roadmap-only, but this
+workspace build's exact build commit is not independently stamped into the
+binary. Do not promote it to packaged/deployed or cross-platform acceptance.
+
+Attempted to reconnect to FreeCAD for a follow-up external visual check; CUA
+reported the Mac locked before exposing the app. No UI action, document change,
+or preference change occurred. The user has been asked to unlock it; continue
+the remote CI and source audit while awaiting that state change.
+
+| W226 check | Result |
+|---|---|
+| qmake6 helper/client suite | PASS; 17 cases / 4581 assertions |
+| `librecad_offset_worker_client_tests` SHA256 | `b39ebaa1a6795c816d15de7eae30ad4e5fd032b8b17614eca1ac381b46ace71e` |
+| `LibreCADOffsetWorker` SHA256 | `10440841d4e03c2d9a764ecfc67f6bb855f008ee0ff8bcf2d1667b05a915b407` |
+| `LibreCAD` SHA256 | `6219de40a5a3c3160eb56d86390fa616002347982ea064cd629e6d70d7e2f80f` |
+| Product-source delta since qualified pin | PASS; only `docs/plan_offset_curve_2961.md` differs |
+| Exact binary build provenance | OPEN; no embedded commit stamp; hashes identify tested artifacts |
+| Visible FreeCAD/LibreCAD continuation | BLOCKED FOR THIS ATTEMPT; Mac locked before app access; no preferences or files changed |
+| Current PR CI | IN PROGRESS at capture; exact-head statuses are tracked in the PR comment |
+
+W226 strengthens local native worker/client evidence but does not close W0-W2
+packaged, cross-platform or full GUI acceptance. FreeCAD visual rendering,
+context-menu acceptance, preview/commit parity, held-drag cancellation,
+durable screenshot/DPR evidence, deployed-package verification, required
+review approval and final R integration remain open.
