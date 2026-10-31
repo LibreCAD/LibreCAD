@@ -88,6 +88,7 @@ public:
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     QString getMeasuredLabel()  override;
+    std::optional<double> getMeasuredValue() const override;
     friend std::ostream& operator <<(std::ostream& os, const LC_DimOrdinate& d);
 protected:
     void determineKneesPositions(const RS_Vector& featurePoint, const RS_Vector& leaderEndPoint, RS_Vector& kneeOne,

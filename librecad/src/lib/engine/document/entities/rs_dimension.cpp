@@ -27,7 +27,9 @@
 #include "rs_dimension.h"
 
 #include <QRegularExpression>
+#include <QLocale>
 
+#include "lc_dimarc.h"
 #include "lc_align.h"
 #include "lc_dimarrowregistry.h"
 #include "lc_linemath.h"
@@ -43,6 +45,37 @@
 #include "rs_units.h"
 
 class LC_ArrowHeadOpen;
+
+QString RS_Dimension::getMeasuredValueText() const {
+    const auto measurement = getMeasuredValue();
+    if (!measurement) return {};
+    double value = *measurement;
+    if (rtti() == RS2::EntityDimAngular) value = RS_Math::rad2deg(value);
+    if (!std::isfinite(value)) return {};
+    if (value == 0.0) value = 0.0;
+    return QLocale::c().toString(value, 'g', QLocale::FloatingPointShortest);
+}
+
+QString RS_Dimension::getFormattedValueText() const {
+    const RS_MText* primary = nullptr;
+    const RS_MText* symbol = nullptr;
+    for (const RS_Entity* entity : *this) {
+        if (entity == nullptr || entity->rtti() != RS2::EntityMText) continue;
+        const auto* text = static_cast<const RS_MText*>(entity);
+        if (primary == nullptr) primary = text;
+        else if (symbol == nullptr) symbol = text;
+        else return {};
+    }
+    if (primary == nullptr) return {};
+    const QString value = RS_MText::toPlainLine(primary->getText());
+    if (value.isEmpty()) return {};
+    if (symbol != nullptr) {
+        const auto* arc = dynamic_cast<const LC_DimArc*>(this);
+        if (arc == nullptr || arc->getArcSymbol() != 1 || symbol->getText() != QStringLiteral("∩")) return {};
+        return QStringLiteral("∩ ") + value;
+    }
+    return value;
+}
 
 namespace {
     // Issue #1953: Use calculations in custom Dimension text #1953

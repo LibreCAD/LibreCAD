@@ -90,6 +90,11 @@ RS_VectorSolutions RS_DimAligned::getRefPoints() const {
  * @return Automatically created label for the default
  * measurement of this dimension.
  */
+std::optional<double> RS_DimAligned::getMeasuredValue() const {
+    if (!validMeasurementPoint(m_dimAlignedData.extensionPoint1) || !validMeasurementPoint(m_dimAlignedData.extensionPoint2)) return std::nullopt;
+    return finiteMeasurement(m_dimAlignedData.extensionPoint1.distanceTo(m_dimAlignedData.extensionPoint2));
+}
+
 QString RS_DimAligned::getMeasuredLabel() {
     const double distance = m_dimAlignedData.extensionPoint1.distanceTo(m_dimAlignedData.extensionPoint2);
     m_dimMeasurement = distance;

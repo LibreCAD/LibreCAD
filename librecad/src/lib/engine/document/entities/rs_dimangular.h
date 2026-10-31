@@ -139,6 +139,7 @@ public:
     }
 
     QString getMeasuredLabel()  override;
+    std::optional<double> getMeasuredValue() const override;
     RS_Vector getCenter() const override;
 
 
