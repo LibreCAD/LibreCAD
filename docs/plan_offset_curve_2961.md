@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W214; chronological evidence follows): planned product
+Current status (W215; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -43,15 +43,15 @@ builds pass. Windows ARM64 passes CTest 23/23, recovers across 66,594 allocation
 failure points, and passes relocated worker-client tests (3,902 assertions in
 17 cases). Windows x64 passes the same 23 CTests and 66,594-point recovery
 sweep, with 4,140 assertions in 17 relocated worker-client cases. Its job took
-5h38m55s, an unusually long but successful CI lane. The most recent GitHub
-status check, for PR head `2d17b3ca060772b6393aa0def90d5d7738275602`, showed
+5h38m55s, an unusually long but successful CI lane. At W213's GitHub status
+capture, PR head `2d17b3ca060772b6393aa0def90d5d7738275602` showed
 CodeQL, Text Foundations, DWG/DXF, and Pixi workflows pending. All changes from
 tested product-source head `440c2525058c26b4af4b4e0aece5b0d219ccd970` through
 that PR head were confined to this roadmap file. The CodeQL Security scan is
-skipped by workflow policy. PR #3193 remains open and draft; GitHub last
-reported mergeability unknown, and review is required.
+skipped by workflow policy. At that capture PR #3193 was open and draft, with
+mergeability unknown and review required.
 
-The approved LibreCAD test app is now accessible. W214 visibly confirms the
+The approved LibreCAD test app was accessible for W214, which visibly confirms the
 W193 drawing's six ellipse contours and idle/default state. Normal pointer
 clicks did not select a contour, but enabling the explicit Select Entities
 control and clicking did select one native Offset Curve with its grips.
@@ -61,7 +61,13 @@ interaction and W211/W163 FreeCAD rendering receipts remain scoped results.
 W171-derived external DXF/DWG rendering is still unverified: FreeCAD previously
 recognized about 233 entities but produced no verified rendered view. The
 screenshot was observed in-session but not retained, and display-DPR evidence
-remains incomplete.
+remains incomplete. The Mac relocked before the follow-up FreeCAD review.
+
+W215 adds a broad current-source CMake Release qualification: all 26 registered
+CTest entries passed, including the main application suite (5,050 passed, 26
+explicitly skipped, 10,344,419 assertions passed). At the W215 PR-head snapshot,
+Headless ON/OFF passed; CodeQL analysis, DWG/DXF verification, and Pixi remained
+in progress. PR #3193 was open, draft, and mergeable, with review still required.
 
 Acceptance remains open: remaining GUI refusal/interaction cases, context-menu
 and entity-pick behavior, retained screenshot/display-DPR evidence, independent
@@ -69,7 +75,7 @@ CAD visual checks beyond W193/W163, signed/deployed package qualification,
 broader W0-W2 platform acceptance,
 reviewer approval, and final R integration. The mirrored external display
 reports 1920x1080 at 75 Hz, but Qt DPR was not measured; in-session screenshots
-were not retained. W203-W214 are scoped visible/test passes, not full acceptance.
+were not retained. W203-W215 are scoped visible/test passes, not full acceptance.
 Direct AC1021
 ACadSharp parsing is also unqualified because that reader throws on negative
 `ComprLen` before entity decoding; LibreDWG parses the current AC1021 matrix.
@@ -8272,3 +8278,32 @@ probes remain unverified GUI behavior, not product failures or passes. Remaining
 GUI refusal/interaction coverage, external-CAD rendering of the W171-derived
 files, durable screenshot/DPR, deployed-package qualification, W0-W2 platform
 acceptance, reviewer approval, and final R integration remain open.
+
+## 173. W215 Full CMake Release and PR-Head Requalification
+
+The worktree has no product-source changes relative to tested product head
+`6e1dc8b3fd69ba40a81789a00959eb5db230fb07`; the only path changed since that
+pin is `docs/plan_offset_curve_2961.md`. Using the exact-worktree CMake Release
+tree `/private/tmp/offset-W166-full-build`, rebuilt the complete application
+target (256 build steps) and all executable targets referenced by CTest (159
+target build steps). CTest discovery resolved every one of the 26 registered
+entries to an executable command.
+
+| W215 check | Result |
+|---|---|
+| Full CMake Release application build | PASS; 256 build steps |
+| Registered CTest executable targets | PASS; 159 build steps; all 26 commands resolve |
+| Full CTest | PASS; 26/26; 336.45 seconds |
+| Main `librecad_tests` suite | PASS; 5,050 passed, 26 explicitly skipped, 10,344,419 assertions passed; 268.00 seconds |
+| Other CTest entries | PASS; worker wire/request/result/kernel/process/client/fault/timeout, focused text/filter/identity/render/console tests, DWG/DXF fast lanes, and required-tag gate |
+| Exact PR head `0dfa6d685eabfcb115efa448edeab9dac4bc6d40` | Headless ON/OFF PASS; CodeQL analysis, DWG/DXF Linux/Windows x64/ARM64, and five-platform Pixi were IN PROGRESS at capture; Security scan skipped by policy |
+| PR state at capture | OPEN; draft, mergeable, review required |
+| External FreeCAD visual review | OPEN; Mac relocked before the W171-derived file could be opened |
+| Product-source changes | None; full-build/test requalification and roadmap receipt only |
+
+W215 supersedes W213's partial local CMake inventory: the full application and
+all registered CTest programs were built and executed. It does not close
+current cross-platform PR checks, external visual inspection of the W171-derived
+DXF/DWG, retained screenshot/DPR evidence, deployed-package qualification,
+remaining visible GUI refusal/interaction cases, reviewer approval, or final R
+integration.
