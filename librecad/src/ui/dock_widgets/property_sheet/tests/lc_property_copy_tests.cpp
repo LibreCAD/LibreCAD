@@ -9,6 +9,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QEvent>
+#include <QEventLoop>
 #include <QLineEdit>
 #include <QKeyEvent>
 #include <QKeySequence>
@@ -17,6 +18,7 @@
 #include <QPointer>
 #include <QProcess>
 #include <QRadioButton>
+#include <QTimer>
 
 #include "lc_actioncontext.h"
 #include "lc_actiongroupmanager.h"
@@ -88,8 +90,15 @@ TEST_CASE("Copyable read-only property uses a selectable editor", "[gui][propert
 #ifdef Q_OS_MACOS
     if (QGuiApplication::platformName() == "cocoa") {
         QProcess paste;
+        QEventLoop loop;
+        QTimer timeout;
+        timeout.setSingleShot(true);
+        QObject::connect(&paste, &QProcess::finished, &loop, &QEventLoop::quit);
+        QObject::connect(&timeout, &QTimer::timeout, &loop, &QEventLoop::quit);
         paste.start("/usr/bin/pbpaste", QStringList{});
-        REQUIRE(paste.waitForFinished(5000));
+        timeout.start(5000);
+        loop.exec();
+        REQUIRE(paste.state() == QProcess::NotRunning);
         CHECK(paste.exitCode() == 0);
         CHECK(paste.readAllStandardOutput() == QByteArray("12.345"));
     }

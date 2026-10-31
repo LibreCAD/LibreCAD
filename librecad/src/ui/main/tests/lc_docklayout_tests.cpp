@@ -13,6 +13,7 @@
 #include "lc_actiontestsupport.h"
 #include "lc_testsettingsisolation.h"
 #include "lc_workspacesmanager.h"
+#include "lc_menufactory.h"
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
 #include "qg_graphicview.h"
@@ -23,10 +24,15 @@
 #include "qg_blockwidget.h"
 #include "rs_block.h"
 #include "rs_line.h"
+#include "rs_dimaligned.h"
 
 struct LC_DockLayoutTestAccess {
     using Workspace = LC_WorkspacesManager::LC_Workspace;
     static QC_ApplicationWindow* createWindow() { return new QC_ApplicationWindow; }
+    static QMenu* dimensionPopup(QC_ApplicationWindow& window, QG_GraphicView* view, RS_Entity* entity) {
+        QStringList actions;
+        return window.m_menuFactory->createGraphicViewPopupMenu(view, entity, RS_Vector(0, 0), actions, true);
+    }
     static void fit(QC_ApplicationWindow& window) { window.fitDocksToWindow(); }
     static void isolate(QC_ApplicationWindow& window) {
         window.m_autoCollapsedGroups.clear();
@@ -901,4 +907,59 @@ TEST_CASE("A restored layout gets the first-start width only if its right docks 
         if (5 * savedStrip > 2 * start.window.width()) CHECK(start.rightStrip() * 4 <= start.window.width());
         else CHECK(start.rightStrip() == savedStrip);
     }
+}
+
+TEST_CASE("Dimension popup restores temporary highlighting", "[gui][clipboard][popup]") {
+    QC_ApplicationWindow& window = testWindow();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    LC_ActionContext context;
+    QG_GraphicView view(nullptr, &graphic, &context);
+    view.initView();
+    RS_DimensionData data;
+    data.definitionPoint = RS_Vector(0, 3);
+    data.middleOfText = RS_Vector(5, 3);
+    data.style = "Standard";
+    data.text = "fixed label";
+    auto* dimension = new RS_DimAligned(&graphic, data, {RS_Vector(0, 0), RS_Vector(10, 0)});
+    auto* selected = new RS_Line(&graphic, RS_Vector(0, 0), RS_Vector(1, 0));
+    graphic.addEntity(dimension);
+    graphic.addEntity(selected);
+    dimension->update();
+    graphic.select(QList<RS_Entity*>{selected}, true);
+    graphic.setModified(false);
+    const auto children = dimension->getEntityList();
+    const auto measurement = dimension->getMeasurement();
+
+    std::unique_ptr<QMenu> menu(LC_DockLayoutTestAccess::dimensionPopup(window, &view, dimension));
+    REQUIRE(menu != nullptr);
+    CHECK(selected->isSelected());
+    CHECK(dimension->isSelected());
+    int copyActions = 0;
+    for (const auto* action : menu->actions()) {
+        if (action->text() == "Copy value" || action->text() == "Copy formatted") ++copyActions;
+    }
+    CHECK(copyActions == 2);
+    menu->popup(QPoint(20, 20));
+    QCoreApplication::processEvents();
+    menu->hide();
+    QCoreApplication::processEvents();
+    CHECK(selected->isSelected());
+    CHECK_FALSE(dimension->isSelected());
+    CHECK_FALSE(graphic.isModified());
+    CHECK(dimension->getEntityList() == children);
+    CHECK(dimension->getMeasurement() == measurement);
+
+    graphic.select(QList<RS_Entity*>{dimension}, true);
+    menu.reset(LC_DockLayoutTestAccess::dimensionPopup(window, &view, dimension));
+    REQUIRE(menu != nullptr);
+    menu->popup(QPoint(20, 20));
+    QCoreApplication::processEvents();
+    menu->hide();
+    QCoreApplication::processEvents();
+    CHECK(dimension->isSelected());
+    CHECK(selected->isSelected());
+    dimension->setExtensionPoint2(RS_Vector(11, 0));
+    dimension->update();
+    CHECK(dimension->getMeasuredValueText() == "11");
 }
