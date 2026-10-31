@@ -43,6 +43,7 @@
 #include <QMimeData>
 #include <QPushButton>
 #include <QResizeEvent>
+#include <QScopeGuard>
 #include <QScopedValueRollback>
 #include <QScreen>
 #include <QShowEvent>
@@ -55,6 +56,8 @@
 #include <QWindow>
 
 #include <algorithm>
+#include <limits>
+#include <utility>
 
 #include "lc_iconcolorsoptions.h"
 
@@ -68,6 +71,7 @@
 #include "lc_creatorinvoker.h"
 #include "lc_customstylehelper.h"
 #include "lc_defaultactioncontext.h"
+#include "lc_documentsstorage.h"
 #include "lc_exporttoimageservice.h"
 #include "lc_graphicviewport.h"
 #include "lc_gridviewinvoker.h"
@@ -76,6 +80,7 @@
 #include "lc_layertreewidget.h"
 #include "lc_menufactory.h"
 #include "lc_namedviewslistwidget.h"
+#include "lc_offsetimportsession.h"
 #include "lc_penpalettewidget.h"
 #include "lc_penwizard.h"
 #include "lc_printing.h"
@@ -176,6 +181,10 @@ QC_ApplicationWindow::QC_ApplicationWindow() {
  */
 QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow");
+    // Destroying an MDI child can activate another child. The singleton may
+    // already be reset, so no activation callback may run during teardown.
+    if (m_mdiAreaCAD) disconnect(m_mdiAreaCAD, nullptr, this, nullptr);
+    cancelPendingImports();
 
     // Quitting closes every drawing through doClose(), and the windows' deferred
     // deletes run as the event loop ends. Should a window be left, destroy it
@@ -1120,7 +1129,10 @@ LC_ActionContext* QC_ApplicationWindow::getActionContext() const {
  * Close Event. Called when the user tries to close the app.
  */
 void QC_ApplicationWindow::closeEvent(QCloseEvent* ce) {
-    tryCloseAllBeforeExist() ? ce->accept() : ce->ignore();
+    if (tryCloseAllBeforeExist()) {
+        cancelPendingImports();
+        ce->accept();
+    } else ce->ignore();
 }
 
 bool QC_ApplicationWindow::isAcceptableDragNDropFileName(const QString& fileName) {
@@ -1318,6 +1330,11 @@ void QC_ApplicationWindow::doWindowActivated(QMdiSubWindow* w, const bool forced
         }
     }
 
+    if (!m_restoreActiveFile.isEmpty() && !m_importActivationDepth && w != m_activeMdiSubWindow && nextStartupSelection()) {
+        m_startupSelectedWindow = w;
+        m_startupSelectionChanged = true;
+    }
+
     if (w == m_activeMdiSubWindow) {
         // this may occur after file open, so additional update is needed :(
         RS_GraphicView* activatedGraphicView = getCurrentGraphicView();
@@ -1448,10 +1465,20 @@ void QC_ApplicationWindow::slotPenChanged(const RS_Pen& pen) {
 }
 
 QC_MDIWindow* QC_ApplicationWindow::createNewDrawingWindow(RS_Document* doc, const QString& expectedFileName) {
+    return createDrawingWindow(doc, expectedFileName, {});
+}
+
+QC_MDIWindow* QC_ApplicationWindow::createOwnedDrawingWindow(std::unique_ptr<RS_Graphic> graphic, const QString& expectedFileName) {
+    return createDrawingWindow(nullptr, expectedFileName, std::move(graphic));
+}
+
+QC_MDIWindow* QC_ApplicationWindow::createDrawingWindow(RS_Document* doc, const QString& expectedFileName,
+                                                         std::unique_ptr<RS_Graphic> owned) {
     static unsigned id = 0;
     id++;
 
-    auto* w = new QC_MDIWindow(doc, m_mdiAreaCAD, false, m_actionContext);
+    auto* w = owned ? new QC_MDIWindow(std::move(owned), m_mdiAreaCAD, false, m_actionContext)
+                    : new QC_MDIWindow(doc, m_mdiAreaCAD, false, m_actionContext);
     QG_GraphicView* view = setupNewGraphicView(w);
 
     m_actionHandler->setDocumentAndView(w->getDocument(), view);
@@ -1522,47 +1549,30 @@ QG_GraphicView* QC_ApplicationWindow::setupNewGraphicView(const QC_MDIWindow* w)
     return view;
 }
 
-bool QC_ApplicationWindow::newDrawingFromTemplate(const QString& fileName, QC_MDIWindow* w) {
-    bool ret = false;
-    constexpr RS2::FormatType type = RS2::FormatDXFRW;
-
+bool QC_ApplicationWindow::newDrawingFromTemplate(const QString& fileName) {
+    if (!fileName.isEmpty()) {
+        auto type = RS_FileIO::detectFormat(fileName);
+        if (!LC_OffsetImportSession::supportsType(type)) type = RS2::FormatDXFRW;
+        return beginStagedImport(fileName, type, RS2::DxfTextEncoding::Declared, true);
+    }
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-    w = createNewDrawingWindow(nullptr, "");
+    auto* w = createNewDrawingWindow(nullptr, "");
     qApp->processEvents(QEventLoop::AllEvents, 1000);
-
-    const bool noFile = fileName.isEmpty();
-    if (noFile) {
-        ret = true;
-    }
-    else {
-        // loads the template file in the new view:
-        ret = w->loadDocumentFromTemplate(fileName, type);
-    }
-
-    if (ret) {
-        updateCoordinateWidgetFormat();
-        doActivate(w);
-        doArrangeWindows(RS2::CurrentMode);
-        autoZoomAfterLoad(w->getGraphicView());
-        if (!noFile) {
-            const QString message = tr("New document from template: ") + fileName;
-            showStatusMessage(message, 2000);
-        }
-        else {
-            showStatusMessage(tr("New Drawing created."), 2000);
-        }
-        const auto graphic = w->getGraphic();
-        if (graphic != nullptr) {
-            if (noFile) {
-                // indicate that loading is completed so we could update default dim style from vars
-                graphic->onLoadingCompleted();
-            }
-            emit gridChanged(graphic->isGridOn());
-        }
-    }
-
+    completeNewDrawing(w, fileName);
     QApplication::restoreOverrideCursor();
-    return ret;
+    return true;
+}
+
+void QC_ApplicationWindow::completeNewDrawing(QC_MDIWindow* w, const QString& fileName) {
+    updateCoordinateWidgetFormat();
+    doActivate(w);
+    doArrangeWindows(RS2::CurrentMode);
+    autoZoomAfterLoad(w->getGraphicView());
+    showStatusMessage(fileName.isEmpty() ? tr("New Drawing created.") : tr("New document from template: ") + fileName, 2000);
+    if (const auto graphic = w->getGraphic()) {
+        if (fileName.isEmpty()) graphic->onLoadingCompleted();
+        emit gridChanged(graphic->isGridOn());
+    }
 }
 
 /**
@@ -1581,48 +1591,7 @@ void QC_ApplicationWindow::slotFileNewFromTemplate() {
         return;
     }
 
-    // Create new document window:
-    const QMdiSubWindow* old = m_activeMdiSubWindow;
-    QRect geo;
-    bool maximized = false;
-    if (old != nullptr) {
-        //save old geometry
-        geo = old->geometry();
-        maximized = old->isMaximized();
-    }
-    QC_MDIWindow* w = nullptr;
-    if (!newDrawingFromTemplate(fileName, w)) {
-        // error
-        const QString msg = tr("Cannot open the file\n%1\nPlease check the permissions.").arg(fileName);
-        m_commandWidget->appendHistory(msg);
-        QMessageBox::information(this, QMessageBox::tr("Warning"), msg, QMessageBox::Ok);
-        //file opening failed, clean up QC_MDIWindow and QMdiSubWindow
-        if (w != nullptr) {
-            slotFilePrintPreview(false); // fixme - sand  why it's there?
-            doClose(w); //force closing, without asking user for confirmation
-        }
-        QMdiSubWindow* activeWindow = m_mdiAreaCAD->currentSubWindow();
-
-        // activeMDIWindowChanged(w);
-        // m_activeMdiSubWindow = nullptr; //to allow reactivate the previous active
-
-        if (activeWindow != nullptr) {
-            //restore old geometry
-            m_mdiAreaCAD->setActiveSubWindow(activeWindow);
-            activeWindow->raise();
-            activeWindow->setFocus();
-            if (old == nullptr || maximized) {
-                activeWindow->showMaximized();
-            }
-            else {
-                activeWindow->setGeometry(geo);
-            }
-        }
-        RS_DEBUG->print("QC_ApplicationWindow::slotFileNewTemplate: load Template failed");
-    }
-    else {
-        RS_DEBUG->print("QC_ApplicationWindow::slotFileNewTemplate() OK");
-    }
+    newDrawingFromTemplate(fileName);
 }
 
 /**
@@ -1789,6 +1758,12 @@ void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatTy
         return;
     }
 
+    const auto actualType = type == RS2::FormatUnknown ? RS_FileIO::detectFormat(fileName) : type;
+    if (LC_OffsetImportSession::supportsType(actualType)) {
+        beginStagedImport(fileName, actualType, encoding, false);
+        return;
+    }
+
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
     if (m_openedFiles.indexOf(fileName) >= 0) {
@@ -1820,6 +1795,172 @@ void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatTy
         return;
     }
 
+    completeOpenedDrawing(w, fileName, legacyUtf8);
+    QApplication::restoreOverrideCursor();
+}
+
+void QC_ApplicationWindow::cancelPendingImports() {
+    const auto pending = std::exchange(m_pendingImports, {});
+    m_queuedImports.clear();
+    clearStartupImportSelection();
+    for (const auto& session : pending) {
+        if (session) { session->cancel(); delete session.data(); }
+    }
+}
+
+void QC_ApplicationWindow::clearStartupImportSelection() {
+    m_restoreActiveFile.clear();
+    m_startupSelectedWindow.clear();
+    m_startupSelectionChanged = false;
+}
+
+quint64 QC_ApplicationWindow::nextStartupSelection() {
+    if (m_restoreActiveFile.isEmpty()) return 0;
+    if (m_startupSelectionSerial == std::numeric_limits<quint64>::max()) {
+        clearStartupImportSelection();
+        return 0;
+    }
+    return ++m_startupSelectionSerial;
+}
+
+bool QC_ApplicationWindow::hasPendingImports() const {
+    return !m_pendingImports.isEmpty() || !m_queuedImports.isEmpty();
+}
+
+void QC_ApplicationWindow::restoreActiveFileAfterPendingImports(const QString& fileName) {
+    clearStartupImportSelection();
+    activateWindowWithFile(fileName);
+    m_restoreActiveFile = hasPendingImports() ? fileName : QString{};
+    nextStartupSelection();
+}
+
+bool QC_ApplicationWindow::beginStagedImport(const QString& fileName, RS2::FormatType type,
+                                              RS2::DxfTextEncoding encoding, bool asTemplate) {
+    if (!m_queuedImports.isEmpty() || m_pendingImports.size() >= MaxActiveImports) {
+        if (m_queuedImports.size() >= MaxQueuedImports) {
+            m_commandWidget->appendHistory(tr("Too many pending imports; '%1' was not opened.").arg(fileName));
+            return false;
+        }
+        const auto selectionRequest = nextStartupSelection();
+        m_queuedImports.append({fileName, type, encoding, asTemplate, selectionRequest});
+        showStatusMessage(tr("Queued import: ") + fileName, 2000);
+        const QPointer<QC_ApplicationWindow> window(this);
+        QTimer::singleShot(0, this, [window] { if (window) window->startQueuedImports(); });
+        return true;
+    }
+    return startStagedImport(fileName, type, encoding, asTemplate, nextStartupSelection());
+}
+
+void QC_ApplicationWindow::startQueuedImports() {
+    const QPointer<QC_ApplicationWindow> window(this);
+    while (m_pendingImports.size() < MaxActiveImports && !m_queuedImports.isEmpty()) {
+        const auto request = m_queuedImports.takeFirst();
+        startStagedImport(request.fileName, request.type, request.encoding, request.asTemplate, request.selectionRequest);
+        if (!window) return;
+    }
+    if (!hasPendingImports()) clearStartupImportSelection();
+}
+
+bool QC_ApplicationWindow::startStagedImport(const QString& fileName, RS2::FormatType type,
+                                              RS2::DxfTextEncoding encoding, bool asTemplate, quint64 selectionRequest) {
+    if (!asTemplate && m_openedFiles.contains(fileName))
+        showStatusMessage(tr("Warning: File already opened : ") + fileName, 2000);
+    auto* session = new LC_OffsetImportSession(this);
+    m_pendingImports.append(session);
+    const QPointer<QC_ApplicationWindow> window(this);
+    const QPointer<LC_OffsetImportSession> pending(session);
+    const bool started = session->startWithDecision(fileName, type, encoding,
+        [window, pending, fileName](bool hasEntities, const QString& error, LC_OffsetImportSession::PartialReply reply) {
+            if (!window || !pending) return;
+            const bool canAccept = hasEntities && fileName.endsWith(".dwg", Qt::CaseInsensitive);
+            const QString details = QObject::tr("Import error:") + "\n    " + error;
+            const QString message = canAccept
+                ? details + "\n\n" + QObject::tr("Anyhow, there are some entities identified.") + "\n" +
+                    QObject::tr("If you open the file now, the drawing may be not complete or unusable.") + "\n\n" +
+                    QObject::tr("Ignore error and open the file?")
+                : details;
+            auto* box = new QMessageBox(canAccept ? QMessageBox::Warning : QMessageBox::Critical,
+                canAccept ? QObject::tr("Warning") : QObject::tr("Error"), message,
+                canAccept ? QMessageBox::Yes | QMessageBox::No : QMessageBox::Ok, window);
+            box->setAttribute(Qt::WA_DeleteOnClose);
+            if (canAccept) box->setDefaultButton(QMessageBox::No);
+            QObject::connect(box, &QMessageBox::finished, pending, [reply](int result) { reply(result == QMessageBox::Yes); });
+            QObject::connect(pending, &QObject::destroyed, box, &QDialog::reject);
+            box->open();
+        },
+        [window, pending, fileName, encoding, asTemplate, selectionRequest](LC_OffsetImportSession::Outcome outcome) {
+            if (!window || !pending) return;
+            window->m_pendingImports.removeAll(pending);
+            pending->deleteLater();
+            QTimer::singleShot(0, window, [window] { if (window) window->startQueuedImports(); });
+            if (outcome.status != LC_OffsetImportSession::Status::Complete || !outcome.graphic) {
+                if (outcome.status != LC_OffsetImportSession::Status::ReadFailed) {
+                    auto* box = new QMessageBox(QMessageBox::Critical, QObject::tr("Error"), outcome.error,
+                                                QMessageBox::Ok, window);
+                    box->setAttribute(Qt::WA_DeleteOnClose); box->open();
+                }
+                if (!window->hasPendingImports()) window->clearStartupImportSelection();
+                return;
+            }
+            QPointer<QC_MDIWindow> mdi;
+            try {
+                ++window->m_importActivationDepth;
+                const auto activationGuard = qScopeGuard([window] {
+                    if (window) --window->m_importActivationDepth;
+                });
+                const bool sourceUnverified = outcome.sourceUnverified || !outcome.sourceStamp.matches(fileName);
+                LC_DocumentsStorage storage;
+                if (asTemplate) storage.finalizeTemplateGraphic(*outcome.graphic);
+                else {
+                    storage.finalizeLoadedGraphic(*outcome.graphic, fileName);
+                    outcome.graphic->setSourceFileIdentity(outcome.sourceStamp);
+                    if (outcome.sourceStamp.valid) outcome.graphic->setLastSaveTime(outcome.sourceStamp.modified);
+                    if (sourceUnverified) {
+                        outcome.graphic->setFormatType(RS2::FormatUnknown);
+                        outcome.graphic->setModified(true);
+                    }
+                }
+                if (!window) return;
+                mdi = window->createOwnedDrawingWindow(std::move(outcome.graphic), asTemplate ? QString{} : fileName);
+                if (!window || !mdi) return;
+                if (asTemplate) mdi->getGraphicView()->zoomAuto(false);
+                else mdi->initializeLoadedDocument(fileName);
+                if (!window || !mdi) return;
+                if (asTemplate) window->completeNewDrawing(mdi, fileName);
+                else window->completeOpenedDrawing(mdi, fileName, encoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8);
+                if (window && !window->m_restoreActiveFile.isEmpty()) {
+                    if (mdi && selectionRequest && selectionRequest == window->m_startupSelectionSerial) {
+                        window->m_startupSelectedWindow = mdi;
+                        window->m_startupSelectionChanged = true;
+                    }
+                    if (window->m_startupSelectionChanged) {
+                        auto* selected = qobject_cast<QC_MDIWindow*>(window->m_startupSelectedWindow.data());
+                        if (selected && window->m_windowList.contains(selected)) window->doActivate(selected);
+                    } else {
+                        window->activateWindowWithFile(window->m_restoreActiveFile);
+                    }
+                }
+                if (window && outcome.downgraded)
+                    window->m_commandWidget->appendHistory(QObject::tr("%1 offset curves could not be restored as editable and were retained as ordinary geometry.").arg(qulonglong(outcome.downgraded)));
+                if (window && sourceUnverified)
+                    window->m_commandWidget->appendHistory(asTemplate
+                        ? QObject::tr("The template changed or could not be verified while loading; the new drawing may not match the current template.")
+                        : QObject::tr("The source changed or could not be verified while loading; use Save As to avoid overwriting it."));
+            } catch (...) {
+                if (window && mdi) window->doClose(mdi);
+                if (window) window->m_commandWidget->appendHistory(QObject::tr("Could not complete the imported drawing."));
+            }
+            if (window && !window->hasPendingImports()) window->clearStartupImportSelection();
+        });
+    if (!started) {
+        m_pendingImports.removeAll(pending);
+        delete session;
+        m_commandWidget->appendHistory(tr("Could not start importing '%1'.").arg(fileName));
+    }
+    return started;
+}
+
+void QC_ApplicationWindow::completeOpenedDrawing(QC_MDIWindow* w, const QString& fileName, bool legacyUtf8) {
     // update recent files menu:
     m_recentFilesList->add(fileName);
     m_openedFiles.push_back(fileName);
@@ -1841,12 +1982,10 @@ void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatTy
     updateWidgetsAsDocumentLoaded(w);
 
     const auto graphicView = w->getGraphicView();
-    autoZoomAfterLoad(graphicView);
     const auto graphic = graphicView->getGraphic(true);
-    if (graphic != nullptr && !legacyUtf8) {
-        graphic->setModified(false);
-    }
-
+    const bool modifiedBeforeZoom = graphic && graphic->isModified();
+    autoZoomAfterLoad(graphicView);
+    if (graphic) graphic->setModified(modifiedBeforeZoom);
     int blocksWithGeometry = maybeSurfaceBlocksDock(graphic);
     QString message;
     int messageTimeout = 0;
@@ -1872,7 +2011,6 @@ void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatTy
     }
     showStatusMessage(message, messageTimeout);
 
-    QApplication::restoreOverrideCursor();
 }
 
 void QC_ApplicationWindow::notifyCurrentDrawingOptionsChanged() {

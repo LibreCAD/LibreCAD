@@ -33,6 +33,8 @@
 #include <cmath>
 #include <iostream>
 #include <limits>
+#include <type_traits>
+#include <utility>
 
 #include "lc_curveoffset.h"
 #include "lc_splinehelper.h"
@@ -190,28 +192,33 @@ using ArcLengthTable = RS_Spline::ArcLengthTable;
  * out a mutable reference, so a cache cannot rely on being told about a
  * change; this walk over the data is a thousandth of the cost of the table.
  */
-std::uint64_t geometryFingerprint(const RS_SplineData &data) {
+std::uint64_t splineGeometryFingerprint(const RS_SplineData &data) noexcept {
   std::uint64_t hash = 1469598103934665603ULL;
-  const auto mix = [&hash](const double value) {
+  const auto integer = [&hash](const std::uint64_t value) {
+    hash = (hash ^ value) * 1099511628211ULL;
+  };
+  const auto mix = [&integer](const double value) {
     std::uint64_t bits = 0;
     static_assert(sizeof bits == sizeof value);
     std::memcpy(&bits, &value, sizeof bits);
-    hash = (hash ^ bits) * 1099511628211ULL;
+    integer(bits);
   };
-  mix(static_cast<double>(data.degree));
-  mix(static_cast<double>(data.controlPoints.size()));
-  mix(static_cast<double>(data.knotslist.size()));
-  mix(static_cast<double>(data.weights.size()));
-  for (const RS_Vector &point : data.controlPoints) {
-    mix(point.x);
-    mix(point.y);
-  }
-  for (const double knot : data.knotslist) {
-    mix(knot);
-  }
-  for (const double weight : data.weights) {
-    mix(weight);
-  }
+  const auto points = [&integer, &mix](const auto &values) {
+    integer(values.size());
+    for (const RS_Vector &point : values) {
+      mix(point.x); mix(point.y); mix(point.z); integer(point.valid);
+    }
+  };
+  const auto numbers = [&integer, &mix](const auto &values) {
+    integer(values.size());
+    for (const double value : values) mix(value);
+  };
+  integer(data.degree);
+  integer(static_cast<unsigned>(data.type));
+  integer(static_cast<unsigned>(data.savedOpenType));
+  integer(data.m_closedFlag); integer(data.m_periodicFlag);
+  points(data.controlPoints); points(data.fitPoints);
+  numbers(data.knotslist); numbers(data.weights); numbers(data.savedOpenKnots);
   return hash;
 }
 
@@ -465,9 +472,35 @@ RS_Entity *RS_Spline::clone() const {
   return new RS_Spline(*this);
 }
 
+std::optional<std::size_t> RS_Spline::displayEntityUpperBound(const RS_SplineData& data) noexcept {
+    // fillDisplayPoints can continue one segment per span after reaching its
+    // nominal cap, and insert an extra one-sided corner point per break.
+    // The number of breaks is at most the number of stored knots. Include
+    // the uniform fallback and the possible final wrapped closing segment.
+    const std::size_t base = std::max<std::size_t>(g_maximumDisplaySegments, g_minimumDisplaySegments) + 3;
+    if (data.knotslist.size() > (std::numeric_limits<std::size_t>::max() - base) / 2) return std::nullopt;
+    return base + 2 * data.knotslist.size();
+}
+
 /** M_Data access */
 RS_SplineData &RS_Spline::getData() { return m_data; }
 const RS_SplineData &RS_Spline::getData() const { return m_data; }
+
+std::uint64_t RS_Spline::geometryFingerprint(const RS_SplineData &data) noexcept {
+  return splineGeometryFingerprint(data);
+}
+
+RS_EntityContainer::OwnedReplacement RS_Spline::replacePreparedSpline(RS_Spline &prepared) {
+  static_assert(std::is_nothrow_swappable_v<RS_SplineData>);
+  const auto minimum = prepared.getMin(), maximum = prepared.getMax();
+  auto children = prepared.takeEntities();
+  auto notification = replaceOwnedEntities(std::move(children));
+  using std::swap;
+  swap(m_data, prepared.m_data);
+  m_arcLength.t.clear(); m_arcLength.length.clear(); m_arcLengthBuilt = false;
+  m_minV = minimum; m_maxV = maximum;
+  return notification;
+}
 
 /** Unwrapped size */
 size_t RS_Spline::getUnwrappedSize() const {
@@ -1616,6 +1649,7 @@ std::vector<double> RS_Spline::getBSplineBasis(const double t,
 
 bool RS_Spline::validate() const {
   const size_t degree = m_data.degree;
+  if (degree < 1 || degree > 3) return false;
 
   // Basic checks
   const size_t numControlPoints = m_data.controlPoints.size(); // total (wrapped if closed)

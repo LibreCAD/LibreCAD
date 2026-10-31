@@ -28,7 +28,18 @@
 
 #include "rs_debug.h"
 #include "rs_entity.h"
+#include "rs_entitycontainer.h"
 #include "rs_selection.h"
+
+namespace {
+    RS_Entity* intersectionOwner(RS_Entity* entity) {
+        if (entity != nullptr && entity->getParent() != nullptr &&
+            entity->getParent()->rtti() == RS2::EntityOffsetCurve) {
+            return entity->getParent();
+        }
+        return entity;
+    }
+}
 
 struct LC_ActionSelectIntersected::ActionData {
     RS_Vector v1;
@@ -64,6 +75,7 @@ void LC_ActionSelectIntersected::init(const int status) {
 }
 
 void LC_ActionSelectIntersected::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]] const RS_Vector& clickPos) {
+    contextEntity = intersectionOwner(contextEntity);
     if (isValidEntityForSelection(contextEntity)) {
         m_actionData->entityToIntersect = contextEntity;
         trigger();
@@ -96,7 +108,7 @@ void LC_ActionSelectIntersected::selectionFinishedByKey([[maybe_unused]] QKeyEve
 void LC_ActionSelectIntersected::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     if (status == SetPoint1) {
         if (e->isShift) {
-            const RS_Entity* entity = nullptr;
+            RS_Entity* entity = nullptr;
             if (e->isControl) {
                 entity = catchAndDescribe(e, RS2::ResolveAll);
             }
@@ -104,6 +116,7 @@ void LC_ActionSelectIntersected::onMouseMoveEvent(const int status, const LC_Mou
                 entity = catchAndDescribe(e, RS2::ResolveNone);
             }
 
+            entity = intersectionOwner(entity);
             if (entity != nullptr) {
                 const bool entityTypeValidForSelection = isValidEntityForSelection(entity);
                 if (entityTypeValidForSelection) {
@@ -147,6 +160,7 @@ void LC_ActionSelectIntersected::onMouseLeftButtonRelease(const int status, cons
             else {
                 entity = catchAndDescribe(e, RS2::ResolveNone);
             }
+            entity = intersectionOwner(entity);
             if (entity != nullptr) {
                 const bool entityTypeValidForSelection = isValidEntityForSelection(entity);
                 if (entityTypeValidForSelection) {
@@ -172,6 +186,7 @@ void LC_ActionSelectIntersected::onMouseLeftButtonRelease(const int status, cons
 }
 
 bool LC_ActionSelectIntersected::isValidEntityForSelection(const RS_Entity* entity) {
+    if (entity == nullptr) return false;
     const RS2::EntityType entityType = entity->rtti();
     const bool entityTypeValidForSelection = !entity->isParentIgnoredOnModifications() && entityType != RS2::EntitySpline;
     return entityTypeValidForSelection;

@@ -9,8 +9,14 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QElapsedTimer>
+#include <QProcess>
+#include <QThread>
 
 #include "lc_actiontestsupport.h"
+#include "lc_offsetcurve.h"
+#include "lc_offsetimportsession.h"
+#include "lc_settingguard.h"
 #include "lc_testsettingsisolation.h"
 #include "lc_workspacesmanager.h"
 #include "qc_applicationwindow.h"
@@ -23,6 +29,21 @@
 #include "qg_blockwidget.h"
 #include "rs_block.h"
 #include "rs_line.h"
+#include "rs_spline.h"
+#ifdef Q_OS_UNIX
+#include <cerrno>
+#include <csignal>
+#include <unistd.h>
+#endif
+
+struct LC_GuiImportTestAccess {
+    static void onStarted(LC_OffsetImportSession& session, std::function<void(QProcess&)> hook) {
+        session.m_worker.m_testStarted = std::move(hook);
+    }
+    static void afterRead(LC_OffsetImportSession& session, std::function<void()> hook) {
+        session.m_testAfterRead = std::move(hook);
+    }
+};
 
 struct LC_DockLayoutTestAccess {
     using Workspace = LC_WorkspacesManager::LC_Workspace;
@@ -57,6 +78,35 @@ struct LC_DockLayoutTestAccess {
         const int count = window.maybeSurfaceBlocksDock(&graphic);
         window.m_blockWidget->setGraphicView(nullptr);
         return count;
+    }
+    static int drawingCount(QC_ApplicationWindow& window) { return window.findChildren<QC_MDIWindow*>().size(); }
+    static int pendingImports(QC_ApplicationWindow& window) { return window.m_pendingImports.size() + window.m_queuedImports.size(); }
+    static int activeImports(QC_ApplicationWindow& window) { return window.m_pendingImports.size(); }
+    static int queuedImports(QC_ApplicationWindow& window) { return window.m_queuedImports.size(); }
+    static int maxActiveImports() { return QC_ApplicationWindow::MaxActiveImports; }
+    static int maxQueuedImports() { return QC_ApplicationWindow::MaxQueuedImports; }
+    static QString queuedFile(QC_ApplicationWindow& window, int index) { return window.m_queuedImports.at(index).fileName; }
+    static bool queuedTemplate(QC_ApplicationWindow& window, int index) { return window.m_queuedImports.at(index).asTemplate; }
+    static void cancelImports(QC_ApplicationWindow& window) { window.cancelPendingImports(); }
+    static void closeDrawing(QC_ApplicationWindow& window, QC_MDIWindow* drawing) {
+        drawing->setSaveOnClosePolicy(QC_MDIWindow::DONT_SAVE);
+        window.doClose(drawing);
+    }
+    static bool newTemplate(QC_ApplicationWindow& window, const QString& file) { return window.newDrawingFromTemplate(file); }
+    static bool tracksOpenedFile(QC_ApplicationWindow& window, const QString& file) { return window.m_openedFiles.contains(file); }
+    static void closeDrawings(QC_ApplicationWindow& window) {
+        const auto drawings = window.findChildren<QC_MDIWindow*>();
+        for (auto* drawing : drawings) {
+            drawing->setSaveOnClosePolicy(QC_MDIWindow::DONT_SAVE);
+            window.doClose(drawing);
+        }
+        QApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    }
+    static LC_OffsetImportSession* pendingImport(QC_ApplicationWindow& window) {
+        return window.m_pendingImports.isEmpty() ? nullptr : window.m_pendingImports.first().data();
+    }
+    static LC_OffsetImportSession* lastPendingImport(QC_ApplicationWindow& window) {
+        return window.m_pendingImports.isEmpty() ? nullptr : window.m_pendingImports.last().data();
     }
     static Workspace capture() {
         Workspace workspace;
@@ -164,6 +214,32 @@ struct DockFixture {
     }
 };
 
+struct DrawingWindowCleanup {
+    QC_ApplicationWindow& window;
+    QC_MDIWindow* drawing;
+    ~DrawingWindowCleanup() {
+        if (drawing != nullptr) LC_DockLayoutTestAccess::closeDrawing(window, drawing);
+    }
+};
+
+class PopupObserver final : public QObject {
+public:
+    bool shown {false};
+    int actionCount {0};
+
+protected:
+    bool eventFilter(QObject* watched, QEvent* event) override {
+        if (event->type() == QEvent::Show) {
+            if (auto* menu = qobject_cast<QMenu*>(watched)) {
+                shown = true;
+                actionCount = menu->actions().size();
+                QTimer::singleShot(0, menu, &QMenu::close);
+            }
+        }
+        return QObject::eventFilter(watched, event);
+    }
+};
+
 // A window as main() builds it on the first start, shown at a realistic size. The offscreen
 // platform has an 800x600 screen unless given a larger one: run these tests with
 // QT_QPA_PLATFORM=offscreen:configfile=librecad/src/ui/main/tests/lc_docklayout_screen.json
@@ -222,6 +298,36 @@ QStringList tabOrder(QC_ApplicationWindow& window, const QString& first, const Q
     }
     return {};
 }
+}
+
+TEST_CASE("Idle right-button release reaches graphic-view popup", "[.gui][dock-window][context-menu]") {
+    DockFixture fixture;
+    auto& window = fixture.window;
+    auto* drawing = window.createNewDrawingWindow(nullptr, {});
+    REQUIRE(drawing != nullptr);
+    DrawingWindowCleanup cleanup{window, drawing};
+    drawing->show();
+    window.activateWindow(drawing);
+    settle();
+
+    auto* view = drawing->getGraphicView();
+    REQUIRE(view != nullptr);
+    const QPoint local(20, 20);
+    QMouseEvent release(QEvent::MouseButtonRelease, QPointF(local), QPointF(view->mapToGlobal(local)),
+                        Qt::RightButton, Qt::NoButton, Qt::NoModifier);
+
+    std::unique_ptr<QMenu> menu(window.createGraphicViewContentMenu(&release, view, nullptr, RS_Vector{}));
+    REQUIRE(menu != nullptr);
+    REQUIRE(menu->actions().size() > 1);
+    menu.reset();
+
+    PopupObserver observer;
+    qApp->installEventFilter(&observer);
+    QApplication::sendEvent(view, &release);
+    qApp->removeEventFilter(&observer);
+
+    CHECK(observer.shown);
+    CHECK(observer.actionCount > 1);
 }
 
 TEST_CASE("Print does not inherit the print preview checked state", "[.gui][printing][issue3105]") {
@@ -365,7 +471,10 @@ TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][dock-window
         file.close();
 
         window.openFile(fileName);
-        settle(0);
+        QElapsedTimer elapsed; elapsed.start();
+        while (LC_DockLayoutTestAccess::pendingImports(window)) {
+            REQUIRE(elapsed.elapsed() < 35000); settle(10);
+        }
         auto* mdi = window.getCurrentMDIWindow();
         REQUIRE(mdi != nullptr);
         auto* graphic = mdi->getGraphic();
@@ -394,6 +503,636 @@ TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][dock-window
         CHECK_FALSE(graphic->isModified());
     }
 }
+
+TEST_CASE("GUI open publishes a validated native offset only after staging", "[.gui][dock-window][offset-import]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString root = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    QString fileName; bool expectNative = true;
+    SECTION("binary DXF") { fileName = root + "dxf-binary-R2018-native-degree3.dxf"; }
+    SECTION("ODA DWG") { fileName = root + "oda-dwg-R2018-native-degree3.dwg"; }
+    SECTION("DWG counted-NUL marker") { fileName = root + "dwg-R2018-native-degree3.dwg"; expectNative = false; }
+    REQUIRE(QFileInfo::exists(fileName));
+    window.openFile(fileName);
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+    REQUIRE(LC_DockLayoutTestAccess::pendingImports(window) == 1);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) {
+        REQUIRE(elapsed.elapsed() < 35000); settle(10);
+    }
+    REQUIRE(LC_DockLayoutTestAccess::drawingCount(window) == initial + 1);
+    auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); auto* graphic = mdi->getGraphic(); REQUIRE(graphic);
+    CHECK(graphic->getFilename() == fileName); CHECK_FALSE(graphic->isModified());
+    bool found = false, spline = false;
+    for (const auto* entity : *graphic) {
+        found |= dynamic_cast<const LC_OffsetCurve*>(entity) != nullptr;
+        spline |= dynamic_cast<const RS_Spline*>(entity) != nullptr;
+    }
+    CHECK(spline); CHECK(found == expectNative);
+}
+
+TEST_CASE("An MDI window owns and destroys a transferred graphic", "[.gui][dock-window][offset-import][lifetime]") {
+    struct TrackedGraphic final : RS_Graphic {
+        explicit TrackedGraphic(int& count) : destroyed(count) {}
+        ~TrackedGraphic() override { ++destroyed; }
+        int& destroyed;
+    };
+    DockFixture fixture; auto& window = fixture.window; int destroyed = 0;
+    auto graphic = std::make_unique<TrackedGraphic>(destroyed); graphic->initForNewDocument();
+    auto* original = graphic.get();
+    QPointer<QC_MDIWindow> mdi(window.createOwnedDrawingWindow(std::move(graphic), QStringLiteral("owned.dxf")));
+    REQUIRE(mdi); CHECK(mdi->getGraphic() == original); CHECK(destroyed == 0);
+    window.doClose(mdi); QApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    CHECK_FALSE(mdi); CHECK(destroyed == 1);
+}
+
+TEST_CASE("Cancelling a pending GUI import publishes no drawing", "[.gui][dock-window][offset-import]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFileInfo::exists(fileName)); window.openFile(fileName);
+    REQUIRE(LC_DockLayoutTestAccess::pendingImports(window) == 1);
+    LC_DockLayoutTestAccess::cancelImports(window); settle(25);
+    CHECK(LC_DockLayoutTestAccess::pendingImports(window) == 0);
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+}
+
+TEST_CASE("Startup restores the active file after asynchronous opens", "[.gui][dock-window][offset-import][startup]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const QString root = QString(LIBRECAD_SOURCE_DIR) + "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    const QString active = root + "dxf-binary-R2018-line-control.dxf";
+    const QString other = root + "dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFileInfo::exists(active)); REQUIRE(QFileInfo::exists(other));
+    window.openFile(active); window.openFile(other);
+    window.restoreActiveFileAfterPendingImports(active);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(window.getCurrentMDIWindow()); CHECK(window.getCurrentMDIWindow()->getFileName() == active);
+    window.openFile(other);
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(window.getCurrentMDIWindow()); CHECK(window.getCurrentMDIWindow()->getFileName() == other);
+}
+
+#ifdef Q_OS_UNIX
+TEST_CASE("Startup imports preserve a later drawing selection", "[.gui][dock-window][offset-import][startup]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString root = QString(LIBRECAD_SOURCE_DIR) + "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    const QString line = root + "dxf-binary-R2018-line-control.dxf";
+    const QString active = directory.filePath("active.dxf"), selected = directory.filePath("selected.dxf");
+    const QString pending = root + "dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFile::copy(line, active)); REQUIRE(QFile::copy(line, selected));
+    window.openFile(active); window.openFile(selected);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    QC_MDIWindow* chosen = nullptr;
+    for (auto* mdi : window.findChildren<QC_MDIWindow*>()) if (mdi->getFileName() == selected) chosen = mdi;
+    REQUIRE(chosen);
+    window.openFile(pending);
+    auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+    bool started = false; pid_t pid = 0; int suspended = -1;
+    LC_GuiImportTestAccess::onStarted(*session, [&](QProcess& process) {
+        pid = static_cast<pid_t>(process.processId()); suspended = ::kill(pid, SIGSTOP); started = true;
+    });
+    while (!started) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(pid > 0); REQUIRE(suspended == 0);
+    window.openFile(active);
+    window.restoreActiveFileAfterPendingImports(active);
+    REQUIRE(window.getCurrentMDIWindow()); REQUIRE(window.getCurrentMDIWindow()->getFileName() == active);
+    const auto verifySelection = [&] {
+        REQUIRE(window.getCurrentMDIWindow() == chosen);
+        SECTION("selection survives multiple publications") {
+            while (LC_DockLayoutTestAccess::pendingImports(window) > 1) {
+                REQUIRE(elapsed.elapsed() < 35000); settle(10);
+            }
+            CHECK(window.getCurrentMDIWindow() == chosen);
+        }
+        SECTION("closing the selected window preserves its replacement") {
+            LC_DockLayoutTestAccess::closeDrawing(window, chosen);
+            chosen = window.getCurrentMDIWindow();
+            REQUIRE(chosen); REQUIRE(chosen->getFileName() == active);
+        }
+        REQUIRE(::kill(pid, SIGCONT) == 0);
+        while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+        CHECK(window.getCurrentMDIWindow() == chosen);
+        LC_DockLayoutTestAccess::closeDrawings(window);
+    };
+    SECTION("window command") {
+        window.activateWindow(chosen);
+        verifySelection();
+    }
+    SECTION("MDI activation") {
+        REQUIRE(chosen->mdiArea());
+        chosen->mdiArea()->setActiveSubWindow(chosen);
+        verifySelection();
+    }
+}
+
+TEST_CASE("New imports take precedence over older startup imports", "[.gui][dock-window][offset-import][startup]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString root = QString(LIBRECAD_SOURCE_DIR) + "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    const QString line = root + "dxf-binary-R2018-line-control.dxf";
+    const QString active = directory.filePath("active.dxf"), requested = directory.filePath("requested.dxf");
+    const QString pending = root + "dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFile::copy(line, active)); REQUIRE(QFile::copy(line, requested));
+    window.openFile(active);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    window.openFile(pending);
+    auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+    bool started = false; pid_t pid = 0; int suspended = -1;
+    LC_GuiImportTestAccess::onStarted(*session, [&](QProcess& process) {
+        pid = static_cast<pid_t>(process.processId()); suspended = ::kill(pid, SIGSTOP); started = true;
+    });
+    while (!started) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(pid > 0); REQUIRE(suspended == 0);
+    window.restoreActiveFileAfterPendingImports(active);
+    const int before = LC_DockLayoutTestAccess::drawingCount(window);
+    bool asTemplate = false;
+    SECTION("drawing") { window.openFile(requested); }
+    SECTION("template") { asTemplate = true; REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, requested)); }
+    while (LC_DockLayoutTestAccess::drawingCount(window) == before) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    auto* chosen = window.getCurrentMDIWindow(); REQUIRE(chosen);
+    CHECK(chosen->getFileName() == (asTemplate ? QString{} : requested));
+    REQUIRE(::kill(pid, SIGCONT) == 0);
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    CHECK(window.getCurrentMDIWindow() == chosen);
+    LC_DockLayoutTestAccess::closeDrawings(window);
+}
+
+TEST_CASE("Later startup import choices win over slow earlier requests", "[.gui][dock-window][offset-import][startup]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString root = QString(LIBRECAD_SOURCE_DIR) + "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    const QString line = root + "dxf-binary-R2018-line-control.dxf";
+    const QString active = directory.filePath("active.dxf"), selected = directory.filePath("selected.dxf");
+    const QString pending = root + "dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFile::copy(line, active)); REQUIRE(QFile::copy(line, selected));
+    window.openFile(active); window.openFile(selected);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    QC_MDIWindow* selectedWindow = nullptr;
+    for (auto* mdi : window.findChildren<QC_MDIWindow*>()) if (mdi->getFileName() == selected) selectedWindow = mdi;
+    REQUIRE(selectedWindow);
+    window.openFile(line);
+    window.restoreActiveFileAfterPendingImports(active);
+    window.openFile(pending);
+    auto* slow = LC_DockLayoutTestAccess::lastPendingImport(window); REQUIRE(slow);
+    bool secondStarted = false; pid_t secondPid = 0; int secondStopped = -1;
+    LC_GuiImportTestAccess::onStarted(*slow, [&](QProcess& process) {
+        secondPid = static_cast<pid_t>(process.processId()); secondStopped = ::kill(secondPid, SIGSTOP); secondStarted = true;
+    });
+    while (!secondStarted) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(secondPid > 0); REQUIRE(secondStopped == 0);
+    QC_MDIWindow* chosen = nullptr;
+    SECTION("later open finishes first") {
+        const int before = LC_DockLayoutTestAccess::drawingCount(window);
+        window.openFile(selected);
+        while (LC_DockLayoutTestAccess::drawingCount(window) == before) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+        chosen = window.getCurrentMDIWindow(); REQUIRE(chosen); CHECK(chosen->getFileName() == selected);
+        CHECK(chosen != selectedWindow);
+    }
+    SECTION("later window switch") {
+        window.activateWindow(selectedWindow);
+        chosen = selectedWindow; REQUIRE(window.getCurrentMDIWindow() == chosen);
+    }
+    REQUIRE(::kill(secondPid, SIGCONT) == 0);
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    CHECK(window.getCurrentMDIWindow() == chosen);
+    bool native = false;
+    for (auto* mdi : window.findChildren<QC_MDIWindow*>()) {
+        if (mdi->getFileName() != pending || !mdi->getGraphic()) continue;
+        for (auto* entity : *mdi->getGraphic()) native |= dynamic_cast<LC_OffsetCurve*>(entity) != nullptr;
+    }
+    CHECK(native);
+    LC_DockLayoutTestAccess::closeDrawings(window);
+}
+
+#endif
+
+TEST_CASE("Queued new import wins over remaining startup imports", "[.gui][dock-window][offset-import][startup][queue]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString root = QString(LIBRECAD_SOURCE_DIR) + "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    const QString line = root + "dxf-binary-R2018-line-control.dxf";
+    const QString active = directory.filePath("active.dxf"), requested = directory.filePath("requested.dxf");
+    const QString selected = directory.filePath("selected.dxf");
+    REQUIRE(QFile::copy(line, active)); REQUIRE(QFile::copy(line, requested)); REQUIRE(QFile::copy(line, selected));
+    window.openFile(active); window.openFile(selected);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    QC_MDIWindow* existing = nullptr;
+    for (auto* mdi : window.findChildren<QC_MDIWindow*>()) if (mdi->getFileName() == selected) existing = mdi;
+    REQUIRE(existing);
+    for (int i = 0; i < LC_DockLayoutTestAccess::maxActiveImports(); ++i) {
+        window.openFile(line);
+    }
+    REQUIRE(LC_DockLayoutTestAccess::activeImports(window) == LC_DockLayoutTestAccess::maxActiveImports());
+    window.restoreActiveFileAfterPendingImports(active);
+    window.openFile(requested);
+    REQUIRE(LC_DockLayoutTestAccess::queuedImports(window) == 1);
+    bool switched = false;
+    SECTION("queued request wins") {}
+    SECTION("later switch wins") { switched = true; window.activateWindow(existing); }
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    auto* chosen = window.getCurrentMDIWindow(); REQUIRE(chosen);
+    if (switched) CHECK(chosen == existing);
+    else CHECK(chosen->getFileName() == requested);
+    LC_DockLayoutTestAccess::closeDrawings(window);
+}
+
+TEST_CASE("Staged GUI imports are bounded and queued work completes", "[.gui][dock-window][offset-import][queue]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString root = QString(LIBRECAD_SOURCE_DIR) + "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    const QString line = root + "dxf-binary-R2018-line-control.dxf";
+    const QString native = root + "dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFileInfo::exists(line)); REQUIRE(QFileInfo::exists(native));
+    for (int i = 0; i < LC_DockLayoutTestAccess::maxActiveImports(); ++i) window.openFile(line);
+    window.openFile(native); REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, native));
+    CHECK(LC_DockLayoutTestAccess::activeImports(window) == LC_DockLayoutTestAccess::maxActiveImports());
+    CHECK(LC_DockLayoutTestAccess::queuedImports(window) == 2);
+    CHECK(LC_DockLayoutTestAccess::queuedFile(window, 0) == native);
+    CHECK_FALSE(LC_DockLayoutTestAccess::queuedTemplate(window, 0));
+    CHECK(LC_DockLayoutTestAccess::queuedFile(window, 1) == native);
+    CHECK(LC_DockLayoutTestAccess::queuedTemplate(window, 1));
+    window.restoreActiveFileAfterPendingImports(line);
+    int peak = LC_DockLayoutTestAccess::activeImports(window);
+    QTimer monitor; monitor.setInterval(1);
+    QObject::connect(&monitor, &QTimer::timeout, [&] { peak = std::max(peak, LC_DockLayoutTestAccess::activeImports(window)); });
+    monitor.start(); QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 60000); settle(10); }
+    monitor.stop();
+    CHECK(peak <= LC_DockLayoutTestAccess::maxActiveImports());
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial + LC_DockLayoutTestAccess::maxActiveImports() + 2);
+    REQUIRE(window.getCurrentMDIWindow()); CHECK(window.getCurrentMDIWindow()->getFileName() == line);
+    LC_DockLayoutTestAccess::closeDrawings(window);
+}
+
+TEST_CASE("Forced application destruction closes live imported drawings", "[.gui][dock-window][offset-import][forced-destruction]") {
+    auto& window = testWindow(); window.resize(700, 500); window.prepareWindowForShow(); window.show(); settle();
+    const QString root = QString(LIBRECAD_SOURCE_DIR) + "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    const QString line = root + "dxf-binary-R2018-line-control.dxf";
+    const QString native = root + "dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFileInfo::exists(line)); REQUIRE(QFileInfo::exists(native));
+    for (int i = 0; i < 4; ++i) window.openFile(line);
+    window.openFile(native); REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, native));
+    window.restoreActiveFileAfterPendingImports(line);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 60000); settle(10); }
+    bool helperStarted = false; qint64 helperPid = 0; int suspended = -1;
+    SECTION("live drawings") {}
+#ifdef Q_OS_UNIX
+    SECTION("live drawings and an active helper") {
+        window.openFile(native); auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+        LC_GuiImportTestAccess::onStarted(*session, [&](QProcess& process) {
+            helperPid = process.processId(); suspended = ::kill(static_cast<pid_t>(helperPid), SIGSTOP); helperStarted = true;
+        });
+        while (!helperStarted) { REQUIRE(elapsed.elapsed() < 60000); settle(10); }
+        REQUIRE(helperPid > 0); REQUIRE(suspended == 0);
+    }
+#endif
+    QList<QPointer<QC_MDIWindow>> drawings;
+    for (auto* drawing : window.findChildren<QC_MDIWindow*>()) drawings.append(drawing);
+    REQUIRE(drawings.size() == 6); window.hide(); QApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    REQUIRE(testWindowOwner); testWindowOwner->reset();
+    QApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    for (const auto& drawing : drawings) CHECK_FALSE(drawing);
+#ifdef Q_OS_UNIX
+    if (helperStarted) { errno = 0; CHECK(::kill(static_cast<pid_t>(helperPid), 0) == -1); CHECK(errno == ESRCH); }
+#endif
+    auto& replacement = testWindow(); replacement.resize(700, 500); replacement.prepareWindowForShow(); replacement.show(); settle();
+    CHECK(LC_DockLayoutTestAccess::drawingCount(replacement) == 0);
+}
+
+TEST_CASE("Staged GUI import queue reports overflow and cancellation clears it", "[.gui][dock-window][offset-import][queue]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFileInfo::exists(fileName));
+    for (int i = 0; i < LC_DockLayoutTestAccess::maxActiveImports() + LC_DockLayoutTestAccess::maxQueuedImports() + 1; ++i)
+        window.openFile(fileName);
+    CHECK(LC_DockLayoutTestAccess::activeImports(window) == LC_DockLayoutTestAccess::maxActiveImports());
+    CHECK(LC_DockLayoutTestAccess::queuedImports(window) == LC_DockLayoutTestAccess::maxQueuedImports());
+    bool reported = false;
+    for (const auto* history : window.findChildren<QTextEdit*>())
+        reported |= history->toPlainText().contains("Too many pending imports");
+    CHECK(reported);
+    LC_DockLayoutTestAccess::cancelImports(window); settle(25);
+    CHECK(LC_DockLayoutTestAccess::pendingImports(window) == 0);
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+}
+
+TEST_CASE("A queued import failure does not strand later requests", "[.gui][dock-window][offset-import][queue]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString line = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-line-control.dxf";
+    REQUIRE(QFileInfo::exists(line)); const QString broken = directory.filePath("broken.dxf"); QFile file(broken);
+    REQUIRE(file.open(QIODevice::WriteOnly));
+    const QByteArray bytes = "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1032\n0\nENDSEC\n"
+        "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n"
+        "0\nLINE\n8\n0\n10\n0.0\n";
+    REQUIRE(file.write(bytes) == bytes.size()); file.close();
+    for (int i = 0; i < LC_DockLayoutTestAccess::maxActiveImports(); ++i) window.openFile(line);
+    window.openFile(broken); window.openFile(line);
+    REQUIRE(LC_DockLayoutTestAccess::queuedImports(window) == 2);
+    QElapsedTimer elapsed; elapsed.start(); QPointer<QMessageBox> box;
+    while (!box) {
+        REQUIRE(elapsed.elapsed() < 30000); settle(10);
+        for (auto* candidate : window.findChildren<QMessageBox*>()) if (candidate->isVisible()) { box = candidate; break; }
+    }
+    box->done(QMessageBox::Ok);
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 60000); settle(10); }
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial + LC_DockLayoutTestAccess::maxActiveImports() + 1);
+    LC_DockLayoutTestAccess::closeDrawings(window);
+}
+
+#ifdef Q_OS_UNIX
+TEST_CASE("GUI import cancels and reaps its running helper before retry", "[.gui][dock-window][offset-import][worker]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFileInfo::exists(fileName)); window.openFile(fileName);
+    auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+    bool started = false; pid_t pid = 0; int suspended = -1;
+    LC_GuiImportTestAccess::onStarted(*session, [&](QProcess& process) {
+        pid = static_cast<pid_t>(process.processId()); suspended = ::kill(pid, SIGSTOP); started = true;
+    });
+    QElapsedTimer elapsed; elapsed.start();
+    while (!started) { REQUIRE(elapsed.elapsed() < 10000); settle(10); }
+    REQUIRE(pid > 0); REQUIRE(suspended == 0);
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+    SECTION("cancel and retry") {
+        LC_DockLayoutTestAccess::cancelImports(window);
+        errno = 0; CHECK(::kill(pid, 0) == -1); CHECK(errno == ESRCH);
+        CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+        window.openFile(fileName);
+        while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+        CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial + 1);
+        auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); REQUIRE(mdi->getGraphic());
+        bool found = false; for (const auto* entity : *mdi->getGraphic()) if (dynamic_cast<const LC_OffsetCurve*>(entity)) found = true;
+        CHECK(found);
+    }
+    SECTION("application close") {
+        REQUIRE(window.close()); settle(25);
+        errno = 0; CHECK(::kill(pid, 0) == -1); CHECK(errno == ESRCH);
+        CHECK(LC_DockLayoutTestAccess::pendingImports(window) == 0);
+        CHECK(LC_DockLayoutTestAccess::drawingCount(window) == 0);
+    }
+}
+#endif
+
+TEST_CASE("GUI recovery import stays modified after automatic zoom", "[.gui][dock-window][offset-import]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString fileName = directory.filePath("recovery.dxf"); QFile file(fileName);
+    REQUIRE(file.open(QIODevice::WriteOnly));
+    const QByteArray bytes = "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n9\n$DWGCODEPAGE\n3\nANSI_1252\n"
+        "0\nENDSEC\n0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n0\nENDSEC\n0\nEOF\n";
+    REQUIRE(file.write(bytes) == bytes.size()); file.close();
+    window.openFile(fileName, RS2::FormatDXFRW, RS2::DxfTextEncoding::LegacyLibreCadUtf8);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 5000); settle(10); }
+    auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); auto* graphic = mdi->getGraphic(); REQUIRE(graphic);
+    CHECK(graphic->isDxfRecoverySourceFile(fileName)); CHECK(graphic->isModified());
+}
+
+TEST_CASE("A GUI import helper failure publishes an ordinary fallback", "[.gui][dock-window][offset-import][worker]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(QFileInfo::exists(fileName)); window.openFile(fileName);
+    auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+    bool started = false;
+    LC_GuiImportTestAccess::onStarted(*session, [&](QProcess& process) { started = true; process.kill(); });
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(started); REQUIRE(LC_DockLayoutTestAccess::drawingCount(window) == initial + 1);
+    auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); REQUIRE(mdi->getGraphic());
+    bool spline = false, native = false;
+    for (const auto* entity : *mdi->getGraphic()) {
+        spline |= dynamic_cast<const RS_Spline*>(entity) != nullptr;
+        native |= dynamic_cast<const LC_OffsetCurve*>(entity) != nullptr;
+    }
+    CHECK(spline); CHECK_FALSE(native);
+    bool reported = false;
+    for (const auto* history : window.findChildren<QTextEdit*>())
+        reported |= history->toPlainText().contains("could not be restored as editable");
+    CHECK(reported);
+}
+
+TEST_CASE("A source changed during GUI validation cannot be saved in place", "[.gui][dock-window][offset-import][source-change]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString fixturePath = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    const QString fileName = directory.filePath("drawing.dxf"); REQUIRE(QFile::copy(fixturePath, fileName));
+    REQUIRE(QFile::setPermissions(fileName, QFile::ReadOwner | QFile::WriteOwner));
+    const QDateTime originalTime = QFileInfo(fileName).lastModified(); REQUIRE(originalTime.isValid());
+    window.openFile(fileName); auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+    bool changed = false;
+    LC_GuiImportTestAccess::onStarted(*session, [&](QProcess&) {
+        QFile file(fileName);
+        if (file.open(QIODevice::ReadWrite) && file.seek(file.size()) && file.write("changed") == 7 && file.flush())
+            changed = file.setFileTime(originalTime.addSecs(60), QFileDevice::FileModificationTime);
+    });
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(changed); auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); auto* graphic = mdi->getGraphic(); REQUIRE(graphic);
+    CHECK(graphic->getFormatType() == RS2::FormatUnknown); CHECK(graphic->isModified());
+    CHECK(graphic->getLastSaveTime() == originalTime); CHECK(QFileInfo(fileName).lastModified() != originalTime);
+    bool reported = false; for (const auto* history : window.findChildren<QTextEdit*>())
+        reported |= history->toPlainText().contains("use Save As to avoid overwriting it");
+    CHECK(reported);
+}
+
+TEST_CASE("A source changed at the read boundary is not published", "[.gui][dock-window][offset-import][source-change]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fixturePath = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    const QString fileName = directory.filePath("drawing.dxf"); REQUIRE(QFile::copy(fixturePath, fileName));
+    REQUIRE(QFile::setPermissions(fileName, QFile::ReadOwner | QFile::WriteOwner));
+    const QDateTime originalTime = QFileInfo(fileName).lastModified(); REQUIRE(originalTime.isValid());
+    window.openFile(fileName); auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+    bool changed = false;
+    LC_GuiImportTestAccess::afterRead(*session, [&] {
+        QFile file(fileName);
+        if (file.open(QIODevice::ReadWrite) && file.seek(file.size()) && file.write("changed") == 7 && file.flush())
+            changed = file.setFileTime(originalTime.addSecs(60), QFileDevice::FileModificationTime);
+    });
+    QElapsedTimer elapsed; elapsed.start(); QPointer<QMessageBox> box;
+    while (!box) {
+        REQUIRE(elapsed.elapsed() < 10000); settle(10);
+        for (auto* candidate : window.findChildren<QMessageBox*>()) if (candidate->isVisible()) { box = candidate; break; }
+    }
+    REQUIRE(changed); CHECK(box->text().contains("changed while it was being read"));
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial); box->done(QMessageBox::Ok);
+    settle(10); CHECK(LC_DockLayoutTestAccess::pendingImports(window) == 0);
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+}
+
+#ifdef Q_OS_UNIX
+TEST_CASE("A same-size source edit with restored mtime is detected where metadata time is available",
+          "[.gui][dock-window][offset-import][source-change]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString fixturePath = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    const QString fileName = directory.filePath("drawing.dxf"); REQUIRE(QFile::copy(fixturePath, fileName));
+    REQUIRE(QFile::setPermissions(fileName, QFile::ReadOwner | QFile::WriteOwner));
+    const QFileInfo original(fileName); const QDateTime originalTime = original.lastModified();
+    REQUIRE(originalTime.isValid());
+    if (!original.metadataChangeTime().isValid()) SKIP("Filesystem metadata-change time is unavailable");
+    QFile before(fileName); REQUIRE(before.open(QIODevice::ReadOnly)); REQUIRE(before.seek(8));
+    const QByteArray originalByte = before.read(1); REQUIRE(originalByte.size() == 1); before.close();
+    const QByteArray replacement = originalByte == QByteArray("X") ? QByteArray("Y") : QByteArray("X");
+    const qint64 originalSize = original.size(); window.openFile(fileName);
+    auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session); bool changed = false;
+    LC_GuiImportTestAccess::onStarted(*session, [&](QProcess&) {
+        QThread::msleep(30); QFile file(fileName);
+        if (file.open(QIODevice::ReadWrite) && file.seek(8) && file.write(replacement) == 1 && file.flush())
+            changed = file.setFileTime(originalTime, QFileDevice::FileModificationTime);
+    });
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(changed); const QFileInfo updated(fileName); CHECK(updated.size() == originalSize);
+    CHECK(updated.lastModified() == originalTime); CHECK(updated.metadataChangeTime() != original.metadataChangeTime());
+    QFile after(fileName); REQUIRE(after.open(QIODevice::ReadOnly)); REQUIRE(after.seek(8)); CHECK(after.read(1) == replacement);
+    auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); REQUIRE(mdi->getGraphic());
+    CHECK(mdi->getGraphic()->getFormatType() == RS2::FormatUnknown); CHECK(mdi->getGraphic()->isModified());
+}
+#endif
+
+TEST_CASE("A malformed DXF is reported without publishing a GUI drawing", "[.gui][dock-window][offset-import]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = directory.filePath("broken.dxf"); QFile file(fileName);
+    REQUIRE(file.open(QIODevice::WriteOnly));
+    const QByteArray bytes = "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1032\n0\nENDSEC\n"
+        "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n"
+        "0\nLINE\n8\n0\n10\n0.0\n";
+    REQUIRE(file.write(bytes) == bytes.size()); file.close(); window.openFile(fileName);
+    QElapsedTimer elapsed; elapsed.start(); QPointer<QMessageBox> box;
+    while (!box) {
+        REQUIRE(elapsed.elapsed() < 5000); settle(10);
+        for (auto* candidate : window.findChildren<QMessageBox*>()) if (candidate->isVisible()) { box = candidate; break; }
+    }
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+    box->done(QMessageBox::Ok);
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 5000); settle(10); }
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+}
+
+TEST_CASE("GUI templates publish validated untitled native drawings", "[.gui][dock-window][offset-template]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString root = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/";
+    QString fileName;
+    SECTION("binary DXF") { fileName = root + "dxf-binary-R2018-native-degree3.dxf"; }
+    SECTION("DWG") { fileName = root + "oda-dwg-R2018-native-degree3.dwg"; }
+    QFile source(fileName); REQUIRE(source.open(QIODevice::ReadOnly)); const auto original = source.readAll(); source.close();
+    REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, fileName));
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+    REQUIRE(LC_DockLayoutTestAccess::pendingImports(window) == 1);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(LC_DockLayoutTestAccess::drawingCount(window) == initial + 1);
+    auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); auto* graphic = mdi->getGraphic(); REQUIRE(graphic);
+    CHECK(graphic->getFilename().isEmpty()); CHECK(graphic->getFormatType() == RS2::FormatDXFRW);
+    CHECK_FALSE(graphic->getAutoSaveFileName().isEmpty()); CHECK(graphic->getAutoSaveFileName() != fileName);
+    CHECK_FALSE(LC_DockLayoutTestAccess::tracksOpenedFile(window, fileName));
+    bool native = false; for (const auto* entity : *graphic) native |= dynamic_cast<const LC_OffsetCurve*>(entity) != nullptr;
+    CHECK(native); REQUIRE(source.open(QIODevice::ReadOnly)); CHECK(source.readAll() == original);
+}
+
+TEST_CASE("Staged imports retain Qt resource support", "[.gui][dock-window][offset-import][resource]") {
+    DockFixture fixture;
+    const QString path = QStringLiteral(":/dxf/dim_sample.dxf"); REQUIRE(QFile::exists(path));
+    LC_OffsetImportSession session; std::optional<LC_OffsetImportSession::Outcome> outcome;
+    REQUIRE(session.start(path, RS2::FormatDXFRW, RS2::DxfTextEncoding::Declared, false,
+        [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+    QElapsedTimer elapsed; elapsed.start();
+    while (!outcome) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(outcome->status == LC_OffsetImportSession::Status::Complete); REQUIRE(outcome->graphic);
+    CHECK_FALSE(outcome->graphic->isEmpty());
+}
+
+TEST_CASE("Blank new drawings remain immediate", "[.gui][dock-window][offset-template]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, QString{}));
+    CHECK(LC_DockLayoutTestAccess::pendingImports(window) == 0);
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial + 1);
+    REQUIRE(window.getCurrentMDIWindow()); REQUIRE(window.getCurrentMDIWindow()->getGraphic());
+    CHECK(window.getCurrentMDIWindow()->getGraphic()->getFilename().isEmpty());
+}
+
+TEST_CASE("Default-template action stages its drawing before publication", "[.gui][dock-window][offset-template]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    lc::test::SettingGuard setting(RS_SETTINGS, "Paths", "Template"); setting.set(fileName);
+    window.slotFileNewFromDefaultTemplate();
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+    REQUIRE(LC_DockLayoutTestAccess::pendingImports(window) == 1);
+    QElapsedTimer elapsed; elapsed.start();
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(LC_DockLayoutTestAccess::drawingCount(window) == initial + 1);
+    auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); REQUIRE(mdi->getGraphic());
+    bool native = false; for (const auto* entity : *mdi->getGraphic()) native |= dynamic_cast<const LC_OffsetCurve*>(entity) != nullptr;
+    CHECK(native); CHECK(mdi->getGraphic()->getFilename().isEmpty());
+}
+
+TEST_CASE("Malformed GUI template reports failure without a new drawing", "[.gui][dock-window][offset-template]") {
+    DockFixture fixture; auto& window = fixture.window; QTemporaryDir directory; REQUIRE(directory.isValid());
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = directory.filePath("broken.dxf"); QFile file(fileName);
+    REQUIRE(file.open(QIODevice::WriteOnly));
+    const QByteArray bytes = "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1032\n0\nENDSEC\n"
+        "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n"
+        "0\nLINE\n8\n0\n10\n0.0\n";
+    REQUIRE(file.write(bytes) == bytes.size()); file.close();
+    REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, fileName));
+    QElapsedTimer elapsed; elapsed.start(); QPointer<QMessageBox> box;
+    while (!box) {
+        REQUIRE(elapsed.elapsed() < 5000); settle(10);
+        for (auto* candidate : window.findChildren<QMessageBox*>()) if (candidate->isVisible()) { box = candidate; break; }
+    }
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial); box->done(QMessageBox::Ok);
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 5000); settle(10); }
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+}
+
+#ifdef Q_OS_UNIX
+TEST_CASE("Cancelling a GUI template reaps its active helper without publication", "[.gui][dock-window][offset-template][worker]") {
+    DockFixture fixture; auto& window = fixture.window;
+    const int initial = LC_DockLayoutTestAccess::drawingCount(window);
+    const QString fileName = QString(LIBRECAD_SOURCE_DIR) +
+        "/librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree3.dxf";
+    REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, fileName));
+    auto* session = LC_DockLayoutTestAccess::pendingImport(window); REQUIRE(session);
+    bool started = false; pid_t pid = 0; int suspended = -1;
+    LC_GuiImportTestAccess::onStarted(*session, [&](QProcess& process) {
+        pid = static_cast<pid_t>(process.processId()); suspended = ::kill(pid, SIGSTOP); started = true;
+    });
+    QElapsedTimer elapsed; elapsed.start();
+    while (!started) { REQUIRE(elapsed.elapsed() < 10000); settle(10); }
+    REQUIRE(pid > 0); REQUIRE(suspended == 0);
+    CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+    LC_DockLayoutTestAccess::cancelImports(window);
+    errno = 0; CHECK(::kill(pid, 0) == -1); CHECK(errno == ESRCH);
+    settle(25); CHECK(LC_DockLayoutTestAccess::drawingCount(window) == initial);
+    REQUIRE(LC_DockLayoutTestAccess::newTemplate(window, fileName));
+    while (LC_DockLayoutTestAccess::pendingImports(window)) { REQUIRE(elapsed.elapsed() < 35000); settle(10); }
+    REQUIRE(LC_DockLayoutTestAccess::drawingCount(window) == initial + 1);
+    auto* mdi = window.getCurrentMDIWindow(); REQUIRE(mdi); REQUIRE(mdi->getGraphic());
+    bool native = false; for (const auto* entity : *mdi->getGraphic()) native |= dynamic_cast<const LC_OffsetCurve*>(entity) != nullptr;
+    CHECK(native); CHECK(mdi->getGraphic()->getFilename().isEmpty());
+}
+#endif
 
 TEST_CASE("Legacy UTF-8 recovery has a separate File menu action", "[.gui][legacy-utf8-ui]") {
     DockFixture fixture;

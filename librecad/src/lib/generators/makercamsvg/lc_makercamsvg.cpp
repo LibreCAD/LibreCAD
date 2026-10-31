@@ -227,6 +227,7 @@ void LC_MakerCamSVG::writeEntity(RS_Entity* entity) {
             writeEllipse(static_cast<RS_Ellipse*>(entity));
             break;
         case RS2::EntitySpline:
+        case RS2::EntityOffsetCurve:
             writeSpline(static_cast<RS_Spline*>(entity));
             break;
         case RS2::EntitySplinePoints:

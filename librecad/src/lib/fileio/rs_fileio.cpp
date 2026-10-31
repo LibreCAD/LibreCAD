@@ -62,7 +62,8 @@
 bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
                            RS2::FormatType type,
                            std::function<bool(bool, const QString&)> errorCallback,
-                           const RS2::DxfTextEncoding encoding) const {
+                           const RS2::DxfTextEncoding encoding,
+                           const OffsetCurveImportPolicy offsetCurvePolicy) const {
 
     RS_DEBUG->print("Trying to import file '%s'...", file.toLatin1().data());
 
@@ -78,6 +79,10 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
         std::unique_ptr<RS_FilterInterface>&& filter(getImportFilter(file, t));
         if (filter) {
             filter->setDxfTextEncoding(encoding);
+            if (offsetCurvePolicy == OffsetCurveImportPolicy::DisplayCacheOnly) {
+                if (auto* dxfrwFilter = dynamic_cast<RS_FilterDXFRW*>(filter.get()))
+                    dxfrwFilter->setOffsetCurveCacheOnlyImport(true);
+            }
 #ifdef DWGSUPPORT
             const bool isDwg{file.endsWith(".dwg", Qt::CaseInsensitive)};
 #endif

@@ -26,11 +26,88 @@
 
 #include "rs_preview.h"
 
+#include <array>
+
 #include "lc_graphicviewport.h"
+#include "lc_offsetcurvetransform.h"
+#include "lc_offsetoutputbudget.h"
 #include "rs_color.h"
+#include "rs_debug.h"
 #include "rs_line.h"
 #include "rs_pen.h"
 #include "rs_settings.h"
+
+namespace {
+enum class PreviewRoute { Ordinary, Native, Refuse };
+
+PreviewRoute previewRoute(const RS_Entity& root) {
+    struct Frame { const RS_EntityContainer* container; std::size_t next; };
+    std::array<Frame, 256> parents{};
+    std::size_t depth = 0, visits = 0;
+    bool native = false;
+    const RS_Entity* entity = &root;
+    for (;;) {
+        if (++visits > kDefaultOffsetDeepEntitiesPerSource) return PreviewRoute::Refuse;
+        if (entity && entity->rtti() == RS2::EntityOffsetCurve) {
+            const auto* cache = static_cast<const RS_EntityContainer*>(entity);
+            if (cache->count() > kDefaultOffsetDeepEntitiesPerSource - visits) return PreviewRoute::Refuse;
+            visits += cache->count();
+            native = true; // typed preparation validates its data and children
+        } else if (entity && RS2::isTextEntity(entity->rtti())) {
+            // Text/MText own generated glyph caches. Their legacy proxies use
+            // baselines, not user geometry; do not walk the glyph expansion.
+        } else if (const auto* container = dynamic_cast<const RS_EntityContainer*>(entity); container && !container->empty()) {
+            if (depth == parents.size() || container->count() > kDefaultOffsetDeepEntitiesPerSource - visits)
+                return PreviewRoute::Refuse;
+            parents[depth++] = {container, 1};
+            entity = container->first();
+            continue;
+        }
+        while (depth && parents[depth - 1].next == parents[depth - 1].container->count()) --depth;
+        if (!depth) return native ? PreviewRoute::Native : PreviewRoute::Ordinary;
+        auto& parent = parents[depth - 1];
+        entity = parent.container->entityAt(parent.next++);
+    }
+}
+
+std::unique_ptr<RS_Entity> nativePreviewCopy(const RS_Entity& entity) {
+    if (entity.rtti() == RS2::EntityOffsetCurve || entity.rtti() == RS2::EntityContainer) {
+        auto prepared = LC_OffsetCurveTransform::prepare(entity, {}, true);
+        if (prepared) return std::move(prepared.entity);
+    }
+    RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Preview: Unsupported native preview tree");
+    return {};
+}
+
+std::unique_ptr<RS_Entity> previewCopy(const RS_Entity& entity) {
+    if (entity.isDeleted()) return {};
+    switch (previewRoute(entity)) {
+    case PreviewRoute::Ordinary:
+        return std::unique_ptr<RS_Entity>{entity.cloneProxy()};
+    case PreviewRoute::Native:
+        return nativePreviewCopy(entity);
+    case PreviewRoute::Refuse:
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Preview: Native routing scan limit reached");
+        return {};
+    }
+    return {};
+}
+
+std::unique_ptr<RS_Entity> admittedPreviewEntity(const RS_Entity* entity) {
+    if (entity->isDeleted()) {
+        delete entity;
+        return {};
+    }
+    const auto route = previewRoute(*entity);
+    if (route == PreviewRoute::Ordinary)
+        return std::unique_ptr<RS_Entity>{const_cast<RS_Entity*>(entity)};
+    auto copy = route == PreviewRoute::Native ? nativePreviewCopy(*entity) : nullptr;
+    delete entity;
+    if (route == PreviewRoute::Refuse)
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Preview: Native routing scan limit reached");
+    return copy;
+}
+}
 
 /**
  * Constructor.
@@ -50,9 +127,13 @@ RS_Preview::RS_Preview(RS_EntityContainer* parent, LC_GraphicViewport* viewport)
  * connections before that.
  */
 void RS_Preview::addEntity(const RS_Entity* entity) {
-    if (entity == nullptr || entity->isDeleted()) {
+    if (entity == nullptr) {
         return;
     }
+
+    auto admitted = admittedPreviewEntity(entity);
+    if (!admitted) return;
+    entity = admitted.release();
 
     // only border preview for complex entities:
 
@@ -180,7 +261,11 @@ void RS_Preview::addAllFrom(RS_EntityContainer& container, [[maybe_unused]]LC_Gr
         if (c > m_maxEntities) {
             break;
         }
-        RS_Entity* clone = e->cloneProxy();
+        auto copy = previewCopy(*e);
+        if (!copy) {
+            continue;
+        }
+        RS_Entity* clone = copy.release();
         clone->clearSelectionFlag();
         clone->reparent(this);
 
@@ -197,7 +282,11 @@ void RS_Preview::addClonesFromList(const QList<RS_Entity*>& list) {
             break;
         }
         if (e != nullptr) {
-            const RS_Entity* clone = e->cloneProxy();
+            auto copy = previewCopy(*e);
+            if (!copy) {
+                continue;
+            }
+            const RS_Entity* clone = copy.release();
             c += clone->countDeep();
             addEntity(clone);
         }
@@ -214,8 +303,10 @@ void RS_Preview::addAllFromList(const QList<RS_Entity*>& list) {
             delete e;                       // adopted or released, never dropped
             continue;
         }
-        c += e->countDeep();
-        addEntity(e);
+        auto admitted = admittedPreviewEntity(e);
+        if (!admitted) continue;
+        c += admitted->countDeep();
+        addEntity(admitted.release());
     }
 }
 
@@ -229,8 +320,10 @@ void RS_Preview::addAllFromList(const std::list<RS_Entity*>& list) {
             delete e;
             continue;
         }
-        c += e->countDeep();
-        addEntity(e);
+        auto admitted = admittedPreviewEntity(e);
+        if (!admitted) continue;
+        c += admitted->countDeep();
+        addEntity(admitted.release());
     }
 }
 
@@ -243,11 +336,22 @@ void RS_Preview::addStretchablesFrom(RS_EntityContainer& container, [[maybe_unus
     unsigned int c=0;
 
     for (const auto e: container) {
-        if (e->isVisible() && e->rtti() != RS2::EntityHatch &&
-            (e->isInWindow(v1, v2) || e->hasEndpointsWithinWindow(v1, v2)) &&
-            c < m_maxEntities) {
-
-            RS_Entity *clone = e->cloneProxy();
+        if (!e || e->rtti() == RS2::EntityHatch || c >= m_maxEntities) continue;
+        const auto route = previewRoute(*e);
+        if (route == PreviewRoute::Refuse) {
+            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Preview: Native routing scan limit reached");
+            continue;
+        }
+        if (!e->isVisible()) continue;
+        auto copy = route == PreviewRoute::Native ? nativePreviewCopy(*e) : nullptr;
+        if (route == PreviewRoute::Native && !copy) continue;
+        const auto* candidate = copy ? copy.get() : e;
+        if (candidate->isInWindow(v1, v2) || candidate->hasEndpointsWithinWindow(v1, v2)) {
+            if (!copy) copy.reset(e->cloneProxy());
+            if (!copy) {
+                continue;
+            }
+            RS_Entity *clone = copy.release();
             //clone->setSelected(false);
             clone->reparent(this);
 

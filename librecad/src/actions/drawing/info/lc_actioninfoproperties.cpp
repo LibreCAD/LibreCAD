@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_quickinfowidget.h"
 #include "qc_applicationwindow.h"
 #include "rs_entity.h"
+#include "rs_entitycontainer.h"
 
 namespace {
 
@@ -99,6 +100,12 @@ void LC_ActionInfoProperties::highlightAndShowEntityInfo(const LC_MouseEvent *e,
 }
 
 bool LC_ActionInfoProperties::showEntityInfo(RS_Entity* entity, const RS_Vector& currentMousePosition) {
+    if (entity && entity->getParent() && entity->getParent()->rtti() == RS2::EntityOffsetCurve)
+        entity = entity->getParent();
+    if (!entity) {
+        clearQuickInfoWidget();
+        return true;
+    }
     constexpr bool shouldShowQuickInfoWidget = true; // todo - read from options as there will be support
     if (!entity->isVisible() || (entity->isLocked() && !shouldShowQuickInfoWidget)){
         clearQuickInfoWidget();

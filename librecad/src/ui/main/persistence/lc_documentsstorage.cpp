@@ -24,6 +24,7 @@
 
 #include <QApplication>
 #include <QDir>
+#include <filesystem>
 
 #ifdef Q_OS_WIN
 #include <qt_windows.h>
@@ -41,6 +42,35 @@
 #include "rs_settings.h"
 
 namespace {
+    QString resolvedFilePath(QString path) {
+        for (int i = 0; i < 16; ++i) {
+            const QFileInfo info(path);
+            if (info.isSymLink()) {
+                path = info.symLinkTarget();
+                if (path.isEmpty()) return {};
+                continue;
+            }
+            const QString parent = info.dir().canonicalPath();
+            return QDir::cleanPath(parent.isEmpty() ? info.absoluteFilePath() : QDir(parent).filePath(info.fileName()));
+        }
+        return {};
+    }
+
+    bool sameFilePath(const QString& first, const QString& second) {
+        if (first.isEmpty() || second.isEmpty()) return false;
+        std::error_code error;
+        if (std::filesystem::equivalent(std::filesystem::u8path(first.toUtf8().constData()),
+                                        std::filesystem::u8path(second.toUtf8().constData()), error)) return true;
+        const QString a = resolvedFilePath(first);
+        const QString b = resolvedFilePath(second);
+        if (a.isEmpty() || b.isEmpty()) return true;
+#ifdef Q_OS_WIN
+        return a.compare(b, Qt::CaseInsensitive) == 0;
+#else
+        return a == b;
+#endif
+    }
+
     QString validatedFileAffix(const QString& affix, const QString& fallback) {
         for (const QChar character : affix) {
             if (character.unicode() < 0x20 || QStringLiteral("<>:\"/\\|?*").contains(character)) {
@@ -115,6 +145,10 @@ bool LC_DocumentsStorage::saveDocument(RS_Document* document, RS_GraphicView * g
                                      recoveryCopyName(fileName), graphic->getFormatType());
         } else if (fileName.isEmpty()) {
             result = doSaveGraphicAs(graphic, graphicView, cancelled);
+        } else if (graphic->sourceFileIdentity().valid && !graphic->sourceFileIdentity().matches(fileName)) {
+            RS_DIALOGFACTORY->commandMessage(
+                tr("The source drawing changed since it was opened. Choose another name to avoid overwriting it."));
+            result = doSaveGraphicAs(graphic, graphicView, cancelled, fileName, graphic->getFormatType());
         } else if (!canSaveInPlace(graphic)) {
             // writing another format under the file's name would destroy it
             RS_DIALOGFACTORY->commandMessage(
@@ -226,42 +260,52 @@ bool LC_DocumentsStorage::loadDocumentFromTemplate(const RS_Document* document, 
  * Loads the given file into this graphic.
  */
 bool LC_DocumentsStorage::loadGraphicFromTemplate(RS_Graphic* graphic, const QString &templateFileName, const RS2::FormatType type) const {
-    const QString autosaveFilename = createAutoSaveFileName(QFileInfo(QDir::tempPath() + "/" + tr("Unnamed") + ".dxf"));
-
     // clean all:
     graphic->initForNewDocument();
 
     // import template file:
     const bool ret = RS_FileIO::instance()->fileImport(*graphic, templateFileName, type);
-    // a drawing made from a template is a new drawing, saved as DXF
-    graphic->setFormatType(RS2::FormatDXFRW);
-
-    const QFileInfo finfo;
-    graphic->markSaved(finfo.lastModified());
-    graphic->setAutosaveFileName(autosaveFilename);
+    finalizeTemplateGraphic(*graphic);
     return ret;
+}
+
+void LC_DocumentsStorage::finalizeTemplateGraphic(RS_Graphic& graphic) const {
+    const QString autosaveFilename = createAutoSaveFileName(QFileInfo(QDir::tempPath() + "/" + tr("Unnamed") + ".dxf"));
+    graphic.setFilename(QString{});
+    graphic.clearSourceFileIdentity();
+    graphic.setFormatType(RS2::FormatDXFRW);
+    graphic.markSaved(QFileInfo().lastModified());
+    graphic.setAutosaveFileName(autosaveFilename);
 }
 
 bool LC_DocumentsStorage::loadGraphic(RS_Graphic* graphic, const QString &filename, const RS2::FormatType type,
                                      const RS2::DxfTextEncoding encoding) const {
     graphic->initForNewDocument();
+    const LC_FileIdentity sourceIdentity = LC_FileIdentity::capture(filename);
 
     const bool ret = RS_FileIO::instance()->fileImport(*graphic, filename, type, nullptr, encoding);
 
     if (ret) {
-        graphic->onLoadingCompleted();
-        const QFileInfo finfo(filename);
-        const auto autosaveFileName = createAutoSaveFileName(finfo);
-        graphic->setAutosaveFileName(autosaveFileName);
-        graphic->setFilename(filename);
-        // markSaved clears modified; re-dirty when import repairs rewrote coords
-        // so Save does not silently rewrite the user's file without notice.
-        const bool importMutated = graphic->takeImportGeometryMutated();
-        graphic->markSaved(finfo.lastModified());
-        if (importMutated || !graphic->dxfRecoverySourceFile().isEmpty())
-            graphic->setModified(true);
+        graphic->setSourceFileIdentity(sourceIdentity);
+        finalizeLoadedGraphic(*graphic, filename);
     }
     return ret;
+}
+
+void LC_DocumentsStorage::finalizeLoadedGraphic(RS_Graphic& graphic, const QString& filename) const {
+    graphic.onLoadingCompleted();
+    const QFileInfo finfo(filename);
+    graphic.setAutosaveFileName(createAutoSaveFileName(finfo));
+    graphic.setFilename(filename);
+    if (!graphic.sourceFileIdentity().valid ||
+        !graphic.sourceFileIdentity().refersToPath(filename)) {
+        graphic.setSourceFileIdentity(LC_FileIdentity::capture(filename));
+    }
+    // Keep repairs and recovery imports dirty after markSaved clears the flag.
+    const bool importMutated = graphic.takeImportGeometryMutated();
+    graphic.markSaved(finfo.lastModified());
+    if (importMutated || !graphic.dxfRecoverySourceFile().isEmpty())
+        graphic.setModified(true);
 }
 
 bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, const bool sameFile) {
@@ -294,6 +338,16 @@ bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, const bool sameFile) {
             QObject::tr("File on disk modified. Please save to another file to avoid data loss! File modified: %1").arg(filename));
         return false;
     }
+    const auto& sourceIdentity = graphic->sourceFileIdentity();
+    const bool isOriginalSourcePath = sourceIdentity.refersToPath(filename) ||
+        (sourceIdentity.valid && QFileInfo(filename).canonicalFilePath() == sourceIdentity.canonicalPath);
+    const bool isOriginalSourceObject = sourceIdentity.refersToSameObject(filename);
+    if (sourceIdentity.valid && !sourceIdentity.matches(filename) &&
+        (isOriginalSourcePath || isOriginalSourceObject)) {
+        RS_DIALOGFACTORY->commandMessage(
+            QObject::tr("File identity changed on disk. Please save to another file to avoid data loss! File: %1").arg(filename));
+        return false;
+    }
 
     const QString& actualName = filename;
     if (LC_GET_ONE_BOOL("Defaults","AutoBackupDocument", true)) {
@@ -308,6 +362,7 @@ bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, const bool sameFile) {
         if (result) {
             const QFileInfo actualFileInfo(actualName);
             graphic->markSaved(actualFileInfo.lastModified());
+            graphic->setSourceFileIdentity(LC_FileIdentity::capture(actualName));
         }
     }
 
@@ -335,6 +390,12 @@ bool LC_DocumentsStorage::autoSaveGraphic(RS_Graphic* graphic, QString& fileName
         const QString autosaveFileName = graphic->getAutoSaveFileName();
         RS_DEBUG->print("LC_DocumentsStorage::autoSaveGraphic: autosaveFileName='%s'", autosaveFileName.toLatin1().data());
         if (!autosaveFileName.isEmpty()) {
+            if (sameFilePath(autosaveFileName, graphic->getFilename()) ||
+                graphic->sourceFileIdentity().refersToSameObject(autosaveFileName)) {
+                RS_DIALOGFACTORY->commandMessage(tr("Autosave was skipped because its path points to the source drawing."));
+                fileName = autosaveFileName;
+                return false;
+            }
             RS_DEBUG->print("LC_DocumentsStorage::autoSaveGraphic: attempting export to '%s'", autosaveFileName.toLatin1().data());
             ret = RS_FileIO::instance()->fileExport(*graphic, autosaveFileName, actualType);
             if (ret) {

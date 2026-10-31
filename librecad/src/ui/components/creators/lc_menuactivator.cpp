@@ -43,6 +43,7 @@ LC_MenuActivator::LC_MenuActivator(const LC_MenuActivator& other) {
     m_eventType = other.m_eventType;
     m_keyModifiers = other.m_keyModifiers;
     m_requiresEntity = other.m_requiresEntity;
+    m_entityType = other.m_entityType;
     m_menuName = other.m_menuName;
 }
 
@@ -56,6 +57,7 @@ void LC_MenuActivator::copyTo(LC_MenuActivator& other) const {
     other.m_eventType = m_eventType;
     other.m_keyModifiers = m_keyModifiers;
     other.m_requiresEntity = m_requiresEntity;
+    other.m_entityType = m_entityType;
 }
 
 bool LC_MenuActivator::isEventApplicable(const QMouseEvent* event) const {
@@ -178,6 +180,9 @@ void LC_MenuActivator::parseEntityType(const QString& entityTypeStr, bool& requi
     }
     else if ("SP" == entityTypeStr) {
         entityType = RS2::EntitySplinePoints;
+    }
+    else if ("OC" == entityTypeStr) {
+        entityType = RS2::EntityOffsetCurve;
     }
     else if ("EL" == entityTypeStr) {
         entityType = RS2::EntityEllipse;
@@ -304,6 +309,9 @@ QString LC_MenuActivator::getEntityTypeStr() const {
             }
             case RS2::EntitySplinePoints: {
                 return "SP";
+            }
+            case RS2::EntityOffsetCurve: {
+                return "OC";
             }
             case RS2::EntityEllipse: {
                 return "EL";
@@ -492,6 +500,10 @@ QString LC_MenuActivator::getShortcutView() const {
             }
             case RS2::EntitySplinePoints: {
                 result.append(QObject::tr("Spline by Points"));
+                break;
+            }
+            case RS2::EntityOffsetCurve: {
+                result.append(QObject::tr("Offset Curve"));
                 break;
             }
             case RS2::EntityEllipse: {

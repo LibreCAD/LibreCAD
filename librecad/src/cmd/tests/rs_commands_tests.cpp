@@ -29,6 +29,7 @@
 #include <QVariant>
 
 #include "lc_actiontestsupport.h"
+#include "lc_testsettingsisolation.h"
 #include "rs_commands.h"
 #include "rs_settings.h"
 
@@ -79,6 +80,8 @@ TEST_CASE("Aliases that differ only in case keep their own actions", "[commands]
 TEST_CASE("Line gap commands start Line Gap, not Break/Divide", "[commands]") {
     (void)lc::test::application();
 
+    CHECK(RS_SETTINGS->getSettings()->value("/Paths/OtherSettingsDir").toString() ==
+          lc::test::SettingsIsolation::directory());
     CHECK(RS_COMMANDS->cmdToAction("gapline") == RS2::ActionModifyLineGap);
     CHECK(RS_COMMANDS->cmdToAction("gl") == RS2::ActionModifyLineGap);
     CHECK(RS_COMMANDS->keycodeToAction("gl") == RS2::ActionModifyLineGap);

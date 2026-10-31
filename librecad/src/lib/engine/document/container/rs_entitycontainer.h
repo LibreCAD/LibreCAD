@@ -314,6 +314,7 @@ protected:
     mutable RS_EntityContainer* m_subContainer = nullptr;
 
 private:
+    friend class LC_OffsetCurvePublication;
     void debugEntityAlreadyPresentExists(const RS_Entity* entity) const;
 
     /** m_entities in the container */

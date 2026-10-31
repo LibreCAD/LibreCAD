@@ -23,11 +23,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_quickinfoentitydata.h"
 
 #include <QCoreApplication>
+#include <cmath>
+#include <optional>
 
 #include "lc_containertraverser.h"
 #include "lc_dimarc.h"
 #include "lc_dimordinate.h"
 #include "lc_hyperbola.h"
+#include "lc_offsetcurve.h"
+#include "lc_offsetcurvereadutils.h"
 #include "lc_parabola.h"
 #include "lc_peninforegistry.h"
 #include "lc_quickinfowidgetoptions.h"
@@ -54,6 +58,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_units.h"
 
 namespace {
+RS_Entity* offsetInfoOwner(RS_Entity* entity) {
+    if (entity && entity->getParent() && entity->getParent()->rtti() == RS2::EntityOffsetCurve)
+        return entity->getParent();
+    return entity;
+}
+
+
 QString formatDimensionLabelForInfo(const QString& label) {
     if (label.isEmpty()) {
         return QCoreApplication::translate("LC_QuickInfoEntityData", "[Automatic]");
@@ -131,9 +142,12 @@ QString LC_QuickInfoEntityData::prepareGenericEntityDescription(const RS_Entity*
 }
 
 QString LC_QuickInfoEntityData::getEntityDescription(RS_Entity* en, const RS2::EntityDescriptionLevel level) {
+    en = offsetInfoOwner(en);
+    if (!en) return {};
+    const bool native = en->rtti() == RS2::EntityOffsetCurve;
     const unsigned long thisEntityId = en->getId();
     // no special value for empty id, yet according to implementation, it seems that 0 should not be used
-    if (thisEntityId != 0 && thisEntityId == m_entityIdForDescription) {
+    if (!native && thisEntityId != 0 && thisEntityId == m_entityIdForDescription) {
         // same entity... so we'll try to optimize a bit mouse move there.
         return m_cachedEntityDescription;
     }
@@ -247,6 +261,10 @@ QString LC_QuickInfoEntityData::getEntityDescription(RS_Entity* en, const RS2::E
             m_cachedEntityDescription = prepareSplineDescription(pspline, level);
             break;
         }
+        case RS2::EntityOffsetCurve: {
+            m_cachedEntityDescription = prepareOffsetCurveDescription(static_cast<const LC_OffsetCurve*>(en), level);
+            break;
+        }
         case RS2::EntitySplinePoints: {
             auto* psplinepoints = static_cast<const LC_SplinePoints*>(en);
             m_cachedEntityDescription = prepareSplinePointsDescription(psplinepoints, level);
@@ -277,11 +295,12 @@ QString LC_QuickInfoEntityData::getEntityDescription(RS_Entity* en, const RS2::E
  * @return true it view should be updated, false otherwise
  */
 bool LC_QuickInfoEntityData::processEntity(RS_Entity* en) {
+    en = offsetInfoOwner(en);
     if (en == nullptr || m_viewport == nullptr) {
         return false;
     }
     // no special value for empty id, yet according to implementation, it seems that 0 should not be used
-    if (m_entityId != 0 && en->getId() == m_entityId) {
+    if (en->rtti() != RS2::EntityOffsetCurve && m_entityId != 0 && en->getId() == m_entityId) {
         // same entity... so we'll try to optimize a bit mouse move there.
         return false;
     }
@@ -397,6 +416,10 @@ bool LC_QuickInfoEntityData::processEntity(RS_Entity* en) {
         case RS2::EntitySpline: {
             auto* pspline = static_cast<const RS_Spline*>(en);
             collectSplineProperties(pspline);
+            break;
+        }
+        case RS2::EntityOffsetCurve: {
+            collectOffsetCurveProperties(static_cast<const LC_OffsetCurve*>(en));
             break;
         }
         case RS2::EntitySplinePoints: {
@@ -1285,6 +1308,43 @@ void LC_QuickInfoEntityData::collectSplineProperties(const RS_Spline* spline) {
             addVectorProperty(tr("Control Point "), i, cp);
         }
     }
+}
+
+void LC_QuickInfoEntityData::collectOffsetCurveProperties(const LC_OffsetCurve* curve) {
+    m_entityName = tr("OFFSET CURVE");
+    const bool available = curve->hasEditableDefinition();
+    const QString state = !curve->isDefined() ? tr("Undefined") : available ? tr("Defined") : tr("Inconsistent");
+    addProperty(tr("Definition"), state, PROPERTY_TYPE_OTHER);
+    addProperty(tr("Source"), available ? tr("Ellipse (embedded definition)") : tr("Unavailable"), PROPERTY_TYPE_OTHER);
+    if (available) {
+        addLinearProperty(tr("Distance"), curve->definition().distance);
+        addProperty(tr("Side"), curve->definition().towardCentre ? tr("Inward") : tr("Outward"), PROPERTY_TYPE_OTHER);
+    } else {
+        addProperty(tr("Distance"), tr("Unavailable"), PROPERTY_TYPE_OTHER);
+        addProperty(tr("Side"), tr("Unavailable"), PROPERTY_TYPE_OTHER);
+    }
+    const auto length = LC_OffsetCurveRead::cachedLength(*curve);
+    if (length) addLinearProperty(tr("Cached Length"), *length);
+    else addProperty(tr("Cached Length"), tr("Unavailable"), PROPERTY_TYPE_OTHER);
+}
+
+QString LC_QuickInfoEntityData::prepareOffsetCurveDescription(const LC_OffsetCurve* curve, const RS2::EntityDescriptionLevel level) {
+    QString result = prepareGenericEntityDescription(curve, tr("OFFSET CURVE"), level);
+    if (level == RS2::EntityDescriptionLevel::DescriptionCreating) return result;
+    const bool available = curve->hasEditableDefinition();
+    appendValue(result, tr("Definition"), !curve->isDefined() ? tr("Undefined") : available ? tr("Defined") : tr("Inconsistent"));
+    appendValue(result, tr("Source"), available ? tr("Ellipse (embedded definition)") : tr("Unavailable"));
+    if (available) {
+        appendLinear(result, tr("Distance"), curve->definition().distance);
+        appendValue(result, tr("Side"), curve->definition().towardCentre ? tr("Inward") : tr("Outward"));
+    } else {
+        appendValue(result, tr("Distance"), tr("Unavailable"));
+        appendValue(result, tr("Side"), tr("Unavailable"));
+    }
+    const auto length = LC_OffsetCurveRead::cachedLength(*curve);
+    if (length) appendLinear(result, tr("Cached Length"), *length);
+    else appendValue(result, tr("Cached Length"), tr("Unavailable"));
+    return result;
 }
 
 QString LC_QuickInfoEntityData::prepareSplinePointsDescription(const LC_SplinePoints* spline, const RS2::EntityDescriptionLevel level) {

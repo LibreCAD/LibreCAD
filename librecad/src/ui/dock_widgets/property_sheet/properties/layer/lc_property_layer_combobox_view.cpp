@@ -23,6 +23,8 @@
 
 #include "lc_property_layer_combobox_view.h"
 
+#include <QCoreApplication>
+
 #include "lc_property_layer.h"
 #include "lc_property_layer_combobox.h"
 #include "lc_property_view_utils.h"
@@ -35,6 +37,11 @@ QComboBox* LC_PropertyLayerComboBoxView::doCreateEditCombobox(QWidget* parent) {
 
 void LC_PropertyLayerComboBoxView::doDrawValueDetails(const QStyle* style, const ValueType& layer, QPainter& painter,
                                                       const QRect& rect) const {
+    if (layer == nullptr) {
+        LC_PropertyViewUtils::drawElidedText(painter,
+            QCoreApplication::translate("LC_PropertyLayerComboBoxView", "Unavailable"), rect, style);
+        return;
+    }
     QRect textRect = rect;
 
     QRect colorRect = rect;

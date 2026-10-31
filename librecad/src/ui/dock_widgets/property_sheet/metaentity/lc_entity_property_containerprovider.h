@@ -36,6 +36,7 @@
 #include "lc_propertiesprovider_dim_ordinate.h"
 #include "lc_propertiesprovider_dim_radial.h"
 #include "lc_propertiesprovider_ellipse.h"
+#include "lc_propertiesprovider_offsetcurve.h"
 #include "lc_propertiesprovider_hatch.h"
 #include "lc_propertiesprovider_hyperbola.h"
 #include "lc_propertiesprovider_image.h"
@@ -81,6 +82,7 @@ private:
     std::unique_ptr<LC_PropertiesProviderCircle> m_circle{nullptr};
     std::unique_ptr<LC_PropertiesProviderArc> m_arc{nullptr};
     std::unique_ptr<LC_PropertiesProviderEllipse> m_ellipse{nullptr};
+    std::unique_ptr<LC_PropertiesProviderOffsetCurve> m_offsetCurve{nullptr};
     std::unique_ptr<LC_PropertiesProviderHyperbola> m_hyperbola{nullptr};
     std::unique_ptr<LC_PropertiesProviderPolyline> m_polyline{nullptr};
     std::unique_ptr<LC_PropertiesProviderPoint> m_point{nullptr};

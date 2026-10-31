@@ -30,11 +30,14 @@
 #include <QFileInfo>
 #include <QInputDialog>
 #include <QList>
+#include <QPointer>
 
 #include "lc_actioncontext.h"
 #include "lc_containertraverser.h"
 #include "lc_copyutils.h"
 #include "lc_documentsstorage.h"
+#include "lc_offsetimportsession.h"
+#include "lc_offsetcurvetransform.h"
 #include "lc_splinepoints.h"
 #include "lc_undosection.h"
 #include "rs_arc.h"
@@ -44,6 +47,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_ellipse.h"
+#include "rs_fileio.h"
 #include "rs_graphicview.h"
 #include "rs_image.h"
 #include "rs_insert.h"
@@ -58,6 +62,57 @@
 #include "intern/qc_actiongetent.h"
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetselect.h"
+
+namespace {
+// true means handled, including whole refusal; only ordinary entities use the
+// historical in-place fallback when the document cannot accept an undo entry.
+bool handleStagedPluginTransform(RS_Entity*& entity, const Doc_plugin_interface* dpi,
+    const LC_OffsetCurveTransform::Steps& steps, const DPI::Disposition disposition) {
+    if (entity == nullptr) return true;
+    if (!LC_OffsetCurveTransform::needsStaging(*entity)) return false;
+    if (dpi == nullptr || (disposition != DPI::DELETE_ORIGINAL && disposition != DPI::KEEP_ORIGINAL)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "Plugin_Entity::transform: offset/INSERT undo publication unavailable");
+        return true;
+    }
+    auto staged = LC_OffsetCurveTransform::prepare(*entity, steps);
+    if (!staged) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "Plugin_Entity::transform: offset/INSERT staging refused (%d, step %d)",
+                        static_cast<int>(staged.refusal), static_cast<int>(staged.failedStep));
+        return true;
+    }
+    // addToUndo(true) takes ownership. On false, retain the source and let the
+    // staged unique_ptr clean up; never retry a native void transform in place.
+    if (dpi->addToUndo(entity, staged.entity.get(), disposition)) entity = staged.entity.release();
+    else RS_DEBUG->print(RS_Debug::D_WARNING, "Plugin_Entity::transform: offset/INSERT undo publication refused");
+    return true;
+}
+
+QString publishPluginBlock(RS_Document* document, RS_Graphic* destination,
+                           RS_Graphic& source, const QString& baseName) {
+    if (document == nullptr || destination == nullptr) return {};
+    RS_BlockList* blocks = destination->getBlockList();
+    RS_BlockList* sourceBlocks = source.getBlockList();
+    if (blocks == nullptr || sourceBlocks == nullptr) return {};
+
+    const QString name = blocks->newName(baseName);
+    if (name.isEmpty()) return {};
+    auto* block = new RS_Block(document, RS_BlockData{name, RS_Vector(0, 0), false});
+
+    constexpr unsigned provenance = RS_Entity::Identity | RS_Entity::TableRefs;
+    for (int i = 0; i < sourceBlocks->count(); ++i)
+        LC_CopyUtils::doCopyBlock(sourceBlocks->at(i), destination, provenance);
+    for (unsigned int i = 0; i < source.count(); ++i) {
+        RS_Entity* entity = source.entityAt(i)->clone();
+        entity->reparent(block);
+        entity->clearDwgProvenance(provenance);
+        LC_CopyUtils::doCopyEntityLayer(entity, destination, &source);
+        block->addEntity(entity);
+    }
+    if (!destination->addBlock(block)) return {};
+    block->updateInserts();
+    return name;
+}
+}
 
 convLTW::convLTW() {
     //    QHash<int, QString> lType;
@@ -232,7 +287,8 @@ Plugin_Entity::~Plugin_Entity() {
 }
 
 RS2::EntityType Plugin_Entity::getEntityType() {
-    return entity->rtti();
+    const auto type = entity->rtti();
+    return type == RS2::EntityOffsetCurve ? RS2::EntitySpline : type;
 }
 
 void Plugin_Entity::getData(QHash<int, QVariant>* data) {
@@ -361,6 +417,7 @@ void Plugin_Entity::getData(QHash<int, QVariant>* data) {
         case RS2::EntityHatch:
             data->insert(DPI::ETYPE, DPI::HATCH);
             break;
+        case RS2::EntityOffsetCurve:
         case RS2::EntitySpline:
             data->insert(DPI::ETYPE, DPI::SPLINE);
             break;
@@ -659,6 +716,7 @@ void Plugin_Entity::updateData(QHash<int, QVariant>* data) {
         }
         case RS2::EntityHatch:
             break;
+        case RS2::EntityOffsetCurve:
         case RS2::EntitySpline:
             break;
         case RS2::EntityPolyline: {
@@ -772,6 +830,8 @@ void Plugin_Entity::updatePolylineData(QList<Plug_VertexData>* data) {
 }
 
 void Plugin_Entity::move(const QPointF offset, const DPI::Disposition disp) {
+    using Step = LC_OffsetCurveTransform::Step;
+    if (handleStagedPluginTransform(entity, dpi, {Step::move({offset.x(), offset.y()})}, disp)) return;
     RS_Entity* ne = entity->clone();
     ne->move(RS_Vector(offset.x(), offset.y()));
     const bool ok = dpi->addToUndo(entity, ne, disp);
@@ -786,6 +846,9 @@ void Plugin_Entity::move(const QPointF offset, const DPI::Disposition disp) {
 }
 
 void Plugin_Entity::moveRotate(const QPointF& offset, const QPointF& center, const double angle, const DPI::Disposition disp) {
+    using Step = LC_OffsetCurveTransform::Step;
+    if (handleStagedPluginTransform(entity, dpi,
+        {Step::move({offset.x(), offset.y()}), Step::rotate({center.x(), center.y()}, angle)}, disp)) return;
     RS_Entity* ne = entity->clone();
     ne->move(RS_Vector(offset.x(), offset.y()));
     ne->rotate(RS_Vector(center.x(), center.y()), angle);
@@ -802,6 +865,8 @@ void Plugin_Entity::moveRotate(const QPointF& offset, const QPointF& center, con
 }
 
 void Plugin_Entity::rotate(const QPointF center, const double angle, const DPI::Disposition disp) {
+    using Step = LC_OffsetCurveTransform::Step;
+    if (handleStagedPluginTransform(entity, dpi, {Step::rotate({center.x(), center.y()}, angle)}, disp)) return;
     RS_Entity* ne = entity->clone();
     ne->rotate(RS_Vector(center.x(), center.y()), angle);
     const bool ok = dpi->addToUndo(entity, ne, disp);
@@ -816,6 +881,9 @@ void Plugin_Entity::rotate(const QPointF center, const double angle, const DPI::
 }
 
 void Plugin_Entity::scale(const QPointF center, const QPointF factor, const DPI::Disposition disp) {
+    using Step = LC_OffsetCurveTransform::Step;
+    if (handleStagedPluginTransform(entity, dpi,
+        {Step::scale({center.x(), center.y()}, {factor.x(), factor.y()})}, disp)) return;
     RS_Entity* ne = entity->clone();
     ne->scale(RS_Vector(center.x(), center.y()), RS_Vector(factor.x(), factor.y()));
     const bool ok = dpi->addToUndo(entity, ne, disp);
@@ -840,6 +908,14 @@ Doc_plugin_interface::Doc_plugin_interface(LC_ActionContext* actionContext, QWid
 }
 
 bool Doc_plugin_interface::addToUndo(RS_Entity* current, RS_Entity* modified, const DPI::Disposition how) const {
+    if (current == nullptr || modified == nullptr) return false;
+    if (LC_OffsetCurveTransform::needsStaging(*current) &&
+        (current->getParent() != m_document || modified->getParent() != m_document ||
+         (how != DPI::DELETE_ORIGINAL && how != DPI::KEEP_ORIGINAL))) {
+        // This undo path adds to m_document, not a borrowed/expanded child's owner.
+        // Refuse before clearing selection or beginning a document undo cycle.
+        return false;
+    }
     const LC_UndoSection undo(m_document, m_viewport);
     current->clearSelectionFlag();
     if (how == DPI::DELETE_ORIGINAL) {
@@ -994,7 +1070,11 @@ QString Doc_plugin_interface::addBlockfromFromdisk(const QString fullName) {
     if (fullName.isEmpty() || (m_document == nullptr)) {
         return nullptr;
     }
-    RS_BlockList* blockList = m_document->getBlockList();
+    RS_Document* const expectedDocument = m_document;
+    RS_Graphic* const expectedGraphic = m_docGr;
+    QPointer<RS_GraphicView> view(m_graphicView);
+    const bool hadView = !view.isNull();
+    RS_BlockList* blockList = expectedDocument->getBlockList();
     if (blockList == nullptr) {
         return nullptr;
     }
@@ -1003,37 +1083,117 @@ QString Doc_plugin_interface::addBlockfromFromdisk(const QString fullName) {
 
     if (fi.isReadable()) {
         const QString s = fi.completeBaseName();
-        QString name = blockList->newName(s);
-        const RS_BlockData d(name, RS_Vector(0, 0), false);
-        auto* b = new RS_Block(m_document, d);
+        const QString path = fi.absoluteFilePath();
+        const auto type = RS_FileIO::detectFormat(path);
+        if (LC_OffsetImportSession::supportsType(type)) {
+            if (!view || view->getDocument() != expectedDocument || view->getViewPort() == nullptr ||
+                view->getViewPort()->getGraphic() != expectedGraphic) {
+                return {};
+            }
+
+            QEventLoop loop;
+            QString importedName;
+            bool completed = false;
+            QObject::connect(view.data(), &QObject::destroyed, &loop, &QEventLoop::quit);
+            addBlockFromDiskAsync(path, [&](const QString& name, const QString&) {
+                importedName = name;
+                completed = true;
+                loop.quit();
+            });
+            if (!completed) loop.exec();
+            if (!view || !completed) return {};
+            return importedName;
+        }
+
         RS_Graphic g;
         const LC_DocumentsStorage storage;
-        if (!storage.loadDocument(&g, fi.absoluteFilePath(), RS2::FormatUnknown)) {
+        if (!storage.loadDocument(&g, path, RS2::FormatUnknown)) {
             // if (!g.open(fi.absoluteFilePath(), RS2::FormatUnknown)) {
             RS_DEBUG->print(RS_Debug::D_WARNING, "Doc_plugin_interface::addBlockfromFromdisk: Cannot open file: %s",
                             fullName.toStdString().c_str());
-            delete b;
             return nullptr;
         }
-        // Everything read is new to this drawing, and goes on its layers of the same names.
-        constexpr unsigned provenance = RS_Entity::Identity | RS_Entity::TableRefs;
-        RS_BlockList* bl = g.getBlockList();
-        for (int i = 0; i < bl->count(); i++) {
-            LC_CopyUtils::doCopyBlock(bl->at(i), m_docGr, provenance);
+        if (m_document != expectedDocument || m_docGr != expectedGraphic || (hadView && !view) ||
+            (view && (view->getDocument() != expectedDocument || view->getViewPort() == nullptr ||
+             view->getViewPort()->getGraphic() != expectedGraphic))) {
+            return {};
         }
-        for (unsigned int i = 0; i < g.count(); i++) {
-            RS_Entity* e = g.entityAt(i)->clone();
-            e->reparent(b);
-            e->clearDwgProvenance(provenance);
-            LC_CopyUtils::doCopyEntityLayer(e, m_docGr, &g);
-            b->addEntity(e);
-        }
-        m_docGr->addBlock(b);
-        // as in LC_CopyUtils::doCopyBlock(): the expansions of its inserts are those of g, which is about to go
-        b->updateInserts();
-        return name;
+        return publishPluginBlock(expectedDocument, expectedGraphic, g, s);
     }
     return nullptr;
+}
+
+void Doc_plugin_interface::addBlockFromDiskAsync(QString fullName, BlockImportCallback callback) {
+    if (!callback) return;
+    if (fullName.isEmpty() || m_document == nullptr || m_docGr == nullptr || m_graphicView == nullptr) {
+        callback({}, QStringLiteral("The active drawing is unavailable."));
+        return;
+    }
+    if (m_graphicView->getDocument() != m_document || m_graphicView->getViewPort() == nullptr ||
+        m_graphicView->getViewPort()->getGraphic() != m_docGr) {
+        callback({}, QStringLiteral("The active drawing changed before the block import started."));
+        return;
+    }
+    for (QObject* child : m_graphicView->children()) {
+        auto* active = dynamic_cast<LC_OffsetImportSession*>(child);
+        if (active != nullptr && active->busy()) {
+            callback({}, QStringLiteral("A staged block import is already active for this drawing."));
+            return;
+        }
+    }
+
+    const QFileInfo file(fullName);
+    if (!file.isReadable()) {
+        callback({}, QStringLiteral("The block drawing is not readable."));
+        return;
+    }
+
+    const RS2::FormatType type = RS_FileIO::detectFormat(file.absoluteFilePath());
+    if (!LC_OffsetImportSession::supportsType(type)) {
+        const QString name = addBlockfromFromdisk(file.absoluteFilePath());
+        callback(name, name.isEmpty() ? QStringLiteral("The block drawing could not be imported.") : QString{});
+        return;
+    }
+
+    QPointer<RS_GraphicView> view(m_graphicView);
+    RS_Document* const expectedDocument = m_document;
+    RS_Graphic* const expectedGraphic = m_docGr;
+    const QString baseName = file.completeBaseName();
+    auto* session = new LC_OffsetImportSession(view.data());
+    QPointer<LC_OffsetImportSession> pending(session);
+    if (!session->start(file.absoluteFilePath(), type, RS2::DxfTextEncoding::Declared, false,
+        [view, pending, expectedDocument, expectedGraphic, baseName,
+         path = file.absoluteFilePath(), callback](LC_OffsetImportSession::Outcome outcome) mutable {
+            const auto finish = [&pending, &callback](const QString& name, const QString& error) {
+                if (pending) pending->deleteLater();
+                callback(name, error);
+            };
+            if (!view || view->getDocument() != expectedDocument ||
+                view->getViewPort() == nullptr || view->getViewPort()->getGraphic() != expectedGraphic) {
+                finish({}, QStringLiteral("The active drawing changed before the block import completed."));
+                return;
+            }
+            if (outcome.status != LC_OffsetImportSession::Status::Complete || !outcome.graphic) {
+                finish({}, outcome.error.isEmpty() ? QStringLiteral("The block drawing could not be imported.") : outcome.error);
+                return;
+            }
+            if (outcome.sourceUnverified || !outcome.sourceStamp.matches(path)) {
+                finish({}, QStringLiteral("The block drawing changed while it was loading."));
+                return;
+            }
+
+            outcome.graphic->onLoadingCompleted();
+            const QString name = publishPluginBlock(expectedDocument, expectedGraphic, *outcome.graphic, baseName);
+            if (name.isEmpty()) {
+                finish({}, QStringLiteral("The imported block could not be published."));
+                return;
+            }
+            view->redraw();
+            finish(name, {});
+        })) {
+        delete session;
+        callback({}, QStringLiteral("The block import could not be started."));
+    }
 }
 
 void Doc_plugin_interface::addEntity(Plug_Entity* handle) {

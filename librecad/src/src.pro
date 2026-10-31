@@ -461,6 +461,20 @@ HEADERS += \
     lib/engine/document/entities/lc_mleader.h \
     lib/engine/document/entities/lc_curvejet.h \
     lib/engine/document/entities/lc_curveoffset.h \
+    lib/engine/document/entities/lc_ellipseoffsetgeometry.h \
+    lib/engine/document/entities/lc_offsetcurve.h \
+    lib/engine/document/entities/lc_offsetworkerwire.h \
+    lib/offset_worker/lc_offsetworkerrequest.h \
+    lib/offset_worker/lc_offsetworkerresult.h \
+    lib/offset_worker/lc_offsetworkerclient.h \
+    lib/offset_worker/lc_offsetworkeredit.h \
+    lib/engine/document/entities/lc_offsetcurvereadutils.h \
+    lib/engine/document/entities/lc_offsetcurvegrips.h \
+    lib/engine/document/entities/lc_offsetcurvetransform.h \
+    lib/engine/document/entities/lc_offsetcurveagain.h \
+    lib/engine/document/entities/lc_offsetcachecontacts.h \
+    lib/engine/document/entities/lc_offsetcontactmatching.h \
+    lib/engine/document/entities/lc_offsetpathsearch.h \
     lib/engine/document/entities/lc_parametriccurveintersection.h \
     lib/engine/document/entities/lc_offsetoutputbudget.h \
     lib/engine/document/entities/lc_offsetresultcheck.h \
@@ -480,6 +494,7 @@ HEADERS += \
     lib/engine/document/entities/support/lc_dimarrowblock.h \
     lib/engine/document/entities/support/lc_dimarrowblockpoly.h \
     lib/engine/document/lc_graphicvariables.h \
+    lib/engine/document/lc_offsetcurvepublication.h \
     lib/engine/document/lc_trackedlistener.h \
     lib/engine/document/selection/lc_selectedset.h \
     lib/engine/document/selection/lc_selectedsetlistener.h \
@@ -615,12 +630,16 @@ HEADERS += \
     lib/engine/rs_vector.h \
     lib/fileio/rs_fileio.h \
     lib/fileio/lc_filenameselectionservice.h \
+    lib/fileio/lc_fileidentity.h \
     lib/filters/lc_embeddedtextxdata.h \
     lib/filters/lc_embeddedtextmodel.h \
     lib/filters/lc_hyperbolaspline.h \
     lib/filters/lc_parabolaspline.h \
     lib/filters/rs_filtercxf.h \
     lib/filters/rs_filterdxfrw.h \
+    lib/filters/lc_offsetcurvecarrier.h \
+    lib/filters/lc_offsetimportsession.h \
+    lib/filters/lc_offsetcurvexdata.h \
     lib/filters/lc_shxshapenames.h \
     lib/filters/rs_filterdxf1.h \
     lib/filters/rs_filterjww.h \
@@ -660,6 +679,10 @@ HEADERS += \
     ui/components/relative_position_assistant/lc_relative_position_editing_widget.h \
     ui/components/relative_position_assistant/lc_relative_position_evaluator.h \
     ui/components/utils/lc_entitymetauiutils.h \
+    ui/components/utils/lc_busycursorguard.h \
+    ui/components/utils/lc_offsetcurveui.h \
+    ui/components/utils/lc_offsetcurveeditsnapshot.h \
+    ui/components/utils/lc_offsetcurvefinalinput.h \
     ui/components/utils/lc_guarded_signals_blocker.h \
     ui/components/utils/lc_mouse_tracking_table_view.h \
     ui/components/utils/lc_tableitem_delegate_base.h \
@@ -674,6 +697,7 @@ HEADERS += \
     ui/dialogs/entity/lc_dlg_dimension.h \
     ui/dialogs/entity/lc_dlg_entityproperties.h \
     ui/dialogs/entity/lc_propertieseditingwidget_ellipse.h \
+    ui/dialogs/entity/lc_propertieseditingwidget_offsetcurve.h \
     ui/dialogs/entity/lc_hatchpropertieseditingwidget.h \
     ui/dialogs/entity/lc_mtextpropertieseditingwidget.h \
     ui/dialogs/entity/lc_textpropertieseditingwidget.h \
@@ -796,6 +820,9 @@ HEADERS += \
     lib/math/lc_convert.h \
     lib/math/lc_linemath.h \
     lib/math/lc_formatter.h \
+    lib/modification/lc_offsetcachetrim.h \
+    lib/modification/lc_offsetpreviewsnapshot.h \
+    lib/modification/lc_offsetbatchpreparation.h \
     lib/modification/rs_modification.h \
     lib/selection/rs_selection.h \
     lib/selection/lc_selectionpredicate.h \
@@ -814,6 +841,7 @@ HEADERS += \
     lib/selection/metaentity/entities/lc_matchdescriptor_arc.h           \
     lib/selection/metaentity/entities/lc_matchdescriptor_polyline.h      \
     lib/selection/metaentity/entities/lc_matchdescriptor_spline.h        \
+    lib/selection/metaentity/entities/lc_matchdescriptor_offsetcurve.h \
     lib/selection/metaentity/entities/lc_matchdescriptor_hatch.h         \
     lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.h     \
     lib/selection/metaentity/entities/lc_matchdescriptor_insert.h        \
@@ -944,6 +972,9 @@ HEADERS += \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_multiple.h \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.h \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.h \
+    ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_offsetcurve.h \
+    ui/dock_widgets/property_sheet/metaentity/lc_offsetcurvepropertyqueue.h \
+    ui/dock_widgets/property_sheet/metaentity/lc_offsetcurvepropertybatch.h \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.h \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.h \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.h \
@@ -1042,6 +1073,21 @@ SOURCES += \
     lib/engine/document/container/lc_containertraverser.cpp \
     lib/engine/document/entities/lc_mleader.cpp \
     lib/engine/document/entities/lc_curveoffset.cpp \
+    lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp \
+    lib/engine/document/entities/lc_offsetcurve.cpp \
+    lib/engine/document/entities/lc_offsetworkerwire.cpp \
+    lib/offset_worker/lc_offsetworkerrequest.cpp \
+    lib/offset_worker/lc_offsetworkerresult.cpp \
+    lib/offset_worker/lc_offsetworkerclient.cpp \
+    lib/offset_worker/lc_offsetworkercompletion.cpp \
+    lib/offset_worker/lc_offsetworkeredit.cpp \
+    lib/engine/document/entities/lc_offsetcurvegrips.cpp \
+    lib/engine/document/entities/lc_offsetcurvesnaps.cpp \
+    lib/engine/document/entities/lc_offsetcurvetransform.cpp \
+    lib/engine/document/entities/lc_offsetcurveagain.cpp \
+    lib/engine/document/entities/lc_offsetcachecontacts.cpp \
+    lib/engine/document/entities/lc_offsetcontactmatching.cpp \
+    lib/engine/document/entities/lc_offsetpathsearch.cpp \
     lib/engine/document/entities/lc_parametriccurveintersection.cpp \
     lib/engine/document/entities/lc_offsetoutputbudget.cpp \
     lib/engine/document/entities/lc_offsetresultcheck.cpp \
@@ -1061,6 +1107,7 @@ SOURCES += \
     lib/engine/document/entities/support/lc_dimarrowblock.cpp \
     lib/engine/document/entities/support/lc_dimarrowblockpoly.cpp \
     lib/engine/document/lc_graphicvariables.cpp \
+    lib/engine/document/lc_offsetcurvepublication.cpp \
     lib/engine/document/selection/lc_selectedset.cpp \
     lib/engine/document/textstyles/lc_textstyle.cpp \
     lib/engine/document/textstyles/lc_textstylelist.cpp \
@@ -1103,6 +1150,8 @@ SOURCES += \
     ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp \
     ui/components/relative_position_assistant/lc_relative_position_evaluator.cpp \
     ui/components/utils/lc_entitymetauiutils.cpp \
+    ui/components/utils/lc_offsetcurveui.cpp \
+    ui/components/utils/lc_offsetcurveeditsnapshot.cpp \
     ui/components/creators/lc_creatorinvoker.cpp \
     ui/components/utils/lc_mouse_tracking_table_view.cpp \
     ui/components/utils/lc_tableitem_delegate_base.cpp \
@@ -1117,6 +1166,7 @@ SOURCES += \
     ui/dialogs/entity/lc_dlg_entityproperties.cpp \
     ui/dialogs/entity/lc_dlg_tolerance.cpp \
     ui/dialogs/entity/lc_propertieseditingwidget_ellipse.cpp \
+    ui/dialogs/entity/lc_propertieseditingwidget_offsetcurve.cpp \
     ui/dialogs/entity/lc_hatchpropertieseditingwidget.cpp \
     ui/dialogs/entity/lc_mtextpropertieseditingwidget.cpp \
     ui/dialogs/entity/lc_textpropertieseditingwidget.cpp \
@@ -1285,8 +1335,12 @@ SOURCES += \
     lib/engine/rs_vector.cpp \
     lib/fileio/rs_fileio.cpp \
     lib/fileio/lc_filenameselectionservice.cpp \
+    lib/fileio/lc_fileidentity.cpp \
     lib/filters/rs_filtercxf.cpp \
     lib/filters/rs_filterdxfrw.cpp \
+    lib/filters/lc_offsetcurvecarrier.cpp \
+    lib/filters/lc_offsetimportsession.cpp \
+    lib/filters/lc_offsetcurvexdata.cpp \
     lib/filters/rs_filterdxf1.cpp \
     lib/filters/rs_filterjww.cpp \
     lib/filters/rs_filterlff.cpp \
@@ -1345,6 +1399,7 @@ SOURCES += \
     lib/math/rs_math.cpp \
     lib/math/lc_quadratic.cpp \
     lib/math/lc_formatter.cpp \
+    lib/modification/lc_offsetcachetrim.cpp \
     lib/modification/rs_modification.cpp \
     lib/selection/rs_selection.cpp \
     lib/selection/lc_selectionpredicate.cpp \
@@ -1355,6 +1410,7 @@ SOURCES += \
     lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp        \
     lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp \
     lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp \
+    lib/selection/metaentity/entities/lc_matchdescriptor_offsetcurve.cpp \
     lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp \
     lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp \
     lib/selection/metaentity/entities/lc_matchdescriptor_insert.cpp \
@@ -1558,6 +1614,8 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/modify/lc_action_modify_move.h \
     actions/drawing/modify/lc_action_modify_move_rotate.h \
     actions/drawing/modify/lc_action_modify_offset.h \
+    actions/drawing/modify/lc_action_offsetcurve_updatesource.h \
+    actions/drawing/modify/lc_action_offsetcurve_restoreoriginal.h \
     actions/drawing/modify/lc_action_modify_revert_direction.h \
     actions/drawing/modify/lc_action_modify_rotate.h \
     actions/drawing/modify/lc_action_modify_rotate_twice.h \
@@ -1724,6 +1782,8 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/modify/lc_action_modify_move.cpp \
     actions/drawing/modify/lc_action_modify_move_rotate.cpp \
     actions/drawing/modify/lc_action_modify_offset.cpp \
+    actions/drawing/modify/lc_action_offsetcurve_updatesource.cpp \
+    actions/drawing/modify/lc_action_offsetcurve_restoreoriginal.cpp \
     actions/drawing/modify/lc_action_modify_revert_direction.cpp \
     actions/drawing/modify/lc_action_modify_rotate.cpp \
     actions/drawing/modify/lc_action_modify_rotate_twice.cpp \
@@ -2225,6 +2285,8 @@ SOURCES +=  ui/action_options/circle/lc_circle_by_arc_options_widget.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp \
+    ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_offsetcurve.cpp \
+    ui/dock_widgets/property_sheet/metaentity/lc_offsetcurvepropertyqueue.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp \
@@ -2353,6 +2415,7 @@ FORMS = ui/action_options/circle/lc_circle_by_arc_options_widget.ui \
        ui/dialogs/entity/lc_dlg_entityproperties.ui \
        ui/dialogs/entity/lc_dlg_tolerance.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui \
+       ui/dialogs/entity/lc_propertieseditingwidget_offsetcurve.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui \
        ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui \
        ui/dialogs/entity/lc_textpropertieseditingwidget.ui \

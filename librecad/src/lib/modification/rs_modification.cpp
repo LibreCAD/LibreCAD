@@ -25,6 +25,12 @@
 **
 **********************************************************************/
 #include "rs_modification.h"
+#include "lc_offsetpreviewsnapshot.h"
+#include "lc_offsetbatchpreparation.h"
+#include "lc_offsetcurveeditsnapshot.h"
+#include "lc_offsetcurvefinalinput.h"
+#include "../offset_worker/lc_offsetworkerclient.h"
+#include <QCborValue>
 
 #include <algorithm>
 #include <cmath>
@@ -33,6 +39,10 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+#include <array>
+#include <cstdint>
+#include <new>
+#include <stdexcept>
 
 #include "lc_containertraverser.h"
 #include "lc_curveoffset.h"
@@ -40,6 +50,10 @@
 #include "lc_hyperbola.h"
 #include "lc_linemath.h"
 #include "lc_offsetresultcheck.h"
+#include "lc_offsetcurve.h"
+#include "lc_offsetcurvetransform.h"
+#include "lc_offsetcurvexdata.h"
+#include "rs_document.h"
 #include "lc_splinepoints.h"
 #include "rs_spline.h"
 #include "lc_undosection.h"
@@ -68,6 +82,7 @@
 #endif
 
 class LC_SplinePoints;
+namespace offsetTx = LC_OffsetCurveTransform;
 
 namespace {
       // fixme - sand - add option for intersection tolerance????
@@ -84,6 +99,10 @@ namespace {
     bool isReplaceableByTrim(const RS_Entity& entity) {
         const RS_EntityContainer* parent = entity.getParent();
         return parent == nullptr || parent->isDocument();
+    }
+
+    bool isNativeCacheChild(const RS_Entity& entity) {
+        return entity.getParent() && entity.getParent()->rtti() == RS2::EntityOffsetCurve;
     }
 
     RS_VectorSolutions findIntersection(const RS_Entity& trimEntity, const RS_Entity& limitEntity, double tolerance = 1e-4) {
@@ -993,9 +1012,8 @@ void RS_Modification::move(const RS_MoveData& data, const QList<RS_Entity*>& ent
     for (const auto e : entitiesList) {
         // Create new entities
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* clone = getClone(forPreviewOnly, e);
-            clone->move(data.offset * num);
-            if (!acceptedInsertSourceEdit(*clone)) {
+            RS_Entity* clone = getTransformedClone(forPreviewOnly, e, {offsetTx::Step::move(data.offset * num)});
+            if (!clone || !acceptedInsertSourceEdit(*clone)) {
                 transformedOriginals.removeAll(e);
                 delete clone;
                 continue;
@@ -1044,24 +1062,54 @@ RS_Entity* RS_Modification::getClone(const bool forPreviewOnly, const RS_Entity*
     return result;
 }
 
+RS_Entity* RS_Modification::getTransformedClone(const bool preview, const RS_Entity* e,
+    const LC_OffsetCurveTransform::Steps& steps, const bool forcePlain) {
+    if (!e || !steps.valid()) return nullptr;
+    if (LC_OffsetCurveTransform::needsStaging(*e)) {
+        auto prepared = LC_OffsetCurveTransform::prepare(*e, steps, forcePlain || preview);
+        if (!prepared) return nullptr;
+        if (prepared.keptPlain && !preview)
+            RS_DEBUG->print(RS_Debug::D_WARNING, "Offset definition demoted to a transformed ordinary spline");
+        return prepared.entity.release();
+    }
+    auto clone = std::unique_ptr<RS_Entity>{getClone(preview, e)};
+    if (!clone) return nullptr;
+    using Kind = LC_OffsetCurveTransform::Step::Kind;
+    for (std::size_t i = 0; i < steps.size(); ++i) {
+        const auto& step = steps[i];
+        switch (step.kind) {
+        case Kind::Move: clone->move(step.first); break;
+        case Kind::Rotate: clone->rotate(step.first, step.scalar); break;
+        case Kind::Scale: clone->scale(step.first, step.second); break;
+        case Kind::Mirror: clone->mirror(step.first, step.second); break;
+        case Kind::Shear: clone->shear(step.scalar); break;
+        case Kind::Reverse: clone->revertDirection(); break;
+        }
+    }
+    return clone.release();
+}
+
 bool RS_Modification::alignRef(const LC_AlignRefData& data, const QList<RS_Entity*>& entitiesList, const bool forPreviewOnly,
                                LC_DocumentModificationBatch& ctx) {
     constexpr int numberOfCopies = 1; /*data.obtainNumberOfCopies();*/
     const RS_Vector offset = data.offset;
+    bool succeeded = false;
     // too slow:
     for (const auto e : entitiesList) {
         // Create new entities
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* clone = getClone(forPreviewOnly, e);
-            clone->rotate(data.rotationCenter, data.rotationAngle);
-            if (data.scale && LC_LineMath::isMeaningful(data.scaleFactor - 1.0)) {
-                clone->scale(data.rotationCenter, data.scaleFactor);
+            offsetTx::Steps steps{offsetTx::Step::rotate(data.rotationCenter, data.rotationAngle)};
+            if (data.scale && (!std::isfinite(data.scaleFactor) || LC_LineMath::isMeaningful(data.scaleFactor - 1.0))) {
+                steps.append(offsetTx::Step::scale(data.rotationCenter, {data.scaleFactor, data.scaleFactor}));
             }
-            clone->move(offset * num);
+            steps.append(offsetTx::Step::move(offset * num));
+            RS_Entity* clone = getTransformedClone(forPreviewOnly, e, steps);
+            if (!clone) continue;
             ctx.replace(e, clone);
+            succeeded = true;
         }
     }
-    return true;
+    return succeeded;
 }
 
 bool LC_OffsetBatchOutcome::anySourceSucceeded() const {
@@ -1379,6 +1427,62 @@ struct LC_OffsetPreviewCache::Entry {
     std::vector<std::unique_ptr<RS_Entity>> entities;
 };
 
+bool LC_OffsetPreviewSnapshot::admitted() const noexcept {
+    if (revision >= std::uint64_t(std::numeric_limits<qint64>::max()) ||
+        otherEntries > maximumEntries || entries.size() > maximumEntries - otherEntries) return false;
+    const auto hard = makeDefaultOffsetSourceBudget();
+    std::size_t values = 8;
+    auto take = [&](std::size_t n) {
+        if (n > maximumValues - values) return false;
+        values += n; return true;
+    };
+    const auto point = [](const RS_Vector& p) { return LC_EllipseOffsetGeometry::isFinite2D(p); };
+    std::optional<std::pair<int, double>> previous;
+    for (const auto& e : entries) {
+        if ((e.side != LC_CurveOffsetSide::Left && e.side != LC_CurveOffsetSide::Right) ||
+            !std::isfinite(e.magnitude) || e.magnitude <= 0 || !take(20) ||
+            !noLargerThan(e.budget, hard) || !withinBudget(e.usage, e.budget) ||
+            int(e.status) < int(LC_CurveOffsetStatus::Ok) || int(e.status) > int(LC_CurveOffsetStatus::LimitExceeded) ||
+            int(e.validation) < 0 || int(e.validation) > int(LC_OffsetValidationLevel::IntervalCertified) ||
+            (e.observedError && (!std::isfinite(*e.observedError) || *e.observedError < 0))) return false;
+        const auto key = std::make_pair(int(e.side), e.magnitude);
+        if (previous && !(*previous < key)) return false;
+        previous = key;
+        if (e.geometry.size() > e.budget.maxOutputEntities ||
+            (e.status == LC_CurveOffsetStatus::Ok ? e.geometry.size() != e.usage.outputEntities : !e.geometry.empty()))
+            return false;
+        for (const auto& value : e.geometry) {
+            if (const auto* line = std::get_if<RS_LineData>(&value)) {
+                if (!point(line->startpoint) || !point(line->endpoint) || !take(13)) return false;
+            } else {
+                const auto& d = std::get<RS_SplineData>(value);
+                const auto controls = d.controlPoints.size();
+                if ((d.degree != 1 && d.degree != 3) || controls < d.degree + 1 || controls > 16384 ||
+                    (controls - 1) % d.degree || d.type != RS_SplineData::SplineType::ClampedOpen ||
+                    d.savedOpenType != d.type || !d.fitPoints.empty() || !d.savedOpenKnots.empty() ||
+                    d.weights.size() != controls || d.knotslist.size() != controls + d.degree + 1 ||
+                    d.knotslist.size() > 32768 || !take(13 + 6 * controls + d.knotslist.size())) return false;
+                for (const auto& p : d.controlPoints) if (!point(p)) return false;
+                for (double w : d.weights) if (w != 1) return false;
+                std::size_t index = 0;
+                double last = 0;
+                const auto spans = (controls - 1) / d.degree;
+                if (spans > e.budget.maxCubicPieces) return false;
+                for (std::size_t k = 0; k <= spans; ++k) {
+                    const double knot = d.knotslist[index];
+                    if (!std::isfinite(knot) || (k && !(last < knot))) return false;
+                    const auto repeats = k == 0 || k == spans ? d.degree + 1 : d.degree;
+                    for (std::size_t j = 0; j < repeats; ++j) if (d.knotslist[index++] != knot) return false;
+                    last = knot;
+                }
+                const auto display = RS_Spline::displayEntityUpperBound(d);
+                if (!display || *display > e.budget.maxDeepEntities) return false;
+            }
+        }
+    }
+    return true;
+}
+
 LC_OffsetPreviewCache::LC_OffsetPreviewCache() = default;
 LC_OffsetPreviewCache::~LC_OffsetPreviewCache() = default;
 
@@ -1412,20 +1516,108 @@ bool LC_OffsetPreviewCache::find(const RS_Entity* source, const LC_CurveOffsetSi
 
 void LC_OffsetPreviewCache::keep(const RS_Entity* source, const LC_CurveOffsetSide side, const double magnitude,
                                  const LC_OffsetSourceBudget& budget, const LC_CurveOffsetMaterializationResult& result) {
-    constexpr std::size_t maxEntries = 256;
-    if (m_entries.size() >= maxEntries) {
-        m_entries.clear();
-    }
+    if (m_revision >= std::uint64_t(std::numeric_limits<qint64>::max()) - 1)
+        throw std::overflow_error("Offset preview cache revision exhausted");
     auto entry = std::make_unique<Entry>(
         Entry{budget, result.status, result.usage, result.validationLevel, result.maxObservedError, {}});
     for (const std::unique_ptr<RS_Entity>& entity : result.entities) {
         entry->entities.emplace_back(entity->clone());
     }
-    m_entries[{source, static_cast<int>(side), magnitude}] = std::move(entry);
+    // Allocate the map node before clearing/overwriting existing state.
+    decltype(m_entries) staged;
+    const auto key = std::make_tuple(source, static_cast<int>(side), magnitude);
+    staged.emplace(key, std::move(entry));
+    if (m_entries.size() + m_otherEntries >= LC_OffsetPreviewSnapshot::maximumEntries) {
+        m_entries.clear(); m_otherEntries = 0; m_cleared = true;
+    }
+    m_entries.erase(key);
+    m_entries.insert(staged.extract(staged.begin()));
+    ++m_revision;
 }
 
 void LC_OffsetPreviewCache::clear() {
-    m_entries.clear();
+    if (m_revision >= std::uint64_t(std::numeric_limits<qint64>::max()) - 1)
+        throw std::overflow_error("Offset preview cache revision exhausted");
+    m_entries.clear(); m_otherEntries = 0; m_cleared = true; ++m_revision;
+}
+
+std::unique_ptr<LC_OffsetPreviewSnapshot> LC_OffsetPreviewCache::snapshot(const RS_Entity* source) const {
+    auto out = std::make_unique<LC_OffsetPreviewSnapshot>();
+    out->revision = m_revision; out->cleared = m_cleared; out->otherEntries = m_otherEntries;
+    std::size_t values = 8;
+    const auto take = [&](std::size_t n) {
+        if (n > LC_OffsetPreviewSnapshot::maximumValues - values) return false;
+        values += n; return true;
+    };
+    for (const auto& item : m_entries) {
+        if (std::get<0>(item.first) != source) { ++out->otherEntries; continue; }
+        const auto& entry = *item.second;
+        if (!take(20)) return {};
+        LC_OffsetPreviewSnapshot::Entry value;
+        value.side = LC_CurveOffsetSide(std::get<1>(item.first)); value.magnitude = std::get<2>(item.first);
+        value.budget = entry.budget; value.status = entry.status; value.usage = entry.usage;
+        value.validation = entry.validationLevel;
+        if (!std::isnan(entry.maxObservedError)) value.observedError = entry.maxObservedError;
+        for (const auto& entity : entry.entities) {
+            if (entity->rtti() == RS2::EntityLine) {
+                if (!take(13)) return {};
+                value.geometry.emplace_back(static_cast<const RS_Line&>(*entity).getData());
+            } else if (entity->rtti() == RS2::EntitySpline) {
+                const auto& d = static_cast<const RS_Spline&>(*entity).getData();
+                if (d.controlPoints.size() > 16384 || d.knotslist.size() > 32768 ||
+                    d.weights.size() != d.controlPoints.size() || !d.fitPoints.empty() || !d.savedOpenKnots.empty() ||
+                    !take(13 + 6 * d.controlPoints.size() + d.knotslist.size())) return {};
+                value.geometry.emplace_back(d);
+            } else return {}; // Never transport an editable native cache as authority.
+        }
+        out->entries.push_back(std::move(value));
+    }
+    return out->admitted() ? std::move(out) : nullptr;
+}
+
+bool LC_OffsetPreviewCache::restore(const RS_Entity* source, const LC_OffsetPreviewSnapshot& snapshot) {
+    if (!snapshot.admitted()) return false;
+    LC_OffsetPreviewCache staged;
+    for (const auto& value : snapshot.entries) {
+        auto entry = std::make_unique<Entry>(Entry{value.budget, value.status, value.usage,
+            value.validation, value.observedError.value_or(std::numeric_limits<double>::quiet_NaN()), {}});
+        for (const auto& geometry : value.geometry) {
+            if (const auto* line = std::get_if<RS_LineData>(&geometry))
+                entry->entities.push_back(std::make_unique<RS_Line>(nullptr, *line));
+            else {
+                const auto& data = std::get<RS_SplineData>(geometry);
+                auto spline = std::make_unique<RS_Spline>(nullptr, data);
+                if (!spline->validate() || RS_Spline::geometryFingerprint(data) !=
+                    RS_Spline::geometryFingerprint(spline->getData())) return false;
+                entry->entities.push_back(std::move(spline));
+            }
+        }
+        staged.m_entries.emplace(std::make_tuple(source, int(value.side), value.magnitude), std::move(entry));
+    }
+    m_entries.swap(staged.m_entries); m_otherEntries = snapshot.otherEntries;
+    m_revision = snapshot.revision; m_cleared = false;
+    return true;
+}
+
+bool LC_OffsetPreviewCache::merge(const RS_Entity* source, const LC_OffsetPreviewSnapshot& before,
+    const LC_OffsetPreviewSnapshot& after) {
+    if (m_otherEntries || before.revision != m_revision || !before.admitted() || !after.admitted() ||
+        after.revision < before.revision || after.revision - before.revision > RS_OffsetData::kMaximumOffsetCopies ||
+        after.otherEntries != (after.cleared ? 0 : before.otherEntries)) return false;
+    LC_OffsetPreviewCache staged;
+    if (!staged.restore(source, after)) return false;
+    if (!after.cleared) {
+        std::size_t other = 0;
+        for (const auto& item : m_entries) if (std::get<0>(item.first) != source) {
+            staged.m_entries.emplace(item.first, nullptr); ++other;
+        }
+        if (other != before.otherEntries) return false;
+        for (auto& item : m_entries) if (std::get<0>(item.first) != source)
+            staged.m_entries.find(item.first)->second = std::move(item.second);
+    }
+    m_entries.swap(staged.m_entries); m_revision = after.revision;
+    m_cleared |= after.cleared;
+    return true;
 }
 
 /**
@@ -1438,10 +1630,507 @@ bool RS_Modification::offset(const RS_OffsetData& data, const QList<RS_Entity*>&
     return offsetWithOutcome(data, entitiesList, forPreviewOnly, LC_OffsetBatchLimits{}, ctx).anySourceSucceeded();
 }
 
+LC_OffsetSourceStatus RS_Modification::prepareOffsetSource(const RS_OffsetData& data, RS_Entity& e,
+    const bool forPreviewOnly, const LC_OffsetBatchLimits& limits, const std::size_t requestDeepLeft,
+    const LC_OffsetSourceContext sourceContext, std::vector<std::unique_ptr<RS_Entity>>& roots,
+    LC_OffsetSourceOutcome& result, LC_OffsetPreviewCache* const cache) {
+    const int numberOfCopies = data.obtainNumberOfCopies();
+    result.copiesRequested = numberOfCopies;
+    const auto discard = [&]() noexcept {
+        roots.clear(); result.copiesMade = result.copiesKeptPlain = 0;
+        result.copyOutputCounts.clear(); result.keptPlain.clear(); result.usage = {};
+    };
+    try {
+        const auto status = prepareOffsetSourceImpl(data, e, forPreviewOnly, limits, requestDeepLeft, roots, result,
+            cache, &sourceContext, numberOfCopies);
+        if (status != LC_OffsetSourceStatus::Succeeded) discard();
+        return status;
+    } catch (...) {
+        discard();
+        throw;
+    }
+}
+
+LC_OffsetSourceStatus RS_Modification::prepareOffsetSourceImpl(const RS_OffsetData& data, RS_Entity& e,
+    const bool forPreviewOnly, const LC_OffsetBatchLimits& limits, const std::size_t requestDeepLeft,
+    std::vector<std::unique_ptr<RS_Entity>>& roots, LC_OffsetSourceOutcome& result,
+    LC_OffsetPreviewCache* const cache, const LC_OffsetSourceContext* const sourceContext, const int numberOfCopies) {
+    // All copies stay provisional until the caller accepts the source as a whole.
+    LC_OffsetOutputUsage& usage = result.usage;
+    LC_OffsetSourceBudget budget = limits.perSource;
+    budget.maxDeepEntities = std::min(budget.maxDeepEntities, requestDeepLeft);
+    auto measureAll = [&roots, &budget]() {
+        std::vector<const RS_Entity*> all;
+        for (const std::unique_ptr<RS_Entity>& root : roots) {
+            all.push_back(root.get());
+        }
+        return measureOffsetOutput(all, budget.maxDeepEntities);
+    };
+    // whether a copy that cannot be made ends the series rather than fails the source
+    auto stopsSeries = [&result]() {
+        if (result.copiesMade == 0) {
+            return false;
+        }
+        result.stoppedBy = LC_OffsetSourceStatus::OffsetFailed;
+        return true;
+    };
+    const auto adoptProduced = [&](LC_CurveOffsetMaterializationResult& copy, const int ordinal,
+                                   const double magnitude, const LC_CurveOffsetSide side,
+                                   const LC_OffsetSourceBudget& left,
+                                   const LC_OffsetPlainReason nativeFallback,
+                                   const std::optional<LC_OffsetCheckResult::Reason> nativeCheck) {
+        if (!data.asOffsetCurve || forPreviewOnly ||
+            (e.rtti() != RS2::EntityEllipse && e.rtti() != RS2::EntityOffsetCurve &&
+                !(sourceContext && sourceContext->nativeSource))) return;
+        const auto kept = [&](const LC_OffsetPlainReason reason,
+                              std::optional<LC_OffsetCheckResult::Reason> checked = std::nullopt) {
+            result.keptPlain.push_back({ordinal, reason, checked});
+            ++result.copiesKeptPlain;
+        };
+        for (auto& entity : copy.entities) {
+            entity->RS_Entity::operator=(e);
+            entity->setLayer(e.getLayer(false));
+            entity->clearDwgProvenance(RS_Entity::Identity);
+            entity->setLineage(RS_Entity::newLineage()); entity->setOwnerLineage(0);
+            entity->delFlag(RS2::FlagHatchChild);
+            entity->calculateBorders();
+        }
+        if (sourceContext ? !sourceContext->topLevel :
+            (!e.getParent() || !e.getParent()->isDocument() || e.isDeleted() ||
+                e.getParent()->findEntityIndex(&e) < 0)) {
+            kept(LC_OffsetPlainReason::NotTopLevel); return;
+        }
+        if (copy.entities.size() != 1) { kept(LC_OffsetPlainReason::SeveralPieces); return; }
+        const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&e);
+        if (!ellipse) { kept(nativeFallback, nativeCheck); return; }
+        // A one-leaf LINE expands to a native spline's display children.
+        if (left.maxDeepEntities < kOffsetDeepEntitiesPerOutputSpline) {
+            kept(LC_OffsetPlainReason::OutputBudget); return;
+        }
+        LC_EllipseOffsetDefinition definition;
+        definition.basis = ellipse->getData(); definition.distance = magnitude;
+        definition.towardCentre = (side == LC_CurveOffsetSide::Left) != definition.basis.reversed;
+        definition.relTolerance = LC_CurveOffset::kEllipseRelativeOffsetTolerance;
+        const double tolerance = LC_CurveOffset::toleranceFor(e, magnitude, definition.relTolerance);
+        LC_OffsetCheckResult checked;
+        LC_OffsetCurveRefusal refusal;
+        if (result.adoptionAttempts == std::size_t(RS_OffsetData::kMaximumOffsetCopies))
+            throw std::overflow_error("Offset adoption attempt count exceeded");
+        ++result.adoptionAttempts;
+        auto native = LC_OffsetCurve::adopt(*copy.entities.front(), definition, tolerance, &checked, {}, &refusal);
+        auto total = result.adoptionCheckWork;
+        const LC_OffsetCheckLimits hard;
+        const auto add = [&](std::size_t& value, std::size_t more, std::size_t perCheck) {
+            const auto cap = result.adoptionAttempts * perCheck;
+            if (value > cap || more > cap - value)
+                throw std::overflow_error("Offset adoption work exceeded");
+            value += more;
+        };
+        add(total.cacheSpans, checked.work.cacheSpans, hard.maxCacheSpans);
+        add(total.vertices, checked.work.vertices, hard.maxVertices);
+        add(total.distancePairs, checked.work.distancePairs, hard.maxDistancePairs);
+        add(total.orderingComparisons, checked.work.orderingComparisons, hard.maxOrderingComparisons);
+        if (checked.work.deepest > hard.maxDepth)
+            throw std::overflow_error("Offset adoption depth exceeded");
+        total.deepest = std::max(total.deepest, checked.work.deepest);
+        result.adoptionCheckWork = total;
+        if (!native) {
+            const auto reason = refusal == LC_OffsetCurveRefusal::CheckFailed || checked ?
+                std::optional<LC_OffsetCheckResult::Reason>{checked.reason} : std::nullopt;
+            kept(refusal == LC_OffsetCurveRefusal::CheckFailed ? LC_OffsetPlainReason::CheckFailed :
+                 LC_OffsetPlainReason::NotCacheRepresentable, reason);
+            return;
+        }
+        const auto cost = measureOffsetOutput({native.get()}, left.maxDeepEntities);
+        if (cost.status != LC_OffsetTreeStatus::Ok) {
+            kept(LC_OffsetPlainReason::OutputBudget, checked.reason); return;
+        }
+        copy.usage.deepEntities = cost.deepEntities;
+        copy.entities.front() = std::move(native);
+    };
+
+    // causes known before anything is offset
+    if (e.rtti() == RS2::EntityLine && (e.getEndpoint() - e.getStartpoint()).magnitude() < RS_TOLERANCE) {
+        result.detail = LC_OffsetFailureDetail::ZeroLength;
+        return LC_OffsetSourceStatus::OffsetFailed;
+    }
+    if (const auto* hyperbola = dynamic_cast<const LC_Hyperbola*>(&e);
+        hyperbola != nullptr && hyperbola->isInfinite()) {
+        result.detail = LC_OffsetFailureDetail::Unbounded;
+        return LC_OffsetSourceStatus::OffsetFailed;
+    }
+
+    if (LC_CurveOffset::isSupportedSource(e)) {
+        // The side is resolved once, so no copy can land on another side.
+        const LC_CurveOffsetOptions sideOptions = LC_CurveOffset::makeOffsetOptions(e, std::abs(data.distance));
+        LC_OffsetSideResolution side = LC_CurveOffset::resolveSide(e, data.coord, sideOptions);
+        // a point on the curve, or on the segments it is drawn with, gives no
+        // side the user chose: the fallback point decides, when it can
+        const bool onCurve =
+            side.status == LC_CurveOffsetStatus::AmbiguousSide ||
+            (side.status == LC_CurveOffsetStatus::Ok && side.distance <= drawnCurveTolerance(e, data.coord));
+        if (onCurve && data.sideFallback.valid) {
+            const LC_OffsetSideResolution fallback = LC_CurveOffset::resolveSide(e, data.sideFallback, sideOptions);
+            if (fallback.status == LC_CurveOffsetStatus::Ok) {
+                side = fallback;
+            }
+        }
+        if (side.status != LC_CurveOffsetStatus::Ok) {
+            result.engineStatus = side.status;
+            return engineFailure(side.status);
+        }
+        result.resolvedSide = side.side;
+        for (int num = 1; num <= numberOfCopies; ++num) {
+            const LC_OffsetSourceBudget left = remainingBudget(budget, usage);
+            if (!isValidOffsetBudget(left)) {
+                return LC_OffsetSourceStatus::LimitExceeded;
+            }
+            const double magnitude = std::abs(num * data.distance);
+            LC_CurveOffsetMaterializationResult copy;
+            auto options = LC_CurveOffset::makeOffsetOptions(e, magnitude);
+            if (limits.maxSamples) options.maxSamples = std::min(options.maxSamples, limits.maxSamples);
+            if (limits.maxIntersectionPairs)
+                options.maxIntersectionPairs = std::min(options.maxIntersectionPairs, limits.maxIntersectionPairs);
+            std::size_t samplesLeft = options.maxSamples, pairsLeft = options.maxIntersectionPairs;
+            const auto* nativeSource = sourceContext ? nullptr : dynamic_cast<const LC_OffsetCurve*>(&e);
+            const bool nativeRequested = data.asOffsetCurve && !forPreviewOnly &&
+                (sourceContext ? sourceContext->nativeSource : nativeSource != nullptr);
+            bool rebased = false;
+            auto plainReason = LC_OffsetPlainReason::NotCacheRepresentable;
+            std::optional<LC_OffsetCheckResult::Reason> nativeCheck;
+            if (nativeRequested) {
+                LC_OffsetRebaseOutcome attempt; attempt.copy = num;
+                plainReason = LC_OffsetPlainReason::RebaseRefused;
+                const auto* parent = sourceContext ? nullptr : e.getParent();
+                if (sourceContext ? !sourceContext->topLevel :
+                    (!parent || !parent->isDocument() || e.isDeleted() || parent->findEntityIndex(&e) < 0)) {
+                    plainReason = LC_OffsetPlainReason::NotTopLevel;
+                } else if (sourceContext ? !sourceContext->nativeDefinition.has_value() :
+                    !nativeSource->hasEditableDefinition()) {
+                    plainReason = LC_OffsetPlainReason::UndefinedDefinition;
+                } else {
+                    const auto& savedDefinition = sourceContext ? *sourceContext->nativeDefinition : nativeSource->definition();
+                    const auto proposal = LC_OffsetCurveAgain::propose(savedDefinition, side.side, magnitude);
+                    attempt.proposalRefusal = proposal.refusal;
+                    if (!proposal) {
+                        if (proposal.refusal == LC_OffsetCurveAgain::Refusal::ZeroSum)
+                            plainReason = LC_OffsetPlainReason::ZeroSum;
+                    } else if (samplesLeft && pairsLeft >= 2) {
+                        const auto& definition = proposal.proposal->definition;
+                        RS_Ellipse source{nullptr, definition.basis};
+                        source.RS_Entity::operator=(e);
+                        LC_OffsetRunLimits run; run.outputBudget = left; run.maxSamples = samplesLeft;
+                        // Reserve per-query ceilings, not observed total boxes.
+                        // Each attempt can run several independently bounded queries.
+                        run.maxIntersectionPairs = pairsLeft / 2;
+                        auto made = LC_OffsetCurve::create(source, definition.distance, definition.towardCentre,
+                            run, definition.relTolerance, definition.cacheReversed);
+                        attempt.engineRuns = made.engineRuns; attempt.sampleUnits = made.sampleUnits;
+                        attempt.nativeRefusal = made.refusal; attempt.engineStatus = made.engineStatus;
+                        attempt.checkReason = made.checkReason; attempt.checkWork = made.checkWork;
+                        nativeCheck = made.checkReason;
+                        result.rebaseEngineRuns += made.engineRuns; result.sampleUnits += made.sampleUnits;
+                        if (made.engineRuns) {
+                            attempt.intersectionPairAllowance = run.maxIntersectionPairs;
+                            result.intersectionPairAllowance += run.maxIntersectionPairs;
+                            pairsLeft -= run.maxIntersectionPairs;
+                            samplesLeft -= std::min(samplesLeft, made.sampleUnits);
+                        }
+                        if (!addUsage(result.attemptedOutputUsage, made.attemptedOutputUsage))
+                            return LC_OffsetSourceStatus::LimitExceeded;
+                        result.attemptedDeepCountComplete &= made.attemptedDeepCountComplete;
+                        if (made) {
+                            copy.status = LC_CurveOffsetStatus::Ok; copy.usage = made.outputUsage;
+                            copy.entities.emplace_back(std::move(made.entity));
+                            rebased = attempt.adopted = true;
+                        }
+                    }
+                }
+                result.rebases.push_back(std::move(attempt));
+            }
+            if (!rebased) {
+                bool reused = cache && cache->find(&e, side.side, magnitude, left, copy);
+                // A preview refusal carries no sample/pair allowance provenance.
+                // Native retries may reuse geometry, never an effort-based refusal.
+                if (reused && nativeRequested && copy.status != LC_CurveOffsetStatus::Ok) reused = false;
+                if (reused) { ++result.reusedCacheCopies; result.reusedCopies.push_back({num, left}); }
+                else {
+                    copy = LC_CurveOffsetMaterializationResult{};
+                    if (!samplesLeft || !pairsLeft) copy.status = LC_CurveOffsetStatus::LimitExceeded;
+                    else {
+                        options.maxSamples = samplesLeft; options.maxIntersectionPairs = pairsLeft;
+                        ++result.cacheEngineRuns;
+                        copy = LC_CurveOffset::createEntities(e, LC_CurveOffset::makeSideRequest(side.side, magnitude),
+                                                              options, left);
+                        result.sampleUnits += copy.sampleUnits;
+                        result.intersectionPairAllowance += pairsLeft;
+                        if (!addUsage(result.attemptedOutputUsage, copy.attemptedOutputUsage))
+                            return LC_OffsetSourceStatus::LimitExceeded;
+                        result.attemptedDeepCountComplete &= copy.attemptedDeepCountComplete;
+                        if (cache && !nativeRequested) cache->keep(&e, side.side, magnitude, left, copy);
+                    }
+                }
+            }
+            if (copy.status != LC_CurveOffsetStatus::Ok) {
+                result.engineStatus = copy.status;
+                if (copy.status != LC_CurveOffsetStatus::LimitExceeded && stopsSeries()) {
+                    break;
+                }
+                return engineFailure(copy.status);
+            }
+            if (copy.entities.empty()) {
+                result.stoppedBy = LC_OffsetSourceStatus::Vanished;
+                break; // trimmed away entirely, as it is at any larger distance on this side
+            }
+            if (!rebased) adoptProduced(copy, num, magnitude, side.side, left, plainReason, nativeCheck);
+            else for (auto& entity : copy.entities) {
+                entity->RS_Entity::operator=(e); entity->setLayer(e.getLayer(false));
+                entity->clearDwgProvenance(RS_Entity::Identity);
+                entity->setLineage(RS_Entity::newLineage()); entity->setOwnerLineage(0);
+                entity->delFlag(RS2::FlagHatchChild); entity->calculateBorders();
+            }
+            if (!addUsage(usage, copy.usage)) {
+                return LC_OffsetSourceStatus::LimitExceeded;
+            }
+            for (std::unique_ptr<RS_Entity>& entity : copy.entities) {
+                roots.push_back(std::move(entity));
+            }
+            result.copyOutputCounts.push_back(copy.entities.size());
+            ++result.copiesMade;
+        }
+    }
+    else {
+        // RS_Polyline::offset() moves lines and arcs only: an elliptic
+        // segment would stay where it is, between offset neighbours.
+        const auto* const polyline = e.rtti() == RS2::EntityPolyline ? static_cast<const RS_Polyline*>(&e) : nullptr;
+        if (polyline != nullptr && hasEllipticSegment(*polyline)) {
+            result.detail = LC_OffsetFailureDetail::EllipticSegments;
+            return LC_OffsetSourceStatus::OffsetFailed;
+        }
+        // A point on the entity gives no side the user chose, and each
+        // type would settle it its own way (a line to the left, a circle
+        // inwards): the second click decides, and without one, nothing.
+        RS_Vector coord = data.coord;
+        if (sideIsAmbiguous(e, coord)) {
+            if (!data.sideFallback.valid || sideIsAmbiguous(e, data.sideFallback)) {
+                result.engineStatus = LC_CurveOffsetStatus::AmbiguousSide;
+                result.detail = LC_OffsetFailureDetail::AmbiguousSide;
+                return LC_OffsetSourceStatus::OffsetFailed;
+            }
+            coord = data.sideFallback;
+        }
+        // Inwards, a circle or an arc has nothing left once its radius is
+        // within the band every exact offset vanishes in, relative to its size.
+        const bool circular = e.rtti() == RS2::EntityCircle || e.rtti() == RS2::EntityArc;
+        const bool inwards = circular && coord.distanceTo(e.getCenter()) < e.getRadius();
+        const double extent = e.getMin().valid && e.getMax().valid ? e.getMin().distanceTo(e.getMax()) : 0.0;
+        for (int num = 1; num <= numberOfCopies; ++num) {
+            if (!isValidOffsetBudget(remainingBudget(budget, usage))) {
+                return LC_OffsetSourceStatus::LimitExceeded;
+            }
+            const double magnitude = std::abs(num * data.distance);
+            if (inwards && e.getRadius() - magnitude <= kOffsetVanishBand * std::max(extent, magnitude)) {
+                result.stoppedBy = LC_OffsetSourceStatus::Vanished;
+                break; // as it is at any larger distance inwards
+            }
+            std::vector<std::unique_ptr<RS_Entity>> copy;
+            // First try the type-changing path (e.g. ellipse → spline).
+            for (RS_Entity* off : e.createOffset(coord, magnitude)) {
+                copy.emplace_back(off);
+            }
+            if (copy.empty()) {
+                // Fall back to the in-place clone+offset path.
+                std::unique_ptr<RS_Entity> clone{getClone(forPreviewOnly, &e)};
+                if (!clone->offset(coord, magnitude)) {
+                    if (e.rtti() == RS2::EntityCircle || e.rtti() == RS2::EntityArc) {
+                        result.stoppedBy = LC_OffsetSourceStatus::Vanished;
+                        break; // the radius would vanish, as it does at any larger distance inwards
+                    }
+                    if (stopsSeries()) {
+                        break;
+                    }
+                    return LC_OffsetSourceStatus::OffsetFailed;
+                }
+                if (polyline != nullptr) {
+                    // RS_Polyline::offset() joins neighbouring offsets and
+                    // never trims a loop, and it always reports success:
+                    // what it made is used only if it is a trimmed offset
+                    const LC_OffsetCheckReport check =
+                        checkLegacyPolylineOffset(*polyline, static_cast<const RS_Polyline&>(*clone), magnitude);
+                    if (check.verdict == LC_OffsetCheckVerdict::NothingLeft) {
+                        result.stoppedBy = LC_OffsetSourceStatus::Vanished;
+                        break; // shrunk past its size, as it is at any larger distance
+                    }
+                    if (check.verdict == LC_OffsetCheckVerdict::Invalid) {
+                        result.detail = LC_OffsetFailureDetail::PolylineNotTrimmed;
+                        if (stopsSeries()) {
+                            break;
+                        }
+                        return LC_OffsetSourceStatus::OffsetFailed;
+                    }
+                }
+                copy.push_back(std::move(clone));
+            }
+            std::vector<const RS_Entity*> copyRoots;
+            for (const std::unique_ptr<RS_Entity>& entity : copy) {
+                copyRoots.push_back(entity.get());
+            }
+            // against what the earlier copies left, as for splines
+            const LC_OffsetTreeCost cost =
+                measureOffsetOutput(copyRoots, remainingBudget(budget, usage).maxDeepEntities);
+            if (cost.status != LC_OffsetTreeStatus::Ok ||
+                !addUsage(usage, LC_OffsetOutputUsage{0, copy.size(), cost.deepEntities}) ||
+                !withinBudget(usage, budget)) {
+                return LC_OffsetSourceStatus::LimitExceeded;
+            }
+            for (std::unique_ptr<RS_Entity>& entity : copy) {
+                roots.push_back(std::move(entity));
+            }
+            result.copyOutputCounts.push_back(copy.size());
+            ++result.copiesMade;
+        }
+    }
+    if (result.copiesMade == 0) {
+        return LC_OffsetSourceStatus::Vanished;
+    }
+    // the whole provisional set: within the source's limits, and no root
+    // or child shared between copies
+    const LC_OffsetTreeCost all = measureAll();
+    if (all.status != LC_OffsetTreeStatus::Ok || !withinBudget(usage, budget)) {
+        return LC_OffsetSourceStatus::LimitExceeded;
+    }
+    usage.deepEntities = all.deepEntities;
+    return LC_OffsetSourceStatus::Succeeded;
+}
+
+struct LC_OffsetBatchPreparation::Data {
+    struct Row {
+        LC_OffsetSourceOutcome outcome;
+        std::vector<std::unique_ptr<RS_Entity>> roots;
+        std::size_t remaining = 0;
+    };
+    RS_OffsetData data;
+    QList<RS_Entity*> sources;
+    bool preview = false, ready = false, released = false;
+    LC_OffsetBatchLimits limits;
+    std::map<const RS_Entity*, Row> rows;
+    RS_Entity* pending = nullptr;
+    std::size_t remaining = 0;
+    LC_OffsetPreviewCache* pendingCache = nullptr;
+    std::unique_ptr<LC_OffsetWorkerRequest::Request> expected;
+    LC_OffsetBatchOutcome outcome;
+    std::vector<RS_Entity*> finalAdded;
+    QList<RS_Entity*> finalOrder;
+};
+
+LC_OffsetBatchPreparation::LC_OffsetBatchPreparation(const RS_OffsetData& data,
+    const QList<RS_Entity*>& sources, bool preview, const LC_OffsetBatchLimits& limits)
+    : m_data(std::make_unique<Data>()) {
+    if (sources.size() > maximumSources) throw std::length_error("Offset source inventory exceeded");
+    m_data->data = data; m_data->sources = sources; m_data->preview = preview; m_data->limits = limits;
+}
+LC_OffsetBatchPreparation::~LC_OffsetBatchPreparation() = default;
+
+bool LC_OffsetBatchPreparation::advance(LC_DocumentModificationBatch& batch, LC_OffsetPreviewCache* cache) {
+    auto& d = *m_data;
+    if (d.released) throw std::logic_error("Offset staging already published");
+    d.pending = nullptr; d.pendingCache = nullptr; d.expected.reset(); d.ready = false;
+    batch = {};
+    d.outcome = RS_Modification::offsetWithOutcomeImpl(d.data, d.sources, d.preview, d.limits, batch, cache, this);
+    if (d.pending) { batch = {}; return false; }
+    d.finalAdded.assign(batch.entitiesToAdd.begin(), batch.entitiesToAdd.end());
+    d.finalOrder = batch.entitiesToAdd;
+    std::sort(d.finalAdded.begin(), d.finalAdded.end(), std::less<RS_Entity*>{});
+    if (std::adjacent_find(d.finalAdded.begin(), d.finalAdded.end()) != d.finalAdded.end())
+        throw std::logic_error("Offset staging shares an output root");
+    d.ready = true;
+    return true;
+}
+const RS_Entity* LC_OffsetBatchPreparation::pendingSource() const noexcept { return m_data->pending; }
+const LC_OffsetBatchOutcome& LC_OffsetBatchPreparation::outcome() const noexcept { return m_data->outcome; }
+
+std::unique_ptr<LC_OffsetWorkerRequest::Request> LC_OffsetBatchPreparation::request(
+    const LC_OffsetWorkerRequest::Token& token, LC_OffsetPreviewCache* cache) {
+    namespace req = LC_OffsetWorkerRequest;
+    auto& d = *m_data;
+    if (!d.pending || d.released) return {};
+    auto& source = *d.pending;
+    req::Produce op;
+    if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&source)) op.source = ellipse->getData();
+    else if (const auto* native = dynamic_cast<const LC_OffsetCurve*>(&source)) {
+        const auto& raw = native->getData();
+        if (raw.controlPoints.size() > 16384 || raw.knotslist.size() > 32768 || raw.weights.size() > 16384 ||
+            raw.fitPoints.size() > 4096 || raw.savedOpenKnots.size() > 32768) return {};
+        op.source = raw; op.context.nativeSource = true;
+        if (native->hasEditableDefinition()) op.context.nativeDefinition = native->definition();
+    } else return {};
+    auto* parent = source.getParent();
+    op.context.topLevel = parent && parent->isDocument() && !source.isDeleted() && parent->findEntityIndex(&source) >= 0;
+    if (source.getMin().valid) op.minimum = source.getMin();
+    if (source.getMax().valid) op.maximum = source.getMax();
+    op.coordinate = d.data.coord;
+    if (d.data.sideFallback.valid) op.fallback = d.data.sideFallback;
+    op.distance = d.data.distance; op.copies = d.data.obtainNumberOfCopies();
+    op.asOffsetCurve = d.data.asOffsetCurve; op.preview = d.preview; op.limits = d.limits;
+    op.limits.maxDeepEntitiesPerRequest = d.remaining;
+    auto value = std::make_unique<req::Request>(); value->token = token;
+    if (cache) {
+        auto snapshot = cache->snapshot(d.pending);
+        if (!snapshot) return {};
+        value->operation = req::CachedProduce{std::move(op), std::move(*snapshot)};
+    } else value->operation = std::move(op);
+    if (!req::admitted(*value)) return {};
+    d.expected = std::make_unique<req::Request>(*value); d.pendingCache = cache;
+    return value;
+}
+
+bool LC_OffsetBatchPreparation::accept(const LC_OffsetWorkerCompletion& completion) {
+    namespace req = LC_OffsetWorkerRequest;
+    auto& d = *m_data;
+    if (!d.pending || !d.expected || d.released || !completion.isJoined()) return false;
+    if (req::encode(*d.expected) != req::encode(completion.request())) return false;
+    auto prepared = completion.produced(*d.pending);
+    if (!prepared) return false;
+    Data::Row row; row.outcome = std::move(prepared->outcome); row.roots = std::move(prepared->entities);
+    row.outcome.source = d.pending; row.remaining = d.remaining;
+    decltype(d.rows) staged; staged.emplace(d.pending, std::move(row));
+    if (d.pendingCache && !completion.updatePreviewCache(*d.pendingCache, d.pending)) return false;
+    d.rows.insert(staged.extract(staged.begin()));
+    d.pending = nullptr; d.expected.reset(); d.pendingCache = nullptr;
+    return true;
+}
+
+std::vector<std::unique_ptr<RS_Entity>> LC_OffsetBatchPreparation::take() {
+    auto& d = *m_data;
+    if (!d.ready || d.released) throw std::logic_error("Offset batch is not privately ready");
+    std::map<RS_Entity*, std::unique_ptr<RS_Entity>*> owners;
+    for (auto& row : d.rows) for (auto& root : row.second.roots) owners.emplace(root.get(), &root);
+    std::vector<std::unique_ptr<RS_Entity>> result; result.reserve(d.finalOrder.size());
+    for (auto* address : std::as_const(d.finalOrder)) if (!owners.count(address))
+        throw std::logic_error("Offset output owner is missing");
+    for (auto* address : std::as_const(d.finalOrder)) result.push_back(std::move(*owners.at(address)));
+    d.released = true;
+    return result;
+}
+
+void LC_OffsetBatchPreparation::release() noexcept {
+    auto& d = *m_data;
+    if (!d.ready || d.released) return;
+    for (auto& row : d.rows) for (auto& root : row.second.roots)
+        if (std::binary_search(d.finalAdded.begin(), d.finalAdded.end(), root.get(), std::less<RS_Entity*>{})) root.release();
+    d.released = true;
+}
+
 LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& data, const QList<RS_Entity*>& entitiesList,
                                                          const bool forPreviewOnly, const LC_OffsetBatchLimits& limits,
                                                          LC_DocumentModificationBatch& ctx,
                                                          LC_OffsetPreviewCache* const cache) {
+    return offsetWithOutcomeImpl(data, entitiesList, forPreviewOnly, limits, ctx, cache, nullptr);
+}
+
+LC_OffsetBatchOutcome RS_Modification::offsetWithOutcomeImpl(const RS_OffsetData& data, const QList<RS_Entity*>& entitiesList,
+    const bool forPreviewOnly, const LC_OffsetBatchLimits& limits, LC_DocumentModificationBatch& ctx,
+    LC_OffsetPreviewCache* const cache, LC_OffsetBatchPreparation* preparation) {
     LC_OffsetBatchOutcome outcome;
     ctx.setActiveLayer = data.useCurrentLayer;
     ctx.setActivePen = data.useCurrentAttributes;
@@ -1476,206 +2165,6 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
             break;
         }
     }
-
-    // The copies of one source, built in local ownership. A copy with nothing
-    // left, or one that cannot be made, ends the series and the copies before
-    // it are kept; the first copy failing fails the source, and exceeding the
-    // output limits fails it whichever copy does.
-    auto offsetOneSource = [&](RS_Entity& e, const std::size_t requestDeepLeft,
-                               std::vector<std::unique_ptr<RS_Entity>>& roots,
-                               LC_OffsetSourceOutcome& result) -> LC_OffsetSourceStatus {
-        LC_OffsetOutputUsage& usage = result.usage;
-        LC_OffsetSourceBudget budget = limits.perSource;
-        budget.maxDeepEntities = std::min(budget.maxDeepEntities, requestDeepLeft);
-        auto measureAll = [&roots, &budget]() {
-            std::vector<const RS_Entity*> all;
-            for (const std::unique_ptr<RS_Entity>& root : roots) {
-                all.push_back(root.get());
-            }
-            return measureOffsetOutput(all, budget.maxDeepEntities);
-        };
-        // whether a copy that cannot be made ends the series rather than fails the source
-        auto stopsSeries = [&result]() {
-            if (result.copiesMade == 0) {
-                return false;
-            }
-            result.stoppedBy = LC_OffsetSourceStatus::OffsetFailed;
-            return true;
-        };
-
-        // causes known before anything is offset
-        if (e.rtti() == RS2::EntityLine && (e.getEndpoint() - e.getStartpoint()).magnitude() < RS_TOLERANCE) {
-            result.detail = LC_OffsetFailureDetail::ZeroLength;
-            return LC_OffsetSourceStatus::OffsetFailed;
-        }
-        if (const auto* hyperbola = dynamic_cast<const LC_Hyperbola*>(&e);
-            hyperbola != nullptr && hyperbola->isInfinite()) {
-            result.detail = LC_OffsetFailureDetail::Unbounded;
-            return LC_OffsetSourceStatus::OffsetFailed;
-        }
-
-        if (LC_CurveOffset::isSupportedSource(e)) {
-            // The side is resolved once, so no copy can land on another side.
-            const LC_CurveOffsetOptions sideOptions = LC_CurveOffset::makeOffsetOptions(e, std::abs(data.distance));
-            LC_OffsetSideResolution side = LC_CurveOffset::resolveSide(e, data.coord, sideOptions);
-            // a point on the curve, or on the segments it is drawn with, gives no
-            // side the user chose: the fallback point decides, when it can
-            const bool onCurve =
-                side.status == LC_CurveOffsetStatus::AmbiguousSide ||
-                (side.status == LC_CurveOffsetStatus::Ok && side.distance <= drawnCurveTolerance(e, data.coord));
-            if (onCurve && data.sideFallback.valid) {
-                const LC_OffsetSideResolution fallback = LC_CurveOffset::resolveSide(e, data.sideFallback, sideOptions);
-                if (fallback.status == LC_CurveOffsetStatus::Ok) {
-                    side = fallback;
-                }
-            }
-            if (side.status != LC_CurveOffsetStatus::Ok) {
-                result.engineStatus = side.status;
-                return engineFailure(side.status);
-            }
-            for (int num = 1; num <= numberOfCopies; ++num) {
-                const LC_OffsetSourceBudget left = remainingBudget(budget, usage);
-                if (!isValidOffsetBudget(left)) {
-                    return LC_OffsetSourceStatus::LimitExceeded;
-                }
-                const double magnitude = std::abs(num * data.distance);
-                LC_CurveOffsetMaterializationResult copy;
-                if (cache == nullptr || !cache->find(&e, side.side, magnitude, left, copy)) {
-                    LC_CurveOffsetOptions options = LC_CurveOffset::makeOffsetOptions(e, magnitude);
-                    if (limits.maxSamples > 0) {
-                        options.maxSamples = std::min(options.maxSamples, limits.maxSamples);
-                    }
-                    if (limits.maxIntersectionPairs > 0) {
-                        options.maxIntersectionPairs = std::min(options.maxIntersectionPairs, limits.maxIntersectionPairs);
-                    }
-                    copy = LC_CurveOffset::createEntities(e, LC_CurveOffset::makeSideRequest(side.side, magnitude),
-                                                          options, left);
-                    if (cache != nullptr) {
-                        cache->keep(&e, side.side, magnitude, left, copy);
-                    }
-                }
-                if (copy.status != LC_CurveOffsetStatus::Ok) {
-                    result.engineStatus = copy.status;
-                    if (copy.status != LC_CurveOffsetStatus::LimitExceeded && stopsSeries()) {
-                        break;
-                    }
-                    return engineFailure(copy.status);
-                }
-                if (copy.entities.empty()) {
-                    result.stoppedBy = LC_OffsetSourceStatus::Vanished;
-                    break; // trimmed away entirely, as it is at any larger distance on this side
-                }
-                if (!addUsage(usage, copy.usage)) {
-                    return LC_OffsetSourceStatus::LimitExceeded;
-                }
-                for (std::unique_ptr<RS_Entity>& entity : copy.entities) {
-                    roots.push_back(std::move(entity));
-                }
-                ++result.copiesMade;
-            }
-        }
-        else {
-            // RS_Polyline::offset() moves lines and arcs only: an elliptic
-            // segment would stay where it is, between offset neighbours.
-            const auto* const polyline = e.rtti() == RS2::EntityPolyline ? static_cast<const RS_Polyline*>(&e) : nullptr;
-            if (polyline != nullptr && hasEllipticSegment(*polyline)) {
-                result.detail = LC_OffsetFailureDetail::EllipticSegments;
-                return LC_OffsetSourceStatus::OffsetFailed;
-            }
-            // A point on the entity gives no side the user chose, and each
-            // type would settle it its own way (a line to the left, a circle
-            // inwards): the second click decides, and without one, nothing.
-            RS_Vector coord = data.coord;
-            if (sideIsAmbiguous(e, coord)) {
-                if (!data.sideFallback.valid || sideIsAmbiguous(e, data.sideFallback)) {
-                    result.engineStatus = LC_CurveOffsetStatus::AmbiguousSide;
-                    result.detail = LC_OffsetFailureDetail::AmbiguousSide;
-                    return LC_OffsetSourceStatus::OffsetFailed;
-                }
-                coord = data.sideFallback;
-            }
-            // Inwards, a circle or an arc has nothing left once its radius is
-            // within the band every exact offset vanishes in, relative to its size.
-            const bool circular = e.rtti() == RS2::EntityCircle || e.rtti() == RS2::EntityArc;
-            const bool inwards = circular && coord.distanceTo(e.getCenter()) < e.getRadius();
-            const double extent = e.getMin().valid && e.getMax().valid ? e.getMin().distanceTo(e.getMax()) : 0.0;
-            for (int num = 1; num <= numberOfCopies; ++num) {
-                if (!isValidOffsetBudget(remainingBudget(budget, usage))) {
-                    return LC_OffsetSourceStatus::LimitExceeded;
-                }
-                const double magnitude = std::abs(num * data.distance);
-                if (inwards && e.getRadius() - magnitude <= kOffsetVanishBand * std::max(extent, magnitude)) {
-                    result.stoppedBy = LC_OffsetSourceStatus::Vanished;
-                    break; // as it is at any larger distance inwards
-                }
-                std::vector<std::unique_ptr<RS_Entity>> copy;
-                // First try the type-changing path (e.g. ellipse → spline).
-                for (RS_Entity* off : e.createOffset(coord, magnitude)) {
-                    copy.emplace_back(off);
-                }
-                if (copy.empty()) {
-                    // Fall back to the in-place clone+offset path.
-                    std::unique_ptr<RS_Entity> clone{getClone(forPreviewOnly, &e)};
-                    if (!clone->offset(coord, magnitude)) {
-                        if (e.rtti() == RS2::EntityCircle || e.rtti() == RS2::EntityArc) {
-                            result.stoppedBy = LC_OffsetSourceStatus::Vanished;
-                            break; // the radius would vanish, as it does at any larger distance inwards
-                        }
-                        if (stopsSeries()) {
-                            break;
-                        }
-                        return LC_OffsetSourceStatus::OffsetFailed;
-                    }
-                    if (polyline != nullptr) {
-                        // RS_Polyline::offset() joins neighbouring offsets and
-                        // never trims a loop, and it always reports success:
-                        // what it made is used only if it is a trimmed offset
-                        const LC_OffsetCheckReport check =
-                            checkLegacyPolylineOffset(*polyline, static_cast<const RS_Polyline&>(*clone), magnitude);
-                        if (check.verdict == LC_OffsetCheckVerdict::NothingLeft) {
-                            result.stoppedBy = LC_OffsetSourceStatus::Vanished;
-                            break; // shrunk past its size, as it is at any larger distance
-                        }
-                        if (check.verdict == LC_OffsetCheckVerdict::Invalid) {
-                            result.detail = LC_OffsetFailureDetail::PolylineNotTrimmed;
-                            if (stopsSeries()) {
-                                break;
-                            }
-                            return LC_OffsetSourceStatus::OffsetFailed;
-                        }
-                    }
-                    copy.push_back(std::move(clone));
-                }
-                std::vector<const RS_Entity*> copyRoots;
-                for (const std::unique_ptr<RS_Entity>& entity : copy) {
-                    copyRoots.push_back(entity.get());
-                }
-                // against what the earlier copies left, as for splines
-                const LC_OffsetTreeCost cost =
-                    measureOffsetOutput(copyRoots, remainingBudget(budget, usage).maxDeepEntities);
-                if (cost.status != LC_OffsetTreeStatus::Ok ||
-                    !addUsage(usage, LC_OffsetOutputUsage{0, copy.size(), cost.deepEntities}) ||
-                    !withinBudget(usage, budget)) {
-                    return LC_OffsetSourceStatus::LimitExceeded;
-                }
-                for (std::unique_ptr<RS_Entity>& entity : copy) {
-                    roots.push_back(std::move(entity));
-                }
-                ++result.copiesMade;
-            }
-        }
-        if (result.copiesMade == 0) {
-            return LC_OffsetSourceStatus::Vanished;
-        }
-        // the whole provisional set: within the source's limits, and no root
-        // or child shared between copies
-        const LC_OffsetTreeCost all = measureAll();
-        if (all.status != LC_OffsetTreeStatus::Ok || !withinBudget(usage, budget)) {
-            return LC_OffsetSourceStatus::LimitExceeded;
-        }
-        usage.deepEntities = all.deepEntities;
-        return LC_OffsetSourceStatus::Succeeded;
-    };
 
     // Selected segments of a polyline: each run of consecutive ones is offset
     // once, as a chain; its other segments report the same outcome. A
@@ -1717,6 +2206,7 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
         result.source = e;
         result.copiesRequested = numberOfCopies;
         std::vector<std::unique_ptr<RS_Entity>> roots;
+        auto* ownedRoots = &roots;
         if (e == nullptr) {
             result.status = LC_OffsetSourceStatus::InvalidSource;
         }
@@ -1738,21 +2228,40 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
             result.status = LC_OffsetSourceStatus::LimitExceeded; // not evaluated
         }
         else {
-            result.status = offsetOneSource(*target, requestDeepLeft, roots, result);
+            auto* staged = preparation ? preparation->m_data.get() : nullptr;
+            const auto stored = staged ? staged->rows.find(e) : decltype(staged->rows)::iterator{};
+            if (staged && stored != staged->rows.end()) {
+                if (stored->second.remaining != requestDeepLeft) throw std::logic_error("Offset source allowance changed");
+                result = stored->second.outcome; ownedRoots = &stored->second.roots;
+            } else if (staged && (dynamic_cast<const RS_Ellipse*>(target) || dynamic_cast<const LC_OffsetCurve*>(target))) {
+                staged->pending = e; staged->remaining = requestDeepLeft;
+                return outcome; // Owned numeric prefixes remain staged, never published or recomputed.
+            } else result.status = prepareOffsetSourceImpl(data, *target, forPreviewOnly, limits, requestDeepLeft,
+                roots, result, cache, nullptr, numberOfCopies);
             if (!result.succeeded()) {
                 result.copiesMade = 0; // none is handed over
+                result.copyOutputCounts.clear();
+                result.copiesKeptPlain = 0; result.keptPlain.clear();
+                result.usage = {}; // committed output only; attempted work stays separate
+            }
+            if (staged && stored == staged->rows.end()) {
+                LC_OffsetBatchPreparation::Data::Row row;
+                row.outcome = result; row.roots = std::move(roots); row.remaining = requestDeepLeft;
+                const auto added = staged->rows.emplace(e, std::move(row));
+                ownedRoots = &added.first->second.roots;
             }
         }
         if (result.succeeded()) {
             // only a source that succeeded is handed over, and only then debits the request
             requestDeepLeft -= std::min(requestDeepLeft, result.usage.deepEntities);
-            for (std::unique_ptr<RS_Entity>& root : roots) {
+            for (std::unique_ptr<RS_Entity>& root : *ownedRoots) {
                 //highlight is used by trim actions. do not carry over flag
                 root->setHighlighted(false);
                 result.createdEntities.append(root.get());
-                ctx += root.release();
+                ctx += preparation ? root.get() : root.release();
             }
-            if (result.complete() && segmentRun == nullptr) {
+            if (result.complete() && segmentRun == nullptr &&
+                (!e->getParent() || (e->getParent()->isDocument() && e->getParent()->findEntityIndex(e) >= 0))) {
                 offsetOriginals.append(e); // a source short of copies is kept
                 result.sourceRemoved = !data.keepOriginals && !forPreviewOnly;
             }
@@ -1795,11 +2304,8 @@ bool RS_Modification::rotate(const RS_RotateData& data, const QList<RS_Entity*>&
     QList<RS_Entity*> transformedOriginals = entitiesList;
     for (const auto e : entitiesList) {
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* clone = getClone(forPreviewOnly, e);
-
             const double rotationAngle = data.angle * num;
-            clone->rotate(data.center, rotationAngle);
-            bool accepted = acceptedInsertSourceEdit(*clone);
+            offsetTx::Steps steps{offsetTx::Step::rotate(data.center, rotationAngle)};
 
             bool rotateTwice = data.twoRotations;
             const double distance = data.refPoint.distanceTo(data.center);
@@ -1815,10 +2321,10 @@ bool RS_Modification::rotate(const RS_RotateData& data, const QList<RS_Entity*>&
                 if (data.secondAngleIsAbsolute) {
                     secondRotationAngle -= rotationAngle;
                 }
-                clone->rotate(rotatedRefPoint, secondRotationAngle);
-                accepted = accepted && acceptedInsertSourceEdit(*clone);
+                steps.append(offsetTx::Step::rotate(rotatedRefPoint, secondRotationAngle));
             }
-            if (!accepted) {
+            RS_Entity* clone = getTransformedClone(forPreviewOnly, e, steps);
+            if (!clone) {
                 transformedOriginals.removeAll(e);
                 delete clone;
                 continue;
@@ -1879,9 +2385,10 @@ bool RS_Modification::scale(const RS_ScaleData& data, const QList<RS_Entity*>& e
     for (const RS_Entity* e : entitiesToScale) {
         if (e != nullptr) {
             for (int num = 1; num <= numberOfCopies; num++) {
-                RS_Entity* clone = getClone(forPreviewOnly, e);
-                clone->scale(data.referencePoint, RS_Math::pow(data.factor, num));
-                if (!acceptedInsertSourceEdit(*clone)) {
+                const auto factor = RS_Math::pow(data.factor, num);
+                RS_Entity* clone = getTransformedClone(forPreviewOnly, e,
+                    {offsetTx::Step::scale(data.referencePoint, factor)}, std::abs(factor.x) != std::abs(factor.y));
+                if (!clone || !acceptedInsertSourceEdit(*clone)) {
                     transformedOriginals.removeAll(const_cast<RS_Entity*>(e));
                     delete clone;
                     continue;
@@ -1918,9 +2425,9 @@ bool RS_Modification::mirror(const RS_MirrorData& data, const QList<RS_Entity*>&
     // Create new entities
     for (const auto e : entitiesList) {
         for (int num = 1; num <= numberOfCopies; ++num) {
-            RS_Entity* clone = getClone(forPreviewOnly, e);
-            clone->mirror(data.axisPoint1, data.axisPoint2);
-            if (!acceptedInsertSourceEdit(*clone)) {
+            RS_Entity* clone = getTransformedClone(forPreviewOnly, e,
+                {offsetTx::Step::mirror(data.axisPoint1, data.axisPoint2)});
+            if (!clone || !acceptedInsertSourceEdit(*clone)) {
                 transformedOriginals.removeAll(e);
                 delete clone;
                 continue;
@@ -1942,28 +2449,26 @@ bool RS_Modification::mirror(const RS_MirrorData& data, const QList<RS_Entity*>&
 bool RS_Modification::rotate2(const RS_Rotate2Data& data, const QList<RS_Entity*>& entitiesList, const bool forPreviewOnly,
                               LC_DocumentModificationBatch& ctx) {
     const int numberOfCopies = data.obtainNumberOfCopies();
+    QList<RS_Entity*> transformedOriginals = entitiesList;
 
     // Create new entities
     for (const auto e : entitiesList) {
         for (int num = 1; num <= numberOfCopies; num++) {
-            RS_Entity* clone = getClone(forPreviewOnly, e);
-
             const double angle1ForCopy = /*data.sameAngle1ForCopies ?  data.angle1 :*/ data.angle1 * num;
             const double angle2ForCopy = data.sameAngle2ForCopies ? data.angle2 : data.angle2 * num;
-            clone->rotate(data.center1, angle1ForCopy);
-
             RS_Vector center2 = data.center2;
             center2.rotate(data.center1, angle1ForCopy);
-            clone->rotate(center2, angle2ForCopy);
-
+            RS_Entity* clone = getTransformedClone(forPreviewOnly, e,
+                {offsetTx::Step::rotate(data.center1, angle1ForCopy), offsetTx::Step::rotate(center2, angle2ForCopy)});
+            if (!clone) { transformedOriginals.removeAll(e); continue; }
             ctx += clone;
         }
     }
 
     if (!data.keepOriginals) {
-        ctx -= entitiesList;
+        ctx -= transformedOriginals;
     }
-    return true;
+    return !transformedOriginals.isEmpty();
 }
 
 /**
@@ -1972,25 +2477,24 @@ bool RS_Modification::rotate2(const RS_Rotate2Data& data, const QList<RS_Entity*
 bool RS_Modification::moveRotate(const RS_MoveRotateData& data, const QList<RS_Entity*>& entitiesList, const bool forPreviewOnly,
                                  LC_DocumentModificationBatch& ctx) {
     const int numberOfCopies = data.obtainNumberOfCopies();
+    QList<RS_Entity*> transformedOriginals = entitiesList;
 
     // Create new entities
     for (const auto entity : entitiesList) {
         for (int num = 1; num <= numberOfCopies; ++num) {
-            RS_Entity* clone = getClone(forPreviewOnly, entity);
-
             const RS_Vector& offset = data.offset * num;
-            clone->move(offset);
             const double angleForCopy = data.sameAngleForCopies ? data.angle : data.angle * num;
-            clone->rotate(data.referencePoint + offset, angleForCopy);
-
+            RS_Entity* clone = getTransformedClone(forPreviewOnly, entity,
+                {offsetTx::Step::move(offset), offsetTx::Step::rotate(data.referencePoint + offset, angleForCopy)});
+            if (!clone) { transformedOriginals.removeAll(entity); continue; }
             ctx += clone;
         }
     }
 
     if (!data.keepOriginals) {
-        ctx -= entitiesList;
+        ctx -= transformedOriginals;
     }
-    return true;
+    return !transformedOriginals.isEmpty();
 }
 
 /**
@@ -2010,6 +2514,7 @@ bool RS_Modification::moveRotate(const RS_MoveRotateData& data, const QList<RS_E
 LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity, const RS_Vector& limitCoord,
                                     RS_Entity* limitEntity, const bool both, LC_DocumentModificationBatch& ctx) {
     Q_ASSERT(trimEntity != nullptr && limitEntity != nullptr);
+    if (both && (limitEntity->rtti() == RS2::EntityOffsetCurve || isNativeCacheChild(*limitEntity))) return {};
 
     // A container limit entity can still bound a one-sided trim, but it must never
     // be cast to RS_AtomicEntity: trimStartpoint(), trimEndpoint() and getTrimPoint()
@@ -2119,6 +2624,600 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord, RS_AtomicEntity*
     return result;
 }
 
+namespace {
+namespace storedTrim = LC_OffsetCacheTrim;
+namespace trimRequest = LC_OffsetWorkerRequest;
+
+storedTrim::Limits lowerStoredTrimLimits(storedTrim::Limits remaining) noexcept {
+    const storedTrim::Limits hard;
+#define LC_TRIM_LOWER(f) remaining.f = std::min(remaining.f, hard.f)
+    LC_TRIM_LOWER(maxSpansPerCurve); LC_TRIM_LOWER(maxInputSpans); LC_TRIM_LOWER(maxInputRecords);
+    LC_TRIM_LOWER(maxBoxPairs); LC_TRIM_LOWER(maxLeaves); LC_TRIM_LOWER(maxGeneratedItems);
+    LC_TRIM_LOWER(maxOrderingComparisons); LC_TRIM_LOWER(maxRoots); LC_TRIM_LOWER(maxDepth);
+    LC_TRIM_LOWER(maxLeafDepth); LC_TRIM_LOWER(maxFragments); LC_TRIM_LOWER(maxOutputSpans);
+    LC_TRIM_LOWER(maxOutputControls); LC_TRIM_LOWER(maxOutputKnots);
+#undef LC_TRIM_LOWER
+    return remaining;
+}
+
+bool debitStoredTrimWork(storedTrim::Limits& remaining, storedTrim::Work& total,
+                         const storedTrim::Work& work) noexcept {
+#define LC_TRIM_DEBIT(f, amount) if ((amount) > remaining.f) return false; remaining.f -= (amount)
+    LC_TRIM_DEBIT(maxInputSpans, work.inputSpans); LC_TRIM_DEBIT(maxInputRecords, work.inputRecords);
+    LC_TRIM_DEBIT(maxRoots, work.rootRecords); LC_TRIM_DEBIT(maxBoxPairs, work.intersections.totalBoxPairs);
+    LC_TRIM_DEBIT(maxLeaves, work.intersections.generatedLeaves);
+    LC_TRIM_DEBIT(maxGeneratedItems, work.kernelItems + work.intersections.generatedItems);
+    LC_TRIM_DEBIT(maxOrderingComparisons, work.kernelComparisons + work.intersections.orderingComparisons);
+    LC_TRIM_DEBIT(maxOutputSpans, work.outputSpans); LC_TRIM_DEBIT(maxOutputControls, work.outputControls);
+    LC_TRIM_DEBIT(maxOutputKnots, work.outputKnots);
+#undef LC_TRIM_DEBIT
+#define LC_TRIM_SUM(f) total.f += work.f
+    LC_TRIM_SUM(inputSpans); LC_TRIM_SUM(inputRecords); LC_TRIM_SUM(rootRecords); LC_TRIM_SUM(kernelItems);
+    LC_TRIM_SUM(kernelComparisons); LC_TRIM_SUM(outputSpans); LC_TRIM_SUM(outputControls); LC_TRIM_SUM(outputKnots);
+#undef LC_TRIM_SUM
+    auto& s = total.intersections; const auto& d = work.intersections;
+#define LC_TRIM_SUM(f) s.f += d.f
+    LC_TRIM_SUM(candidateBoxPairs); LC_TRIM_SUM(refinementBoxPairs); LC_TRIM_SUM(certificateBoxPairs);
+    LC_TRIM_SUM(totalBoxPairs); LC_TRIM_SUM(generatedLeaves); LC_TRIM_SUM(generatedItems);
+    LC_TRIM_SUM(orderingComparisons); LC_TRIM_SUM(validationSegmentVisits); LC_TRIM_SUM(validationNextCalls);
+#undef LC_TRIM_SUM
+#define LC_TRIM_MAX(f) s.f = std::max(s.f, d.f)
+    LC_TRIM_MAX(deepestPreparation); LC_TRIM_MAX(deepestPairRefinement);
+    LC_TRIM_MAX(deepestOrderingRefinement); LC_TRIM_MAX(deepestRootRefinement);
+#undef LC_TRIM_MAX
+    return true;
+}
+
+bool sameStoredTrimLimits(const storedTrim::Limits& a, const storedTrim::Limits& b) noexcept {
+#define LC_TRIM_FIELDS(v) std::tie(v.maxSpansPerCurve, v.maxInputSpans, v.maxInputRecords, \
+    v.maxBoxPairs, v.maxLeaves, v.maxGeneratedItems, v.maxOrderingComparisons, v.maxRoots, \
+    v.maxDepth, v.maxLeafDepth, v.maxFragments, v.maxOutputSpans, v.maxOutputControls, v.maxOutputKnots)
+    return LC_TRIM_FIELDS(a) == LC_TRIM_FIELDS(b);
+#undef LC_TRIM_FIELDS
+}
+
+const storedTrim::Result* storedTrimPayload(const LC_OffsetWorkerCompletion& completion) noexcept {
+    if (!completion.isJoined()) return nullptr;
+    const auto& request = completion.request(); const auto& reply = completion.reply();
+    const auto& a = request.token; const auto& b = reply.token;
+    if ((request.operation.index() != 2 && request.operation.index() != 3) ||
+        reply.operation != request.operation.index() || reply.failure != LC_OffsetWorkerResult::Failure::None ||
+        std::tie(a.requestId, a.generation, a.sourceRevision, a.undoEpoch) !=
+            std::tie(b.requestId, b.generation, b.sourceRevision, b.undoEpoch)) return nullptr;
+    return std::get_if<storedTrim::Result>(&reply.result);
+}
+
+bool sameStoredTrimValue(const std::optional<QCborArray>& a, const std::optional<QCborArray>& b) {
+    // Compare the complete admitted typed value, including latent fields and
+    // signed zero, rather than a lossy geometry fingerprint or CBOR numeric equality.
+    return a && b && QCborValue(*a).toCbor() == QCborValue(*b).toCbor();
+}
+
+std::optional<trimRequest::Cutter> storedTrimCutter(const RS_Entity& source) {
+    if (const auto* line = dynamic_cast<const RS_Line*>(&source))
+        return trimRequest::Cutter{trimRequest::Segment{line->getStartpoint(), line->getEndpoint()}};
+    if (const auto* arc = dynamic_cast<const RS_Arc*>(&source)) return trimRequest::Cutter{arc->getData()};
+    if (const auto* circle = dynamic_cast<const RS_Circle*>(&source)) return trimRequest::Cutter{circle->getData()};
+    if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&source)) return trimRequest::Cutter{ellipse->getData()};
+    if (const auto* spline = dynamic_cast<const RS_Spline*>(&source)) {
+        // The one-sided ordinary limit was not replacement-admitted. Bound its
+        // raw arrays before copying, just as the kernel does on the sync path.
+        if (!trimRequest::Values::encodeCache(spline->getData())) return std::nullopt;
+        return trimRequest::Cutter{spline->getData()};
+    }
+    return std::nullopt;
+}
+
+const storedTrim::Result* matchedStoredTrim(const trimRequest::Request& retained,
+                                            const LC_OffsetWorkerCompletion& completion) {
+    const auto* result = storedTrimPayload(completion);
+    if (!result || retained.operation.index() != completion.request().operation.index() ||
+        !sameStoredTrimValue(trimRequest::encode(retained), trimRequest::encode(completion.request()))) return nullptr;
+    return result;
+}
+
+std::optional<storedTrim::Result> consumeStoredTrimCache(const trimRequest::Request& retained,
+    const LC_OffsetWorkerCompletion& completion, const RS_SplineData& cache, const RS_Entity& cutter,
+    const storedTrim::Pick& pick, const storedTrim::Limits& remaining) {
+    const auto* result = matchedStoredTrim(retained, completion);
+    const auto* request = std::get_if<trimRequest::TrimCache>(&completion.request().operation);
+    if (!result || !request || !sameStoredTrimLimits(request->limits, remaining) ||
+        !sameStoredTrimValue(trimRequest::Values::encodeCache(cache),
+            trimRequest::Values::encodeCache(request->cache)) ||
+        !sameStoredTrimValue(trimRequest::Values::encodePick(pick),
+            trimRequest::Values::encodePick(request->pick))) return std::nullopt;
+    const auto value = storedTrimCutter(cutter);
+    if (!value || !sameStoredTrimValue(trimRequest::Values::encodeCutter(*value),
+        trimRequest::Values::encodeCutter(request->cutter))) return std::nullopt;
+    return *result;
+}
+
+std::optional<storedTrim::Result> consumeStoredTrimConic(const trimRequest::Request& retained,
+    const LC_OffsetWorkerCompletion& completion, const RS_SplineData& cache, const RS_Entity& conic,
+    const storedTrim::Pick& conicPick, const std::optional<storedTrim::Pick>& cachePick,
+    const storedTrim::Limits& remaining) {
+    const auto* result = matchedStoredTrim(retained, completion);
+    const auto* request = std::get_if<trimRequest::TrimConic>(&completion.request().operation);
+    if (!result || !request || !sameStoredTrimLimits(request->limits, remaining) ||
+        !sameStoredTrimValue(trimRequest::Values::encodeCache(cache),
+            trimRequest::Values::encodeCache(request->cache)) ||
+        !sameStoredTrimValue(trimRequest::Values::encodePick(conicPick),
+            trimRequest::Values::encodePick(request->conicPick)) ||
+        cachePick.has_value() != request->cachePick.has_value() ||
+        (cachePick && !sameStoredTrimValue(trimRequest::Values::encodePick(*cachePick),
+            trimRequest::Values::encodePick(*request->cachePick)))) return std::nullopt;
+    const auto value = storedTrimCutter(conic);
+    if (!value || !sameStoredTrimValue(trimRequest::Values::encodeCutter(*value),
+        trimRequest::Values::encodeCutter(request->conic))) return std::nullopt;
+    return *result;
+}
+} // namespace
+
+std::optional<LC_OffsetCacheTrim::Limits> RS_Modification::storedCacheTrimRemainingLimits(
+    const LC_OffsetCacheTrim::Limits& limits, const LC_OffsetWorkerCompletion* previous) noexcept {
+    auto remaining = lowerStoredTrimLimits(limits);
+    if (!previous) return remaining;
+    const auto* request = std::get_if<trimRequest::TrimCache>(&previous->request().operation);
+    const auto* result = storedTrimPayload(*previous);
+    if (!request || !result || result->refusal != storedTrim::Refusal::None ||
+        !sameStoredTrimLimits(request->limits, remaining)) return std::nullopt;
+    storedTrim::Work ignored;
+    if (!debitStoredTrimWork(remaining, ignored, result->work)) return std::nullopt;
+    return remaining;
+}
+
+std::unique_ptr<trimRequest::Request> RS_Modification::storedCacheTrimRequest(
+    const RS_Entity& target, const RS_Vector& targetPick, const RS_Entity& cutter,
+    const RS_Vector& cutterPick, bool both, const trimRequest::Token& token,
+    const storedTrim::Limits& limits, const trimRequest::Request* previousRequest,
+    const LC_OffsetWorkerCompletion* previous) {
+    if (&target == &cutter || bool(previousRequest) != bool(previous)) return {};
+    const auto* nativeA = dynamic_cast<const LC_OffsetCurve*>(&target);
+    const auto* nativeB = dynamic_cast<const LC_OffsetCurve*>(&cutter);
+    if (!nativeA && !nativeB) return {};
+    const auto isConic = [](const RS_Entity& e) {
+        return dynamic_cast<const RS_Circle*>(&e) || dynamic_cast<const RS_Arc*>(&e) ||
+            dynamic_cast<const RS_Ellipse*>(&e);
+    };
+    const bool conicReplacement = isConic(target) || (both && isConic(cutter));
+    auto remaining = storedCacheTrimRemainingLimits(limits);
+    if (!remaining) return {};
+    if (previous) {
+        if (!both || conicReplacement) return {};
+        auto first = storedCacheTrimRequest(target, targetPick, cutter, cutterPick, both,
+            previousRequest->token, limits);
+        if (!first || !matchedStoredTrim(*first, *previous) ||
+            !sameStoredTrimValue(trimRequest::encode(*first), trimRequest::encode(*previousRequest))) return {};
+        const auto& prior = previousRequest->token;
+        if (token.requestId <= prior.requestId ||
+            std::tie(token.generation, token.sourceRevision, token.undoEpoch) !=
+                std::tie(prior.generation, prior.sourceRevision, prior.undoEpoch)) return {};
+        remaining = storedCacheTrimRemainingLimits(limits, previous);
+        if (!remaining) return {};
+    }
+    auto request = std::make_unique<trimRequest::Request>(); request->token = token;
+    if (conicReplacement) {
+        const bool targetConic = isConic(target);
+        const auto* native = targetConic ? nativeB : nativeA;
+        if (!native || !trimRequest::Values::encodeCache(native->getData())) return {};
+        const auto conicValue = storedTrimCutter(targetConic ? target : cutter);
+        if (!conicValue) return {};
+        std::optional<storedTrim::Pick> cachePick;
+        if (both) cachePick = storedTrim::Pick{targetConic ? cutterPick : targetPick};
+        request->operation = trimRequest::TrimConic{native->getData(), *conicValue,
+            {targetConic ? targetPick : cutterPick}, cachePick, *remaining};
+    } else {
+        const auto& source = previous ? cutter : target;
+        const auto& limit = previous ? target : cutter;
+        RS_SplineData cache{1, false};
+        if (const auto* spline = dynamic_cast<const RS_Spline*>(&source)) {
+            if (!trimRequest::Values::encodeCache(spline->getData())) return {};
+            cache = spline->getData();
+        } else if (const auto* line = dynamic_cast<const RS_Line*>(&source)) {
+            const auto data = line->RS_Line::getData();
+            cache.controlPoints = {data.startpoint, data.endpoint};
+            cache.knotslist = {0, 0, 1, 1}; cache.weights = {1, 1};
+        } else return {};
+        const auto value = storedTrimCutter(limit); if (!value) return {};
+        request->operation = trimRequest::TrimCache{std::move(cache), *value,
+            {previous ? cutterPick : targetPick}, *remaining};
+    }
+    return trimRequest::admitted(*request) ? std::move(request) : nullptr;
+}
+
+struct LC_StoredCacheTrimPreparation::Data {
+    const RS_Entity& target;
+    RS_Vector targetPick;
+    const RS_Entity& cutter;
+    RS_Vector cutterPick;
+    bool both, finished = false;
+    storedTrim::Limits limits;
+    std::unique_ptr<trimRequest::Request> firstRequest, secondRequest, pending;
+    std::unique_ptr<LC_OffsetWorkerCompletion> first, second;
+};
+
+LC_StoredCacheTrimPreparation::LC_StoredCacheTrimPreparation(const RS_Entity& target,
+    const RS_Vector& targetPick, const RS_Entity& cutter, const RS_Vector& cutterPick,
+    bool both, const storedTrim::Limits& limits)
+    : m_data(std::make_unique<Data>(Data{target, targetPick, cutter, cutterPick, both, false, limits})) {}
+LC_StoredCacheTrimPreparation::~LC_StoredCacheTrimPreparation() = default;
+
+std::unique_ptr<trimRequest::Request> LC_StoredCacheTrimPreparation::request(const trimRequest::Token& token) {
+    auto& d = *m_data;
+    if (d.finished || d.pending) return {};
+    auto value = RS_Modification::storedCacheTrimRequest(d.target, d.targetPick, d.cutter, d.cutterPick,
+        d.both, token, d.limits, d.firstRequest.get(), d.first.get());
+    if (!value) return {};
+    d.pending = std::make_unique<trimRequest::Request>(*value);
+    return value;
+}
+
+bool LC_StoredCacheTrimPreparation::accept(std::unique_ptr<LC_OffsetWorkerCompletion> completion) {
+    auto& d = *m_data;
+    if (d.finished || !d.pending || !completion) return false;
+    const auto* result = matchedStoredTrim(*d.pending, *completion);
+    if (!result) return false;
+    if (!d.first) {
+        d.firstRequest = std::move(d.pending); d.first = std::move(completion);
+        // A refusal is final and is consumed as such; it cannot grant a second
+        // job. A conic pair is already a single complete op3 query.
+        d.finished = result->refusal != storedTrim::Refusal::None || !d.both ||
+            std::holds_alternative<trimRequest::TrimConic>(d.firstRequest->operation);
+    } else {
+        d.secondRequest = std::move(d.pending); d.second = std::move(completion); d.finished = true;
+    }
+    return true;
+}
+
+bool LC_StoredCacheTrimPreparation::ready() const noexcept { return m_data->finished; }
+std::optional<LC_StoredCacheTrimCompletions> LC_StoredCacheTrimPreparation::completions(
+    std::uint64_t publicationUndoEpoch) const {
+    const auto& d = *m_data;
+    if (!d.finished || !d.first || !d.firstRequest) return std::nullopt;
+    return LC_StoredCacheTrimCompletions{*d.firstRequest, *d.first,
+        d.secondRequest.get(), d.second.get(), publicationUndoEpoch};
+}
+
+LC_TrimResult RS_Modification::trimStoredCache(RS_Document& document, RS_Entity& target,
+    const RS_Vector& targetPick, RS_Entity& cutter, const RS_Vector& cutterPick, const bool both,
+    LC_DocumentModificationBatch& ctx, const LC_StoredCacheTrimOptions& options) {
+    return trimStoredCacheImpl(document, target, targetPick, cutter, cutterPick, both, ctx, options, nullptr);
+}
+
+LC_TrimResult RS_Modification::trimStoredCachePrepared(RS_Document& document, RS_Entity& target,
+    const RS_Vector& targetPick, RS_Entity& cutter, const RS_Vector& cutterPick, const bool both,
+    LC_DocumentModificationBatch& ctx, const LC_StoredCacheTrimCompletions& completed,
+    const LC_StoredCacheTrimOptions& options) {
+    return trimStoredCacheImpl(document, target, targetPick, cutter, cutterPick, both, ctx, options, &completed);
+}
+
+LC_TrimResult RS_Modification::trimStoredCacheImpl(RS_Document& document, RS_Entity& target,
+    const RS_Vector& targetPick, RS_Entity& cutter, const RS_Vector& cutterPick, const bool both,
+    LC_DocumentModificationBatch& ctx, const LC_StoredCacheTrimOptions& options,
+    const LC_StoredCacheTrimCompletions* completed) {
+    namespace trim = LC_OffsetCacheTrim;
+    LC_TrimResult result;
+    result.cacheRefusal = trim::Refusal::InvalidInput;
+    result.intersection1 = result.intersection2 = RS_Vector{false};
+    const auto admittedUndoEpoch = document.undoStateEpoch();
+    const auto checkCancel = [&] {
+        return options.cancellation.requested && options.cancellation.requested->load(std::memory_order_relaxed);
+    };
+    const auto refuse = [&](trim::Refusal reason) {
+        // A late refusal must not expose pointers into privately owned outputs.
+        result.trimmed1 = result.trimmed2 = nullptr;
+        result.intersection1 = result.intersection2 = RS_Vector{false};
+        result.nativeDemotions = 0;
+        result.result = false; result.cacheRefusal = reason; return result;
+    };
+    constexpr std::size_t memberCap = std::size_t{1} << 20;
+    const auto outputCap = std::min<std::size_t>(options.maxOutputEntities, 4);
+    const auto displayCap = std::min(options.maxDisplayEntities, kDefaultOffsetDeepEntitiesPerSource);
+    // Membership is checked by POINTER before dereferencing a replacement
+    // source. No countDeep(), recursive findEntity(), native clone or C call.
+    const auto member = [&](const RS_Entity* source) {
+        return document.size() <= memberCap && document.isOwner() &&
+            std::find(document.begin(), document.end(), source) != document.end() &&
+            source->getParent() == &document && !source->isDeleted() && source->isVisible();
+    };
+    const auto live = [&](const RS_Entity* source) { return member(source) && !source->isLocked(); };
+    const auto nativeReady = [&](const LC_OffsetCurve& source) {
+        if (!source.isOwner() || source.size() > kDefaultOffsetDeepEntitiesPerSource || !source.hasEditableDefinition()) return false;
+        for (const auto* child : source) {
+            if (!child || child->getParent() != &source || child->rtti() != RS2::EntityLine) return false;
+        }
+        return true;
+    };
+    const auto conic = [](const RS_Entity* source) {
+        return (source->rtti() == RS2::EntityCircle && dynamic_cast<const RS_Circle*>(source)) ||
+            (source->rtti() == RS2::EntityArc && dynamic_cast<const RS_Arc*>(source)) ||
+            (source->rtti() == RS2::EntityEllipse && dynamic_cast<const RS_Ellipse*>(source));
+    };
+    const auto eligible = [&](const RS_Entity* source) {
+        if (!live(source)) return false;
+        if (const auto* native = dynamic_cast<const LC_OffsetCurve*>(source)) return nativeReady(*native);
+        if (conic(source)) return true;
+        if (source->rtti() == RS2::EntitySpline) {
+            const auto* spline = dynamic_cast<const RS_Spline*>(source);
+            if (!spline || !spline->isOwner() || spline->size() > kDefaultOffsetDeepEntitiesPerSource) return false;
+            const auto& data = spline->getData(); const trim::Limits hard;
+            if (data.degree != 1 && data.degree != 3) return false;
+            const auto layout = LC_EllipseOffsetGeometry::cacheLayoutCountsFromControls(data.degree, data.controlPoints.size());
+            if (!layout || layout->spans > hard.maxSpansPerCurve) return false;
+            std::size_t records = 0;
+            for (const auto n : {data.controlPoints.size(), data.weights.size(), data.knotslist.size(), data.fitPoints.size(),
+                    data.savedOpenKnots.size(), layout->spans, layout->spans}) {
+                if (n > hard.maxInputRecords - records) return false;
+                records += n;
+            }
+            for (const auto* child : *spline) if (!child || child->getParent() != spline || child->rtti() != RS2::EntityLine) return false;
+            return true; // Raw counts/layout/finite checks precede copying in the pure kernel.
+        }
+        return source->rtti() == RS2::EntityLine && dynamic_cast<const RS_Line*>(source);
+    };
+    try {
+        if (checkCancel()) return refuse(trim::Refusal::Cancelled);
+        if (completed) {
+            if (completed->publicationUndoEpoch != admittedUndoEpoch ||
+                bool(completed->secondRequest) != bool(completed->second) ||
+                !trimRequest::admitted(completed->firstRequest)) return refuse(trim::Refusal::InvalidInput);
+            const auto& first = completed->firstRequest.token;
+            const auto submittedEpoch = static_cast<std::uint64_t>(first.undoEpoch);
+            if (admittedUndoEpoch != submittedEpoch && admittedUndoEpoch != submittedEpoch + 1)
+                return refuse(trim::Refusal::InvalidInput);
+            if (completed->secondRequest) {
+                const auto& second = completed->secondRequest->token;
+                if (second.requestId <= first.requestId ||
+                    std::tie(second.generation, second.sourceRevision, second.undoEpoch) !=
+                        std::tie(first.generation, first.sourceRevision, first.undoEpoch))
+                    return refuse(trim::Refusal::InvalidInput);
+            }
+        }
+        if (&target == &cutter || !outputCap || !displayCap || document.size() > memberCap ||
+            ctx.entitiesToAdd.size() > qsizetype(memberCap) || ctx.entitiesToDelete.size() > qsizetype(memberCap))
+            return refuse(trim::Refusal::LimitExceeded);
+        const auto* nativeA = dynamic_cast<const LC_OffsetCurve*>(&target);
+        const auto* nativeB = dynamic_cast<const LC_OffsetCurve*>(&cutter);
+        if (!nativeA && !nativeB) return refuse(trim::Refusal::UnsupportedCutter);
+        // Capture EVERY native operand before replacement-source getter reads.
+        // Native admission/snapshot getters are bounded, shared value reads;
+        // an ordinary operand's virtual endpoints must not precede this baseline.
+        struct NativeInput {
+            const LC_OffsetCurve* address = nullptr;
+            unsigned long long id = 0;
+            bool replacement = false;
+            std::unique_ptr<LC_OffsetCurveEditSnapshot> snapshot;
+        };
+        std::array<NativeInput, 2> nativeInputs;
+        nativeInputs[0].address = nativeA; nativeInputs[0].replacement = true;
+        nativeInputs[1].address = nativeB; nativeInputs[1].replacement = both;
+        for (auto& input : nativeInputs) if (input.address) {
+            const auto reason = input.replacement ? trim::Refusal::UnsupportedLayout : trim::Refusal::UnsupportedCutter;
+            if (!member(input.address) || (input.replacement && input.address->isLocked()) || !nativeReady(*input.address))
+                return refuse(reason);
+            input.id = input.address->getId();
+            input.snapshot = LC_OffsetCurveEditSnapshot::capture(*input.address);
+            if (!input.snapshot) return refuse(trim::Refusal::LimitExceeded);
+        }
+        if (!eligible(&target) || (both && !eligible(&cutter))) return refuse(trim::Refusal::UnsupportedLayout);
+        if (nativeB && !nativeReady(*nativeB)) return refuse(trim::Refusal::UnsupportedCutter);
+        // A one-sided limit is read-only, but a native limit must still be a
+        // live top-level source, not a borrowed/generated/block clone.
+        if (nativeB && !member(&cutter)) return refuse(trim::Refusal::UnsupportedCutter);
+        const auto supportedLimit = [](const RS_Entity& e) {
+            return dynamic_cast<const RS_Line*>(&e) || dynamic_cast<const RS_Arc*>(&e) ||
+                dynamic_cast<const RS_Circle*>(&e) || dynamic_cast<const RS_Ellipse*>(&e) ||
+                dynamic_cast<const RS_Spline*>(&e);
+        };
+        if (!supportedLimit(cutter)) return refuse(trim::Refusal::UnsupportedCutter);
+        std::array<RS_Entity*, 2> sources{{&target, both ? &cutter : nullptr}};
+        std::array<std::uint64_t, 2> stamps{};
+        const auto stamp = [](const RS_Entity& e) {
+            if (const auto* spline = dynamic_cast<const RS_Spline*>(&e)) return RS_Spline::geometryFingerprint(spline->getData());
+            RS_SplineData data{1, false};
+            if (const auto* circle = dynamic_cast<const RS_Circle*>(&e)) {
+                data.controlPoints = {circle->getCenter()}; data.weights = {circle->getRadius()};
+            } else if (const auto* arc = dynamic_cast<const RS_Arc*>(&e)) {
+                const auto& d = arc->getData(); data.controlPoints = {d.center};
+                data.weights = {d.radius, d.angle1, d.angle2, d.reversed ? 1. : 0.};
+            } else if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&e)) {
+                const auto& d = ellipse->getData(); data.controlPoints = {d.center, d.majorP};
+                data.weights = {d.ratio, d.angle1, d.angle2, d.reversed ? 1. : 0., d.isArc ? 1. : 0.,
+                    d.angleDegrees, d.startAngleDegrees, d.otherAngleDegrees, d.angularLength};
+            } else data.controlPoints = {e.getStartpoint(), e.getEndpoint()};
+            return RS_Spline::geometryFingerprint(data);
+        };
+        // Attribute copies use the same RS_Entity base copy as E-tools. Admit
+        // opaque maps/vectors first; the schema parser never mutates variants.
+        std::array<LC_OffsetCurveXData::XData, 2> foreign;
+        for (std::size_t i = 0; i < sources.size() && sources[i]; ++i) {
+            if (!sources[i]->cloneMetadataFits(1024, std::size_t{1} << 20, 4096)) return refuse(trim::Refusal::LimitExceeded);
+            auto parsed = LC_OffsetCurveXData::parseAndStrip(sources[i]->getDrwExtData());
+            if (!parsed.remaining) return refuse(trim::Refusal::LimitExceeded);
+            foreign[i] = std::move(*parsed.remaining); stamps[i] = stamp(*sources[i]);
+        }
+        auto remaining = lowerStoredTrimLimits(options.kernel);
+        const auto debit = [&](const trim::Work& work) {
+            return debitStoredTrimWork(remaining, result.cacheWork, work);
+        };
+        std::array<trim::Result, 2> prepared;
+        const bool conicReplacement = conic(&target) || (both && conic(&cutter));
+        if (completed && completed->second && (conicReplacement || !both))
+            return refuse(trim::Refusal::InvalidInput);
+        if (conicReplacement) {
+            const std::size_t ci = conic(&target) ? 0 : 1, ni = 1 - ci;
+            const auto* cache = ci == 0 ? nativeB : nativeA;
+            if (!cache) return refuse(trim::Refusal::UnsupportedLayout);
+            const trim::Pick cp{ci == 0 ? targetPick : cutterPick};
+            std::optional<trim::Pick> np;
+            if (both) np = trim::Pick{ni == 0 ? targetPick : cutterPick};
+            trim::Result pair;
+            if (completed) {
+                auto received = consumeStoredTrimConic(completed->firstRequest, completed->first,
+                    cache->getData(), *sources[ci], cp, np, remaining);
+                if (!received) return refuse(trim::Refusal::InvalidInput);
+                pair = std::move(*received);
+            } else pair = trim::prepareConic(cache->getData(), *sources[ci], cp, np, remaining, options.cancellation);
+            if (!debit(pair.work)) return refuse(trim::Refusal::LimitExceeded);
+            if (pair.refusal != trim::Refusal::None) return refuse(pair.refusal);
+            if (pair.conicFragments.empty() || (both && pair.fragments.empty())) return refuse(trim::Refusal::Arithmetic);
+            prepared[ni] = std::move(pair);
+            prepared[ci].conicFragments.swap(prepared[ni].conicFragments);
+        } else {
+            for (std::size_t i = 0; i < sources.size() && sources[i]; ++i) {
+                if (checkCancel()) return refuse(trim::Refusal::Cancelled);
+                RS_SplineData line{1, false}; const RS_SplineData* raw = nullptr;
+                if (const auto* spline = dynamic_cast<const RS_Spline*>(sources[i])) raw = &spline->getData();
+                else {
+                    if (sources[i]->rtti() != RS2::EntityLine) return refuse(trim::Refusal::UnsupportedLayout);
+                    line.controlPoints = {sources[i]->getStartpoint(), sources[i]->getEndpoint()};
+                    line.knotslist = {0, 0, 1, 1}; line.weights = {1, 1}; raw = &line;
+                }
+                if (completed) {
+                    const auto* retained = i == 0 ? &completed->firstRequest : completed->secondRequest;
+                    const auto* receipt = i == 0 ? &completed->first : completed->second;
+                    if (!retained || !receipt) return refuse(trim::Refusal::InvalidInput);
+                    auto received = consumeStoredTrimCache(*retained, *receipt, *raw,
+                        i == 0 ? cutter : target, {i == 0 ? targetPick : cutterPick}, remaining);
+                    if (!received) return refuse(trim::Refusal::InvalidInput);
+                    prepared[i] = std::move(*received);
+                } else prepared[i] = trim::prepare(*raw, i == 0 ? cutter : target,
+                    {i == 0 ? targetPick : cutterPick}, remaining, options.cancellation);
+                if (!debit(prepared[i].work)) return refuse(trim::Refusal::LimitExceeded);
+                if (prepared[i].refusal != trim::Refusal::None) return refuse(prepared[i].refusal);
+                if (prepared[i].fragments.empty()) return refuse(trim::Refusal::Arithmetic);
+            }
+        }
+        std::array<std::size_t, 2> sideCount{};
+        std::size_t count = 0, display = 0;
+        for (std::size_t i = 0; i < sources.size() && sources[i]; ++i) {
+            sideCount[i] = prepared[i].fragments.size() + prepared[i].conicFragments.size();
+            if (!sideCount[i] || sideCount[i] > outputCap - count) return refuse(trim::Refusal::LimitExceeded);
+            count += sideCount[i];
+            if (conic(sources[i])) {
+                if (!prepared[i].fragments.empty() || sideCount[i] > displayCap - display) return refuse(trim::Refusal::LimitExceeded);
+                display += sideCount[i];
+            } else for (const auto& fragment : prepared[i].fragments) {
+                const auto upper = sources[i]->rtti() == RS2::EntityLine ? std::optional<std::size_t>{1} :
+                    RS_Spline::displayEntityUpperBound(fragment.data);
+                if (!upper || *upper > displayCap - display) return refuse(trim::Refusal::LimitExceeded);
+                display += *upper;
+            }
+        }
+        // BOTH geometry preparations and ALL count/attribute/display admissions
+        // precede the first output constructor. No original has been changed.
+        std::vector<std::unique_ptr<RS_Entity>> owned; owned.reserve(count);
+        for (std::size_t i = 0; i < sources.size() && sources[i]; ++i) {
+            if (dynamic_cast<const LC_OffsetCurve*>(sources[i])) ++result.nativeDemotions;
+            for (std::size_t j = 0; j < sideCount[i]; ++j) {
+                if (checkCancel()) return refuse(trim::Refusal::Cancelled);
+                std::unique_ptr<RS_Entity> output;
+                if (conic(sources[i])) {
+                    const auto& data = prepared[i].conicFragments[j].data;
+                    // Owned typed restrictions of the original primitive, never
+                    // endpoint chords, display intersections or fitted splines.
+                    if (sources[i]->rtti() == RS2::EntityEllipse) {
+                        auto clone = std::make_unique<RS_Ellipse>(*static_cast<const RS_Ellipse*>(sources[i]));
+                        clone->setParent(nullptr);
+                        // Keep at least one nonzero angle installed while the
+                        // ordinary API recalculates its fuzzy whole-ellipse flag.
+                        if (std::abs(data.angle1) >= std::abs(data.angle2)) {
+                            clone->setAngle1(data.angle1); clone->setAngle2(data.angle2);
+                        } else { clone->setAngle2(data.angle2); clone->setAngle1(data.angle1); }
+                        if (clone->getAngle1() != data.angle1 || clone->getAngle2() != data.angle2 || !clone->isEllipticArc())
+                            return refuse(trim::Refusal::Arithmetic);
+                        output = std::move(clone);
+                    } else if (sources[i]->rtti() == RS2::EntityArc) {
+                        auto clone = std::make_unique<RS_Arc>(*static_cast<const RS_Arc*>(sources[i])); clone->setParent(nullptr);
+                        clone->setData(RS_ArcData{data.center, data.majorP.x, data.angle1, data.angle2, data.reversed});
+                        output = std::move(clone);
+                    } else output = std::make_unique<RS_Arc>(nullptr,
+                        RS_ArcData{data.center, data.majorP.x, data.angle1, data.angle2, data.reversed});
+                    if (!(output->getLength() > 0) || !std::isfinite(output->getLength())) return refuse(trim::Refusal::Arithmetic);
+                } else if (sources[i]->rtti() == RS2::EntityLine) {
+                    const auto& fragment = prepared[i].fragments[j];
+                    if (fragment.data.degree != 1 || fragment.data.controlPoints.size() != 2) return refuse(trim::Refusal::UnsupportedLayout);
+                    output = std::make_unique<RS_Line>(nullptr, fragment.data.controlPoints.front(), fragment.data.controlPoints.back());
+                } else {
+                    const auto& fragment = prepared[i].fragments[j];
+                    auto spline = std::make_unique<RS_Spline>(nullptr, fragment.data);
+                    if (!spline->validate() || !spline->size() ||
+                        RS_Spline::geometryFingerprint(spline->getData()) != RS_Spline::geometryFingerprint(fragment.data))
+                        return refuse(trim::Refusal::Arithmetic);
+                    output = std::move(spline);
+                }
+                output->RS_Entity::operator=(*sources[i]);
+                output->setDrwExtData(foreign[i]);
+                output->clearDwgProvenance(RS_Entity::Identity);
+                output->setOwnerLineage(0); output->setLineage(RS_Entity::newLineage());
+                output->setParent(&document); output->calculateBorders();
+                if (!LC_EllipseOffsetGeometry::isFinite2D(output->getMin()) ||
+                    !LC_EllipseOffsetGeometry::isFinite2D(output->getMax())) return refuse(trim::Refusal::Arithmetic);
+                owned.push_back(std::move(output));
+            }
+        }
+        std::vector<const RS_Entity*> roots; roots.reserve(owned.size());
+        for (const auto& e : owned) roots.push_back(e.get());
+        if (measureOffsetOutput(roots, displayCap).status != LC_OffsetTreeStatus::Ok) return refuse(trim::Refusal::LimitExceeded);
+        if (checkCancel()) return refuse(trim::Refusal::Cancelled);
+        for (std::size_t i = 0; i < sources.size() && sources[i]; ++i) {
+            if (!eligible(sources[i]) || stamp(*sources[i]) != stamps[i] || ctx.entitiesToDelete.contains(sources[i]))
+                return refuse(trim::Refusal::UnsupportedLayout);
+        }
+        if (count > memberCap - std::size_t(ctx.entitiesToAdd.size()) ||
+            (both ? 2u : 1u) > memberCap - std::size_t(ctx.entitiesToDelete.size())) return refuse(trim::Refusal::LimitExceeded);
+        auto additions = ctx.entitiesToAdd, deletions = ctx.entitiesToDelete;
+        additions.reserve(additions.size() + qsizetype(count)); deletions.reserve(deletions.size() + (both ? 2 : 1));
+        for (const auto& e : owned) additions.append(e.get());
+        deletions.append(&target); if (both) deletions.append(&cutter);
+        result.trimmed1 = owned.front().get();
+        if (both) result.trimmed2 = owned[sideCount[0]].get();
+        std::optional<std::size_t> firstRoot;
+        for (const auto& fragment : prepared[0].fragments) {
+            const std::array<std::pair<const trim::Endpoint*, RS_Vector>, 2> ends{{
+                {&fragment.start, fragment.data.controlPoints.front()}, {&fragment.end, fragment.data.controlPoints.back()}}};
+            for (const auto& [end, point] : ends) if (end->rootId) {
+                if (!firstRoot) { firstRoot = end->rootId; result.intersection1 = point; }
+                else if (end->rootId != firstRoot) result.intersection2 = point;
+            }
+        }
+        // No allocation or user callback after the first swap. The standard
+        for (std::size_t j = 0; j < prepared[0].conicFragments.size(); ++j) {
+            const auto& fragment = prepared[0].conicFragments[j];
+            if (fragment.startRoot) result.intersection1 = owned[j]->getStartpoint();
+            if (fragment.endRoot) result.intersection2 = owned[j]->getEndpoint();
+        }
+        // All typed geometry, attributes and BOTH output sets are complete.
+        // document batch is the only publication; no compensating rollback.
+        // This is after the final source stamps and typed endpoint getters.
+        // Revalidate the complete native root set, not only the last operand.
+        // Pointer membership precedes ID/type/value reads through each address.
+        for (const auto& input : nativeInputs) if (input.address) {
+            const auto reason = input.replacement ? trim::Refusal::UnsupportedLayout : trim::Refusal::UnsupportedCutter;
+            if (!member(input.address) || input.address->getId() != input.id ||
+                (input.replacement && input.address->isLocked()) || !nativeReady(*input.address) ||
+                !input.snapshot->matches(*input.address)) return refuse(reason);
+        }
+        std::vector<LC_OffsetCurveFinalInput::Input> finalInputs;
+        finalInputs.reserve(2);
+        for (const auto& input : nativeInputs) if (input.address)
+            finalInputs.push_back({input.address, input.snapshot.get(), input.replacement});
+        if (document.undoStateEpoch() != admittedUndoEpoch)
+            return refuse(trim::Refusal::UnsupportedLayout);
+        LC_OffsetCurveFinalInput::validate(document, finalInputs);
+        for (const auto& input : finalInputs) if (!input.matches)
+            return refuse(input.requireUnlocked ? trim::Refusal::UnsupportedLayout : trim::Refusal::UnsupportedCutter);
+        // The atomic token read cannot invalidate the stored seal. Keep this
+        // final probe after all validation allocations, immediately before handoff.
+        if (checkCancel()) return refuse(trim::Refusal::Cancelled);
+        // No operand callback or notification follows.
+        ctx.entitiesToAdd.swap(additions); ctx.entitiesToDelete.swap(deletions); ctx.dontSetActiveLayerAndPen();
+        for (auto& e : owned) e.release();
+        result.result = true; result.cacheRefusal.reset();
+        return result;
+    } catch (const std::bad_alloc&) { return refuse(trim::Refusal::AllocationFailure); }
+}
+
 void RS_Modification::trimEnding(const RS_Vector& trimCoord, RS_AtomicEntity* trimmed1, const RS_Vector& is) {
     const RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
     switch (ending) {
@@ -2150,6 +3249,7 @@ void RS_Modification::trimEnding(const RS_Vector& trimCoord, RS_AtomicEntity* tr
 RS_Entity* RS_Modification::trimAmount(const RS_Vector& trimCoord, RS_AtomicEntity* entityToTrim, const double dist, const bool trimBoth,
                                        bool& trimStart, bool& trimEnd, LC_DocumentModificationBatch& ctx) {
     Q_ASSERT(entityToTrim != nullptr);
+    if (isNativeCacheChild(*entityToTrim)) return nullptr;
 
     if (entityToTrim->isLocked() || !entityToTrim->isVisible()) {
         return nullptr;
@@ -2199,6 +3299,7 @@ bool RS_Modification::cut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity,
 #endif
 
     Q_ASSERT(cutEntity != nullptr);
+    if (isNativeCacheChild(*cutEntity)) return false;
 
     if (cutEntity->isLocked() || !cutEntity->isVisible()) {
         return false;
@@ -2770,6 +3871,12 @@ static void updateExplodedChildrenRecursively(const RS_EntityContainer* ec, cons
 
 bool RS_Modification::explode(const QList<RS_Entity*>& entitiesList, LC_DocumentModificationBatch& ctx) {
     for (const auto e : entitiesList) {
+        if (const auto* native = dynamic_cast<const LC_OffsetCurve*>(e)) {
+            auto plain = native->toPlainSpline();
+            ctx += plain.release();
+            ctx -= e;
+            continue;
+        }
         if (e->isContainer()) {
             // add entities from container:
             const auto* container = static_cast<RS_EntityContainer*>(e);

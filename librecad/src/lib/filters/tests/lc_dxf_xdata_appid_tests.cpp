@@ -42,6 +42,7 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "drw_base.h"
@@ -51,7 +52,12 @@
 #include "lc_dimstyle.h"
 #include "lc_dimstyleslist.h"
 #include "lc_dwgadvancedmetadata.h"
+#include "lc_drwnullinterface.h"
 #include "lc_filtertestsupport.h"
+#include "libdxfrw.h"
+#ifdef DWGSUPPORT
+#include "libdwgr.h"
+#endif
 #include "rs_block.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
@@ -200,6 +206,252 @@ bool hasXDataApplication(const RS_Entity& entity, const std::string& application
 }
 
 } // namespace
+
+namespace {
+
+using DimstyleTokens = std::vector<std::pair<int, std::string>>;
+
+// Normalize only the two codec representations of binary XDATA and the
+// storage width of an integer. Assert all other group types explicitly.
+DimstyleTokens dimstyleTokens(const std::vector<DRW_Variant*>& data) {
+    DimstyleTokens result;
+    for (const auto* value : data) {
+        REQUIRE(value != nullptr);
+        std::string text;
+        switch (value->code()) {
+        case 1000:
+        case 1001:
+        case 1002:
+            REQUIRE(value->type() == DRW_Variant::STRING);
+            REQUIRE(value->content.s != nullptr);
+            text = *value->content.s;
+            break;
+        case 1004:
+            if (value->type() == DRW_Variant::STRING) {
+                REQUIRE(value->content.s != nullptr);
+                text = upper(*value->content.s);
+            } else {
+                REQUIRE(value->type() == DRW_Variant::BINARY);
+                REQUIRE(value->content.b != nullptr);
+                constexpr char hex[] = "0123456789ABCDEF";
+                for (const auto byte : *value->content.b) {
+                    text += hex[byte >> 4];
+                    text += hex[byte & 15];
+                }
+            }
+            break;
+        case 1070:
+        case 1071:
+            REQUIRE((value->type() == DRW_Variant::INTEGER ||
+                     value->type() == DRW_Variant::INTEGER64));
+            text = value->type() == DRW_Variant::INTEGER
+                ? std::to_string(value->i_val()) : std::to_string(value->i64_val());
+            break;
+        case 1040:
+            REQUIRE(value->type() == DRW_Variant::DOUBLE);
+            text = std::to_string(value->d_val());
+            break;
+        default:
+            FAIL("Unexpected DIMSTYLE fixture group");
+        }
+        result.emplace_back(value->code(), text);
+    }
+    return result;
+}
+
+std::string dimstyleMergeFixture(bool duplicate) {
+    const std::string owned =
+        "1001\nACAD_DSTYLE_DIMTALN\n1070\n392\n1070\n0\n"
+        "1000\nowned-before\n1002\n{\n1070\n392\n1070\n77\n"
+        "1000\nnested-foreign\n1002\n}\n"
+        "1070\n777\n1071\n1234567\n"
+        "1070\n778\n1070\n392\n1070\n779\n1070\n55\n"
+        "1040\n2.5\n1004\n00A5FF\n";
+    const std::string separate =
+        "1001\nLC_DIMSTYLE_FOREIGN\n1000\nseparate-foreign\n"
+        "1002\n{\n1070\n392\n1070\n23\n1002\n}\n1004\n10FE\n";
+    const std::string tail = duplicate
+        ? "1001\nacad_dstyle_dimtaln\n1070\n392\n1070\n0\n1000\nowned-after\n"
+        : "";
+    return "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+           "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nDIMSTYLE\n70\n1\n"
+           "0\nDIMSTYLE\n105\n31\n330\nA\n100\nAcDbSymbolTableRecord\n"
+           "100\nAcDbDimStyleTableRecord\n2\nXDIM\n70\n0\n" +
+           owned + separate + tail +
+           "1001\nACAD_DSTYLE_DIMJAG\n1070\n388\n1040\n1.5\n"
+           "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+           "0\nLINE\n5\n40\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
+           "10\n0\n20\n0\n30\n0\n11\n2\n21\n3\n31\n0\n"
+           "0\nENDSEC\n0\nEOF\n";
+}
+
+DimstyleTokens expectedDimstyleTokens(int adjustment, bool duplicate) {
+    DimstyleTokens expected{
+        {1001, "ACAD_DSTYLE_DIMTALN"}, {1070, "392"},
+        {1070, std::to_string(adjustment)}, {1000, "owned-before"},
+        {1002, "{"}, {1070, "392"}, {1070, "77"},
+        {1000, "nested-foreign"}, {1002, "}"},
+        {1070, "777"}, {1071, "1234567"},
+        {1070, "778"}, {1070, "392"}, {1070, "779"}, {1070, "55"},
+        {1040, "2.500000"}, {1004, "00A5FF"}};
+    if (duplicate)
+        expected.emplace_back(1000, "owned-after");
+    const DimstyleTokens foreign{
+        {1001, "LC_DIMSTYLE_FOREIGN"}, {1000, "separate-foreign"},
+        {1002, "{"}, {1070, "392"}, {1070, "23"}, {1002, "}"}, {1004, "10FE"},
+        {1001, "ACAD_DSTYLE_DIMJAG"}, {1070, "388"}, {1040, "1.500000"}};
+    expected.insert(expected.end(), foreign.begin(), foreign.end());
+    return expected;
+}
+
+struct DimstyleMergeCapture final : lc::test::NullDrwInterface {
+    std::vector<DRW_Dimstyle> styles;
+    void addDimStyle(const DRW_Dimstyle& style) override { styles.push_back(style); }
+};
+
+void checkDimstyleOutput(const std::filesystem::path& path, bool dwg,
+                         DRW::Version version, int adjustment, bool duplicate) {
+    DimstyleMergeCapture capture;
+    const auto nativePath = path.string();
+    if (dwg) {
+#ifdef DWGSUPPORT
+        dwgRW reader(nativePath.c_str());
+        REQUIRE(reader.read(&capture, false));
+        REQUIRE(reader.getVersion() == version);
+#else
+        FAIL("DWG check requires DWGSUPPORT");
+#endif
+    } else {
+        dxfRW reader(nativePath.c_str());
+        REQUIRE(reader.read(&capture, false));
+        REQUIRE(reader.getSourceVersion() == version);
+        checkEveryApplicationRegisteredOnce(path);
+    }
+    unsigned matches = 0;
+    for (const auto& style : capture.styles) {
+        std::set<std::string> applications;
+        for (const auto* value : style.extData) {
+            REQUIRE(value != nullptr);
+            if (value->code() == 1001) {
+                REQUIRE(value->type() == DRW_Variant::STRING);
+                REQUIRE(value->content.s != nullptr);
+                CHECK(applications.insert(upper(*value->content.s)).second);
+            }
+        }
+        if (style.name == "XDIM") {
+            ++matches;
+            CHECK(dimstyleTokens(style.extData) == expectedDimstyleTokens(adjustment, duplicate));
+        }
+    }
+    REQUIRE(matches == 1);
+}
+
+void saveDimstyleWithoutMutatingSource(RS_Graphic& graphic,
+                                        const std::filesystem::path& path,
+                                        RS2::FormatType format, bool dwg,
+                                        DRW::Version version, int adjustment,
+                                        bool duplicate) {
+    auto* style = graphic.getDimStyleList()->findByName(QStringLiteral("XDIM"));
+    REQUIRE(style != nullptr);
+    style->latteralTolerance()->setAdjustmentRaw(adjustment);
+    const auto* source = graphic.dwgAdvancedMetadata().findDimStyleTableEntryByName("XDIM");
+    REQUIRE(source != nullptr);
+    const DRW_Dimstyle snapshot = *source; // Independent deep copy, not shared variants.
+    const auto addresses = source->extData;
+    const auto before = dimstyleTokens(snapshot.extData);
+    REQUIRE(lc::test::exportDrawing(graphic, path, format));
+    CHECK(source->extData == addresses);
+    CHECK(dimstyleTokens(source->extData) == before);
+    for (std::size_t i = 0; i < snapshot.extData.size(); ++i)
+        CHECK(snapshot.extData[i] != source->extData[i]);
+    CHECK(static_cast<int>(style->latteralTolerance()->adjustment()) == adjustment);
+    checkDimstyleOutput(path, dwg, version, adjustment, duplicate);
+}
+
+} // namespace
+
+TEST_CASE("DIMSTYLE replaces owned adjustment pairs and preserves foreign XDATA on repeated DXF saves",
+          "[dxf][filter][xdata][dimstyle][regression]") {
+    lc::test::ensureSettings();
+    const lc::test::QuietLog quiet;
+    const bool duplicate = GENERATE(false, true);
+    const Format format = GENERATE(Format{RS2::FormatDXFRW2000, "dxf-2000"},
+                                   Format{RS2::FormatDXFRW2018, "dxf-2018"});
+    const auto version = format.m_type == RS2::FormatDXFRW2000 ? DRW::AC1015 : DRW::AC1032;
+    CAPTURE(duplicate, format.m_name);
+    const lc::test::OutputDirectory directory("lc_dimstyle_owned_xdata_repeat");
+    const auto input = directory.file("source.dxf");
+    {
+        std::ofstream stream(input, std::ios::binary);
+        stream << dimstyleMergeFixture(duplicate);
+        REQUIRE(stream.good());
+    }
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    REQUIRE(lc::test::importDrawing(graphic, input, RS2::FormatDXFRW));
+    graphic.onLoadingCompleted();
+    for (int step = 0; step < 4; ++step) {
+        CAPTURE(step);
+        const auto output = directory.file("same-source-" + std::to_string(step) + ".dxf");
+        saveDimstyleWithoutMutatingSource(graphic, output, format.m_type, false,
+                                          version, (step + 1) % 2, duplicate);
+    }
+}
+
+#ifdef DWGSUPPORT
+TEST_CASE("DIMSTYLE adjustment stays idempotent across actual alternating DXF and DWG saves",
+          "[dxf][dwg][filter][xdata][eed][dimstyle][regression]") {
+    lc::test::ensureSettings();
+    const lc::test::QuietLog quiet;
+    struct ChainFormat {
+        RS2::FormatType dxf;
+        RS2::FormatType dwg;
+        DRW::Version version;
+    };
+    const ChainFormat formats[] = {
+        {RS2::FormatDXFRW2000, RS2::FormatDWG, DRW::AC1015},
+        {RS2::FormatDXFRW2004, RS2::FormatDWG2004, DRW::AC1018},
+        {RS2::FormatDXFRW, RS2::FormatDWG2007, DRW::AC1021},
+        {RS2::FormatDXFRW2010, RS2::FormatDWG2010, DRW::AC1024},
+        {RS2::FormatDXFRW2013, RS2::FormatDWG2013, DRW::AC1027},
+        {RS2::FormatDXFRW2018, RS2::FormatDWG2018, DRW::AC1032}};
+    const auto index = GENERATE(Catch::Generators::range(std::size_t{0}, std::size_t{6}));
+    const bool dwgFirst = GENERATE(false, true);
+    const auto format = formats[index];
+    CAPTURE(index, dwgFirst);
+    const lc::test::OutputDirectory directory("lc_dimstyle_owned_xdata_chain");
+    const auto input = directory.file("source.dxf");
+    {
+        std::ofstream stream(input, std::ios::binary);
+        stream << dimstyleMergeFixture(true);
+        REQUIRE(stream.good());
+    }
+    auto graphic = std::make_unique<RS_Graphic>();
+    graphic->initForNewDocument();
+    REQUIRE(lc::test::importDrawing(*graphic, input, RS2::FormatDXFRW));
+    graphic->onLoadingCompleted();
+    for (int step = 0; step < 8; ++step) {
+        const bool dwg = (step % 2 == 0) == dwgFirst;
+        const auto type = dwg ? format.dwg : format.dxf;
+        const int adjustment = (step + 1) % 2;
+        CAPTURE(step, dwg, adjustment);
+        const auto output = directory.file("chain-" + std::to_string(step) + (dwg ? ".dwg" : ".dxf"));
+        saveDimstyleWithoutMutatingSource(*graphic, output, type, dwg,
+                                          format.version, adjustment, true);
+        auto reopened = std::make_unique<RS_Graphic>();
+        reopened->initForNewDocument();
+        REQUIRE(lc::test::importDrawing(*reopened, output, type));
+        reopened->onLoadingCompleted();
+        const auto* style = reopened->getDimStyleList()->findByName(QStringLiteral("XDIM"));
+        REQUIRE(style != nullptr);
+        CHECK(static_cast<int>(style->latteralTolerance()->adjustment()) == adjustment);
+        const auto* source = reopened->dwgAdvancedMetadata().findDimStyleTableEntryByName("XDIM");
+        REQUIRE(source != nullptr);
+        CHECK(dimstyleTokens(source->extData) == expectedDimstyleTokens(adjustment, true));
+        graphic = std::move(reopened);
+    }
+}
+#endif
 
 TEST_CASE("the DXF export registers the application of every XDATA it writes, once",
           "[dxf][filter][xdata][appid]") {

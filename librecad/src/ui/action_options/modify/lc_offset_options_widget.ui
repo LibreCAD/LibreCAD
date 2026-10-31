@@ -44,7 +44,7 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="0" column="11">
+   <item row="0" column="12">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Orientation::Horizontal</enum>
@@ -56,6 +56,16 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="0" column="11">
+    <widget class="QCheckBox" name="cbEditableOffsetCurve">
+     <property name="toolTip">
+      <string>Keep eligible ellipse offsets editable; other results remain plain.</string>
+     </property>
+     <property name="text">
+      <string>Editable Offset Curve</string>
+     </property>
+    </widget>
    </item>
    <item row="0" column="7">
     <widget class="QSpinBox" name="sbNumberOfCopies">
@@ -183,6 +193,17 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>cbFixedDistance</tabstop>
+  <tabstop>leDist</tabstop>
+  <tabstop>tbPickDistance</tabstop>
+  <tabstop>cbKeepOriginals</tabstop>
+  <tabstop>cbMultipleCopies</tabstop>
+  <tabstop>sbNumberOfCopies</tabstop>
+  <tabstop>cbCurrentAttr</tabstop>
+  <tabstop>cbCurrentLayer</tabstop>
+  <tabstop>cbEditableOffsetCurve</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../../res/icons/icons.qrc"/>
  </resources>

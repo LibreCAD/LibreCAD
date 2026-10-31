@@ -53,6 +53,14 @@ LC_VisualSnapManager::~LC_VisualSnapManager() {
     clear();
 }
 
+void LC_VisualSnapManager::detachFromView() {
+    m_timer.stop();
+    doSkipDelayedAdditions();
+    m_solution.reset();
+    m_snapData = nullptr;
+    setViewport(nullptr);
+}
+
 void LC_VisualSnapManager::solveAndVisualizeSolution(RS_Preview* preview, LC_Highlight* highlight) {
     if (m_solution != nullptr) {
         lock();
@@ -153,6 +161,7 @@ bool LC_VisualSnapManager::isNotInVisualSnap(RS_Entity* e) const {
 }
 
 void LC_VisualSnapManager::clear() {
+    if (!m_snapData) return; // A detached manager owns no remaining delayed work or solution.
     lock();
     doSkipDelayedAdditions();
     if (m_clearSnapData) {

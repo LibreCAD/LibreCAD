@@ -42,6 +42,7 @@
 #include <QFileInfo>
 #include <QGridLayout>
 #include <QTemporaryDir>
+#include <QThread>
 #include <QTranslator>
 
 #include "jwwdoc.h"
@@ -257,6 +258,216 @@ private:
 };
 
 } // namespace
+
+TEST_CASE("Private graphic finalization preserves normal open bookkeeping", "[documentsstorage][import][offset]") {
+    ensureApp(); QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString source = directory.filePath("drawing.dxf");
+    QFile file(source); REQUIRE(file.open(QIODevice::WriteOnly)); REQUIRE(file.write("test") == 4); file.close();
+    TestStorage storage; RS_Graphic graphic; graphic.initForNewDocument();
+    graphic.setFormatType(RS2::FormatDXFRW);
+    bool expectedModified = false;
+    SECTION("clean import") {}
+    SECTION("geometry repair") { graphic.setImportGeometryMutated(true); expectedModified = true; }
+    SECTION("recovery import") { graphic.setDxfRecoverySourceFile(source); expectedModified = true; }
+    SECTION("accepted partial import") { graphic.setFormatType(RS2::FormatUnknown); }
+    const auto format = graphic.getFormatType();
+    storage.finalizeLoadedGraphic(graphic, source);
+    CHECK(graphic.getFilename() == source);
+    CHECK(graphic.sourceFileIdentity().matches(source));
+    CHECK_FALSE(graphic.getAutoSaveFileName().isEmpty());
+    CHECK(graphic.getAutoSaveFileName() != source);
+    CHECK(graphic.getLastSaveTime() == QFileInfo(source).lastModified());
+    CHECK(graphic.getFormatType() == format);
+    CHECK(graphic.isModified() == expectedModified);
+    CHECK_FALSE(graphic.takeImportGeometryMutated());
+}
+
+TEST_CASE("Document finalization retains source identity captured before import", "[documentsstorage][import][source-change]") {
+    ensureApp();
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const QString source = directory.filePath("drawing.dxf");
+    const QString original = directory.filePath("original.dxf");
+    QFile file(source);
+    REQUIRE(file.open(QIODevice::WriteOnly));
+    REQUIRE(file.write("original") == 8);
+    file.close();
+    const LC_FileIdentity importedIdentity = LC_FileIdentity::capture(source);
+    REQUIRE(importedIdentity.valid);
+
+    REQUIRE(QFile::rename(source, original));
+    REQUIRE(file.open(QIODevice::WriteOnly));
+    REQUIRE(file.write("replacement") == 11);
+    file.close();
+
+    TestStorage storage;
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    graphic.setSourceFileIdentity(importedIdentity);
+    storage.finalizeLoadedGraphic(graphic, source);
+    CHECK(graphic.sourceFileIdentity().refersToSameObject(original));
+    CHECK_FALSE(graphic.sourceFileIdentity().matches(source));
+
+    graphic.setModified(true);
+    bool cancelled = false;
+    CHECK(storage.saveDocument(&graphic, nullptr, cancelled));
+    CHECK(cancelled);
+    CHECK(storage.m_asked == 1);
+    CHECK(contents(source) == QByteArray("replacement"));
+}
+
+TEST_CASE("Private template finalization keeps an untitled DXF document", "[documentsstorage][import][offset][template]") {
+    ensureApp(); TestStorage storage; RS_Graphic graphic; graphic.initForNewDocument();
+    graphic.setFilename(QStringLiteral("previous.dwg")); graphic.setFormatType(RS2::FormatDWG2018); graphic.setModified(true);
+    storage.finalizeTemplateGraphic(graphic);
+    CHECK(graphic.getFilename().isEmpty()); CHECK(graphic.getFormatType() == RS2::FormatDXFRW);
+    CHECK_FALSE(graphic.sourceFileIdentity().valid);
+    CHECK_FALSE(graphic.getAutoSaveFileName().isEmpty()); CHECK_FALSE(graphic.getLastSaveTime().isValid());
+    CHECK_FALSE(graphic.isModified());
+}
+
+TEST_CASE("An unverified imported source requires Save As", "[documentsstorage][import][offset][source-change]") {
+    ensureApp(); QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString source = directory.filePath("drawing.dxf"); QFile file(source);
+    REQUIRE(file.open(QIODevice::WriteOnly)); REQUIRE(file.write("source") == 6); file.close();
+    TestStorage storage; RS_Graphic graphic; graphic.initForNewDocument();
+    graphic.setFilename(source); graphic.setFormatType(RS2::FormatUnknown); graphic.setModified(true);
+    bool cancelled = false;
+    CHECK(storage.saveDocument(&graphic, nullptr, cancelled)); CHECK(cancelled); CHECK(storage.m_asked == 1);
+    CHECK(contents(source) == QByteArray("source")); CHECK(graphic.isModified());
+}
+
+TEST_CASE("Same-size source replacement with restored mtime requires Save As",
+          "[documentsstorage][import][offset][source-change]") {
+    ensureApp(); QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString source = directory.filePath("drawing.dxf");
+    QFile file(source);
+    REQUIRE(file.open(QIODevice::WriteOnly)); REQUIRE(file.write("source") == 6); file.close();
+    const auto originalModified = QFileInfo(source).lastModified();
+    const auto importedIdentity = LC_FileIdentity::capture(source);
+    REQUIRE(importedIdentity.valid);
+
+    QThread::msleep(1100);
+    REQUIRE(file.open(QIODevice::WriteOnly | QIODevice::Truncate));
+    REQUIRE(file.write("change") == 6); file.close();
+    REQUIRE(file.open(QIODevice::ReadWrite));
+    REQUIRE(file.setFileTime(originalModified, QFileDevice::FileModificationTime));
+    file.close();
+    CHECK(QFileInfo(source).lastModified() == originalModified);
+    CHECK_FALSE(importedIdentity.matches(source));
+
+    TestStorage storage; RS_Graphic graphic; graphic.initForNewDocument();
+    graphic.setFilename(source); graphic.setFormatType(RS2::FormatDXFRW);
+    graphic.setLastSaveTime(originalModified); graphic.setSourceFileIdentity(importedIdentity);
+    graphic.setModified(true);
+    bool cancelled = false;
+    SECTION("cancel Save As") {
+        CHECK(storage.saveDocument(&graphic, nullptr, cancelled));
+        CHECK(cancelled);
+    }
+    SECTION("selecting the original path is refused") {
+        storage.m_answer = source;
+        CHECK_FALSE(storage.saveDocument(&graphic, nullptr, cancelled));
+        CHECK_FALSE(cancelled);
+    }
+    CHECK(storage.m_asked == 1);
+    CHECK(contents(source) == QByteArray("change"));
+    CHECK_FALSE(QFileInfo::exists(source + "~"));
+    CHECK(graphic.isModified());
+}
+
+TEST_CASE("Save As cannot replace a new symlink target at the imported source path",
+          "[documentsstorage][import][offset][source-change]") {
+    ensureApp(); QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString source = directory.filePath("drawing.dxf");
+    const QString target = directory.filePath("external.dxf");
+    QFile file(source);
+    REQUIRE(file.open(QIODevice::WriteOnly)); REQUIRE(file.write("source") == 6); file.close();
+    const auto importedIdentity = LC_FileIdentity::capture(source);
+    REQUIRE(importedIdentity.valid);
+    QFile external(target);
+    REQUIRE(external.open(QIODevice::WriteOnly)); REQUIRE(external.write("external") == 8); external.close();
+    REQUIRE(QFile::remove(source));
+    std::error_code error;
+    std::filesystem::create_symlink(std::filesystem::u8path(target.toUtf8().constData()),
+                                    std::filesystem::u8path(source.toUtf8().constData()), error);
+    if (error) SKIP("Symbolic links are unavailable on this filesystem");
+
+    TestStorage storage; storage.m_answer = source;
+    RS_Graphic graphic; graphic.initForNewDocument();
+    graphic.setFilename(source); graphic.setFormatType(RS2::FormatDXFRW);
+    graphic.setLastSaveTime(importedIdentity.modified); graphic.setSourceFileIdentity(importedIdentity);
+    graphic.setModified(true); bool cancelled = false;
+    CHECK_FALSE(storage.saveDocument(&graphic, nullptr, cancelled));
+    CHECK_FALSE(cancelled); CHECK(storage.m_asked == 1);
+    CHECK(contents(target) == QByteArray("external"));
+    CHECK(graphic.isModified());
+}
+
+TEST_CASE("Autosave never writes through an alias of the source drawing", "[documentsstorage][import][offset][source-change]") {
+    ensureApp(); QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString source = directory.filePath("drawing.dxf"); QFile file(source);
+    REQUIRE(file.open(QIODevice::WriteOnly)); REQUIRE(file.write("source") == 6); file.close();
+    QString autosave = source;
+    SECTION("same path") {}
+    SECTION("hard link") {
+        autosave = directory.filePath("autosave.dxf"); std::error_code error;
+        std::filesystem::create_hard_link(std::filesystem::u8path(source.toUtf8().constData()),
+                                          std::filesystem::u8path(autosave.toUtf8().constData()), error);
+        if (error) SKIP("Hard links are unavailable on this filesystem");
+    }
+    SECTION("symbolic link") {
+        autosave = directory.filePath("autosave.dxf"); std::error_code error;
+        std::filesystem::create_symlink(std::filesystem::u8path(source.toUtf8().constData()),
+                                        std::filesystem::u8path(autosave.toUtf8().constData()), error);
+        if (error) SKIP("Symbolic links are unavailable on this filesystem");
+    }
+    TestStorage storage; RS_Graphic graphic; graphic.initForNewDocument();
+    graphic.setFilename(source); graphic.setFormatType(RS2::FormatUnknown); graphic.setAutosaveFileName(autosave);
+    graphic.setModified(true); QString written;
+    CHECK_FALSE(storage.autoSaveDocument(&graphic, nullptr, written)); CHECK(written == autosave);
+    CHECK(contents(source) == QByteArray("source")); CHECK(graphic.isModified());
+}
+
+TEST_CASE("Autosave rejects a hard link to the imported source after its path is replaced",
+          "[documentsstorage][import][offset][source-change]") {
+    ensureApp(); QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString source = directory.filePath("drawing.dxf");
+    const QString autosave = directory.filePath("autosave.dxf");
+    QFile file(source);
+    REQUIRE(file.open(QIODevice::WriteOnly)); REQUIRE(file.write("source") == 6); file.close();
+    const auto importedIdentity = LC_FileIdentity::capture(source);
+    REQUIRE(importedIdentity.valid);
+    std::error_code error;
+    std::filesystem::create_hard_link(std::filesystem::u8path(source.toUtf8().constData()),
+                                      std::filesystem::u8path(autosave.toUtf8().constData()), error);
+    if (error) SKIP("Hard links are unavailable on this filesystem");
+    REQUIRE(QFile::remove(source));
+    QFile replacement(source);
+    REQUIRE(replacement.open(QIODevice::WriteOnly)); REQUIRE(replacement.write("newsrc") == 6); replacement.close();
+
+    TestStorage storage; RS_Graphic graphic; graphic.initForNewDocument();
+    graphic.setFilename(source); graphic.setFormatType(RS2::FormatDXFRW);
+    graphic.setAutosaveFileName(autosave); graphic.setSourceFileIdentity(importedIdentity);
+    graphic.setModified(true); QString written;
+    CHECK_FALSE(storage.autoSaveDocument(&graphic, nullptr, written));
+    CHECK(written == autosave); CHECK(contents(source) == QByteArray("newsrc"));
+    CHECK(contents(autosave) == QByteArray("source")); CHECK(graphic.isModified());
+}
+
+TEST_CASE("Autosave does not recreate a removed source through a dangling link", "[documentsstorage][import][offset][source-change]") {
+    ensureApp(); QTemporaryDir directory; REQUIRE(directory.isValid());
+    const QString source = directory.filePath("drawing.dxf");
+    const QString autosave = directory.filePath("autosave.dxf"); std::error_code error;
+    std::filesystem::create_symlink(std::filesystem::u8path(source.toUtf8().constData()),
+                                    std::filesystem::u8path(autosave.toUtf8().constData()), error);
+    if (error) SKIP("Symbolic links are unavailable on this filesystem");
+    TestStorage storage; RS_Graphic graphic; graphic.initForNewDocument();
+    graphic.setFilename(source); graphic.setFormatType(RS2::FormatUnknown); graphic.setAutosaveFileName(autosave);
+    graphic.setModified(true); QString written;
+    CHECK_FALSE(storage.autoSaveDocument(&graphic, nullptr, written)); CHECK(written == autosave);
+    CHECK_FALSE(QFileInfo::exists(source)); CHECK(graphic.isModified());
+}
 
 TEST_CASE("Legacy DXF recovery saves a corrected copy and protects its original",
           "[documentsstorage][save][legacyutf8]") {
@@ -919,6 +1130,7 @@ TEST_CASE("A drawing opened from DXF is saved as DXF", "[documentsstorage][save]
     REQUIRE(save(storage, graphic, cancelled));
     CHECK(storage.m_asked == 0);
     CHECK(isDxf(contents(path)));
+    CHECK(graphic.sourceFileIdentity().matches(path));
     CHECK(contents(path + "~") == original);
 
     RS_Graphic reopened;
@@ -1283,7 +1495,7 @@ TEST_CASE("A new drawing from a DWG template is saved as DXF", "[documentsstorag
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
-TEST_CASE("Save still refuses a file changed on disk since it was opened", "[documentsstorage][save]") {
+TEST_CASE("Save asks for another path when the source changed on disk", "[documentsstorage][save]") {
     ensureApp();
     QTemporaryDir dir;
     const QString path = dir.filePath("drawing.dwg");
@@ -1300,8 +1512,9 @@ TEST_CASE("Save still refuses a file changed on disk since it was opened", "[doc
     const QByteArray changed = contents(path);
     edit(graphic);
     bool cancelled = false;
-    CHECK_FALSE(save(storage, graphic, cancelled));
-    CHECK(storage.m_asked == 0);
+    CHECK(save(storage, graphic, cancelled));
+    CHECK(cancelled);
+    CHECK(storage.m_asked == 1);
     CHECK(contents(path) == changed);
     CHECK(graphic.isModified());
 }

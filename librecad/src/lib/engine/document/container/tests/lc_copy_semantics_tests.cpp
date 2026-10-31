@@ -30,8 +30,10 @@
 #include <type_traits>
 
 #include "drw_base.h"
+#include "lc_action_modify_entity.h"
 #include "lc_actiontestsupport.h"
 #include "lc_documentinvariants.h"
+#include "lc_testentityfactory.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_filterdxfrw.h"
@@ -200,6 +202,12 @@ std::vector<std::function<RS_Entity*(RS_Graphic&)>> containerMakers() {
             return s;
         },
         [](RS_Graphic& g) -> RS_Entity* {
+            auto offset = lc::test::makeOffsetCurve(&g);
+            REQUIRE(offset != nullptr);
+            REQUIRE(offset->hasEditableDefinition());
+            return offset.release();
+        },
+        [](RS_Graphic& g) -> RS_Entity* {
             auto* i = new RS_Insert(&g, RS_InsertData("B1", RS_Vector{20, 0}, RS_Vector{1, 1}, 0.0, 1, 1, RS_Vector{0, 0}));
             i->update();
             return i;
@@ -266,6 +274,38 @@ TEST_CASE("A value copy of a container is a deep copy", "[copy][container]") {
     copy.reset();
     CHECK(original->entityAt(0)->getLength() == 10.0);
 }
+
+TEST_CASE("Native offset clones own their cache and extension values", "[copy][container][lc-offsetcurve]") {
+    Drawing d;
+    auto original = lc::test::makeOffsetCurve(&d.m_graphic);
+    REQUIRE(original != nullptr);
+    LC_OffsetCurve::OwnedTail tail{{1000, QStringLiteral("original extension")},
+                                 {1010, RS_Vector{1, 2}}, {1070, std::int16_t{7}}};
+    REQUIRE(original->setOwnedExtensions(0x10, tail));
+    const std::unique_ptr<LC_OffsetCurve> clone{static_cast<LC_OffsetCurve*>(original->clone())};
+    REQUIRE(clone != nullptr);
+    REQUIRE(clone->rtti() == RS2::EntityOffsetCurve);
+    REQUIRE(clone->hasEditableDefinition());
+    CHECK(clone->getData().controlPoints.data() != original->getData().controlPoints.data());
+    CHECK(clone->cachedDefinitionGrips().data() != original->cachedDefinitionGrips().data());
+    CHECK(clone->unknownOwnedTail().data() != original->unknownOwnedTail().data());
+    CHECK(clone->unknownOwnedFlags() == 0x10);
+    REQUIRE(clone->unknownOwnedTail().size() == 3);
+    tail.front().value = QStringLiteral("changed caller storage");
+    CHECK(std::get<QString>(clone->unknownOwnedTail().front().value) == QStringLiteral("original extension"));
+    REQUIRE(clone->setOwnedExtensions(0x20, tail));
+    CHECK(original->unknownOwnedFlags() == 0x10);
+    CHECK(std::get<QString>(original->unknownOwnedTail().front().value) == QStringLiteral("original extension"));
+    CHECK(lc::test::containerProblems(*clone).isEmpty());
+    const double before = touch(clone.get());
+    original.reset();
+    CHECK(touch(clone.get()) == before);
+    CHECK(clone->hasEditableDefinition());
+    CHECK(std::get<QString>(clone->unknownOwnedTail().front().value) == QStringLiteral("changed caller storage"));
+}
+
+// H-dialog replaces the temporary native-properties refusal with real
+// widget/action Accept, Cancel and undo/redo tests in lc_offsetcurve_propertiesdialog_tests.cpp.
 
 TEST_CASE("A cloned closed polyline closes itself, not the original", "[copy][polyline]") {
     Drawing d;

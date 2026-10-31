@@ -27,10 +27,12 @@
 #include "console_command_utils.h"
 
 #include <QDir>
+#include <QEventLoop>
 #include <QFile>
 #include <QFileInfo>
 #include <QSet>
 
+#include "lc_offsetimportsession.h"
 #include "rs_fileio.h"
 #include "rs_graphic.h"
 
@@ -286,17 +288,65 @@ bool validateOutputTargets(const QStringList& inputFiles, const QStringList& out
     return true;
 }
 
-bool importGraphic(RS_Graphic& graphic, const QString& inputFile, RS2::FormatType type) {
+std::unique_ptr<RS_Graphic> importGraphic(const QString& inputFile, RS2::FormatType type) {
     if (!QFileInfo::exists(inputFile)) {
         qCritical("ERROR: input file does not exist: '%s'", qPrintable(inputFile));
-        return false;
+        return {};
     }
 
-    graphic.initForNewDocument();
+    const QString suffix = QFileInfo(inputFile).suffix();
+    const bool staged = LC_OffsetImportSession::supportsType(type) ||
+        (type == RS2::FormatUnknown &&
+         (suffix.compare(QStringLiteral("dxf"), Qt::CaseInsensitive) == 0 ||
+          suffix.compare(QStringLiteral("dwg"), Qt::CaseInsensitive) == 0));
+    if (staged) {
+        LC_OffsetImportSession session;
+        QEventLoop loop;
+        LC_OffsetImportSession::Outcome outcome;
+        bool completed = false;
+        const bool started = session.start(inputFile, type, RS2::DxfTextEncoding::Declared,
+            LC_OffsetImportSession::PartialDecision{
+                [](bool hasEntities, const QString&) { return hasEntities; }},
+            [&](LC_OffsetImportSession::Outcome result) {
+                outcome = std::move(result);
+                completed = true;
+                loop.quit();
+            });
+        if (!started) {
+            qCritical("ERROR: bounded import could not start for '%s'", qPrintable(inputFile));
+            return {};
+        }
+        if (!completed)
+            loop.exec();
+        if (!completed || outcome.status != LC_OffsetImportSession::Status::Complete || !outcome.graphic) {
+            const QString error = outcome.error.isEmpty() ? QStringLiteral("staged import failed") : outcome.error;
+            qCritical("ERROR: import failed for '%s': %s", qPrintable(inputFile), qPrintable(error));
+            return {};
+        }
+        if (outcome.sourceUnverified) {
+            qCritical("ERROR: source changed during import of '%s'", qPrintable(inputFile));
+            return {};
+        }
+        if (outcome.partial)
+            qWarning("WARNING: partial import of '%s': %s", qPrintable(inputFile), qPrintable(outcome.error));
+        if (outcome.downgraded != 0) {
+            qWarning("WARNING: %zu offset carrier(s) in '%s' were imported as ordinary spline geometry",
+                     outcome.downgraded, qPrintable(inputFile));
+        }
+        if (outcome.suppressedDiagnostics != 0) {
+            qWarning("WARNING: %zu additional offset-import diagnostic(s) were suppressed",
+                     outcome.suppressedDiagnostics);
+        }
+        outcome.graphic->onLoadingCompleted();
+        return std::move(outcome.graphic);
+    }
+
+    auto graphic = std::make_unique<RS_Graphic>();
+    graphic->initForNewDocument();
 
     bool reported = false;
     const bool imported = RS_FileIO::instance()->fileImport(
-        graphic, inputFile, type,
+        *graphic, inputFile, type,
         [&reported, &inputFile](bool partial, const QString& error) {
             reported = true;
             if (partial) {
@@ -313,11 +363,11 @@ bool importGraphic(RS_Graphic& graphic, const QString& inputFile, RS2::FormatTyp
         // the format was not recognised, so the import never reached a filter
         if (!reported)
             qCritical("ERROR: cannot read '%s'", qPrintable(inputFile));
-        return false;
+        return {};
     }
 
-    graphic.onLoadingCompleted();
-    return true;
+    graphic->onLoadingCompleted();
+    return graphic;
 }
 
 } // namespace LC_Console

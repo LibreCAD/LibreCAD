@@ -1072,9 +1072,26 @@ std::vector<QString> RS_Entity::getAllKeys() const {
     return ret;
 }
 
+std::size_t RS_Entity::userDefVarCount() const {
+    return m_pImpl->varList.size();
+}
+
 const std::vector<std::shared_ptr<DRW_Variant>> &
 RS_Entity::getDrwExtData() const {
   return m_pImpl->drwExtData;
+}
+
+bool RS_Entity::cloneMetadataFits(std::size_t variables, std::size_t stringUnits,
+                                 std::size_t reactors) const noexcept {
+    if (m_pImpl->varList.size() > variables || m_pImpl->m_reactorHandles.size() > reactors) return false;
+    for (const auto& [key, value] : m_pImpl->varList) {
+        const auto a = static_cast<std::size_t>(key.size()), b = static_cast<std::size_t>(value.size());
+        if (a > stringUnits) return false;
+        stringUnits -= a;
+        if (b > stringUnits) return false;
+        stringUnits -= b;
+    }
+    return true;
 }
 
 void RS_Entity::setDrwExtData(
@@ -1183,6 +1200,9 @@ bool RS_Entity::isPrint() const {
 
 bool RS_Entity::trimmable() const {
     switch (rtti()) {
+        case RS2::EntityOffsetCurve:
+            // The native curve is a spline container, not a trimmable atomic entity.
+            return false;
         case RS2::EntityArc:
         case RS2::EntityCircle: // fixme - check whether prepareTrim() is supported there?
         case RS2::EntityEllipse:
@@ -1299,7 +1319,7 @@ std::ostream& operator <<(std::ostream& os, RS_Entity& e) {
 }
 
 bool RS_Entity::isParentIgnoredOnModifications() const {
-    return m_parent != nullptr && m_parent->ignoredOnModification();
+    return m_parent != nullptr && (m_parent->rtti() == RS2::EntityOffsetCurve || m_parent->ignoredOnModification());
 }
 
 unsigned long long RS_Entity::getId() const {

@@ -26,7 +26,12 @@
 
 #include "rs_creation.h"
 
+#include <cmath>
+#include <memory>
+#include <utility>
+
 #include "lc_curveoffset.h"
+#include "lc_offsetcurvetransform.h"
 #include "lc_quadratic.h"
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
@@ -43,6 +48,26 @@
 
 // fixme - sand - refactor - review this class completely
 namespace {
+    RS_Entity* nativeParallelOwner(RS_Entity* entity) {
+        if (entity != nullptr && entity->getParent() != nullptr &&
+            entity->getParent()->rtti() == RS2::EntityOffsetCurve) return entity->getParent();
+        return entity;
+    }
+
+    bool nativeParallelRequest(const RS_Vector& coord, int number) {
+        // Match the drawing tools' 1..99 copy range before any cache clone.
+        return number > 0 && number < 100 && coord.valid && std::isfinite(coord.x) &&
+            std::isfinite(coord.y) && std::isfinite(coord.z) && coord.z == 0;
+    }
+
+    std::unique_ptr<RS_Entity> plainParallelCache(const RS_Entity& native) {
+        // Parallel tools offset the visible cache, never the original ellipse's
+        // definition. Staging bounds and validates even a stale native payload.
+        auto prepared = LC_OffsetCurveTransform::prepare(native, {}, true);
+        if (!prepared || prepared.entity->rtti() != RS2::EntitySpline) return {};
+        return std::move(prepared.entity);
+    }
+
     /**
      * @brief isArc whether the entity supports tangent
      * @param entity
@@ -95,6 +120,14 @@ namespace {
 void RS_Creation::createParallelThrough(const RS_Vector& coord, const int number, RS_Entity* e, const bool symmetric,
                                         bool distributeWithin,
                                         QList<RS_Entity*>& createdEntities, const bool forPreview) {
+    e = nativeParallelOwner(e);
+    std::unique_ptr<RS_Entity> plain;
+    if (e != nullptr && e->rtti() == RS2::EntityOffsetCurve) {
+        if (!nativeParallelRequest(coord, number)) return;
+        plain = plainParallelCache(*e);
+        if (!plain) return;
+        e = plain.get();
+    }
     // check given entity:
     if (e == nullptr) {
         return;
@@ -145,6 +178,7 @@ void RS_Creation::createParallelThrough(const RS_Vector& coord, const int number
  */
 void RS_Creation::createParallel(const RS_Vector& coord, const double distance, const int number, RS_Entity* e, const bool symmetric,
                                  QList<RS_Entity*>& createdEntities, const bool forPreview) {
+    e = nativeParallelOwner(e);
     // check given entity:
     if (e == nullptr) {
         return;
@@ -164,6 +198,7 @@ void RS_Creation::createParallel(const RS_Vector& coord, const double distance, 
         case RS2::EntityHyperbola:
         case RS2::EntitySplinePoints:
         case RS2::EntitySpline:
+        case RS2::EntityOffsetCurve:
             createParallelCurve(coord, distance, number, e, createdEntities, forPreview);
             break;
         default:
@@ -359,6 +394,15 @@ void RS_Creation::createParallelCircle(const RS_Vector& coord, double distance, 
 void RS_Creation::createParallelCurve(const RS_Vector& coord, const double distance, const int number, const RS_Entity* e,
                                       QList<RS_Entity*>& createdEntities, const bool forPreview) {
     Q_ASSERT(e != nullptr);
+    if (e == nullptr) return;
+    if (e->getParent() != nullptr && e->getParent()->rtti() == RS2::EntityOffsetCurve) e = e->getParent();
+    std::unique_ptr<RS_Entity> plain;
+    if (e->rtti() == RS2::EntityOffsetCurve) {
+        if (!nativeParallelRequest(coord, number) || !std::isfinite(distance)) return;
+        plain = plainParallelCache(*e);
+        if (!plain) return;
+        e = plain.get();
+    }
 
     // A spline's offset may change type and have several pieces, so each copy
     // comes from createOffset(). A copy that fails ends the series instead of

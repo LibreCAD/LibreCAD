@@ -30,7 +30,7 @@
 /// framing for the file, system, and data pages.
 class dwgWriter21 final : public dwgWriter24 {
 public:
-    dwgWriter21(std::ofstream *stream, DRW_Header *header)
+    dwgWriter21(std::ostream *stream, DRW_Header *header)
         : dwgWriter24(stream, header) {
         m_version = DRW::AC1021;
         configureTextCodec();

@@ -35,6 +35,7 @@
 #include "lc_dimstyleslist.h"
 #include "lc_plot_settings.h"
 #include "lc_textstylelist.h"
+#include "../../fileio/lc_fileidentity.h"
 #include "lc_dwgadvancedmetadata.h"
 #include "lc_linetypelist.h"
 #include "lc_ucslist.h"
@@ -303,6 +304,9 @@ public:
 
     QDateTime getLastSaveTime(){return m_lastSaveTime;}
     void setLastSaveTime(const QDateTime &time) { m_lastSaveTime = time;}
+    const LC_FileIdentity& sourceFileIdentity() const noexcept { return m_sourceFileIdentity; }
+    void setSourceFileIdentity(LC_FileIdentity identity) { m_sourceFileIdentity = std::move(identity); }
+    void clearSourceFileIdentity() { m_sourceFileIdentity = {}; }
 
     LC_PlotSettings* getPlotSettings() const;
 
@@ -374,6 +378,7 @@ private:
     void refreshBlockVisibility();
 
     QDateTime m_lastSaveTime;
+    LC_FileIdentity m_sourceFileIdentity;
     QString m_currentFileName; //keep a copy of filename for the modifiedTime
 
     // fixme - sand - files - change to unique_ptrs?

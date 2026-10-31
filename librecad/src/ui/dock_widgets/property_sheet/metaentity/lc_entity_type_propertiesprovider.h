@@ -126,7 +126,7 @@ protected:
 
     void addMultipleProperties(LC_PropertyContainer* cont, QList<LC_PropertyAtomic*> props);
 
-    void fillGenericAttributes(LC_PropertyContainer* container, const QList<RS_Entity*>& list);
+    virtual void fillGenericAttributes(LC_PropertyContainer* container, const QList<RS_Entity*>& list);
 
     template <typename EntityClass>
     void addVector(const LC_Property::Names& names, typename LC_EntityPropertyValueDelegate<RS_Vector, EntityClass>::FunValueGet funGet,
