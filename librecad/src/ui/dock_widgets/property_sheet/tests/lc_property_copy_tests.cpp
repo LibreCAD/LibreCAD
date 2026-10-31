@@ -33,6 +33,7 @@
 #include "lc_property_qstring_lineedit_view.h"
 #include "lc_propertysheet_widget_options.h"
 #include "lc_propertysheetwidget.h"
+#include "lc_undosection.h"
 #include "qg_graphicview.h"
 #include "rs_dimaligned.h"
 #include "rs_dimlinear.h"
@@ -290,6 +291,27 @@ TEST_CASE("Dimension property sheet copies its measured value and closes the edi
     (void)properties->grab();
     QKeyEvent activateBeforeDetach(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
     QCoreApplication::sendEvent(properties, &activateBeforeDetach);
+    alive = properties->findChild<QLineEdit*>("LCPropertyValueEditor");
+    REQUIRE_FALSE(alive.isNull());
+    {
+        LC_UndoSection undo(&graphic, view.getViewPort());
+        undo.addUndoable(dimension);
+    }
+    REQUIRE(graphic.undo());
+    CHECK(dimension->isDeleted());
+    view.defaultActionActivated(true, RS2::ActionDefault, RS2::ActionEditUndo);
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    CHECK(alive.isNull());
+    REQUIRE(graphic.redo());
+    graphic.select(QList<RS_Entity*>{dimension}, true);
+    sheet.setGraphicView(&view);
+    QCoreApplication::processEvents();
+    measured = properties->findProperty("$_secDimText.$_secDimText$dimTextMeasurement");
+    REQUIRE(measured != nullptr);
+    properties->setActiveProperty(measured, true);
+    (void)properties->grab();
+    QKeyEvent activateAfterUndo(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+    QCoreApplication::sendEvent(properties, &activateAfterUndo);
     alive = properties->findChild<QLineEdit*>("LCPropertyValueEditor");
     REQUIRE_FALSE(alive.isNull());
     sheet.setGraphicView(nullptr);
