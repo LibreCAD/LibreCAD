@@ -171,8 +171,20 @@ TEST_CASE("Dimension property sheet copies its measured value and closes the edi
     (void)properties->grab();
     int edits = 0;
     QObject::connect(properties, &LC_PropertiesSheet::propertyEdited, &sheet, [&edits] { ++edits; });
-    QKeyEvent activate(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
-    QCoreApplication::sendEvent(properties, &activate);
+    QPoint valuePoint(-1, -1);
+    for (int y = 0; y < properties->viewport()->height(); ++y) {
+        const QPoint candidate(properties->viewport()->width() * 3 / 4, y);
+        if (properties->getPropertyAt(candidate) == measured) {
+            valuePoint = candidate;
+            break;
+        }
+    }
+    REQUIRE(valuePoint.x() >= 0);
+    const QPoint globalPoint = properties->viewport()->mapToGlobal(valuePoint);
+    QMouseEvent press(QEvent::MouseButtonPress, valuePoint, globalPoint, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QMouseEvent release(QEvent::MouseButtonRelease, valuePoint, globalPoint, Qt::LeftButton, Qt::NoButton, Qt::NoModifier);
+    QCoreApplication::sendEvent(properties->viewport(), &press);
+    QCoreApplication::sendEvent(properties->viewport(), &release);
     auto* editor = properties->findChild<QLineEdit*>("LCPropertyValueEditor");
     REQUIRE(editor != nullptr);
     CHECK(editor->isReadOnly());
@@ -210,6 +222,15 @@ TEST_CASE("Dimension property sheet copies its measured value and closes the edi
         REQUIRE(editor != nullptr);
         alive = editor;
     }
+    QKeyEvent enterEditor(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+    QCoreApplication::sendEvent(editor, &enterEditor);
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    CHECK(alive.isNull());
+    QKeyEvent reactivateAfterEnter(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+    QCoreApplication::sendEvent(properties, &reactivateAfterEnter);
+    editor = properties->findChild<QLineEdit*>("LCPropertyValueEditor");
+    REQUIRE(editor != nullptr);
+    alive = editor;
     QKeyEvent escape(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier);
     QCoreApplication::sendEvent(editor, &escape);
     QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
