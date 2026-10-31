@@ -72,7 +72,9 @@ namespace {
 struct TestApplication {
   TestApplication() {
     if (!QCoreApplication::instance()) {
-      qputenv("QT_QPA_PLATFORM", "offscreen");
+      if (!qEnvironmentVariableIsSet("QT_QPA_PLATFORM")) {
+        qputenv("QT_QPA_PLATFORM", "offscreen");
+      }
       static int argc = 1;
       static char name[] = "text_bidi_tests";
       static char *argv[] = {name, nullptr};

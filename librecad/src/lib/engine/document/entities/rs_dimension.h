@@ -27,6 +27,9 @@
 #ifndef RS_DIMENSION_H
 #define RS_DIMENSION_H
 
+#include <cmath>
+#include <optional>
+
 #include "lc_dimstyle.h"
 #include "rs_entitycontainer.h"
 #include "rs_hatch.h"
@@ -146,6 +149,12 @@ public:
      * measurement of the dimension (e.g. 10.5 or 15'14").
      */
     virtual QString getMeasuredLabel()  = 0;
+
+    // Geometric measurement in drawing units, or radians for angular dimensions.
+    // This query is independent of the generated label and dimension style.
+    virtual std::optional<double> getMeasuredValue() const { return std::nullopt; }
+    QString getMeasuredValueText() const;
+    QString getFormattedValueText() const;
 
     /**
      * Must be overwritten by implementing dimension entity class
@@ -311,6 +320,12 @@ private:
     RS_Vector doGetNearestRef(const RS_Vector& coord, double* dist = nullptr) const override;
     RS_Vector doGetNearestSelectedRef(const RS_Vector& coord, double* dist) const override;
 protected:
+    static bool validMeasurementPoint(const RS_Vector& point) {
+        return point.valid && std::isfinite(point.x) && std::isfinite(point.y);
+    }
+    static std::optional<double> finiteMeasurement(double value) {
+        return std::isfinite(value) ? std::optional<double>(value) : std::nullopt;
+    }
     /** Data common to all dimension entities. */
     RS_DimensionData m_dimGenericData;
     // dim style used during updateDim()

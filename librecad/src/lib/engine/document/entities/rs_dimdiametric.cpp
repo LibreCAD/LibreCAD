@@ -74,6 +74,11 @@ RS_Entity* RS_DimDiametric::clone() const {
  * @return Automatically created label for the default
  * measurement of this dimension.
  */
+std::optional<double> RS_DimDiametric::getMeasuredValue() const {
+    if (!validMeasurementPoint(m_dimGenericData.definitionPoint) || !validMeasurementPoint(m_dimDiametricData.definitionPoint)) return std::nullopt;
+    return finiteMeasurement(m_dimGenericData.definitionPoint.distanceTo(m_dimDiametricData.definitionPoint));
+}
+
 QString RS_DimDiametric::getMeasuredLabel() {
     // Definitive dimension line:
     const double distance = m_dimGenericData.definitionPoint.distanceTo(m_dimDiametricData.definitionPoint) * getGeneralFactor();

@@ -736,18 +736,9 @@ void LC_PropertiesProviderDimBase::createTextSection(LC_PropertyContainer* conta
                    ds->text()->setReadingDirectionRaw(v);
                }, list, cont);
 
-    addReadOnlyString<RS_Dimension>({"dimTextMeasurement", tr("Text measurement"), tr("Specified dimension measurement value")},
-                                    [this](const RS_Dimension* e)-> QString {
-                                        const double measurement = e->getMeasurement();
-                                        QString value;
-                                        if (e->rtti() == RS2::EntityDimAngular) {
-                                            value = formatRawAngle(measurement, RS2::AngleFormat::DegreesDecimal);
-                                        }
-                                        else {
-                                            value = formatDouble(measurement);
-                                        }
-                                        return value;
-                                    }, list, cont);
+    addReadOnlyString<RS_Dimension>({"dimTextMeasurement", tr("Measured value"),
+                                     tr("Geometric measurement in drawing units, or decimal degrees for angles; excludes dimension scale factor.")},
+                                    [](const RS_Dimension* e) -> QString { return e->getMeasuredValueText(); }, list, cont, true);
 
     addString<RS_Dimension>({
                                 "dimTextOverride",

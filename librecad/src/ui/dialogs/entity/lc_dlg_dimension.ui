@@ -168,6 +168,23 @@
      </property>
     </widget>
    </item>
+   <item row="7" column="0" colspan="4">
+    <layout class="QHBoxLayout" name="measurementLayout">
+     <item>
+      <widget class="QLabel" name="lblMeasuredValue">
+       <property name="text"><string>Measured value:</string></property>
+       <property name="buddy"><cstring>leMeasuredValue</cstring></property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="leMeasuredValue">
+       <property name="readOnly"><bool>true</bool></property>
+       <property name="placeholderText"><string>Unavailable</string></property>
+       <property name="toolTip"><string>Geometric measurement in drawing units, or decimal degrees for angles; excludes dimension scale factor.</string></property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="11" column="0" colspan="5">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">

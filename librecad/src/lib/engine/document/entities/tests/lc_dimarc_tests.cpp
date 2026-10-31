@@ -148,7 +148,7 @@ TEST_CASE("Rebuilding an arc dimension leaves nothing behind", "[dimension][dima
 }
 
 TEST_CASE("An imported ARC_DIMENSION is drawn, and rebuilding it leaves nothing behind",
-          "[dimension][dimarc][dxf][filter][ownership]") {
+          "[dimension][dimarc][dxf][filter][ownership][clipboard]") {
     REQUIRE(lc::test::application() != nullptr);
     const QTemporaryDir dir;
     REQUIRE(dir.isValid());
@@ -174,6 +174,9 @@ TEST_CASE("An imported ARC_DIMENSION is drawn, and rebuilding it leaves nothing 
     CHECK(dimension->getCenter().x == Catch::Approx(0.0).margin(1e-9));
     CHECK(dimension->getCenter().y == Catch::Approx(0.0).margin(1e-9));
     CHECK(dimension->getRadius() == Catch::Approx(15.0));
+    REQUIRE(dimension->getMeasuredValue());
+    CHECK(*dimension->getMeasuredValue() == Catch::Approx(15.0 * M_PI_2));
+    CHECK(dimension->getFormattedValueText() == QStringLiteral("∩ 23.5619"));
 
     // The dimension arc, on either side of the text, and both extension lines.
     const Parts parts = partsOf(*dimension);

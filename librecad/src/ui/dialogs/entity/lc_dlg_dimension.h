@@ -69,6 +69,7 @@ protected:
     void saveDimensionStyles();
     void setupDimensionTypeDependentUI(RS_Dimension* dim);
     void setupDimensionAttributesUI(const RS_Dimension* dim);
+    void updateMeasuredValue() const;
     QModelIndex getSelectedDimStyleIndex() const;
 protected slots:
     void languageChange();

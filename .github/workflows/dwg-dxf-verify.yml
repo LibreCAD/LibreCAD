@@ -40,6 +40,12 @@ on:
       - 'librecad/src/lib/engine/document/entities/lc_text*'
       - 'librecad/src/lib/engine/document/container/rs_entitycontainer.*'
       - 'librecad/src/lib/engine/document/entities/tests/**'
+      - 'librecad/src/lib/engine/document/entities/*dim*'
+      - 'librecad/src/ui/dialogs/entity/lc_dlg_dimension.*'
+      - 'librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.*'
+      - 'librecad/src/ui/dock_widgets/property_sheet/**'
+      - 'librecad/src/ui/main/init/lc_menufactory_graphicview.*'
+      - 'librecad/src/ui/main/tests/lc_docklayout_tests.cpp'
       - 'librecad/src/lib/engine/document/fonts/**'
       - 'librecad/src/test/**'
       - 'librecad/src/main/console_dxf2png.*'
@@ -103,6 +109,7 @@ jobs:
               librecad_offset_hostilefile_tests librecad_offset_adapter_tests \
               librecad_lc_consolesvgexporttests librecad_painter_tests \
               libdxfrw_dxf_embedded_scope_tests libdxfrw_verified_write_tests librecad_text_native_tests \
+              librecad_dimension_clipboard_tests \
               librecad_offset_worker librecad_offset_worker_wire_tests librecad_offset_worker_request_tests \
               librecad_offset_worker_result_tests librecad_offset_worker_kernel_tests \
               librecad_offset_worker_process_tests librecad_offset_worker_client_tests \
@@ -201,7 +208,8 @@ jobs:
           set "PATH=%VSPATH%\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja;%PATH%"
           ninja --version || exit /b 1
           cmake.exe -S . -B generated-tests -G Ninja -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT="%CD%\boost" -DCMAKE_CXX_FLAGS="/EHsc" -DBUILD_TESTS=ON -DLIBRECAD_ENABLE_OPENTYPE=OFF -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON -DLIBRECAD_REGISTER_OFFSET_WORKER_TESTS=ON -DLIBRECAD_REGISTER_FULL_TESTS=OFF -DLIBRECAD_REGISTER_FORMAT_TESTS=OFF -DLIBRECAD_REGISTER_CROSS_READ_SMOKE=OFF || exit /b 1
-          cmake --build generated-tests --parallel --target librecad_dwg_fast_tests librecad_dxf_fast_tests librecad_console_command_utils_tests librecad_offset_hostilefile_tests librecad_offset_adapter_tests librecad_lc_consolesvgexporttests librecad_painter_tests libdxfrw_dxf_embedded_scope_tests libdxfrw_verified_write_tests librecad_text_native_tests librecad_offset_worker librecad_offset_worker_wire_tests librecad_offset_worker_request_tests librecad_offset_worker_result_tests librecad_offset_worker_kernel_tests librecad_offset_worker_process_tests librecad_offset_worker_client_tests librecad_offset_worker_fault_tests librecad_offset_worker_geometry_timeout_tests librecad_offset_creation_action_tests librecad_offset_cache_trim_failure_tests librecad_offset_cache_check_failure_tests || exit /b 1
+          cmake.exe -S . -B generated-tests -G Ninja -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT="%CD%\boost" -DCMAKE_CXX_FLAGS="/EHsc" -DBUILD_TESTS=ON -DLIBRECAD_ENABLE_OPENTYPE=OFF -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON -DLIBRECAD_REGISTER_OFFSET_WORKER_TESTS=ON -DLIBRECAD_REGISTER_FULL_TESTS=OFF -DLIBRECAD_REGISTER_FORMAT_TESTS=OFF -DLIBRECAD_REGISTER_CROSS_READ_SMOKE=OFF || exit /b 1
+          cmake --build generated-tests --parallel --target librecad_dwg_fast_tests librecad_dxf_fast_tests librecad_console_command_utils_tests librecad_offset_hostilefile_tests librecad_offset_adapter_tests librecad_lc_consolesvgexporttests librecad_painter_tests libdxfrw_dxf_embedded_scope_tests libdxfrw_verified_write_tests librecad_text_native_tests librecad_dimension_clipboard_tests librecad_offset_worker librecad_offset_worker_wire_tests librecad_offset_worker_request_tests librecad_offset_worker_result_tests librecad_offset_worker_kernel_tests librecad_offset_worker_process_tests librecad_offset_worker_client_tests librecad_offset_worker_fault_tests librecad_offset_worker_geometry_timeout_tests librecad_offset_creation_action_tests librecad_offset_cache_trim_failure_tests librecad_offset_cache_check_failure_tests || exit /b 1
         shell: cmd
 
       - name: Run bounded DWG/DXF test lanes

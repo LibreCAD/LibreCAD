@@ -24,6 +24,8 @@
 #include "lc_menufactory_graphicview.h"
 
 #include <QDockWidget>
+#include <QApplication>
+#include <QClipboard>
 
 #include "lc_actioncontext.h"
 #include "lc_actiongroup.h"
@@ -32,6 +34,7 @@
 #include "qc_applicationwindow.h"
 #include "qg_graphicview.h"
 #include "rs_ellipse.h"
+#include "rs_dimension.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
 #include "rs_selection.h"
@@ -562,11 +565,32 @@ void LC_MenuFactoryGraphicView::createGVMenuModifyGeneral(QMenu* contextMenu, QG
     createGVEditPropertiesAction(modifyGenericMenu, graphicView, entity);
 }
 
+void LC_MenuFactoryGraphicView::createGVDimensionCopyActions(QMenu* contextMenu, const RS_Entity* entity) const {
+    if (entity == nullptr) return;
+    const auto entityType = entity->rtti();
+    if (RS2::isDimensionalEntity(entityType) && entityType != RS2::EntityDimLeader) {
+        const auto* dimension = static_cast<const RS_Dimension*>(entity);
+        const QString value = dimension->getMeasuredValueText();
+        const QString formatted = value.isEmpty() ? QString() : dimension->getFormattedValueText();
+        auto* copyValue = contextMenu->addAction(tr("Copy value"));
+        copyValue->setEnabled(!value.isEmpty());
+        connect(copyValue, &QAction::triggered, contextMenu, [value] {
+            QApplication::clipboard()->setText(value, QClipboard::Clipboard);
+        });
+        auto* copyFormatted = contextMenu->addAction(tr("Copy formatted"));
+        copyFormatted->setEnabled(!formatted.isEmpty());
+        connect(copyFormatted, &QAction::triggered, contextMenu, [formatted] {
+            QApplication::clipboard()->setText(formatted, QClipboard::Clipboard);
+        });
+        contextMenu->addSeparator();
+    }
+}
+
 void LC_MenuFactoryGraphicView::createGVMenuEntitySpecific(QMenu* contextMenu, QG_GraphicView* graphicView, RS_Entity* entity,
                                                 const RS_Vector& pos) {
 
-
     const auto entityType = entity->rtti();
+    createGVDimensionCopyActions(contextMenu, entity);
  /*   auto resolvedEntity = entity;
     if (entityType == RS2::EntityPolyline) { // fixme - pass it to actions to eliminate resolving there??
         auto polyline = static_cast<RS_Polyline*>(entity);
