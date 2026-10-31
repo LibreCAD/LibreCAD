@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W222; chronological evidence follows): planned product
+Current status (W223; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -40,10 +40,11 @@ started but are not yet complete. W220 identifies the approved qmake6 app and
 worker used for bounded GUI checks; W221 confirms normal pointer selection of
 an Offset Curve. W222 also confirms the compact options strip exposes its
 configured values at the tested window size and that an offset commit can be
-undone back to the fixture state. Context-menu behavior, held-drag cancellation,
-and preview/commit parity remain unverified. W0-W2 and R remain open for
-acceptance, not because the Node developer runner substitutes for the native
-worker.
+undone back to the fixture state. W223 confirms a locked layer cannot advance
+the Offset source-selection step. Context-menu behavior, stale-peer behavior,
+held-drag cancellation, and preview/commit parity remain unverified. W0-W2 and
+R remain open for acceptance, not because the Node developer runner substitutes
+for the native worker.
 
 W216 integrates the current upstream tip `5a5fe7345fe7a7ec66892e879967673b6d7a859b`
 through merge commit `c4eb33fd2038e81c55ddd79f437d29dc85f96d47`. The upstream
@@ -8599,3 +8600,27 @@ recovery case only. Context menus, held-drag cancellation, preview/commit
 parity, remaining refusal/interaction cases, independent external-CAD
 rendering, durable screenshot/DPR evidence, deployed-package and W0-W2
 acceptance, reviewer approval, and final R integration remain open.
+
+## 181. W223 Locked-Layer Offset Selection Refusal
+
+In the approved isolated qmake6 app and disposable W193 drawing, used the
+Layers panel's Lock All control. With layer 0 visibly locked, started Tools >
+Modify > Offset and clicked the right-group outer ellipse. The action remained
+at `Select entities to offset`; Return did not advance to the direction prompt,
+so no commit stage was reached. Escape returned to Default. Unlock All restored
+the layer, and the drawing showed the original three-contour groups with no
+selected entities. The file was not saved; SHA256 remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+| W223 check | Result |
+|---|---|
+| Locked-layer selection refusal | PASS; source did not advance from entity selection and no offset commit occurred |
+| Lock-state cleanup | PASS; Unlock All restored the layer and idle/default action state |
+| Drawing/fixture integrity | PASS; original visible geometry retained; file SHA256 unchanged |
+| Product-source changes | None; visible validation and roadmap receipt only |
+
+W223 closes one locked-layer selection refusal case. Stale-peer behavior,
+held-drag cancellation, context menus, preview/commit parity, remaining GUI
+refusal/interaction cases, independent external-CAD rendering, durable
+screenshot/DPR evidence, deployed-package and W0-W2 acceptance, reviewer
+approval, and final R integration remain open.
