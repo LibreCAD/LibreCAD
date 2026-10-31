@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W236; chronological evidence follows): planned product
+Current status (W237; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -35,6 +35,10 @@ has been identified in the latest audit. W218's exact product-source head
 DWG/DXF Linux and Windows x64/ARM64, and all five-platform Pixi checks. Exact
 head CI is re-run after pushed test/acceptance receipts; its live state is
 tracked in the PR comment.
+
+W237 requalified the current test-only head with the full CMake application
+suite: 5,155 cases, 5,080 passed, 75 skipped, and 10,348,250 assertions passed.
+All nine registered CTest worker lanes passed as well.
 
 W220-W225 qualify selected pieces of the approved qmake6 app's GUI: normal
 Offset Curve selection, compact options at one window size, locked-layer
@@ -9067,3 +9071,23 @@ The native stale-peer route is now covered. Physical visible stale-peer
 interaction, held-drag and preview/commit screenshots, independent FreeCAD
 rendering, durable screenshot/DPR evidence, deployed-package and W0-W2
 acceptance, reviewer approval, and final R integration remain open.
+
+## 195. W237 Full CMake Exact-Worktree Requalification
+
+After the W236 event-pipeline test was pushed, rebuilt and ran the complete
+CMake Release application test executable from the worktree. All 5,155 cases
+completed: 5,080 passed, 75 were explicitly skipped, and all 10,348,250
+assertions passed. The separate registered CTest suite passed all nine worker
+lanes, including process, fault, geometry-timeout, and ordinary-process tests.
+This is test-only requalification; no product behavior changed.
+
+| W237 check | Result |
+|---|---|
+| Full application test suite | PASS; 5,155 cases, 5,080 passed, 75 skipped; 10,348,250 assertions passed |
+| Registered CTest worker suite | PASS; 9/9 tests |
+| Build | PASS; CMake Release `librecad_tests` target rebuilt |
+| PR head during validation | `b68b2c9571ef0f7b61a0683ecbb0c049e28fd843` |
+| Product behavior changes | None; validation and roadmap receipt only |
+
+The physical GUI, external rendering, deployed-package, W0-W2, reviewer, and
+final R integration gates remain open as recorded above.
