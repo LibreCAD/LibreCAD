@@ -8875,3 +8875,46 @@ event-pipeline test that asserts the idle right-button release reaches the menu
 factory and that the Offset Curve popup is shown. Do not edit the normal user
 profile to force a result. Keep context-menu integration open until that check
 separates custom-menu configuration from product event routing.
+
+## 189. W231 Context-Menu Event Probe Follow-Up
+
+With the user-approved test bundle, confirmed that a left click selects the
+Offset Curve owner and the property selector reports `Offset Curve (1)`. A
+right click on that selected owner still displayed no popup. A blank-canvas
+right click and a blank-canvas left double-click also displayed no popup. The
+last left double-click is only a probe of the popup factory path; it does not
+replace the required right-release interaction. The selected contour was
+cleared by clicking empty canvas with selection enabled, then `Select Entities`
+was restored to off. The property selector returned to `No Selection`, the
+command prompt returned to `Enter Command`, and no drawing save occurred. The
+W193 source fixture still hashes to
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+Read the test bundle's current settings without modifying them. The only
+persisted menu activator is `NNNMDNE` (`Middle` + `Double-Click`, no entity),
+which does not match the right-button release. This makes a custom right-click
+activator an unlikely explanation in the observed profile, but the run still
+does not isolate settings or prove which native Qt mouse event CUA delivered.
+`QG_GraphicView::mouseReleaseEvent` should route an idle right-button release
+to `invokeContextMenuForMouseEvent`; `LC_CreatorInvoker` should permit the
+default menu when no matching activator applies; and the factory builds a
+non-empty default menu. The missing popup remains an unresolved GUI event-path
+discrepancy, not a pass and not a confirmed product defect.
+
+| W231 check | Result |
+|---|---|
+| Left-click selection path | PASS; selected contour resolved to `Offset Curve (1)` |
+| Selected-owner right-click popup | OPEN; no popup visible |
+| Blank-canvas right-click popup | OPEN; no popup visible |
+| Blank-canvas double-click popup probe | OPEN; no popup visible; not a substitute for right-release test |
+| Menu activator settings | PARTIAL; observed profile has only a middle-button double-click activator; no setting changed |
+| UI cleanup | PASS; `Select Entities` off, `No Selection`, command idle |
+| Fixture integrity | PASS; no save, source hash unchanged |
+| Product-source changes | None; visible probe and roadmap receipt only |
+
+Next step remains a test-only QSettings-profile run or deterministic event-pipeline
+test that records the actual `QMouseEvent` button/type/modifiers and verifies
+the popup reaches `QMenu::exec`. Do not change the normal user's settings.
+FreeCAD external rendering, preview/commit parity, held-drag cancellation,
+stale-peer GUI behavior, retained screenshot/DPR evidence, deployed-package and
+W0-W2 acceptance, reviewer approval, and final R integration remain open.
