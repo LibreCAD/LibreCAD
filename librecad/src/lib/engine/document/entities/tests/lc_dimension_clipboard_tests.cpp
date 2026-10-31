@@ -8,6 +8,7 @@
 
 #include <QLocale>
 #include <cmath>
+#include <limits>
 
 #include "lc_actiontestsupport.h"
 #include "lc_dimarc.h"
@@ -81,6 +82,9 @@ TEST_CASE("Dimension values are geometric and independent of labels", "[dimensio
     RS_DimAligned invalid(nullptr, data, {RS_Vector(false), RS_Vector(0, 0)});
     CHECK_FALSE(invalid.getMeasuredValue());
     CHECK(invalid.getMeasuredValueText().isEmpty());
+    RS_DimAligned nonfinite(nullptr, data, {RS_Vector(0, 0), RS_Vector(std::numeric_limits<double>::quiet_NaN(), 0)});
+    CHECK_FALSE(nonfinite.getMeasuredValue());
+    CHECK(nonfinite.getMeasuredValueText().isEmpty());
     RS_DimAligned zero(nullptr, data, {RS_Vector(0, 0), RS_Vector(0, 0)});
     CHECK(zero.getMeasuredValueText() == "0");
     RS_DimAligned tiny(nullptr, data, {RS_Vector(0, 0), RS_Vector(1e-12, 0)});

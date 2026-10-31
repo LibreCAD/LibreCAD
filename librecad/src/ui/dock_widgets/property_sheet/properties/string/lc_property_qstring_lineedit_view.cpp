@@ -234,6 +234,7 @@ bool LC_PropertyQStringLineEditView::doAcceptKeyPressedForInplaceEdit(QKeyEvent*
 QWidget* LC_PropertyQStringLineEditView::doCreateValueEditor(QWidget* parent, const QRect& rect, const EditActivationContext* ctx) {
     if (!isEditableByUser() && m_copyableReadOnly && !isMultiValue() && !propertyValue().isEmpty()) {
         auto* editor = createValueEditorLineEdit(parent, rect, true, ctx);
+        editor->setProperty("_lc_copyable_readonly", true);
         QObject::connect(this, &QObject::destroyed, editor, &QWidget::deleteLater);
         QObject::connect(getStateProperty(), &QObject::destroyed, editor, &QWidget::deleteLater);
         if (getStateProperty() != getProperty()) {

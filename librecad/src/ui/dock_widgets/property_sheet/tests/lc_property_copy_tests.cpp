@@ -187,6 +187,41 @@ TEST_CASE("Dimension property sheet copies its measured value and closes the edi
     CHECK(QApplication::clipboard()->text() == "10");
     CHECK(edits == 0);
     QPointer<QLineEdit> alive(editor);
+    QPointer<QMenu> textMenu(editor->createStandardContextMenu());
+    QAction* popupCopy = nullptr;
+    for (auto* action : textMenu->actions()) {
+        if (action->text().contains("Copy", Qt::CaseInsensitive)) popupCopy = action;
+    }
+    REQUIRE(popupCopy != nullptr);
+    textMenu->popup(QPoint(20, 20));
+    QCoreApplication::processEvents();
+    REQUIRE_FALSE(alive.isNull());
+    QApplication::clipboard()->clear();
+    textMenu->setActiveAction(popupCopy);
+    QKeyEvent popupEnter(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+    QCoreApplication::sendEvent(textMenu.data(), &popupEnter);
+    QCoreApplication::processEvents();
+    CHECK(QApplication::clipboard()->text() == "10");
+    delete textMenu.data();
+    if (alive.isNull()) {
+        QKeyEvent reactivateAfterPopup(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+        QCoreApplication::sendEvent(properties, &reactivateAfterPopup);
+        editor = properties->findChild<QLineEdit*>("LCPropertyValueEditor");
+        REQUIRE(editor != nullptr);
+        alive = editor;
+    }
+    QKeyEvent escape(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier);
+    QCoreApplication::sendEvent(editor, &escape);
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    CHECK(alive.isNull());
+    QKeyEvent reactivate(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+    QCoreApplication::sendEvent(properties, &reactivate);
+    editor = properties->findChild<QLineEdit*>("LCPropertyValueEditor");
+    REQUIRE(editor != nullptr);
+    alive = editor;
+    QPointer<QMenu> menuDuringRebind(editor->createStandardContextMenu());
+    menuDuringRebind->popup(QPoint(20, 20));
+    QCoreApplication::processEvents();
 
     auto* other = new RS_DimAligned(&graphic, data, {RS_Vector(0, 0), RS_Vector(10, 0)});
     graphic.addEntity(other);
@@ -195,6 +230,7 @@ TEST_CASE("Dimension property sheet copies its measured value and closes the edi
     sheet.setGraphicView(&view);
     QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
     CHECK(alive.isNull());
+    CHECK(menuDuringRebind.isNull());
     QCoreApplication::processEvents();
     measured = properties->findProperty("$_secDimText.$_secDimText$dimTextMeasurement");
     REQUIRE(measured != nullptr);
@@ -223,6 +259,18 @@ TEST_CASE("Dimension property sheet copies its measured value and closes the edi
     QCoreApplication::sendEvent(properties, &activateMixed);
     CHECK(properties->findChild<QLineEdit*>("LCPropertyValueEditor") == nullptr);
     CHECK(edits == 0);
+
+    graphic.select(QList<RS_Entity*>{other}, false);
+    sheet.setGraphicView(&view);
+    QCoreApplication::processEvents();
+    measured = properties->findProperty("$_secDimText.$_secDimText$dimTextMeasurement");
+    REQUIRE(measured != nullptr);
+    properties->setActiveProperty(measured, true);
+    (void)properties->grab();
+    QKeyEvent activateBeforeDetach(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+    QCoreApplication::sendEvent(properties, &activateBeforeDetach);
+    alive = properties->findChild<QLineEdit*>("LCPropertyValueEditor");
+    REQUIRE_FALSE(alive.isNull());
     sheet.setGraphicView(nullptr);
     QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
     CHECK(alive.isNull());

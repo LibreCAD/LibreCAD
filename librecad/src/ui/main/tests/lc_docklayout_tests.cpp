@@ -911,7 +911,17 @@ TEST_CASE("A restored layout gets the first-start width only if its right docks 
 
 TEST_CASE("Dimension popup restores temporary highlighting", "[gui][clipboard][popup]") {
     QC_ApplicationWindow& window = testWindow();
-    RS_Graphic graphic;
+    QClipboard* clipboard = QApplication::clipboard();
+    auto savedClipboard = std::make_unique<QMimeData>();
+    if (const auto* current = clipboard->mimeData()) {
+        for (const QString& format : current->formats()) savedClipboard->setData(format, current->data(format));
+    }
+    struct RestoreClipboard {
+        QClipboard* clipboard;
+        std::unique_ptr<QMimeData> saved;
+        ~RestoreClipboard() { clipboard->setMimeData(saved.release()); }
+    } restore{clipboard, std::move(savedClipboard)};
+    struct TestGraphic : RS_Graphic { using RS_Undo::countUndoCycles; } graphic;
     graphic.initForNewDocument();
     LC_ActionContext context;
     QG_GraphicView view(nullptr, &graphic, &context);
@@ -928,25 +938,36 @@ TEST_CASE("Dimension popup restores temporary highlighting", "[gui][clipboard][p
     dimension->update();
     graphic.select(QList<RS_Entity*>{selected}, true);
     graphic.setModified(false);
+    const auto entities = graphic.getEntityList();
     const auto children = dimension->getEntityList();
     const auto measurement = dimension->getMeasurement();
+    const auto undoCount = graphic.countUndoCycles();
 
     std::unique_ptr<QMenu> menu(LC_DockLayoutTestAccess::dimensionPopup(window, &view, dimension));
     REQUIRE(menu != nullptr);
     CHECK(selected->isSelected());
     CHECK(dimension->isSelected());
     int copyActions = 0;
-    for (const auto* action : menu->actions()) {
+    QAction* copyValue = nullptr;
+    for (auto* action : menu->actions()) {
         if (action->text() == "Copy value" || action->text() == "Copy formatted") ++copyActions;
+        if (action->text() == "Copy value") copyValue = action;
     }
     CHECK(copyActions == 2);
+    REQUIRE(copyValue != nullptr);
     menu->popup(QPoint(20, 20));
     QCoreApplication::processEvents();
-    menu->hide();
+    menu->setActiveAction(copyValue);
+    QKeyEvent enter(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+    QCoreApplication::sendEvent(menu.get(), &enter);
     QCoreApplication::processEvents();
+    CHECK_FALSE(menu->isVisible());
+    CHECK(clipboard->text() == "10");
     CHECK(selected->isSelected());
     CHECK_FALSE(dimension->isSelected());
     CHECK_FALSE(graphic.isModified());
+    CHECK(graphic.countUndoCycles() == undoCount);
+    CHECK(graphic.getEntityList() == entities);
     CHECK(dimension->getEntityList() == children);
     CHECK(dimension->getMeasurement() == measurement);
 
