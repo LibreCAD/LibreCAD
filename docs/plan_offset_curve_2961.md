@@ -23,73 +23,47 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-10-30. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W212; the chronological evidence ledger follows): planned product
-implementation slices A-core through T3 and the local A-core through C-check audit
-are present and locally qualified. This includes the shipped native geometry
-worker, Modify Offset creation/repeat, native Trim preview/commit, staged GUI
-drawing/template imports, and bounded worker validation for public synchronous
-file/stream/byte filter imports. No additional feature-code gap is currently
-identified by the roadmap review; W0-W2 and R remain open for acceptance, not
-because the Node developer runner substitutes for the native worker.
+Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W214; chronological evidence follows): planned product
+implementation slices A-core through T3 and the local A-core through C-check
+audit are present and locally qualified. This includes the shipped native
+geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
+staged GUI drawing/template imports, and bounded worker validation for public
+synchronous file/stream/byte filter imports. No additional feature-code gap is
+currently identified; W0-W2 and R remain open for acceptance, not because the
+Node developer runner substitutes for the native worker.
 
-W196 records a full merged-source CMake Release run (6,380 cases, zero failures
-or errors, 75 skips not qualified), deterministic full-selector ASan requalification
-(1,027 declarations / 1,354 JUnit cases, zero failures or errors, one legacy-DXF
-skip; leak detection disabled), worker CTest 9/9, and the Node validation suite
-412/412. The W198 qmake6 product build is from code head
-`2c4f26b378f201135227403cbb0575e510f88550`; no product-path commits follow it
-through PR head `b086c780e3aed99fe80eadc949e379d8e740ad9b`, based on master
-`d66b7e1379990224a6a897105683463692b05549`. On PR head
-`4341e27e1fd5642d5763f372f722689e003d2ed7`, Headless ON/OFF passed; C++
-analysis, fast DWG/DXF verification, Windows x64 and ARM64 verification, and
-Pixi platform builds were pending. The CodeQL Security scan was skipped by
-workflow policy. The qmake6 application
-and native worker were rebuilt from the exact pre-W198 documentation head; the
-build succeeds. A relocated client-protocol run against that worker passes
-4,285 assertions / 17 cases, and the CMake worker CTest set passes 9/9. The
-isolated LibreCAD bundle is now controllable after user approval. W193's six
-ellipse contours rendered in the app, and Escape during a visible offset
-preview canceled cleanly with no selection, undoable edit, or change to the
-source DXF. A separate text-only DXF visibly exercised the GUI's unsupported
-entity refusal; LibreCAD reported no valid entities selected and returned to
-Default without an edit. FreeCAD's W171-derived DXF still has no verified
-rendered view: an earlier accessibility-driven confirmation crashed, and a
-keyboard-driven retry recognized about 233 entities but left the viewport blank
-after Fit All and returned to FreeCAD's first-start page. Independent FreeCAD
-visual review of the separate W193 DXF remains recorded above; it does not close
-that W171-derived visual check. W211 independently reviewed the W163 AC1032
-DXF in FreeCAD: approximately 89 entities were recognized and two nested
-ellipse contours rendered. W206 reverified app access and the unchanged
-W193 rendering. W207 adds a create/property-edit/undo-redo GUI interaction on
-that product-equivalent app build. W208 retried external visual inspection with
-FreeCAD's Draft-object importer; the viewport remained unusable.
+W213 requalifies the current source locally: the full Node suite passes 412/412,
+the roadmap/refusal gate passes 99/99 (93 obligations, no pending declarations
+or production mismatches), the CMake worker CTest set passes 9/9, and the
+installed macOS worker-client suite passes 3,715 assertions in 17 cases. On PR
+source head `440c2525058c26b4af4b4e0aece5b0d219ccd970`, Headless ON/OFF, C++
+analysis, Linux DWG/DXF, CodeQL analysis, and Ubuntu/macOS/Windows Pixi builds
+pass. Windows ARM64 passes CTest 23/23, recovers across 66,594 allocation
+failure points, and passes relocated worker-client tests (3,902 assertions in
+17 cases). Windows x64 passes the same 23 CTests and 66,594-point recovery
+sweep, with 4,140 assertions in 17 relocated worker-client cases. Its job took
+5h38m55s, an unusually long but successful CI lane. The CodeQL Security scan is
+skipped by workflow policy. PR #3193 remains open and draft, mergeable, and
+review-required.
 
-W209 visibly created two ellipse offset copies, undid both in one history step,
-and confirmed the W193 source hash unchanged. W210 rebuilt the CMake Release
-test executable from this worktree and passed the focused creation-worker,
-portable preview-cache and real helper-process suites (19 cases, 2,711
-assertions total). The full Node validation suite passed 412/412, and the
-updated roadmap/refusal inventory suite passed 99/99 with W209-W212 present.
+The approved LibreCAD test app is now accessible. W214 visibly confirms the
+W193 drawing's six ellipse contours and idle/default state. A right-click on a
+contour did not open a context menu, and two normal contour clicks did not
+select an entity; Escape left zero selection and Undo/Redo disabled. No drawing
+edit or save occurred. Earlier W193 interaction and W211/W163 FreeCAD rendering
+receipts remain scoped results. W171-derived external DXF/DWG rendering is
+still unverified: FreeCAD previously recognized about 233 entities but
+produced no verified rendered view. The screenshot was observed in-session but
+not retained, and display-DPR evidence remains incomplete.
 
-W212 adds a selected-ellipse Shift+F10 context-menu probe and a Preview screenshot
-capture attempt; neither produced a retained menu/image. The W193 document was
-left unchanged. The current PR head before this receipt is
-`d3882fe578de386289e34ea3247e3380f358672b`; changes since the tested product
-source head `6e1dc8b3fd69ba40a81789a00959eb5db230fb07` are roadmap receipts only.
-Headless ON/OFF passed on this head; C++ analysis, DWG/DXF, Windows x64/ARM and
-Pixi workflows remain pending. Security scan is skipped by workflow policy.
-The PR is open and draft, mergeability is unknown, and an approving review is
-required.
-
-Acceptance remains open: the rest of the GUI refusal and interaction matrix
-(including context menus, which did not open through right-click, Control-click,
-or Shift+F10), retained screenshot/display-DPR evidence, independent CAD
-visual checks for outputs beyond W193/W163, signed/deployed package
-qualification, broader W0-W2 platform acceptance, and final R integration. The mirrored external
-display reports 1920x1080 at 75 Hz, but Qt DPR was not measured and screenshots
-were observed in-session only. W203-W204 and W209-W212 are scoped visible/test
-passes, not full GUI acceptance.
+Acceptance remains open: remaining GUI refusal/interaction cases, context-menu
+and entity-pick behavior, retained screenshot/display-DPR evidence, independent
+CAD visual checks beyond W193/W163, signed/deployed package qualification,
+broader W0-W2 platform acceptance,
+reviewer approval, and final R integration. The mirrored external display
+reports 1920x1080 at 75 Hz, but Qt DPR was not measured; in-session screenshots
+were not retained. W203-W214 are scoped visible/test passes, not full acceptance.
 Direct AC1021
 ACadSharp parsing is also unqualified because that reader throws on negative
 `ComprLen` before entity decoding; LibreDWG parses the current AC1021 matrix.
@@ -382,8 +356,8 @@ candidate except the explicitly proposed native-worker tags.
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; W98 current-source review and focused Release/ASan requalification found no gap; W155 confirms unchanged audited source and current full-geometry selector; final R acceptance remains | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a`; W100 charges the final proof-publication slot; W103/W105/W108/W109/W115/W116 sweep every observed allocation failure over line, forward/reversed two-span cubic, forward/reversed whole-circle seam, both open and closed components of a producer-generated two-component trimmed path, and hidden-cusp endpoint refusal with bounded ledger and same-budget retry; W120 runs all standalone fault fixtures in one Release pass; W122 and W155 close the local topology/test inventory; remote platform/final gates remain | `[lc-offsetcurve][geometry][cache-topology-chain]`, standalone cache-check allocation-fault target |
 | W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; current in-repo caller/fallback/import ownership inventory recorded; external public low-level API use and platform/deployment gates remain | operation/cap/deadline/call-site table |
-| W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; W154 adds component-only installed-helper execution to Linux/Windows CI; local macOS staged/relocated client passes, remote gates remain | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
-| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit and scoped action faults and geometry-entry timeout receipts qualified locally; W81 adds Linux/Windows CMake worker CI; W82 removes PR path filtering and W83 adds scoped feature-branch push triggering; current cross-platform run, import and final gates remain open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
+| W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; W154 adds component-only installed-helper execution to Linux/Windows CI; local macOS staged/relocated client passes; W213 Windows x64 and ARM64 installed-helper checks pass | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
+| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit and scoped action faults and geometry-entry timeout receipts qualified locally; W81 adds Linux/Windows CMake worker CI; W82 removes PR path filtering and W83 adds scoped feature-branch push triggering; W213 Windows x64 and ARM64 pass; import, GUI, deployment and final gates remain open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; W128 current-source review and focused Release/ASan requalification found no gap; remote/final R acceptance remains | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; W129 current-source dispatch review and focused Release/ASan coverage found no gap; separately gated legacy DXF test remains unavailable in this configuration; remote/final R acceptance remains | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; W131 current-source review and focused Release/ASan requalification found no gap; remote/final R acceptance remains | native edit/grip/transform TUs |
@@ -8229,3 +8203,63 @@ its screenshot and display-DPR evidence remain partial.
 
 W212 does not close context-menu, screenshot/DPR, broader GUI refusal and
 interaction, external-CAD, deployed-package, W0-W2 platform or final R acceptance.
+
+## 171. W213 Current-Source Validation Receipt
+
+No product-source files changed after W212. The current PR head is
+`440c2525058c26b4af4b4e0aece5b0d219ccd970`; the existing CMake Release tree
+`/private/tmp/offset-W166-full-build` points to this exact worktree, and the
+source diff from the last product-code head `6e1dc8b3` is empty. Rebuilt all
+the worker executable plus all eight worker-test targets (41 Ninja steps), then
+ran the complete worker CTest set successfully. A fresh temporary install was
+qualified using the macOS bundle layout, with the worker client beside the
+installed helper.
+
+| W213 check | Result |
+|---|---|
+| Full offset developer-validation Node suite | PASS; 412/412, zero failures, skips, or todos |
+| Roadmap parser and H6 refusal/inventory | PASS; 99/99; 93 obligations, zero pending declarations and zero production mismatches |
+| qmake6 application/worker build | PASS; W198 build at `2c4f26b` is source-equivalent to product head `6e1dc8b`; no non-roadmap diff |
+| Exact-worktree worker-target build | PASS; 41/41 build steps |
+| Native worker CTest | PASS; 9/9 |
+| Relocated macOS worker-client suite | PASS; 3,715 assertions in 17 cases |
+| Diff / source scope | PASS; `git diff --check`; W213 is the only worktree change, no product-source changes |
+| Windows ARM64 exact-head job | PASS; job `124319327955`; CTest 23/23, 66,594 allocation-failure injection points recovered, relocated client 3,902 assertions in 17 cases |
+| Windows x64 exact-head job | PASS; job `124319328539`; CTest 23/23, 66,594 allocation-failure injection points recovered, relocated client 4,140 assertions in 17 cases; job duration 5h38m55s |
+| Other exact-head GitHub checks | PASS; Headless ON/OFF, C++ analysis, Linux DWG/DXF, CodeQL analysis, and Ubuntu/macOS/Windows Pixi builds; CodeQL Security scan skipped by workflow policy |
+| PR state | OPEN; draft, mergeable, review required |
+| Current-source visible GUI recheck | OPEN; CUA still reports macOS locked despite app Device Control approval |
+
+W213 closes the current local developer-validation and worker portability
+receipts and records full Windows x64 and ARM64 passes. The x64 DWG/DXF lane
+took 5h38m55s, including its exhaustive allocation-failure work; this is a
+successful result but a material CI latency to monitor. W213 does not close Mac
+GUI refusal/interaction coverage, context-menu behavior, retained
+screenshot/display-DPR, independent DWG visual review, deployed-package
+qualification, remaining W0-W2 platform acceptance, reviewer approval, or final
+R integration.
+
+## 172. W214 Approved-App GUI Recheck
+
+After Device Control approval, CUA controlled the running test application
+`org.librecad.librecad.pr3193current`, showing
+`/private/tmp/offset-W193-multi-entity.dxf`. The canvas visibly rendered two
+groups of three nested ellipse contours. The screenshot was 1920x982 pixels;
+this is a capture size, not a measurement of Qt or display DPR.
+
+| W214 check | Result |
+|---|---|
+| W193 ellipse rendering | PASS; six contours visible across two groups |
+| Default/idle baseline | PASS; Selection Pointer, `Current Action: Default`, no selection |
+| Right-click on visible ellipse | OPEN/NOT REPRODUCED; no context menu appeared |
+| Normal ellipse pick at two visible contour locations | OPEN/NOT REPRODUCED; selection count stayed zero |
+| Recovery / document state | PASS; Escape returned focus to the drawing, zero selected entities, Undo/Redo disabled; no edit or save |
+| Screenshot / DPR retention | OPEN; image observed in-session but not retained; DPR not exposed/measured |
+| Product-source changes | None; GUI validation and roadmap receipt only |
+
+W214 closes only the approved-app access and this scoped render/idle-state
+check. The failed context-menu and pick probes are recorded as unverified GUI
+behavior, not product failures or passes. Remaining GUI refusal/interaction
+coverage, external-CAD rendering of the W171-derived files, durable
+screenshot/DPR, deployed-package qualification, W0-W2 platform acceptance,
+reviewer approval, and final R integration remain open.
