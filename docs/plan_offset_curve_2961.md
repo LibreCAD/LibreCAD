@@ -8352,3 +8352,37 @@ eventual completion still needs observation. This does not close the W171-derive
 external visual check, retained screenshot/display-DPR,
 remaining GUI interaction/refusal cases, deployed-package and W0-W2 acceptance,
 reviewer approval, or final R integration.
+
+## 175. W217 Isolated Application-Data Test Directory
+
+The exact-worktree CMake Release build `/private/tmp/offset-W166-full-build`
+was rebuilt after W216 master integration. The first full CTest run exposed
+two failures in the existing command-alias test: `gl` resolved to
+`ActionModifyBreakDivide` instead of `ActionModifyLineGap`. Investigation
+showed that `RS_Settings::OtherSettingsDir` fell back to the developer's real
+LibreCAD test-profile directory, where a pre-existing `librecad.alias` maps
+`gl` to `breakdivide`. No user profile or alias file was edited or removed.
+
+Updated the shared test settings isolation to set `Paths/OtherSettingsDir`
+inside the same private temporary root as QSettings. Added a command-test
+assertion that confirms the application-data path is the isolated directory.
+The focused `[commands]` suite then passed (11 cases, 70 assertions); its
+diagnostics confirmed that alias lookup used the temporary directory. Rebuilt
+the complete configured tree and reran all registered CTest entries.
+
+| W217 check | Result |
+|---|---|
+| Full CMake Release incremental build | PASS; exact current worktree, no work remaining on final build check |
+| Initial full CTest | Diagnosed environment contamination; command-alias assertions read a pre-existing user alias from the real app-data directory |
+| Isolated command suite | PASS; 11 cases, 70 assertions |
+| Full CTest after fix | PASS; 26/26, 331.40 seconds |
+| Main `librecad_tests` suite | PASS; 266.96 seconds |
+| User profile / alias data | UNTOUCHED; test harness now routes `OtherSettingsDir` into its temporary root |
+| Product source scope | None; test isolation, one regression assertion, and this receipt |
+| PR state | OPEN; draft and review required; new CI for the pending test-harness commit not yet started |
+
+W217 closes the current local CMake test-isolation and complete CTest
+qualification. It does not close visible GUI refusal/interaction, retained
+screenshot/display-DPR, independent external-CAD review of the W171-derived
+files, deployed-package or remaining W0-W2 acceptance, reviewer approval, or
+final R integration.
