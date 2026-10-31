@@ -17,6 +17,7 @@ ANGLE_CONTEXTS = {
     "LC_ActionInteractivePickAngle",
     "RS_ActionInfoAngle",
 }
+DERIVED_LABELS = ("Complementary:", "Supplementary:", "Explementary angle:")
 
 
 def numbered_arguments(text: str) -> Counter:
@@ -39,20 +40,27 @@ class AngleTranslationCatalogTests(unittest.TestCase):
                         "vanished", "obsolete"
                     }:
                         continue
-                    if "Alternative:" in source or "Explementary angle:" in source:
+                    if (source.strip() in DERIVED_LABELS
+                            or "Alternative:" in source
+                            or "Explementary angle:" in source):
                         messages.append(message)
             cls.catalogs[path.name] = messages
 
-    def test_all_angle_messages_use_the_explementary_source(self) -> None:
+    def test_angle_catalogs_include_all_derived_labels(self) -> None:
         self.assertTrue(any(self.catalogs.values()))
         for catalog, messages in self.catalogs.items():
             # Older Spanish regional catalogs inherit these messages from es.
             if not messages:
                 continue
             with self.subTest(catalog=catalog):
-                self.assertEqual(6, len(messages))
+                self.assertEqual(12, len(messages))
                 for message in messages:
-                    self.assertIn("Explementary angle:", message.findtext("source"))
+                    source = message.findtext("source")
+                    self.assertNotIn("Alternative:", source)
+                    if "\n" in source:
+                        self.assertIn("Explementary angle:", source)
+                    else:
+                        self.assertIn(source.strip(), DERIVED_LABELS)
 
     def test_translations_preserve_numbered_arguments(self) -> None:
         for catalog, messages in self.catalogs.items():
@@ -70,7 +78,7 @@ class AngleTranslationCatalogTests(unittest.TestCase):
 
     def test_cursor_and_report_labels_agree(self) -> None:
         for catalog, messages in self.catalogs.items():
-            labels = []
+            labels = {name: [] for name in DERIVED_LABELS}
             for message in messages:
                 translation = message.find("translation")
                 if translation is None:
@@ -84,11 +92,28 @@ class AngleTranslationCatalogTests(unittest.TestCase):
                         self.assertGreaterEqual(len(lines), 4)
                     if len(lines) < 4:
                         continue
-                    text = lines[3].replace("%4", "")
-                labels.append(text.strip())
+                    for index, name in enumerate(DERIVED_LABELS, start=1):
+                        labels[name].append(lines[index].replace(f"%{index + 1}", "").strip())
+                else:
+                    labels[message.findtext("source").strip()].append(text.strip())
+            for name, values in labels.items():
+                if values:
+                    with self.subTest(catalog=catalog, angle=name):
+                        self.assertEqual(1, len(set(values)), values)
+
+    def test_derived_angle_names_are_distinct(self) -> None:
+        for catalog, messages in self.catalogs.items():
+            labels = {}
+            for message in messages:
+                source = (message.findtext("source") or "").strip()
+                if source not in DERIVED_LABELS:
+                    continue
+                text = message.findtext("translation") or ""
+                if text.strip():
+                    labels[source] = text.strip()
             if labels:
                 with self.subTest(catalog=catalog):
-                    self.assertEqual(1, len(set(labels)), labels)
+                    self.assertEqual(3, len(set(labels.values())), labels)
 
 
 if __name__ == "__main__":

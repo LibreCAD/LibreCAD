@@ -4140,7 +4140,8 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="209"/>
         <source>Complementary:</source>
-        <translation>Дополнителен:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>Комплементарен агол:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="55"/>
@@ -4151,10 +4152,10 @@ Explementary angle: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
-        <extracomment>%4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.</extracomment>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Агол: %1
-Дополнителен: %2
-Суплментарен: %3
+Комплементарен агол: %2
+Суплементарен агол: %3
 Полн круг − агол: %4
 Почетна точка на страната: (%5 , %6)
 Пресечна точка: (%7, %8)
@@ -4174,7 +4175,8 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="210"/>
         <source>Supplementary:</source>
-        <translation>Дополнително:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>Суплементарен агол:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="211"/>
@@ -4377,13 +4379,15 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="161"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="319"/>
         <source>Complementary:</source>
-        <translation>Дополнителен:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>Комплементарен агол:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="162"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="320"/>
         <source>Supplementary:</source>
-        <translation>Суплментарен:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>Суплементарен агол:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="163"/>
@@ -48428,10 +48432,10 @@ Complementary: %2
 Supplementary: %3
 Explementary angle: %4
 </source>
-        <extracomment>%4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.</extracomment>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Агол: %1
-Дополнителен: %2
-Суплментарен: %3
+Комплементарен агол: %2
+Суплементарен агол: %3
 Полн круг − агол: %4</translation>
     </message>
     <message>
@@ -48442,10 +48446,10 @@ Supplementary: %3
 Explementary angle: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <extracomment>%4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.</extracomment>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Агол: %1
-Дополнителен: %2
-Суплментарен: %3
+Комплементарен агол: %2
+Суплементарен агол: %3
 Полн круг − агол: %4
 Пресек: (%5 , %6)
 Пресек: @(%7, %8)</translation>
@@ -48471,13 +48475,15 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="290"/>
         <source>Complementary:</source>
-        <translation>Комплементарен:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>Комплементарен агол:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="291"/>
         <source>Supplementary:</source>
-        <translation>Суплементарен:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>Суплементарен агол:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>

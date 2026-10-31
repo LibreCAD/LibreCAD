@@ -4149,10 +4149,10 @@ Explementary angle: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
-        <extracomment>%4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.</extracomment>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Кут: %1
-Поповнення: %2
-Доповнення: %3
+Доповнення до прямого кута: %2
+Доповнення до розгорнутого кута: %3
 Повний оберт − кут: %4
 Початкова точка краю: (%5, %6)
 Точка перетину :(%7, %8)
@@ -4172,12 +4172,14 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="209"/>
         <source>Complementary:</source>
-        <translation>Складові:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>Доповнення до прямого кута:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="210"/>
         <source>Supplementary:</source>
-        <translation>Доповнення:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>Доповнення до розгорнутого кута:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="211"/>
@@ -4380,13 +4382,15 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="161"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="319"/>
         <source>Complementary:</source>
-        <translation>Складові:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>Доповнення до прямого кута:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="162"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="320"/>
         <source>Supplementary:</source>
-        <translation>Доповнення:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>Доповнення до розгорнутого кута:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="163"/>
@@ -48466,10 +48470,10 @@ Complementary: %2
 Supplementary: %3
 Explementary angle: %4
 </source>
-        <extracomment>%4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.</extracomment>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Кут: %1
-Поповнення: %2
-Доповнення: %3
+Доповнення до прямого кута: %2
+Доповнення до розгорнутого кута: %3
 Повний оберт − кут: %4</translation>
     </message>
     <message>
@@ -48480,10 +48484,10 @@ Supplementary: %3
 Explementary angle: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <extracomment>%4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.</extracomment>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Кут: %1
-Поповнення: %2
-Доповнення: %3
+Доповнення до прямого кута: %2
+Доповнення до розгорнутого кута: %3
 Повний оберт − кут: %4
 Інтерсекція: (%5, %6)
 Інтерсекція :@(%7, %8)</translation>
@@ -48509,13 +48513,15 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="290"/>
         <source>Complementary:</source>
-        <translation>Складові:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>Доповнення до прямого кута:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="291"/>
         <source>Supplementary:</source>
-        <translation>Доповнення:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>Доповнення до розгорнутого кута:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>

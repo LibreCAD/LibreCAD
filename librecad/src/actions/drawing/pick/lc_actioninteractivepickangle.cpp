@@ -158,7 +158,9 @@ void LC_ActionInteractivePickAngle::updateInfoCursor2(const RS_Vector &point2, c
 
         msgStart().string(tr("Angle Info"))
         .rawAngle(tr("Angle:"), angle)
+        //: Complementary angle: right angle minus the measured angle (pi/2 - angle).
         .rawAngle(tr("Complementary:"), angleComplementary)
+        //: Supplementary angle: straight angle minus the measured angle (pi - angle).
         .rawAngle(tr("Supplementary:"), angleSupplementary)
         //: Completes one full turn with the measured angle (2*pi - angle).
         .rawAngle(tr("Explementary angle: "), angleAlt)
@@ -317,7 +319,9 @@ void LC_ActionInteractivePickAngle::updateInfoCursor(const RS_Vector &mouse, con
 
         msg(tr("Pick Angle"))
             .rawAngle(tr("Angle:"), angle)
+            //: Complementary angle: right angle minus the measured angle (pi/2 - angle).
             .rawAngle(tr("Complementary:"), angleComplementary)
+            //: Supplementary angle: straight angle minus the measured angle (pi - angle).
             .rawAngle(tr("Supplementary:"), angleSupplementary)
             //: Completes one full turn with the measured angle (2*pi - angle).
             .rawAngle(tr("Explementary angle: "), angleAlt)

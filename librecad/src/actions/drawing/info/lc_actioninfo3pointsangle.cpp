@@ -52,7 +52,7 @@ void LC_ActionInfo3PointsAngle::doTrigger() {
     QString supplimentaryStr = formatAngleRaw(angleSupplementary);
     QString altStr = formatAngleRaw(alt);
 
-    //: %4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.
+    //: %2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.
     const QString &msgTemplate = tr("Angle: %1\nComplementary: %2\nSupplementary: %3\nExplementary angle: %4\nStart Edge Point: (%5 , %6)\nIntersection Point :(%7, %8)\nEnd Edge Point: (%9 , %10)");
     const QString &msg = msgTemplate.arg(strAngle,complimenatryStr, supplimentaryStr, altStr, p1X, p1Y, p2X, p2Y, p3X, p3Y);
     commandMessage("---");
@@ -207,7 +207,9 @@ void LC_ActionInfo3PointsAngle::updateInfoCursor(const RS_Vector &mouse, const R
 
         msg(tr("Angle Info"))
             .rawAngle(tr("Angle:"), angle)
+            //: Complementary angle: right angle minus the measured angle (pi/2 - angle).
             .rawAngle(tr("Complementary:"), angleComplementary)
+            //: Supplementary angle: straight angle minus the measured angle (pi - angle).
             .rawAngle(tr("Supplementary:"), angleSupplementary)
             //: Completes one full turn with the measured angle (2*pi - angle).
             .rawAngle(tr("Explementary angle: "), angleAlt)

@@ -4147,10 +4147,10 @@ Explementary angle: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
-        <extracomment>%4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.</extracomment>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>角度 :%1
-补充 :%2
-补充 :%3
+余角： %2
+补角： %3
 共轭角： %4
 启动边缘点 :%5,%6 )
 交叉点 :(%7,%8)
@@ -4170,12 +4170,14 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="209"/>
         <source>Complementary:</source>
-        <translation>补充:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>余角：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="210"/>
         <source>Supplementary:</source>
-        <translation>补充:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>补角：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="211"/>
@@ -4378,13 +4380,15 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="161"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="319"/>
         <source>Complementary:</source>
-        <translation>补充:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>余角：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="162"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="320"/>
         <source>Supplementary:</source>
-        <translation>补充:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>补角：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="163"/>
@@ -48453,10 +48457,10 @@ Complementary: %2
 Supplementary: %3
 Explementary angle: %4
 </source>
-        <extracomment>%4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.</extracomment>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>角度 :%1
-补充 :%2
-补充 :%3
+余角： %2
+补角： %3
 共轭角： %4</translation>
     </message>
     <message>
@@ -48467,10 +48471,10 @@ Supplementary: %3
 Explementary angle: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <extracomment>%4 completes one full turn with angle %1 (2*pi - angle). Preserve the numbered placeholders.</extracomment>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>角度 :%1
-补充 :%2
-补充 :%3
+余角： %2
+补角： %3
 共轭角： %4
 交叉 :%5,%6 )
 交叉区 : @ (%7,%8)</translation>
@@ -48496,13 +48500,15 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="290"/>
         <source>Complementary:</source>
-        <translation>补充:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>余角：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="291"/>
         <source>Supplementary:</source>
-        <translation>补充:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>补角：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
