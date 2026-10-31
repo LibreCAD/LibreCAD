@@ -8466,3 +8466,49 @@ not close exact-binary GUI qualification, independent external-CAD rendering,
 retained screenshot/DPR evidence, remaining GUI refusal/interaction cases,
 deployed-package and W0-W2 acceptance, reviewer approval, or final R
 integration.
+
+## 178. W220 Approved qmake6 Bundle Multi-Copy and History Recheck
+
+Repeated the W193 visible workflow in the specifically approved isolated app
+`/private/tmp/LibreCAD-PR3193-visible.app` (LibreCAD 2.2.2.6-alpha). The staged
+application and `LibreCADOffsetWorker` hashes match W207 exactly:
+`df35f8adef5c2ef6ec16aeecd8cb1ecaa7401557da012b02ea09eec0a6903966` and
+`ecc00959fdce4f105a6f6c909e4ab554f1f966f58579ad889fde9fb058605c5b`. This
+qmake6 bundle was built from W198 product head
+`2c4f26b378f201135227403cbb0575e510f88550`. The offset action, options widget,
+and worker source paths are unchanged through this checkpoint; the bundle is
+not claimed as an exact full-source build because later master integration
+changed painter code.
+
+Opened the disposable W193 fixture
+`/private/tmp/offset-W193-multi-entity.dxf`, whose SHA256 was
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`. The
+initial six ellipse contours were visible. Tools > Modify > Offset showed fixed
+distance `0.5`, two copies, editable offset enabled, and Keep Originals/current
+attributes/current layer enabled. Selected the outer ellipse in the right
+group and clicked the exterior side; two additional contours appeared (five
+in that group). Escape returned the action to Default. Undo removed both
+copies, Redo restored them, and a final Undo restored the original six
+contours. Closed the drawing with No at the save prompt. The fixture hash after
+closing remains unchanged.
+
+| W220 check | Result |
+|---|---|
+| Approved app identity | PASS; exact approved path and W207 app/worker hashes match |
+| W193 render and offset options | PASS; six source ellipses visible; fixed `0.5`, two copies, editable mode and preserve-original options verified |
+| Multi-copy creation and repeat-ready exit | PASS; selected one outer ellipse, created two additional contours, Escape returned to Default |
+| Undo/Redo and document recovery | PASS; Undo removed both; Redo restored both; final Undo restored original contours; drawing discarded without saving |
+| Fixture integrity | PASS; before/after SHA256 `05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d` |
+| Build provenance | PASS for app/worker binary hashes and offset-related source paths; PARTIAL for whole application source because later painter changes are absent from the W198-built bundle |
+| Screenshot / display-DPR | OPEN; visible state observed in-session, no durable screenshot retained and DPR unavailable |
+| Independent FreeCAD rendering | OPEN; first-start profile remains untouched; no external geometry viewport verified |
+| PR state/checks | To be refreshed after this roadmap commit |
+| Product-source changes | None; approved-app validation and roadmap receipt only |
+
+W220 supersedes W219's app-identity caveat for this bounded workflow: the
+specifically approved qmake6 bundle and worker are now identified by their
+retained hashes, and relevant offset code paths match the build source. It does
+not make the bundle a whole-tree current-source build or close the external
+CAD visual review, durable screenshot/DPR capture, other GUI refusal and
+interaction cases, deployed-package and W0-W2 acceptance, reviewer approval,
+or final R integration.
