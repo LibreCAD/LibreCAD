@@ -665,8 +665,13 @@ bool canWriteDxfFieldList(const DRW_FieldList& list) {
 }
 
 void writeDxfSplineBody(dxfWriter *writer, DRW_Spline *ent) {
-    // Normal vector is optional; omit when it is the default (0,0,1).
-    if (ent->normalVec.x != 0.0 || ent->normalVec.y != 0.0 || ent->normalVec.z != 1.0) {
+    // DRW_Spline value-initializes this optional vector to zero. DXF defines
+    // an omitted extrusion vector as +Z, so do not serialize that sentinel.
+    const bool unspecifiedNormal = ent->normalVec.x == 0.0
+        && ent->normalVec.y == 0.0 && ent->normalVec.z == 0.0;
+    const bool defaultNormal = ent->normalVec.x == 0.0
+        && ent->normalVec.y == 0.0 && ent->normalVec.z == 1.0;
+    if (!unspecifiedNormal && !defaultNormal) {
         writer->writeDouble(210, ent->normalVec.x);
         writer->writeDouble(220, ent->normalVec.y);
         writer->writeDouble(230, ent->normalVec.z);
