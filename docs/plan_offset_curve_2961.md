@@ -39,9 +39,12 @@ delta is the linetype dash-phase fix and its tests; the focused painter/render
 CTest passes on the merged source. The PR head before this merge was
 `5129ca3cb71b3446466141838ccc56b6669dbf81`, with Headless ON/OFF passing and
 CodeQL, DWG/DXF, Windows, and Pixi checks still running. PR #3193 remains open,
-draft, and review-required. Device Control approval for the isolated test app
-was confirmed, but macOS remains locked, so the W171-derived FreeCAD visual
-recheck is still open.
+draft, and review-required. The merge and roadmap receipt were pushed as
+`2fe0a651b4eeff856a63f552629fb670abfee48f` against base
+`5a5fe7345fe7a7ec66892e879967673b6d7a859b`; fresh Headless ON/OFF checks are
+running and the remaining checks have not yet attached. Device Control approval
+for the isolated test app was confirmed, but macOS remains locked, so the
+W171-derived FreeCAD visual recheck is still open.
 
 W213 requalifies the current source locally: the full Node suite passes 412/412,
 the roadmap/refusal gate passes 99/99 (93 obligations, no pending declarations
@@ -8336,11 +8339,14 @@ without altering the offset-curve implementation.
 | Roadmap/refusal gate | PASS; 99/99; 93 obligations, zero pending declarations and zero production mismatches |
 | PR checks before merge | Headless ON/OFF PASS; CodeQL, DWG/DXF, Windows x64/ARM64, and Pixi IN_PROGRESS; security scan skipped by policy |
 | PR state before push | OPEN; draft; review required; mergeable |
+| Pushed PR head | PASS; `2fe0a651b4eeff856a63f552629fb670abfee48f` on current base `5a5fe7345fe7a7ec66892e879967673b6d7a859b` |
+| Fresh checks after push | Headless ON/OFF IN_PROGRESS; remaining workflows not yet attached at capture |
 | Approved-app visible check | OPEN; Device Control approval confirmed, but CUA reports macOS locked |
 | Product source scope | Upstream painter fix and tests only; offset-curve product code unchanged |
 
-The merge and focused painter test close the current-master integration check.
-The PR must be pushed and its checks observed on the new head. This does not
-close the W171-derived external visual check, retained screenshot/display-DPR,
+The merge and focused painter test close the current-master integration check,
+and the updated branch is pushed. Fresh CI has started on the new head; its
+eventual completion still needs observation. This does not close the W171-derived
+external visual check, retained screenshot/display-DPR,
 remaining GUI interaction/refusal cases, deployed-package and W0-W2 acceptance,
 reviewer approval, or final R integration.
