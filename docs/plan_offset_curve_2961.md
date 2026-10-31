@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W240; chronological evidence follows): planned product
+Current status (W241; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -49,6 +49,10 @@ For W238 head `2c9b5bcb25e50865f301ee64c2ec41df7d9eb276`, exact-head GitHub
 Headless ON and OFF both passed (run `41220922934`). W239 head
 `a63a26eaf8ece575717c5c718e0ee07de96dccc7` also passed both modes (run
 `41221162702`). Current W240 head CI status is tracked in the PR comment.
+
+W241 rebuilt the exact-worktree ASan test target and reran stale-peer plus the
+complete creation-worker group. The focused event test passed 38 assertions;
+all 14 worker cases passed with 398 assertions (`detect_leaks=0`).
 
 W220-W225 qualify selected pieces of the approved qmake6 app's GUI: normal
 Offset Curve selection, compact options at one window size, locked-layer
@@ -9175,3 +9179,43 @@ checkout/upload-artifact actions targeting Node.js 20 are forced onto Node.js
 Physical GUI, external rendering, cross-platform/full deployed-package W0-W2,
 required review and final R integration remain open. Fresh exact-head CI must
 qualify the next roadmap commit.
+
+## 199. W241 Exact-Worktree and External Import Requalification
+
+The existing ASan CMake cache points to this implementation worktree. Rebuilt
+`librecad_tests` and the sibling worker after adding W236's stale-peer
+`QG_GraphicView` regression. The focused `[stale-peer]` case passed 38
+assertions, and the full `[creation-worker]` selection passed 14 cases / 398
+assertions. Both used `ASAN_OPTIONS=detect_leaks=0`; these results do not claim
+leak-sanitizer coverage. Also ran FreeCAD 1.1.4's isolated DXF importer on
+`/private/tmp/offset-W200-oda-output/offset-matrix-write-dwg-R2018-d3_actual.dxf`
+(SHA256 `b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`).
+It reported one SPLINE, no unsupported features, and produced one non-null valid
+BSpline edge. Its bounds are 0.0000625 mm wide by 0.0124998 mm high, with edge
+length 0.0125 mm. An isolated FreeCAD GUI run on the native macOS backend saved
+`/private/tmp/offset-2961-freecad-viewport.png` (SHA256
+`5c62da29cda1a0d78728c7084d0b4f03697b175f528361404d2252fd0f30df98`). The
+canvas shows only a very thin vertical trace, so this is partial viewport
+evidence, not a contour-fidelity pass. A separate Qt offscreen attempt could
+not create the OpenGL context required by FreeCAD and produced no capture. The
+GUI used a temporary user config; no drawing was saved. Product behavior and
+implementation files are unchanged.
+
+| W241 check | Result |
+|---|---|
+| ASan CMake source directory | PASS; `/Users/dli/.codex/worktrees/offset-2961-runtime/LibreCAD` |
+| ASan test/helper rebuild | PASS; `librecad_tests` and `LibreCADOffsetWorker` |
+| Focused stale-peer event test | PASS; 1 case / 38 assertions |
+| Creation-worker regression group | PASS; 14 cases / 398 assertions |
+| FreeCAD DXF import | PASS; one AC1032 SPLINE imported as a valid one-edge BSpline, no unsupported features |
+| FreeCAD native viewport capture | PARTIAL; screenshot at `/private/tmp/offset-2961-freecad-viewport.png`, SHA256 `5c62da29cda1a0d78728c7084d0b4f03697b175f528361404d2252fd0f30df98`; only a very thin vertical trace is visible |
+| FreeCAD contour/fidelity review | OPEN; trace is not sufficient to judge the expected curve contour |
+| FreeCAD offscreen GUI attempt | BLOCKED; Qt offscreen plugin cannot create the required OpenGL context |
+| FreeCAD profile | PASS; used an isolated temporary user config |
+| Sanitizer scope | `detect_leaks=0`; no leak-detection claim |
+| PR head during validation | `b1a16f53364545e89eddfabfed439f8fdb4a3728` |
+| Product behavior changes | None; exact-worktree and independent-import checks only |
+
+This does not close current-head remote CI, physical LibreCAD GUI interaction,
+independent external contour/fidelity review, cross-platform/full deployed-
+package W0-W2 acceptance, required review, or final R integration.
