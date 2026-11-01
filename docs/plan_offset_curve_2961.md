@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W258; chronological evidence follows): planned product
+Current status (W259; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -9971,3 +9971,35 @@ record was retained. Product source stayed unchanged.
 | Durable screenshot / display-DPR | OPEN; neither retained |
 | Physical preview parity | OPEN; transient preview not established by the CUA frame |
 | Exact-head CI after `4516f4d6` | IN PROGRESS; Headless ON/OFF passed, analysis, DWG/DXF and Pixi pending |
+
+## 217. W259 Sequential GUI Repeat Check
+
+On the reapproved test copy, ran Offset on a right-group ellipse with fixed
+distance `0.5`, two copies, and Keep Originals. The right group visibly gained
+two exterior contours. After the action returned to Default, reissued Offset,
+selected a different ellipse in the left group, and reached the direction-pick
+stage. Canceled before committing the second operation, then used Undo to
+remove the first operation. The final visible drawing again showed two groups
+of three ellipses. The input DXF hash remained
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`; no Save
+command was issued.
+
+This demonstrates sequential command re-entry and selection of a different
+source after a completed offset. It does not demonstrate automatic same-action
+continuation, a second committed operation, held-drag transient preview, or
+preview/commit visual parity. No durable screenshot or display-DPR record was
+retained. The product source stayed unchanged. At exact PR head
+`8abe14730544ea29241d39b7e7f180e512552bed`, Headless OFF passed while Headless
+ON, analysis, DWG/DXF and five-platform Pixi checks were pending; Security scan
+was skipped by policy.
+
+| W259 check | Result |
+|---|---|
+| Sequential Offset re-entry and different-source selection | PASS; fresh Offset invocation reached direction stage on a second source |
+| Second operation / same-action continuation | OPEN; second operation canceled, no automatic continuation claimed |
+| Undo and visible fixture restoration | PASS; first operation undone, two groups of three visible |
+| Source integrity | PASS; recorded W193 hash unchanged, no Save issued |
+| Roadmap inventory/refusal suite | PASS; 99 tests, 0 failures |
+| Physical preview parity / stale-peer | OPEN; neither demonstrated |
+| Durable screenshot / display-DPR | OPEN; neither retained |
+| Exact-head CI at `8abe1473` | IN PROGRESS; Headless OFF passed, remaining required checks pending |
