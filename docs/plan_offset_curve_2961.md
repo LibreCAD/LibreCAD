@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W246; chronological evidence follows): planned product
+Current status (W247; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -9507,3 +9507,41 @@ The code head is fully green for this CI run. Acceptance still requires physical
 stale-peer and held-drag/preview/commit interaction evidence, independent W171
 contour-fidelity review, durable screenshot/display-DPR evidence, deployed and
 cross-platform W0-W2 acceptance, reviewer approval, and final R integration.
+
+## 205. W247 FreeCAD Import Attempt and Exact-Head CI Checkpoint
+
+With user approval, FreeCAD 1.1.4 first-run defaults were accepted (English,
+Standard mm/kg/s, CAD navigation; theme unchanged). The temporary acceptance
+DXF `/private/tmp/offset-2961-visible-acceptance.dxf` was selected read-only;
+FreeCAD's DXF import dialog estimated 93 geometric entities. Confirming import
+terminated the application before a viewport could be inspected. A second
+attempt using fused-shape import also terminated FreeCAD. The crash report at
+`~/Library/Logs/DiagnosticReports/freecad-2026-11-01-010325.ips` records
+`EXC_BAD_ACCESS` during `QMacAccessibilityElement` teardown. This is not a
+geometry-rendering result and does not establish a defect in the DXF parser.
+No drawing was saved; the temporary DXF was not edited.
+
+At this checkpoint, PR head
+`8b99aabf45e1d2b00e06380dce68dcb58ffe38f7` has passed Headless ON/OFF, C++
+Analyze, Linux DWG/DXF, CodeQL analysis, and Pixi builds on macOS Intel/latest,
+Ubuntu x64/ARM64, and Windows. The Security scan is skipped by workflow policy.
+Windows x64 and ARM64 DWG/DXF jobs remain in their bounded test steps; neither
+has completed. These checks belong to the documentation-only head `8b99aab`,
+whose product source is unchanged from the separately green `c54ecd29` head.
+
+| W247 check | Result |
+|---|---|
+| FreeCAD first-run defaults | PASS; user-approved defaults applied, theme unchanged |
+| Acceptance DXF recognition | PARTIAL; import dialog estimated 93 geometric entities |
+| FreeCAD visual viewport | OPEN; app terminated on both import confirmations |
+| Crash evidence | `EXC_BAD_ACCESS` in `QMacAccessibilityElement` teardown; not evidence of geometry failure |
+| Drawing/file integrity | PASS; no save, temporary DXF not edited |
+| Headless ON/OFF, C++ Analyze, Linux DWG/DXF | PASS at `8b99aab` |
+| Windows x64/ARM64 DWG/DXF | IN PROGRESS at `8b99aab`; bounded test steps |
+| Pixi platforms | PASS at `8b99aab`; macOS Intel/latest, Ubuntu x64/ARM64, Windows |
+| W171-derived external contour fidelity | OPEN; this was the W193-derived acceptance DXF, not a visual recheck of the W171 fixture |
+
+The independent W171 visual check, durable app screenshot/display-DPR records,
+physical stale-peer/held-drag/preview-commit evidence, deployed/cross-platform
+W0-W2 acceptance, review approval, and final R integration remain open. No
+product-code change is justified by this FreeCAD accessibility crash.
