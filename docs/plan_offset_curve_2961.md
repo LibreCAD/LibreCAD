@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W257; chronological evidence follows): planned product
+Current status (W258; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -9941,6 +9941,33 @@ skipped by policy).
 | Offset creation | PASS; two exterior copies visibly added |
 | Undo and source integrity | PASS; original layout restored, input hash unchanged, no Save issued |
 | GUI repeat-after-creation | OPEN; no second entity was selected in this run |
-| Physical held preview and stale-peer interaction | OPEN; UI automation cannot hold the button during movement |
+| Physical held preview and stale-peer interaction | OPEN; preview not established by the UI frame, stale-peer interaction untested |
 | Durable screenshot / display-DPR | OPEN; neither retained |
 | PR #3193 CI at `f1acb286` | IN PROGRESS; Headless ON/OFF passed, other required jobs pending |
+
+## 216. W258 Transient Preview Probe
+
+In the reapproved LibreCAD test copy, started Offset on the W193 fixture with
+distance `0.5`, two copies, and Keep Originals. After selecting the left group's
+outer ellipse, issued a drag from the curve toward the exterior while requesting
+a screenshot concurrently. The captured frame showed the selected red ellipse
+but no distinct offset preview contour, and did not establish transient-preview
+parity. A subsequent side click visibly added two exterior copies; the action
+returned to Default. Undo removed both and restored the original six-contour
+layout. No Save command was issued; the source DXF hash remained
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+Successful creation completes the current action. This run did not start another
+Offset invocation or perform another entity selection in that invocation, so it
+does not close the GUI repeat-routing gate. No durable screenshot or display-DPR
+record was retained. Product source stayed unchanged.
+
+| W258 check | Result |
+|---|---|
+| In-session drag-time screenshot | INCONCLUSIVE; selected outline visible, no distinct preview contour established |
+| Offset creation and Undo | PASS; two exterior copies added, then removed; original six contours restored |
+| Source integrity | PASS; recorded W193 hash unchanged, no Save issued |
+| GUI repeat-routing and physical stale-peer interaction | OPEN; not demonstrated in this run |
+| Durable screenshot / display-DPR | OPEN; neither retained |
+| Physical preview parity | OPEN; transient preview not established by the CUA frame |
+| Exact-head CI after `4516f4d6` | IN PROGRESS; Headless ON/OFF passed, analysis, DWG/DXF and Pixi pending |
