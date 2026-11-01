@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W261; chronological evidence follows): planned product
+Current status (W262; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -34,7 +34,11 @@ has been identified in the latest audit. W218's exact product-source head
 `71ecf102b36017d57bd30db39d0de630ac11bb75` passed Headless ON/OFF, CodeQL,
 DWG/DXF Linux and Windows x64/ARM64, and all five-platform Pixi checks. Exact
 head CI is re-run after pushed test/acceptance receipts; its live state is
-tracked in the PR checks and latest PR comment. At the W260 CI snapshot
+tracked in the PR checks and latest PR comment. At the W262 CI snapshot
+(2026-11-01; PR head `f40c3fdc8a18638c412ee840e6a4b7c58b07bc88`), Headless
+ON/OFF passed; CodeQL, DWG/DXF verification, and five-platform Pixi checks are
+still running. Security scan is skipped by policy. The W261 roadmap/refusal
+suite passes 99/99. At the W260 CI snapshot
 (2026-11-01 19:48 UTC; PR head
 `e9fe078f4e31eb6917d4dfe3cf1be9e8204b6960`), Headless ON/OFF and Text
 Foundations passed while CodeQL, DWG/DXF verification, and five-platform Pixi
@@ -10097,3 +10101,26 @@ The corresponding image is retained at
 | Native FreeCAD GUI / DPR | OPEN; desktop locked, no viewport or display-DPR receipt |
 | Physical stale-peer and preview/commit parity | OPEN; headless import does not cover GUI interaction |
 | PR #3193 CI snapshot at `5a336d95c` (2026-11-01 20:08 UTC) | Headless ON/OFF and Text Foundations passed; Analyze/CodeQL, DWG/DXF, and Pixi in progress or pending; Security scan skipped by policy |
+
+## 220. W262 Reapproval Retry and Exact-Head CI
+
+The user approved the rebuilt `/private/tmp/LibreCAD-PR3193-visible.app` after
+its ad-hoc signature changed. A fresh CUA surface check still returned no
+native apps and the explicit error that the Mac is locked; a second check
+confirmed the same state. No GUI interaction was attempted and approval is not
+counted as a visible-app pass. No files, preferences, or drawings were changed.
+
+At PR head `f40c3fdc8a18638c412ee840e6a4b7c58b07bc88`, Headless ON/OFF passed.
+The DWG/DXF fast and Windows x64/ARM64 lanes, CodeQL analysis, and five-platform
+Pixi jobs were still running at the latest check; Security scan was skipped by
+policy. The roadmap/refusal suite remains 99/99 from W261. The PR comment was
+refreshed with W261 evidence and this exact-head CI state.
+
+| W262 check | Result |
+|---|---|
+| User approval of rebuilt test app | PASS; approval granted |
+| Native UI availability | BLOCKED; CUA reports Mac locked on both checks |
+| Visible stale-peer / preview / FreeCAD GUI checks | OPEN; no UI evidence collected |
+| Headless ON/OFF CI at `f40c3fdc8` | PASS |
+| DWG/DXF, CodeQL, and Pixi at `f40c3fdc8` | IN PROGRESS |
+| Security scan | SKIPPED by repository policy |
