@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W247; chronological evidence follows): planned product
+Current status (W248; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -9545,3 +9545,37 @@ The independent W171 visual check, durable app screenshot/display-DPR records,
 physical stale-peer/held-drag/preview-commit evidence, deployed/cross-platform
 W0-W2 acceptance, review approval, and final R integration remain open. No
 product-code change is justified by this FreeCAD accessibility crash.
+
+## 206. W248 W171-Derived FreeCAD Visual Retry
+
+Retried the actual W171-derived ODA-converted AC1032 fixture in FreeCAD 1.1.4:
+`/private/tmp/offset-W200-oda-output/offset-matrix-write-dwg-R2018-d3_actual.dxf`.
+Its input hash matched the recorded SHA256
+`b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`. The DXF
+import dialog estimated 233 geometric entities. The dialog was set to Fused
+Part shapes; confirming import terminated FreeCAD before a viewport appeared.
+This repeats the FreeCAD failure on the W171-derived fixture itself, not only
+the W193 acceptance drawing. It provides no visual contour-fidelity evidence
+and does not distinguish an importer, rendering, or file-geometry cause. No
+drawing was saved, and the source DXF hash remained unchanged.
+
+At the time of this recheck, the pushed docs-only head was
+`e15057e8a5c2f9706135f32db5015dff5edb0b9a`. Its Headless ON/OFF, C++ Analyze,
+Linux and Windows DWG/DXF, and Pixi checks were pending; the Security scan was
+skipped under workflow policy. Product source remains unchanged from the
+separately green `c54ecd29` product head. A new exact-head run is required for
+the W248 roadmap receipt.
+
+| W248 check | Result |
+|---|---|
+| W171-derived file identity | PASS; recorded SHA256 matches `b696b00f...` before and after |
+| FreeCAD DXF recognition | PARTIAL; import dialog estimated 233 geometric entities |
+| FreeCAD rendered viewport | OPEN; app terminated on fused import confirmation |
+| Drawing/file integrity | PASS; no save, source DXF unchanged |
+| Independent W171 contour fidelity | OPEN; no viewport was produced |
+| Exact-head CI at test time (`e15057e`) | IN PROGRESS; headless, analysis, DWG/DXF, Pixi pending; Security scan skipped |
+
+Do not treat either the 93-entity W193 acceptance import or this 233-entity
+W171 import-dialog estimate as a visual pass. Independent rendering, retained
+screenshot/display-DPR evidence, physical GUI receipts, deployed/cross-platform
+W0-W2 acceptance, review approval, and final R integration remain open.
