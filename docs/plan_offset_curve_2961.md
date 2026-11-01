@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W252; chronological evidence follows): planned product
+Current status (W253; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -35,6 +35,12 @@ has been identified in the latest audit. W218's exact product-source head
 DWG/DXF Linux and Windows x64/ARM64, and all five-platform Pixi checks. Exact
 head CI is re-run after pushed test/acceptance receipts; its live state is
 tracked in the PR comment.
+
+W253 records the approved FreeCAD first-run setup and a second, keyboard-driven
+attempt to import the W171-derived DXF. The import dialog recognized about 233
+entities, but FreeCAD exited before presenting a geometry viewport. The complete
+offset validation Node suite passes 412/412; exact-head CI for `e246acd8` is
+green. Independent contour-fidelity review therefore remains open.
 
 W237 requalified the current test-only head with the full CMake application
 suite: 5,155 cases, 5,080 passed, 75 skipped, and 10,348,250 assertions passed.
@@ -9742,3 +9748,46 @@ Resume the independent FreeCAD visual check only when the desktop control
 surface is available. Physical stale-peer and held-drag/preview/commit GUI
 evidence with durable screenshots and display-DPR, full deployed/cross-platform
 W0-W2 acceptance, human review approval, and final R integration remain open.
+
+## 211. W253 FreeCAD Setup and Keyboard-Driven Import Retry
+
+After the desktop became available, the user-approved FreeCAD 1.1.4 first-run
+defaults were applied: English, Standard mm/kg/s, CAD navigation, and no theme
+change. The actual W171-derived ODA DXF
+`/private/tmp/offset-W200-oda-output/offset-matrix-write-dwg-R2018-d3_actual.dxf`
+was opened read-only. FreeCAD's import dialog recognized approximately 233
+geometric entities; the default Individual Part shapes mode was retained. To
+avoid the accessibility-triggered dialog-dismissal path, the file was selected
+and the import confirmed with keyboard input. FreeCAD still exited immediately
+after confirmation, before any viewport appeared. CUA then reported no FreeCAD
+window, reproducing the import-boundary failure without a visual result.
+
+The earlier W247 import crash report records `EXC_BAD_ACCESS` in
+`QMacAccessibilityElement` deallocation. The repeat attempt produced no new
+geometry evidence and does not establish that this earlier stack is the cause
+of the new exit. The input DXF remains unchanged (SHA256
+`b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`); no
+drawing was saved. No product change is justified by this external application's
+failure.
+
+The full offset validation Node suite passes 412/412 tests (exit 0; 353,722 ms).
+At exact PR head `e246acd8e434c00487b39a57fa771ba6587cb5ec`, Text Foundations,
+C++ Analyze, DWG/DXF verification (Linux fast lane and Windows x64/ARM64),
+CodeQL analysis, and Pixi builds (Ubuntu x64/ARM64, Windows, macOS latest and
+Intel) passed; the Security scan subjob is skipped by workflow policy. PR #3193
+remains open, draft, mergeable, and review-required.
+
+| W253 check | Result |
+|---|---|
+| User-approved FreeCAD first-run defaults | PASS; applied, theme unchanged |
+| W171-derived DXF recognition | PARTIAL; FreeCAD reported about 233 entities |
+| Keyboard-driven Individual Part shapes import | OPEN; FreeCAD exited before viewport |
+| Drawing integrity | PASS; source hash unchanged; no drawing saved |
+| Full offset validation Node suite | PASS; 412/412, zero failures |
+| Exact-head CI for `e246acd8` | PASS; required build, test, analysis, and platform workflows green |
+| Independent W171 contour-fidelity review | OPEN; no external viewport rendered |
+
+Do not infer geometric failure or success from this FreeCAD termination. The
+W171 contour-fidelity review, physical stale-peer and held-drag/preview/commit
+evidence with durable screenshots and display-DPR, full deployed/cross-platform
+W0-W2 acceptance, reviewer approval, and final R integration remain open.
