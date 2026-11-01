@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W250; chronological evidence follows): planned product
+Current status (W251; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -9664,3 +9664,45 @@ The independent W171 contour-fidelity review, physical stale-peer and held-drag
 interaction evidence, durable screenshots with display-DPR, full deployed and
 cross-platform W0-W2 acceptance, reviewer approval, and final R integration
 remain open.
+
+## 209. W251 Exact-Source Console Raster Inspection
+
+With the desktop locked, used the exact-source qmake6/Qt 6.12.0 macOS
+application's existing `dxf2png` command to produce supplementary raster
+renderings. The executable SHA256 is
+`9fc9b5a8e2efccf6a4693ff4d3219ae922c9da037a96da357febf9360ca84149`, matching
+the W244 bundle built from product-source head `c54ecd29`. It reported successful
+AC1032/R2018 input and wrote both 1920x1080 images without modifying either DXF.
+
+The W171-derived source
+`/private/tmp/offset-W200-oda-output/offset-matrix-write-dwg-R2018-d3_actual.dxf`
+retains SHA256 `b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`.
+Its raster
+`/private/tmp/offset-W250-w171-native-render.png` (SHA256
+`470c7e8ad6cdc925860a1112c52110ef9693a594f0b0632d9e1005a0fb0a7361`)
+shows the expected very thin near-vertical trace, consistent with the previously
+recorded tiny DXF bounds. It remains unsuitable for judging contour fidelity.
+
+The W193-derived acceptance DXF
+`/private/tmp/offset-2961-visible-acceptance.dxf` retains SHA256
+`51b82a318f2d6fbf25fdc2fc4e4e255410860a1f8f72927acc02287dd9bc77cb`. Its raster
+`/private/tmp/offset-W250-acceptance-native-render.png` (SHA256
+`2798aeb254b3f676744147b34e7928167a9140f1f50d3776fc60ac7b87d6df90`)
+visibly contains the two separated groups of nested contours. This corroborates
+the prior LibreCAD visible re-open result with a deterministic current-source
+renderer and provides a retained raster for this acceptance fixture.
+
+| W251 check | Result |
+|---|---|
+| Exact-source `dxf2png` for W171 AC1032 fixture | PASS; exit 0; AC1032/R2018; 1920x1080 |
+| W171 visual inspection | PARTIAL; thin trace agrees with recorded bounds; not contour-fidelity evidence |
+| Exact-source `dxf2png` for acceptance DXF | PASS; exit 0; 1920x1080; two nested-contour groups visible |
+| Input DXF integrity | PASS; both recorded input hashes unchanged; no drawing saved |
+| Retained native-render output | PASS; both PNGs retained under `/private/tmp` with SHA256 above |
+| External CAD / desktop GUI / DPR acceptance | OPEN; console export is not an independent CAD or visible-session receipt |
+
+This closes neither independent W171 contour review nor physical GUI evidence:
+the raster uses LibreCAD's own DXF reader and renderer, does not capture a live
+viewport, and has no Qt/display-DPR measurement. Physical stale-peer and
+held-drag/preview/commit interaction evidence, full deployed/cross-platform
+W0-W2 acceptance, reviewer approval, and final R integration remain open.
