@@ -37,10 +37,10 @@ head CI is re-run after pushed test/acceptance receipts; its live state is
 tracked in the PR checks and latest PR comment. W263 closes the W171 numeric
 expected-contour fidelity check with an independent FreeCAD-kernel comparison;
 visible FreeCAD viewport and DPR evidence remain open. At the W263 CI snapshot
-(2026-11-01; PR head `7716191b93ede14d641529f49254ff98f83487e6`), Headless
-ON/OFF, CodeQL, DWG/DXF, and five-platform Pixi checks are pending or running;
-Security scan is skipped by policy. The W263 roadmap/refusal suite passes
-99/99. At the W262 CI snapshot (2026-11-01; PR head
+(2026-11-01; PR head `516334bc3884972197a4d34eee786dd9b5c5b11e`), Headless ON/OFF
+and Text Foundations passed; CodeQL and DWG/DXF verification are running, Pixi
+is running or queued, and Security scan is skipped by policy. The W263
+roadmap/refusal suite passes 99/99. At the W262 CI snapshot (2026-11-01; PR head
 `f40c3fdc8a18638c412ee840e6a4b7c58b07bc88`), Headless ON/OFF passed; CodeQL,
 DWG/DXF verification, and five-platform Pixi checks were still running.
 Security scan was skipped by policy. The W261 roadmap/refusal suite passes
@@ -10141,18 +10141,29 @@ The expected output is therefore the radius-1.25 circular arc over that
 interval. This analytic expectation is independent of the exported SPLINE
 control polygon.
 
-Reopened the unchanged ODA-converted AC1032/R2018 W171 output in FreeCAD 1.1.4
-using its bundled Python and Draft DXF importer. Its source DWG SHA256 is
+Reopened both unchanged ODA-converted AC1032/R2018 W171 outputs in FreeCAD 1.1.4
+using its bundled Python and Draft DXF importer. For degree 3, the source DWG SHA256 is
 `aed066088fab728aff6224481accdd9900ce0b08e2e63c96dd729d28a2838842`; the
 converted DXF SHA256 is
 `b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`.
+For degree 1, the source DWG SHA256 is
+`bbdd8e458f0818b11ce579d7c42f3279bf6d7a9048c96990197007ff515848e5`; ODA
+File Converter output is `$ACADVER=AC1032` with DXF SHA256
+`eee34dab0385e00f3c9acec6518e0a6751fe12e31aaf8072d5730d3866e52990`.
 FreeCAD produced one non-rational degree-3 BSpline edge with four poles, knots
 `[0,1]`, and multiplicities `[4,4]`. Sampling it at 10,001 points gave radius
 range `[1.25, 1.2500000000000004]`, maximum radial error `4.440892098500626e-16`,
 monotone angle range `[0, 0.009999999999999972]`, endpoint error
 `4.451856111102413e-16`, and curve-length error `3.2959746043559335e-17` against
-the expected `0.0125`. These errors are far below the fixture's `0.0001`
-geometry tolerance and at floating-point noise scale.
+the expected `0.0125`.
+
+The degree-1 control imports as one non-rational two-pole BSpline edge. Its
+10,001 samples have radius range `[1.2499843750325523,
+1.2500000000000004]`, maximum inward radial error `1.562496744766939e-5`,
+monotone angle range `[0, 0.009999999999999972]`, endpoint error
+`4.451856111102413e-16`, and length error `5.2083268262462235e-8` against
+`0.0125`. Both degree-1 and degree-3 errors are below the fixture's `0.0001`
+geometry tolerance; degree 3 is at floating-point noise scale.
 
 This closes W171's numeric expected-contour fidelity question using an
 independent CAD kernel and explicit analytic comparison. It does not claim a
@@ -10165,9 +10176,10 @@ file or product source was changed by the geometry check.
 | W263 check | Result |
 |---|---|
 | W171 analytic expected contour | PASS; radius 1.25, sweep 0 to 0.01 rad |
-| Independent FreeCAD curve import | PASS; one degree-3 non-rational BSpline |
-| 10,001-sample radial/angle/endpoint comparison | PASS; max radial error `4.44e-16`, monotone full sweep, endpoint error `4.45e-16` |
-| Arc-length comparison | PASS; error `3.30e-17` against 0.0125 |
-| Fixture integrity | PASS; DWG and ODA DXF hashes unchanged and recorded above |
+| Independent FreeCAD curve import | PASS; degree 1: two-pole BSpline; degree 3: four-pole BSpline |
+| 10,001-sample degree-1 contour comparison | PASS; inward radial error `1.5625e-5` < `1e-4`, monotone sweep, endpoint error `4.45e-16` |
+| 10,001-sample degree-3 contour comparison | PASS; radial error `4.44e-16`, monotone sweep, endpoint error `4.45e-16` |
+| Arc-length comparison | PASS; degree 1 error `5.21e-8`, degree 3 error `3.30e-17`, both against 0.0125 |
+| Fixture integrity | PASS; source DWGs and converted DXFs hashed and unchanged |
 | Visible viewport / DPR | OPEN; this was a headless kernel measurement |
-| PR #3193 exact-head CI at `7716191b9` | IN PROGRESS; checks pending/running at latest poll; Security skipped by policy |
+| PR #3193 exact-head CI at `516334bc3` | Headless ON/OFF and Text Foundations PASS; CodeQL and DWG/DXF running, Pixi running/queued; Security skipped by policy |
