@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W254; chronological evidence follows): planned product
+Current status (W255; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -46,6 +46,13 @@ W254 additionally tested the same unchanged DXF in Inkscape 1.4.2. The DXF
 importer accepted it with a `$PDMODE` warning, but the drawing extent produced
 only a tiny trace at a useful viewing scale. This is not contour-fidelity
 evidence; the exact external visual gate remains open.
+
+W255 visibly opened the preserved six-contour W193 acceptance DXF in the
+current-source LibreCAD test copy and rendered two groups of three contours.
+The W171-derived ODA DXF also opens in LibreCAD, but its one model-space SPLINE
+is not a useful independent contour-comparison fixture. FreeCAD's approved
+fused-shape retry still exits before a viewport. Neither attempt supplies the
+independent W171 fidelity review or durable screenshot/DPR receipt.
 
 W237 requalified the current test-only head with the full CMake application
 suite: 5,155 cases, 5,080 passed, 75 skipped, and 10,348,250 assertions passed.
@@ -9827,3 +9834,43 @@ Retain the external fidelity gate. Do not interpret the scale/trace observed in
 Inkscape as proof of geometry corruption or correctness. Physical stale-peer
 and held-drag/preview/commit evidence, deployed/cross-platform W0-W2 acceptance,
 reviewer approval, and final R integration also remain open.
+
+## 213. W255 Current-Source LibreCAD Rendering and FreeCAD Retry
+
+Used the rebuilt test-only LibreCAD copy at
+`/private/tmp/LibreCAD-PR3193-visible.app`, whose product source is unchanged
+from `c54ecd29` (the current roadmap head adds documentation only). The app
+opened `/private/tmp/offset-W193-multi-entity.dxf`; Fit to View displayed both
+groups of three contours in model space. The input SHA256 is
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`. The
+screen was visibly inspected through CUA, but no durable screenshot or
+display-DPR record was retained and the drawing was not saved.
+
+The same test copy opened the W171-derived ODA output
+`/private/tmp/offset-W200-oda-output/offset-matrix-write-dwg-R2018-d3_actual.dxf`.
+Its ENTITIES section contains one SPLINE, which LibreCAD displayed after
+Auto Zoom; this is an open single-curve fixture, not an independent contour
+fidelity comparison. The source DXF SHA256 remains
+`b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`, and no
+drawing was saved.
+
+With the user-approved FreeCAD 1.1.4 defaults now applied, retried the W171 DXF
+in Fused Part shapes mode. FreeCAD still terminated at import confirmation
+before presenting a viewport. This provides no geometry verdict and does not
+replace the LibreCAD render check.
+
+| W255 check | Result |
+|---|---|
+| Current-source LibreCAD W193 DXF import | PASS; file opened in model space |
+| Six-contour rendering | PASS; both groups of three contours visibly rendered |
+| W193 input integrity | PASS; recorded SHA256 matches, no save |
+| LibreCAD W171-derived ODA DXF import | PASS; one model-space SPLINE displayed |
+| Independent W171 contour-fidelity review | OPEN; no independent expected-contour comparison |
+| FreeCAD fused-shape viewport | OPEN; application exited before viewport |
+| Durable screenshot / display-DPR | OPEN; screen was observed but not retained |
+| Exact-head CI at `048c8e1c` | IN PROGRESS at test time; Text Foundations passed, other workflows live |
+
+The six-contour LibreCAD screenshot observation is product-app rendering, not
+independent-reader fidelity. Preserve the W171 fidelity gate, durable screenshot
+and DPR record, physical stale-peer/preview/commit evidence, deployed and
+cross-platform W0-W2 acceptance, reviewer approval, and final R integration.
