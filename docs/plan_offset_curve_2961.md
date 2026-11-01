@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W249; chronological evidence follows): planned product
+Current status (W250; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -9628,3 +9628,39 @@ integration remain open. FreeCAD's accessibility crash is not grounds for
 changing product geometry code. Exact-source LibreCAD GUI control for the
 temporary relocated bundle has been requested; no permission or app setting is
 changed by this receipt.
+
+## 208. W250 Bundled and Relocated Worker Requalification
+
+Re-ran the native worker-client suite from both the qmake6/Qt 6.12.0 bundle
+built from the current product source and its already-relocated copy. Running
+`librecad_offset_worker_client_tests` from each bundle's `Contents/MacOS`
+directory passed all 17 cases: 4,281 assertions from
+`/private/tmp/offset-2961-w237-qmake/LibreCAD.app` and 3,815 assertions from
+`/private/tmp/offset-W244-relocated.yPKzEj/LibreCAD.app`. The assertion total
+varies with randomized geometry cases; both runs exited zero with no failures.
+
+Recomputed executable SHA256 values are identical for the original and
+relocated bundles: LibreCAD
+`9fc9b5a8e2efccf6a4693ff4d3219ae922c9da037a96da357febf9360ca84149`, helper
+`a42cb47bcedc27ba8e7adbbf253e01f43d0692e7204c5f451c28f1b37268f1a7`, and
+worker-client test `5aad800d8ea2498653715cf46b07c24ba70005ed335a64221575ef553376516f`.
+The qmake bundle corresponds to product-source head `c54ecd29`; current changes
+since that source head are roadmap-only. This requalifies the local macOS
+installed-helper path after W249. It does not establish GUI integration,
+cross-platform full-application deployment, visible preview/commit behavior, or
+the broader W0-W2 acceptance contract.
+
+| W250 check | Result |
+|---|---|
+| Original app-bundle worker-client suite | PASS; 17 cases / 4,281 assertions |
+| Relocated app-bundle worker-client suite | PASS; 17 cases / 3,815 assertions |
+| Original vs relocated app/helper/test SHA256 | PASS; all three hashes identical |
+| Roadmap parser/refusal suite after W250 receipt | PASS; 99/99; zero pending declarations/mismatches |
+| Product source | PASS; both bundles match `c54ecd29`; no product source changed |
+| Full deployed/cross-platform W0-W2 acceptance | OPEN; these are local macOS worker-client lanes only |
+| PR head CI | IN PROGRESS on `81fbcb96`; do not supersede while Windows/Pixi jobs run |
+
+The independent W171 contour-fidelity review, physical stale-peer and held-drag
+interaction evidence, durable screenshots with display-DPR, full deployed and
+cross-platform W0-W2 acceptance, reviewer approval, and final R integration
+remain open.
