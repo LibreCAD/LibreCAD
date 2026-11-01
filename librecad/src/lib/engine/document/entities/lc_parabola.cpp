@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_parabola.h"
 
+#include "lc_momentquadrature.h"
 #include "rs_debug.h"
 #include "rs_information.h"
 #include "rs_line.h"
@@ -670,109 +671,16 @@ double LC_Parabola::areaLineIntegral() const
 
   return a * y0 + b * y1 + c * y2;
 }
-namespace {
-
-// Polynomial helpers used by the line-integral computations below.
-// A polynomial is stored as a vector of coefficients in ascending order:
-// poly[i] is the coefficient of t^i.
-
-std::vector<double> polyMul(const std::vector<double> &a,
-                            const std::vector<double> &b) {
-  if (a.empty() || b.empty())
+LC_AreaMoments LC_Parabola::momentLineIntegrals(const RS_Vector& origin) const {
+  // The parabola stores its three control points in world coordinates. The
+  // six Green's theorem integrands are polynomials of degree ≤ 7 in the
+  // Bezier parameter, so the 8-node Gauss-Legendre rule inside
+  // quadraticBezier is exact.
+  if (!m_data.m_valid) {
     return {};
-  std::vector<double> c(a.size() + b.size() - 1, 0.);
-  for (size_t i = 0; i < a.size(); ++i)
-    for (size_t j = 0; j < b.size(); ++j)
-      c[i + j] += a[i] * b[j];
-  return c;
-}
-
-// Integrate a polynomial (ascending coefficients) over [t1, t2]:
-// ∫_{t1}^{t2} (Σ p[i] · t^i) dt = Σ p[i] · (t2^(i+1) - t1^(i+1)) / (i+1)
-double polyIntegrate(const std::vector<double> &p, double t1, double t2) {
-  double res = 0.;
-  double pow1 = t1; // t1^(i+1), starting at i=0 so t1^1
-  double pow2 = t2; // t2^(i+1)
-  for (size_t i = 0; i < p.size(); ++i) {
-    res += p[i] * (pow2 - pow1) / static_cast<double>(i + 1);
-    pow1 *= t1;
-    pow2 *= t2;
   }
-  return res;
-}
-
-// Quadratic Bezier component as polynomial in t (ascending coefficients).
-// For control values v0, v1, v2: v(t) = v0 + 2(v1-v0) t + (v0 - 2v1 + v2) t^2.
-std::vector<double> bezierComponentPoly(double v0, double v1, double v2) {
-  return {v0, 2. * (v1 - v0), v0 - 2. * v1 + v2};
-}
-
-// Derivative (ascending coefficients).
-std::vector<double> polyDerivative(const std::vector<double> &p) {
-  if (p.size() <= 1)
-    return {0.};
-  std::vector<double> d(p.size() - 1, 0.);
-  for (size_t i = 1; i < p.size(); ++i)
-    d[i - 1] = static_cast<double>(i) * p[i];
-  return d;
-}
-
-} // namespace
-
-double LC_Parabola::computeLocalArea(double t1, double t2) const {
-  // ½ ∫ x(t) y'(t) dt — Green's theorem contribution to the enclosed area
-  // from a single arc traversed from t1 to t2.
-  const auto &cp = m_data.m_controlPoints;
-  const auto x = bezierComponentPoly(cp[0].x, cp[1].x, cp[2].x);
-  const auto y = bezierComponentPoly(cp[0].y, cp[1].y, cp[2].y);
-  const auto yp = polyDerivative(y);
-  return 0.5 * polyIntegrate(polyMul(x, yp), t1, t2);
-}
-
-LC_FirstMoment LC_Parabola::computeLocalFirstMoment(double t1, double t2) const {
-  // mx = ½ ∫ x² y' dt;   my = -½ ∫ y² x' dt
-  const auto &cp = m_data.m_controlPoints;
-  const auto x = bezierComponentPoly(cp[0].x, cp[1].x, cp[2].x);
-  const auto y = bezierComponentPoly(cp[0].y, cp[1].y, cp[2].y);
-  const auto xp = polyDerivative(x);
-  const auto yp = polyDerivative(y);
-
-  const double mx = 0.5 * polyIntegrate(polyMul(polyMul(x, x), yp), t1, t2);
-  const double my = -0.5 * polyIntegrate(polyMul(polyMul(y, y), xp), t1, t2);
-  return {mx, my};
-}
-
-LC_SecondMoment LC_Parabola::computeLocalSecondMoment(double t1, double t2) const {
-  // ixx = ⅓ ∫ x³ y' dt;   iyy = -⅓ ∫ y³ x' dt;   ixy = ½ ∫ x² y y' dt
-  const auto &cp = m_data.m_controlPoints;
-  const auto x = bezierComponentPoly(cp[0].x, cp[1].x, cp[2].x);
-  const auto y = bezierComponentPoly(cp[0].y, cp[1].y, cp[2].y);
-  const auto xp = polyDerivative(x);
-  const auto yp = polyDerivative(y);
-
-  LC_SecondMoment m;
-  m.ixx =
-      (1. / 3.) * polyIntegrate(polyMul(polyMul(polyMul(x, x), x), yp), t1, t2);
-  m.iyy = -(1. / 3.) *
-          polyIntegrate(polyMul(polyMul(polyMul(y, y), y), xp), t1, t2);
-  m.ixy = 0.5 * polyIntegrate(polyMul(polyMul(polyMul(x, x), y), yp), t1, t2);
-  return m;
-}
-
-LC_FirstMoment LC_Parabola::firstMomentLineIntegral() const {
-  if (!m_data.m_valid)
-    return {};
-  // computeLocalFirstMoment already integrates with world-coordinate control
-  // points, so the result is moments about the world origin — no further
-  // rotation or parallel-axis shift required (unlike the ellipse pipeline,
-  // which integrates in an ellipse-centered local frame).
-  return computeLocalFirstMoment(0.0, 1.0);
-}
-
-LC_SecondMoment LC_Parabola::secondMomentLineIntegral() const {
-  if (!m_data.m_valid)
-    return {};
-  return computeLocalSecondMoment(0.0, 1.0);
+  const auto& cp = m_data.m_controlPoints;
+  return LC_MomentQuadrature::quadraticBezier(cp[0], cp[1], cp[2], origin);
 }
 
 double LC_Parabola::getLength() const

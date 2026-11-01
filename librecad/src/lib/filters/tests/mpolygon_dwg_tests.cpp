@@ -40,6 +40,8 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <cmath>
+#include <cstddef>
 #include <filesystem>
 #include <string>
 
@@ -156,9 +158,33 @@ TEST_CASE("DWG MPOLYGON is read into a DRW_MPolygon via parseDwg",
   REQUIRE(cap.m_mpolygonCount == 1);
   CHECK(cap.m_hatchCount == 0);
 
-  // Decoded scalar fields must match the source fixture (solid SOLID fill).
+  // Decoded scalar fields must match the source fixture (solid SOLID fill with
+  // one closed polyline boundary at (0,0), (10,0), (10,10), (0,10)).  Before
+  // the AcDbMPolygon DWG layout was corrected, the HATCH-like decoder misread
+  // the body and left looplist empty, so the loop-count assertion below is
+  // the red-first guard the fix clears.
   const DRW_MPolygon &mp = cap.m_captured;
   CHECK(mp.eType == DRW::MPOLYGON);
   CHECK(mp.name == "SOLID");
   CHECK(mp.solid == 1);
+  CHECK(mp.mpVersion == 1);
+  CHECK(mp.associative == 0);
+  CHECK(mp.fillColorAci == 3);
+  REQUIRE(mp.looplist.size() == 1);
+  const auto &loop = mp.looplist[0];
+  CHECK((loop->type & 2) == 2);
+  REQUIRE_FALSE(loop->objlist.empty());
+  const auto *polyline =
+      dynamic_cast<const DRW_LWPolyline *>(loop->objlist[0].get());
+  REQUIRE(polyline != nullptr);
+  CHECK((polyline->flags & 1) == 1);
+  REQUIRE(polyline->vertlist.size() == 4u);
+  const double expectedX[] = {0.0, 10.0, 10.0, 0.0};
+  const double expectedY[] = {0.0, 0.0, 10.0, 10.0};
+  for (std::size_t i = 0; i < 4; ++i) {
+    INFO("vertex " << i);
+    CHECK(std::abs(polyline->vertlist[i]->x - expectedX[i]) < 1e-9);
+    CHECK(std::abs(polyline->vertlist[i]->y - expectedY[i]) < 1e-9);
+    CHECK(polyline->vertlist[i]->bulge == 0.0);
+  }
 }

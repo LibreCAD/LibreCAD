@@ -116,12 +116,20 @@ struct RS_InsertExpansionBudget {
     // This is separate from derived entities: an empty BLOCK can otherwise
     // make a huge MINSERT grid consume unbounded traversal work.
     static constexpr std::size_t DefaultMaxArrayInstances = DefaultMaxDerivedEntities;
+    // Shared across every hatch clone of one expansion: once the pool is
+    // used up, any remaining clones become HATCH_TOO_DENSE. 0 is a valid
+    // value and leaves every pattern hatch of the expansion as a tint; the
+    // expansion itself never fails because of hatch work.
+    static constexpr std::size_t DefaultMaxHatchPieces = 1000000U;
 
     std::size_t maxNestingDepth {DefaultMaxNestingDepth};
     std::size_t maxDerivedEntities {DefaultMaxDerivedEntities};
     std::size_t maxArrayInstances {DefaultMaxArrayInstances};
+    std::size_t maxHatchPieces {DefaultMaxHatchPieces};
 
     [[nodiscard]] bool isValid() const noexcept {
+        // A hatch budget of 0 is intentional (tint everything); it does not
+        // invalidate the expansion.
         return maxNestingDepth > 0U && maxDerivedEntities > 0U
                && maxArrayInstances > 0U;
     }

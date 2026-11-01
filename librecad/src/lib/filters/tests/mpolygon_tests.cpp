@@ -25,6 +25,9 @@
  * now parses it into a DRW_MPolygon (hatch-derived) and delivers it via
  * addMPolygon, which defaults to addHatch so it renders as a filled hatch.
  *
+ * In MPOLYGON, code 70 is the version and code 71 is the solid flag — not the
+ * other way around as a reader of DRW_Hatch's shared layout might assume.
+ *
  * The fixture below is the exact group-code stream AutoCAD/ezdxf emit for a
  * solid-filled MPOLYGON with a 4-vertex closed polyline boundary (verified with
  * ezdxf 1.4.4 add_mpolygon + set_solid_fill).  Validating against a real-world
@@ -209,9 +212,9 @@ public:
   }
 };
 
-// Exact ezdxf-emitted MPOLYGON: SOLID fill (pattern name "SOLID"), one external
-// polyline boundary path (flag 92==3), closed (73==1), 4 vertices forming a
-// 10x10 square, fill color ACI 3.
+// Exact ezdxf-emitted MPOLYGON: SOLID fill (71 = 1, pattern name "SOLID"),
+// one external polyline boundary path (flag 92==3), closed (73==1), 4 vertices
+// forming a 10x10 square, fill color ACI 3. Code 70 holds the version (1).
 const char *kSolidMPolygon =
     "0\nSECTION\n2\nENTITIES\n"
     "0\nMPOLYGON\n5\n2F\n330\n17\n100\nAcDbEntity\n8\n0\n62\n2\n"

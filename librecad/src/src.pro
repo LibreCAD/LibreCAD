@@ -523,7 +523,9 @@ HEADERS += \
     lib/engine/document/views/lc_viewslist.h \
     lib/engine/document/entities/lc_cachedlengthentity.h \
     lib/engine/overlays/crosshair/lc_crosshair.h \
+    lib/engine/document/container/lc_loopclassifier.h \
     lib/engine/document/container/lc_looputils.h \
+    lib/engine/document/container/lc_patternlinededup.h \
     lib/engine/document/entities/lc_parabola.h \
     lib/engine/overlays/references/lc_refarc.h \
     lib/engine/overlays/references/lc_refcircle.h \
@@ -571,6 +573,7 @@ HEADERS += \
     lib/engine/document/fonts/lc_textfontregistry.h \
     lib/engine/document/fonts/rs_fontlist.h \
     lib/engine/document/rs_graphic.h \
+    lib/engine/document/entities/lc_hatchdensity.h \
     lib/engine/document/entities/rs_hatch.h \
     lib/engine/document/entities/lc_hyperbola.h \
     lib/engine/document/entities/lc_insert_transform.h \
@@ -600,6 +603,7 @@ HEADERS += \
     lib/engine/document/entities/rs_spline.h \
     lib/engine/document/entities/lc_splinepoints.h \
     lib/engine/document/entities/lc_secondmoment.h \
+    lib/engine/document/entities/lc_momentquadrature.h \
     lib/engine/rs_system.h \
     lib/engine/document/entities/rs_text.h \
     lib/engine/undo/lc_undoablerelzero.h \
@@ -617,6 +621,7 @@ HEADERS += \
     lib/fileio/lc_filenameselectionservice.h \
     lib/filters/lc_embeddedtextxdata.h \
     lib/filters/lc_embeddedtextmodel.h \
+    lib/filters/lc_hatchdefinitionlines.h \
     lib/filters/lc_hyperbolaspline.h \
     lib/filters/lc_parabolaspline.h \
     lib/filters/rs_filtercxf.h \
@@ -778,6 +783,7 @@ HEADERS += \
     lib/gui/rs_coordinateevent.h \
     lib/gui/rs_dialogfactory.h \
     lib/gui/rs_dialogfactoryinterface.h \
+    lib/gui/lc_hatchdensitytext.h \
     lib/gui/rs_graphicview.h \
     lib/gui/grid/rs_grid.h \
     lib/gui/rs_linetypepattern.h \
@@ -1080,6 +1086,7 @@ SOURCES += \
     lib/engine/utils/lc_rectregion.cpp \
     lib/filters/lc_embeddedtextxdata.cpp \
     lib/filters/lc_embeddedtextmodel.cpp \
+    lib/filters/lc_hatchdefinitionlines.cpp \
     lib/filters/lc_hyperbolaspline.cpp \
     lib/filters/lc_parabolaspline.cpp \
     lib/generators/layers/lc_layersexporter.cpp \
@@ -1216,7 +1223,9 @@ SOURCES += \
     lib/engine/document/views/lc_viewslist.cpp \
     lib/engine/document/entities/lc_cachedlengthentity.cpp \
     lib/engine/overlays/crosshair/lc_crosshair.cpp \
+    lib/engine/document/container/lc_loopclassifier.cpp \
     lib/engine/document/container/lc_looputils.cpp \
+    lib/engine/document/container/lc_patternlinededup.cpp \
     lib/engine/document/entities/lc_parabola.cpp \
     lib/engine/overlays/references/lc_refarc.cpp \
     lib/engine/overlays/references/lc_refcircle.cpp \
@@ -1252,6 +1261,7 @@ SOURCES += \
     lib/engine/document/fonts/lc_opentypefont.cpp \
     lib/engine/document/fonts/lc_textfontregistry.cpp \
     lib/engine/document/rs_graphic.cpp \
+    lib/engine/document/entities/lc_hatchdensity.cpp \
     lib/engine/document/entities/rs_hatch.cpp \
     lib/engine/document/entities/lc_hyperbola.cpp \
     lib/engine/document/entities/lc_insert_transform.cpp \
@@ -1275,6 +1285,7 @@ SOURCES += \
     lib/engine/document/entities/rs_solid.cpp \
     lib/engine/document/entities/rs_spline.cpp \
     lib/engine/document/entities/lc_splinepoints.cpp \
+    lib/engine/document/entities/lc_momentquadrature.cpp \
     lib/engine/rs_system.cpp \
     lib/engine/document/entities/rs_text.cpp \
     lib/engine/undo/rs_undo.cpp \
@@ -1325,6 +1336,7 @@ SOURCES += \
     lib/gui/grid/lc_lattice.cpp \
     lib/gui/grid/lc_orthogonalgrid.cpp \
     lib/gui/rs_dialogfactory.cpp \
+    lib/gui/lc_hatchdensitytext.cpp \
     #lib/gui/rs_eventhandler.cpp \
     lib/gui/rs_graphicview.cpp \
     lib/gui/grid/rs_grid.cpp \

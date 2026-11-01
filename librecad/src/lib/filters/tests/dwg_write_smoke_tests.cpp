@@ -5502,12 +5502,13 @@ bool writeRegistryMPolygon(dwgRW &writer) {
   polygon.color = 2;
   polygon.solid = 1;
   polygon.name = "SOLID";
+  polygon.mpVersion = 1;
   polygon.hstyle = 0;
   polygon.hpattern = 1;
   polygon.fillColorAci = 3;
   polygon.extPoint = DRW_Coord{0.0, 0.0, 1.0};
 
-  auto loop = std::make_shared<DRW_HatchLoop>(3); // external + polyline
+  auto loop = std::make_shared<DRW_HatchLoop>(2); // polyline path
   auto polyline = std::make_shared<DRW_LWPolyline>();
   polyline->flags = 1;
   polyline->addVertex(DRW_Vertex2D(0.0, 0.0, 0.0));
@@ -5591,6 +5592,8 @@ void assertRegistryMPolygon(const WholeModelRegistryIface &iface) {
   CHECK(polygon.eType == DRW::MPOLYGON);
   CHECK(polygon.name == "SOLID");
   CHECK(polygon.solid == 1);
+  CHECK(polygon.mpVersion == 1);
+  CHECK(polygon.associative == 0);
   CHECK(polygon.fillColorAci == 3);
   REQUIRE(polygon.looplist.size() == 1);
   const auto &loop = polygon.looplist[0];
@@ -5602,6 +5605,10 @@ void assertRegistryMPolygon(const WholeModelRegistryIface &iface) {
   CHECK(polyline->vertlist.size() == 4u);
 }
 
+// Forward declaration — definition follows below the iface so it can share
+// MPolygonOnlyIface's capture state.
+bool writePatternMPolygon(dwgRW &writer);
+
 class MPolygonOnlyIface : public EmptyIface {
 public:
   dwgRW *m_writer{nullptr};
@@ -5612,6 +5619,7 @@ public:
     if (m_writer == nullptr)
       return;
     REQUIRE(writeRegistryMPolygon(*m_writer));
+    REQUIRE(writePatternMPolygon(*m_writer));
   }
 
   void addMPolygon(const DRW_MPolygon *p) override {
@@ -5626,13 +5634,15 @@ public:
 };
 
 void assertMPolygonOnlyRead(const MPolygonOnlyIface &iface) {
-  REQUIRE(iface.m_mpolygons.size() == 1);
+  REQUIRE(iface.m_mpolygons.size() >= 1);
   CHECK(iface.m_hatches.empty());
 
   const DRW_MPolygon &polygon = iface.m_mpolygons[0];
   CHECK(polygon.eType == DRW::MPOLYGON);
   CHECK(polygon.name == "SOLID");
   CHECK(polygon.solid == 1);
+  CHECK(polygon.mpVersion == 1);
+  CHECK(polygon.associative == 0);
   CHECK(polygon.fillColorAci == 3);
   REQUIRE(polygon.looplist.size() == 1);
   const auto &loop = polygon.looplist[0];
@@ -5642,6 +5652,96 @@ void assertMPolygonOnlyRead(const MPolygonOnlyIface &iface) {
   REQUIRE(polyline != nullptr);
   CHECK((polyline->flags & 1) == 1);
   CHECK(polyline->vertlist.size() == 4u);
+}
+
+// A second pattern MPOLYGON (ANSI31 at scale 4, two polyline loops with one
+// bulge-0.5 arc, one pattern definition line) added by MPolygonOnlyIface
+// so the DWG round trip covers the non-solid path as well.
+bool writePatternMPolygon(dwgRW &writer) {
+  DRW_MPolygon polygon;
+  polygon.color = 2;
+  polygon.solid = 0;
+  polygon.name = "ANSI31";
+  polygon.mpVersion = 1;
+  polygon.hstyle = 0;
+  polygon.hpattern = 1;
+  polygon.angle = 0.0;
+  polygon.scale = 4.0;
+  polygon.doubleflag = 0;
+  polygon.fillColorAci = 256;
+  polygon.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+
+  auto outer = std::make_shared<DRW_HatchLoop>(2);
+  auto outerPl = std::make_shared<DRW_LWPolyline>();
+  outerPl->flags = 1;
+  outerPl->addVertex(DRW_Vertex2D(0.0, 0.0, 0.0));
+  outerPl->addVertex(DRW_Vertex2D(100.0, 0.0, 0.5));
+  outerPl->addVertex(DRW_Vertex2D(100.0, 60.0, 0.0));
+  outerPl->addVertex(DRW_Vertex2D(0.0, 60.0, 0.0));
+  outer->objlist.push_back(outerPl);
+  polygon.looplist.push_back(outer);
+
+  auto inner = std::make_shared<DRW_HatchLoop>(2);
+  auto innerPl = std::make_shared<DRW_LWPolyline>();
+  innerPl->flags = 1;
+  innerPl->addVertex(DRW_Vertex2D(30.0, 20.0, 0.0));
+  innerPl->addVertex(DRW_Vertex2D(70.0, 20.0, 0.0));
+  innerPl->addVertex(DRW_Vertex2D(70.0, 40.0, 0.0));
+  innerPl->addVertex(DRW_Vertex2D(30.0, 40.0, 0.0));
+  inner->objlist.push_back(innerPl);
+  polygon.looplist.push_back(inner);
+
+  DRW_Hatch::PatternLine pl;
+  pl.angle = 0.7853981633974483; // 45 deg in radians
+  pl.baseX = 0.0;
+  pl.baseY = 0.0;
+  pl.offsetX = -8.9802561212;
+  pl.offsetY = 8.9802561212;
+  polygon.patternLines.push_back(pl);
+
+  return writer.writeMPolygon(&polygon);
+}
+
+void assertPatternMPolygonRead(const DRW_MPolygon &polygon) {
+  CHECK(polygon.eType == DRW::MPOLYGON);
+  CHECK(polygon.name == "ANSI31");
+  CHECK(polygon.solid == 0);
+  CHECK(polygon.mpVersion == 1);
+  CHECK(polygon.associative == 0);
+  CHECK(polygon.hpattern == 1);
+  CHECK(polygon.fillColorAci == 256);
+  CHECK(polygon.scale == Catch::Approx(4.0));
+  REQUIRE(polygon.looplist.size() == 2);
+
+  const auto &outerLoop = polygon.looplist[0];
+  CHECK((outerLoop->type & 2) == 2);
+  REQUIRE_FALSE(outerLoop->objlist.empty());
+  auto *outerPl =
+      dynamic_cast<DRW_LWPolyline *>(outerLoop->objlist[0].get());
+  REQUIRE(outerPl != nullptr);
+  CHECK((outerPl->flags & 1) == 1);
+  REQUIRE(outerPl->vertlist.size() == 4u);
+  CHECK(outerPl->vertlist[1]->bulge == Catch::Approx(0.5).margin(1e-15));
+
+  const auto &innerLoop = polygon.looplist[1];
+  CHECK((innerLoop->type & 2) == 2);
+  REQUIRE_FALSE(innerLoop->objlist.empty());
+  auto *innerPl =
+      dynamic_cast<DRW_LWPolyline *>(innerLoop->objlist[0].get());
+  REQUIRE(innerPl != nullptr);
+  CHECK((innerPl->flags & 1) == 1);
+  REQUIRE(innerPl->vertlist.size() == 4u);
+  for (const auto &v : innerPl->vertlist)
+    CHECK(v->bulge == 0.0);
+
+  REQUIRE(polygon.patternLines.size() == 1);
+  const auto &pl = polygon.patternLines[0];
+  CHECK(pl.angle == Catch::Approx(0.7853981633974483).margin(1e-12));
+  CHECK(pl.baseX == Catch::Approx(0.0).margin(1e-12));
+  CHECK(pl.baseY == Catch::Approx(0.0).margin(1e-12));
+  CHECK(pl.offsetX == Catch::Approx(-8.9802561212).margin(1e-9));
+  CHECK(pl.offsetY == Catch::Approx(8.9802561212).margin(1e-9));
+  CHECK(pl.dashList.empty());
 }
 
 const std::vector<WritableTypeEntry> &writableTypeRegistry() {
@@ -10584,7 +10684,9 @@ TEST_CASE("dwgRW writes MPOLYGON as AcDbMPolygon instead of HATCH",
       REQUIRE(reader.getError() == DRW::BAD_NONE);
     }
 
+    REQUIRE(readIface.m_mpolygons.size() == 2);
     assertMPolygonOnlyRead(readIface);
+    assertPatternMPolygonRead(readIface.m_mpolygons[1]);
     std::remove(path.c_str());
   }
 }
