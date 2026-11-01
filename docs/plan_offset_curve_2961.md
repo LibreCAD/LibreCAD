@@ -9706,3 +9706,39 @@ the raster uses LibreCAD's own DXF reader and renderer, does not capture a live
 viewport, and has no Qt/display-DPR measurement. Physical stale-peer and
 held-drag/preview/commit interaction evidence, full deployed/cross-platform
 W0-W2 acceptance, reviewer approval, and final R integration remain open.
+
+## 210. W252 FreeCAD First-Run Retry Blocked by Desktop Lock
+
+The user approved accepting FreeCAD's displayed first-run defaults (English,
+standard mm/kg/s, CAD navigation; leave the theme unchanged). Before applying
+them, the native-app control surface again reported that macOS is locked and
+cannot be unlocked automatically. A brief `QT_QPA_PLATFORM=offscreen` launch
+probe started FreeCAD but did not expose an operable setup dialog or viewport;
+it was interrupted and no FreeCAD process remains. No defaults were applied,
+no drawing was saved, and no independent visual evidence was produced. This
+does not change the previous W247/W248 FreeCAD import-crash findings or imply a
+geometry defect.
+
+The W171-derived DXF remains unchanged at SHA256
+`b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`. The
+current exact PR head is `5ee311a56d140eab434e7c02b89d69f2870381c6`; the
+Text Foundations workflow and Headless OFF job passed, while Headless ON,
+CodeQL, DWG/DXF verification (including Windows x64/ARM64), and Pixi platform
+jobs remained in progress at this receipt. Security scan is skipped by
+workflow policy. The PR is open, draft, mergeable, and still requires review.
+
+| W252 check | Result |
+|---|---|
+| User approval for first-run defaults | PASS; defaults authorized, not applied |
+| Native desktop control | BLOCKED; CUA reports macOS locked |
+| FreeCAD setup dialog / viewport | OPEN; offscreen probe provided neither |
+| Drawing integrity | PASS; no save; W171-derived DXF hash unchanged |
+| Roadmap parser/refusal/evidence tests | PASS; Node test command exited 0 |
+| Exact-head Text Foundations / Headless OFF | PASS on `5ee311a5` |
+| Exact-head Headless ON, CodeQL, DWG/DXF, Pixi | IN PROGRESS at this receipt |
+| Independent W171 contour-fidelity review | OPEN; no independent viewport |
+
+Resume the independent FreeCAD visual check only when the desktop control
+surface is available. Physical stale-peer and held-drag/preview/commit GUI
+evidence with durable screenshots and display-DPR, full deployed/cross-platform
+W0-W2 acceptance, human review approval, and final R integration remain open.
