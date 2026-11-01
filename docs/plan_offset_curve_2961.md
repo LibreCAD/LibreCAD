@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W253; chronological evidence follows): planned product
+Current status (W254; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -41,6 +41,11 @@ attempt to import the W171-derived DXF. The import dialog recognized about 233
 entities, but FreeCAD exited before presenting a geometry viewport. The complete
 offset validation Node suite passes 412/412; exact-head CI for `e246acd8` is
 green. Independent contour-fidelity review therefore remains open.
+
+W254 additionally tested the same unchanged DXF in Inkscape 1.4.2. The DXF
+importer accepted it with a `$PDMODE` warning, but the drawing extent produced
+only a tiny trace at a useful viewing scale. This is not contour-fidelity
+evidence; the exact external visual gate remains open.
 
 W237 requalified the current test-only head with the full CMake application
 suite: 5,155 cases, 5,080 passed, 75 skipped, and 10,348,250 assertions passed.
@@ -9791,3 +9796,34 @@ Do not infer geometric failure or success from this FreeCAD termination. The
 W171 contour-fidelity review, physical stale-peer and held-drag/preview/commit
 evidence with durable screenshots and display-DPR, full deployed/cross-platform
 W0-W2 acceptance, reviewer approval, and final R integration remain open.
+
+## 212. W254 Inkscape DXF Import Attempt
+
+As an alternate independent vector viewer after the W253 FreeCAD termination,
+opened the unchanged W171-derived ODA DXF in Inkscape 1.4.2. Its DXF input
+extension completed import and reported that `$PDMODE` is ignored and a point is
+displayed normally. Zoom Drawing brought a filled, narrow shape into view only
+at extreme magnification; reducing the zoom left a tiny trace. The page view
+was blank, and no useful contour geometry could be distinguished. This confirms
+only that the extension accepted the file; it is not CAD validation or a visual
+fidelity pass.
+
+The source DXF SHA256 remains
+`b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`. No file
+was saved, no persistent Inkscape preference was changed, and no screenshot or
+display-DPR record was retained. The complete Node suite remains 412/412 and
+the focused roadmap parser/refusal suite 99/99 on the product-equivalent tree;
+the W253-only document edit is unchanged except for this additional evidence.
+
+| W254 check | Result |
+|---|---|
+| Inkscape DXF import | PARTIAL; import completed with `$PDMODE` warning |
+| Useful contour viewport | OPEN; only a tiny trace was visible at useful scale |
+| Source integrity | PASS; original DXF hash unchanged, no drawing saved |
+| Independent W171 contour-fidelity review | OPEN; no readable contour comparison |
+| Durable screenshot / display-DPR | OPEN; not captured |
+
+Retain the external fidelity gate. Do not interpret the scale/trace observed in
+Inkscape as proof of geometry corruption or correctness. Physical stale-peer
+and held-drag/preview/commit evidence, deployed/cross-platform W0-W2 acceptance,
+reviewer approval, and final R integration also remain open.
