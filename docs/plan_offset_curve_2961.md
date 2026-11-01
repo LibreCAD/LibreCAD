@@ -9874,3 +9874,42 @@ The six-contour LibreCAD screenshot observation is product-app rendering, not
 independent-reader fidelity. Preserve the W171 fidelity gate, durable screenshot
 and DPR record, physical stale-peer/preview/commit evidence, deployed and
 cross-platform W0-W2 acceptance, reviewer approval, and final R integration.
+
+## 214. W256 Offset Commit and Undo in the Current-Source App
+
+Continued in the approved test-only LibreCAD copy at
+`/private/tmp/LibreCAD-PR3193-visible.app`, with
+`/private/tmp/offset-W193-multi-entity.dxf` open. The fixture began with three
+ellipses in each of two groups and its SHA256 remained
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+Using Offset with fixed distance `0.5`, two copies, and Keep Originals enabled,
+selected one ellipse and clicked the exterior side. The right group visibly
+grew from three to five concentric ellipses; exiting the action and invoking
+Undo restored both groups to three. Undo became disabled. The drawing was
+closed with No at the save prompt, and no drawing was saved.
+
+A separate transient-preview state was not captured reliably. The CUA `drag`
+operation releases the button as part of the action and committed the offset;
+the red in-command outline could not be distinguished conclusively from
+selection highlighting. Therefore the held-drag and preview parity gate stays
+open. The screenshots were observed inline but not retained as durable files,
+and display DPR was not recorded. The worktree/product source was unchanged by
+this GUI check. At exact PR head `84e553845`, both Text Foundations jobs passed;
+the C++ analysis, DWG/DXF Linux and Windows jobs, and platform builds were still
+pending, with Security scan skipped by policy.
+
+| W256 check | Result |
+|---|---|
+| Current-source W193 load and rendering | PASS; two groups of three displayed |
+| Offset GUI creation | PASS; one direction pick added two copies |
+| Offset Undo | PASS; restored three ellipses per group, Undo disabled |
+| Drawing integrity | PASS; W193 hash unchanged, closed with No, no save |
+| Independent W171 contour-fidelity review | OPEN; no independent expected-contour comparison |
+| Held-drag and transient-preview parity | OPEN; CUA drag releases and committed, preview state ambiguous |
+| Durable screenshot and display-DPR record | OPEN; inline view only, neither retained |
+| Exact-head CI at `84e553845` | IN PROGRESS; Text Foundations passed, other required jobs pending |
+
+Continue to treat W193 GUI creation/undo as local interaction evidence only.
+Physical stale-peer testing, true held-drag/preview/commit parity, deployed and
+cross-platform W0-W2 acceptance, reviewer approval, and final R integration
+remain open.
