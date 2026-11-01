@@ -31,7 +31,7 @@
 namespace lc::test {
 
 /**
- * Gives a test process a settings store of its own.
+ * Gives a test process a settings store and application data directory of its own.
  *
  * The tests open their settings as organization "LibreCAD", application
  * "LibreCAD-tests" (RS_Settings::init). Left alone, that names one per-user
@@ -47,9 +47,10 @@ namespace lc::test {
  * store starts empty, sees only what this process writes, and end() removes
  * it when the process exits. (QSettings(organization, application) ignores the
  * default format and always opens the native store; tests that open a store
- * themselves use openSettings() below.) The store is still shared by the tests
- * of the one process, in order, as before: a value one test file writes is
- * what the next one reads.
+ * themselves use openSettings() below.) OtherSettingsDir is also pointed into
+ * the temporary root, keeping aliases and other user-managed data out of tests.
+ * The store is still shared by the tests of the one process, in order, as
+ * before: a value one test file writes is what the next one reads.
  *
  * A Catch2 listener in lc_testsettingsisolation.cpp calls begin() before the
  * first test case, so it applies to every executable that lists that file

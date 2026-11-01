@@ -199,17 +199,16 @@ static void reportWriteFailure(const QString& outFile){
 
 static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,
     const QString& dxfFile){
-    auto* newGraphic = new RS_Graphic();
-    *doc = newGraphic;
+    *doc = nullptr;
+    *graphic = nullptr;
     // LC_Console::importGraphic() reports on stderr. Importing through the
     // document storage opens a message box no console command can close.
-    if (!LC_Console::importGraphic(*newGraphic, dxfFile)) {
-        delete *doc;
-        *doc = nullptr;
+    auto imported = LC_Console::importGraphic(dxfFile);
+    if (!imported)
         return false;
-    }
 
-    *graphic = newGraphic;
+    *graphic = imported.get();
+    *doc = imported.release();
     return true;
 }
 

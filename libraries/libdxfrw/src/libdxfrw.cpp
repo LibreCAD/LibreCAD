@@ -665,8 +665,13 @@ bool canWriteDxfFieldList(const DRW_FieldList& list) {
 }
 
 void writeDxfSplineBody(dxfWriter *writer, DRW_Spline *ent) {
-    // Normal vector is optional; omit when it is the default (0,0,1).
-    if (ent->normalVec.x != 0.0 || ent->normalVec.y != 0.0 || ent->normalVec.z != 1.0) {
+    // DRW_Spline value-initializes this optional vector to zero. DXF defines
+    // an omitted extrusion vector as +Z, so do not serialize that sentinel.
+    const bool unspecifiedNormal = ent->normalVec.x == 0.0
+        && ent->normalVec.y == 0.0 && ent->normalVec.z == 0.0;
+    const bool defaultNormal = ent->normalVec.x == 0.0
+        && ent->normalVec.y == 0.0 && ent->normalVec.z == 1.0;
+    if (!unspecifiedNormal && !defaultNormal) {
         writer->writeDouble(210, ent->normalVec.x);
         writer->writeDouble(220, ent->normalVec.y);
         writer->writeDouble(230, ent->normalVec.z);
@@ -1182,8 +1187,7 @@ void dxfRW::setDebug(DRW::DebugLevel lvl){
     }
 }
 
-bool dxfRW::read(DRW_Interface *interface_, bool ext){
-    drw_assert(fileName.empty() == false);
+void dxfRW::resetReadSession(DRW_Interface *interface_, bool ext) {
     version = DRW::UNKNOWNV;
     m_sourceVersion = DRW::UNKNOWNV;
     error = DRW::BAD_NONE;
@@ -1194,16 +1198,31 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
     m_readingContext.blockRecordMap.clear();
     m_readRawHandles.clear();
     applyExt = ext;
-    std::ifstream filestr;
+    binFile = false;
+    iface = interface_;
+    reader.reset();
+}
+
+bool dxfRW::read(DRW_Interface *interface_, bool ext){
+    drw_assert(fileName.empty() == false);
     if (nullptr == interface_) {
         return setError(DRW::BAD_UNKNOWN);
     }
+    resetReadSession(interface_, ext);
     DRW_DBG("dxfRW::read 1def\n");
-    filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
+    std::ifstream filestr(fileName.c_str(), std::ios_base::in | std::ios::binary);
     if (!filestr.is_open()
         || !filestr.good()) {
         return setError(DRW::BAD_OPEN);
     }
+    return readStream(interface_, ext, filestr);
+}
+
+bool dxfRW::readStream(DRW_Interface *interface_, bool ext, std::istream& input) {
+    if (nullptr == interface_) return setError(DRW::BAD_UNKNOWN);
+    resetReadSession(interface_, ext);
+    const auto start = input.tellg();
+    if (start == std::streampos(-1)) return setError(DRW::BAD_OPEN);
 
     char line[24]{};
     char line2[22] = "AutoCAD Binary DXF\r\n";
@@ -1211,46 +1230,48 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
     line2[21] = '\0';
     // Read the 22-byte sentinel plus the first 2 bytes of the group stream so
     // the binary sub-format can be detected before any group is parsed.
-    filestr.read (line, 24);
-    filestr.close();
-    iface = interface_;
+    input.read(line, sizeof(line));
+    const auto probed = input.gcount();
+    if (input.bad()) return setError(DRW::BAD_OPEN);
+    if (m_testAfterProbe) {
+        auto hook = std::move(m_testAfterProbe);
+        m_testAfterProbe = {};
+        hook();
+    }
     DRW_DBG("dxfRW::read 2\n");
     // `line` is filled by an unterminated read; compare the sentinel by exact
     // length to avoid strcmp reading past the buffer when the sentinel
     // bytes don't include an embedded NUL.
-    if (std::memcmp(line, line2, 22) == 0) {
-        filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
-        if (!filestr.is_open() || !filestr.good())
-            return setError(DRW::BAD_OPEN);
-        binFile = true;
-        //skip sentinel
-        filestr.seekg (22, std::ios::beg);
-        if (!filestr.good())
-            return setError(DRW::BAD_OPEN);
+    binFile = probed >= 22 && std::memcmp(line, line2, 22) == 0;
+    input.clear();
+    input.seekg(start);
+    if (binFile && input.good()) input.seekg(22, std::ios::cur);
+    if (!input.good()) return setError(DRW::BAD_OPEN);
+    if (binFile) {
         // R12/AC1009 binary uses 1-byte group codes; R13+ uses 2-byte LE. The
         // first group is always code 0 (SECTION): R12 => bytes 00 'S' (byte[1]
         // != 0); R13+ => bytes 00 00. So a non-zero second byte selects the
         // 1-byte reader.
         if (static_cast<unsigned char>(line[23]) != 0)
-            reader = std::make_unique<dxfReaderBinaryR12>(&filestr);
+            reader = std::make_unique<dxfReaderBinaryR12>(&input);
         else
-            reader = std::make_unique<dxfReaderBinary>(&filestr);
+            reader = std::make_unique<dxfReaderBinary>(&input);
         DRW_DBG("dxfRW::read binary file\n");
     } else {
-        binFile = false;
-        filestr.open (fileName.c_str(), std::ios_base::in);
-        if (!filestr.is_open() || !filestr.good())
-            return setError(DRW::BAD_OPEN);
-        reader = std::make_unique<dxfReaderAscii>(&filestr);
+        reader = std::make_unique<dxfReaderAscii>(&input);
     }
 
     reader->setDxfTextEncoding(m_dxfTextEncoding);
-    bool isOk {processDxf()};
-    filestr.close();
-    version = (DRW::Version) reader->getVersion();
-    m_sourceVersion = reader->getSourceVersion();
-    reader.reset();
-    return isOk;
+    try {
+        bool isOk {processDxf()};
+        version = (DRW::Version) reader->getVersion();
+        m_sourceVersion = reader->getSourceVersion();
+        reader.reset();
+        return isOk;
+    } catch (...) {
+        reader.reset();
+        throw;
+    }
 }
 
 
@@ -1258,17 +1279,7 @@ bool dxfRW::readAscii(DRW_Interface *interface_, bool ext, std::string& content)
     if (nullptr == interface_) {
         return setError(DRW::BAD_UNKNOWN);
     }
-    version = DRW::UNKNOWNV;
-    m_sourceVersion = DRW::UNKNOWNV;
-    error = DRW::BAD_NONE;
-    nextentity.clear();
-    m_hasPendingEntityBoundary = false;
-    m_readingBlockEntities = false;
-    m_readingContext.lineTypeNameMap.clear();
-    m_readingContext.blockRecordMap.clear();
-    m_readRawHandles.clear();
-    applyExt = ext;
-    iface = interface_;
+    resetReadSession(interface_, ext);
     std::istringstream strstream(content);
     reader = std::make_unique<dxfReaderAscii>(&strstream);
     reader->setDxfTextEncoding(m_dxfTextEncoding);
@@ -1447,7 +1458,16 @@ void dxfRW::resetDxfWriteSession() {
 }
 
 bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
-    return writeImpl(interface_, ver, bin, nullptr, nullptr);
+    return writeImpl(interface_, ver, bin, nullptr, nullptr, nullptr, nullptr);
+}
+
+bool dxfRW::writeGuarded(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                         DRW_OutputPublishGuard guard, void* guardContext) {
+    if (!guard) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    return writeImpl(interface_, ver, bin, nullptr, nullptr, guard, guardContext);
 }
 
 bool dxfRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
@@ -1456,11 +1476,22 @@ bool dxfRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
         error = DRW::BAD_OPEN;
         return false;
     }
-    return writeImpl(interface_, ver, bin, verifier, context);
+    return writeVerified(interface_, ver, bin, verifier, context, nullptr, nullptr);
+}
+
+bool dxfRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                         DRW_StagedFileVerifier verifier, void* context,
+                         DRW_OutputPublishGuard guard, void* guardContext) {
+    if (!verifier) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    return writeImpl(interface_, ver, bin, verifier, context, guard, guardContext);
 }
 
 bool dxfRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
-                     DRW_StagedFileVerifier verifier, void* context) try {
+                     DRW_StagedFileVerifier verifier, void* context,
+                     DRW_OutputPublishGuard guard, void* guardContext) try {
     if (!isSupportedDxfWriteVersion(ver)) {
         error = DRW::BAD_VERSION;
         return false;
@@ -1487,7 +1518,7 @@ bool dxfRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
         error = DRW::BAD_OPEN;
         return false;
     }
-    std::ofstream& filestr = output.stream();
+    std::ostream& filestr = output.stream();
     const auto failWrite = [&]() {
         writer.reset();
         output.abort();
@@ -1632,7 +1663,9 @@ bool dxfRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
     // exactly as it was.
     if (!iface->finalizeDxfWrite())
         return failWrite();
-    if (!(verifier ? output.commitVerified(verifier, context) : output.commit()))
+    if (!(verifier
+              ? output.commitVerified(verifier, context, guard, guardContext)
+              : output.commit(guard, guardContext)))
         return failWrite();
     return true;
 }
@@ -7940,11 +7973,11 @@ bool dxfRW::writeExtData(const std::vector<DRW_Variant*> &ed){
                             break;
                         }
                     }
-                    // ASCII DXF cannot hold a line break inside a value:
-                    // write control characters as caret codes (^J, ^M, ...).
+                    // ASCII XDATA needs canonical control and literal-caret
+                    // escaping; binary DXF and other text codes stay unchanged.
                     recordResult(writer->writeUtf8String(
                         cc, cc == 1000 && !binFile
-                                ? dxfCaretEncodedControls(value)
+                                ? DRW_TextCodec::encodeDxfXDataString(value)
                                 : value));
                     break;
                 }
@@ -14892,7 +14925,8 @@ void dxfRW::writePlotSettingsFields(const DRW_PlotSettings *ent) {
     if (version > DRW::AC1015) {   // shade-plot settings are R2004+
         writer->writeInt16(76, ent->shadePlotMode);
         writer->writeInt16(77, ent->shadePlotResLevel);
-        writer->writeInt16(78, ent->shadePlotCustomDPI);
+        // Zero is the legacy in-memory "unspecified" value, not a valid DPI.
+        writer->writeInt16(78, ent->shadePlotCustomDPI == 0 ? 300 : ent->shadePlotCustomDPI);
     }
     writer->writeDouble(147, ent->scaleFactor);
     writer->writeDouble(148, ent->paperImageOriginX);

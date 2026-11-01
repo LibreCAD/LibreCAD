@@ -27,6 +27,7 @@
 #include <cmath>
 
 #include <QMouseEvent>
+#include <QPointer>
 
 #include "rs_previewactioninterface.h"
 
@@ -145,7 +146,7 @@ void RS_PreviewActionInterface::deletePreview() {
         m_preview->clear();
         m_hasPreview = false;
     }
-    if (!m_graphicView->isCleanUp()) {
+    if (m_graphicView && m_viewport && !m_graphicView->isCleanUp()) {
         RS_EntityContainer* container = m_viewport->getOverlayEntitiesContainer(RS2::ActionPreviewEntity);
         container->clear();
 
@@ -174,7 +175,7 @@ void RS_PreviewActionInterface::drawPreview() {
 void RS_PreviewActionInterface::deleteHighlights() const {
     // fixme - optimize if empty
     m_highlight->clear();
-    if (!m_graphicView->isCleanUp()) {
+    if (m_graphicView && m_viewport && !m_graphicView->isCleanUp()) {
         RS_EntityContainer* overlayContainer = m_viewport->getOverlayEntitiesContainer(RS2::OverlayEffects);
         overlayContainer->clear();
 
@@ -913,8 +914,9 @@ void RS_PreviewActionInterface::mouseMoveEvent(QMouseEvent* event) {
             m_visualSnapManager->visualizeOrdinaryRestrictions(m_preview.get(), m_highlight.get());
         }
     }
+    const QPointer<RS_PreviewActionInterface> alive(this);
     onMouseMoveEvent(status, &lcEvent);
-    drawPreviewAndHighlights();
+    if (alive) drawPreviewAndHighlights();
 }
 
 // fixme - check and ensure that coordinate is properly set if it is specified by command line

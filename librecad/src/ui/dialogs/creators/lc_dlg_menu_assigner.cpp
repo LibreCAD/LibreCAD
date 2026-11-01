@@ -115,6 +115,7 @@ void LC_DlgMenuAssigner::initEntityContextCombobox() const {
     ui->cbEntityContext->addItem(tr("Polyline"), "PL");
     ui->cbEntityContext->addItem(tr("Spline"), "SL");
     ui->cbEntityContext->addItem(tr("Spline By Points"), "SP");
+    ui->cbEntityContext->addItem(tr("Offset Curve"), "OC");
     ui->cbEntityContext->addItem(tr("Ellipse"), "EL");
     ui->cbEntityContext->addItem(tr("Point"), "PO");
     ui->cbEntityContext->addItem(tr("Parabola"), "PA");

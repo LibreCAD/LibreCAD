@@ -31,7 +31,7 @@
 ///   - String fields (TV) are encoded as UTF-16LE (TU form) for R2007+.
 class dwgWriter24 : public dwgWriter18 {
 public:
-    dwgWriter24(std::ofstream *stream, DRW_Header *header)
+    dwgWriter24(std::ostream *stream, DRW_Header *header)
         : dwgWriter18(stream, header)
     {
         m_version = DRW::AC1024;

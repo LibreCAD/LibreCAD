@@ -87,6 +87,12 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, const bool printPr
     addWidgetsListeners();
 }
 
+QC_MDIWindow::QC_MDIWindow(std::unique_ptr<RS_Graphic> doc, QWidget* parent, const bool printPreview,
+                           LC_ActionContext* actionContext)
+    : QC_MDIWindow(doc.get(), parent, printPreview, actionContext) {
+    if (doc) { m_owner = true; doc.release(); }
+}
+
 /**
  * Destructor.
  *
@@ -362,35 +368,36 @@ bool QC_MDIWindow::loadDocument(const QString& fileName, const RS2::FormatType t
     removeWidgetsListeners();
     const bool loaded = LC_DocumentsStorage{}.loadDocument(m_document, fileName, type, encoding);
     if (loaded) {
-        const RS_Graphic* graphic = m_document->getGraphic();
-        if (graphic != nullptr) {
-            const RS_GraphicView* gv = graphic->getGraphicView(); // fixme - eliminate this dependency!
-            if (gv != nullptr) {
-                // fixme - sand - review and probably move initialization of UCS - as normal support of VIEWPORT will be available
-                // todo - not sure whether this is right place for setting up current wcs.
-                // Actually, it seems that it's better to rely on reading viewport (were setting for the offset and zoom are set.
-                // however, must probably with proper support of VIEW, they will be reworked too..
-                // So let it have here for now so far
-                LC_GraphicViewport* viewport = gv->getViewPort();
-                viewport->initAfterDocumentOpen();
-            }
-        }
-
-        // fixme - sand - move support of fonts in some separate space?
-        if (fileName.endsWith(".lff") || fileName.endsWith(".cxf")) {
-            // fixme - sand - move to upper layer
-            drawChars();
-            m_graphicView->zoomAuto(false);
-        }
-        else {
-            m_graphicView->redraw();
-        }
-
-    }
-    else {
+        initializeLoadedDocument(fileName);
     }
     addWidgetsListeners();
     return loaded;
+}
+
+void QC_MDIWindow::initializeLoadedDocument(const QString& fileName) {
+    const RS_Graphic* graphic = m_document->getGraphic();
+    if (graphic != nullptr) {
+        const RS_GraphicView* gv = graphic->getGraphicView(); // fixme - eliminate this dependency!
+        if (gv != nullptr) {
+            // fixme - sand - review and probably move initialization of UCS - as normal support of VIEWPORT will be available
+            // todo - not sure whether this is right place for setting up current wcs.
+            // Actually, it seems that it's better to rely on reading viewport (were setting for the offset and zoom are set.
+            // however, must probably with proper support of VIEW, they will be reworked too..
+            // So let it have here for now so far
+            LC_GraphicViewport* viewport = gv->getViewPort();
+            viewport->initAfterDocumentOpen();
+        }
+    }
+
+    // fixme - sand - move support of fonts in some separate space?
+    if (fileName.endsWith(".lff") || fileName.endsWith(".cxf")) {
+        // fixme - sand - move to upper layer
+        drawChars();
+        m_graphicView->zoomAuto(false);
+    }
+    else {
+        m_graphicView->redraw();
+    }
 }
 
 /**

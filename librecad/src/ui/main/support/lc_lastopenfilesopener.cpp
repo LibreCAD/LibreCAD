@@ -92,7 +92,7 @@ void LC_LastOpenFilesOpener::openLastOpenFiles(QStringList &fileList,  QSplashSc
             }
             if (reopenLastFiles) {
                 const QString activeFile = LC_GET_STR("LastOpenFilesActive", "");
-                m_appWindow->activateWindowWithFile(activeFile);
+                m_appWindow->restoreActiveFileAfterPendingImports(activeFile);
             }
         }
 

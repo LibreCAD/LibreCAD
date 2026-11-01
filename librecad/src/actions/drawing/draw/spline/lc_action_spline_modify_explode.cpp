@@ -22,9 +22,14 @@
 
 #include "lc_action_spline_modify_explode.h"
 
+#include <algorithm>
+#include <cmath>
+
 #include "lc_spline_explode_options_filler.h"
 #include "lc_spline_explode_options_widget.h"
 #include "lc_splinepoints.h"
+#include "lc_offsetcurve.h"
+#include "lc_offsetcurvetransform.h"
 #include "rs_entity.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
@@ -36,9 +41,14 @@
 namespace {
     // Parabola is a quadratic Bezier (3 control points), so the base
     // LC_SplinePoints stroking infrastructure handles it directly.
-    const EntityTypeList g_enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints,
+    const EntityTypeList g_enTypeList = {RS2::EntitySpline, RS2::EntityOffsetCurve, RS2::EntitySplinePoints,
                                          RS2::EntityParabola};
 
+    RS_Entity* nativeExplodeOwner(RS_Entity* entity) {
+        if (entity != nullptr && entity->getParent() != nullptr &&
+            entity->getParent()->rtti() == RS2::EntityOffsetCurve) return entity->getParent();
+        return entity;
+    }
 }
 
 // fixme - potentially, the action may be expanded even more - and used to expand circle, arcs, and ellipses to lines.
@@ -67,6 +77,9 @@ void LC_ActionSplineExplode::doLoadOptions() {
 }
 
 bool LC_ActionSplineExplode::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
+    m_entityToModify = nativeExplodeOwner(m_entityToModify);
+    if (m_entityToModify != nullptr && m_entityToModify->rtti() == RS2::EntityOffsetCurve &&
+        (m_document == nullptr || m_entityToModify->isDeleted() || m_document->findEntityIndex(m_entityToModify) < 0)) return false;
     int segmentsCount = obtainSegmentsCount();
     std::vector<RS_Vector> strokePoints;
     bool closed = false;
@@ -137,6 +150,7 @@ void LC_ActionSplineExplode::doTriggerCompletion([[maybe_unused]]bool success) {
 }
 
 bool LC_ActionSplineExplode::mayModifySplineEntity(RS_Entity* entity) {
+    entity = nativeExplodeOwner(entity);
     return entity != nullptr && g_enTypeList.contains(entity->rtti());
 }
 
@@ -161,7 +175,7 @@ void LC_ActionSplineExplode::onMouseMove(const RS_Vector mouse, const int status
 }
 
 void LC_ActionSplineExplode::setEntityToModify(RS_Entity* entity) {
-    m_entityToModify = entity;
+    m_entityToModify = nativeExplodeOwner(entity);
     trigger();
 }
 
@@ -188,7 +202,26 @@ RS_Entity *LC_ActionSplineExplode::createModifiedSplineEntity(RS_Entity *e, [[ma
 }
 
 void  LC_ActionSplineExplode::fillStrokePoints(RS_Entity *e, const int segmentsCount, std::vector<RS_Vector> &strokePoints, bool &closed) const {
+    e = nativeExplodeOwner(e);
+    if (e == nullptr) return;
     switch (e->rtti()){
+        case RS2::EntityOffsetCurve: {
+            strokePoints.clear();
+            closed = false;
+            // The ordinary stroker divides by the count. Admit its native-only
+            // use before allocation, and never turn invalid samples into output.
+            if (segmentsCount < 1 || static_cast<std::size_t>(segmentsCount) >= LC_OffsetCheckLimits{}.maxVertices) return;
+            auto prepared = LC_OffsetCurveTransform::prepare(*e, {}, true);
+            if (!prepared || prepared.entity->rtti() != RS2::EntitySpline) return;
+            const auto* spline = static_cast<const RS_Spline*>(prepared.entity.get());
+            spline->fillStrokePoints(segmentsCount, strokePoints);
+            if (!std::all_of(strokePoints.begin(), strokePoints.end(), [](const RS_Vector& point) {
+                return point.valid && std::isfinite(point.x) && std::isfinite(point.y) &&
+                    std::isfinite(point.z) && point.z == 0;
+            })) { strokePoints.clear(); return; }
+            closed = spline->isClosed();
+            break;
+        }
         case RS2::EntitySplinePoints:{
             const auto* splinePoints = static_cast<LC_SplinePoints *>(e);
             splinePoints->fillStrokePoints(segmentsCount, strokePoints);

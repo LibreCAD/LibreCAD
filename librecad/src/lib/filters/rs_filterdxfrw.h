@@ -31,6 +31,7 @@
 #include <algorithm>
 #include <array>
 #include <cstdint>
+#include <functional>
 #include <limits>
 #include <map>
 #include <memory>
@@ -39,18 +40,22 @@
 #include <string>
 #include <vector>
 
+#include <QByteArray>
+
 #include "drw_interface.h"
+#include "lc_fileidentity.h"
 #include "lc_extentitydata.h"
+#include "lc_offsetcurvexdata.h"
 #include "libdxfrw.h"
 #ifdef DWGSUPPORT
 #include "libdwgr.h"
-#include <functional>
 #endif
 #include "rs_color.h"
 #include "rs_dimension.h"
 #include "rs_filterinterface.h"
 
 class DL_WriterA;
+class DRW_TextCodec;
 class LC_DimStyle;
 class LC_Hyperbola;
 class LC_MLeader;
@@ -80,6 +85,7 @@ struct DRW_AcisBrep;
 
 #ifdef DWGSUPPORT
 class DwgWriteFailureTestAccess;
+class DwgOutputPublicationTestAccess;
 
 /**
  * DWG-only identity state. Keeping these maps together makes their export
@@ -1958,6 +1964,7 @@ class RsFilterDxfRwExposureTestAccess;
  *
  * @author Rallaz
  */
+struct LC_OffsetImportBudget;
 class RS_FilterDXFRW : public RS_FilterInterface,
                        DRW_Interface
 #ifdef DWGSUPPORT
@@ -1967,8 +1974,11 @@ class RS_FilterDXFRW : public RS_FilterInterface,
 {
   friend class RsFilterDxfRwHeaderTestAccess;
   friend class RsFilterDxfRwExposureTestAccess;
+  friend class LC_OffsetImportSession;
 #ifdef DWGSUPPORT
   friend class DwgWriteFailureTestAccess;
+  friend class DwgOutputPublicationTestAccess;
+  friend class LC_DwgReadVersionTestAccess;
 #endif
 public:
   enum class DwgDataStorageIdentityStatus : std::uint8_t {
@@ -2031,6 +2041,15 @@ public:
   // Import:
   bool fileImport(RS_Graphic &g, const QString &file,
                   RS2::FormatType type) override;
+  /** Keep recognized native offset splines as plain display-cache geometry. */
+  void setOffsetCurveCacheOnlyImport(bool enabled) noexcept { m_offsetCurveCacheOnlyImport = enabled; }
+  /// Read caller-owned bytes while resolving external references relative to
+  /// the original logical filename. The stream must be seekable and binary.
+  bool fileImportStream(RS_Graphic &g, const QString &logicalFile,
+                        RS2::FormatType type, std::istream &input);
+  /// Parse caller-owned bytes while retaining the logical filename for XREFs.
+  bool fileImportBytes(RS_Graphic &g, const QString &logicalFile,
+                       RS2::FormatType type, const QByteArray &bytes);
 
   // Methods from DRW_CreationInterface:
   void addHeader(const DRW_Header *data) override;
@@ -2419,6 +2438,14 @@ protected:
                                  const std::string &rawLayerName);
 
 private:
+  static bool outputPublishGuard(void *context);
+  bool verifyOutputTargetForPublication();
+
+  bool fileImportImpl(RS_Graphic &g, const QString &logicalFile,
+                      RS2::FormatType type, std::istream *input);
+  bool fileImportImplBody(RS_Graphic &g, const QString &logicalFile,
+                          RS2::FormatType type, std::istream *input);
+  std::function<bool(const QString &, QByteArray &)> m_xrefSnapshotProvider;
   void prepareBlocks();
   void prepareDxfEntityHandleMap();
   /** The application names of the XDATA a DXF export writes: on its table
@@ -3104,10 +3131,26 @@ private:
 
   /** Pointer to the m_graphic we currently operate on. */
   RS_Graphic *m_graphic = nullptr;
+  QString m_activeOutputPath;
+  LC_FileIdentity m_activeOutputSourceIdentity;
+  bool m_activeOutputTargetsSource = false;
+  struct DirectImportContext {
+    struct Source {
+      QString path;
+      LC_FileIdentity identity;
+    };
+    std::vector<Source> sources;
+    bool sourceChanged = false;
+  };
+  std::shared_ptr<DirectImportContext> m_directImportContext;
   /** File name. Used to find out the full path of images. */
   QString m_file;
   /** Pointer to current entity container (either block or graphic) */
   RS_EntityContainer *m_currentContainer = nullptr;
+  bool m_deferOffsetAdmission = false;
+  bool m_offsetCurveCacheOnlyImport = false;
+  std::shared_ptr<LC_OffsetImportBudget> m_offsetImportBudget;
+  static void refreshDeferredOffsetInserts(RS_Graphic &graphic);
   /** MLINESTYLE cache: name → style data. Populated by addMLineStyle as
    *  the OBJECTS section is decoded; consumed by addMLine to compute
    *  per-element offsets when decomposing the MLINE into N polylines. */
@@ -3124,6 +3167,34 @@ private:
   // The version of the DXF being exported, and how many raw records read
   // from another version it leaves out.
   DRW::Version m_dxfExportVersion = DRW::UNKNOWNV;
+  enum class OffsetInputKind { None, Dxf, Dwg };
+  OffsetInputKind m_offsetInputKind = OffsetInputKind::None;
+  DRW::Version m_offsetInputVersion = DRW::UNKNOWNV;
+  bool m_sourceChangedDuringRead = false;
+#ifdef DWGSUPPORT
+  std::function<void()> m_testBeforeDwgOpen;
+  std::function<void()> m_testBeforeDwgStagedPublish;
+  std::function<void(const QString&)> m_testBeforeDwgStageRename;
+#endif
+  QString m_offsetInputCodePage = QStringLiteral("ANSI_1252");
+  struct OffsetXDataContext {
+    LC_OffsetCurveXData::Options options;
+    std::shared_ptr<DRW_TextCodec> codec;
+  };
+  DRW::Version m_offsetOutputVersion = DRW::UNKNOWNV;
+  bool m_offsetOutputDwg = false;
+  std::optional<OffsetXDataContext> m_offsetOutputContext;
+  static std::optional<OffsetXDataContext>
+  makeOffsetXDataContext(bool dwg, DRW::Version version,
+                         const QString &codePage, bool binary = false);
+  std::optional<OffsetXDataContext> offsetInputContext() const;
+  void applyImportedSplineAttributes(
+      RS_Entity *entity, const DRW_Spline *raw,
+      const LC_OffsetCurveXData::XData *remaining);
+  std::optional<LC_OffsetCurveXData::XData>
+  mergedOffsetSplineXData(const RS_Entity &source, bool includeDefinition);
+  static void reportOffsetXDataDiagnostics(
+      const char *operation, const LC_OffsetCurveXData::Diagnostics &diagnostics);
   std::size_t m_dxfLeftOutRawRecords = 0;
   // What the codec left out of the last export (DXF or DWG leftOut()).
   std::map<std::string, std::size_t> m_writeLeftOut;
@@ -3343,7 +3414,9 @@ private:
    * @return true if a conic entity (hyperbola or parabola) was created and
    * handled
    */
-  bool handleQuadraticConicSpline(const DRW_Spline *data);
+  bool handleQuadraticConicSpline(
+      const DRW_Spline *data,
+      const LC_OffsetCurveXData::XData *remaining = nullptr);
 };
 
 #endif

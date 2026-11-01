@@ -26,12 +26,14 @@
 
 #include "rs_insert.h"
 #include "lc_insert_transform.h"
+#include "lc_offsetcurve.h"
 
 #include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <limits>
 #include <memory>
+#include <unordered_map>
 #include <vector>
 
 #include "rs_arc.h"
@@ -89,6 +91,7 @@ enum class InsertTransformCapability {
     NativeOrthogonal,
     CircleToEllipse,
     ArcToEllipse,
+    OffsetToSpline,
     NestedInsert,
     Unsupported
 };
@@ -101,6 +104,8 @@ InsertTransformCapability transformCapability(const RS_Entity& entity) {
         return InsertTransformCapability::ArcToEllipse;
     case RS2::EntityInsert:
         return InsertTransformCapability::NestedInsert;
+    case RS2::EntityOffsetCurve:
+        return InsertTransformCapability::OffsetToSpline;
     // These entity families currently own a two-dimensional scale/rotate/move
     // implementation. Each remains explicitly listed so a new EntityType is
     // rejected until its INSERT-transform semantics are reviewed.
@@ -173,8 +178,125 @@ bool isUniformScale(const LC_InsertTransformParts& parts) {
     return std::abs(std::abs(parts.scaleX) - std::abs(parts.scaleY)) <= tolerance;
 }
 
+constexpr std::size_t offsetCloneWalkLimit = 1U << 20;
+
+bool demoteOffsetDescendants(RS_Entity& clone, bool& demoted) {
+    if (!clone.isContainer())
+        return true;
+    struct Pending {
+        RS_EntityContainer* container;
+        bool privatePath;
+    };
+    struct Replacement {
+        RS_EntityContainer* container;
+        int index;
+        std::unique_ptr<RS_Spline> spline;
+    };
+    std::vector<Pending> pending{{static_cast<RS_EntityContainer*>(&clone), true}};
+    std::unordered_map<RS_EntityContainer*, unsigned> visited;
+    std::vector<Replacement> replacements;
+    std::size_t work = 0;
+    bool borrowedPath = false;
+    while (!pending.empty()) {
+        if (work++ >= offsetCloneWalkLimit) return false;
+        const auto item = pending.back();
+        pending.pop_back();
+        const bool privatePath = item.privatePath && item.container->isOwner();
+        borrowedPath |= !privatePath;
+        const unsigned state = privatePath ? 1u : 2u;
+        auto& seen = visited[item.container];
+        if ((seen & state) != 0)
+            continue;
+        seen |= state;
+        if (item.container->count() > static_cast<unsigned>(std::numeric_limits<int>::max()))
+            return false;
+        for (int index = 0; index < static_cast<int>(item.container->count()); ++index) {
+            if (work++ >= offsetCloneWalkLimit) return false;
+            RS_Entity* child = item.container->entityAt(index);
+            if (child == nullptr)
+                continue;
+            if (child->rtti() == RS2::EntityOffsetCurve) {
+                // Inspect borrowed paths too, but never replace or transform
+                // their source offsets through an allegedly private clone.
+                if (!privatePath)
+                    return false;
+                demoted = true;
+                auto plain = static_cast<const LC_OffsetCurve*>(child)->toPlainSpline();
+                if (!plain)
+                    return false;
+                plain->reparent(item.container);
+                pending.push_back({plain.get(), true});
+                replacements.push_back({item.container, index, std::move(plain)});
+            } else if (child->isContainer()) {
+                pending.push_back({static_cast<RS_EntityContainer*>(child), privatePath});
+            }
+        }
+    }
+    // A later generic container transform would also edit borrowed non-offset
+    // siblings. Refuse the whole new fallback before publishing replacements.
+    if (demoted && borrowedPath) return false;
+    // Prepare everything and reject borrowed aliases before deleting any child.
+    for (auto& replacement : replacements) {
+        replacement.container->setEntityAt(replacement.index, replacement.spline.get());
+        replacement.spline.release();
+    }
+    return true;
+}
+
+// These checks are for the new offset-cache fallback only, not a change to
+// legacy transforms of drawings which contain no native offsets.
+bool finiteOffsetClone(const RS_Entity& root, const LC_InsertTransform* transform = nullptr,
+                       const LC_InsertTransformParts* parts = nullptr) {
+    std::vector<const RS_Entity*> pending{&root};
+    std::unordered_map<const RS_Entity*, bool> visited;
+    std::size_t work = 0;
+    const auto finite = [](const RS_Vector& p) {
+        return p.valid && std::isfinite(p.x) && std::isfinite(p.y) && std::isfinite(p.z);
+    };
+    while (!pending.empty()) {
+        if (work++ >= offsetCloneWalkLimit) return false;
+        const auto* entity = pending.back(); pending.pop_back();
+        if (!visited.emplace(entity, true).second) continue;
+        if (const auto* spline = dynamic_cast<const RS_Spline*>(entity)) {
+            const auto& data = spline->getData();
+            const LC_OffsetCheckLimits limits;
+            if (data.degree < 1 || data.degree > 3 || data.controlPoints.size() > limits.maxVertices ||
+                data.fitPoints.size() > limits.maxVertices || !spline->validate()) return false;
+            if (!std::all_of(data.weights.begin(), data.weights.end(), [](double w) { return std::isfinite(w) && w > 0; }) ||
+                !std::all_of(data.knotslist.begin(), data.knotslist.end(), [](double k) { return std::isfinite(k); })) return false;
+            for (const auto* points : {&data.controlPoints, &data.fitPoints}) for (const auto& point : *points) {
+                if (work++ >= offsetCloneWalkLimit) return false;
+                if (!finite(point)) return false;
+                if (transform && parts) {
+                    // Check the actual decomposed operation sequence as well as
+                    // the complete matrix; neither may publish infinities.
+                    auto mapped = point;
+                    mapped.scale(lcInsertTransformOrigin(), {parts->scaleX, std::abs(parts->scaleY)});
+                    if (!finite(mapped)) return false;
+                    if (parts->reversesOrientation)
+                        mapped.mirror(lcInsertTransformOrigin(), lcInsertTransformReflectionAxisPoint());
+                    if (!finite(mapped)) return false;
+                    mapped.rotate(lcInsertTransformOrigin(), parts->angle);
+                    if (!finite(mapped)) return false;
+                    mapped.move({transform->tx, transform->ty});
+                    if (!finite(mapped) || !finite(transform->mapLeafPoint(point))) return false;
+                }
+            }
+        }
+        if (entity->isContainer()) {
+            const auto& container = static_cast<const RS_EntityContainer&>(*entity);
+            for (const auto* child : container) {
+                if (work++ >= offsetCloneWalkLimit) return false;
+                if (child) pending.push_back(child);
+            }
+        }
+    }
+    return true;
+}
+
 std::unique_ptr<RS_Entity> cloneForTransform(const RS_Entity& source,
-                                              const LC_InsertTransformParts& parts) {
+                                              const LC_InsertTransformParts& parts, bool& offsetFallback) {
+    offsetFallback = false;
     switch (transformCapability(source)) {
     case InsertTransformCapability::CircleToEllipse:
         if (!isUniformScale(parts)) {
@@ -201,10 +323,22 @@ std::unique_ptr<RS_Entity> cloneForTransform(const RS_Entity& source,
     case InsertTransformCapability::NestedInsert:
     case InsertTransformCapability::Unsupported:
         return nullptr;
+    case InsertTransformCapability::OffsetToSpline: {
+        // Native proof transport can refuse rounded moves/rotations. Expand a
+        // plain cache so the complete INSERT transform always reaches its geometry.
+        auto plain = static_cast<const LC_OffsetCurve&>(source).toPlainSpline();
+        offsetFallback = true;
+        if (plain && !demoteOffsetDescendants(*plain, offsetFallback))
+            return nullptr;
+        return plain;
+    }
     case InsertTransformCapability::NativeOrthogonal:
         break;
     }
-    return std::unique_ptr<RS_Entity>(source.clone());
+    auto clone = std::unique_ptr<RS_Entity>(source.clone());
+    if (clone && !demoteOffsetDescendants(*clone, offsetFallback))
+        return nullptr;
+    return clone;
 }
 
 void copyExpansionProperties(const RS_Entity& source, RS_Entity& target) {
@@ -423,12 +557,20 @@ void RS_Insert::update(const RS_InsertExpansionBudget& budget) {
                             lcInsertTransformDecompositionStatusName(decompositionStatus));
             return false;
         }
-        auto clone = cloneForTransform(source, parts);
+        bool offsetFallback = false;
+        auto clone = cloneForTransform(source, parts, offsetFallback);
         if (clone)
             copyExpansionProperties(source, *clone);
         if (!clone) {
             RS_DEBUG->print(RS_Debug::D_ERROR,
                             "RS_Insert::update: unsupported derived entity transform");
+            return false;
+        }
+        if (offsetFallback &&
+            ((clone->rtti() != RS2::EntitySpline &&
+              (std::abs(parts.scaleX) <= RS_TOLERANCE || std::abs(parts.scaleY) <= RS_TOLERANCE)) ||
+             !finiteOffsetClone(*clone, &transform, &parts))) {
+            RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Insert::update: offset cache transform is not representable");
             return false;
         }
         applyTransform(*clone, transform, parts);
@@ -447,6 +589,7 @@ void RS_Insert::update(const RS_InsertExpansionBudget& budget) {
         clone->setPen(updatePen(clone->getPen(false), blockPen));
         if (m_data.updateMode != RS2::PreviewUpdate)
             clone->update();
+        if (offsetFallback && !finiteOffsetClone(*clone)) return false;
         expanded.push_back(std::move(clone));
         return true;
     };

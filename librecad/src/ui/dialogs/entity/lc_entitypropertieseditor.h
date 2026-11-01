@@ -24,6 +24,10 @@
 #ifndef LC_ENTITYPROPERTIESEDITOR_H
 #define LC_ENTITYPROPERTIESEDITOR_H
 #include <QObject>
+#include <QPointer>
+#include <memory>
+#include <cstdint>
+#include <functional>
 
 #include "lc_latecompletionrequestor.h"
 #include "rs_entity.h"
@@ -31,12 +35,22 @@
 class LC_ActionContext;
 class LC_LateCompletionRequestor;
 class LC_GraphicViewport;
+class QDialog;
+
+// Value ownership outlives an action/editor destroyed inside the modal event loop.
+struct LC_EntityPropertiesEditSession {
+    std::unique_ptr<RS_Entity> entity;
+    ~LC_EntityPropertiesEditSession();
+};
 
 class LC_EntityPropertiesEditor: public QObject, public LC_LateCompletionRequestor{
     Q_OBJECT
 public:
     LC_EntityPropertiesEditor(LC_ActionContext* actionContext, LC_LateCompletionRequestor* requestor);
-    void editEntity(QWidget* parent, RS_Entity* entity, LC_GraphicViewport* viewport);
+    ~LC_EntityPropertiesEditor() override;
+    void editEntity(QWidget* parent, RS_Entity* entity, LC_GraphicViewport* viewport,
+        std::function<bool()> guard = {}, std::shared_ptr<LC_EntityPropertiesEditSession> session = {});
+    void cancelGuardedEdit();
     void onLateRequestCompleted(bool shouldBeSkipped) override;
 public slots:
     void showEntityPropertiesDialog();
@@ -46,6 +60,12 @@ protected:
     LC_GraphicViewport* m_viewport {nullptr};
     LC_LateCompletionRequestor* m_lateCompletionRequestor {nullptr};
     QWidget* m_parent {nullptr};
+private:
+    void scheduleDialog(int delay);
+    std::function<bool()> m_editGuard;
+    std::shared_ptr<LC_EntityPropertiesEditSession> m_guardedSession;
+    QPointer<QDialog> m_activeGuardedDialog;
+    std::uint64_t m_editGeneration = 0;
 };
 
 #endif

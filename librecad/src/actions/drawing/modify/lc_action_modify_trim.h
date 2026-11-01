@@ -28,20 +28,30 @@
 #define RS_ACTIONMODIFYTRIM_H
 
 #include "lc_undoabledocumentmodificationaction.h"
+#include "lc_selectedsetlistener.h"
+#include <QPointer>
 
 class RS_AtomicEntity;
+class LC_OffsetTrimWorker;
+struct LC_StoredCacheTrimOptions;
 /**
  * This action class can handle user events to trim entities.
  *
  * @author Andrew Mustun
  */
-class LC_ActionModifyTrim:public LC_UndoableDocumentModificationAction {
+class LC_ActionModifyTrim:public LC_UndoableDocumentModificationAction, private LC_SelectedSetListener {
     Q_OBJECT
 public:
     explicit LC_ActionModifyTrim(LC_ActionContext *actionContext,bool both = false);
     ~LC_ActionModifyTrim() override;
     void init(int status) override;
     void finish() override;
+    void suspend() override;
+    void keyPressEvent(QKeyEvent* event) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
 protected:
     /**
      * Action States.
@@ -51,11 +61,31 @@ protected:
         ChooseTrimEntity /**< Choosing the entity to trim. */
     };
 
-    RS_AtomicEntity *m_trimEntity = nullptr;
+    RS_Entity *m_trimEntity = nullptr;
     RS_Entity *m_limitEntity = nullptr;
     struct TrimActionData;
     std::unique_ptr<TrimActionData> m_actionData;
     bool m_both = false;
+    virtual LC_StoredCacheTrimOptions storedCacheTrimOptions() const;
+    bool capturedTrimInputsLive() const;
+    bool validateCapturedTrimInputs();
+    bool hasNativeTrimPartner() const;
+    bool currentTrimContext() const;
+    bool hasPendingNativeTrim() const noexcept;
+    void cancelNativeTrim();
+    void beginNativeTrim();
+    void beginNativeTrimWork(RS_Entity* target, RS_Entity* limit,
+        const RS_Vector& targetPick, const RS_Vector& limitPick, bool preview);
+    struct NativeTrimWork;
+    void cancelNativePreview(const std::shared_ptr<NativeTrimWork>& work);
+    bool currentNativeTrim(const std::shared_ptr<NativeTrimWork>& work) const;
+    void completeNativeTrim(const std::shared_ptr<NativeTrimWork>& work);
+    void completeNativePreview(const std::shared_ptr<NativeTrimWork>& work);
+    RS_Entity* mappedTrimPick(const RS_Entity* address, bool allowNestedLimit) const;
+    void abandonTrimContext(bool viewportMayBeAlive);
+    void selectionChanged() override {}
+    void selectedSetDestroyed() override;
+    QPointer<RS_GraphicView> m_liveTrimView;
 
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS_Entity* catchLimitEntity(const LC_MouseEvent* e) const;
@@ -66,8 +96,11 @@ protected:
     void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
-    void previewTrim(RS_Entity* entityToTrimCandidate, RS_Entity* limitingEntity, const RS_Vector& trimCoordinates, const RS_Vector& limitCoordinates, bool& trimInvalid) const;
+    void previewTrim(RS_Entity* entityToTrimCandidate, RS_Entity* limitingEntity, const RS_Vector& trimCoordinates, const RS_Vector& limitCoordinates, bool& trimInvalid);
     bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
     void doTriggerCompletion(bool success) override;
+private:
+    friend class LC_ActionModifyTrimTestAccess;
+    LC_OffsetTrimWorker* nativeTrimWorkerForTest() const noexcept;
 };
 #endif

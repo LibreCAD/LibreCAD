@@ -581,6 +581,7 @@ TEST_CASE("legacy recovery follows the existing Windows-1252 aliases and unknown
 namespace {
 
 const std::string kLegacyRawXData = "RAW\xE9\xB0\\U+00E9";
+const std::string kDeclaredXData = "RAW\xC3\xA9\xC2\xB0\xC3\xA9";
 
 std::vector<std::string> rawTextStrings(RS_Graphic& graphic) {
     std::vector<std::string> strings;
@@ -595,9 +596,8 @@ std::vector<std::string> rawTextStrings(RS_Graphic& graphic) {
     return strings;
 }
 
-// Typed names and text use UTF-8 under an ANSI_1252 declaration. The raw
-// XDATA has invalid UTF-8 bytes and a literal DXF escape; neither is a typed
-// text field. This does not promise lossless output for raw valid UTF-8 pairs.
+// Typed names and text use UTF-8 under an ANSI_1252 declaration. XDATA text
+// always follows the declared codepage, independently of text recovery.
 std::string legacyUtf8Drawing(const char* acadver, const bool codePageFirst) {
     const std::string degree = "\xC2\xB0";
     const std::string layer = "L" + degree;
@@ -674,12 +674,12 @@ void checkRecoveredDrawing(RS_Graphic& graphic) {
     }
     CHECK(inserts == 1);
     CHECK(texts == 1);
-    CHECK(rawTextStrings(graphic) == std::vector<std::string>{kLegacyRawXData});
+    CHECK(rawTextStrings(graphic) == std::vector<std::string>{kDeclaredXData});
 }
 
 } // namespace
 
-TEST_CASE("legacy LibreCAD DXF recovery fixes typed text and names without rewriting raw XDATA",
+TEST_CASE("legacy LibreCAD DXF recovery fixes typed text and names without reinterpreting declared XDATA",
           "[dxf][filter][pre2007][legacy-utf8][roundtrip]") {
     ensureSettings();
     for (const char* acadver : kPre2007Versions) {
@@ -701,7 +701,7 @@ TEST_CASE("legacy LibreCAD DXF recovery fixes typed text and names without rewri
                 REQUIRE(normal.fileImport(ordinary, source, RS2::FormatDXFRW));
                 CHECK(ordinary.findLayer(QString::fromUtf8("L\xC3\x82\xC2\xB0")) != nullptr);
                 CHECK(textOf(ordinary) != QString::fromUtf8("main \xC2\xB0 \xE4\xB8\xAD"));
-                CHECK(rawTextStrings(ordinary) == std::vector<std::string>{kLegacyRawXData});
+                CHECK(rawTextStrings(ordinary) == std::vector<std::string>{kDeclaredXData});
 
                 RS_Graphic recovered;
                 recovered.initForNewDocument();
@@ -720,7 +720,7 @@ TEST_CASE("legacy LibreCAD DXF recovery fixes typed text and names without rewri
                 // escape; the layer-name oracle below checks the CP1252 byte.
                 CHECK(corrected.contains("1\nmain %%D \\U+4E2D\n"));
                 CHECK(corrected.contains("2\nL\xB0\n"));
-                CHECK(corrected.contains(QByteArray::fromStdString("1000\n" + kLegacyRawXData + "\n")));
+                CHECK(corrected.contains("1000\nRAW\xE9\xB0\xE9\n"));
 
                 RS_Graphic reloaded;
                 reloaded.initForNewDocument();
@@ -739,7 +739,7 @@ TEST_CASE("legacy LibreCAD DXF recovery fixes typed text and names without rewri
     }
 }
 
-TEST_CASE("raw XDATA valid UTF-8 pairs are not decoded by either DXF input policy",
+TEST_CASE("XDATA valid UTF-8 pairs follow the declared codepage under either DXF input policy",
           "[dxf][filter][pre2007][legacy-utf8][raw-import]") {
     ensureSettings();
     const QTemporaryDir directory;
@@ -757,8 +757,18 @@ TEST_CASE("raw XDATA valid UTF-8 pairs are not decoded by either DXF input polic
         RS_FilterDXFRW filter;
         filter.setDxfTextEncoding(encoding);
         REQUIRE(filter.fileImport(graphic, source, RS2::FormatDXFRW));
-        CHECK(rawTextStrings(graphic) == std::vector<std::string>{"AMB\xC2\xB0"});
+        const std::vector<std::string> expected{"AMB\xC3\x82\xC2\xB0"};
+        CHECK(rawTextStrings(graphic) == expected);
+        const auto copy = directory.filePath("declared-pairs.dxf");
+        REQUIRE(filter.fileExport(graphic, copy, RS2::FormatDXFRW2000));
+        QFile saved(copy);
+        REQUIRE(saved.open(QIODevice::ReadOnly));
+        auto output = saved.readAll();
+        output.replace("\r\n", "\n");
+        CHECK(output.contains("1000\nAMB\xC2\xB0\n"));
+        RS_Graphic reloaded;
+        reloaded.initForNewDocument();
+        REQUIRE(filter.fileImport(reloaded, copy, RS2::FormatDXFRW2000));
+        CHECK(rawTextStrings(reloaded) == expected);
     }
-    // Deliberately no raw-write oracle: valid UTF-8 pairs have pre-existing
-    // output-codec ambiguity, outside this input-only recovery mode.
 }

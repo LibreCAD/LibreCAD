@@ -73,6 +73,7 @@ namespace {
             case RS2::EntityPolyline:
             case RS2::EntityContainer:
             case RS2::EntitySpline:
+            case RS2::EntityOffsetCurve:
                 return true;
             default:
                 return false;
@@ -80,6 +81,9 @@ namespace {
     }
 
     bool matchesRequestedType(const RS_Entity& entity, const RS2::EntityType type) {
+        const auto* parent = entity.getParent();
+        if (parent && parent->rtti() == RS2::EntityOffsetCurve &&
+            type != RS2::EntitySpline && type != RS2::EntityOffsetCurve) return false;
         if (entity.rtti() == type) {
             return true;
         }
@@ -1163,7 +1167,10 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, const EntityTypeList& e
     }
     double dist = 0.;
     RS_Entity* entity = matches.getNearestEntity(pos, &dist, RS2::ResolveNone);
-    return entity != nullptr && dist <= catchDistance ? entity : nullptr;
+    if (!entity || dist > catchDistance) return nullptr;
+    if (entity->getParent() && entity->getParent()->rtti() == RS2::EntityOffsetCurve)
+        return entity->getParent();
+    return entity;
 }
 
 void RS_Snapper::suspend() {

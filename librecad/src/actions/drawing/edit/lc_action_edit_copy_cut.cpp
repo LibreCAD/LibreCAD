@@ -30,6 +30,7 @@
 #include "rs_clipboard.h"
 #include "rs_graphic.h"
 #include "rs_preview.h"
+#include "rs_selection.h"
 #include "rs_units.h"
 
 /**
@@ -82,11 +83,12 @@ bool RS_ActionEditCopyPaste::doTriggerModifications(LC_DocumentModificationBatch
             m_document->getSelection()->collectSelectedEntities(selection);
             if (!selection.empty()) {
                 const bool cut = m_actionType ==  RS2::ActionEditCut || m_actionType == RS2::ActionEditCutQuick;
-                LC_CopyUtils::copy(*m_referencePoint, selection, m_graphic);
-                unselectAll();
+                const auto copied = LC_CopyUtils::copy(*m_referencePoint, selection, m_graphic);
                 if (cut) {
-                    ctx-= selection;
+                    RS_Selection::selectEntitiesList(m_document, m_viewport, copied, false);
+                    ctx-= copied;
                 }
+                else unselectAll();
 
                 if (m_invokedWithControl){
                     m_actionType = RS2::ActionEditPaste;

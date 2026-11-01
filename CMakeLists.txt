@@ -737,6 +737,10 @@ set (SHARED_SOURCES
      librecad/src/actions/drawing/modify/lc_action_modify_move_rotate.h
      librecad/src/actions/drawing/modify/lc_action_modify_offset.cpp
      librecad/src/actions/drawing/modify/lc_action_modify_offset.h
+     librecad/src/actions/drawing/modify/lc_action_offsetcurve_updatesource.cpp
+     librecad/src/actions/drawing/modify/lc_action_offsetcurve_updatesource.h
+     librecad/src/actions/drawing/modify/lc_action_offsetcurve_restoreoriginal.cpp
+     librecad/src/actions/drawing/modify/lc_action_offsetcurve_restoreoriginal.h
      librecad/src/actions/drawing/modify/lc_action_modify_revert_direction.cpp
      librecad/src/actions/drawing/modify/lc_action_modify_revert_direction.h
      librecad/src/actions/drawing/modify/lc_action_modify_rotate.cpp
@@ -891,6 +895,35 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_curvejet.h
      librecad/src/lib/engine/document/entities/lc_curveoffset.cpp
      librecad/src/lib/engine/document/entities/lc_curveoffset.h
+     librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
+     librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
+     librecad/src/lib/engine/document/entities/lc_offsetcurve.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetcurve.h
+     librecad/src/lib/engine/document/entities/lc_offsetworkerwire.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetworkerwire.h
+     librecad/src/lib/offset_worker/lc_offsetworkerrequest.cpp
+     librecad/src/lib/offset_worker/lc_offsetworkerrequest.h
+     librecad/src/lib/offset_worker/lc_offsetworkerresult.cpp
+     librecad/src/lib/offset_worker/lc_offsetworkerresult.h
+     librecad/src/lib/offset_worker/lc_offsetworkerclient.cpp
+     librecad/src/lib/offset_worker/lc_offsetworkerclient.h
+     librecad/src/lib/offset_worker/lc_offsetworkercompletion.cpp
+     librecad/src/lib/offset_worker/lc_offsetworkeredit.cpp
+     librecad/src/lib/offset_worker/lc_offsetworkeredit.h
+     librecad/src/lib/engine/document/entities/lc_offsetcurvereadutils.h
+     librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetcurvegrips.h
+     librecad/src/lib/engine/document/entities/lc_offsetcurvesnaps.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetcurvetransform.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetcurvetransform.h
+     librecad/src/lib/engine/document/entities/lc_offsetcurveagain.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetcurveagain.h
+     librecad/src/lib/engine/document/entities/lc_offsetcachecontacts.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetcachecontacts.h
+     librecad/src/lib/engine/document/entities/lc_offsetcontactmatching.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetcontactmatching.h
+     librecad/src/lib/engine/document/entities/lc_offsetpathsearch.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetpathsearch.h
      librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.cpp
      librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h
      librecad/src/lib/engine/document/entities/lc_offsetoutputbudget.cpp
@@ -1018,6 +1051,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/layers/rs_layerlistlistener.h
      librecad/src/lib/engine/document/lc_graphicvariables.cpp
      librecad/src/lib/engine/document/lc_graphicvariables.h
+     librecad/src/lib/engine/document/lc_offsetcurvepublication.cpp
+     librecad/src/lib/engine/document/lc_offsetcurvepublication.h
      librecad/src/lib/engine/document/lc_trackedlistener.h
      librecad/src/lib/engine/document/linetypes/lc_linetype.cpp
      librecad/src/lib/engine/document/linetypes/lc_linetype.h
@@ -1126,6 +1161,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/utils/rs_utility.h
      librecad/src/lib/fileio/lc_filenameselectionservice.cpp
      librecad/src/lib/fileio/lc_filenameselectionservice.h
+     librecad/src/lib/fileio/lc_fileidentity.cpp
+     librecad/src/lib/fileio/lc_fileidentity.h
      librecad/src/lib/fileio/rs_fileio.cpp
      librecad/src/lib/fileio/rs_fileio.h
      librecad/src/lib/filters/lc_embeddedtextxdata.cpp
@@ -1134,6 +1171,12 @@ set (SHARED_SOURCES
      librecad/src/lib/filters/lc_embeddedtextmodel.h
      librecad/src/lib/filters/lc_hyperbolaspline.cpp
      librecad/src/lib/filters/lc_hyperbolaspline.h
+     librecad/src/lib/filters/lc_offsetcurvecarrier.cpp
+     librecad/src/lib/filters/lc_offsetcurvecarrier.h
+     librecad/src/lib/filters/lc_offsetimportsession.cpp
+     librecad/src/lib/filters/lc_offsetimportsession.h
+     librecad/src/lib/filters/lc_offsetcurvexdata.cpp
+     librecad/src/lib/filters/lc_offsetcurvexdata.h
         librecad/src/lib/filters/lc_parabolaspline.cpp
     librecad/src/lib/filters/lc_parabolaspline.h
      librecad/src/lib/filters/rs_filtercxf.cpp
@@ -1228,6 +1271,10 @@ set (SHARED_SOURCES
      librecad/src/lib/modification/lc_copyutils.h
      librecad/src/lib/modification/lc_division.cpp
      librecad/src/lib/modification/lc_division.h
+     librecad/src/lib/modification/lc_offsetcachetrim.cpp
+     librecad/src/lib/modification/lc_offsetcachetrim.h
+     librecad/src/lib/modification/lc_offsetpreviewsnapshot.h
+     librecad/src/lib/modification/lc_offsetbatchpreparation.h
      librecad/src/lib/modification/rs_modification.cpp
      librecad/src/lib/modification/rs_modification.h
      librecad/src/lib/printing/lc_printing.cpp
@@ -1290,6 +1337,8 @@ set (SHARED_SOURCES
      librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.h
      librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp
      librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.h
+     librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_offsetcurve.cpp
+     librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_offsetcurve.h
      librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_splinepoints.cpp
      librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_splinepoints.h
      librecad/src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp
@@ -1521,6 +1570,12 @@ set (SHARED_SOURCES
      librecad/src/ui/components/toolbars/qg_snaptoolbar.h
      librecad/src/ui/components/utils/lc_entitymetauiutils.cpp
      librecad/src/ui/components/utils/lc_entitymetauiutils.h
+     librecad/src/ui/components/utils/lc_busycursorguard.h
+     librecad/src/ui/components/utils/lc_offsetcurveui.cpp
+     librecad/src/ui/components/utils/lc_offsetcurveui.h
+     librecad/src/ui/components/utils/lc_offsetcurveeditsnapshot.cpp
+     librecad/src/ui/components/utils/lc_offsetcurveeditsnapshot.h
+     librecad/src/ui/components/utils/lc_offsetcurvefinalinput.h
      librecad/src/ui/components/utils/lc_guarded_signals_blocker.h
      librecad/src/ui/components/utils/lc_item_info.h
      librecad/src/ui/components/utils/lc_mouse_tracking_table_view.cpp
@@ -1549,6 +1604,8 @@ set (SHARED_SOURCES
      librecad/src/ui/dialogs/entity/lc_dlg_tolerance.h
      librecad/src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.cpp
      librecad/src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.h
+     librecad/src/ui/dialogs/entity/lc_propertieseditingwidget_offsetcurve.cpp
+     librecad/src/ui/dialogs/entity/lc_propertieseditingwidget_offsetcurve.h
     librecad/src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.cpp
     librecad/src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.h
      librecad/src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.cpp
@@ -1842,6 +1899,11 @@ set (SHARED_SOURCES
      librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.h
      librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp
      librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.h
+     librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_offsetcurve.cpp
+     librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_offsetcurve.h
+     librecad/src/ui/dock_widgets/property_sheet/metaentity/lc_offsetcurvepropertyqueue.cpp
+     librecad/src/ui/dock_widgets/property_sheet/metaentity/lc_offsetcurvepropertyqueue.h
+     librecad/src/ui/dock_widgets/property_sheet/metaentity/lc_offsetcurvepropertybatch.h
      librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp
      librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.h
      librecad/src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp
@@ -2416,6 +2478,33 @@ target_link_libraries (librecad PRIVATE
                        Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network
 )
 
+# A one-request, headless helper. Keep it beside the application so the parent
+# never resolves a command from PATH or from drawing-controlled metadata.
+add_executable(librecad_offset_worker
+    librecad/src/main/lc_release_label.cpp
+    librecad/src/lib/offset_worker/lc_offsetworkerkernel.cpp
+    librecad/src/lib/offset_worker/lc_offsetworkermain.cpp
+)
+target_include_directories(librecad_offset_worker PRIVATE ${SHARED_INCLUDES})
+target_compile_features(librecad_offset_worker PRIVATE cxx_std_17)
+target_link_libraries(librecad_offset_worker PRIVATE librecad_lib
+    Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network)
+target_compile_definitions(librecad_offset_worker PRIVATE DWGSUPPORT)
+if(WIN32)
+    target_compile_definitions(librecad_offset_worker PRIVATE _USE_MATH_DEFINES)
+endif()
+set_target_properties(librecad_offset_worker PROPERTIES
+    OUTPUT_NAME LibreCADOffsetWorker
+    RUNTIME_OUTPUT_DIRECTORY "$<TARGET_FILE_DIR:librecad>"
+)
+add_dependencies(librecad librecad_offset_worker)
+if(APPLE)
+    install(TARGETS librecad_offset_worker RUNTIME DESTINATION bin/LibreCAD.app/Contents/MacOS
+        COMPONENT OffsetWorker)
+else()
+    install(TARGETS librecad_offset_worker RUNTIME DESTINATION bin COMPONENT OffsetWorker)
+endif()
+
 if(APPLE)
     install(TARGETS librecad
         RUNTIME DESTINATION bin
@@ -2570,6 +2659,8 @@ option (LIBRECAD_REGISTER_CROSS_READ_SMOKE
         "Register the cross-reader DWG fixture smoke test with CTest" OFF)
 option (LIBRECAD_REGISTER_TEXT_FOUNDATION_TESTS
         "Register headless text/source-state foundation tests with CTest" OFF)
+option (LIBRECAD_REGISTER_OFFSET_WORKER_TESTS
+        "Register the separately built native offset worker tests with CTest" OFF)
 
 if (BUILD_TESTS)
     enable_testing()
@@ -2597,6 +2688,22 @@ if (BUILD_TESTS)
                 "git submodule update --init externals/Catch2")
         endif()
     endif()
+
+    # The wire codec needs neither document state nor a GUI application.
+    add_executable(librecad_offset_worker_wire_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/engine/document/entities/lc_offsetworkerwire.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetworkerwire_tests.cpp)
+    set_target_properties(librecad_offset_worker_wire_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+    target_include_directories(librecad_offset_worker_wire_tests PRIVATE
+        librecad/src/lib/engine/document/entities)
+    target_compile_features(librecad_offset_worker_wire_tests PRIVATE cxx_std_17)
+    target_link_libraries(librecad_offset_worker_wire_tests PRIVATE
+        Qt6::Core Catch2::Catch2WithMain)
+    if (LIBRECAD_REGISTER_OFFSET_WORKER_TESTS)
+        add_test(NAME offset_worker_wire COMMAND librecad_offset_worker_wire_tests
+            "[lc-offsetcurve][worker-protocol][wire]")
+    endif ()
 
     # A Catch2 listener that gives each test process a settings store of its own
     # (see librecad/src/test/lc_testsettingsisolation.h). It registers itself
@@ -2646,6 +2753,21 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_trim_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_region_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_curveoffsetellipsetests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_geometry_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_edit_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcreationpublication_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_grips_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_grip_order_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurvetransform_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurveagain_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_types_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_cached_dispatch_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetsample_budget_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcachecontacts_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcontactmatching_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_topology_budget_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offsetpathsearch_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_backend_experiments.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetoutputbudget_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_entity_tests.cpp
@@ -2659,6 +2781,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_hatchmovetests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_image_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_insert_transform_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_entitytype_coverage_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_mtext_bidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp
@@ -2676,13 +2799,20 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/views/tests/lc_view_tests.cpp
         librecad/src/lib/engine/tests/rs_pen_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
+        librecad/src/actions/drawing/tests/lc_offsetcurve_drag_tests.cpp
         librecad/src/lib/actions/tests/lc_modifiersinfo_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_trim_tests.cpp
+        librecad/src/actions/drawing/modify/tests/lc_offsetcachetrim_action_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_actionmodifylinejointests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_move_tests.cpp
         librecad/src/actions/drawing/draw/curve/tests/lc_actiondrawdualtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_offset_tests.cpp
+        librecad/src/actions/dock_widgets/library/tests/lc_action_block_library_insert_import_tests.cpp
+        librecad/src/ui/dock_widgets/library_widget/tests/qg_librarywidget_thumbnail_tests.cpp
+        librecad/src/actions/drawing/modify/tests/lc_offsetcurve_enable_tests.cpp
+        librecad/src/actions/drawing/modify/tests/lc_action_offsetcurve_source_tests.cpp
+        librecad/src/actions/drawing/modify/tests/lc_action_offsetcurve_restoreoriginal_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_offsetmatrixtests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_codepage_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_section_size_tests.cpp
@@ -2695,17 +2825,32 @@ if (BUILD_TESTS)
         librecad/src/lib/math/tests/lc_interval_tests.cpp
         librecad/src/lib/creation/tests/rs_creation_null_entity_tests.cpp
         librecad/src/lib/creation/tests/lc_creation_ellipse_tests.cpp
+        librecad/src/lib/creation/tests/lc_offsetcurve_action_dispatch_tests.cpp
         librecad/src/actions/print_preview/tests/rs_actionprintpreview_tests.cpp
         librecad/src/lib/printing/tests/lc_printingtests.cpp
         librecad/src/lib/modification/tests/lc_copy_identity_tests.cpp
         librecad/src/lib/modification/tests/lc_copy_insert_transform_tests.cpp
         librecad/src/lib/modification/tests/lc_division_tests.cpp
+        librecad/src/lib/modification/tests/lc_offsetcachetrim_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_trim_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_offset_tests.cpp
+        librecad/src/lib/modification/tests/rs_modification_offsetcurve_tests.cpp
+        librecad/src/lib/modification/tests/rs_modification_offsetcurveagain_tests.cpp
         librecad/src/lib/modification/tests/lc_offsetresultchecktests.cpp
         librecad/src/lib/modification/tests/rs_modification_attributes_tests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/spline_offset_representation_tests.cpp
+        librecad/src/lib/filters/tests/lc_offsetcachetrim_file_tests.cpp
+        librecad/src/lib/filters/tests/lc_offsetcurve_exportdispatch_tests.cpp
+        librecad/src/lib/filters/tests/lc_offsetcurve_adapter_tests.cpp
+        librecad/src/lib/filters/tests/lc_offsetcurve_persistence_tests.cpp
+        librecad/src/lib/filters/tests/lc_offsetcurve_source_actions_persistence_tests.cpp
+        librecad/src/lib/filters/tests/lc_offsetcurve_hostilefile_tests.cpp
+        librecad/src/lib/filters/tests/lc_offsetcurve_matrix_tests.cpp
+        librecad/src/lib/filters/tests/lc_offsetcurve_eed_packet_tests.cpp
+        librecad/src/lib/filters/tests/dxf_xdata_codec_tests.cpp
+        tests/lc_offsetcurvecarrier_tests.cpp
+        tests/lc_offsetcurvexdata_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_line_parallel_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_fast_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_circle_center_point_tests.cpp
@@ -2804,21 +2949,28 @@ if (BUILD_TESTS)
         librecad/src/ui/dock_widgets/layer_widget/tests/lc_layerblockwidgets_tests.cpp
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucsviewsselectiondocks_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_offsetcurve_properties_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_offsetcurve_uihelpers_tests.cpp
+        librecad/src/ui/components/utils/tests/lc_offsetcurve_names_tests.cpp
+        librecad/src/ui/components/utils/tests/lc_offsetcurve_source_ui_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_property_copy_tests.cpp
         librecad/src/actions/dock_widgets/block/tests/lc_actionblockssave_tests.cpp
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucslistmodel_tests.cpp
         librecad/src/ui/dock_widgets/views_list/tests/lc_namedviewsmodel_tests.cpp
         librecad/src/lib/generators/layers/tests/lc_layersexporter_tests.cpp
         librecad/src/ui/main/persistence/tests/lc_documentsstorage_tests.cpp
+        librecad/src/ui/main/persistence/tests/lc_dwg_save_filter_tests.cpp
         librecad/src/ui/main/tests/lc_mdiwindow_close_tests.cpp
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp
         librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
         librecad/src/ui/dialogs/tests/lc_dialog_tests.cpp
+        librecad/src/ui/dialogs/entity/tests/lc_offsetcurve_propertiesdialog_tests.cpp
         librecad/src/ui/dialogs/tests/lc_language_selection_tests.cpp
         librecad/src/ui/dialogs/settings/options_drawing/tests/lc_dlgoptionsdrawingtests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreewidget_tests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreemodel_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
+        librecad/src/plugins/tests/doc_plugin_offsetcurve_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
         librecad/src/lib/gui/tests/lc_linetype_render_tests.cpp
         librecad/src/lib/gui/tests/lc_scrollmodel_tests.cpp
@@ -2864,6 +3016,20 @@ if (BUILD_TESTS)
     target_compile_features (librecad_tests PRIVATE cxx_std_17)
     # compiling time defines
     target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}" LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata" LIBRECAD_TEST_TRANSLATION_DIR="${CMAKE_CURRENT_BINARY_DIR}")
+
+    # GUI tests use the product's fixed sibling-helper resolution too. macOS
+    # test executables are outside the application bundle; copy the real built
+    # helper there rather than injecting a configurable command into the client.
+    if(APPLE)
+        add_custom_target(librecad_offset_test_helper
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "$<TARGET_FILE:librecad_offset_worker>"
+                "$<TARGET_FILE_DIR:librecad_tests>/$<TARGET_FILE_NAME:librecad_offset_worker>"
+            DEPENDS librecad_offset_worker VERBATIM)
+    else()
+        add_custom_target(librecad_offset_test_helper DEPENDS librecad_offset_worker)
+    endif()
+    add_dependencies(librecad_tests librecad_offset_test_helper)
 
     add_executable(librecad_text_bidi_tests EXCLUDE_FROM_ALL
         ${LIBRECAD_TEST_SETTINGS_ISOLATION_SOURCE}
@@ -3205,6 +3371,7 @@ if (BUILD_TESTS)
     # application startup or console commands, so they must not pull in
     # MAIN_SOURCES and its UI/resource compilation cost.
     set(LIBRECAD_DWG_FAST_TEST_SOURCES
+        librecad/src/lib/filters/tests/lc_offsetcurve_eed_packet_tests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
@@ -3293,6 +3460,8 @@ if (BUILD_TESTS)
     )
 
     set(LIBRECAD_DXF_FAST_TEST_SOURCES
+        librecad/src/lib/filters/tests/dxf_xdata_codec_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_entitytype_coverage_tests.cpp
         librecad/src/lib/engine/document/linetypes/tests/lc_linetypelist_tests.cpp
         librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
         librecad/src/lib/filters/tests/dxf_object_tests.cpp
@@ -3345,6 +3514,8 @@ if (BUILD_TESTS)
         LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
         LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata"
     )
+    add_dependencies(librecad_dxf_fast_tests librecad_offset_test_helper)
+    add_dependencies(librecad_dwg_fast_tests librecad_offset_test_helper)
 
     # Build one LibreCAD-linked test translation unit at a time for the
     # incremental loop. The grouped DWG/DXF targets remain useful for family
@@ -3388,6 +3559,205 @@ if (BUILD_TESTS)
     endfunction()
 
     add_librecad_filter_micro_test(
+        librecad_offset_source_preparation_tests
+        librecad/src/lib/modification/tests/rs_modification_offsetcurveagain_tests.cpp)
+    target_sources(librecad_offset_source_preparation_tests PRIVATE
+        librecad/src/lib/modification/tests/rs_modification_offsetcurve_tests.cpp
+        librecad/src/lib/modification/tests/rs_modification_offset_tests.cpp)
+
+    add_librecad_filter_micro_test(
+        librecad_offset_adapter_tests
+        librecad/src/lib/filters/tests/lc_offsetcurve_adapter_tests.cpp)
+    add_dependencies(librecad_offset_adapter_tests librecad_offset_test_helper)
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_probe_tests
+        librecad/src/lib/engine/document/entities/tests/lc_offsetworkerprobe_tests.cpp)
+    target_include_directories(librecad_offset_worker_probe_tests PRIVATE
+        librecad/src/lib/offset_worker)
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_request_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkerrequest_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_offset_native_edit_tests
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcurve_edit_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_offset_creation_publication_tests
+        librecad/src/lib/engine/document/entities/tests/lc_offsetcreationpublication_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_offset_properties_dialog_tests
+        librecad/src/ui/dialogs/entity/tests/lc_offsetcurve_propertiesdialog_tests.cpp)
+    target_include_directories(librecad_offset_properties_dialog_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include"
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include_$<CONFIG>")
+    target_sources(librecad_offset_properties_dialog_tests PRIVATE ${LIBRECAD_RES})
+    set_target_properties(librecad_offset_properties_dialog_tests PROPERTIES AUTORCC ON)
+    add_dependencies(librecad_offset_properties_dialog_tests librecad_offset_test_helper)
+    add_librecad_filter_micro_test(
+        librecad_offset_properties_sheet_tests
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_offsetcurve_properties_tests.cpp)
+    target_include_directories(librecad_offset_properties_sheet_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include"
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include_$<CONFIG>")
+    target_sources(librecad_offset_properties_sheet_tests PRIVATE ${LIBRECAD_RES})
+    set_target_properties(librecad_offset_properties_sheet_tests PROPERTIES AUTORCC ON)
+    add_dependencies(librecad_offset_properties_sheet_tests librecad_offset_test_helper)
+    add_librecad_filter_micro_test(
+        librecad_offset_grip_tests
+        librecad/src/actions/drawing/tests/lc_offsetcurve_drag_tests.cpp)
+    target_include_directories(librecad_offset_grip_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include"
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include_$<CONFIG>")
+    target_sources(librecad_offset_grip_tests PRIVATE ${LIBRECAD_RES})
+    set_target_properties(librecad_offset_grip_tests PROPERTIES AUTORCC ON)
+    add_dependencies(librecad_offset_grip_tests librecad_offset_test_helper)
+    add_librecad_filter_micro_test(
+        librecad_offset_update_source_tests
+        librecad/src/actions/drawing/modify/tests/lc_action_offsetcurve_source_tests.cpp)
+    target_include_directories(librecad_offset_update_source_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include"
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include_$<CONFIG>")
+    target_sources(librecad_offset_update_source_tests PRIVATE ${LIBRECAD_RES})
+    set_target_properties(librecad_offset_update_source_tests PROPERTIES AUTORCC ON)
+    add_dependencies(librecad_offset_update_source_tests librecad_offset_test_helper)
+    add_librecad_filter_micro_test(
+        librecad_offset_creation_action_tests
+        librecad/src/actions/drawing/modify/tests/lc_action_modify_offset_tests.cpp)
+    target_include_directories(librecad_offset_creation_action_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include"
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include_$<CONFIG>")
+    target_sources(librecad_offset_creation_action_tests PRIVATE
+        librecad/src/actions/drawing/modify/tests/lc_offsetcurve_enable_tests.cpp
+        librecad/src/actions/drawing/modify/tests/lc_offsetmatrixtests.cpp
+        librecad/src/actions/dock_widgets/library/tests/lc_action_block_library_insert_import_tests.cpp
+        librecad/src/ui/dock_widgets/library_widget/tests/qg_librarywidget_thumbnail_tests.cpp
+        ${LIBRECAD_RES})
+    set_target_properties(librecad_offset_creation_action_tests PROPERTIES AUTORCC ON)
+    add_dependencies(librecad_offset_creation_action_tests librecad_offset_test_helper)
+    add_librecad_filter_micro_test(
+        librecad_offset_trim_tests
+        librecad/src/actions/drawing/modify/tests/lc_offsetcachetrim_action_tests.cpp)
+    target_sources(librecad_offset_trim_tests PRIVATE
+        librecad/src/lib/modification/tests/lc_offsetcachetrim_tests.cpp
+        ${LIBRECAD_RES})
+    target_include_directories(librecad_offset_trim_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include"
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include_$<CONFIG>")
+    set_target_properties(librecad_offset_trim_tests PROPERTIES AUTORCC ON)
+    add_dependencies(librecad_offset_trim_tests librecad_offset_test_helper)
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_edit_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkeredit_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_kernel_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkerkernel_tests.cpp)
+    target_sources(librecad_offset_worker_kernel_tests PRIVATE
+        librecad/src/lib/offset_worker/lc_offsetworkerkernel.cpp)
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_result_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkerresult_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_process_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkerprocess_tests.cpp)
+    target_compile_definitions(librecad_offset_worker_process_tests PRIVATE
+        LIBRECAD_OFFSET_HELPER_PATH="$<TARGET_FILE:librecad_offset_worker>")
+    add_dependencies(librecad_offset_worker_process_tests librecad_offset_worker)
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_client_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkerclient_tests.cpp)
+    set_target_properties(librecad_offset_worker_client_tests PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "$<TARGET_FILE_DIR:librecad>")
+    add_dependencies(librecad_offset_worker_client_tests librecad_offset_worker)
+    # Fault fixtures live outside the app bundle and cannot replace/install the
+    # real helper, including when CTest runs the normal process lane in parallel.
+    add_executable(librecad_offset_worker_fault_fixture EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/lib/offset_worker/tests/lc_offsetworkerfaultfixture.cpp)
+    target_include_directories(librecad_offset_worker_fault_fixture PRIVATE ${SHARED_INCLUDES})
+    target_compile_features(librecad_offset_worker_fault_fixture PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_offset_worker_fault_fixture PRIVATE DWGSUPPORT _USE_MATH_DEFINES)
+    target_link_libraries(librecad_offset_worker_fault_fixture PRIVATE librecad_lib
+        Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network)
+    set_target_properties(librecad_offset_worker_fault_fixture PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF OUTPUT_NAME LibreCADOffsetWorker
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/native-offset-fault-tests")
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_fault_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkerfault_tests.cpp)
+    set_target_properties(librecad_offset_worker_fault_tests PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/native-offset-fault-tests")
+    add_dependencies(librecad_offset_worker_fault_tests librecad_offset_worker_fault_fixture)
+    # Geometry-entry timeout qualification uses the same main/kernel, with its
+    # nonreturning Generate loop compiled ONLY into this uninstalled test helper.
+    # Its fixed sibling name is isolated from both the product and fault lanes.
+    add_executable(librecad_offset_worker_geometry_timeout_fixture EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/lib/offset_worker/lc_offsetworkerkernel.cpp
+        librecad/src/lib/offset_worker/lc_offsetworkermain.cpp)
+    target_include_directories(librecad_offset_worker_geometry_timeout_fixture PRIVATE ${SHARED_INCLUDES})
+    target_compile_features(librecad_offset_worker_geometry_timeout_fixture PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_offset_worker_geometry_timeout_fixture PRIVATE
+        DWGSUPPORT _USE_MATH_DEFINES LC_OFFSET_WORKER_GEOMETRY_TIMEOUT_TEST_ONLY=1)
+    target_link_libraries(librecad_offset_worker_geometry_timeout_fixture PRIVATE librecad_lib
+        Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network)
+    set_target_properties(librecad_offset_worker_geometry_timeout_fixture PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF OUTPUT_NAME LibreCADOffsetWorker
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/native-offset-geometry-timeout-tests")
+    add_librecad_filter_micro_test(
+        librecad_offset_worker_geometry_timeout_tests
+        librecad/src/lib/offset_worker/tests/lc_offsetworkergeometrytimeout_tests.cpp)
+    set_target_properties(librecad_offset_worker_geometry_timeout_tests PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/native-offset-geometry-timeout-tests")
+    add_dependencies(librecad_offset_worker_geometry_timeout_tests librecad_offset_worker_geometry_timeout_fixture)
+    if(LIBRECAD_REGISTER_OFFSET_WORKER_TESTS)
+        foreach(kind request result kernel process client fault geometry_timeout)
+            set(worker_filter "[lc-offsetcurve]")
+            if(kind STREQUAL "process")
+                set(worker_filter "[lc-offsetcurve]~[ordinary]")
+            endif()
+            add_test(NAME offset_worker_${kind}
+                COMMAND librecad_offset_worker_${kind}_tests "${worker_filter}")
+            set_tests_properties(offset_worker_${kind} PROPERTIES
+                TIMEOUT 30 ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+        endforeach()
+        add_test(NAME offset_worker_process_ordinary
+            COMMAND librecad_offset_worker_process_tests "[lc-offsetcurve][ordinary]")
+        set_tests_properties(offset_worker_process_ordinary PROPERTIES
+            TIMEOUT 30 ENVIRONMENT "QT_QPA_PLATFORM=offscreen" RUN_SERIAL TRUE)
+        set_tests_properties(offset_worker_process offset_worker_client offset_worker_fault offset_worker_geometry_timeout
+            PROPERTIES RUN_SERIAL TRUE)
+    endif()
+    set(LIBRECAD_OFFSET_EXTERNAL_TEST_HELPER "" CACHE FILEPATH
+        "Additional built offset helper to qualify (tests only, never a product command)")
+    if(LIBRECAD_OFFSET_EXTERNAL_TEST_HELPER)
+        add_librecad_filter_micro_test(
+            librecad_offset_worker_external_process_tests
+            librecad/src/lib/offset_worker/tests/lc_offsetworkerprocess_tests.cpp)
+        target_compile_definitions(librecad_offset_worker_external_process_tests PRIVATE
+            LIBRECAD_OFFSET_HELPER_PATH="${LIBRECAD_OFFSET_EXTERNAL_TEST_HELPER}")
+    endif()
+    add_librecad_filter_micro_test(
+        librecad_offset_persistence_tests
+        librecad/src/lib/filters/tests/lc_offsetcurve_persistence_tests.cpp)
+    add_dependencies(librecad_offset_persistence_tests librecad_offset_test_helper)
+    add_librecad_filter_micro_test(
+        librecad_offset_hostilefile_tests
+        librecad/src/lib/filters/tests/lc_offsetcurve_hostilefile_tests.cpp)
+    add_dependencies(librecad_offset_hostilefile_tests librecad_offset_test_helper)
+    add_librecad_filter_micro_test(
+        librecad_offset_matrix_tests
+        librecad/src/lib/filters/tests/lc_offsetcurve_matrix_tests.cpp)
+    add_dependencies(librecad_offset_matrix_tests librecad_offset_test_helper)
+    add_librecad_filter_micro_test(
+        librecad_xdata_appid_tests
+        librecad/src/lib/filters/tests/lc_dxf_xdata_appid_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_xdata_codec_tests
+        librecad/src/lib/filters/tests/dxf_xdata_codec_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_eed_packet_tests
+        librecad/src/lib/filters/tests/lc_offsetcurve_eed_packet_tests.cpp)
+
+    add_librecad_filter_micro_test(
         librecad_text_source_tests
         librecad/src/lib/engine/document/entities/tests/rs_text_source_tests.cpp)
 
@@ -3419,6 +3789,59 @@ if (BUILD_TESTS)
         BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES)
     if(MSVC)
         target_compile_options(librecad_entity_container_replace_failure_tests PRIVATE /bigobj)
+    endif()
+
+    # Native H-sheet construction gate only. Never add global-new overrides
+    # to librecad_tests, a Catch micro runner or the application's fast lane.
+    add_executable(librecad_offsetcurve_batch_failure_tests EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_offsetcurve_batch_failure_tests.cpp)
+    set_target_properties(librecad_offsetcurve_batch_failure_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+    target_include_directories(librecad_offsetcurve_batch_failure_tests PRIVATE ${SHARED_INCLUDES})
+    target_link_libraries(librecad_offsetcurve_batch_failure_tests PRIVATE
+        librecad_lib Qt6::Core Qt6::Gui Qt6::Network Qt6::PrintSupport Qt6::Svg Qt6::Widgets)
+    target_compile_features(librecad_offsetcurve_batch_failure_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_offsetcurve_batch_failure_tests PRIVATE
+        BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES)
+    if(MSVC)
+        target_compile_options(librecad_offsetcurve_batch_failure_tests PRIVATE /bigobj)
+    endif()
+
+    # T readiness is an opt-in standalone process. No Catch/main-runner or
+    # ordinary fast-lane registration may pull in its allocator interposition.
+    # The registered kernel is supplied by librecad_lib, not compiled here.
+    add_executable(librecad_offset_cache_trim_failure_tests EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/lib/modification/tests/lc_offsetcachetrim_failure_tests.cpp)
+    set_target_properties(librecad_offset_cache_trim_failure_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+    target_include_directories(librecad_offset_cache_trim_failure_tests PRIVATE
+        ${SHARED_INCLUDES})
+    target_link_libraries(librecad_offset_cache_trim_failure_tests PRIVATE
+        librecad_lib Qt6::Core Qt6::Gui Qt6::Network Qt6::PrintSupport Qt6::Svg Qt6::Widgets)
+    target_compile_features(librecad_offset_cache_trim_failure_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_offset_cache_trim_failure_tests PRIVATE
+        BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES)
+    if(MSVC)
+        target_compile_options(librecad_offset_cache_trim_failure_tests PRIVATE /bigobj)
+    endif()
+
+    # Verify the public cache-check publication debit in an isolated process.
+    # The global-new fault injector must never enter Catch or application runs.
+    add_executable(librecad_offset_cache_check_failure_tests EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_offset_cache_check_failure_tests.cpp)
+    set_target_properties(librecad_offset_cache_check_failure_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+    target_include_directories(librecad_offset_cache_check_failure_tests PRIVATE ${SHARED_INCLUDES})
+    target_link_libraries(librecad_offset_cache_check_failure_tests PRIVATE
+        librecad_lib Qt6::Core Qt6::Gui Qt6::Network Qt6::PrintSupport Qt6::Svg Qt6::Widgets)
+    target_compile_features(librecad_offset_cache_check_failure_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_offset_cache_check_failure_tests PRIVATE
+        BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES)
+    if(MSVC)
+        target_compile_options(librecad_offset_cache_check_failure_tests PRIVATE /bigobj)
     endif()
 
     # Keep the large corpus/diagnostic source isolated. It is an explicit
@@ -3552,6 +3975,9 @@ if (BUILD_TESTS)
     target_sources(librecad_lc_consolesvgexporttests PRIVATE
         librecad/src/main/console_command_utils.cpp
         librecad/src/main/console_dxf2png.cpp)
+    target_sources(librecad_console_command_utils_tests PRIVATE
+        librecad/src/main/tests/lc_consoleimporttests.cpp)
+    add_dependencies(librecad_console_command_utils_tests librecad_offset_test_helper)
 
     # A parser-only lane for the tight implementation loop.  The existing
     # librecad_*_fast_tests targets intentionally exercise the LibreCAD filter,
@@ -3798,6 +4224,17 @@ if (BUILD_TESTS)
             TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
+        add_test(NAME librecad_console_import_tests
+            COMMAND $<TARGET_FILE:librecad_console_command_utils_tests>
+                "[console][import]" --reporter compact)
+        set_tests_properties(librecad_console_import_tests PROPERTIES
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
+        add_test(NAME librecad_offset_import_identity_tests
+            COMMAND $<TARGET_FILE:librecad_offset_hostilefile_tests>
+                "[lc-offsetcurve][import-session][snapshot][identity]" --reporter compact)
+        set_tests_properties(librecad_offset_import_identity_tests PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
         add_test(NAME librecad_dimension_clipboard_tests
             COMMAND $<TARGET_FILE:librecad_dimension_clipboard_tests> "[clipboard]" --reporter compact)
         set_tests_properties(librecad_dimension_clipboard_tests PROPERTIES

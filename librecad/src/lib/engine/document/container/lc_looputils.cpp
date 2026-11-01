@@ -27,6 +27,7 @@
 #include <algorithm>
 #include <cmath>
 #include <functional>
+#include <limits>
 #include <random>
 #include <set>
 #include <unordered_map>
@@ -36,6 +37,7 @@
 
 #include "lc_looputils.h"
 #include "lc_pathbuilder.h"
+#include "lc_offsetoutputbudget.h"
 #include "lc_parabola.h"
 #include "lc_rect.h"
 #include "lc_splinepoints.h"
@@ -49,10 +51,82 @@
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_painter.h"
+#include "rs_pen.h"
 #include "rs_pattern.h"
 #include "rs_vector.h"
 
 namespace {
+    template<typename Visitor>
+    bool visitBoundaryEdges(const RS_EntityContainer& container, Visitor visit) {
+        std::size_t nativeCount = 0;
+        for (const auto* entity : container) {
+            if (entity && entity->rtti() == RS2::EntityOffsetCurve) {
+                const auto count = static_cast<const RS_EntityContainer*>(entity)->count();
+                if (count > kDefaultOffsetDeepEntitiesPerSource - nativeCount) {
+                    RS_DEBUG->print(RS_Debug::D_WARNING, "LC_LoopUtils: Offset display cache limit reached");
+                    return false;
+                }
+                nativeCount += count;
+            }
+        }
+        // Counts precede cache walks and allocation; validity precedes visitors.
+        for (auto* entity : container) {
+            if (entity && entity->rtti() == RS2::EntityOffsetCurve) {
+                const auto& cache = *static_cast<const RS_EntityContainer*>(entity);
+                const bool usable = !entity->isDeleted() && !cache.empty() &&
+                    std::all_of(cache.begin(), cache.end(), [](const RS_Entity* edge) {
+                        if (!edge || edge->isDeleted() || edge->rtti() != RS2::EntityLine) return false;
+                        for (const auto& p : {edge->getStartpoint(), edge->getEndpoint()}) {
+                            if (!p.valid || !std::isfinite(p.x) || !std::isfinite(p.y) || p.z != 0) return false;
+                        }
+                        return true;
+                    });
+                if (!usable) {
+                    RS_DEBUG->print(RS_Debug::D_WARNING, "LC_LoopUtils: Unsupported offset display cache");
+                    return false;
+                }
+            }
+        }
+        std::map<RS_Entity*, bool> nativeEdges;
+        if (nativeCount) {
+            for (const auto* entity : container) {
+                if (entity && entity->rtti() == RS2::EntityOffsetCurve)
+                    for (auto* edge : *static_cast<const RS_EntityContainer*>(entity)) nativeEdges.emplace(edge, false);
+            }
+        }
+        const auto visitOnce = [&](RS_Entity* edge) {
+            if (auto found = nativeEdges.find(edge); found != nativeEdges.end()) {
+                if (found->second) return;
+                found->second = true;
+            }
+            visit(edge);
+        };
+        for (auto* entity : container) {
+            if (!entity) continue;
+            if (entity->rtti() == RS2::EntityOffsetCurve) {
+                const auto& cache = *static_cast<const RS_EntityContainer*>(entity);
+                // Borrow only during this operation. Results clone the edges,
+                // never the native container or an alias of its owned children.
+                for (auto* edge : cache) visitOnce(edge);
+            } else if (entity->isAtomic()) {
+                visitOnce(entity);
+            } else if (entity->rtti() == RS2::EntitySpline) {
+                RS_DEBUG->print(RS_Debug::D_WARNING, "LC_LoopUtils: Ordinary spline containers are unsupported boundaries");
+            }
+        }
+        return true;
+    }
+
+    RS_Entity* independentEdge(const RS_Entity& edge, RS_EntityContainer* parent) {
+        auto clone = std::unique_ptr<RS_Entity>{edge.clone()};
+        const auto* owner = edge.getParent();
+        // Spline display edges are painted with the containing curve's pen.
+        clone->setPen(owner && owner->rtti() == RS2::EntityOffsetCurve ? owner->getPen(true) : edge.getPen(true));
+        clone->setLayer(nullptr);
+        clone->reparent(parent);
+        return clone.release();
+    }
+
     // Definition for buildLC_Loops (moved to namespace level for accessibility)
     /**
      * @brief Recursively builds an LC_Loops hierarchy from a container and all loops.
@@ -63,11 +137,10 @@ namespace {
      */
     LC_LoopUtils::LC_Loops buildLoops(const RS_EntityContainer* cont, const std::vector<std::unique_ptr<RS_EntityContainer>>& allLoops) {
         const auto loopCopy = std::make_shared<RS_EntityContainer>(nullptr, true);
-        for (const RS_Entity* e : *cont) {
-            if (e && !e->isContainer()) {
-                loopCopy->addEntity(e->clone()); // Clone atomics for independent ownership
-            }
-        }
+        if (!visitBoundaryEdges(*cont, [&](const RS_Entity* e) {
+            auto* copy = independentEdge(*e, nullptr);
+            loopCopy->addEntity(copy); // immutable hatch cache deliberately has no drawing parent/layer
+        })) return LC_LoopUtils::LC_Loops{loopCopy, true};
         LC_LoopUtils::LC_Loops lc(loopCopy, true);
         for (const auto& p : allLoops) {
             if (p.get()->getParent() == cont) {
@@ -164,6 +237,12 @@ VectorKey makeVectorKey(const RS_Vector& v) {
           static_cast<long long>(std::round(v.y * SCALE))};
 }
 
+bool hasEndpointKey(const RS_Vector& v) {
+  if (!v.valid || !std::isfinite(v.x) || !std::isfinite(v.y)) return false;
+  const double limit = std::nextafter(static_cast<double>(std::numeric_limits<long long>::max()), 0.);
+  return std::abs(std::round(v.x * 1e8)) <= limit && std::abs(std::round(v.y * 1e8)) <= limit;
+}
+
 }  // anonymous namespace
 
 namespace LC_LoopUtils {
@@ -188,8 +267,15 @@ struct LoopExtractor::LoopData {
 LoopExtractor::LoopExtractor(const RS_EntityContainer& edges) :
                                                                 m_data(std::make_unique<LoopData>())
 {
-  for (RS_Entity* e : edges) {
+  bool invalidKey = false;
+  if (!visitBoundaryEdges(edges, [&](RS_Entity* e) {
+    if (invalidKey) return;
     if (e->isAtomic() && e->getLength() > ENDPOINT_TOLERANCE) {  // Skip degenerate zero-length edges
+      if (!isClosed(*e) && (!hasEndpointKey(e->getStartpoint()) || !hasEndpointKey(e->getEndpoint()))) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "LoopExtractor: Endpoint outside adjacency key range");
+        invalidKey = true;
+        return;
+      }
       m_data->unprocessed.push_back(e);
       m_data->processed[e] = false;
 
@@ -202,6 +288,11 @@ LoopExtractor::LoopExtractor(const RS_EntityContainer& edges) :
         m_data->endpointToEdges[k2].push_back(e);
       }
     }
+  })) return; // preflight refusal publishes no adjacency or partial loop
+  if (invalidKey) {
+    m_data->unprocessed.clear();
+    m_data->processed.clear();
+    m_data->endpointToEdges.clear();
   }
 }
 
@@ -218,7 +309,7 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract()const {
     m_loop = std::make_unique<RS_EntityContainer>();
     RS_Entity* first = findFirst();
     if (first) {
-      RS_Entity* cloned_first = first->clone();
+      RS_Entity* cloned_first = independentEdge(*first, m_loop.get());
       m_loop->addEntity(cloned_first);
       m_data->processed[first] = true;
       m_data->current = cloned_first;
@@ -249,7 +340,7 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract()const {
           // Reverse direction for positive area (counter-clockwise)
           auto new_loop = std::make_unique<RS_EntityContainer>();
           for (int i = static_cast<int>(m_loop->count()) - 1; i >= 0; --i) {
-            RS_Entity* e = m_loop->entityAt(static_cast<unsigned>(i))->clone();
+            RS_Entity* e = independentEdge(*m_loop->entityAt(static_cast<unsigned>(i)), new_loop.get());
             e->revertDirection();
             new_loop->addEntity(e);
           }
@@ -515,7 +606,7 @@ bool LoopExtractor::findNext() const {
   RS_Entity* next = (connected.size() == 1) ? connected[0] : findOutermost(connected);
 
   if (next) {
-    RS_Entity* cloned = next->clone();
+    RS_Entity* cloned = independentEdge(*next, m_loop.get());
     m_loop->addEntity(cloned);
     m_data->processed[next] = true;
     m_data->unprocessed.erase(std::remove(m_data->unprocessed.begin(), m_data->unprocessed.end(), next), m_data->unprocessed.end());
@@ -850,8 +941,7 @@ LC_SecondMoment LC_Loops::getTotalSecondMoment() const {
         }
 
          //builder.moveTo(cont.first()->getStartpoint());
-  for (RS_Entity* e : cont) {
-    if (e->isAtomic()) {
+  if (!visitBoundaryEdges(cont, [&](RS_Entity* e) {
       RS_Vector start = e->getStartpoint();
       if (!path.isEmpty() && RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL) {
         if ((path.currentPosition() - builder.toGuiPoint({start.x, start.y})).manhattanLength() >= 3.) {
@@ -859,8 +949,7 @@ LC_SecondMoment LC_Loops::getTotalSecondMoment() const {
         }
       }
       builder.append(e);
-    }
-  }
+  })) return {}; // never close a partial refused boundary
   builder.closeSubpath();
   if (RS_DEBUG->getLevel() > RS_Debug::D_WARNING) {
       debugPath(path);
@@ -906,11 +995,7 @@ LC_SecondMoment LC_Loops::getTotalSecondMoment() const {
         getAllLoops(loops);
         std::vector<RS_Entity*> bounds;
         for (auto* l : loops) {
-            for (RS_Entity* e : *l) {
-                if (e->isAtomic()) {
-                    bounds.push_back(e);
-                }
-            }
+            if (!visitBoundaryEdges(*l, [&](RS_Entity* e) { bounds.push_back(e); })) return {};
         }
         return bounds;
     }
@@ -963,16 +1048,16 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
      */
     std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Pattern& pattern) const {
         auto trimmed = std::make_unique<RS_EntityContainer>();
-        std::vector<RS_Vector> tiles = createTiles(pattern);
+        std::vector<RS_Entity*> patternEdges;
+        if (!visitBoundaryEdges(pattern, [&](RS_Entity* e) { patternEdges.push_back(e); })) return trimmed;
         auto boundaries = getAllBoundaries();
+        if (boundaries.empty()) return trimmed;
+        std::vector<RS_Vector> tiles = createTiles(pattern);
         std::map<const RS_Entity*, std::set<double, DoublePredicate>> savedIntercepts;
         LC_Rect bBox = getBoundingBox();
         for (const RS_Vector& tile : tiles) {
-            for (RS_Entity* e : pattern) {
-                if (!e->isAtomic()) {
-                    continue;
-                }
-                auto cloned = std::unique_ptr<RS_Entity>(e->clone());
+            for (RS_Entity* e : patternEdges) {
+                auto cloned = std::unique_ptr<RS_Entity>(independentEdge(*e, trimmed.get()));
                 cloned->move(tile);
 
       if (e->rtti() == RS2::EntityLine) {
@@ -1034,6 +1119,8 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
         auto sub = std::unique_ptr<RS_Entity>(createSubEntity(cloned.get(), p1, p2));
         // Filter short subs and add if inside
         if (sub && sub->getLength() > RS_TOLERANCE && isPointInside(sub->getMiddlePoint())) {
+          sub->setPen(cloned->getPen(false));
+          sub->reparent(trimmed.get());
           sub->setVisible(true);
           trimmed->addEntity(sub.release());
         }
@@ -1044,6 +1131,8 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
         if (pw1.distanceTo(pw2) >= RS_TOLERANCE) {
           auto sub = std::unique_ptr<RS_Entity>(createSubEntity(cloned.get(), pw1, pw2));
           if (sub && sub->getLength() > RS_TOLERANCE && isPointInside(sub->getMiddlePoint())) {
+            sub->setPen(cloned->getPen(false));
+            sub->reparent(trimmed.get());
             sub->setVisible(true);
             trimmed->addEntity(sub.release());
           }

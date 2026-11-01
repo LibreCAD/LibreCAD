@@ -97,6 +97,15 @@ struct Verification {
             self.parsed && self.exactLine && self.exactMode;
     }
 };
+struct PublishPolicy {
+    bool allow=true;
+    unsigned calls=0;
+    static bool check(void *context) {
+        auto &self=*static_cast<PublishPolicy *>(context);
+        ++self.calls;
+        return self.allow;
+    }
+};
 template<class Writer>
 void dispositionCase(DRW::Version version,bool dwg,bool binary,Disposition disposition) {
     Fixture fixture;const auto path=fixture.destination.string();Writer writer(path.c_str());Output<Writer> output(writer);
@@ -132,6 +141,7 @@ void invalidCase(bool binary) {
     CHECK_FALSE(writer.writeVerified(&output,DRW::AC1032,binary,nullptr,nullptr));
     CHECK_FALSE(writer.writeVerified(nullptr,DRW::AC1032,binary,&Verification::inspect,&verifier));
     CHECK_FALSE(writer.writeVerified(&output,DRW::UNKNOWNV,binary,&Verification::inspect,&verifier));
+    CHECK_FALSE(writer.writeGuarded(&output,DRW::AC1032,binary,nullptr,nullptr));
     output.throwing=true;
     CHECK_FALSE(writer.writeVerified(&output,DRW::AC1032,binary,&Verification::inspect,&verifier));
     CHECK(verifier.calls==0);CHECK_FALSE(output.emitted);CHECK(contents(fixture.destination)=="old destination");
@@ -177,5 +187,88 @@ TEST_CASE("DXF traversal veto precedes verification and leaves the destination i
         REQUIRE(writer.writeVerified(&output, DRW::AC1032, binary, &Verification::inspect, &verifier));
         CHECK(verifier.calls == 1);
         CHECK(fixture.files() == 1);
+    }
+}
+
+TEST_CASE("Native writers apply per-call publication guards", "[verified-native-write][publish-guard]") {
+    for (const auto version : {DRW::AC1027, DRW::AC1032}) {
+        for (const bool allow : {false, true}) {
+            CAPTURE(int(version), allow);
+            Fixture dwgFixture;
+            const auto dwgPath = dwgFixture.destination.string();
+            dwgRW dwgWriter(dwgPath.c_str());
+            Output<dwgRW> dwgOutput(dwgWriter);
+            PublishPolicy dwgPolicy{allow};
+            const bool dwgAccepted = dwgWriter.writeGuarded(
+                &dwgOutput, version, false, &PublishPolicy::check, &dwgPolicy);
+            CHECK(dwgAccepted == allow);
+            CHECK(dwgPolicy.calls == 1);
+            CHECK(dwgOutput.emitted);
+            CHECK(dwgFixture.files() == 1);
+            CHECK((contents(dwgFixture.destination) != "old destination") == allow);
+            if (!allow)
+                CHECK(dwgWriter.getError() == DRW::BAD_OPEN);
+
+            Fixture verifiedDwgFixture;
+            const auto verifiedDwgPath = verifiedDwgFixture.destination.string();
+            dwgRW verifiedDwgWriter(verifiedDwgPath.c_str());
+            Output<dwgRW> verifiedDwgOutput(verifiedDwgWriter);
+            Verification dwgVerifier;
+            dwgVerifier.destination = verifiedDwgFixture.destination;
+            dwgVerifier.version = version;
+            dwgVerifier.dwg = true;
+            PublishPolicy verifiedDwgPolicy{allow};
+            const bool verifiedDwgAccepted = verifiedDwgWriter.writeVerified(
+                &verifiedDwgOutput, version, false, &Verification::inspect,
+                &dwgVerifier, &PublishPolicy::check, &verifiedDwgPolicy);
+            CHECK(verifiedDwgAccepted == allow);
+            CHECK(dwgVerifier.calls == 1);
+            CHECK(dwgVerifier.parsed);
+            CHECK(dwgVerifier.exactLine);
+            CHECK(verifiedDwgPolicy.calls == 1);
+            CHECK(verifiedDwgFixture.files() == 1);
+            CHECK((contents(verifiedDwgFixture.destination) != "old destination") == allow);
+
+            for (const bool binary : {false, true}) {
+                CAPTURE(binary);
+                Fixture dxfFixture;
+                const auto dxfPath = dxfFixture.destination.string();
+                dxfRW dxfWriter(dxfPath.c_str());
+                Output<dxfRW> dxfOutput(dxfWriter);
+                Verification verifier;
+                verifier.destination = dxfFixture.destination;
+                verifier.version = version;
+                verifier.binary = binary;
+                PublishPolicy dxfPolicy{allow};
+                const bool dxfAccepted = dxfWriter.writeVerified(
+                    &dxfOutput, version, binary, &Verification::inspect,
+                    &verifier, &PublishPolicy::check, &dxfPolicy);
+                CHECK(dxfAccepted == allow);
+                CHECK(verifier.calls == 1);
+                CHECK(verifier.oldDestination);
+                CHECK(verifier.parsed);
+                CHECK(verifier.exactLine);
+                CHECK(dxfPolicy.calls == 1);
+                CHECK(dxfOutput.emitted);
+                CHECK(dxfFixture.files() == 1);
+                CHECK((contents(dxfFixture.destination) != "old destination") == allow);
+                if (!allow)
+                    CHECK(dxfWriter.getError() == DRW::BAD_OPEN);
+
+                Fixture guardedDxfFixture;
+                const auto guardedDxfPath = guardedDxfFixture.destination.string();
+                dxfRW guardedDxfWriter(guardedDxfPath.c_str());
+                Output<dxfRW> guardedDxfOutput(guardedDxfWriter);
+                PublishPolicy guardedDxfPolicy{allow};
+                const bool guardedDxfAccepted = guardedDxfWriter.writeGuarded(
+                    &guardedDxfOutput, version, binary,
+                    &PublishPolicy::check, &guardedDxfPolicy);
+                CHECK(guardedDxfAccepted == allow);
+                CHECK(guardedDxfPolicy.calls == 1);
+                CHECK(guardedDxfOutput.emitted);
+                CHECK(guardedDxfFixture.files() == 1);
+                CHECK((contents(guardedDxfFixture.destination) != "old destination") == allow);
+            }
+        }
     }
 }

@@ -38,7 +38,7 @@ public:
     explicit LC_EntityPropertiesEditorWidget(QWidget* parent);
     virtual void setEntity(RS_Entity* entity) = 0;
     virtual void updateEntityData() {}
-    void interactiveInputUpdate(LC_ActionContext::InteractiveInputInfo::InputType inputType,
+    virtual void interactiveInputUpdate(LC_ActionContext::InteractiveInputInfo::InputType inputType,
         const QString &tag, double valueOne, double valueTwo) const;
     virtual void setupInteractiveInputWidgets() {}
 signals:
