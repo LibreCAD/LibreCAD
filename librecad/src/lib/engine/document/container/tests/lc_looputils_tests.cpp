@@ -29,15 +29,20 @@
 #include <cfloat>
 #include <cmath>
 #include <functional>
+#include <limits>
 #include <memory>
 #include <string>
 #include <vector>
+
+#include <random>
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators.hpp>
 #include <catch2/generators/catch_generators_range.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
+#include "lc_containertraverser.h"
+#include "lc_hatchdensity.h"
 #include "lc_hatchtestsupport.h"
 #include "lc_hyperbola.h"
 #include "lc_loopclassifier.h"
@@ -51,6 +56,7 @@
 #include "rs_line.h"
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
+#include "rs_polyline.h"
 #include "rs_vector.h"
 
 using Catch::Matchers::WithinAbs;
@@ -200,6 +206,75 @@ TEST_CASE("Hyperbola island is parented", "[lc-hatchfix][nesting]") {
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Circle island inside a rotated half-ellipse nests on a SOLID hatch",
+          "[lc-hatchfix][nesting]") {
+    // Boundary: rotated half-ellipse a = 3, b = 2 at (10, 5), phi = 30 deg
+    // (one loop with an elliptic-arc edge plus the diametric chord), with a
+    // circle island r = 0.5 centred at (9.6, 5.7). The CW variant exercises
+    // the extractor's reversal path (revertDirection swaps angles and flips
+    // isReversed), where the LoopGeometry piece-boundary vertices used to
+    // bind to the wrong endpoint on the reversed elliptic arc and overcount
+    // the right-crossings through the island centre; both loops came back as
+    // roots and the SOLID area was ellipse + circle = 10.21 instead of
+    // 8.639379797...
+    const double phi = 30.0 * M_PI / 180.0;
+    const RS_Vector majorP(3.0 * std::cos(phi), 3.0 * std::sin(phi));
+
+    auto buildEllipseLoop = [&](bool cwChordFirst) {
+        auto cont = std::make_unique<RS_EntityContainer>(nullptr, true);
+        RS_EllipseData ed;
+        ed.center = RS_Vector(10, 5);
+        ed.majorP = majorP;
+        ed.ratio = 2.0 / 3.0;
+        ed.angle1 = 0.0;
+        ed.angle2 = M_PI;
+        ed.reversed = false;
+        const RS_Vector low  = RS_Vector(10, 5) - majorP;
+        const RS_Vector high = RS_Vector(10, 5) + majorP;
+        if (cwChordFirst) {
+            // Chord then ellipse — gives negative area so the extractor must
+            // reverse the whole loop (revertDirection on both edges).
+            cont->addEntity(new RS_Line(cont.get(), low, high));
+            cont->addEntity(new RS_Ellipse(cont.get(), ed));
+        } else {
+            cont->addEntity(new RS_Ellipse(cont.get(), ed));
+            cont->addEntity(new RS_Line(cont.get(), low, high));
+        }
+        return cont;
+    };
+    auto buildIsland = []() {
+        auto cont = std::make_unique<RS_EntityContainer>(nullptr, true);
+        cont->addEntity(new RS_Circle(cont.get(),
+            RS_CircleData{RS_Vector(9.6, 5.7), 0.5}));
+        return cont;
+    };
+
+    const double expectedArea = M_PI * 3.0 * 2.0 / 2.0 - M_PI * 0.25;
+
+    SECTION("ellipse first, line second (positive area, no reversal)") {
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(buildEllipseLoop(false));
+        loops.push_back(buildIsland());
+        auto hatch = makeHatch(std::move(loops),
+            RS_HatchData(true, 1.0, 0.0, QStringLiteral("SOLID")));
+        REQUIRE(hatch->countLoops() == 1);
+        REQUIRE(hatch->countAllLoops() == 2);
+        REQUIRE_THAT(hatch->getTotalArea(), WithinAbs(expectedArea, 1e-9));
+    }
+
+    SECTION("line first, ellipse second (negative area, reversed by extractor)") {
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(buildEllipseLoop(true));
+        loops.push_back(buildIsland());
+        auto hatch = makeHatch(std::move(loops),
+            RS_HatchData(true, 1.0, 0.0, QStringLiteral("SOLID")));
+        REQUIRE(hatch->countLoops() == 1);
+        REQUIRE(hatch->countAllLoops() == 2);
+        REQUIRE_THAT(hatch->getTotalArea(), WithinAbs(expectedArea, 1e-9));
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("Collinear pattern pieces: bottom and right drawn, top and left not",
           "[lc-hatchfix][pattern]") {
     // Rectangle [0,30] x [0,20]. Two synthetic patterns:
@@ -244,8 +319,9 @@ TEST_CASE("Collinear pattern pieces: bottom and right drawn, top and left not",
         auto results = opt.getResults();
         REQUIRE(results);
         REQUIRE_FALSE(results->empty());
-        const auto& loop = (*results)[0];
-        auto trimmed = loop.trimPatternEntities(*pattern, RS_Vector(0.0, 0.0));
+        auto tiles = LC_LoopUtils::createTiles(*results, *pattern, RS_Vector(0.0, 0.0));
+        LC_HatchPieceBudget budget{std::numeric_limits<std::size_t>::max()};
+        auto trimmed = LC_LoopUtils::trimPatternEntities(*results, *pattern, tiles, budget);
         REQUIRE(trimmed != nullptr);
 
         int bottom = 0, top = 0;
@@ -267,8 +343,9 @@ TEST_CASE("Collinear pattern pieces: bottom and right drawn, top and left not",
         auto results = opt.getResults();
         REQUIRE(results);
         REQUIRE_FALSE(results->empty());
-        const auto& loop = (*results)[0];
-        auto trimmed = loop.trimPatternEntities(*pattern, RS_Vector(0.0, 0.0));
+        auto tiles = LC_LoopUtils::createTiles(*results, *pattern, RS_Vector(0.0, 0.0));
+        LC_HatchPieceBudget budget{std::numeric_limits<std::size_t>::max()};
+        auto trimmed = LC_LoopUtils::trimPatternEntities(*results, *pattern, tiles, budget);
         REQUIRE(trimmed != nullptr);
 
         int left = 0, right = 0;
@@ -1202,5 +1279,660 @@ TEST_CASE("Pinched lobes in an L room: triangle lobe outside, square lobe a hole
     for (const auto& r : *roots) totArea += r.getTotalArea();
     // L_room (210000) - square lobe (10000) + triangle lobe (3750) = 203750.
     REQUIRE_THAT(totArea, WithinAbs(203750.0, 1e-6));
+}
+
+namespace {
+
+// Builds a loop container that mirrors how the filter writes a HATCH boundary
+// with the polyline-boundary path type (bit 2): construct a transient RS_Polyline,
+// addVertex every (point, bulge), setClosed, and clone each generated atomic
+// entity into a fresh container that owns them.
+std::unique_ptr<RS_EntityContainer> makePolylineLoopContainer(
+    const std::vector<std::pair<RS_Vector, double>>& vertsWithBulge) {
+    RS_PolylineData pd{RS_Vector(false), RS_Vector(false), 1};
+    RS_Polyline polyline{nullptr, pd};
+    for (const auto& vb : vertsWithBulge) {
+        polyline.addVertex(vb.first, vb.second);
+    }
+    polyline.setClosed(true);
+    auto cont = std::make_unique<RS_EntityContainer>(nullptr, true);
+    for (const RS_Entity* e :
+         lc::LC_ContainerTraverser{polyline, RS2::ResolveNone}.entities()) {
+        RS_Entity* copy = e->clone();
+        copy->setParent(cont.get());
+        copy->setLayer(nullptr);
+        cont->addEntity(copy);
+    }
+    return cont;
+}
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A bulge-1e-9 edge is a line and keeps its loop",
+          "[lc-hatchfix][nesting]") {
+    // A 10x10 polyline square at the origin; the right edge carries a tiny
+    // bulge. 4*atan(1e-9) is below RS_TOLERANCE_ANGLE, so RS_Polyline::createVertex
+    // must emit an RS_Line for that edge; the square keeps its four edges and
+    // nests the thin bar at (2,2)-(8,2.00015) as its hole.
+    //
+    // On the parent build the near-flat bulge becomes an RS_Arc of radius
+    // ~2.5e9; RS_ArcData::getAngleLength() rounds its sweep to 2*pi and
+    // isClosed() takes it as a loop of its own (area ~pi*r^2 ~ 1.96e19) while
+    // the remaining three edges fail to close.
+    auto buildHatch = [](double bulge) {
+        const std::vector<std::pair<RS_Vector, double>> verts{
+            {RS_Vector(0.0, 0.0), 0.0},
+            {RS_Vector(10.0, 0.0), bulge},  // right edge carries the bulge
+            {RS_Vector(10.0, 10.0), 0.0},
+            {RS_Vector(0.0, 10.0), 0.0},
+        };
+        auto outer = makePolylineLoopContainer(verts);
+        auto bar = makeLoopContainer({
+            RS_Vector(2.0, 2.0),           RS_Vector(8.0, 2.0),
+            RS_Vector(8.0, 2.0 + 1.5e-4),  RS_Vector(2.0, 2.0 + 1.5e-4)});
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(std::move(outer));
+        loops.push_back(std::move(bar));
+        RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+        return makeHatch(std::move(loops), data);
+    };
+
+    auto a = buildHatch(1.0e-9);
+    auto b = buildHatch(0.0);
+
+    REQUIRE(a->getUpdateError() == RS_Hatch::HATCH_OK);
+    REQUIRE(b->getUpdateError() == RS_Hatch::HATCH_OK);
+    REQUIRE(a->countAllLoops() == 2);
+    REQUIRE(b->countAllLoops() == 2);
+    // The outer container of the bulge hatch must come out as four line edges,
+    // never as a nearly-full RS_Arc that gets taken for a closed loop.
+    const RS_EntityContainer* aRoot = a->getBoundaryContainer(0);
+    REQUIRE(aRoot != nullptr);
+    REQUIRE(aRoot->count() == 4u);
+    for (unsigned i = 0; i < aRoot->count(); ++i) {
+        REQUIRE(aRoot->entityAt(i)->rtti() == RS2::EntityLine);
+    }
+    REQUIRE_THAT(a->getTolerance(), WithinRel(b->getTolerance(), 1e-12));
+    // Square area 100 minus bar area 6 * 1.5e-4 = 9e-4.
+    const double expected = 100.0 - 9.0e-4;
+    REQUIRE_THAT(a->getTotalArea(), WithinAbs(expected, 1e-6));
+    REQUIRE_THAT(b->getTotalArea(), WithinAbs(expected, 1e-6));
+}
+
+namespace {
+
+// Build a container of RS_Line edges from a vector of vertex coordinates
+// (the ring is closed by the last-to-first edge).
+std::unique_ptr<RS_EntityContainer> makeNoisyPolygonLoop(
+    const std::vector<RS_Vector>& vertices) {
+    auto cont = std::make_unique<RS_EntityContainer>(nullptr, true);
+    const std::size_t n = vertices.size();
+    for (std::size_t i = 0; i < n; ++i) {
+        cont->addEntity(new RS_Line(cont.get(), vertices[i], vertices[(i + 1) % n]));
+    }
+    return cont;
+}
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A 50-junction polygon with 1e-10 end noise always closes",
+          "[lc-hatchfix][nesting]") {
+    // Regular 50-gon of radius 100 at the origin. For each of 1000 seeds,
+    // translate the polygon by a uniform offset in [0, 1e-6)^2 and move every
+    // edge end by 1e-10 in a random direction (independent per end). The
+    // extractor must still see one closed loop; master's exact 1e-8 key loses
+    // around 47% of such loops.
+    constexpr int kJunctions = 50;
+    constexpr int kSeeds = 1000;
+    constexpr double kNoise = 1.0e-10;
+    constexpr double kOffsetScale = 1.0e-6;
+
+    std::vector<RS_Vector> base;
+    base.reserve(kJunctions);
+    for (int i = 0; i < kJunctions; ++i) {
+        const double a = 2.0 * M_PI * i / kJunctions;
+        base.emplace_back(100.0 * std::cos(a), 100.0 * std::sin(a));
+    }
+
+    int closed = 0;
+    for (int seed = 0; seed < kSeeds; ++seed) {
+        std::mt19937 gen(static_cast<unsigned>(seed) + 1u);
+        std::uniform_real_distribution<double> offs(0.0, kOffsetScale);
+        std::uniform_real_distribution<double> ang(0.0, 2.0 * M_PI);
+        const RS_Vector offset(offs(gen), offs(gen));
+        std::vector<RS_Vector> perturbed(kJunctions);
+        for (int i = 0; i < kJunctions; ++i) {
+            const double theta = ang(gen);
+            perturbed[i] = base[i] + offset
+                           + RS_Vector(kNoise * std::cos(theta),
+                                       kNoise * std::sin(theta));
+        }
+        auto cont = makeNoisyPolygonLoop(perturbed);
+        LC_LoopUtils::LoopOptimizer opt(*cont);
+        auto roots = opt.getResults();
+        if (roots && roots->size() == 1) {
+            ++closed;
+        }
+    }
+    REQUIRE(closed == kSeeds);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("D = 0.5 square with 2e-9 junction noise is kept",
+          "[lc-hatchfix][nesting]") {
+    // Small square whose diagonal 0.5 would make a strict scale-relative
+    // tolerance 1e-9 * D = 5e-10, below the 2e-9 junction noise. The eps
+    // floor min(1e-8, 1e-6*D) widens the tolerance to 1e-8 and keeps the
+    // loop. Checked at the origin and at (100, 100); each over 1000 seeds.
+    constexpr int kSeeds = 1000;
+    constexpr double kSide = 0.5 / M_SQRT2;  // diagonal 0.5
+    constexpr double kNoise = 2.0e-9;
+
+    auto run = [&](const RS_Vector& origin, double noise) {
+        int closed = 0;
+        for (int seed = 0; seed < kSeeds; ++seed) {
+            std::mt19937 gen(static_cast<unsigned>(seed) + 7u);
+            std::uniform_real_distribution<double> ang(0.0, 2.0 * M_PI);
+            std::vector<RS_Vector> corners{origin,
+                                            origin + RS_Vector(kSide, 0.0),
+                                            origin + RS_Vector(kSide, kSide),
+                                            origin + RS_Vector(0.0, kSide)};
+            std::vector<RS_Vector> jiggled(4);
+            for (int i = 0; i < 4; ++i) {
+                const double theta = ang(gen);
+                jiggled[i] = corners[i]
+                             + RS_Vector(noise * std::cos(theta),
+                                         noise * std::sin(theta));
+            }
+            auto cont = makeNoisyPolygonLoop(jiggled);
+            LC_LoopUtils::LoopOptimizer opt(*cont);
+            auto roots = opt.getResults();
+            if (roots && roots->size() == 1) {
+                ++closed;
+            }
+        }
+        return closed;
+    };
+
+    SECTION("origin, 2e-9 noise") {
+        REQUIRE(run(RS_Vector(0.0, 0.0), kNoise) == kSeeds);
+    }
+    SECTION("far from origin, 2e-9 noise") {
+        REQUIRE(run(RS_Vector(100.0, 100.0), kNoise) == kSeeds);
+    }
+    SECTION("origin, 5e-9 noise") {
+        REQUIRE(run(RS_Vector(0.0, 0.0), 5.0e-9) == kSeeds);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A bulge-1e-7 edge neither drops the loop nor loosens eps",
+          "[lc-hatchfix][nesting]") {
+    // Hatch A: a 10x10 polyline square whose right edge has bulge 1e-7. The
+    // sweep 4 * atan(1e-7) ~ 4e-7 is above the near-flat threshold, so the
+    // polyline builds an RS_Arc of radius ~2.5e7. Master's 1e-8 endpoint key
+    // loses the join between that arc and the top edge. The local arc
+    // tolerance max(eps, 64*u*(|c|+r)) ~ 3.6e-7 welds that gap and keeps the
+    // square.
+    //
+    // Hatch B: the same hatch without the bulge. Both must have the same
+    // per-hatch tolerance (the bulge contributes to M only through its chord
+    // ends, which coincide with the two neighbouring vertices).
+    //
+    // The thin bar at (2, 2) - (8, 2.00015) is the inner island.
+    auto buildHatch = [](double bulge) {
+        const std::vector<std::pair<RS_Vector, double>> verts{
+            {RS_Vector(0.0, 0.0), 0.0},
+            {RS_Vector(10.0, 0.0), bulge},
+            {RS_Vector(10.0, 10.0), 0.0},
+            {RS_Vector(0.0, 10.0), 0.0},
+        };
+        auto outer = makePolylineLoopContainer(verts);
+        auto bar = makeLoopContainer({
+            RS_Vector(2.0, 2.0),           RS_Vector(8.0, 2.0),
+            RS_Vector(8.0, 2.0 + 1.5e-4),  RS_Vector(2.0, 2.0 + 1.5e-4)});
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(std::move(outer));
+        loops.push_back(std::move(bar));
+        RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+        return makeHatch(std::move(loops), data);
+    };
+
+    auto a = buildHatch(1.0e-7);
+    auto b = buildHatch(0.0);
+
+    REQUIRE(a->getUpdateError() == RS_Hatch::HATCH_OK);
+    REQUIRE(b->getUpdateError() == RS_Hatch::HATCH_OK);
+    REQUIRE(a->countAllLoops() == 2);
+    REQUIRE(b->countAllLoops() == 2);
+    // A's and B's bbox diagonals differ only by the arc's sagitta
+    // (~5e-7 for a 10-unit chord with |b| = 1e-7); the per-hatch tolerance
+    // picks up that fraction of 1e-9 * D. Practical equality on the 1e-8
+    // scale is well within 1e-12 absolute.
+    REQUIRE_THAT(a->getTolerance(), WithinAbs(b->getTolerance(), 1e-12));
+
+    // The right edge is now an RS_Arc; the outer boundary still has 4 edges.
+    const RS_EntityContainer* aRoot = a->getBoundaryContainer(0);
+    REQUIRE(aRoot != nullptr);
+    REQUIRE(aRoot->count() == 4u);
+    bool sawArc = false;
+    for (unsigned i = 0; i < aRoot->count(); ++i) {
+        if (aRoot->entityAt(i)->rtti() == RS2::EntityArc) sawArc = true;
+    }
+    REQUIRE(sawArc);
+
+    // A - B equals the signed segment area of the arc; for b > 0 on a CCW
+    // square's right edge the segment bulges outward (positive). Compute it
+    // from the RS_Arc the polyline built: segment = r^2 / 2 * (theta - sin theta).
+    const double bulge = 1.0e-7;
+    const double theta = 4.0 * std::atan(bulge);
+    const double chord = 10.0;
+    const double radius = std::abs(chord / (2.0 * std::sin(theta / 2.0)));
+    const double segment = 0.5 * radius * radius * (theta - std::sin(theta));
+    const double delta = a->getTotalArea() - b->getTotalArea();
+    REQUIRE_THAT(delta, WithinAbs(segment, 3.0e-7));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("An edge shorter than eps is dropped, one of 10 eps is kept",
+          "[lc-hatchfix][nesting]") {
+    // Square (0, 0) - (10, 10) whose bottom edge is split into three pieces by
+    // a tiny midpoint displacement delta. delta = 0.5*eps -> the middle piece
+    // is shorter than eps and the extractor drops it, leaving a 4-edge loop
+    // with area 100. delta = 10*eps -> the piece is kept and the loop has 6
+    // edges. eps for a square of diagonal ~14 at the origin is the 1e-8 floor,
+    // so delta = 5e-9 and 1e-7 are the two cases.
+    const double eps = 1.0e-8;
+
+    auto buildHatch = [eps](double delta) {
+        const double mid = 5.0 + delta;
+        auto outer = std::make_unique<RS_EntityContainer>(nullptr, true);
+        outer->addEntity(new RS_Line(outer.get(), RS_Vector(0, 0), RS_Vector(5, 0)));
+        outer->addEntity(new RS_Line(outer.get(), RS_Vector(5, 0), RS_Vector(mid, 0)));
+        outer->addEntity(new RS_Line(outer.get(), RS_Vector(mid, 0), RS_Vector(10, 0)));
+        outer->addEntity(new RS_Line(outer.get(), RS_Vector(10, 0), RS_Vector(10, 10)));
+        outer->addEntity(new RS_Line(outer.get(), RS_Vector(10, 10), RS_Vector(0, 10)));
+        outer->addEntity(new RS_Line(outer.get(), RS_Vector(0, 10), RS_Vector(0, 0)));
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(std::move(outer));
+        RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+        return makeHatch(std::move(loops), data);
+    };
+
+    SECTION("delta = 0.5 * eps") {
+        auto h = buildHatch(0.5 * eps);
+        REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_OK);
+        REQUIRE(h->countAllLoops() == 1);
+        REQUIRE(h->getBoundaryContainer(0)->count() == 5u);
+        REQUIRE_THAT(h->getTotalArea(), WithinAbs(100.0, 1e-6));
+    }
+    SECTION("delta = 10 * eps") {
+        auto h = buildHatch(10.0 * eps);
+        REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_OK);
+        REQUIRE(h->countAllLoops() == 1);
+        REQUIRE(h->getBoundaryContainer(0)->count() == 6u);
+        REQUIRE_THAT(h->getTotalArea(), WithinAbs(100.0, 1e-6));
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Distinct vertices 10 eps apart stay distinct",
+          "[lc-hatchfix][nesting]") {
+    // Two 1x1 squares that touch at their nearest corners, offset by 10 eps
+    // (1e-7) along the join axis. The welder must not merge the corners even
+    // under the loose rule; the hatch gets two root loops with area 1 each.
+    const double gap = 1.0e-7;
+
+    auto left = makeLoopContainer(lc::test::rectRing(0.0, 0.0, 1.0, 1.0));
+    auto right = makeLoopContainer(
+        lc::test::rectRing(1.0 + gap, 0.0, 2.0 + gap, 1.0));
+
+    std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+    loops.push_back(std::move(left));
+    loops.push_back(std::move(right));
+    RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+    auto hatch = makeHatch(std::move(loops), data);
+
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    REQUIRE(hatch->countLoops() == 2);
+    REQUIRE(hatch->countAllLoops() == 2);
+    REQUIRE_THAT(hatch->getTotalArea(), WithinAbs(2.0, 1e-10));
+}
+
+namespace {
+
+// Apply (scale, rotate about origin, translate) to every loop container in
+// place. Transform order follows the Case description: scale first, rotate
+// second, move last. Each container's children are RS_Entity atomics
+// (RS_Line, RS_Arc, RS_Circle, RS_Ellipse, ...) which handle their own
+// endpoint recomputation.
+void transformLoops(std::vector<std::unique_ptr<RS_EntityContainer>>& loops,
+                    double scale, double rotateDeg, const RS_Vector& offset) {
+    const RS_Vector origin(0.0, 0.0);
+    const double theta = rotateDeg * M_PI / 180.0;
+    for (auto& loop : loops) {
+        if (!loop) continue;
+        if (scale != 1.0) {
+            loop->scale(origin, RS_Vector(scale, scale));
+        }
+        if (std::abs(theta) > 0.0) {
+            loop->rotate(origin, theta);
+        }
+        if (offset.x != 0.0 || offset.y != 0.0) {
+            loop->move(offset);
+        }
+        loop->forcedCalculateBorders();
+    }
+}
+
+} // namespace
+
+namespace {
+
+// Build a polyline-boundary loop container from an inline list of
+// (point, bulge) tuples. The polyline is closed and its atomic edges are
+// cloned into a fresh owning container, matching how the DXF filter writes
+// a hatch boundary with the polyline bit set.
+std::unique_ptr<RS_EntityContainer> makeBulgePolylineLoop(
+    const std::vector<std::tuple<double, double, double>>& pts) {
+    std::vector<std::pair<RS_Vector, double>> vs;
+    vs.reserve(pts.size());
+    for (const auto& p : pts) {
+        vs.emplace_back(RS_Vector(std::get<0>(p), std::get<1>(p)), std::get<2>(p));
+    }
+    return makePolylineLoopContainer(vs);
+}
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Bulge paths far from the origin keep their loops",
+          "[lc-hatchfix][nesting]") {
+    // Two real-world hatch boundaries drawn with bulges, replayed at the
+    // origin, at (5e5, 4e6) and at (3e7, 3e7). The welder's scale-relative
+    // tolerance keeps the chain closed at every location; the master build's
+    // fixed 1e-8 key loses one of these paths at D = 1e4 or above.
+    //
+    // The hatch-6 path has one closed boundary (5 vertices, 2 bulged).
+    // The hatch-7 path has an outer rectangle (closed) plus an inner mixed
+    // boundary (5 vertices, 3 bulged); the inner one nests inside the outer.
+    auto buildHatch6 = []() {
+        return makeBulgePolylineLoop({
+            {90.52467476398633, 25.2544690703545, 0.0},
+            {95.50272119367489, 25.2544690703545, 0.0712515982017834},
+            {94.76722237490561, 27.39219767398249, 1.507885615214488},
+            {92.5559157660329, 30.05747155033201, 0.0734835535140569},
+            {90.52467476398633, 31.20054570052284, 0.0},
+        });
+    };
+    auto buildHatch7Rect = []() {
+        return makeBulgePolylineLoop({
+            {116.8535739341333, 34.34631086375322, 0.0},
+            {102.7338310135901, 34.34631086375322, 0.0},
+            {102.7338310135901, 21.59331610156323, 0.0},
+            {116.8535739341333, 21.59331610156323, 0.0},
+        });
+    };
+    auto buildHatch7Inner = []() {
+        return makeBulgePolylineLoop({
+            {106.6036874636791, 31.35483848998607, -0.0734835535140573},
+            {108.6349284657257, 30.21176433979524, -1.507885615214487},
+            {110.8462350745984, 27.54649046344571, -0.0712515982017835},
+            {111.5817338933677, 25.40876185981773, 0.0},
+            {106.6036874636791, 25.40876185981773, 0.0},
+        });
+    };
+
+    const std::vector<RS_Vector> offsets{
+        RS_Vector(0, 0),
+        RS_Vector(5.0e5, 4.0e6),
+        RS_Vector(3.0e7, 3.0e7),
+    };
+    SECTION("hatch 6: one closed boundary") {
+        for (const RS_Vector& off : offsets) {
+            CAPTURE(off.x, off.y);
+            std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+            loops.push_back(buildHatch6());
+            if (off.x != 0.0 || off.y != 0.0) {
+                for (auto& l : loops) {
+                    l->move(off);
+                    l->forcedCalculateBorders();
+                }
+            }
+            RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+            auto hatch = makeHatch(std::move(loops), data);
+            REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+            REQUIRE(hatch->countAllLoops() == 1);
+        }
+    }
+    SECTION("hatch 7: rectangle with an inner island") {
+        for (const RS_Vector& off : offsets) {
+            CAPTURE(off.x, off.y);
+            std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+            loops.push_back(buildHatch7Rect());
+            loops.push_back(buildHatch7Inner());
+            if (off.x != 0.0 || off.y != 0.0) {
+                for (auto& l : loops) {
+                    l->move(off);
+                    l->forcedCalculateBorders();
+                }
+            }
+            RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+            auto hatch = makeHatch(std::move(loops), data);
+            REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+            REQUIRE(hatch->countAllLoops() == 2);
+        }
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Loop counts and areas are scale and rotation invariant",
+          "[lc-hatchfix][nesting]") {
+    // Replay the 24 island-nesting cases through four frames: scale 1e-4, scale 1e4,
+    // rotate 30 deg about the origin, and translate to (3e7, 3e7). Loop
+    // counts and depths must match the as-stored case; area in the three
+    // origin-based frames is identical to the original up to the arithmetic
+    // of each primitive (relative 1e-9 is well within the per-hatch
+    // tolerance of each frame). The translated frame is kept to show that
+    // the id-based attach handles the shifted M even where the floor
+    // 1e-6*D no longer dominates.
+    const CaseList cases = buildCases();
+    const auto idx = GENERATE_COPY(Catch::Generators::range<std::size_t>(
+        0, cases.size()));
+    const Case& c = cases[idx];
+
+    struct Frame {
+        const char* name;
+        double scale;
+        double rotateDeg;
+        RS_Vector offset;
+        double areaFactor;        // scaled area = baseArea * areaFactor
+        bool checkAbs;            // enforce area oracle in this frame
+    };
+    const std::vector<Frame> frames{
+        {"scale_1e-4",   1.0e-4,  0.0,  RS_Vector(0, 0),       1.0e-8,  true},
+        {"scale_1e4",    1.0e4,   0.0,  RS_Vector(0, 0),       1.0e8,   true},
+        {"rotate_30",    1.0,     30.0, RS_Vector(0, 0),       1.0,     true},
+        {"far_offset",   1.0,     0.0,  RS_Vector(3.0e7, 3.0e7), 1.0,  false},
+    };
+
+    for (const Frame& f : frames) {
+        CAPTURE(c.name, f.name);
+        auto loops = c.build();
+        transformLoops(loops, f.scale, f.rotateDeg, f.offset);
+
+        auto roots = sorterTree(std::move(loops));
+        REQUIRE(roots);
+        REQUIRE(static_cast<int>(roots->size()) == c.roots);
+
+        std::vector<int> depths;
+        for (const auto& r : *roots) collectDepths(r, 0, depths);
+        std::sort(depths.begin(), depths.end());
+        std::vector<int> expected = c.depths;
+        std::sort(expected.begin(), expected.end());
+        REQUIRE(depths == expected);
+
+        if (f.checkAbs) {
+            const double expectedArea = c.area * f.areaFactor;
+            // Allow a few ULPs of the expected area to absorb per-primitive
+            // rotation/scale arithmetic; the as-stored tolerance was 1e-6.
+            REQUIRE_THAT(totalArea(*roots),
+                         WithinRel(expectedArea, 1.0e-9));
+        }
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Welding at large D merges near-touching contours safely",
+          "[lc-hatchfix][nesting]") {
+    // Two squares in one container at D = 1e4, pinched at a single corner
+    // where the two near-touching vertices sit 0.5 * eps = 5e-6 apart (the
+    // join tolerance at D = 1e4 is 2e-5 = 1e-9 * D). The welder joins them
+    // into a figure-8 chain; the extractor's max-left turn plus split-at-
+    // repeat produces two simple loops whose total area equals the sum of
+    // the two squares.
+    const double side = 1.0e4;
+    const double gap = 5.0e-6;  // << eps = 2e-5 at D = 2*side.
+
+    auto cont = std::make_unique<RS_EntityContainer>(nullptr, true);
+    // Left square (0, 0)-(side, side), CCW.
+    cont->addEntity(new RS_Line(cont.get(), RS_Vector(0, 0),       RS_Vector(side, 0)));
+    cont->addEntity(new RS_Line(cont.get(), RS_Vector(side, 0),    RS_Vector(side, side)));
+    cont->addEntity(new RS_Line(cont.get(), RS_Vector(side, side), RS_Vector(0, side)));
+    cont->addEntity(new RS_Line(cont.get(), RS_Vector(0, side),    RS_Vector(0, 0)));
+    // Right square whose lower-left corner nearly touches the left square's
+    // upper-right corner: pinch at ~(side, side).
+    const double x0 = side + gap;
+    const double y0 = side + gap;
+    const double x1 = 2.0 * side + gap;
+    const double y1 = 2.0 * side + gap;
+    cont->addEntity(new RS_Line(cont.get(), RS_Vector(x0, y0), RS_Vector(x1, y0)));
+    cont->addEntity(new RS_Line(cont.get(), RS_Vector(x1, y0), RS_Vector(x1, y1)));
+    cont->addEntity(new RS_Line(cont.get(), RS_Vector(x1, y1), RS_Vector(x0, y1)));
+    cont->addEntity(new RS_Line(cont.get(), RS_Vector(x0, y1), RS_Vector(x0, y0)));
+
+    std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+    loops.push_back(std::move(cont));
+    RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+    auto hatch = makeHatch(std::move(loops), data);
+
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    REQUIRE(hatch->countLoops() == 2);
+    const double expected = 2.0 * side * side;
+    REQUIRE_THAT(hatch->getTotalArea(), WithinRel(expected, 1e-6));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Crossing loops fill as XOR", "[lc-hatchfix][classifier]") {
+    using lc::test::TestPainter;
+
+    // Two overlapping squares in two containers: (0,0)-(200,200) and
+    // (100,100)-(300,300). The sorter leaves both as roots because neither
+    // encloses the other, so the one-path odd-even fill paints the two
+    // squares as XOR: the overlap region (100,100)-(200,200) draws empty.
+    auto makeCrossingLoops = []() {
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(makeLoopContainer(lc::test::rectRing(0, 0, 200, 200)));
+        loops.push_back(makeLoopContainer(lc::test::rectRing(100, 100, 300, 300)));
+        return loops;
+    };
+
+    SECTION("Solid hatch draws the XOR region") {
+        auto loops = makeCrossingLoops();
+        RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+        auto hatch = makeHatch(std::move(loops), data);
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        REQUIRE(hatch->countLoops() == 2);
+
+        LC_Rect box{RS_Vector(-10, -10), RS_Vector(310, 310)};
+        auto tp = TestPainter::fitting(box, 600);
+        hatch->draw(&tp.painter);
+
+        // Overlap region (150, 150) is inside both subpaths, so the odd-even
+        // fill leaves it blank. The two non-overlap regions remain filled.
+        REQUIRE_FALSE(tp.filledAt(150.0, 150.0));
+        REQUIRE(tp.filledAt(50.0, 50.0));
+        REQUIRE(tp.filledAt(250.0, 250.0));
+    }
+
+    SECTION("TOO_DENSE pattern hatch tints the XOR region") {
+        lc::test::SourcePatterns patterns;
+        LC_HatchDensityPolicy policy;
+        policy.maxPieces = 0;
+        LC_HatchDensity::ScopedPolicy guard{policy};
+
+        auto loops = makeCrossingLoops();
+        RS_HatchData data{false, 1.0, 0.0, QStringLiteral("ANSI31")};
+        auto hatch = makeHatch(std::move(loops), data);
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE);
+
+        LC_Rect box{RS_Vector(-10, -10), RS_Vector(310, 310)};
+        auto tp = TestPainter::fitting(box, 600);
+        hatch->draw(&tp.painter);
+
+        // The density tint rides the same drawFill path, so the overlap
+        // region is untinted and the two non-overlap regions are tinted.
+        REQUIRE_FALSE(tp.filledAt(150.0, 150.0));
+        REQUIRE(tp.filledAt(50.0, 50.0));
+        REQUIRE(tp.filledAt(250.0, 250.0));
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Duplicate loops are counted and cancel",
+          "[lc-hatchfix][nesting]") {
+    using lc::test::TestPainter;
+
+    SECTION("N2: two identical squares count one duplicate and cancel") {
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(makeLoopContainer(lc::test::rectRing(0, 0, 300, 300)));
+        loops.push_back(makeLoopContainer(lc::test::rectRing(0, 0, 300, 300)));
+        RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+        auto hatch = makeHatch(std::move(loops), data);
+
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        REQUIRE(hatch->countDuplicateLoops() == 1);
+        REQUIRE_THAT(hatch->getTotalArea(), WithinAbs(0.0, 1e-9));
+
+        // The duplicate's subpath cancels the root's in the odd-even fill:
+        // the interior probe sits inside two subpaths and draws empty.
+        LC_Rect box{RS_Vector(-10, -10), RS_Vector(310, 310)};
+        auto tp = TestPainter::fitting(box, 600);
+        hatch->draw(&tp.painter);
+        REQUIRE_FALSE(tp.filledAt(150.0, 150.0));
+    }
+
+    SECTION("Reversed and start-rotated copy still counts as one duplicate") {
+        auto cont1 = makeLoopContainer(lc::test::rectRing(0, 0, 300, 300));
+
+        // Same square, reversed (CW) and starting at the opposite corner.
+        auto cont2 = std::make_unique<RS_EntityContainer>(nullptr, true);
+        cont2->addEntity(new RS_Line(cont2.get(), RS_Vector(300, 300), RS_Vector(0, 300)));
+        cont2->addEntity(new RS_Line(cont2.get(), RS_Vector(0, 300),   RS_Vector(0, 0)));
+        cont2->addEntity(new RS_Line(cont2.get(), RS_Vector(0, 0),     RS_Vector(300, 0)));
+        cont2->addEntity(new RS_Line(cont2.get(), RS_Vector(300, 0),   RS_Vector(300, 300)));
+
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(std::move(cont1));
+        loops.push_back(std::move(cont2));
+        RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+        auto hatch = makeHatch(std::move(loops), data);
+
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        REQUIRE(hatch->countDuplicateLoops() == 1);
+    }
+
+    SECTION("Equal but disjoint squares count zero duplicates") {
+        std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+        loops.push_back(makeLoopContainer(lc::test::rectRing(0, 0, 100, 100)));
+        loops.push_back(makeLoopContainer(lc::test::rectRing(200, 0, 300, 100)));
+        RS_HatchData data{true, 1.0, 0.0, QStringLiteral("SOLID")};
+        auto hatch = makeHatch(std::move(loops), data);
+
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        REQUIRE(hatch->countDuplicateLoops() == 0);
+    }
 }
 

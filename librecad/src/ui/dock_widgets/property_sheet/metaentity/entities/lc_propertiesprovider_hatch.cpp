@@ -23,6 +23,8 @@
 
 #include "lc_propertiesprovider_hatch.h"
 
+#include "lc_hatchdensity.h"
+#include "lc_hatchdensitytext.h"
 #include "lc_property_qstring_list_combobox_view.h"
 #include "rs_hatch.h"
 #include "rs_patternlist.h"
@@ -69,6 +71,15 @@ void LC_PropertiesProviderHatch::doCreateCalculatedProperties(LC_PropertyContain
         QString value = formatLinear(area);
         return value;
     }, list, container);
+    // Pattern-line status: tells the user whether the density guard tripped
+    // on this hatch, which is why the fill looks like a tint rather than
+    // the usual pattern lines.
+    addReadOnlyString<RS_Hatch>(
+        {"patternLines", tr("Pattern lines"),
+         tr("Whether the pattern lines were generated")},
+        []([[maybe_unused]] const RS_Hatch* e) -> QString {
+            return LC_HatchDensityText::patternLinesStatus(e->getDensityReport());
+        }, list, container);
 }
 
 void LC_PropertiesProviderHatch::fillSingleEntityCommands([[maybe_unused]] LC_PropertyContainer* container,

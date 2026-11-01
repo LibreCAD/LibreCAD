@@ -30,6 +30,7 @@
 #include <memory>
 #include <vector>
 
+#include "lc_hatchdensity.h"
 #include "lc_secondmoment.h"
 #include "rs_entitycontainer.h"
 
@@ -67,6 +68,30 @@ struct RS_HatchData {
 std::ostream& operator<<(std::ostream& os, const RS_HatchData& td);
 
 /**
+ * Pattern-frame struct used when realizing PAT-local definition lines into
+ * WCS/OCS lines for export. Mirrors the three members of RS_HatchData plus
+ * the pattern's native tile bounding box, so the realized line can be
+ * exported without any knowledge of the trimmed pattern children. See
+ * RS_Hatch::patternFrame().
+ */
+struct RS_HatchPatternFrame {
+    /// Lattice anchor h (WCS). Fixed at (0, 0) on 2.2.2; a stored origin
+    /// replaces this later.
+    RS_Vector origin{0.0, 0.0};
+    double scale = 1.0;
+    /// Hatch rotation angle in radians.
+    double angle = 0.0;
+    /// Native (unscaled, unrotated) tile bounding box minimum corner.
+    RS_Vector tileMin{0.0, 0.0};
+    /// Native (unscaled, unrotated) tile size: (width, height).
+    RS_Vector tileSize{0.0, 0.0};
+    /// True when the pattern was found and the tile bbox is finite and
+    /// positive; false for solid hatches, missing patterns, or an un-updated
+    /// RS_Hatch.
+    bool tileValid = false;
+};
+
+/**
  * Class for a hatch entity.
  *
  * @author Andrew Mustun
@@ -82,7 +107,8 @@ public:
         HATCH_INVALID_CONTOUR, ///< Failed loop optimization
         HATCH_PATTERN_NOT_FOUND, ///< Pattern not in library
         HATCH_TOO_SMALL,       ///< Contour/pattern too tiny
-        HATCH_AREA_TOO_BIG     ///< Excessive area ratio
+        HATCH_AREA_TOO_BIG,    ///< Excessive area ratio (legacy; no longer produced)
+        HATCH_TOO_DENSE        ///< Pattern pieces would exceed the piece budget
     };
 
     RS_Hatch() = default;
@@ -120,6 +146,14 @@ public:
      * counts only roots.
      */
     int countAllLoops() const;
+
+    /**
+     * @return The number of boundary loops the last successful validate()
+     * found to duplicate an earlier loop in the hierarchy. A duplicate loop
+     * cancels in the one-path odd-even fill, so the duplicated region draws
+     * empty. Zero before validate() has run or after a failed validate().
+     */
+    int countDuplicateLoops() const { return m_duplicateLoops; }
 
     /** @return true if solid hatch (either flag set or pattern name is "SOLID"). */
     bool isSolid() const { return m_data.solid || m_data.pattern.compare("SOLID", Qt::CaseInsensitive) == 0; }
@@ -175,6 +209,14 @@ public:
     RS_HatchError getUpdateError() const { return m_updateError; }
 
     /**
+     * @return Diagnostic density report from the last pattern update attempt.
+     * Zero-initialised at the start of update(); fields are filled by
+     * updatePatternHatch(). Readers used by the density tint, dialog,
+     * Quick Info and property sheet.
+     */
+    const LC_HatchDensityReport& getDensityReport() const { return m_densityReport; }
+
+    /**
      * Toggles visibility of boundary contours in subcontainers.
      * @param visible true to show boundaries.
      */
@@ -184,6 +226,36 @@ public:
      * @return Subcontainer for the boundary loop at index (0-based).
      */
     RS_EntityContainer* getBoundaryContainer(int loopIndex) const;
+
+    /**
+     * @return The pattern frame used to realize PAT-local definition lines
+     * into WCS lines (export, Quick Info). origin is the hatch's lattice
+     * anchor h; scale and angle come from m_data; tileMin and tileSize
+     * capture the pattern's native (unscaled, unrotated) tile bounding box
+     * set during the last successful updatePatternHatch. tileValid is false
+     * for solid hatches, when the pattern was not found, when the tile is
+     * degenerate, or when update() has not yet run.
+     */
+    RS_HatchPatternFrame patternFrame() const;
+
+    /// One boundary path handed to the exporter: a WCS entity container of
+    /// atomic edges, and the loop's depth in the extracted tree (0 = root).
+    struct ExportLoop {
+        std::unique_ptr<RS_EntityContainer> edges;
+        int depth = 0;
+    };
+
+    /**
+     * @return One ExportLoop per extracted loop in the hatch tree, in
+     * pre-order (every root is followed by its own descendants). The
+     * entities inside each container are atomic WCS clones of the loop's
+     * boundary edges, in the order LoopExtractor produced them. One narrow
+     * exception: when the hatch has exactly one source container that
+     * holds a single RS_Spline, that container is cloned verbatim so the
+     * writer keeps the SPLINE edge instead of flattening it to chord
+     * lines. Empty when the hatch was never validated.
+     */
+    std::vector<ExportLoop> exportLoops() const;
 
     void draw(RS_Painter* painter) override;
     void move(const RS_Vector& offset) override;
@@ -210,6 +282,13 @@ protected:
 private:
     void drawPatternLines(RS_Painter* painter) const;
     void drawSolidFill(RS_Painter* painter) const;
+    /// Fills the region with the resolved pen colour and the given alpha
+    /// channel; shared by drawSolidFill (alpha = 1) and drawDensityTint
+    /// (alpha derived from the density report), so paper matches screen.
+    void drawFill(RS_Painter* painter, double alpha) const;
+    /// Draws the HATCH_TOO_DENSE tint. Called by draw() when the pattern
+    /// generation ran out of budget and the pattern pieces were discarded.
+    void drawDensityTint(RS_Painter* painter) const;
     void updatePatternHatch(RS_Layer* layer, const RS_Pen& pen);
     void updateSolidHatch(RS_Layer* layer, const RS_Pen& pen) const;
     mutable double m_area = RS_MAXDOUBLE;
@@ -219,6 +298,10 @@ private:
     /// Central second-moment tensor about m_centroid, in WCS axes.
     mutable LC_SecondMoment m_centralMoment;
     mutable bool m_secondMomentValid = false;
+    /// Diagnostic report of the last pattern update attempt; read-only to
+    /// callers through getDensityReport(). update() resets it to a
+    /// default-constructed value before validate() runs.
+    LC_HatchDensityReport m_densityReport{};
     RS_HatchError m_updateError = HATCH_UNDEFINED;
     bool m_updateRunning = false;
     bool m_needOptimization = true;
@@ -228,6 +311,13 @@ private:
     RS_Vector m_pivot{0.0, 0.0};  ///< WCS centre of the combined bbox of the loop containers.
     double m_loopAngle = 0.0;     ///< isSolid() ? 0 : m_data.angle at the last successful validate().
     double m_tolerance = 0.0;     ///< Per-hatch ε cached by validate().
+    int m_duplicateLoops = 0;     ///< Number of loops that duplicate an earlier one; cached by validate().
+    /// Pattern tile bounding box captured by the last successful
+    /// updatePatternHatch, before scaling. Invalid for solid hatches or when
+    /// the pattern was not found or had a degenerate size. Read through
+    /// patternFrame().
+    RS_Vector m_tileMin{false};
+    RS_Vector m_tileSize{false};
 
     /**
      * The hatch's lattice origin in WCS. Every root uses one lattice through

@@ -288,6 +288,13 @@ void appendArcPieces(const RS_Arc& arc,
 
     const double a1 = arc.isReversed() ? arc.getAngle2() : arc.getAngle1();
     const double a2 = arc.isReversed() ? arc.getAngle1() : arc.getAngle2();
+    // The parameter walk goes from a1 to a2 at angular length sweep. For an
+    // entity with isReversed() = true, revertDirection has swapped angle1 and
+    // angle2, so getStartpoint returns the point at a2 and getEndpoint the
+    // point at a1. The caller's va/vb come from the entity's start/end, so
+    // swap them here to match the piece-boundary substitution below.
+    const RS_Vector& vALo = arc.isReversed() ? vb : va;
+    const RS_Vector& vAHi = arc.isReversed() ? va : vb;
     const double sweep = std::abs(arc.getAngleLength());
     if (sweep <= 0.0) return;
 
@@ -319,8 +326,8 @@ void appendArcPieces(const RS_Arc& arc,
         const double uHi = splits[i + 1];
         if (uHi - uLo <= 8.0 * kU * std::max(1.0, std::abs(uHi))) continue;
         const double uMid = 0.5 * (uLo + uHi);
-        const RS_Vector pLo = (i == 0) ? va : arcPoint(uLo);
-        const RS_Vector pHi = (i + 1 == splits.size() - 1) ? vb : arcPoint(uHi);
+        const RS_Vector pLo = (i == 0) ? vALo : arcPoint(uLo);
+        const RS_Vector pHi = (i + 1 == splits.size() - 1) ? vAHi : arcPoint(uHi);
         // Guard against invalid supplied vertices (closed-arc fallback).
         const RS_Vector pLoActual = isFiniteV(pLo) ? pLo : arcPoint(uLo);
         const RS_Vector pHiActual = isFiniteV(pHi) ? pHi : arcPoint(uHi);
@@ -383,6 +390,13 @@ void appendEllipsePieces(const RS_Ellipse& ell,
     const double a2 = ell.isReversed() ? ell.getAngle1() : ell.getAngle2();
     const double sweep = fullCircle ? kTwoPi : std::abs(ell.getAngleLength());
     if (sweep <= 0.0) return;
+    // The parameter walk goes from a1 (= angle at the piece-0 start) to a2.
+    // When isReversed() is true, revertDirection has swapped angle1 and
+    // angle2, so getStartpoint returns the entity's point at a2 and
+    // getEndpoint the point at a1. The caller's va/vb come from those, so
+    // swap them to line up with the piece-boundary substitution below.
+    const RS_Vector& vALo = ell.isReversed() ? vb : va;
+    const RS_Vector& vAHi = ell.isReversed() ? va : vb;
 
     // Collect split parameters at t = alpha + k*pi strictly inside sweep.
     std::vector<double> splits;
@@ -414,8 +428,8 @@ void appendEllipsePieces(const RS_Ellipse& ell,
         const double tMid = 0.5 * (tLo + tHi);
         const RS_Vector pLoRaw = ellPoint(tLo);
         const RS_Vector pHiRaw = ellPoint(tHi);
-        const RS_Vector pLo = (i == 0 && isFiniteV(va)) ? va : pLoRaw;
-        const RS_Vector pHi = (i + 1 == splits.size() - 1 && isFiniteV(vb)) ? vb : pHiRaw;
+        const RS_Vector pLo = (i == 0 && isFiniteV(vALo)) ? vALo : pLoRaw;
+        const RS_Vector pHi = (i + 1 == splits.size() - 1 && isFiniteV(vAHi)) ? vAHi : pHiRaw;
         if (pLo.y == pHi.y) continue;
         MonoPiece p;
         p.kind = MonoPiece::Kind::Ellipse;

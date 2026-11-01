@@ -96,6 +96,9 @@
 #include "rs_block.h"
 #include "rs_blocklist.h"
 #include "rs_circle.h"
+#include "lc_hatchdefinitionlines.h"
+#include "lc_hatchdensity.h"
+#include "lc_hatchdensitytext.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_dimaligned.h"
@@ -4556,6 +4559,39 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
               .arg(orphans.size())
               .arg(orphans.join(QStringLiteral(", "))));
     }
+  }
+
+  // Count pattern hatches whose density guard tripped and tint-fill them in
+  // model-space, every block and every top-level insert's direct children.
+  // One summary message per import, so the user is told that some fills are
+  // shown as tints rather than pattern lines.
+  const auto denseFromHatch = [](const RS_Entity* e) -> bool {
+    if (e == nullptr || e->rtti() != RS2::EntityHatch) return false;
+    const auto* h = static_cast<const RS_Hatch*>(e);
+    return h->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE;
+  };
+  int tooDenseCount = 0;
+  if (m_graphic != nullptr) {
+    for (const RS_Entity* en : std::as_const(*m_graphic)) {
+      if (denseFromHatch(en)) ++tooDenseCount;
+      if (en != nullptr && en->rtti() == RS2::EntityInsert) {
+        const auto* ins = static_cast<const RS_EntityContainer*>(en);
+        for (const RS_Entity* child : std::as_const(*ins)) {
+          if (denseFromHatch(child)) ++tooDenseCount;
+        }
+      }
+    }
+    for (unsigned i = 0; i < m_graphic->countBlocks(); ++i) {
+      const RS_Block* blk = m_graphic->blockAt(i);
+      if (blk == nullptr) continue;
+      for (const RS_Entity* en : std::as_const(*blk)) {
+        if (denseFromHatch(en)) ++tooDenseCount;
+      }
+    }
+  }
+  if (tooDenseCount > 0) {
+    RS_DIALOGFACTORY->commandMessage(
+        LC_HatchDensityText::importSummary(tooDenseCount));
   }
 
   RS_DEBUG->print("RS_FilterDXFRW::fileImport OK");
@@ -10281,6 +10317,20 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
       m_currentContainer, RS_HatchData(data->solid, data->scale, hatchAngle,
                                        QString::fromUtf8(data->name.c_str())));
   setEntityAttributes(hatch, data);
+  // Strip the approximate definition-line tag the writer may have added so
+  // a round-trip through LibreCAD never duplicates it: the re-export rebuilds
+  // the tag from forExport()'s own approximate flag. The strip is case-
+  // insensitive on the 1001 group name. A caller may read whether the import
+  // carried the tag through the returned bool (unused today; a future step
+  // reads it to tell "this hatch was reconstructed through our placeholder"
+  // from "an exact LibreCAD export").
+  if (hatch->hasDrwExtData()) {
+    auto extData = hatch->getDrwExtData();
+    const bool importedApproximate =
+        LC_HatchDefinitionLines::stripApproximateTag(extData);
+    if (importedApproximate)
+      hatch->setDrwExtData(std::move(extData));
+  }
   if (data->basePoint.z != 0.0 || data->extPoint.x != 0.0 ||
       data->extPoint.y != 0.0 || data->extPoint.z != 1.0) {
     std::vector<std::shared_ptr<DRW_Variant>> payload;
@@ -12894,6 +12944,26 @@ void RS_FilterDXFRW::prepareBlocks() {
         break;
       } // end switch
     } // end if !RS2::FlagUndone
+  }
+  // R12 writes every pattern hatch into a *U block of its own. When the
+  // density guard tripped the hatch has no pattern pieces, so the *U block
+  // and its INSERT end up empty. Warn the user once per export.
+  if (m_version == 1009) {
+    int r12DenseCount = 0;
+    for (RS_Entity *e :
+         lc::LC_ContainerTraverser{*m_graphic, RS2::ResolveNone}.entities()) {
+      if (e != nullptr && e->isAlive() && e->rtti() == RS2::EntityHatch) {
+        const auto *h = static_cast<const RS_Hatch *>(e);
+        if (!h->isSolid()
+            && h->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE) {
+          ++r12DenseCount;
+        }
+      }
+    }
+    if (r12DenseCount > 0) {
+      RS_DIALOGFACTORY->commandMessage(
+          LC_HatchDensityText::r12Warning(r12DenseCount));
+    }
   }
 }
 
@@ -32584,6 +32654,89 @@ std::shared_ptr<DRW_Spline> makeDrwSplineFromRSSpline(const RS_Spline *sp) {
   return drw;
 }
 
+// Convert every atomic edge of `source` into a DRW boundary-edge object and
+// append it to `loop`. Shared by every path written by the hatch exporter
+// so the per-edge layout stays in one place. The container that encloses
+// an RS_Spline is handled by caller lookup: it reaches here as the
+// (chord-flattened or clone-preserving) container `exportLoops()` built.
+void appendHatchLoopEdges(DRW_HatchLoop& loop,
+                          const RS_EntityContainer& source) {
+  std::vector<const RS_Entity*> edges;
+  for (const RS_Entity* ed :
+       lc::LC_ContainerTraverser{source, RS2::ResolveNone}.entities()) {
+    if (ed == nullptr) continue;
+    if (ed->isContainer() && ed->rtti() != RS2::EntitySpline) {
+      const auto parts = lc::LC_ContainerTraverser{
+          *static_cast<const RS_EntityContainer*>(ed),
+          RS2::ResolveAll}.entities();
+      edges.insert(edges.end(), parts.begin(), parts.end());
+    } else {
+      edges.push_back(ed);
+    }
+  }
+  for (const RS_Entity* ed : edges) {
+    if (ed->rtti() == RS2::EntityLine) {
+      const auto* ln = static_cast<const RS_Line*>(ed);
+      auto line = std::make_shared<DRW_Line>();
+      line->basePoint.x = ln->getStartpoint().x;
+      line->basePoint.y = ln->getStartpoint().y;
+      line->secPoint.x = ln->getEndpoint().x;
+      line->secPoint.y = ln->getEndpoint().y;
+      loop.objlist.push_back(line);
+    } else if (ed->rtti() == RS2::EntityArc) {
+      const auto* ar = static_cast<const RS_Arc*>(ed);
+      auto arc = std::make_shared<DRW_Arc>();
+      arc->basePoint.x = ar->getCenter().x;
+      arc->basePoint.y = ar->getCenter().y;
+      arc->radious = ar->getRadius();
+      if (!ar->isReversed()) {
+        arc->staangle = ar->getAngle1();
+        arc->endangle = ar->getAngle2();
+        arc->isccw = true;
+      } else {
+        arc->staangle = 2 * M_PI - ar->getAngle1();
+        arc->endangle = 2 * M_PI - ar->getAngle2();
+        arc->isccw = false;
+      }
+      loop.objlist.push_back(arc);
+    } else if (ed->rtti() == RS2::EntityCircle) {
+      const auto* ci = static_cast<const RS_Circle*>(ed);
+      auto arc = std::make_shared<DRW_Arc>();
+      arc->basePoint.x = ci->getCenter().x;
+      arc->basePoint.y = ci->getCenter().y;
+      arc->radious = ci->getRadius();
+      arc->staangle = 0.0;
+      arc->endangle = 2 * M_PI;
+      arc->isccw = true;
+      loop.objlist.push_back(arc);
+    } else if (ed->rtti() == RS2::EntityEllipse) {
+      const auto* el = static_cast<const RS_Ellipse*>(ed);
+      auto ell = std::make_shared<DRW_Ellipse>();
+      ell->basePoint.x = el->getCenter().x;
+      ell->basePoint.y = el->getCenter().y;
+      ell->secPoint.x = el->getMajorP().x;
+      ell->secPoint.y = el->getMajorP().y;
+      ell->ratio = el->getRatio();
+      double rot = el->getMajorP().angle();
+      double startAng =
+          el->getCenter().angleTo(el->getStartpoint()) - rot;
+      double endAng = el->getCenter().angleTo(el->getEndpoint()) - rot;
+      if (startAng < 0) startAng = M_PI * 2 + startAng;
+      if (endAng < 0) endAng = M_PI * 2 + endAng;
+      ell->staparam = startAng;
+      ell->endparam = endAng;
+      ell->isccw = !el->isReversed();
+      loop.objlist.push_back(ell);
+    } else if (ed->rtti() == RS2::EntitySplinePoints) {
+      loop.objlist.push_back(makeDrwSplineFromSplinePoints(
+          static_cast<const LC_SplinePoints*>(ed)));
+    } else if (ed->rtti() == RS2::EntitySpline) {
+      loop.objlist.push_back(makeDrwSplineFromRSSpline(
+          static_cast<const RS_Spline*>(ed)));
+    }
+  }
+}
+
 } // namespace
 
 /**
@@ -32608,22 +32761,12 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
     return;
   }
 
-  bool writeIt = true;
-  if (h->countLoops() > 0) {
-    // check if all of the loops contain entities:
-    for (RS_Entity *l :
-         lc::LC_ContainerTraverser{*h, RS2::ResolveNone}.entities()) {
-      if (l->isContainer() && !l->getFlag(RS2::FlagTemp)) {
-        if (l->count() == 0) {
-          writeIt = false;
-        }
-      }
-    }
-  } else {
-    writeIt = false;
-  }
-
-  if (!writeIt) {
+  // Build one boundary path per extracted loop, in WCS, flagged by the
+  // loop's depth in the extracted tree. Dropped hatches are those whose
+  // validate() never produced an ordered tree; exportLoops() returns
+  // empty for them.
+  auto loops = h->exportLoops();
+  if (loops.empty()) {
     RS_DEBUG->print(RS_Debug::D_WARNING,
                     "RS_FilterDXF::writeHatch: Dropping Hatch");
     return;
@@ -32644,96 +32787,42 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
   } else {
     ha.name = h->getPattern().toUtf8().data();
   }
-  ha.loopsnum = h->countLoops();
 
-  for (RS_Entity *l = h->firstEntity(RS2::ResolveNone); l;
-       l = h->nextEntity(RS2::ResolveNone)) {
-    // Write hatch loops:
-    if (l->isContainer() && !l->getFlag(RS2::FlagTemp)) {
-      auto loop = static_cast<RS_EntityContainer *>(l);
-      std::shared_ptr<DRW_HatchLoop> lData = std::make_shared<DRW_HatchLoop>(0);
-
-      // a container other than a spline, such as a polyline, is written as its edges
-      std::vector<RS_Entity *> edges;
-      for (RS_Entity *ed :
-           lc::LC_ContainerTraverser{*loop, RS2::ResolveNone}.entities()) {
-        if (ed->isContainer() && ed->rtti() != RS2::EntitySpline) {
-          const auto parts = lc::LC_ContainerTraverser{
-              *static_cast<RS_EntityContainer *>(ed), RS2::ResolveAll}.entities();
-          edges.insert(edges.end(), parts.begin(), parts.end());
-        } else {
-          edges.push_back(ed);
-        }
-      }
-      for (RS_Entity *ed : edges) {
-        // Write hatch loop edges:
-        if (ed->rtti() == RS2::EntityLine) {
-          auto *ln = static_cast<RS_Line *>(ed);
-          std::shared_ptr<DRW_Line> line = std::make_shared<DRW_Line>();
-          line->basePoint.x = ln->getStartpoint().x;
-          line->basePoint.y = ln->getStartpoint().y;
-          line->secPoint.x = ln->getEndpoint().x;
-          line->secPoint.y = ln->getEndpoint().y;
-          lData->objlist.push_back(line);
-        } else if (ed->rtti() == RS2::EntityArc) {
-          auto ar = static_cast<RS_Arc *>(ed);
-          std::shared_ptr<DRW_Arc> arc = std::make_shared<DRW_Arc>();
-          arc->basePoint.x = ar->getCenter().x;
-          arc->basePoint.y = ar->getCenter().y;
-          arc->radious = ar->getRadius();
-          if (!ar->isReversed()) {
-            arc->staangle = ar->getAngle1();
-            arc->endangle = ar->getAngle2();
-            arc->isccw = true;
-          } else {
-            arc->staangle = 2 * M_PI - ar->getAngle1();
-            arc->endangle = 2 * M_PI - ar->getAngle2();
-            arc->isccw = false;
-          }
-          lData->objlist.push_back(arc);
-        } else if (ed->rtti() == RS2::EntityCircle) {
-          auto ci = static_cast<RS_Circle *>(ed);
-          std::shared_ptr<DRW_Arc> arc = std::make_shared<DRW_Arc>();
-          arc->basePoint.x = ci->getCenter().x;
-          arc->basePoint.y = ci->getCenter().y;
-          arc->radious = ci->getRadius();
-          arc->staangle = 0.0;
-          arc->endangle = 2 * M_PI; // 2*M_PI;
-          arc->isccw = true;
-          lData->objlist.push_back(arc);
-        } else if (ed->rtti() == RS2::EntityEllipse) {
-          auto el = static_cast<RS_Ellipse *>(ed);
-          std::shared_ptr<DRW_Ellipse> ell = std::make_shared<DRW_Ellipse>();
-          ell->basePoint.x = el->getCenter().x;
-          ell->basePoint.y = el->getCenter().y;
-          ell->secPoint.x = el->getMajorP().x;
-          ell->secPoint.y = el->getMajorP().y;
-          ell->ratio = el->getRatio();
-          double rot = el->getMajorP().angle();
-          double startAng = el->getCenter().angleTo(el->getStartpoint()) - rot;
-          double endAng = el->getCenter().angleTo(el->getEndpoint()) - rot;
-          if (startAng < 0) {
-            startAng = M_PI * 2 + startAng;
-          }
-          if (endAng < 0) {
-            endAng = M_PI * 2 + endAng;
-          }
-          ell->staparam = startAng;
-          ell->endparam = endAng;
-          ell->isccw = !el->isReversed();
-          lData->objlist.push_back(ell);
-        } else if (ed->rtti() == RS2::EntitySplinePoints) {
-          lData->objlist.push_back(makeDrwSplineFromSplinePoints(
-              static_cast<LC_SplinePoints *>(ed)));
-        } else if (ed->rtti() == RS2::EntitySpline) {
-          lData->objlist.push_back(
-              makeDrwSplineFromRSSpline(static_cast<RS_Spline *>(ed)));
-        }
-      }
-      lData->update(); // change to DRW_HatchLoop
-      ha.appendLoop(lData);
-    }
+  // Realized definition lines, pattern type 2, and the approximate XDATA tag.
+  // ODA File Converter 27.1 deletes every non-solid HATCH written with 78 = 0
+  // (LibreCAD before this change), so a pattern hatch always carries at least
+  // one line; a solid hatch keeps 78 = 0 and the stale tag is dropped. The
+  // 1001 kApplication group under which the tag lives is already registered
+  // by writeAppId (emitRequired("LibreCad")).
+  if (ha.solid) {
+    LC_HatchDefinitionLines::setApproximateTag(ha.extData, false);
+    ha.hpattern = 1;
+    ha.hstyle = 0;
+    ha.doubleflag = 0;
+  } else {
+    const LC_HatchDefinitionLines::ExportLines definition =
+        LC_HatchDefinitionLines::forExport(*h);
+    ha.patternLines.clear();
+    ha.patternLines.reserve(definition.lines.size());
+    for (const auto& line : definition.lines)
+      ha.patternLines.push_back(line);
+    ha.deflines = static_cast<int>(ha.patternLines.size());
+    ha.hpattern = 2;
+    ha.hstyle = 0;
+    ha.doubleflag = 0;
+    LC_HatchDefinitionLines::setApproximateTag(ha.extData,
+                                               definition.approximate);
   }
+
+  for (const auto& loop : loops) {
+    if (!loop.edges) continue;
+    auto lData = std::make_shared<DRW_HatchLoop>(
+        LC_HatchDefinitionLines::boundaryPathFlags(loop.depth));
+    appendHatchLoopEdges(*lData, *loop.edges);
+    lData->update();
+    ha.appendLoop(lData);
+  }
+  ha.loopsnum = static_cast<int>(ha.looplist.size());
   if (m_dwgW) {
     if (!m_dwgW->writeHatch(&ha))
       m_writeFailed = true;

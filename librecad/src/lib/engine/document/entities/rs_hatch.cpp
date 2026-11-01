@@ -30,13 +30,16 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <limits>
 #include <memory>
 #include <unordered_set>
 #include <vector>
 
 #include "lc_containertraverser.h"
+#include "lc_hatchdensity.h"
 #include "lc_loopclassifier.h"
 #include "lc_looputils.h"
+#include "lc_patternlinededup.h"
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -51,11 +54,11 @@
 
 namespace {
 
-// Removes zero-length entities from the vector in place.
-void avoidZeroLength(std::vector<RS_Entity*>& container) {
+// Removes entities whose length is at or below the per-hatch tolerance.
+void avoidZeroLength(std::vector<RS_Entity*>& container, double eps) {
     container.erase(std::remove_if(container.begin(), container.end(),
-                                   [](RS_Entity* e) {
-                                       return e != nullptr && RS_Math::equal(e->getLength(), 0.);
+                                   [eps](RS_Entity* e) {
+                                       return e == nullptr || !(e->getLength() > eps);
                                    }),
                     container.end());
 }
@@ -178,6 +181,40 @@ bool RS_Hatch::validate() {
         }
         const RS_Vector rotCenter = (preMin + preMax) * 0.5;
 
+        // Pre-eps: a quick scale-relative tolerance computed from the raw
+        // bbox and endpoint extrema BEFORE rotation. Rotation is rigid, so
+        // the diagonal is identical post-rotation and M differs by at most
+        // sqrt(2); the resulting pre-eps shares the magnitude of the final
+        // tolerance and only drives avoidZeroLength (the length filter is
+        // rotation-invariant). The final tolerance is recomputed after
+        // rotation and is what the extractor and sorter see.
+        double preMaxAbs = 0.0;
+        for (RS_Entity *en : loops) {
+          lc::LC_ContainerTraverser t{
+              *static_cast<RS_EntityContainer *>(en), RS2::ResolveAll};
+          for (RS_Entity *entity : t.entities()) {
+            if (!entity || !entity->isAtomic()) continue;
+            if (isClosedAtomic(*entity)) {
+              const RS_Vector mn = entity->getMin();
+              const RS_Vector mx = entity->getMax();
+              if (mn.valid && mx.valid) {
+                preMaxAbs = std::max({preMaxAbs,
+                                        std::abs(mn.x), std::abs(mn.y),
+                                        std::abs(mx.x), std::abs(mx.y)});
+              }
+            } else {
+              const RS_Vector s = entity->getStartpoint();
+              const RS_Vector tp = entity->getEndpoint();
+              if (s.valid)
+                preMaxAbs = std::max({preMaxAbs, std::abs(s.x), std::abs(s.y)});
+              if (tp.valid)
+                preMaxAbs = std::max({preMaxAbs, std::abs(tp.x), std::abs(tp.y)});
+            }
+          }
+        }
+        const double preDiag = (preMax - preMin).magnitude();
+        const double preEps = LC_LoopUtils::hatchTolerance(preDiag, preMaxAbs);
+
         // Pass 1: per-container clone+rotate, accumulate the post-rotation
         // bbox D and the endpoint extremum M for the per-hatch tolerance.
         // Closed atomic curves (circle, full ellipse, closed spline) have
@@ -196,7 +233,7 @@ bool RS_Hatch::validate() {
               edges.push_back(entity);
             }
           }
-          avoidZeroLength(edges);
+          avoidZeroLength(edges, preEps);
           if (edges.empty())
             continue;
 
@@ -250,7 +287,7 @@ bool RS_Hatch::validate() {
         // and run them through the geometry-aware LoopSorter.
         std::vector<LC_LoopUtils::ExtractedLoop> allExtracted;
         for (auto &cont : perContainerClones) {
-          LC_LoopUtils::LoopExtractor extractor{*cont};
+          LC_LoopUtils::LoopExtractor extractor{*cont, tolerance};
           auto extracted = extractor.extractLoops();
           for (auto &el : extracted)
             allExtracted.push_back(std::move(el));
@@ -274,6 +311,12 @@ bool RS_Hatch::validate() {
         m_pivot = rotCenter;
         m_loopAngle = isSolid() ? 0.0 : m_data.angle;
         m_tolerance = tolerance;
+        m_duplicateLoops = LC_LoopUtils::countDuplicateLoops(*results);
+        if (m_duplicateLoops > 0) {
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                "RS_Hatch::validate(): %d duplicate boundary loop(s); duplicated areas draw empty",
+                m_duplicateLoops);
+        }
         m_needOptimization = false;
 
         // Collect all loops (outer + holes) into flat boundary container list
@@ -281,6 +324,7 @@ bool RS_Hatch::validate() {
     } catch (const std::exception& e) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "Hatch validation error: %s", e.what());
         m_updateError = HATCH_INVALID_CONTOUR;
+        m_duplicateLoops = 0;
         success = false;
     }
 
@@ -310,6 +354,121 @@ RS_EntityContainer* RS_Hatch::getBoundaryContainer(const int loopIndex) const {
         return m_boundaryContainers[loopIndex].get();
     }
     return nullptr;
+}
+
+RS_HatchPatternFrame RS_Hatch::patternFrame() const {
+    RS_HatchPatternFrame frame;
+    frame.origin = latticeOrigin();
+    frame.scale = m_data.scale;
+    frame.angle = m_data.angle;
+    frame.tileMin = m_tileMin;
+    frame.tileSize = m_tileSize;
+    const bool sizeFinite = m_tileSize.valid &&
+                             std::isfinite(m_tileSize.x) &&
+                             std::isfinite(m_tileSize.y) &&
+                             m_tileSize.x > 1e-12 && m_tileSize.y > 1e-12;
+    const bool minFinite = m_tileMin.valid &&
+                            std::isfinite(m_tileMin.x) &&
+                            std::isfinite(m_tileMin.y);
+    frame.tileValid = !isSolid() && sizeFinite && minFinite;
+    return frame;
+}
+
+namespace {
+
+// Clones every atomic edge of `node.getOuterLoop()` into a fresh WCS
+// container and recurses depth-first.
+void appendExportLoops(const LC_LoopUtils::LC_Loops& node,
+                       int depth,
+                       const RS_Vector& pivot,
+                       double loopAngle,
+                       std::vector<RS_Hatch::ExportLoop>& out) {
+    auto edges = std::make_unique<RS_EntityContainer>(nullptr, true);
+    auto source = node.getOuterLoop();
+    if (source) {
+        for (RS_Entity* e : *source) {
+            if (e == nullptr) continue;
+            RS_Entity* copy = e->clone();
+            copy->setParent(nullptr);
+            copy->setLayer(nullptr);
+            edges->addEntity(copy);
+        }
+    }
+    // The loops live in the frame rotated by -loopAngle about pivot (see
+    // validate()). Rotating by +loopAngle maps them back into WCS. The
+    // identity case stays bit-identical, so a solid hatch (loopAngle = 0)
+    // reaches the writer with the same coordinates as before.
+    if (loopAngle != 0.0)
+        edges->rotate(pivot, RS_Vector{loopAngle});
+    out.push_back({std::move(edges), depth});
+    for (const auto& child : node.getChildren())
+        appendExportLoops(child, depth + 1, pivot, loopAngle, out);
+}
+
+// True when the given extracted container holds exactly one RS_Spline
+// anywhere in it. validate() flattens source entities with ResolveAll, so
+// an RS_Spline reaches the sorter as its chord lines; the writer wants to
+// write the SPLINE edge back for the single-spline draw-hatch input.
+bool holdsSingleRsSpline(const RS_EntityContainer& container) {
+    bool found = false;
+    lc::LC_ContainerTraverser traverser{container, RS2::ResolveNone};
+    for (const RS_Entity* entity : traverser.entities()) {
+        if (entity == nullptr) continue;
+        if (entity->rtti() == RS2::EntitySpline) {
+            if (found) return false;
+            found = true;
+            continue;
+        }
+        // A nested container is explored by the traverser already; any
+        // non-spline atomic entity rules the single-spline case out.
+        if (entity->isAtomic())
+            return false;
+    }
+    return found;
+}
+
+std::unique_ptr<RS_EntityContainer> cloneSourceWithChildren(
+    const RS_EntityContainer& source) {
+    auto owned = std::make_unique<RS_EntityContainer>(nullptr, true);
+    for (RS_Entity* e : source) {
+        if (e == nullptr) continue;
+        RS_Entity* copy = e->clone();
+        copy->setParent(owned.get());
+        copy->setLayer(nullptr);
+        owned->addEntity(copy);
+    }
+    return owned;
+}
+
+}  // namespace
+
+std::vector<RS_Hatch::ExportLoop> RS_Hatch::exportLoops() const {
+    std::vector<ExportLoop> out;
+    if (!m_orderedLoops || m_orderedLoops->empty())
+        return out;
+    for (const auto& root : *m_orderedLoops)
+        appendExportLoops(root, 0, m_pivot, m_loopAngle, out);
+
+    // One narrow exception: validate() flattens source entities with
+    // ResolveAll, so an RS_Spline reaches the tree as its chord lines.
+    // When the hatch's own source has exactly one container and it holds
+    // one RS_Spline (any level), hand the writer the source container
+    // instead so the SPLINE edge survives the round trip.
+    if (out.size() == 1u) {
+        const RS_EntityContainer* onlySource = nullptr;
+        int containerCount = 0;
+        for (RS_Entity* e : *this) {
+            if (e != nullptr && e->isContainer() && !e->getFlag(RS2::FlagTemp)) {
+                ++containerCount;
+                onlySource = static_cast<const RS_EntityContainer*>(e);
+            }
+        }
+        if (containerCount == 1 && onlySource != nullptr &&
+            holdsSingleRsSpline(*onlySource)) {
+            out[0].edges = cloneSourceWithChildren(*onlySource);
+        }
+    }
+    return out;
 }
 
 /**
@@ -345,6 +504,7 @@ void RS_Hatch::update() {
 
     m_updateRunning = true;
     m_updateError = HATCH_OK;
+    m_densityReport = LC_HatchDensityReport{};
 
     // Delete the pattern lines of an earlier update: validate() drops them only
     // when the loops need optimizing.
@@ -364,6 +524,10 @@ void RS_Hatch::update() {
     // Reset caches
     m_area = RS_MAXDOUBLE;
     m_secondMomentValid = false;
+    // The tile bbox is written by updatePatternHatch only; reset it so a
+    // solid hatch or a missing pattern leaves patternFrame().tileValid false.
+    m_tileMin = RS_Vector(false);
+    m_tileSize = RS_Vector(false);
 
     // Validate and optimize loops (moves boundaries to subcontainers)
     if (!validate()) {
@@ -385,24 +549,26 @@ void RS_Hatch::update() {
         updatePatternHatch(layer, pen);
     }
 
-    // Compute 0th, 1st, and 2nd moments from loops. The loops live in the
-    // frame rotated by -m_loopAngle about m_pivot; map the centroid and the
-    // central tensor back to WCS once their frame-local values are known.
-    m_area = 0.0;
-    LC_FirstMoment first;    // raw first moment of the loop frame about (0, 0)
-    LC_SecondMoment second;  // raw second moment of the loop frame about (0, 0)
+    // Compute area and the central tensor from the moment integrator in one
+    // traversal about the stored pivot. The loops live in the frame rotated by
+    // -m_loopAngle about m_pivot; the integrator returns the moments in that
+    // frame relative to the pivot, and we map the centroid and the central
+    // tensor back to WCS once the frame-local values are known.
+    LC_AreaMoments total;
     for (const auto& loop : *m_orderedLoops) {
-        m_area += loop.getTotalArea();
-        first  += loop.getTotalFirstMoment();
-        second += loop.getTotalSecondMoment();
+        total += loop.getTotalMoments(m_pivot);
     }
+    m_area = total.area;
     m_centroid = RS_Vector(false);
     m_centralMoment = {};
     if (m_area >= RS_TOLERANCE) {
-        RS_Vector centroid{first.mx / m_area, first.my / m_area};
-        LC_SecondMoment central = second.getCentral(m_area, centroid.x, centroid.y);
+        // In the loop frame, moments are about m_pivot; d is the centroid
+        // offset from the pivot in that frame.
+        const RS_Vector d{total.first.mx / m_area, total.first.my / m_area};
+        LC_SecondMoment central =
+            total.second.getCentral(m_area, d.x, d.y);
+        RS_Vector centroid = m_pivot + d.rotated(m_loopAngle);
         if (m_loopAngle != 0.0) {
-            centroid.rotate(m_pivot, m_loopAngle);
             central = central.regionRotated(m_loopAngle);
         }
         m_centroid = centroid;
@@ -433,6 +599,24 @@ void RS_Hatch::updateSolidHatch([[maybe_unused]] RS_Layer* layer, [[maybe_unused
 void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updatePatternHatch");
 
+    // A NaN scale propagates through pattern->scale() without touching the
+    // existing size checks (NaN comparisons never trip 1e-6 / RS_MAXDOUBLE);
+    // treat it as a non-finite density outcome so the hatch stays empty of
+    // children but keeps its loops, area and picking.
+    if (!std::isfinite(m_data.scale)) {
+        m_densityReport.reason = LC_HatchDensityReport::Reason::NonFinite;
+        m_densityReport.finite = false;
+        m_updateError = HATCH_TOO_DENSE;
+        return;
+    }
+    // RS_EntityContainer::scale is a no-op when |factor| <= RS_TOLERANCE, so a
+    // sub-tolerance scale would silently leave the pattern at its loaded
+    // dimensions. Reject it up front as HATCH_TOO_SMALL.
+    if (std::abs(m_data.scale) <= RS_TOLERANCE) {
+        m_updateError = HATCH_TOO_SMALL;
+        return;
+    }
+
     // Request and clone pattern
     std::unique_ptr<RS_Pattern> pattern = RS_PATTERNLIST->requestPattern(m_data.pattern);
     if (!pattern) {
@@ -451,6 +635,14 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     }
     pattern->setOwner(true);
 
+    // Capture the native (unscaled, unrotated) tile bbox before applying the
+    // hatch scale. patternFrame() returns it to the exporter and to Quick
+    // Info; it is the quantity DXF/DWG writers need to size the placeholder
+    // definition line.
+    pattern->calculateBorders();
+    m_tileMin = pattern->getMin();
+    m_tileSize = pattern->getSize();
+
     pattern->scale((pattern->getMin() + pattern->getMax()) * 0.5, RS_Vector{m_data.scale, m_data.scale});
     pattern->calculateBorders();
     forcedCalculateBorders();
@@ -468,12 +660,55 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
         m_updateError = HATCH_TOO_SMALL;
         return;
     }
-    const double areaRatio = (contourSize.x * contourSize.y) / (patternSize.x * patternSize.y);
-    if (areaRatio > 1e4) {
-        LC_ERR<<"RS_Hatch::"<<__func__<<"(): contour to pattern ratio too large, "
-                                              "contour=["<<contourSize.x<<'x'<<contourSize.y
-               <<"], patternSize=["<<patternSize.x<<'x'<<patternSize.y<<']';
-        m_updateError = HATCH_AREA_TOO_BIG;
+    // Density guard: estimate, work bound, buffered piece budget. HATCH_TOO_DENSE
+    // keeps the loops, area, moments and picking intact; the trimmed pieces are
+    // buffered over all roots and only committed after every root finishes, so
+    // an abort leaves no FlagHatchChild children behind.
+    const LC_HatchDensityPolicy& dpolicy = LC_HatchDensity::policy();
+    LC_HatchDensityReport report = LC_HatchDensity::estimate(
+        *pattern, *m_orderedLoops, /*patternTurn*/ 0.0);
+    const double softCap = dpolicy.forced ? dpolicy.hardMax : dpolicy.maxPieces;
+    const double hardCap = dpolicy.hardMax;
+    double effectiveCap = std::min(softCap, hardCap);
+
+    // Insert expansion installs a shared budget that every hatch clone of
+    // the expansion draws from. Shrink our local cap by the remaining room
+    // so the first clones do not exhaust the shared pool; the "SharedBudget"
+    // trip reason flags clones the pool refused.
+    LC_HatchPieceBudget* shared = LC_HatchDensity::sharedBudget();
+    std::size_t sharedRemaining = std::numeric_limits<std::size_t>::max();
+    if (shared != nullptr) {
+        sharedRemaining = shared->limit > shared->taken
+            ? shared->limit - shared->taken
+            : 0U;
+        const double rem = static_cast<double>(sharedRemaining);
+        if (rem < effectiveCap) effectiveCap = rem;
+    }
+    report.limit = effectiveCap;
+
+    auto tripTooDense = [&](LC_HatchDensityReport::Reason why) {
+        report.reason = why;
+        m_densityReport = report;
+        m_updateError = HATCH_TOO_DENSE;
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Hatch::updatePatternHatch: HATCH_TOO_DENSE "
+                        "(estimate=%.3f, work=%.3f, limit=%.3f)",
+                        report.estimatedPieces, report.work, report.limit);
+    };
+
+    if (!report.finite || !(report.estimatedPieces <= hardCap)) {
+        tripTooDense(report.finite ? LC_HatchDensityReport::Reason::Estimate
+                                    : LC_HatchDensityReport::Reason::NonFinite);
+        return;
+    }
+    if (!dpolicy.forced && report.estimatedPieces > softCap) {
+        tripTooDense(LC_HatchDensityReport::Reason::Estimate);
+        return;
+    }
+    // The shared pool is a hard cap even in forced mode: insert expansion must
+    // never produce more hatch pieces than the budget it was called with.
+    if (shared != nullptr && report.estimatedPieces > static_cast<double>(sharedRemaining)) {
+        tripTooDense(LC_HatchDensityReport::Reason::SharedBudget);
         return;
     }
 
@@ -485,21 +720,103 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     // back to WCS by +m_loopAngle about the same m_pivot.
     RS_Vector anchor = latticeOrigin();
     anchor.rotate(m_pivot, RS_Vector{-m_loopAngle});
-    const RS_Vector rotationVector{m_loopAngle};
-    int addedCount = 0;
-    for (size_t i = 0; i < m_orderedLoops->size(); ++i) {
-        const auto& loop = (*m_orderedLoops)[i];
-        for (auto& owned : loop.trimPatternEntities(*pattern, anchor)->takeEntities()) {
-            RS_Entity* entity = owned.release();
-            entity->setPen(pen);
-            entity->setLayer(layer);
-            entity->reparent(this);
-            entity->setFlag(RS2::FlagHatchChild);
-            entity->rotate(m_pivot, rotationVector);
-            addEntity(entity);
-            ++addedCount;
+
+    // gridWork is the (grid cells) * (boundary edges) overlap-test cost of
+    // createTiles. Charge it before any tile is built so a thin diagonal
+    // strip with a small tile does not run its O(B) grid walk inside the
+    // density guard.
+    const double gridWorkTotal = LC_LoopUtils::gridWork(*m_orderedLoops, *pattern, anchor);
+    if (gridWorkTotal > 10.0 * dpolicy.workCap
+        || (!dpolicy.forced && gridWorkTotal > dpolicy.workCap)) {
+        report.work = gridWorkTotal;
+        tripTooDense(LC_HatchDensityReport::Reason::Work);
+        return;
+    }
+
+    // One tile set over the union of the roots' bounding boxes, de-duplicated
+    // by (i, k); measure per-tile pair work with an early stop.
+    const std::vector<LC_LoopUtils::LC_TileSlot> tiles =
+        LC_LoopUtils::createTiles(*m_orderedLoops, *pattern, anchor);
+    const double pairStop = 10.0 * dpolicy.workCap;
+    const double pairWorkTotal =
+        LC_LoopUtils::tileWork(*m_orderedLoops, *pattern, tiles, pairStop);
+    report.work = gridWorkTotal + pairWorkTotal;
+    if (report.work > 10.0 * dpolicy.workCap
+        || (!dpolicy.forced && report.work > dpolicy.workCap)) {
+        tripTooDense(LC_HatchDensityReport::Reason::Work);
+        return;
+    }
+
+    // Buffer every produced piece under one shared budget. A trip discards
+    // the whole buffer, keeping the hatch empty of FlagHatchChild children.
+    const std::size_t cap = static_cast<std::size_t>(effectiveCap);
+    LC_HatchPieceBudget budget{cap};
+    std::unique_ptr<RS_EntityContainer> trimmed =
+        LC_LoopUtils::trimPatternEntities(*m_orderedLoops, *pattern, tiles, budget);
+    // Charge the shared pool for every piece this clone tried, tripped or not.
+    // The next hatch clone in the same expansion sees a smaller remaining
+    // budget; its sharedBudget comparison and softCap adjustment above keep
+    // the pool bounded even when every clone would independently fit.
+    if (shared != nullptr) {
+        const std::size_t charge = budget.tripped ? budget.taken + 1 : budget.taken;
+        if (shared->limit - shared->taken >= charge) {
+            shared->taken += charge;
+        } else {
+            shared->taken = shared->limit;
+            shared->tripped = true;
         }
     }
+    if (budget.tripped) {
+        report.attempted = budget.taken + 1;  // the piece that tripped
+        trimmed.reset();
+        tripTooDense(LC_HatchDensityReport::Reason::Budget);
+        return;
+    }
+    report.attempted = budget.taken;
+
+    // Collect every produced piece from the single trimmer run while they
+    // are still in the loop frame. The LINE pieces feed one tile-relative
+    // de-dup (tolerance 1e-6 x the scaled tile size), which merges touching
+    // tile borders so no ink is drawn twice. Non-LINE pieces (arcs, circles,
+    // ellipses, ...) pass through unchanged.
+    std::vector<RS_LineData> lineData;
+    std::vector<std::unique_ptr<RS_Entity>> otherPieces;
+    if (trimmed) {
+        for (auto& owned : trimmed->takeEntities()) {
+            if (owned && owned->rtti() == RS2::EntityLine) {
+                const auto* line = static_cast<const RS_Line*>(owned.get());
+                lineData.push_back(line->getData());
+                owned.reset();
+            } else if (owned) {
+                otherPieces.push_back(std::move(owned));
+            }
+        }
+    }
+    const double tolOffset = 1e-6 * std::max(patternSize.x, patternSize.y);
+    std::vector<RS_LineData> mergedLines =
+        LC_LoopUtils::deduplicatePatternLines(std::move(lineData), tolOffset);
+
+    const RS_Vector rotationVector{m_loopAngle};
+    int addedCount = 0;
+    auto emitEntity = [&](RS_Entity* entity) {
+        entity->setPen(pen);
+        entity->setLayer(layer);
+        entity->reparent(this);
+        entity->setFlag(RS2::FlagHatchChild);
+        entity->rotate(m_pivot, rotationVector);
+        addEntity(entity);
+        ++addedCount;
+    };
+    for (const RS_LineData& ld : mergedLines) {
+        auto* line = new RS_Line(nullptr, ld);
+        line->setVisible(true);
+        emitEntity(line);
+    }
+    for (auto& owned : otherPieces) {
+        RS_Entity* entity = owned.release();
+        emitEntity(entity);
+    }
+    m_densityReport = report;
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updatePatternHatch: Added %d direct entities",
                     addedCount);
@@ -538,6 +855,9 @@ void RS_Hatch::draw(RS_Painter* painter) {
     if (isSolid()) {
         drawSolidFill(painter);
     }
+    else if (m_updateError == HATCH_TOO_DENSE) {
+        drawDensityTint(painter);
+    }
     else {
         drawPatternLines(painter);
     }
@@ -547,22 +867,76 @@ void RS_Hatch::draw(RS_Painter* painter) {
  * Helper: Draws solid fill using cached QPainterPaths.
  */
 void RS_Hatch::drawSolidFill(RS_Painter* painter) const {
-    if (m_orderedLoops->empty()){
+    drawFill(painter, 1.0);
+}
+
+/**
+ * Helper: Fills the hatch region with the resolved pen colour at the given
+ * alpha channel. One QPainterPath carries every loop in the hierarchy as a
+ * subpath and is drawn with Qt::OddEvenFill, so holes and islands fall out
+ * of the odd-even rule naturally and crossing boundaries draw as XOR. Shared
+ * by the solid fill (alpha = 1) and the HATCH_TOO_DENSE tint, so print,
+ * print preview, and image export paths produce the same ink as the screen
+ * for both outputs.
+ */
+void RS_Hatch::drawFill(RS_Painter* painter, double alpha) const {
+    if (m_boundaryContainers.empty()) {
         return;
     }
+    if (!std::isfinite(alpha) || alpha <= 0.0) {
+        return;
+    }
+    if (alpha > 1.0) alpha = 1.0;
 
     painter->save();
     QBrush fillBrush = painter->brush();
-    fillBrush.setColor(painter->getPen().getColor());
+    QColor fillColor = painter->getPen().getColor();
+    // Fold the requested alpha into the pen's existing alpha so a pre-tinted
+    // pen still contributes.
+    const int penA = fillColor.alpha();
+    const int a = static_cast<int>(std::lround(static_cast<double>(penA) * alpha));
+    fillColor.setAlpha(std::clamp(a, 0, 255));
+    fillBrush.setColor(fillColor);
     fillBrush.setStyle(Qt::SolidPattern);
     painter->setBrush(fillBrush);
 
-    for (const LC_LoopUtils::LC_Loops& loop : *m_orderedLoops) {
-        QPainterPath path = loop.getPainterPath(painter);
-        painter->drawPath(path);
+    QPainterPath path;
+    path.setFillRule(Qt::OddEvenFill);
+    for (const auto& cont : m_boundaryContainers) {
+        if (cont) {
+            path.addPath(LC_LoopUtils::buildLoopPath(painter, *cont, m_tolerance));
+        }
     }
+    painter->drawPath(path);
 
     painter->restore();
+}
+
+/**
+ * Helper: Draws the HATCH_TOO_DENSE tint. The alpha comes from
+ * LC_HatchDensity::tintAlpha, which turns the saved line/piece densities
+ * into a coverage estimate at the current zoom/stroke width.
+ */
+void RS_Hatch::drawDensityTint(RS_Painter* painter) const {
+    // Physical pixels per UCS unit (one unit mapped through the view, then
+    // through the device pixel ratio).
+    double dpr = 1.0;
+    if (painter != nullptr && painter->device() != nullptr) {
+        dpr = painter->device()->devicePixelRatioF();
+    }
+    if (!std::isfinite(dpr) || dpr <= 0.0) dpr = 1.0;
+    const double kPhys = painter != nullptr
+        ? painter->toGuiDX(1.0) * dpr
+        : dpr;
+    // Pen width in physical pixels: a non-positive stored width means a
+    // cosmetic pen (1 logical pixel).
+    double wPhys = 1.0 * dpr;
+    if (painter != nullptr) {
+        const double sw = painter->getPen().getScreenWidth();
+        if (std::isfinite(sw) && sw > 0.0) wPhys = sw * dpr;
+    }
+    const double alpha = LC_HatchDensity::tintAlpha(m_densityReport, kPhys, wPhys);
+    drawFill(painter, alpha);
 }
 
 /**
@@ -611,14 +985,13 @@ double RS_Hatch::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity
     if (m_loopAngle != 0.0) {
         query.rotate(m_pivot, -m_loopAngle);
     }
-    // Check if point is on the solid fill/hatch
-    for (const auto& loop : *m_orderedLoops) {
-        if (loop.isInside(query)) {
-            if (entity != nullptr) {
-                *entity = const_cast<RS_Hatch*>(this);
-            }
-            return 0.0;
+    // Global even-odd parity: a point is inside the hatch region iff
+    // classifyAll says so, matching one-path odd-even fill and the trimmer.
+    if (LC_LoopUtils::classifyAll(query, *m_orderedLoops) != LC_LoopUtils::PointClass::Outside) {
+        if (entity != nullptr) {
+            *entity = const_cast<RS_Hatch*>(this);
         }
+        return 0.0;
     }
     return RS_MAXDOUBLE;
 }

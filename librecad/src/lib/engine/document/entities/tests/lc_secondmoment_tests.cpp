@@ -35,11 +35,14 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
+#include "lc_hyperbola.h"
 #include "lc_momentquadrature.h"
 #include "lc_secondmoment.h"
+#include "lc_splinepoints.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
+#include "rs_entitycontainer.h"
 #include "rs_line.h"
 #include "rs_vector.h"
 
@@ -432,4 +435,157 @@ TEST_CASE("Entity moments about an origin equal the moments of the moved entity"
             }, o);
         }
     }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("LC_Hyperbola moments: both branches in world coordinates",
+          "[lc-hatchfix][moments]") {
+    // c=(3,-2), majorP 2 at 25 degrees exact, ratio 0.5, phi in [-0.5, 1.2].
+    // Oracles are the six Green's theorem integrals of (P-origin) with
+    // origin at the world origin. The right branch (reversed=false) and
+    // left branch (reversed=true) differ: the x_local sign flips through
+    // (sx*a*cosh phi, b*sinh phi), so area, mx, Ixx and Iyy carry the sign
+    // flip through the x^k and dx factors while my, Ixy follow the mix.
+    const double th = 25.0 * M_PI / 180.0;
+    auto makeHyp = [&](bool reversed) {
+        LC_HyperbolaData d(RS_Vector(3.0, -2.0),
+                           RS_Vector(2.0 * std::cos(th), 2.0 * std::sin(th)),
+                           0.5, -0.5, 1.2, reversed);
+        return LC_Hyperbola(nullptr, d);
+    };
+    auto checkAt = [](const LC_AreaMoments& m, double area, double mx,
+                      double my, double ixx, double iyy, double ixy) {
+        const double scale = 1.0 + std::fabs(area) + std::fabs(mx)
+                               + std::fabs(my) + std::fabs(ixx)
+                               + std::fabs(iyy) + std::fabs(ixy);
+        const double tol = 1e-11 * scale;
+        REQUIRE_THAT(m.area, WithinAbs(area, tol));
+        REQUIRE_THAT(m.first.mx, WithinAbs(mx, tol));
+        REQUIRE_THAT(m.first.my, WithinAbs(my, tol));
+        REQUIRE_THAT(m.second.ixx, WithinAbs(ixx, tol));
+        REQUIRE_THAT(m.second.iyy, WithinAbs(iyy, tol));
+        REQUIRE_THAT(m.second.ixy, WithinAbs(ixy, tol));
+    };
+
+    SECTION("right branch") {
+        auto hyp = makeHyp(false);
+        const auto m = hyp.momentLineIntegrals(RS_Vector(0.0, 0.0));
+        checkAt(m, 12.2404572857327, 31.069820806061, 0.357199091923305,
+                105.441014552541, -0.450956294401385, -7.79027307949069);
+    }
+    SECTION("left branch") {
+        auto hyp = makeHyp(true);
+        const auto m = hyp.momentLineIntegrals(RS_Vector(0.0, 0.0));
+        checkAt(m, 1.10749871133751, 0.659476112426364, 5.76070178509638,
+                0.485855382657346, -9.01094136644325, -1.9513908655756);
+    }
+    SECTION("huge-phi guard: no partial moments outside |phi| = 170") {
+        LC_HyperbolaData d(RS_Vector(3.0, -2.0),
+                           RS_Vector(2.0 * std::cos(th), 2.0 * std::sin(th)),
+                           0.5, 171.0, 172.0, false);
+        LC_Hyperbola hyp(nullptr, d);
+        const auto m = hyp.momentLineIntegrals(RS_Vector(0.0, 0.0));
+        REQUIRE(m.area == 0.0);
+        REQUIRE(m.first.mx == 0.0);
+        REQUIRE(m.first.my == 0.0);
+        REQUIRE(m.second.ixx == 0.0);
+        REQUIRE(m.second.iyy == 0.0);
+        REQUIRE(m.second.ixy == 0.0);
+    }
+    SECTION("ordinary huge-ish phi stays finite") {
+        LC_HyperbolaData d(RS_Vector(3.0, -2.0),
+                           RS_Vector(2.0 * std::cos(th), 2.0 * std::sin(th)),
+                           0.5, 160.0, 165.0, false);
+        LC_Hyperbola hyp(nullptr, d);
+        const auto m = hyp.momentLineIntegrals(RS_Vector(0.0, 0.0));
+        REQUIRE(std::isfinite(m.area));
+        REQUIRE(std::isfinite(m.first.mx));
+        REQUIRE(std::isfinite(m.first.my));
+        REQUIRE(std::isfinite(m.second.ixx));
+        REQUIRE(std::isfinite(m.second.iyy));
+        REQUIRE(std::isfinite(m.second.ixy));
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_EntityContainer moments about an origin survive a junction gap",
+          "[lc-hatchfix][moments]") {
+    // 10x4 rectangle rotated by 0.3 rad about centre C = (5e5, 5e6); the
+    // last edge ends 5e-9 off the first vertex (within RS_TOLERANCE15's
+    // sqrt). The container's momentLineIntegrals follows the areaLineIntegral
+    // traversal, so the gap feeds the "run" branch and the signed area +
+    // moments add up. About the bbox centre, the centroid lands within
+    // 1e-8 of C; about (0, 0), the catastrophic cancellation of A * C * C
+    // in the central tensor shifts the centroid off by more than 1.
+    const double rot = 0.3;
+    const double c = std::cos(rot);
+    const double s = std::sin(rot);
+    const RS_Vector C(5e5, 5e6);
+    const RS_Vector offs[] = {RS_Vector(-5, +2), RS_Vector(+5, +2),
+                              RS_Vector(+5, -2), RS_Vector(-5, -2)};
+    RS_Vector corners[4];
+    for (int i = 0; i < 4; ++i) {
+        corners[i] = RS_Vector(C.x + c * offs[i].x - s * offs[i].y,
+                               C.y + s * offs[i].x + c * offs[i].y);
+    }
+    // Nudge the last end point by 5e-9 along the next-edge direction so a
+    // gap exists; the traversal's RS_TOLERANCE15 is sqrt(RS_TOLERANCE), so
+    // 5e-9^2 = 2.5e-17 passes through the "same vertex" branch.
+    const RS_Vector lastEnd = corners[0]
+        + RS_Vector(5e-9 * (corners[0].x - corners[3].x),
+                    5e-9 * (corners[0].y - corners[3].y));
+    RS_EntityContainer cont(nullptr, true);
+    cont.addEntity(new RS_Line(&cont, corners[0], corners[1]));
+    cont.addEntity(new RS_Line(&cont, corners[1], corners[2]));
+    cont.addEntity(new RS_Line(&cont, corners[2], corners[3]));
+    cont.addEntity(new RS_Line(&cont, corners[3], lastEnd));
+
+    SECTION("about the bbox centre") {
+        const auto m = cont.momentLineIntegrals(C);
+        REQUIRE(m.area > 0.0);
+        // Centroid offset from C in the integration frame; a small gap
+        // leaves at most sub-ULP residuals in m.first.
+        REQUIRE_THAT(m.first.mx / m.area, WithinAbs(0.0, 1e-8));
+        REQUIRE_THAT(m.first.my / m.area, WithinAbs(0.0, 1e-8));
+    }
+    SECTION("about (0, 0): catastrophic cancellation shifts the centroid") {
+        // The reason to integrate about the pivot is that getCentral(A, cg)
+        // subtracts A * cg * cg from m.second, which here is a sum of order
+        // 1e18 (= 40 * 5e6^2 + others) — well beyond the integral's own 1e-9
+        // relative accuracy. The centroid itself is already off by more than
+        // 1 unit from C once the small-origin frame runs through
+        // momentLineIntegrals and the quotient first/area is formed.
+        const auto m = cont.momentLineIntegrals(RS_Vector(0.0, 0.0));
+        REQUIRE(m.area > 0.0);
+        const RS_Vector cg{m.first.mx / m.area, m.first.my / m.area};
+        const double shift = std::hypot(cg.x - C.x, cg.y - C.y);
+        REQUIRE(shift > 1.0);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("LC_SplinePoints moments: open control net has a first moment",
+          "[lc-hatchfix][moments]") {
+    // Control net (0,0), (3,4), (7,-1), (9,3), (12,0), open spline. Oracle
+    // integrals summed from the segment decomposition (two half-join Beziers
+    // flanking the interior join at (8, 1)): area=-15.5, mx=-83.7,
+    // my=-13.4166666666667, Ixx=-615.864285714286, Iyy=-17.2839285714286,
+    // Ixy=-66.3238095238095. Negative because the control net is open and
+    // its horizontal projection runs left to right.
+    LC_SplinePointsData sd(/*closed=*/false, /*cut=*/false);
+    sd.useControlPoints = true;
+    sd.controlPoints = {{0.0, 0.0}, {3.0, 4.0}, {7.0, -1.0},
+                        {9.0, 3.0}, {12.0, 0.0}};
+    LC_SplinePoints sp(nullptr, std::move(sd));
+    const auto m = sp.momentLineIntegrals(RS_Vector(0.0, 0.0));
+    const double scale = 1.0 + std::fabs(m.area) + std::fabs(m.first.mx)
+                           + std::fabs(m.first.my) + std::fabs(m.second.ixx)
+                           + std::fabs(m.second.iyy) + std::fabs(m.second.ixy);
+    const double tol = 1e-11 * scale;
+    REQUIRE_THAT(m.area, WithinAbs(-15.5, tol));
+    REQUIRE_THAT(m.first.mx, WithinAbs(-83.7, tol));
+    REQUIRE_THAT(m.first.my, WithinAbs(-13.4166666666667, tol));
+    REQUIRE_THAT(m.second.ixx, WithinAbs(-615.864285714286, tol));
+    REQUIRE_THAT(m.second.iyy, WithinAbs(-17.2839285714286, tol));
+    REQUIRE_THAT(m.second.ixy, WithinAbs(-66.3238095238095, tol));
 }

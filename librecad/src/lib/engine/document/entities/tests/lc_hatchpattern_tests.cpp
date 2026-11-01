@@ -31,7 +31,9 @@
 #include <cmath>
 #include <cstddef>
 #include <filesystem>
+#include <limits>
 #include <memory>
+#include <random>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -39,7 +41,9 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators.hpp>
+#include <catch2/generators/catch_generators_adapters.hpp>
 #include <catch2/generators/catch_generators_range.hpp>
+#include <catch2/matchers/catch_matchers_floating_point.hpp>
 
 #include <QDir>
 #include <QFileInfo>
@@ -49,6 +53,10 @@
 #include "lc_filtertestsupport.h"
 #include "lc_hatchtestsupport.h"
 #include "lc_looputils.h"
+#include "lc_patternlinededup.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_ellipse.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphic.h"
 #include "rs_hatch.h"
@@ -104,15 +112,15 @@ std::vector<Piece> tilePathPieces(const QString& name, double s,
     LC_LoopUtils::LoopOptimizer opt(contour);
     auto roots = opt.getResults();
     REQUIRE(roots);
+    auto tiles = LC_LoopUtils::createTiles(*roots, *pattern, RS_Vector{0.0, 0.0});
+    LC_HatchPieceBudget budget{std::numeric_limits<std::size_t>::max()};
+    auto trimmed = LC_LoopUtils::trimPatternEntities(*roots, *pattern, tiles, budget);
+    REQUIRE(trimmed);
     std::vector<Piece> out;
-    for (const LC_LoopUtils::LC_Loops& root : *roots) {
-        auto trimmed = root.trimPatternEntities(*pattern, RS_Vector{0.0, 0.0});
-        REQUIRE(trimmed);
-        for (RS_Entity* en : *trimmed) {
-            if (en && en->rtti() == RS2::EntityLine) {
-                auto* line = static_cast<RS_Line*>(en);
-                out.push_back({line->getStartpoint(), line->getEndpoint()});
-            }
+    for (RS_Entity* en : *trimmed) {
+        if (en && en->rtti() == RS2::EntityLine) {
+            auto* line = static_cast<RS_Line*>(en);
+            out.push_back({line->getStartpoint(), line->getEndpoint()});
         }
     }
     return out;
@@ -704,13 +712,12 @@ TEST_CASE("Hatch pattern lattice: tile indices are half-open as in 2.2.1",
     auto roots = opt.getResults();
     REQUIRE(roots);
     REQUIRE_FALSE(roots->empty());
-    const LC_LoopUtils::LC_Loops& root = (*roots)[0];
 
     const auto c = GENERATE(from_range(std::begin(kTileCountCases),
                                        std::end(kTileCountCases)));
     CAPTURE(c.name);
     auto scaled = scaledPattern(c.name, 1.0);
-    const auto tiles = root.createTiles(*scaled, RS_Vector{0.0, 0.0});
+    const auto tiles = LC_LoopUtils::createTiles(*roots, *scaled, RS_Vector{0.0, 0.0});
     INFO("tiles=" << tiles.size());
     REQUIRE(tiles.size() == c.tiles);
 }
@@ -1021,4 +1028,871 @@ TEST_CASE("Hatch pattern lines: islands in a U and an L wall match the clipped c
         REQUIRE(matchedFraction(fixed, carpet, 1e-7) == Catch::Approx(1.0));
         REQUIRE(matchedFraction(carpet, fixed, 1e-7) == Catch::Approx(1.0));
     }
+}
+
+// --- Interior-tile fast path. ---------------------------------------------
+// LC_Loops::createTiles now returns LC_TileSlot values whose interior flag is
+// true when the tile's expanded rect (one slack per side) does not overlap any
+// boundary edge. The trimmer's fast path emits every clone of such a slot
+// whole, without clipping; the no-intersection branch of the slow path would
+// have emitted the identical clone through keepPiece.
+
+namespace {
+
+// NOLINTBEGIN(readability-identifier-naming)
+
+// A root for the first ring of rings, built through LoopOptimizer so m_eps is
+// set from the per-hatch tolerance of the loop container.
+std::shared_ptr<LC_LoopUtils::LoopOptimizer>
+buildOptimizerFromRings(RS_EntityContainer& contour, const std::vector<Ring>& rings) {
+    for (const Ring& ring : rings) {
+        for (size_t i = 0; i < ring.size(); ++i) {
+            const RS_Vector& a = ring[i];
+            const RS_Vector& b = ring[(i + 1) % ring.size()];
+            contour.addEntity(new RS_Line(&contour, a, b));
+        }
+    }
+    contour.calculateBorders();
+    return std::make_shared<LC_LoopUtils::LoopOptimizer>(contour);
+}
+
+// A stable key for a trimmer-produced piece. Doubles use exact == comparison
+// so the fast and slow paths' bit-identical clones match element-by-element.
+struct PieceKey {
+    int rtti = 0;
+    std::array<double, 8> data{};
+    bool operator<(const PieceKey& o) const {
+        if (rtti != o.rtti) return rtti < o.rtti;
+        for (size_t i = 0; i < data.size(); ++i) {
+            if (data[i] != o.data[i]) return data[i] < o.data[i];
+        }
+        return false;
+    }
+    bool operator==(const PieceKey& o) const {
+        return rtti == o.rtti && data == o.data;
+    }
+};
+
+PieceKey pieceKey(const RS_Entity* e) {
+    PieceKey k;
+    k.rtti = static_cast<int>(e->rtti());
+    switch (e->rtti()) {
+    case RS2::EntityLine: {
+        const auto* ln = static_cast<const RS_Line*>(e);
+        k.data[0] = ln->getStartpoint().x;
+        k.data[1] = ln->getStartpoint().y;
+        k.data[2] = ln->getEndpoint().x;
+        k.data[3] = ln->getEndpoint().y;
+        break;
+    }
+    case RS2::EntityArc: {
+        const auto* ar = static_cast<const RS_Arc*>(e);
+        k.data[0] = ar->getCenter().x;
+        k.data[1] = ar->getCenter().y;
+        k.data[2] = ar->getRadius();
+        k.data[3] = ar->getAngle1();
+        k.data[4] = ar->getAngle2();
+        k.data[5] = ar->isReversed() ? 1.0 : 0.0;
+        break;
+    }
+    case RS2::EntityCircle: {
+        const auto* ci = static_cast<const RS_Circle*>(e);
+        k.data[0] = ci->getCenter().x;
+        k.data[1] = ci->getCenter().y;
+        k.data[2] = ci->getRadius();
+        break;
+    }
+    case RS2::EntityEllipse: {
+        const auto* el = static_cast<const RS_Ellipse*>(e);
+        k.data[0] = el->getCenter().x;
+        k.data[1] = el->getCenter().y;
+        k.data[2] = el->getMajorP().x;
+        k.data[3] = el->getMajorP().y;
+        k.data[4] = el->getRatio();
+        k.data[5] = el->getAngle1();
+        k.data[6] = el->getAngle2();
+        k.data[7] = el->isReversed() ? 1.0 : 0.0;
+        break;
+    }
+    default:
+        break;
+    }
+    return k;
+}
+
+std::vector<PieceKey> pieceKeys(const RS_EntityContainer& trimmed) {
+    std::vector<PieceKey> keys;
+    for (const RS_Entity* e : trimmed) {
+        if (e == nullptr) continue;
+        keys.push_back(pieceKey(e));
+    }
+    std::sort(keys.begin(), keys.end());
+    return keys;
+}
+
+// NOLINTEND(readability-identifier-naming)
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern fast path: only tiles away from the boundary are interior",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    RS_EntityContainer contour;
+    auto opt = buildOptimizerFromRings(contour, {rectRing(0, 0, 500, 300)});
+    auto roots = opt->getResults();
+    REQUIRE(roots);
+    REQUIRE_FALSE(roots->empty());
+
+    SECTION("HEX") {
+        // HEX tile 100 x 60: 5 x 5 grid for 500 x 300 but the two outer rows
+        // of y-centres fall outside the rect, leaving 20 kept slots. Interior
+        // slots are the 6 tiles whose expanded rect does not overlap the
+        // boundary (columns 1-3 x rows 1-2).
+        auto scaled = scaledPattern("HEX", 1.0);
+        auto tileSlots = LC_LoopUtils::createTiles(*roots, *scaled, RS_Vector{0.0, 0.0});
+        REQUIRE(tileSlots.size() == 20u);
+        int interior = 0;
+        for (const auto& s : tileSlots) if (s.interior) ++interior;
+        CHECK(interior == 6);
+    }
+    SECTION("BRICK") {
+        // BRICK tile 100 x 100: 5 x 3 kept. Interior: columns 1-3, row 1.
+        auto scaled = scaledPattern("BRICK", 1.0);
+        auto tileSlots = LC_LoopUtils::createTiles(*roots, *scaled, RS_Vector{0.0, 0.0});
+        REQUIRE(tileSlots.size() == 15u);
+        int interior = 0;
+        for (const auto& s : tileSlots) if (s.interior) ++interior;
+        CHECK(interior == 3);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern fast path: interior tiles draw exactly what clipping draws",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+
+    auto compareFastAndSlow = [](const std::vector<LC_LoopUtils::LC_Loops>& roots,
+                                 const RS_Pattern& scaled) {
+        auto tileSlots = LC_LoopUtils::createTiles(roots, scaled, RS_Vector{0.0, 0.0});
+        LC_HatchPieceBudget fast{std::numeric_limits<std::size_t>::max()};
+        LC_HatchPieceBudget slow{std::numeric_limits<std::size_t>::max()};
+        auto fastOut = LC_LoopUtils::trimPatternEntities(roots, scaled, tileSlots, fast, true);
+        auto slowOut = LC_LoopUtils::trimPatternEntities(roots, scaled, tileSlots, slow, false);
+        REQUIRE(fastOut);
+        REQUIRE(slowOut);
+        REQUIRE(fast.taken == slow.taken);
+        const auto fastKeys = pieceKeys(*fastOut);
+        const auto slowKeys = pieceKeys(*slowOut);
+        REQUIRE(fastKeys.size() == slowKeys.size());
+        for (size_t i = 0; i < fastKeys.size(); ++i) {
+            CHECK(fastKeys[i] == slowKeys[i]);
+        }
+    };
+
+    SECTION("500 x 300 rect, BRICK") {
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour, {rectRing(0, 0, 500, 300)});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        auto scaled = scaledPattern("BRICK", 1.0);
+        compareFastAndSlow(*roots, *scaled);
+    }
+    SECTION("500 x 300 rect, HEX") {
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour, {rectRing(0, 0, 500, 300)});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        auto scaled = scaledPattern("HEX", 1.0);
+        compareFastAndSlow(*roots, *scaled);
+    }
+    SECTION("500 x 300 rect, ANSI31") {
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour, {rectRing(0, 0, 500, 300)});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        auto scaled = scaledPattern("ANSI31", 1.0);
+        compareFastAndSlow(*roots, *scaled);
+    }
+    SECTION("500 x 300 rect, PAISLEY") {
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour, {rectRing(0, 0, 500, 300)});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        auto scaled = scaledPattern("PAISLEY", 1.0);
+        compareFastAndSlow(*roots, *scaled);
+    }
+    SECTION("Rect with a square island, BRICK") {
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour,
+            {rectRing(0, 0, 400, 400), rectRing(100, 100, 300, 300)});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        REQUIRE_FALSE(roots->empty());
+        auto scaled = scaledPattern("BRICK", 1.0);
+        compareFastAndSlow(*roots, *scaled);
+    }
+    SECTION("Full circle, HEX") {
+        auto contour = std::make_unique<RS_EntityContainer>(nullptr, true);
+        contour->addEntity(new RS_Circle(contour.get(),
+            RS_CircleData(RS_Vector(250.0, 150.0), 150.0)));
+        contour->calculateBorders();
+        LC_LoopUtils::LoopOptimizer opt(*contour);
+        auto roots = opt.getResults();
+        REQUIRE(roots);
+        REQUIRE_FALSE(roots->empty());
+        auto scaled = scaledPattern("HEX", 1.0);
+        compareFastAndSlow(*roots, *scaled);
+    }
+    SECTION("Full ellipse rotated 20 deg, ANSI31") {
+        auto contour = std::make_unique<RS_EntityContainer>(nullptr, true);
+        RS_Vector major(240.0, 0.0);
+        major.rotate(20.0 * M_PI / 180.0);
+        contour->addEntity(new RS_Ellipse(contour.get(),
+            RS_EllipseData{RS_Vector(250.0, 150.0), major, 140.0 / 240.0,
+                           0.0, 0.0, false}));
+        contour->calculateBorders();
+        LC_LoopUtils::LoopOptimizer opt(*contour);
+        auto roots = opt.getResults();
+        REQUIRE(roots);
+        REQUIRE_FALSE(roots->empty());
+        auto scaled = scaledPattern("ANSI31", 1.0);
+        compareFastAndSlow(*roots, *scaled);
+    }
+    SECTION("BRICK, slack-sensitive top-edge rect") {
+        // Top edge sits a fraction of epsOn above the BRICK line y = 300.00003
+        // (BRICK tile height is 100.00001 in the loaded pattern). The slack
+        // keeps every top-row tile non-interior so keepPiece can decide
+        // whether the top-line piece draws.
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour,
+            {rectRing(0.0, 0.0, 500.0, 300.00003 + 1e-7)});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        auto scaled = scaledPattern("BRICK", 1.0);
+        compareFastAndSlow(*roots, *scaled);
+    }
+    SECTION("U-in-U, BRICK") {
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour,
+            {hatchfixOuterU(), hatchfixInnerU()});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        auto scaled = scaledPattern("BRICK", 1.0);
+        compareFastAndSlow(*roots, *scaled);
+    }
+    SECTION("L wall, BRICK") {
+        RS_EntityContainer contour;
+        auto opt = buildOptimizerFromRings(contour,
+            {hatchfixLOuter(), hatchfixLInner()});
+        auto roots = opt->getResults();
+        REQUIRE(roots);
+        auto scaled = scaledPattern("BRICK", 1.0);
+        compareFastAndSlow(*roots, *scaled);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Crossing loops trim as XOR in one pass",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    // Two overlapping squares: (0,0)-(200,200) and (100,100)-(300,300).
+    // Their XOR is the two L-hexagons:
+    //   L1: (0,0),(200,0),(200,100),(100,100),(100,200),(0,200)
+    //   L2: (200,100),(300,100),(300,300),(100,300),(100,200),(200,200)
+    // The single-pass global-parity trimmer must emit the same lines as a
+    // pattern hatch over the two L-hexagons.
+    const std::vector<Ring> crossing = {
+        rectRing(0, 0, 200, 200),
+        rectRing(100, 100, 300, 300),
+    };
+    const Ring l1 = {RS_Vector(0, 0),   RS_Vector(200, 0),
+                     RS_Vector(200, 100), RS_Vector(100, 100),
+                     RS_Vector(100, 200), RS_Vector(0, 200)};
+    const Ring l2 = {RS_Vector(200, 100), RS_Vector(300, 100),
+                     RS_Vector(300, 300), RS_Vector(100, 300),
+                     RS_Vector(100, 200), RS_Vector(200, 200)};
+
+    const auto crossPieces = tilePathPieces("ANSI31", 1.0, crossing);
+    const auto xorPieces = tilePathPieces("ANSI31", 1.0, {l1, l2});
+
+    REQUIRE_FALSE(crossPieces.empty());
+    REQUIRE_FALSE(xorPieces.empty());
+
+    // No piece midpoint lies inside (100,200)^2 - that is the overlap region
+    // of the two input squares which must be excluded by XOR.
+    for (const Piece& p : crossPieces) {
+        const RS_Vector mid = (p.a + p.b) * 0.5;
+        INFO("piece mid (" << mid.x << ", " << mid.y << ")");
+        REQUIRE_FALSE((mid.x > 100.0 && mid.x < 200.0
+                       && mid.y > 100.0 && mid.y < 200.0));
+    }
+
+    // The single-pass trimmer and the explicit XOR pair produce the same
+    // amount of ink.
+    REQUIRE(crossPieces.size() == xorPieces.size());
+    REQUIRE_THAT(inkOf(crossPieces),
+                 Catch::Matchers::WithinRel(inkOf(xorPieces), 1e-9));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Overlapping-bbox roots draw no duplicates",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    // Two roots whose bounding boxes overlap but whose regions do not: a
+    // U-shape with a notch filler and an L room next to a notch room. The
+    // single-pass trimmer must give the same ink as the sum of each root
+    // built alone.
+    struct TwoRoot {
+        const char* name;
+        Ring a;
+        Ring b;
+    };
+    const TwoRoot cases[] = {
+        {"T3_notch_filler_outside_U",
+         // P-shaped U with its notch filled by a rectangle outside the U.
+         Ring{RS_Vector(0, 0),      RS_Vector(300, 0),   RS_Vector(300, 300),
+              RS_Vector(200, 300),  RS_Vector(200, 100), RS_Vector(100, 100),
+              RS_Vector(100, 300),  RS_Vector(0, 300)},
+         Ring{RS_Vector(100, 100), RS_Vector(200, 100),
+              RS_Vector(200, 300), RS_Vector(100, 300)}},
+        {"T5_L_room_and_notch_room",
+         Ring{RS_Vector(0, 0),     RS_Vector(200, 0),
+              RS_Vector(200, 50),  RS_Vector(100, 50),
+              RS_Vector(100, 150), RS_Vector(0, 150)},
+         Ring{RS_Vector(100, 50),  RS_Vector(200, 50),
+              RS_Vector(200, 150), RS_Vector(100, 150)}},
+    };
+    const auto c = GENERATE_COPY(from_range(std::begin(cases), std::end(cases)));
+    CAPTURE(c.name);
+
+    const auto combined = tilePathPieces("ANSI31", 1.0, {c.a, c.b});
+    const auto onlyA = tilePathPieces("ANSI31", 1.0, {c.a});
+    const auto onlyB = tilePathPieces("ANSI31", 1.0, {c.b});
+
+    REQUIRE_FALSE(combined.empty());
+    REQUIRE_FALSE(onlyA.empty());
+    REQUIRE_FALSE(onlyB.empty());
+
+    const double combInk = inkOf(combined);
+    const double aloneInk = inkOf(onlyA) + inkOf(onlyB);
+    REQUIRE_THAT(combInk, Catch::Matchers::WithinRel(aloneInk, 1e-9));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Picking uses global parity", "[lc-hatchfix][pick]") {
+    using lc::test::makeHatch;
+    // Same N3 fixture as the solid-fill XOR case: two overlapping squares.
+    SECTION("Axis-aligned") {
+        auto h = makeHatch({rectRing(0, 0, 200, 200), rectRing(100, 100, 300, 300)},
+                           RS_HatchData{true, 1.0, 0.0, QStringLiteral("SOLID")});
+        REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_OK);
+        RS_Entity* hit = nullptr;
+        // Overlap region (100,200)^2 is outside the XOR fill: distance is
+        // RS_MAXDOUBLE.
+        CHECK(h->getDistanceToPoint(RS_Vector(150.0, 150.0), &hit) == RS_MAXDOUBLE);
+        CHECK(h->getDistanceToPoint(RS_Vector(50.0, 50.0), &hit) == 0.0);
+        CHECK(h->getDistanceToPoint(RS_Vector(250.0, 250.0), &hit) == 0.0);
+    }
+    SECTION("Rotated 30 degrees as a pattern hatch") {
+        lc::test::SourcePatterns patterns;
+        auto h = makeHatch({rectRing(0, 0, 200, 200), rectRing(100, 100, 300, 300)},
+                           RS_HatchData{false, 1.0, 30.0 * M_PI / 180.0,
+                                        QStringLiteral("ANSI31")});
+        REQUIRE(h);
+        REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_OK);
+        // Pick the overlap centre in WCS: still Outside under the rotated
+        // frame mapping. The two non-overlap points remain Inside.
+        RS_Entity* hit = nullptr;
+        CHECK(h->getDistanceToPoint(RS_Vector(150.0, 150.0), &hit) == RS_MAXDOUBLE);
+        CHECK(h->getDistanceToPoint(RS_Vector(50.0, 50.0), &hit) == 0.0);
+        CHECK(h->getDistanceToPoint(RS_Vector(250.0, 250.0), &hit) == 0.0);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Tiles come only from the roots' own lattice ranges",
+          "[lc-hatchfix][pattern]") {
+    // Two disjoint 10x10 squares, one at the origin and one at (1e5, 0),
+    // against an in-code 1x1 pattern. The lattice is shared, but each root
+    // only pulls tiles within its own bbox. Union of the ranges is at most
+    // 2 * 11 * 11 slots (eleven cells per axis, so a slack of one keeps the
+    // rough upper bound).
+    auto pat = std::make_unique<RS_Pattern>(QStringLiteral("ONEBYONE"));
+    pat->addEntity(new RS_Line(pat.get(), RS_Vector(0, 0), RS_Vector(1, 0)));
+    pat->addEntity(new RS_Line(pat.get(), RS_Vector(0, 0), RS_Vector(0, 1)));
+    pat->calculateBorders();
+
+    RS_EntityContainer contour;
+    for (const Ring& ring : {rectRing(0, 0, 10, 10), rectRing(100000, 0, 100010, 10)}) {
+        for (size_t i = 0; i < ring.size(); ++i) {
+            const RS_Vector& a = ring[i];
+            const RS_Vector& b = ring[(i + 1) % ring.size()];
+            contour.addEntity(new RS_Line(&contour, a, b));
+        }
+    }
+    contour.calculateBorders();
+    LC_LoopUtils::LoopOptimizer opt(contour);
+    auto roots = opt.getResults();
+    REQUIRE(roots);
+    REQUIRE(roots->size() == 2u);
+
+    const auto tiles = LC_LoopUtils::createTiles(*roots, *pat, RS_Vector{0.0, 0.0});
+    REQUIRE(tiles.size() <= 2u * 11u * 11u);
+    // Each square's tile count is roughly 10 x 10 so the total should be
+    // well below the loose upper bound; the key property is that the tiles
+    // only come from the two squares' own index ranges, not the long span
+    // between them.
+    REQUIRE(tiles.size() <= 300u);
+}
+
+// --- Tile-relative de-dup of LINE pieces. --------------------------------
+// LC_LoopUtils::deduplicatePatternLines merges tile-border overlaps so that
+// no ink is drawn twice. Collinear pieces whose offsets differ by at most
+// tolOffset glue; adjacent dashes whose t-gap is <= tolOffset glue; and
+// the output never depends on input order. tolOffset = 1e-6 x the scaled
+// tile size, so scale changes the result accordingly.
+
+namespace {
+
+// NOLINTBEGIN(readability-identifier-naming)
+
+struct AxisLineKey {
+    bool vertical = false;
+    double offset = 0.0;    // x for vertical, y for horizontal
+    double start = 0.0;     // smaller t
+    double end = 0.0;       // larger t
+};
+
+// Return a sorted sequence of maximal runs of the axis-aligned pieces of
+// `before`, taking the union along each axis-aligned line. Only axis-aligned
+// pieces are considered: SQUARE has horizontal and vertical ink only.
+std::vector<AxisLineKey> unionRunsOfAxisAligned(const std::vector<Piece>& before,
+                                                double tol) {
+    std::unordered_map<long long, std::vector<std::pair<double, double>>> horizontals;
+    std::unordered_map<long long, std::vector<std::pair<double, double>>> verticals;
+    auto bucketKey = [tol](double v) -> long long {
+        return static_cast<long long>(std::llround(v / tol));
+    };
+    for (const Piece& p : before) {
+        const double dx = p.b.x - p.a.x;
+        const double dy = p.b.y - p.a.y;
+        if (std::abs(dy) < tol && std::abs(dx) > tol) {
+            const long long k = bucketKey(0.5 * (p.a.y + p.b.y));
+            horizontals[k].push_back({std::min(p.a.x, p.b.x), std::max(p.a.x, p.b.x)});
+        } else if (std::abs(dx) < tol && std::abs(dy) > tol) {
+            const long long k = bucketKey(0.5 * (p.a.x + p.b.x));
+            verticals[k].push_back({std::min(p.a.y, p.b.y), std::max(p.a.y, p.b.y)});
+        }
+    }
+    std::vector<AxisLineKey> runs;
+    auto flush = [tol, &runs](const auto& bucketMap, bool vertical) {
+        for (const auto& kv : bucketMap) {
+            auto ranges = kv.second;
+            std::sort(ranges.begin(), ranges.end());
+            double curA = ranges.front().first;
+            double curB = ranges.front().second;
+            const double offset = static_cast<double>(kv.first) * tol;
+            for (std::size_t i = 1; i < ranges.size(); ++i) {
+                if (ranges[i].first <= curB + tol) {
+                    curB = std::max(curB, ranges[i].second);
+                } else {
+                    runs.push_back({vertical, offset, curA, curB});
+                    curA = ranges[i].first;
+                    curB = ranges[i].second;
+                }
+            }
+            runs.push_back({vertical, offset, curA, curB});
+        }
+    };
+    flush(horizontals, false);
+    flush(verticals, true);
+    std::sort(runs.begin(), runs.end(),
+              [](const AxisLineKey& a, const AxisLineKey& b) {
+                  if (a.vertical != b.vertical) return !a.vertical && b.vertical;
+                  if (a.offset != b.offset) return a.offset < b.offset;
+                  return a.start < b.start;
+              });
+    return runs;
+}
+
+// Simple segment representation for sort/eq comparisons.
+struct SortedLine {
+    double x1;
+    double y1;
+    double x2;
+    double y2;
+    SortedLine(const RS_LineData& d) {
+        RS_Vector a = d.startpoint;
+        RS_Vector b = d.endpoint;
+        if (b.x < a.x || (b.x == a.x && b.y < a.y)) std::swap(a, b);
+        x1 = a.x; y1 = a.y;
+        x2 = b.x; y2 = b.y;
+    }
+    bool operator<(const SortedLine& o) const {
+        if (x1 != o.x1) return x1 < o.x1;
+        if (y1 != o.y1) return y1 < o.y1;
+        if (x2 != o.x2) return x2 < o.x2;
+        return y2 < o.y2;
+    }
+    bool operator==(const SortedLine& o) const {
+        return x1 == o.x1 && y1 == o.y1 && x2 == o.x2 && y2 == o.y2;
+    }
+};
+
+std::vector<SortedLine> sortedLines(const std::vector<RS_LineData>& v) {
+    std::vector<SortedLine> out;
+    out.reserve(v.size());
+    for (const RS_LineData& d : v) out.emplace_back(d);
+    std::sort(out.begin(), out.end());
+    return out;
+}
+
+std::vector<RS_LineData> toLineData(const std::vector<Piece>& pieces) {
+    std::vector<RS_LineData> out;
+    out.reserve(pieces.size());
+    for (const Piece& p : pieces) out.push_back(RS_LineData(p.a, p.b));
+    return out;
+}
+
+std::vector<RS_LineData> hatchLineData(const RS_Hatch& h) {
+    std::vector<RS_LineData> out;
+    for (const auto& lp : lc::test::patternLines(h)) {
+        out.push_back(RS_LineData(lp.a, lp.b));
+    }
+    return out;
+}
+
+// Equality of two line-data sets within an endpoint tolerance (used by case 21:
+// the hatch's own output can move by one ulp through the rotate-by-zero path).
+// Sorts by a quantised key (rounded to tolQuant), which keeps near-equal pieces
+// in the same relative order across two independent computations, then checks
+// each pair's endpoint distance.
+bool approxLineSetsEqual(std::vector<RS_LineData> a, std::vector<RS_LineData> b, double tol) {
+    if (a.size() != b.size()) return false;
+    auto canon = [](RS_LineData& d) {
+        if (d.endpoint.x < d.startpoint.x ||
+            (d.endpoint.x == d.startpoint.x && d.endpoint.y < d.startpoint.y)) {
+            std::swap(d.startpoint, d.endpoint);
+        }
+    };
+    for (auto& d : a) canon(d);
+    for (auto& d : b) canon(d);
+    const double tolQuant = std::max(tol * 100.0, 1e-7);
+    auto quant = [tolQuant](double v) -> long long {
+        return static_cast<long long>(std::llround(v / tolQuant));
+    };
+    auto key = [&](const RS_LineData& x) {
+        return std::array<long long, 4>{
+            quant(x.startpoint.x), quant(x.startpoint.y),
+            quant(x.endpoint.x), quant(x.endpoint.y)};
+    };
+    auto cmp = [&](const RS_LineData& x, const RS_LineData& y) {
+        return key(x) < key(y);
+    };
+    std::sort(a.begin(), a.end(), cmp);
+    std::sort(b.begin(), b.end(), cmp);
+    for (std::size_t i = 0; i < a.size(); ++i) {
+        if (a[i].startpoint.distanceTo(b[i].startpoint) > tol) return false;
+        if (a[i].endpoint.distanceTo(b[i].endpoint) > tol) return false;
+    }
+    return true;
+}
+
+// NOLINTEND(readability-identifier-naming)
+
+}  // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern de-dup: SQUARE draws every line once",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    auto hatch = lc::test::makePatternHatch(
+        "SQUARE", 1.0, 0.0, {rectRing(0, 0, 500, 300)});
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    const auto hatchPieces = lc::test::patternLines(*hatch);
+    REQUIRE_FALSE(hatchPieces.empty());
+
+    const auto before = tilePathPieces("SQUARE", 1.0, {rectRing(0, 0, 500, 300)});
+    REQUIRE_FALSE(before.empty());
+
+    const double tol = 5e-5;
+
+    // Σ child length equals the union length of before (axis-aligned union
+    // computed in the test) to 1e-9 relative.
+    const auto runs = unionRunsOfAxisAligned(before, tol);
+    double unionLen = 0.0;
+    for (const auto& r : runs) unionLen += (r.end - r.start);
+    const double drawnInk = inkOf(hatchPieces);
+    INFO("drawnInk=" << drawnInk << " unionLen=" << unionLen);
+    REQUIRE(std::abs(drawnInk - unionLen) <= 1e-9 * unionLen);
+
+    // No two collinear children overlap by more than tol.
+    for (std::size_t i = 0; i < hatchPieces.size(); ++i) {
+        const Piece& a = hatchPieces[i];
+        const double adx = a.b.x - a.a.x;
+        const double ady = a.b.y - a.a.y;
+        for (std::size_t j = i + 1; j < hatchPieces.size(); ++j) {
+            const Piece& b = hatchPieces[j];
+            const double bdx = b.b.x - b.a.x;
+            const double bdy = b.b.y - b.a.y;
+            const bool bothH = std::abs(ady) < tol && std::abs(bdy) < tol;
+            const bool bothV = std::abs(adx) < tol && std::abs(bdx) < tol;
+            if (!bothH && !bothV) continue;
+            if (bothH && std::abs(a.a.y - b.a.y) > tol) continue;
+            if (bothV && std::abs(a.a.x - b.a.x) > tol) continue;
+            double aLo, aHi, bLo, bHi;
+            if (bothH) {
+                aLo = std::min(a.a.x, a.b.x);
+                aHi = std::max(a.a.x, a.b.x);
+                bLo = std::min(b.a.x, b.b.x);
+                bHi = std::max(b.a.x, b.b.x);
+            } else {
+                aLo = std::min(a.a.y, a.b.y);
+                aHi = std::max(a.a.y, a.b.y);
+                bLo = std::min(b.a.y, b.b.y);
+                bHi = std::max(b.a.y, b.b.y);
+            }
+            const double overlap = std::min(aHi, bHi) - std::max(aLo, bLo);
+            INFO("overlap=" << overlap);
+            REQUIRE(overlap <= tol);
+        }
+    }
+
+    // The child count equals the number of maximal runs in that union.
+    CHECK(hatchPieces.size() == runs.size());
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern de-dup: ANSI31 keeps its ink and glues tile-border pieces",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    const auto before = tilePathPieces("ANSI31", 1.0, {rectRing(0, 0, 500, 300)});
+    REQUIRE_FALSE(before.empty());
+
+    auto scaled = scaledPattern("ANSI31", 1.0);
+    const RS_Vector pSize = scaled->getSize();
+    const double tolOffset = 1e-6 * std::max(pSize.x, pSize.y);
+
+    const auto after = LC_LoopUtils::deduplicatePatternLines(
+        toLineData(before), tolOffset);
+    REQUIRE_FALSE(after.empty());
+
+    double inkBefore = 0.0;
+    for (const Piece& p : before) inkBefore += p.a.distanceTo(p.b);
+    double inkAfter = 0.0;
+    for (const RS_LineData& d : after) inkAfter += d.startpoint.distanceTo(d.endpoint);
+    CAPTURE(inkBefore);
+    CAPTURE(inkAfter);
+    CAPTURE(before.size());
+    CAPTURE(after.size());
+    REQUIRE(std::abs(inkAfter - inkBefore) <= 1e-6 * inkBefore);
+    REQUIRE(after.size() < before.size());
+
+    // No collinear overlap greater than tol in the output: group by (direction,
+    // perpendicular offset) and check that intervals are disjoint.
+    struct Bucket { double offset; std::vector<std::pair<double, double>> intervals; };
+    std::unordered_map<long long, std::vector<Bucket>> byDir;
+    const double tolDir = 1e-6;
+    for (const RS_LineData& d : after) {
+        const double dx = d.endpoint.x - d.startpoint.x;
+        const double dy = d.endpoint.y - d.startpoint.y;
+        const double L = std::hypot(dx, dy);
+        if (L < tolOffset) continue;
+        double theta = std::atan2(dy, dx);
+        if (theta < 0.0) theta += M_PI;
+        if (theta >= M_PI) theta -= M_PI;
+        const long long dirKey = static_cast<long long>(std::llround(theta / tolDir));
+        const double ux = std::cos(theta);
+        const double uy = std::sin(theta);
+        const double nx = -uy, ny = ux;
+        const double c = 0.5 * ((d.startpoint.x + d.endpoint.x) * nx +
+                                (d.startpoint.y + d.endpoint.y) * ny);
+        double t0 = d.startpoint.x * ux + d.startpoint.y * uy;
+        double t1 = d.endpoint.x * ux + d.endpoint.y * uy;
+        if (t1 < t0) std::swap(t0, t1);
+        auto& buckets = byDir[dirKey];
+        Bucket* found = nullptr;
+        for (Bucket& bk : buckets) {
+            if (std::abs(bk.offset - c) <= tolOffset) { found = &bk; break; }
+        }
+        if (!found) {
+            buckets.push_back({c, {}});
+            found = &buckets.back();
+        }
+        found->intervals.push_back({t0, t1});
+    }
+    for (auto& kv : byDir) {
+        for (Bucket& bk : kv.second) {
+            std::sort(bk.intervals.begin(), bk.intervals.end());
+            for (std::size_t i = 1; i < bk.intervals.size(); ++i) {
+                const double overlap = bk.intervals[i - 1].second - bk.intervals[i].first;
+                INFO("overlap=" << overlap);
+                REQUIRE(overlap <= tolOffset);
+            }
+        }
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern de-dup: the result does not depend on input order",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+
+    auto checkInvariant = [](const QString& name) {
+        const auto before = tilePathPieces(name, 1.0, {rectRing(0, 0, 500, 300)});
+        REQUIRE_FALSE(before.empty());
+
+        auto scaled = scaledPattern(name, 1.0);
+        const RS_Vector pSize = scaled->getSize();
+        const double tolOffset = 1e-6 * std::max(pSize.x, pSize.y);
+
+        const auto baseline = LC_LoopUtils::deduplicatePatternLines(
+            toLineData(before), tolOffset);
+        REQUIRE_FALSE(baseline.empty());
+
+        auto shuffled = toLineData(before);
+        std::mt19937 rng(20261025u);
+        std::shuffle(shuffled.begin(), shuffled.end(), rng);
+        const auto out = LC_LoopUtils::deduplicatePatternLines(
+            std::move(shuffled), tolOffset);
+
+        const auto a = sortedLines(baseline);
+        const auto b = sortedLines(out);
+        REQUIRE(a.size() == b.size());
+        for (std::size_t i = 0; i < a.size(); ++i) {
+            REQUIRE(a[i] == b[i]);
+        }
+    };
+
+    SECTION("SQUARE") { checkInvariant("SQUARE"); }
+    SECTION("ANSI31") { checkInvariant("ANSI31"); }
+    SECTION("HEX") { checkInvariant("HEX"); }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern de-dup: the tolerance follows the tile, not the drawing",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+
+    auto scaleBy = [](const std::vector<Piece>& pieces, double s) {
+        std::vector<RS_LineData> out;
+        out.reserve(pieces.size());
+        for (const Piece& p : pieces) {
+            out.push_back(RS_LineData(RS_Vector(p.a.x * s, p.a.y * s),
+                                      RS_Vector(p.b.x * s, p.b.y * s)));
+        }
+        return out;
+    };
+
+    SECTION("SAND at scale 5e-4 keeps every piece") {
+        const auto before = tilePathPieces("SAND", 1.0, {rectRing(0, 0, 500, 300)});
+        REQUIRE_FALSE(before.empty());
+        auto scaled = scaledPattern("SAND", 5e-4);
+        const RS_Vector pSize = scaled->getSize();
+        const double tolOffset = 1e-6 * std::max(pSize.x, pSize.y);
+        auto scaledInput = scaleBy(before, 5e-4);
+        double inkIn = 0.0;
+        for (const RS_LineData& d : scaledInput) inkIn += d.startpoint.distanceTo(d.endpoint);
+
+        const auto after = LC_LoopUtils::deduplicatePatternLines(
+            scaledInput, tolOffset);
+        double inkOut = 0.0;
+        for (const RS_LineData& d : after) inkOut += d.startpoint.distanceTo(d.endpoint);
+        CAPTURE(before.size());
+        CAPTURE(after.size());
+        CAPTURE(inkIn);
+        CAPTURE(inkOut);
+        REQUIRE(after.size() == before.size());
+        REQUIRE(std::abs(inkOut / inkIn - 1.0) <= 5e-5);
+
+        // Sensitivity: at the drawing-scale absolute tolerance 1e-4 (the
+        // refuted alternative), every piece is shorter than the tolerance. The
+        // plan's own-adaptation (keep the original short piece, never emit a
+        // zero-length RS_Line) prevents the prototype's dot-collapse: ink and
+        // piece count stay within a few percent of the input. One tolerance
+        // coarser than the whole scaled tile (~0.05) collapses user-visible
+        // geometry; 1e-4 here does not.
+        const auto afterBad = LC_LoopUtils::deduplicatePatternLines(
+            scaledInput, 1e-4);
+        double inkBad = 0.0;
+        for (const RS_LineData& d : afterBad) inkBad += d.startpoint.distanceTo(d.endpoint);
+        CAPTURE(inkBad);
+        REQUIRE(afterBad.size() >= 0.95 * before.size());
+        REQUIRE(inkBad >= 0.95 * inkIn);
+    }
+    SECTION("GOST_GLASS1 at scale 1e-4 keeps every piece") {
+        const auto before = tilePathPieces("GOST_GLASS1", 1.0, {rectRing(0, 0, 500, 300)});
+        REQUIRE_FALSE(before.empty());
+        auto scaled = scaledPattern("GOST_GLASS1", 1e-4);
+        const RS_Vector pSize = scaled->getSize();
+        const double tolOffset = 1e-6 * std::max(pSize.x, pSize.y);
+        auto scaledInput = scaleBy(before, 1e-4);
+        double inkIn = 0.0;
+        for (const RS_LineData& d : scaledInput) inkIn += d.startpoint.distanceTo(d.endpoint);
+
+        const auto after = LC_LoopUtils::deduplicatePatternLines(
+            scaledInput, tolOffset);
+        double inkOut = 0.0;
+        for (const RS_LineData& d : after) inkOut += d.startpoint.distanceTo(d.endpoint);
+        CAPTURE(before.size());
+        CAPTURE(after.size());
+        REQUIRE(after.size() == before.size());
+        REQUIRE(std::abs(inkOut / inkIn - 1.0) <= 5e-5);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern de-dup: HEX seams merge into double dashes only",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+    const auto before = tilePathPieces("HEX", 1.0, {rectRing(0, 0, 500, 300)});
+    REQUIRE_FALSE(before.empty());
+    auto scaled = scaledPattern("HEX", 1.0);
+    const RS_Vector pSize = scaled->getSize();
+    const double tolOffset = 1e-6 * std::max(pSize.x, pSize.y);
+
+    const auto after = LC_LoopUtils::deduplicatePatternLines(
+        toLineData(before), tolOffset);
+    REQUIRE_FALSE(after.empty());
+
+    double maxLen = 0.0;
+    for (const RS_LineData& d : after) {
+        maxLen = std::max(maxLen, d.startpoint.distanceTo(d.endpoint));
+    }
+    CAPTURE(maxLen);
+    CAPTURE(before.size());
+    CAPTURE(after.size());
+    REQUIRE(maxLen <= 9.60);
+    REQUIRE(after.size() < before.size());
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Hatch pattern de-dup: the hatch draws the de-duplicated tile path",
+          "[lc-hatchfix][pattern]") {
+    lc::test::SourcePatterns patterns;
+
+    auto checkHatch = [](const QString& name) {
+        auto hatch = lc::test::makePatternHatch(
+            name, 1.0, 0.0, {rectRing(0, 0, 500, 300)});
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        const auto hatchData = hatchLineData(*hatch);
+        REQUIRE_FALSE(hatchData.empty());
+
+        const auto before = tilePathPieces(name, 1.0, {rectRing(0, 0, 500, 300)});
+        auto scaled = scaledPattern(name, 1.0);
+        const RS_Vector pSize = scaled->getSize();
+        const double tolOffset = 1e-6 * std::max(pSize.x, pSize.y);
+        const auto expected = LC_LoopUtils::deduplicatePatternLines(
+            toLineData(before), tolOffset);
+        REQUIRE_FALSE(expected.empty());
+
+        CAPTURE(hatchData.size());
+        CAPTURE(expected.size());
+        CAPTURE(before.size());
+        REQUIRE(approxLineSetsEqual(hatchData, expected, 1e-9));
+    };
+
+    SECTION("SQUARE") { checkHatch("SQUARE"); }
+    SECTION("HEX") { checkHatch("HEX"); }
 }

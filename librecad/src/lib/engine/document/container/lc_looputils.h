@@ -29,6 +29,7 @@
 #include <memory>
 #include <vector>
 
+#include "lc_hatchdensity.h"
 #include "lc_loopclassifier.h"
 #include "lc_secondmoment.h"
 #include "rs_entitycontainer.h"
@@ -55,6 +56,22 @@ using LC_Rect = lc::geo::Area;
  * area calculation should find the total area of all land including any islands in lakes.
  */
 namespace LC_LoopUtils {
+
+/**
+ * @brief One tile copy of a scaled pattern over a loop hierarchy's bounding
+ * box: the WCS offset applied to every atomic pattern entity, and a flag
+ * marking tiles that no boundary edge comes near.
+ *
+ * The interior flag is true when the tile rect does not overlap any boundary
+ * edge even once expanded by two per-hatch tolerances. Such a tile is wholly
+ * inside the loop (its kept-rule check already confirms the centre is inside),
+ * so every clone of a pattern entity dropped at its offset is inside too and
+ * can skip the trimmer's intersect-and-split pass.
+ */
+struct LC_TileSlot {
+    RS_Vector offset;
+    bool interior = false;
+};
 
 /**
  * @brief The LC_Loops class - recursive representation of contour loops with holes.
@@ -94,57 +111,19 @@ public:
    */
   int getContainingDepth(const RS_Vector& point) const;
   /**
-   * @brief Generates a QPainterPath for this loop and its children up to the specified level.
-   * @param level Recursion level for path building (default: 0).
-   * @return The combined QPainterPath with OddEvenFill rule.
-   */
-  QPainterPath getPainterPath(RS_Painter* painter, int level = 0) const;
-  /**
-   * @brief Trims pattern entities to the boundaries of this loop hierarchy.
-   * @param pattern The pattern to trim.
-   * @param latticeAnchor A lattice point in this tree's frame; the pattern's
-   *        minimum corner is placed on every lattice point
-   *        anchor + (i*W, k*H).
-   * @return Unique pointer to a container of trimmed entities.
-   */
-  std::unique_ptr<RS_EntityContainer> trimPatternEntities(const RS_Pattern& pattern,
-                                                          const RS_Vector& latticeAnchor) const;
-  /**
-   * @brief Generates tile offsets for pattern repetition over this loop
-   * hierarchy's bounding box, anchored at latticeAnchor.
-   *
-   * Tile indices are half-open [floor((bbMin - a)/P), ceil((bbMax - a)/P));
-   * every tile whose rect intersects the bounding box and either overlaps the
-   * loop or contains the pattern's centre is kept.
-   */
-  std::vector<RS_Vector> createTiles(const RS_Pattern& pattern,
-                                     const RS_Vector& latticeAnchor) const;
-  /**
    * @brief Computes the total area of this loop, adding islands and subtracting holes.
    * @return The net area as a double.
    */
   double getTotalArea() const;
   /**
-   * @brief getTotalFirstMoment - recursively computes the first moments of area
-   * (∬ x dA, ∬ y dA) for this loop hierarchy using the same hole-subtraction
-   * logic as getTotalArea():
+   * @brief getTotalMoments - recursively computes the Green's theorem line
+   * integrals of (P - origin) summed around this loop and subtracted around
+   * every child, feeding one LC_AreaMoments accumulator per hatch update.
    *
-   *   totalMoment = outerMoment - ∑(child.getTotalFirstMoment())
-   *
-   * Divide by getTotalArea() to get the centroid (cx, cy).
+   *   totalMoment = outer.momentLineIntegrals(origin)
+   *                 - sum(child.getTotalMoments(origin))
    */
-  LC_FirstMoment getTotalFirstMoment() const;
-  /**
-   * @brief getTotalSecondMoment - recursively computes the three second moments
-   * of area for this loop hierarchy using the same hole-subtraction logic as
-   * getTotalArea():
-   *
-   *   totalMoment = outerMoment - ∑(child.getTotalSecondMoment())
-   *
-   * @return LC_SecondMoment with ixx=∬x²dA, iyy=∬y²dA, ixy=∬xydA for the
-   *         net region (outer shape minus holes, plus islands, etc.)
-   */
-  LC_SecondMoment getTotalSecondMoment() const;
+  LC_AreaMoments getTotalMoments(const RS_Vector& origin) const;
   /**
    * @brief Checks if this loop overlaps with a given rectangle.
    * @param other The rectangle to check against.
@@ -192,19 +171,23 @@ public:
   PointClass classify(const RS_Vector& point) const;
 
 private:
+  friend PointClass classifyAll(const RS_Vector&, const std::vector<LC_Loops>&);
+  friend std::vector<LC_TileSlot> createTiles(const std::vector<LC_Loops>&,
+                                              const RS_Pattern&,
+                                              const RS_Vector&);
+  friend std::unique_ptr<RS_EntityContainer> trimPatternEntities(
+      const std::vector<LC_Loops>&, const RS_Pattern&,
+      const std::vector<LC_TileSlot>&, LC_HatchPieceBudget&, bool);
+  friend double gridWork(const std::vector<LC_Loops>&, const RS_Pattern&,
+                         const RS_Vector&);
+  friend double tileWork(const std::vector<LC_Loops>&, const RS_Pattern&,
+                         const std::vector<LC_TileSlot>&, double);
   /**
    * @brief Checks if a point is inside the outer loop only (non-recursive).
    * @param point The point to test.
    * @return True if inside the outer contour.
    */
   bool isInsideOuter(const RS_Vector& point) const;
-  /**
-   * @brief Builds a QPainterPath from the entities in a container.
-   * @param painter
-   * @param cont The entity container.
-   * @return The resulting path.
-   */
-  QPainterPath buildPathFromLoop(RS_Painter* painter, const RS_EntityContainer& cont) const;
   /**
    * @brief Collects all descendant loops recursively.
    * @param loops Output vector of loop pointers.
@@ -278,6 +261,15 @@ private:
    */
   bool isEntityClosed(const RS_Entity* e) const;
 
+  /**
+   * @brief The half-open [floor, ceil) tile index range used by createTiles,
+   * gridWork and tileWork. Written to the four out-params when the pattern
+   * and bbox are non-degenerate; returns false when the pattern is empty.
+   */
+  bool tileIndexRange(const RS_Pattern& pattern, const RS_Vector& latticeAnchor,
+                      double& iFirst, double& iEnd,
+                      double& kFirst, double& kEnd) const;
+
   std::shared_ptr<RS_EntityContainer> m_loop;  ///< Outer loop container
   std::vector<LC_Loops> m_children;             ///< Child loops (holes/islands)
   mutable std::shared_ptr<const LoopGeometry> m_geometry;  ///< Lazily built
@@ -327,9 +319,16 @@ class LoopExtractor {
 public:
   /**
    * @brief Constructor for LoopExtractor.
+   *
+   * eps > 0 forces that per-hatch tolerance; eps <= 0 (the default) asks the
+   * extractor to compute its own tolerance from the input bbox and endpoint
+   * extrema. The tolerance drives the length filter, the welded adjacency,
+   * the chain closure test and the degenerate-area cut.
+   *
    * @param edges Container of edges to process.
+   * @param eps   Per-hatch tolerance; <=0 means compute from the input.
    */
-  LoopExtractor(const RS_EntityContainer& edges);
+  LoopExtractor(const RS_EntityContainer& edges, double eps = -1.0);
   ~LoopExtractor();
 
   /**
@@ -394,12 +393,6 @@ private:
    * @return Selected entity.
    */
   RS_Entity* findOutermost(std::vector<RS_Entity*> edges) const;
-
-  // Endpoint matching tolerance: must be consistent with VectorKey resolution
-  // (SCALE=1e8 → ~5e-9). Real-world DWG files can have boundary segment
-  // endpoints that differ by ~1e-10 due to floating-point arithmetic in
-  // AutoCAD, so 1e-10 is too tight.
-  static constexpr double ENDPOINT_TOLERANCE = 1e-8;
 
   mutable std::unique_ptr<RS_EntityContainer> m_loop;  ///< Current loop being built
 
@@ -492,6 +485,97 @@ private:
   struct Data;
   std::shared_ptr<Data> m_data;  ///< Private data for optimization results
 };
+
+/**
+ * @brief Builds a QPainterPath from the atomic edges of a boundary container.
+ *
+ * A single closed atomic entity (circle, full ellipse, closed spline) is drawn
+ * as its own closed subpath; otherwise the atomic edges are appended in order
+ * and the subpath is closed at the end. The eps parameter is the per-hatch ON
+ * tolerance used by the "is this one closed curve" test for the single-entity
+ * case; callers that do not have a hatch tolerance may pass 0.
+ */
+QPainterPath buildLoopPath(RS_Painter* painter, const RS_EntityContainer& cont,
+                           double eps = 0.0);
+
+/**
+ * @brief Half-open crossing-parity classifier against all nodes of all roots.
+ *
+ * Returns On when the point sits within tolerance of any boundary edge in any
+ * node of any root (used as the ON band of the collinear-safe keep rule).
+ * Otherwise sums crossingsRight(point) over every node's LoopGeometry and
+ * returns Inside/Outside by odd parity.
+ */
+PointClass classifyAll(const RS_Vector& point,
+                       const std::vector<LC_Loops>& roots);
+
+/**
+ * @brief Tile slots over the union of the roots' bounding boxes.
+ *
+ * The lattice is one WCS lattice through latticeAnchor; tile indices are
+ * half-open [floor, ceil) on each axis. A tile is kept when its rect
+ * intersects the union bbox and at least one root either overlaps the tile or
+ * contains the pattern's centre. Slots are de-duplicated across roots by
+ * (i, k). A slot's interior flag is true when no root's boundary comes within
+ * one ON band of the tile rect; the trimmer emits those slots' clones whole.
+ */
+std::vector<LC_TileSlot> createTiles(const std::vector<LC_Loops>& roots,
+                                     const RS_Pattern& pattern,
+                                     const RS_Vector& latticeAnchor);
+
+/**
+ * @brief Clips every tile copy of every atomic pattern entity to the union of
+ * the roots' boundaries in a single pass.
+ *
+ * The classifier is classifyAll(roots), so holes and islands fall out of the
+ * global parity rule and overlapping roots trim as XOR. Pieces whose
+ * midpoint falls inside the overall odd-even region are kept. Every emitted
+ * piece is charged to budget; a trip returns the partial container (the
+ * caller discards buffered output). Slots marked interior emit their clones
+ * whole when interiorFastPath is true.
+ */
+std::unique_ptr<RS_EntityContainer> trimPatternEntities(
+    const std::vector<LC_Loops>& roots,
+    const RS_Pattern& pattern,
+    const std::vector<LC_TileSlot>& tiles,
+    LC_HatchPieceBudget& budget,
+    bool interiorFastPath = true);
+
+/**
+ * @brief Upper bound on the overlap-test cost createTiles(roots, ...) runs:
+ * (grid cells over the union bbox) * (total boundary edges of all roots).
+ */
+double gridWork(const std::vector<LC_Loops>& roots,
+                const RS_Pattern& pattern,
+                const RS_Vector& latticeAnchor);
+
+/**
+ * @brief Σ_tile (E * B(tile)) over the given tile slots, where B(tile) is the
+ * number of boundary edges (from any root) whose bbox overlaps the pattern
+ * rect translated by tile.offset. Returns as soon as the running sum exceeds
+ * stopAbove so the measurement itself is bounded.
+ */
+double tileWork(const std::vector<LC_Loops>& roots,
+                const RS_Pattern& pattern,
+                const std::vector<LC_TileSlot>& tiles,
+                double stopAbove);
+
+/**
+ * @brief Counts the loops in roots that duplicate an earlier one.
+ *
+ * Walks every node of every root in pre-order. Two nodes are duplicates when
+ * both are CCW, have the same vertex count n >= 1, there is a rotation k with
+ * |V2[(i+k) % n] - V1[i]| <= eps for every i, the two edge sequences have the
+ * same rtti in the same order, and the edge midpoints match within eps. A loop
+ * made of a single closed atomic entity (circle, full ellipse, closed spline)
+ * matches a candidate with the same rtti and the same centre, major axis,
+ * ratio or radius within eps. Candidate pairs are prefiltered by
+ * |area_a - area_b| <= eps * max(perimeter). The returned count is the number
+ * of nodes whose match
+ * carries a lower pre-order index: three identical loops count as two.
+ */
+int countDuplicateLoops(const std::vector<LC_Loops>& roots);
+
 }
 
 #endif // LC_LOOPUTILS_H

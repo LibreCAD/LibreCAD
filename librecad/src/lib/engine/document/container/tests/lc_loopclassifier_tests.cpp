@@ -471,3 +471,85 @@ TEST_CASE("leftmostPoint, travelDirection and signedCurvature per edge type",
     }
 }
 
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Reversed arc and ellipse pieces trace the same path as their non-reversed twin",
+          "[lc-hatchfix][classifier]") {
+    // When LoopExtractor reverses a container whose signed area was negative,
+    // every atomic edge gets revertDirection(). For an arc or elliptic arc the
+    // call swaps angle1/angle2 and flips isReversed, so getStartpoint and
+    // getEndpoint now return the point at the parameter-space END and START
+    // of the piece walk respectively. fromChain's vertex table takes those
+    // values and hands them as va/vb to appendArcPieces / appendEllipsePieces.
+    // The piece-boundary substitution must match the walk order, otherwise a
+    // bogus monotone piece covers the whole bbox height and overcounts the
+    // right-crossings.
+    SECTION("arc") {
+        // Upper semicircle, r = 5 at the origin. Non-reversed form.
+        RS_Arc baseArc(nullptr, RS_ArcData(RS_Vector(0, 0), 5.0,
+                                           0.0, M_PI, false));
+        auto base = std::make_shared<RS_EntityContainer>(nullptr);
+        base->addEntity(baseArc.clone());
+        base->addEntity(new RS_Line(base.get(), RS_Vector(-5, 0),
+                                                RS_Vector(5, 0)));
+        auto g0 = LoopGeometry::fromChain(*base,
+            {RS_Vector(5, 0), RS_Vector(-5, 0)});
+
+        // Reversed twin: swap angles and flip reversed on the arc; swap the
+        // line to keep the chain closed in reversed-walk order. The geometric
+        // path is identical.
+        RS_Arc revArc(nullptr, RS_ArcData(RS_Vector(0, 0), 5.0,
+                                          M_PI, 0.0, true));
+        auto rev = std::make_shared<RS_EntityContainer>(nullptr);
+        rev->addEntity(revArc.clone());
+        rev->addEntity(new RS_Line(rev.get(), RS_Vector(5, 0),
+                                              RS_Vector(-5, 0)));
+        auto g1 = LoopGeometry::fromChain(*rev,
+            {RS_Vector(-5, 0), RS_Vector(5, 0)});
+
+        const RS_Vector probe(0.0, 2.0);  // Interior of the semicircle.
+        REQUIRE(g0->crossingsRight(probe) == 1);
+        REQUIRE(g1->crossingsRight(probe) == 1);
+        REQUIRE(oddParity(probe, {g0.get()}));
+        REQUIRE(oddParity(probe, {g1.get()}));
+    }
+
+    SECTION("elliptic arc rotated 30 degrees with a chord") {
+        // The plan's "pattern hatch equals the solid hatch with curved edges"
+        // oracle. Half-ellipse a = 3, b = 2 at (10, 5), phi = 30 degrees, plus
+        // the diametric chord; a circle island centred at (9.6, 5.7) lies
+        // strictly inside the half-disc. Before the fix the reversed form
+        // double-counted the horizontal ray from (9.6, 5.7) and the circle
+        // became a root loop on the SOLID hatch.
+        const double phi = 30.0 * M_PI / 180.0;
+        const RS_Vector majorP(3.0 * std::cos(phi), 3.0 * std::sin(phi));
+        auto build = [&](bool reversed) {
+            auto cont = std::make_shared<RS_EntityContainer>(nullptr);
+            RS_EllipseData ed;
+            ed.center = RS_Vector(10, 5);
+            ed.majorP = majorP;
+            ed.ratio = 2.0 / 3.0;
+            ed.angle1 = reversed ? M_PI : 0.0;
+            ed.angle2 = reversed ? 0.0 : M_PI;
+            ed.reversed = reversed;
+            cont->addEntity(new RS_Ellipse(cont.get(), ed));
+            const RS_Vector low  = RS_Vector(10, 5) - majorP;
+            const RS_Vector high = RS_Vector(10, 5) + majorP;
+            if (reversed) {
+                cont->addEntity(new RS_Line(cont.get(), high, low));
+            } else {
+                cont->addEntity(new RS_Line(cont.get(), low, high));
+            }
+            std::vector<RS_Vector> verts = reversed ? std::vector<RS_Vector>{low, high}
+                                                   : std::vector<RS_Vector>{high, low};
+            return LoopGeometry::fromChain(*cont, std::move(verts));
+        };
+        auto g0 = build(false);
+        auto g1 = build(true);
+        const RS_Vector probe(9.6, 5.7);
+        REQUIRE(g0->crossingsRight(probe) == 1);
+        REQUIRE(g1->crossingsRight(probe) == 1);
+        REQUIRE(oddParity(probe, {g0.get()}));
+        REQUIRE(oddParity(probe, {g1.get()}));
+    }
+}
+

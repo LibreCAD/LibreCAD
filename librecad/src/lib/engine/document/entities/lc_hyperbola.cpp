@@ -29,6 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_hyperbola.h"
 #include "lc_curveoffset.h"
+#include "lc_momentquadrature.h"
 #include "lc_quadratic.h"
 #include "rs_debug.h"
 #include "rs_line.h"
@@ -1901,128 +1902,62 @@ double LC_Hyperbola::areaLineIntegral() const
   return primitive(phi2) - primitive(phi1);
 }
 
-double LC_Hyperbola::computeLocalArea(double phi1, double phi2) const {
-  if (isInfinite()) return 0.0;
-  const double a = getMajorRadius();
-  const double b = getMinorRadius();
-  // areaLineIntegral = ∫ x dy ∝ ab cosh², so for the left branch (x_local =
-  // -a·cosh) the entire integrand picks up a -1.
-  const double sx = m_data.reversed ? -1.0 : 1.0;
-  auto F = [&](double phi) {
-    return sx * (a * b / 2.0) * (phi + 0.5 * std::sinh(2.0 * phi));
-  };
-  return F(phi2) - F(phi1);
-}
-
-LC_FirstMoment LC_Hyperbola::computeLocalFirstMoment(double phi1, double phi2) const {
-  // First moments via Green's theorem with x = a·cosh φ, y = b·sinh φ:
-  //   mx = ½ ∫ x² dy = (a²b/2) ∫ cosh³ φ dφ      = (a²b/2)·(sinh φ + sinh³ φ /
-  //   3) my = -½ ∫ y² dx = -(ab²/2) ∫ sinh³ φ dφ    = -(ab²/2)·(cosh³ φ / 3 −
-  //   cosh φ)
-  // dx = sx·a·sinh φ dφ flips with the branch, so my = -½∫y²dx flips;
-  // mx = ½∫x²dy does not (x² is unchanged).
-  if (isInfinite()) return {};
-  const double a = getMajorRadius();
-  const double b = getMinorRadius();
-  const double sx = m_data.reversed ? -1.0 : 1.0;
-  auto F_mx = [&](double phi) {
-    const double sh = std::sinh(phi);
-    return (a * a * b / 2.0) * (sh + sh * sh * sh / 3.0);
-  };
-  auto F_my = [&](double phi) {
-    const double ch = std::cosh(phi);
-    return -sx * (a * b * b / 2.0) * (ch * ch * ch / 3.0 - ch);
-  };
-  return {F_mx(phi2) - F_mx(phi1), F_my(phi2) - F_my(phi1)};
-}
-
-LC_SecondMoment LC_Hyperbola::computeLocalSecondMoment(double phi1, double phi2) const {
-  // Second moments via Green's theorem with x = a·cosh φ, y = b·sinh φ:
-  //   ixx =  ⅓ ∫ x³ dy   =  (a³b/24)·(3φ + 2 sinh 2φ + ¼ sinh 4φ)
-  //   iyy = -⅓ ∫ y³ dx   = -(ab³/24)·(3φ − 2 sinh 2φ + ¼ sinh 4φ)
-  //   ixy =  ½ ∫ x² y dy =  (a²b²/8)·cosh⁴ φ
-  // ixx (x³) and iyy (dx) flip with the branch; ixy (x² dy) does not.
-  if (isInfinite()) return {};
-  const double a = getMajorRadius();
-  const double b = getMinorRadius();
-  const double sx = m_data.reversed ? -1.0 : 1.0;
-  auto F_ixx = [&](double phi) {
-    const double s2 = std::sinh(2.0 * phi);
-    const double s4 = std::sinh(4.0 * phi);
-    return sx * (a * a * a * b / 24.0) * (3.0 * phi + 2.0 * s2 + 0.25 * s4);
-  };
-  auto F_iyy = [&](double phi) {
-    const double s2 = std::sinh(2.0 * phi);
-    const double s4 = std::sinh(4.0 * phi);
-    return -sx * (a * b * b * b / 24.0) * (3.0 * phi - 2.0 * s2 + 0.25 * s4);
-  };
-  auto F_ixy = [&](double phi) {
-    const double ch = std::cosh(phi);
-    return (a * a * b * b / 8.0) * (ch * ch * ch * ch);
-  };
-
-  LC_SecondMoment m;
-  m.ixx = F_ixx(phi2) - F_ixx(phi1);
-  m.iyy = F_iyy(phi2) - F_iyy(phi1);
-  m.ixy = F_ixy(phi2) - F_ixy(phi1);
-  return m;
-}
-
-// Parallel-axis shift used by firstMoment/secondMoment helpers below.
-// We deliberately do NOT use `LC_SecondMoment::shifted` — that helper has
-// `area*dy²` where `area*dx²` belongs (and vice versa for iyy), which is
-// inconsistent with both the documented `ixx = ∬x²dA` convention and the
-// sibling `getCentral` formula. Inlining the right transformation keeps the
-// hyperbola pipeline correct without dragging the other entities (ellipse
-// arcs, parabola) along.
 namespace {
-LC_FirstMoment shiftFirstMomentToOrigin(const LC_FirstMoment &local, double cx,
-                                        double cy, double area) {
-  // local moments are about a frame centered at world (cx, cy). To express
-  // them about the world origin: ∫(x_local + cx) dA = ∫ x_local dA + cx·A.
-  return {local.mx + cx * area, local.my + cy * area};
+// Guard against overflow in cosh/sinh and in e^{4φ} inside Iyy. cosh(170) is
+// about 7.6e73, well below DBL_MAX ~ 1.8e308; cosh(355) overflows. The
+// hyperbola is unlikely to be useful much past |φ| ~ 20, but the guard keeps
+// scaled centre + radius arithmetic finite at ordinary scales.
+constexpr double kMaxHyperbolaPhi = 170.0;
 }
-LC_SecondMoment shiftSecondMomentToOrigin(const LC_SecondMoment &local,
-                                          double cx, double cy, double area) {
-  return {local.ixx + area * cx * cx, local.iyy + area * cy * cy,
-          local.ixy + area * cx * cy};
-}
-} // namespace
 
-LC_FirstMoment LC_Hyperbola::firstMomentLineIntegral() const {
-  if (!m_valid || isInfinite())
+LC_AreaMoments LC_Hyperbola::momentLineIntegrals(const RS_Vector& origin) const {
+  if (!m_valid || isInfinite()) {
     return {};
-  const double phi = getAngle();
-  const double cx = m_data.center.x;
-  const double cy = m_data.center.y;
+  }
+  const double phiMax = std::max(std::fabs(m_data.angle1), std::fabs(m_data.angle2));
+  if (!(phiMax <= kMaxHyperbolaPhi)) {
+    return {};
+  }
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
+  if (!(a > 0.0) || !(b > 0.0)) {
+    return {};
+  }
 
-  // No t0/t1 swap for reversed branches: the helpers already apply the
-  // x-sign factor (`effectiveSignX = -1`) so a single source of truth
-  // handles the orientation. Swapping here on top of the sx flip would
-  // double-correct (mx flipping sign even though x² is even, etc.).
+  // P(φ) = c + R(θ)(sx·a·cosh φ, b·sinh φ); P'(φ) = R(θ)(sx·a·sinh φ, b·cosh φ).
+  // sx is -1 on the left branch (reversed=true). Integrate from angle1 to
+  // angle2 with step 0.25; reversed order (t1 < t0) negates the result.
+  const double sx = m_data.reversed ? -1.0 : 1.0;
+  const double theta = getAngle();
+  const double cosT = std::cos(theta);
+  const double sinT = std::sin(theta);
+  const double dx = m_data.center.x - origin.x;
+  const double dy = m_data.center.y - origin.y;
   const double t0 = m_data.angle1;
   const double t1 = m_data.angle2;
-
-  const auto local = computeLocalFirstMoment(t0, t1);
-  const double area = computeLocalArea(t0, t1);
-
-  return shiftFirstMomentToOrigin(local.rotated(phi), cx, cy, area);
-}
-
-LC_SecondMoment LC_Hyperbola::secondMomentLineIntegral() const {
-  if (!m_valid || isInfinite())
-    return {};
-  const double phi = getAngle();
-  const double cx = m_data.center.x;
-  const double cy = m_data.center.y;
-
-  const double t0 = m_data.angle1;
-  const double t1 = m_data.angle2;
-
-  const auto local = computeLocalSecondMoment(t0, t1);
-  const double area = computeLocalArea(t0, t1);
-
-  return shiftSecondMomentToOrigin(local.rotated(phi), cx, cy, area);
+  auto eval = [sx, a, b, cosT, sinT, dx, dy](
+                  double phi, const RS_Vector& /*org*/, RS_Vector& pmo,
+                  RS_Vector& dp) {
+    const double ch = std::cosh(phi);
+    const double sh = std::sinh(phi);
+    if (!std::isfinite(ch) || !std::isfinite(sh)) {
+      pmo.valid = false;
+      dp.valid = false;
+      return;
+    }
+    const double lx = sx * a * ch;
+    const double ly = b * sh;
+    pmo.x = dx + cosT * lx - sinT * ly;
+    pmo.y = dy + sinT * lx + cosT * ly;
+    pmo.valid = true;
+    const double tx = sx * a * sh;
+    const double ty = b * ch;
+    dp.x = cosT * tx - sinT * ty;
+    dp.y = sinT * tx + cosT * ty;
+    dp.valid = true;
+  };
+  return LC_MomentQuadrature::integrate(
+      eval, t0, t1, 0.25, RS_Vector{0.0, 0.0});
 }
 //=====================================================================
 RS_Vector LC_Hyperbola::dualLineTangentPoint(const RS_Vector &line) const {

@@ -1624,6 +1624,7 @@ TEST_CASE("RS_Hatch area: left-branch hyperbola segment (#2559)",
     }
 }
 
+
 // Regression: picking a rotated pattern hatch tested the WCS click against
 // the loops validate() had rotated by -angle, so a 30-degree ANSI31 hatch on
 // (0,0)-(10,0)-(0,10) was unpickable at interior points and pickable just
@@ -1815,6 +1816,115 @@ TEST_CASE("RS_Hatch moments: pattern hatch equals the solid hatch at any angle",
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: hyperbola segment on both branches",
+          "[lc-hatchfix][moments]") {
+    // Same construction as #2559 (hyperbola from phi=-0.5 to phi=1.2 with
+    // a=2, b=1, theta=25deg, c=(3,-2), closed by a chord). Both branches
+    // have the same area 0.945631933837233 (checked above) but different
+    // centroids and central tensors; the WCS answer must come from the GL
+    // integrator through momentLineIntegrals, not the stale closed form.
+    const double th = 25.0 * M_PI / 180.0;
+    SECTION("right branch (reversed=false)") {
+        LC_HyperbolaData d(RS_Vector(3, -2),
+                           RS_Vector(2.0 * std::cos(th), 2.0 * std::sin(th)),
+                           0.5, -0.5, 1.2, false);
+        RS_Hatch hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+        auto* loop = new RS_EntityContainer(&hatch);
+        hatch.addEntity(loop);
+        auto* hb = new LC_Hyperbola(loop, d);
+        loop->addEntity(hb);
+        loop->addEntity(new RS_Line(loop, hb->getEndpoint(), hb->getStartpoint()));
+        hatch.update();
+        REQUIRE(hatch.getUpdateError() == RS_Hatch::HATCH_OK);
+        checkHatchMoments(hatch, 0.945631933837233,
+                          RS_Vector(5.18604044469351, -0.494928732544125),
+                          {0.0363376945360846, 0.280534794376385,
+                           0.0623564313990398},
+                          5.0, 1e-10);
+    }
+    SECTION("left branch (reversed=true)") {
+        LC_HyperbolaData d(RS_Vector(3, -2),
+                           RS_Vector(2.0 * std::cos(th), 2.0 * std::sin(th)),
+                           0.5, -0.5, 1.2, true);
+        RS_Hatch hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+        auto* loop = new RS_EntityContainer(&hatch);
+        hatch.addEntity(loop);
+        auto* hb = new LC_Hyperbola(loop, d);
+        loop->addEntity(hb);
+        loop->addEntity(new RS_Line(loop, hb->getEndpoint(), hb->getStartpoint()));
+        hatch.update();
+        REQUIRE(hatch.getUpdateError() == RS_Hatch::HATCH_OK);
+        checkHatchMoments(hatch, 0.945631933837233,
+                          RS_Vector(0.441888806944747, -2.70716297267495),
+                          {0.241047532237592, 0.0758249566748777,
+                           -0.109415517914656},
+                          5.0, 1e-10);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: closed spline diamond off the origin",
+          "[lc-hatchfix][moments]") {
+    // makeClosedSplineHatch((10, 5)): a closed quadratic B-spline diamond of
+    // radius 1 centred on (10, 5). Enclosed area 5/3, central tensor is
+    // isotropic with Ixx=Iyy=31/140 and Ixy=0. Before the full GL pipeline
+    // the moments came out about the world origin, not the centroid, so
+    // the central tensor on an off-origin diamond was wildly wrong.
+    std::unique_ptr<RS_Hatch> hatch(makeClosedSplineHatch(RS_Vector(10, 5)));
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    checkHatchMoments(*hatch, 5.0 / 3.0, RS_Vector(10, 5),
+                      {31.0 / 140.0, 31.0 / 140.0, 0.0}, 3.0, 1e-10);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: open spline lens off the origin",
+          "[lc-hatchfix][moments]") {
+    // Lens with the open control net (9,5),(9.5,6.2),(10.5,6.2),(11,5) and
+    // a closing chord from (11, 5) back to (9, 5). Area 1.6, centroid
+    // (10, 5.48); the open spline contributes to centroid/tensor through
+    // the GL quadrature on each quadratic segment plus the closing chord.
+    RS_Hatch hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+    auto* loop = new RS_EntityContainer(&hatch);
+    hatch.addEntity(loop);
+    LC_SplinePointsData sd(/*closed=*/false, /*cut=*/false);
+    sd.useControlPoints = true;
+    sd.controlPoints = {{9.0, 5.0}, {9.5, 6.2}, {10.5, 6.2}, {11.0, 5.0}};
+    loop->addEntity(new LC_SplinePoints(loop, std::move(sd)));
+    loop->addEntity(new RS_Line(loop, RS_Vector(11.0, 5.0), RS_Vector(9.0, 5.0)));
+    hatch.update();
+    REQUIRE(hatch.getUpdateError() == RS_Hatch::HATCH_OK);
+    checkHatchMoments(hatch, 1.6, RS_Vector(10.0, 5.48),
+                      {0.32, 0.157988571428571, 0.0}, 2.5, 1e-10);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_FilterDXFRW: spline lens hatch fixture imports with exact moments",
+          "[lc-hatchfix][moments]") {
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::QuietLog quiet;
+    RS_Graphic g;
+    REQUIRE(lc::test::importDrawing(
+        g,
+        std::filesystem::path(LIBRECAD_TEST_DIR) / "dxf" /
+            "hatch_moments_spline_lens_10_5.dxf",
+        RS2::FormatDXFRW));
+    RS_Hatch* hatch = nullptr;
+    int count = 0;
+    for (RS_Entity* e :
+         lc::LC_ContainerTraverser{g, RS2::ResolveAll}.entities()) {
+        if (e && e->rtti() == RS2::EntityHatch) {
+            ++count;
+            if (!hatch) hatch = static_cast<RS_Hatch*>(e);
+        }
+    }
+    REQUIRE(count == 1);
+    REQUIRE(hatch != nullptr);
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    checkHatchMoments(*hatch, 1.6, RS_Vector(10.0, 5.48),
+                      {0.32, 0.157988571428571, 0.0}, 2.5, 1e-10);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("RS_Hatch moments: half-ellipse off the origin",
           "[lc-hatchfix][moments]") {
     // makeHalfEllipseHatch(3, 2, c) at c in {(0,0), (10,0), (0,5), (10,5)}:
@@ -1904,21 +2014,23 @@ TEST_CASE("RS_Hatch moments: elliptic segment forward and reversed",
 TEST_CASE("RS_Hatch moments: polyline D-shape with a nearly flat bulge",
           "[lc-hatchfix][moments]") {
     // Vertices (0,0),0; (10,0),0; (10,5),b; (0,5),0; (0,0),0.
-    // The near-flat arc on the top edge is where HEAD's closed-form Iyy
-    // was wildly wrong; the Gauss-Legendre quadrature stays stable.
-    // The hatch's getTotalArea() still goes through areaLineIntegral(),
-    // which loses up to ~7e-6 of precision at small bulges; the GL8 moments
-    // are compared against the GL8-correct oracles below.
+    // The near-flat arc on the top edge is where the closed-form Iyy was
+    // wildly wrong; the Gauss-Legendre pipeline — now also for the hatch
+    // area — stays stable through bulge 1e-6.
     struct Expected {
         double bulge;
+        double area;
         double cy;
         double ixx;
         double iyy;
     };
     const Expected rows[] = {
-        {1e-4, 2.50016666888907, 416.683333333405, 104.187501944547},
-        {1e-5, 2.50001666668889, 416.668333333333, 104.168750019445},
-        {1e-6, 2.50000166666689, 416.666833333333, 104.166875000194},
+        {1e-4, 50.0033333333400, 2.50016666888907, 416.683333333405,
+         104.187501944547},
+        {1e-5, 50.0003333333333, 2.50001666668889, 416.668333333333,
+         104.168750019445},
+        {1e-6, 50.0000333333333, 2.50000166666689, 416.666833333333,
+         104.166875000194},
     };
     for (const Expected& row : rows) {
         INFO("bulge = " << row.bulge);
@@ -1942,64 +2054,27 @@ TEST_CASE("RS_Hatch moments: polyline D-shape with a nearly flat bulge",
         hatch->update();
         std::unique_ptr<RS_Hatch> owner(hatch);
         REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
-        // Area via areaLineIntegral() is close to 50 at every bulge;
-        // its precision is set by RS_Math::correctAngle's rounding. The
-        // area rise above 50 scales with the bulge, so allow a liberal
-        // 1e-2 tolerance; the moment regression lives in centroid/tensor.
-        REQUIRE_THAT(hatch->getTotalArea(),
-                     Catch::Matchers::WithinAbs(50.0, 1e-2));
-        const RS_Vector c = hatch->getCentroid();
-        REQUIRE(c.valid);
-        // Centroid x is 5 by symmetry; cy follows the bulge rise. The
-        // ratio first/area carries over the areaLineIntegral precision
-        // loss noted above, so allow 1e-4 absolute.
-        REQUIRE_THAT(c.x, Catch::Matchers::WithinAbs(5.0, 1e-4));
-        REQUIRE_THAT(c.y, Catch::Matchers::WithinAbs(row.cy, 1e-4));
-        const LC_SecondMoment m = hatch->getMomentOfInertia();
-        // getCentral subtracts area * c * c from the raw tensor; until a
-        // later unification uses GL8 area everywhere, areaLineIntegral()'s
-        // precision loss at tiny bulges leaks a corresponding bias into
-        // the central tensor. Allow 1e-4 relative.
-        REQUIRE_THAT(m.ixx, Catch::Matchers::WithinRel(row.ixx, 1e-4));
-        REQUIRE_THAT(m.iyy, Catch::Matchers::WithinRel(row.iyy, 1e-4));
-        // Ixy is zero by symmetry; GL8 roundoff grows as the arc radius
-        // grows (r ~ 1/b), so loosen the absolute tolerance for small
-        // bulges. Residual stays below 1e-2 at area ~50, dimension ~10
-        // even at bulge 1e-6 (radius ~2.5e6).
-        REQUIRE_THAT(m.ixy, Catch::Matchers::WithinAbs(0.0, 1e-2));
+        checkHatchMoments(*hatch, row.area, RS_Vector(5.0, row.cy),
+                          {row.ixx, row.iyy, 0.0}, 10.0, 1e-9);
     }
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
-TEST_CASE("RS_Hatch moments: pattern hatch equals the solid hatch on a curved loop",
+TEST_CASE("RS_Hatch moments: pattern hatch equals the solid hatch with curved edges",
           "[lc-hatchfix][moments]") {
     lc::test::SourcePatterns patterns;
-    // Rotated half-ellipse at (10, 5), phi = 30 degrees. One loop with
-    // an elliptic-arc edge plus the diametric chord. The solid and the
-    // ANSI31 pattern must give the same WCS area, centroid and tensor at
-    // every pattern angle (the rotation mapping back to WCS).
+    // Boundary: rotated half-ellipse at (10, 5), phi = 30 degrees (one
+    // loop with an elliptic-arc edge plus the diametric chord), with an
+    // r = 0.5 circle island at (9.6, 5.7). The circle sits strictly inside
+    // the half-disc (local offset (0.0036, 0.806), clearance >= 0.3 from
+    // the chord and the arc). The solid and the ANSI31 pattern must agree
+    // on WCS area, centroid and central tensor at every pattern angle.
     const double phi = 30.0 * M_PI / 180.0;
-    auto buildHatch = [phi](const RS_HatchData& data) {
-        return std::unique_ptr<RS_Hatch>(
-            makeHalfEllipseHatch(3.0, 2.0, RS_Vector(10.0, 5.0), phi));
-    };
-    auto solid = buildHatch(RS_HatchData(true, 1.0, 0.0, "SOLID"));
-    REQUIRE(solid->getUpdateError() == RS_Hatch::HATCH_OK);
-    const double area = solid->getTotalArea();
-    const RS_Vector centroid = solid->getCentroid();
-    const LC_SecondMoment central = solid->getMomentOfInertia();
-
-    const double angles[] = {0.0, M_PI / 6.0, 37.0 * M_PI / 180.0,
-                              M_PI / 2.0, 123.0 * M_PI / 180.0};
-    for (double a : angles) {
-        INFO("pattern angle " << a);
-        // makeHalfEllipseHatch uses a SOLID data; override to ANSI31 at
-        // angle a to drive updatePatternHatch and the loop frame rotation.
-        auto h = std::unique_ptr<RS_Hatch>(new RS_Hatch(
-            nullptr, RS_HatchData(false, 1.0, a, "ANSI31")));
+    const RS_Vector majorP(3.0 * std::cos(phi), 3.0 * std::sin(phi));
+    auto buildHatch = [&](const RS_HatchData& data) {
+        auto h = std::unique_ptr<RS_Hatch>(new RS_Hatch(nullptr, data));
         auto* loop = new RS_EntityContainer(h.get());
         h->addEntity(loop);
-        const RS_Vector majorP(3.0 * std::cos(phi), 3.0 * std::sin(phi));
         RS_EllipseData ed;
         ed.center = RS_Vector(10.0, 5.0);
         ed.majorP = majorP;
@@ -2010,9 +2085,31 @@ TEST_CASE("RS_Hatch moments: pattern hatch equals the solid hatch on a curved lo
         loop->addEntity(new RS_Ellipse(loop, ed));
         loop->addEntity(new RS_Line(loop,
             RS_Vector(10.0, 5.0) - majorP, RS_Vector(10.0, 5.0) + majorP));
+        auto* island = new RS_EntityContainer(h.get());
+        h->addEntity(island);
+        island->addEntity(new RS_Circle(island,
+            RS_CircleData{RS_Vector(9.6, 5.7), 0.5}));
         h->update();
+        return h;
+    };
+    auto solid = buildHatch(RS_HatchData(true, 1.0, 0.0, "SOLID"));
+    REQUIRE(solid->getUpdateError() == RS_Hatch::HATCH_OK);
+    // Oracle: area 8.63937979737193;
+    // centroid (9.57336743827812, 5.73829657515897);
+    // central 16.513256532916 / 7.22691961323573 / 8.04246578862691.
+    const double area = 8.63937979737193;
+    const RS_Vector centroid(9.57336743827812, 5.73829657515897);
+    const LC_SecondMoment central{16.513256532916, 7.22691961323573,
+                                  8.04246578862691};
+    checkHatchMoments(*solid, area, centroid, central, 7.0, 1e-11);
+
+    const double angles[] = {0.0, M_PI / 6.0, 37.0 * M_PI / 180.0,
+                              M_PI / 2.0, 123.0 * M_PI / 180.0};
+    for (double a : angles) {
+        INFO("pattern angle " << a);
+        auto h = buildHatch(RS_HatchData(false, 1.0, a, "ANSI31"));
         REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_OK);
-        checkHatchMoments(*h, area, centroid, central, 7.0, 1e-10);
+        checkHatchMoments(*h, area, centroid, central, 7.0, 1e-11);
     }
 }
 
@@ -2054,6 +2151,197 @@ TEST_CASE("RS_FilterDXFRW: half-ellipse hatch fixtures import with exact moments
         REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
         checkHatchMoments(*hatch, row.area, row.centroid, row.central,
                            7.0, 1e-10);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: D-shape far from the origin",
+          "[lc-hatchfix][moments]") {
+    // The D-shape of the near-flat-bulge test, offset by (5e5, 5e6).
+    // The central tensor must be invariant under translation; before
+    // routing the hatch area and raw moments through GL8 about the
+    // pivot, Iyy came out negative 5e8 at bulge 1e-4.
+    const RS_Vector offset(5e5, 5e6);
+    struct Row {
+        double bulge;
+        double area;
+        double cy;
+        double ixx;
+        double iyy;
+    };
+    const Row rows[] = {
+        {1e-4, 50.0033333333400, 2.50016666888907, 416.683333333405,
+         104.187501944547},
+        {1e-5, 50.0003333333333, 2.50001666668889, 416.668333333333,
+         104.168750019445},
+    };
+    for (const Row& row : rows) {
+        INFO("bulge = " << row.bulge);
+        auto* polyline = new RS_Polyline(nullptr);
+        polyline->addVertex(offset + RS_Vector(0.0, 0.0), 0.0);
+        polyline->addVertex(offset + RS_Vector(10.0, 0.0), 0.0);
+        polyline->addVertex(offset + RS_Vector(10.0, 5.0), row.bulge);
+        polyline->addVertex(offset + RS_Vector(0.0, 5.0), 0.0);
+        polyline->addVertex(offset + RS_Vector(0.0, 0.0), 0.0);
+        auto* hatch = new RS_Hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+        auto* loop = new RS_EntityContainer(hatch);
+        hatch->addEntity(loop);
+        for (RS_Entity* child : *polyline) {
+            if (child != nullptr) {
+                loop->addEntity(child->clone());
+            }
+        }
+        delete polyline;
+        hatch->update();
+        std::unique_ptr<RS_Hatch> owner(hatch);
+        REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+        const RS_Vector centroid = offset + RS_Vector(5.0, row.cy);
+        checkHatchMoments(*hatch, row.area, centroid,
+                          {row.ixx, row.iyy, 0.0}, 10.0, 1e-9);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: invariant under move and rotate",
+          "[lc-hatchfix][moments]") {
+    // The hatch's area and the central tensor must be invariant under a
+    // rigid translation, and the central tensor must rotate as a region
+    // tensor under rigid rotation. Checked for a rotated half-ellipse (one
+    // ellipse arc + chord). The move oracle is translation-invariance;
+    // the rotate oracle is before.regionRotated(theta).
+    const double phi = 30.0 * M_PI / 180.0;
+    const RS_Vector majorP(3.0 * std::cos(phi), 3.0 * std::sin(phi));
+    auto build = []() {
+        auto h = std::make_unique<RS_Hatch>(nullptr,
+            RS_HatchData(true, 1.0, 0.0, "SOLID"));
+        auto* loop = new RS_EntityContainer(h.get());
+        h->addEntity(loop);
+        const double ph = 30.0 * M_PI / 180.0;
+        const RS_Vector M(3.0 * std::cos(ph), 3.0 * std::sin(ph));
+        RS_EllipseData ed;
+        ed.center = RS_Vector(10, 5);
+        ed.majorP = M;
+        ed.ratio = 2.0 / 3.0;
+        ed.angle1 = 0.0;
+        ed.angle2 = M_PI;
+        ed.reversed = false;
+        loop->addEntity(new RS_Ellipse(loop, ed));
+        loop->addEntity(new RS_Line(loop, RS_Vector(10, 5) - M,
+                                          RS_Vector(10, 5) + M));
+        h->update();
+        return h;
+    };
+    auto base = build();
+    REQUIRE(base->getUpdateError() == RS_Hatch::HATCH_OK);
+    const double baseArea = base->getTotalArea();
+    const RS_Vector baseC = base->getCentroid();
+    const LC_SecondMoment baseM = base->getMomentOfInertia();
+
+    SECTION("move by (1234.5, -678.25)") {
+        auto h = build();
+        const RS_Vector d(1234.5, -678.25);
+        h->move(d);
+        h->update();
+        REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_OK);
+        checkHatchMoments(*h, baseArea, baseC + d, baseM, 7.0, 1e-10);
+    }
+    SECTION("move by (5e5, 5e6)") {
+        auto h = build();
+        const RS_Vector d(5e5, 5e6);
+        h->move(d);
+        h->update();
+        REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_OK);
+        checkHatchMoments(*h, baseArea, baseC + d, baseM, 7.0, 1e-9);
+    }
+    SECTION("rotate about (3, 4) by 0.7") {
+        auto h = build();
+        const RS_Vector pvt(3, 4);
+        const double theta = 0.7;
+        const RS_Vector av = RS_Vector::polar(1.0, theta);
+        h->rotate(pvt, av);
+        h->update();
+        REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_OK);
+        RS_Vector expC = baseC;
+        expC.rotate(pvt, av);
+        const LC_SecondMoment expM = baseM.regionRotated(theta);
+        checkHatchMoments(*h, baseArea, expC, expM, 7.0, 1e-10);
+        // Principal moments avg +- sqrt(delta^2 + ixy^2) are invariant.
+        const double avg0 = 0.5 * (baseM.ixx + baseM.iyy);
+        const double del0 = 0.5 * (baseM.ixx - baseM.iyy);
+        const double rad0 = std::hypot(del0, baseM.ixy);
+        const LC_SecondMoment m = h->getMomentOfInertia();
+        const double avg = 0.5 * (m.ixx + m.iyy);
+        const double del = 0.5 * (m.ixx - m.iyy);
+        const double rad = std::hypot(del, m.ixy);
+        REQUIRE_THAT(avg, Catch::Matchers::WithinAbs(avg0, 1e-10 * std::abs(avg0)));
+        REQUIRE_THAT(rad, Catch::Matchers::WithinAbs(rad0, 1e-10 * rad0));
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Hatch moments: rotated rectangle at UTM coordinates",
+          "[lc-hatchfix][moments]") {
+    // Rotated 10x4 rectangle: corners C + R(0.3)(+-5, +-2), traversed CCW.
+    // The expected central tensor is invariant under translation; summing
+    // the raw moments around the WCS origin and then subtracting A*C*C
+    // leaves a catastrophic cancellation at survey-scale centres unless
+    // the integrator integrates about the pivot (bbox centre).
+    const double rot = 0.3;
+    const double c = std::cos(rot);
+    const double s = std::sin(rot);
+    const double hx = 5.0;
+    const double hy = 2.0;
+    const RS_Vector offs[] = {
+        {+hx, +hy}, {-hx, +hy}, {-hx, -hy}, {+hx, -hy}};
+    const RS_Vector centres[] = {RS_Vector(5e5, 5e6), RS_Vector(3e6, 6e6)};
+
+    for (const RS_Vector& C : centres) {
+        INFO("centre = (" << C.x << ", " << C.y << ")");
+        RS_Vector corners[4];
+        for (int i = 0; i < 4; ++i) {
+            corners[i] = RS_Vector(C.x + c * offs[i].x - s * offs[i].y,
+                                   C.y + s * offs[i].x + c * offs[i].y);
+        }
+        // CCW walk: (+hx, +hy) -> (-hx, +hy) is a left-going top edge of
+        // the un-rotated axis frame but the enclosed region is to the right
+        // of travel; swap to (-,+)->(+,+)->(+,-)->(-,-) for CCW signed area.
+        RS_Hatch hatch(nullptr, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+        auto* loop = new RS_EntityContainer(&hatch);
+        hatch.addEntity(loop);
+        const int order[] = {1, 0, 3, 2};
+        for (int k = 0; k < 4; ++k) {
+            const RS_Vector& p = corners[order[k]];
+            const RS_Vector& q = corners[order[(k + 1) % 4]];
+            loop->addEntity(new RS_Line(loop, p, q));
+        }
+        hatch.update();
+        REQUIRE(hatch.getUpdateError() == RS_Hatch::HATCH_OK);
+        // Area is 40 up to the input corner noise at UTM scale.
+        REQUIRE_THAT(hatch.getTotalArea(),
+                     Catch::Matchers::WithinAbs(40.0, 1e-6));
+        const RS_Vector cg = hatch.getCentroid();
+        REQUIRE(cg.valid);
+        // Centroid is at C up to 1e-8.
+        REQUIRE_THAT(cg.x, Catch::Matchers::WithinAbs(C.x, 1e-8));
+        REQUIRE_THAT(cg.y, Catch::Matchers::WithinAbs(C.y, 1e-8));
+        // Central tensor matches R(rot) * diag * R(rot)^T on a 10 x 4 box:
+        //   Ixx0 = 10 * 4^3 / 12 = 10 * 64 / 12 = 53.333...
+        //   Iyy0 = 4 * 10^3 / 12 = 333.333...
+        //   Rotated: ixx = c^2 * Iyy0 + s^2 * Ixx0, iyy = s^2*Iyy0 + c^2*Ixx0,
+        //   ixy = c*s * (Iyy0 - Ixx0). But our loop walks the rotated frame
+        //   via +hx = long axis of the local x direction, so the pre-rot
+        //   values are 4 * 10^3 / 12 and 10 * 4^3 / 12 as above.
+        const double ixx0 = 4.0 * 10.0 * 10.0 * 10.0 / 12.0;  // 333.333...
+        const double iyy0 = 10.0 * 4.0 * 4.0 * 4.0 / 12.0;    // 53.333...
+        const double ixxExp = c * c * ixx0 + s * s * iyy0;
+        const double iyyExp = s * s * ixx0 + c * c * iyy0;
+        const double ixyExp = c * s * (ixx0 - iyy0);
+        const LC_SecondMoment m = hatch.getMomentOfInertia();
+        // Rel 1e-9 of A * L^2 = 40 * 10.8^2 ~ 4666 is about 4.7e-6.
+        const double tol = 1e-9 * 40.0 * 10.8 * 10.8;
+        REQUIRE_THAT(m.ixx, Catch::Matchers::WithinAbs(ixxExp, tol));
+        REQUIRE_THAT(m.iyy, Catch::Matchers::WithinAbs(iyyExp, tol));
+        REQUIRE_THAT(m.ixy, Catch::Matchers::WithinAbs(ixyExp, tol));
     }
 }
 

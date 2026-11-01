@@ -270,6 +270,15 @@ They are kept as local regression artifacts rather than external corpus copies:
 | --- | --- |
 | `large_radial.dwg` | `d3f7c22db4b6c3953e2d716da719d7e7e5b285cf73bd4e317f0a171d3859f98a` |
 | `mpolygon_solid.dwg` | `66a171c55bc90fdd0764ad3556ec786503666a30a4473a637d168a01979ffc29` |
+| `mpolygon/oda_pattern_ac1015.dwg` | `0ae4fd0805641a28172d9a17ab3bdb5df6eb10b6be2ad1bb1fdb5e395e4725e7` |
+| `mpolygon/oda_solid_ac1015.dwg` | `fd93d12c24b2aab7f06326842d87b5aaa6ae6aad9d9dbe2418419a3d85be7ce1` |
+| `mpolygon/oda_bulge_two_ac1015.dwg` | `5fe0a4211f2c6cd3d31bb5c5ed7a045b216bd7ce5503ca5132b690f314022bce` |
+| `mpolygon/oda_pattern_ac1018.dwg` | `ab62309add3954d0276a09349e811ef72c7b7e65270927b708130e0a2c204451` |
+| `mpolygon/oda_solid_ac1024.dwg` | `8d396e729cde3ddd7ed253ef13380c05a62e6fd14fc23f1cc4677d1ec4d375e6` |
+| `mpolygon/oda_three_loops_brick30_ac1032.dwg` | `91c708dbe2b747eb58b6e6a9dcf35209090ed2ffb40b6514fda3d4ca621e19b2` |
+| `mpolygon/oda_open_path_ac1032.dwg` | `a7981b8c24e03edde2de3699e1d46b0b729f0a89f84cf848bdd4d0f98e3915a7` |
+| `mpolygon/oda_ar_hbone_117_ac1032.dwg` | `35dbbee36e589b75f53dacac4cd0267e61215d595fb1a6f263026ec6b8396e9f` |
+| `mpolygon/oda_pattern30_ac1032.dwg` | `26777fc727454d1960da49e8c1fd6426456760ef53b866086bb2b6268a56895e` |
 | `rtext_arctext.dwg` | `db5663cdc5c1759fdc1f68f9122e596307de06317e766cd5e0aab55912e5d511` |
 
 The bundled application data under `librecad/support/patterns`,
