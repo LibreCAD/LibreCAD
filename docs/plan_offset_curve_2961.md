@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W260; chronological evidence follows): planned product
+Current status (W261; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -58,6 +58,15 @@ The W171-derived ODA DXF also opens in LibreCAD, but its one model-space SPLINE
 is not a useful independent contour-comparison fixture. FreeCAD's approved
 fused-shape retry still exits before a viewport. Neither attempt supplies the
 independent W171 fidelity review or durable screenshot/DPR receipt.
+
+W261 adds an independent FreeCAD 1.1.4 headless read/render of the W193-derived
+AC1032 acceptance DXF: six `LC_OFFSET_CURVE` XDATA records imported as six
+BSpline edges beside two source ellipses, and the equal-scale raster shows the
+five-left/three-right nested contours. This is external-kernel geometry
+evidence, retained at
+`docs/offset-curve-evidence/w261-freecad-acceptance-headless.png`, not a FreeCAD
+GUI viewport or a DPR receipt. The W171-specific expected-contour comparison
+remains open because that fixture is a near-straight tiny spline.
 
 W237 requalified the current test-only head with the full CMake application
 suite: 5,155 cases, 5,080 passed, 75 skipped, and 10,348,250 assertions passed.
@@ -128,10 +137,12 @@ the controlled LibreCAD window, so the two misleading temporary captures were
 removed. No screenshot or DPR claim is inferred from them.
 
 Still open: physical stale-peer interaction; durable, separate visible
-held-drag and preview/commit screenshots; independent FreeCAD rendering and
-contour-fidelity review of the W171-derived fixture; durable screenshot/display-
-DPR records; cross-platform and full deployed-package W0-W2 acceptance; review
-approval; and final R integration. W226's older
+held-drag and preview/commit screenshots; W171-specific expected-contour
+fidelity review; visible FreeCAD GUI viewport and durable screenshot/display-DPR
+records; cross-platform and full deployed-package W0-W2 acceptance; review
+approval; and final R integration. W261 supplies a headless FreeCAD render for
+the W193-derived AC1032 acceptance output, not those remaining GUI or W171
+gates. W226's older
 qmake6 helper/client run passed 17 cases / 4581 assertions; W238 adds a fresh
 current-worktree bundle and relocation check. W0-W2 and R remain acceptance
 gates, not missing product features or substitutes for the native worker tests.
@@ -10046,3 +10057,43 @@ rechecked after the UI interaction. Product source stayed unchanged.
 | Independent W171 contour-fidelity review | OPEN; no useful external contour comparison |
 | Roadmap/refusal suite | PASS; 99 tests, 0 failures |
 | PR #3193 CI at `e9fe078f4e31eb6917d4dfe3cf1be9e8204b6960` | IN PROGRESS at 2026-11-01 19:48 UTC; Headless ON/OFF and Text Foundations passed, CodeQL, DWG/DXF verification, and Pixi builds in progress; Security scan skipped by policy |
+
+## 219. W261 Independent FreeCAD Headless Import and Raster
+
+The Mac was locked, so this pass used FreeCAD 1.1.4's bundled Python runtime
+headlessly rather than claiming a visible FreeCAD viewport. `importDXF.open`
+loaded `/private/tmp/offset-2961-visible-acceptance.dxf`, an AC1032 file with
+six `LC_OFFSET_CURVE` XDATA records and recorded SHA256
+`51b82a318f2d6fbf25fdc2fc4e4e255410860a1f8f72927acc02287dd9bc77cb`. FreeCAD
+created eight non-null Part edges: two source Ellipses and six BSpline curves.
+Their equal-scale headless raster at
+`docs/offset-curve-evidence/w261-freecad-acceptance-headless.png` (SHA256
+`55e1b34caad3453d2d8550242ef26a793a896faa99d5f93d21d7df5287118a42`) shows
+five nested contours on the left and three on the right. The image was drawn
+from FreeCAD edge samples; it is not a FreeCAD GUI screenshot, pixel parity
+comparison, or display-DPR record.
+
+![FreeCAD 1.1.4 headless import of the AC1032 offset acceptance DXF](offset-curve-evidence/w261-freecad-acceptance-headless.png)
+
+Also rendered the unchanged W171-derived ODA DXF through the same FreeCAD
+kernel. It imports as one edge with bounds `0.0000625 x 0.0124998` and produces
+a near-straight trace in the equal-scale raster
+`docs/offset-curve-evidence/w261-freecad-w171-thin-trace-headless.png` (SHA256
+`edc7e6b9cc99e080da37033a8e3fc9bfe5c5cc08e99e056f8dcb3392359e3af5`). This
+confirms the file's tiny shape and does not establish its expected contour
+fidelity. W171's visual comparison, visible FreeCAD GUI/DPR, physical
+stale-peer, and held-drag parity gates remain open. Neither input DXF was
+modified; product-source files were unchanged.
+
+The corresponding image is retained at
+[W171 FreeCAD headless raster](offset-curve-evidence/w261-freecad-w171-thin-trace-headless.png).
+
+| W261 check | Result |
+|---|---|
+| FreeCAD AC1032 import of W193-derived acceptance file | PASS; 8 edges, 2 Ellipse and 6 BSpline, 6 offset XDATA markers |
+| Independent-kernel equal-scale contour raster | PASS; two groups, five left and three right; PNG hash recorded above |
+| W171-derived file import | PASS; one edge, tiny near-straight bounds; not a contour-fidelity pass |
+| Source integrity | PASS; both input hashes unchanged |
+| Native FreeCAD GUI / DPR | OPEN; desktop locked, no viewport or display-DPR receipt |
+| Physical stale-peer and preview/commit parity | OPEN; headless import does not cover GUI interaction |
+| PR #3193 CI snapshot at `5a336d95c` (2026-11-01 20:08 UTC) | Headless ON/OFF and Text Foundations passed; Analyze/CodeQL, DWG/DXF, and Pixi in progress or pending; Security scan skipped by policy |
