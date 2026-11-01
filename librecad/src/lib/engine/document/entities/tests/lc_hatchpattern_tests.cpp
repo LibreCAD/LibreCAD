@@ -1806,10 +1806,10 @@ TEST_CASE("Hatch pattern de-dup: the tolerance follows the tile, not the drawing
         REQUIRE(after.size() == before.size());
         REQUIRE(std::abs(inkOut / inkIn - 1.0) <= 5e-5);
 
-        // Sensitivity: at the drawing-scale absolute tolerance 1e-4 (the
-        // refuted alternative), every piece is shorter than the tolerance. The
-        // plan's own-adaptation (keep the original short piece, never emit a
-        // zero-length RS_Line) prevents the prototype's dot-collapse: ink and
+        // Sensitivity: at a drawing-scale absolute tolerance of 1e-4,
+        // every piece is shorter than the tolerance. The
+        // de-dup keeps the original short piece and never emits a zero-length
+        // RS_Line, so no dash collapses to a dot: ink and
         // piece count stay within a few percent of the input. One tolerance
         // coarser than the whole scaled tile (~0.05) collapses user-visible
         // geometry; 1e-4 here does not.

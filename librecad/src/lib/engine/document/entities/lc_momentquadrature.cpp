@@ -28,7 +28,7 @@ double signedSweep(double a0, double a1, bool reversed)
         return 0.0;
     }
     // Exactly-equal parameters are the documented full-turn signal:
-    // a 2.2.2-vintage arc with angle1 == angle2 covers the whole circle.
+    // an arc with angle1 == angle2 covers the whole circle.
     if (a0 == a1) {
         return reversed ? -2.0 * M_PI : 2.0 * M_PI;
     }

@@ -358,7 +358,7 @@ TEST_CASE("An exported pattern hatch has a definition line, pattern type 2 "
           == Catch::Approx(expected.offsetX).margin(1e-9));
     CHECK(std::stod(group46.front())
           == Catch::Approx(expected.offsetY).margin(1e-9));
-    // LibreCAD's PAISLEY tile at e8dd54132 is roughly 100 x 100, so the
+    // LibreCAD's PAISLEY tile is roughly 100 x 100, so the
     // offset magnitude lives near 25 at scale 1.
     const double mag = std::hypot(expected.offsetX, expected.offsetY);
     CHECK(mag == Catch::Approx(25.0).margin(1e-3));

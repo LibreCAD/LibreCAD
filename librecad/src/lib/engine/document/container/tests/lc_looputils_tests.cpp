@@ -1382,7 +1382,7 @@ TEST_CASE("A 50-junction polygon with 1e-10 end noise always closes",
     // Regular 50-gon of radius 100 at the origin. For each of 1000 seeds,
     // translate the polygon by a uniform offset in [0, 1e-6)^2 and move every
     // edge end by 1e-10 in a random direction (independent per end). The
-    // extractor must still see one closed loop; master's exact 1e-8 key loses
+    // extractor must still see one closed loop; the old exact 1e-8 key lost
     // around 47% of such loops.
     constexpr int kJunctions = 50;
     constexpr int kSeeds = 1000;
@@ -1652,8 +1652,8 @@ TEST_CASE("Bulge paths far from the origin keep their loops",
           "[lc-hatchfix][nesting]") {
     // Two real-world hatch boundaries drawn with bulges, replayed at the
     // origin, at (5e5, 4e6) and at (3e7, 3e7). The welder's scale-relative
-    // tolerance keeps the chain closed at every location; the master build's
-    // fixed 1e-8 key loses one of these paths at D = 1e4 or above.
+    // tolerance keeps the chain closed at every location; the old fixed
+    // 1e-8 key lost one of these paths at D = 1e4 or above.
     //
     // The hatch-6 path has one closed boundary (5 vertices, 2 bulged).
     // The hatch-7 path has an outer rectangle (closed) plus an inner mixed

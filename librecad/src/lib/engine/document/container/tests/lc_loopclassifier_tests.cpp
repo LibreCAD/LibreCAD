@@ -514,8 +514,8 @@ TEST_CASE("Reversed arc and ellipse pieces trace the same path as their non-reve
     }
 
     SECTION("elliptic arc rotated 30 degrees with a chord") {
-        // The plan's "pattern hatch equals the solid hatch with curved edges"
-        // oracle. Half-ellipse a = 3, b = 2 at (10, 5), phi = 30 degrees, plus
+        // A pattern hatch must equal the solid hatch on curved edges too.
+        // Half-ellipse a = 3, b = 2 at (10, 5), phi = 30 degrees, plus
         // the diametric chord; a circle island centred at (9.6, 5.7) lies
         // strictly inside the half-disc. Before the fix the reversed form
         // double-counted the horizontal ray from (9.6, 5.7) and the circle

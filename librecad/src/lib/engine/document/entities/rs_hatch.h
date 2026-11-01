@@ -75,8 +75,8 @@ std::ostream& operator<<(std::ostream& os, const RS_HatchData& td);
  * RS_Hatch::patternFrame().
  */
 struct RS_HatchPatternFrame {
-    /// Lattice anchor h (WCS). Fixed at (0, 0) on 2.2.2; a stored origin
-    /// replaces this later.
+    /// Lattice anchor h (WCS). Fixed at (0, 0) for now; a stored origin
+    /// that follows the hatch's transforms would replace it.
     RS_Vector origin{0.0, 0.0};
     double scale = 1.0;
     /// Hatch rotation angle in radians.
