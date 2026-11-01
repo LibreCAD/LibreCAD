@@ -34,9 +34,10 @@ has been identified in the latest audit. W218's exact product-source head
 `71ecf102b36017d57bd30db39d0de630ac11bb75` passed Headless ON/OFF, CodeQL,
 DWG/DXF Linux and Windows x64/ARM64, and all five-platform Pixi checks. Exact
 head CI is re-run after pushed test/acceptance receipts; its live state is
-tracked in the PR comment. At current PR head `77eb64eeb`, Headless ON/OFF pass;
-Analysis, DWG/DXF, and Pixi jobs are in progress (Security scan skipped by
-policy). The W260 roadmap/refusal suite passes 99/99.
+tracked in the PR comment. At current PR head `e9fe078f4e31eb6917d4dfe3cf1be9e8204b6960`,
+Headless ON/OFF and Text Foundations pass; CodeQL, DWG/DXF verification, and
+five-platform Pixi builds are in progress (Security scan skipped by policy).
+The W260 roadmap/refusal suite passes 99/99.
 
 W253 records the approved FreeCAD first-run setup and a second, keyboard-driven
 attempt to import the W171-derived DXF. The import dialog recognized about 233
@@ -10042,4 +10043,4 @@ rechecked after the UI interaction. Product source stayed unchanged.
 | Durable screenshot / display-DPR | OPEN; inline view only, neither retained nor measured |
 | Independent W171 contour-fidelity review | OPEN; no useful external contour comparison |
 | Roadmap/refusal suite | PASS; 99 tests, 0 failures |
-| PR #3193 CI at `77eb64eeb` | IN PROGRESS; Headless ON/OFF passed, Analysis, DWG/DXF, and Pixi pending |
+| PR #3193 CI at `e9fe078f4e31eb6917d4dfe3cf1be9e8204b6960` | IN PROGRESS at 2026-11-01 19:48 UTC; Headless ON/OFF and Text Foundations passed, CodeQL, DWG/DXF verification, and Pixi builds in progress; Security scan skipped by policy |
