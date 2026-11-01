@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W263; chronological evidence follows): planned product
+Current status (W264; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -34,12 +34,17 @@ has been identified in the latest audit. W218's exact product-source head
 `71ecf102b36017d57bd30db39d0de630ac11bb75` passed Headless ON/OFF, CodeQL,
 DWG/DXF Linux and Windows x64/ARM64, and all five-platform Pixi checks. Exact
 head CI is re-run after pushed test/acceptance receipts; its live state is
-tracked in the PR checks and latest PR comment. W263 closes the W171 numeric
-expected-contour fidelity check with an independent FreeCAD-kernel comparison;
-visible FreeCAD viewport and DPR evidence remain open. At the W263 CI snapshot
-(2026-11-01; PR head `516334bc3884972197a4d34eee786dd9b5c5b11e`), Headless ON/OFF
-and Text Foundations passed; CodeQL and DWG/DXF verification are running, Pixi
-is running or queued, and Security scan is skipped by policy. The W263
+tracked in the PR checks and latest PR comment. W263/W264 close the W171 numeric
+expected-contour fidelity check across both curve degrees and all 24 DWG matrix
+rows using an independent FreeCAD kernel; visible FreeCAD viewport and DPR
+evidence remain open. At the W264 CI snapshot (2026-11-01; PR head
+`f095a12a7b92bbfe6ecd4f6bed748e8499e240b3`), Headless ON/OFF are pending,
+Text Foundations and CodeQL are running, DWG/DXF and Pixi are pending, and
+Security scan is skipped by policy. The W264 roadmap/refusal suite passes
+99/99. At the W263 CI snapshot (2026-11-01; PR head
+`516334bc3884972197a4d34eee786dd9b5c5b11e`), Headless ON/OFF and Text
+Foundations passed; CodeQL and DWG/DXF verification were running, Pixi was
+running or queued, and Security scan was skipped by policy. The W263
 roadmap/refusal suite passes 99/99. At the W262 CI snapshot (2026-11-01; PR head
 `f40c3fdc8a18638c412ee840e6a4b7c58b07bc88`), Headless ON/OFF passed; CodeQL,
 DWG/DXF verification, and five-platform Pixi checks were still running.
@@ -10183,3 +10188,40 @@ file or product source was changed by the geometry check.
 | Fixture integrity | PASS; source DWGs and converted DXFs hashed and unchanged |
 | Visible viewport / DPR | OPEN; this was a headless kernel measurement |
 | PR #3193 exact-head CI at `516334bc3` | Headless ON/OFF and Text Foundations PASS; CodeQL and DWG/DXF running, Pixi running/queued; Security skipped by policy |
+
+## 222. W264 Full W171 DWG-Matrix Geometry Comparison
+
+Converted the unchanged 24 current-source DWG writer outputs from W171 through
+ODA File Converter to ACAD2018 DXF under
+`/private/tmp/offset-W264-matrix.n5GZHb`. The matrix covers six DWG versions
+(R2000, R2004, R2007, R2010, R2013, R2018), source degrees 1 and 3, and both
+initial and edited saves. The 24 source DWGs still match every entry in
+`/private/tmp/offset-W171-current-dwg/dwg-manifest.sha256` (`shasum -c` passed
+24/24); conversion read those inputs without changing them.
+
+FreeCAD 1.1.4 Draft DXF import created exactly one edge for each converted file.
+Each edge was sampled at 1,001 points and compared with the analytic offset of
+the source circle: radius 1.25 for the initial distance 0.25 and radius 1.5 for
+the edited distance 0.5, over the 0-to-0.01-radian interval. All 24 rows passed
+radial error `< 0.0001`, monotone sweep, endpoint error `< 1e-10`, and arc-length
+error `< 0.0001`. Maximum observed radial error was `1.562496744766939e-5`,
+maximum endpoint error `4.451856111102413e-16`, and maximum arc-length error
+`5.2083268262462235e-8`.
+
+The six initial degree-1 rows remain degree 1 (two poles); the six initial
+degree-3 rows remain degree 3 (four poles). All twelve edited rows are degree 3
+(four poles), including those that began as degree 1, consistent with the
+offset engine's recomputed curve representation. The maximum deviation across
+the matrix is the initial degree-1 chord sagitta and remains comfortably below
+the declared tolerance. This qualifies numeric cross-version geometry through
+an independent reader; it is not visible CAD viewport or DPR evidence.
+
+| W264 check | Result |
+|---|---|
+| ODA conversion of current-source DWG matrix | PASS; 24/24 converted to ACAD2018 DXF |
+| Independent FreeCAD import and geometry | PASS; exactly one edge per output; 24/24 pass |
+| Degree/layout preservation | PASS; initial d1/d3 retained; edited rows recompute as d3 |
+| Analytic contour error | PASS; radial `< 1.5625e-5`, endpoints `< 4.46e-16`, length `< 5.21e-8` |
+| Source DWG integrity | PASS; saved manifest verifies 24/24 after conversion |
+| Visible viewport / DPR | OPEN; numerical headless reader comparison only |
+| PR #3193 exact-head CI at `f095a12a7` | Headless pending; Text Foundations and CodeQL running; DWG/DXF and Pixi pending; Security skipped by policy |
