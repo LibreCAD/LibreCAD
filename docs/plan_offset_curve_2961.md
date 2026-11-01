@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-10-31. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W245; chronological evidence follows): planned product
+Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W246; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -94,11 +94,21 @@ rejection and recovery through the same view route. These native event tests
 close their corresponding code-path gaps, not the remaining physical-app
 evidence.
 
-Still open: physical stale-peer interaction; visible held-drag and separate
-preview/commit screenshots; independent FreeCAD rendering and contour-fidelity
-review of the W171-derived fixture; durable screenshot/display-DPR records;
-cross-platform and full deployed-package W0-W2 acceptance; review approval; and
-final R integration. W226's older
+W246 confirms the approved exact-source LibreCAD test copy is responsive after
+the Mac was unlocked. The saved acceptance DXF reopens and visibly renders five
+left-hand and three right-hand contours. This adds no new preview/commit result;
+W245's previously recorded preview, commit, Undo, Redo, and DXF round-trip
+checks remain the interaction evidence. The normal-profile Offset distance was
+restored to 0.5 and the app was left idle. The in-session CUA screenshot is not
+a durable artifact: macOS `screencapture` captured the Codex desktop rather than
+the controlled LibreCAD window, so the two misleading temporary captures were
+removed. No screenshot or DPR claim is inferred from them.
+
+Still open: physical stale-peer interaction; durable, separate visible
+held-drag and preview/commit screenshots; independent FreeCAD rendering and
+contour-fidelity review of the W171-derived fixture; durable screenshot/display-
+DPR records; cross-platform and full deployed-package W0-W2 acceptance; review
+approval; and final R integration. W226's older
 qmake6 helper/client run passed 17 cases / 4581 assertions; W238 adds a fresh
 current-worktree bundle and relocation check. W0-W2 and R remain acceptance
 gates, not missing product features or substitutes for the native worker tests.
@@ -9453,3 +9463,47 @@ held-drag/preview/commit screenshots with display-DPR, external W171 contour
 fidelity, deployed/cross-platform W0-W2 acceptance, reviewer approval, and final
 R integration remain open. No visual evidence is inferred from the synthetic
 tool suite or headless import results.
+
+## 204. W246 Unlocked-Session GUI Recheck and Exact-Head CI
+
+After the user confirmed the Mac was awake, the approved exact-source LibreCAD
+test copy became responsive. The existing saved acceptance file
+`/private/tmp/offset-2961-visible-acceptance.dxf` was reopened in the app and
+visibly showed five left-hand contours and three right-hand contours, with no
+selection and the command prompt idle. The test-only Offset distance had been
+temporarily set to 1.5 during a preview probe; it was restored to the original
+0.5 before leaving the tool canceled. No source drawing was overwritten and no
+product source changed.
+
+The app-specific CUA screenshot was visible in-session, but not persisted as a
+file. Two attempted `screencapture` outputs were inspected and found to show the
+Codex desktop rather than LibreCAD; both were removed. Therefore W246 does not
+close the durable screenshot or display-DPR evidence gate. The prior W245
+preview/commit/Undo/Redo and DXF round-trip evidence remains separately recorded
+in the PR comment; this recheck only reconfirms the reopened drawing's contours.
+
+Exact PR head `c54ecd29ed04fdb6d2bd76a0f017764f53aefeb7` completed its current
+validation run successfully. The bounded Windows x64 job took 5h38m58s; Linux,
+Windows ARM64, headless ON/OFF, C++ Analyze, and all five Pixi platform builds
+also passed. CodeQL finished neutral/skipped under workflow policy, and the
+Security scan was skipped by workflow policy. No PR head change was made during
+the run.
+
+| W246 check | Result |
+|---|---|
+| Exact PR head | `c54ecd29ed04fdb6d2bd76a0f017764f53aefeb7` |
+| Headless ON/OFF | PASS |
+| DWG/DXF Linux | PASS; 1h06m42s |
+| DWG/DXF Windows ARM64 | PASS; 2h17m44s |
+| DWG/DXF Windows x64 | PASS; 5h38m58s |
+| C++ Analyze | PASS |
+| Pixi builds | PASS; macOS Intel/latest, Ubuntu x64/ARM64, Windows |
+| CodeQL / Security scan | Neutral/skipped / skipped by workflow policy |
+| Visible saved-DXF reopen | PASS; five left and three right contours; app idle |
+| Durable preview/commit screenshots and DPR | OPEN; capture mismatch confirmed, no durable app image |
+| External W171 contour-fidelity review | OPEN; FreeCAD first-run confirmation remains unanswered |
+
+The code head is fully green for this CI run. Acceptance still requires physical
+stale-peer and held-drag/preview/commit interaction evidence, independent W171
+contour-fidelity review, durable screenshot/display-DPR evidence, deployed and
+cross-platform W0-W2 acceptance, reviewer approval, and final R integration.
