@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W262; chronological evidence follows): planned product
+Current status (W263; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -34,11 +34,17 @@ has been identified in the latest audit. W218's exact product-source head
 `71ecf102b36017d57bd30db39d0de630ac11bb75` passed Headless ON/OFF, CodeQL,
 DWG/DXF Linux and Windows x64/ARM64, and all five-platform Pixi checks. Exact
 head CI is re-run after pushed test/acceptance receipts; its live state is
-tracked in the PR checks and latest PR comment. At the W262 CI snapshot
-(2026-11-01; PR head `f40c3fdc8a18638c412ee840e6a4b7c58b07bc88`), Headless
-ON/OFF passed; CodeQL, DWG/DXF verification, and five-platform Pixi checks are
-still running. Security scan is skipped by policy. The W261 roadmap/refusal
-suite passes 99/99. At the W260 CI snapshot
+tracked in the PR checks and latest PR comment. W263 closes the W171 numeric
+expected-contour fidelity check with an independent FreeCAD-kernel comparison;
+visible FreeCAD viewport and DPR evidence remain open. At the W263 CI snapshot
+(2026-11-01; PR head `7716191b93ede14d641529f49254ff98f83487e6`), Headless
+ON/OFF, CodeQL, DWG/DXF, and five-platform Pixi checks are pending or running;
+Security scan is skipped by policy. The W263 roadmap/refusal suite passes
+99/99. At the W262 CI snapshot (2026-11-01; PR head
+`f40c3fdc8a18638c412ee840e6a4b7c58b07bc88`), Headless ON/OFF passed; CodeQL,
+DWG/DXF verification, and five-platform Pixi checks were still running.
+Security scan was skipped by policy. The W261 roadmap/refusal suite passes
+99/99. At the W260 CI snapshot
 (2026-11-01 19:48 UTC; PR head
 `e9fe078f4e31eb6917d4dfe3cf1be9e8204b6960`), Headless ON/OFF and Text
 Foundations passed while CodeQL, DWG/DXF verification, and five-platform Pixi
@@ -69,8 +75,9 @@ BSpline edges beside two source ellipses, and the equal-scale raster shows the
 five-left/three-right nested contours. This is external-kernel geometry
 evidence, retained at
 `docs/offset-curve-evidence/w261-freecad-acceptance-headless.png`, not a FreeCAD
-GUI viewport or a DPR receipt. The W171-specific expected-contour comparison
-remains open because that fixture is a near-straight tiny spline.
+GUI viewport or a DPR receipt. At W261 the W171 expected-contour comparison
+was still open because that fixture is a near-straight tiny spline; W263 below
+closes its numerical geometric-fidelity check without claiming a GUI viewport.
 
 W237 requalified the current test-only head with the full CMake application
 suite: 5,155 cases, 5,080 passed, 75 skipped, and 10,348,250 assertions passed.
@@ -141,12 +148,11 @@ the controlled LibreCAD window, so the two misleading temporary captures were
 removed. No screenshot or DPR claim is inferred from them.
 
 Still open: physical stale-peer interaction; durable, separate visible
-held-drag and preview/commit screenshots; W171-specific expected-contour
-fidelity review; visible FreeCAD GUI viewport and durable screenshot/display-DPR
-records; cross-platform and full deployed-package W0-W2 acceptance; review
-approval; and final R integration. W261 supplies a headless FreeCAD render for
-the W193-derived AC1032 acceptance output, not those remaining GUI or W171
-gates. W226's older
+held-drag and preview/commit screenshots; visible FreeCAD GUI viewport and
+durable screenshot/display-DPR records; cross-platform and full deployed-package
+W0-W2 acceptance; review approval; and final R integration. W261 supplies a
+headless FreeCAD render for the W193-derived AC1032 acceptance output; W263
+adds the W171 numeric geometry comparison, not GUI evidence. W226's older
 qmake6 helper/client run passed 17 cases / 4581 assertions; W238 adds a fresh
 current-worktree bundle and relocation check. W0-W2 and R remain acceptance
 gates, not missing product features or substitutes for the native worker tests.
@@ -10124,3 +10130,44 @@ refreshed with W261 evidence and this exact-head CI state.
 | Headless ON/OFF CI at `f40c3fdc8` | PASS |
 | DWG/DXF, CodeQL, and Pixi at `f40c3fdc8` | IN PROGRESS |
 | Security scan | SKIPPED by repository policy |
+
+## 221. W263 Independent W171 Expected-Contour Fidelity
+
+The W171 fixture's `LC_OFFSET_CURVE` XDATA in
+`librecad/src/lib/filters/tests/testdata/offsetcurve_independent/hand-degree3.dxf.in`
+defines a circle (`ELLIPSE`, center `(0,0)`, major axis `(1,0,0)`, ratio `1`),
+parameter interval `[0, 0.01]`, outward offset `0.25`, and tolerance `0.0001`.
+The expected output is therefore the radius-1.25 circular arc over that
+interval. This analytic expectation is independent of the exported SPLINE
+control polygon.
+
+Reopened the unchanged ODA-converted AC1032/R2018 W171 output in FreeCAD 1.1.4
+using its bundled Python and Draft DXF importer. Its source DWG SHA256 is
+`aed066088fab728aff6224481accdd9900ce0b08e2e63c96dd729d28a2838842`; the
+converted DXF SHA256 is
+`b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`.
+FreeCAD produced one non-rational degree-3 BSpline edge with four poles, knots
+`[0,1]`, and multiplicities `[4,4]`. Sampling it at 10,001 points gave radius
+range `[1.25, 1.2500000000000004]`, maximum radial error `4.440892098500626e-16`,
+monotone angle range `[0, 0.009999999999999972]`, endpoint error
+`4.451856111102413e-16`, and curve-length error `3.2959746043559335e-17` against
+the expected `0.0125`. These errors are far below the fixture's `0.0001`
+geometry tolerance and at floating-point noise scale.
+
+This closes W171's numeric expected-contour fidelity question using an
+independent CAD kernel and explicit analytic comparison. It does not claim a
+useful visual screenshot: at this narrow sweep the raster is intrinsically a
+thin trace. Visible FreeCAD viewport/DPR evidence, the physical LibreCAD
+interaction receipts, remaining deployment/platform checks, human review, and
+final integration remain separate gates. Both input files were only read; no
+file or product source was changed by the geometry check.
+
+| W263 check | Result |
+|---|---|
+| W171 analytic expected contour | PASS; radius 1.25, sweep 0 to 0.01 rad |
+| Independent FreeCAD curve import | PASS; one degree-3 non-rational BSpline |
+| 10,001-sample radial/angle/endpoint comparison | PASS; max radial error `4.44e-16`, monotone full sweep, endpoint error `4.45e-16` |
+| Arc-length comparison | PASS; error `3.30e-17` against 0.0125 |
+| Fixture integrity | PASS; DWG and ODA DXF hashes unchanged and recorded above |
+| Visible viewport / DPR | OPEN; this was a headless kernel measurement |
+| PR #3193 exact-head CI at `7716191b9` | IN PROGRESS; checks pending/running at latest poll; Security skipped by policy |
