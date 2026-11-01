@@ -272,18 +272,17 @@ TEST_CASE("A hatch over the old area limit is not invisible",
     REQUIRE(h->getDensityReport().reason == LC_HatchDensityReport::Reason::Estimate);
     CHECK(patternPieceCount(*h) == 0);
 
-    // Render the hatch into a 256x256 raster with a cosmetic black pen.
-    // The TestPainter default is factor 1 at origin (0, 0) with the y-axis
-    // flipped; the square (0,0)-(10500,10500) covers the whole canvas, so
-    // the centre pixel must be filled by the tint.
-    lc::test::TestPainter canvas;
+    // Render the whole square into a 256x256 raster with a cosmetic black pen.
+    // At this zoom one pixel holds many pattern lines, so the centre pixel
+    // must be filled by the tint.
+    lc::test::TestPainter canvas{256, 256.0 / 10500.0, RS_Vector(0.0, 0.0)};
     canvas.painter.setPen(RS_Color(0, 0, 0));
     h->draw(&canvas.painter);
     canvas.painter.end();
 
     const QRgb centre = canvas.image.pixel(canvas.W / 2, canvas.H / 2);
-    // Non-white: tint drew at least some ink here. The estimate (~1.1M) is
-    // large so the tint is dense: red/green/blue must each be <= 10.
+    // Non-white: tint drew at least some ink here, and the lines are about
+    // 2 units apart at 0.024 pixels per unit: red/green/blue must each be <= 10.
     CHECK(qRed(centre) <= 10);
     CHECK(qGreen(centre) <= 10);
     CHECK(qBlue(centre) <= 10);
@@ -304,14 +303,15 @@ TEST_CASE("The tint follows the pattern's coverage",
     REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE);
 
     // Factor 1, DPR 1, cosmetic pen: wPhys = 1, kPhys = 1 so f = L/A + E/A^2.
-    // BRICK has 2 lines per 100 x 100 tile = 100 units of ink over A_t = 10,000
-    // and E = 2 pieces per tile. For the 200x200 region: lineDensity = 100/10000
-    // = 0.01, pieceDensity = 2/10000 = 2e-4. tintAlpha = 1 - exp(-(0.01 + 2e-4))
-    // ~= 1 - exp(-0.0102) ~= 0.01015. The centre pixel is approximately
-    // 255 * (1 - 0.01015) ~ 252.
-    const double a = LC_HatchDensity::tintAlpha(h->getDensityReport(), 1.0, 1.0);
-    CHECK(a > 0.0);
-    CHECK(a < 0.1);
+    // BRICK has 4 lines per 100 x 100 tile: 300 units of ink over A_t = 10,000
+    // and E = 4 pieces. So lineDensity = 0.03, whatever the boundary's length,
+    // pieceDensity = 4e-4 and tintAlpha = 1 - exp(-0.0304) ~= 0.02994. The
+    // centre pixel is approximately 255 * (1 - 0.02994) ~ 247.
+    const auto& report = h->getDensityReport();
+    CHECK_THAT(report.lineDensity, WithinRel(0.03, 1e-6));
+    CHECK_THAT(report.pieceDensity, WithinRel(4e-4, 1e-6));
+    const double a = LC_HatchDensity::tintAlpha(report, 1.0, 1.0);
+    CHECK_THAT(a, WithinRel(1.0 - std::exp(-0.0304), 1e-5));
 
     lc::test::TestPainter canvas;
     canvas.painter.setPen(RS_Color(0, 0, 0));
@@ -330,6 +330,32 @@ TEST_CASE("The tint follows the pattern's coverage",
     CHECK(qRed(outside) == 255);
     CHECK(qGreen(outside) == 255);
     CHECK(qBlue(outside) == 255);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("The tint of a rotated hatch is drawn over the hatch",
+          "[lc-hatchfix][density]") {
+    SourcePatterns patterns;
+    LC_HatchDensityPolicy policy;
+    policy.maxPieces = 1;
+    LC_HatchDensity::ScopedPolicy guard{policy};
+
+    // A 200 x 20 bar at hatch angle 90 degrees. The hatch keeps its loops
+    // turned about the bar's centre (120, 120), which would be a 20 x 200 bar.
+    std::vector<Ring> rings = {rectRing(20.0, 110.0, 220.0, 130.0)};
+    auto h = makePatternHatch("BRICK", 1.0, M_PI / 2.0, rings);
+    REQUIRE(h);
+    REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE);
+
+    lc::test::TestPainter canvas;
+    canvas.painter.setPen(RS_Color(0, 0, 0));
+    h->draw(&canvas.painter);
+    canvas.painter.end();
+
+    CHECK(qRed(canvas.image.pixel(200, canvas.H - 120)) < 255);
+    CHECK(qRed(canvas.image.pixel(40, canvas.H - 120)) < 255);
+    CHECK(qRed(canvas.image.pixel(120, canvas.H - 200)) == 255);
+    CHECK(qRed(canvas.image.pixel(120, canvas.H - 40)) == 255);
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
@@ -382,8 +408,11 @@ TEST_CASE("An insert array never blanks its block and never exceeds the hatch bu
             CHECK_THAT(h->getTotalArea(), WithinRel(1800.0, 1e-9));
         }
     }
-    CHECK(okHatches >= 1);
-    CHECK(denseHatches >= 1);
+    // Each clone costs about n1 pieces, so the pool of 5 n1 pays for about five
+    // clones: it charges each one once, not for clone() and again for update().
+    CHECK(okHatches >= 4);
+    CHECK(okHatches <= 5);
+    CHECK(okHatches + denseHatches == 100);
     CHECK(totalHatchPieces <= 5U * n1);
 
     // With maxHatchPieces = 0: every hatch tints.

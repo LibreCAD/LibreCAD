@@ -325,7 +325,11 @@ LC_HatchDensityReport estimate(const RS_Pattern& scaledPattern,
         const double l = b->getLength();
         if (std::isfinite(l) && l > 0.0) Lb += l;
     }
-    r.lineDensity = Lb / At;
+    double ink = curvedPerimeter;
+    for (const auto& kv : groupLength) {
+        ink += kv.second;
+    }
+    r.lineDensity = ink / At;
 
     // Even-odd area.
     r.area = evenOddArea(roots);

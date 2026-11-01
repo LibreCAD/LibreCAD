@@ -141,7 +141,11 @@ RS_Entity* RS_Hatch::clone() const {
     cloneHatch->m_secondMomentValid = false;
     cloneHatch->m_updated = false;
     cloneHatch->m_boundaryContainers.clear();  // Will be regenerated
+    // An insert expansion updates the clone again once it is placed, and that
+    // update is the one its shared piece budget pays for.
+    cloneHatch->m_chargeSharedBudget = false;
     cloneHatch->update();
+    cloneHatch->m_chargeSharedBudget = true;
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::clone(): OK");
     return cloneHatch;
@@ -757,7 +761,7 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     // The next hatch clone in the same expansion sees a smaller remaining
     // budget; its sharedBudget comparison and softCap adjustment above keep
     // the pool bounded even when every clone would independently fit.
-    if (shared != nullptr) {
+    if (shared != nullptr && m_chargeSharedBudget) {
         const std::size_t charge = budget.tripped ? budget.taken + 1 : budget.taken;
         if (shared->limit - shared->taken >= charge) {
             shared->taken += charge;
@@ -903,9 +907,24 @@ void RS_Hatch::drawFill(RS_Painter* painter, double alpha) const {
     QPainterPath path;
     path.setFillRule(Qt::OddEvenFill);
     for (const auto& cont : m_boundaryContainers) {
-        if (cont) {
-            path.addPath(LC_LoopUtils::buildLoopPath(painter, *cont, m_tolerance));
+        if (cont == nullptr) {
+            continue;
         }
+        if (m_loopAngle == 0.0) {
+            path.addPath(LC_LoopUtils::buildLoopPath(painter, *cont, m_tolerance));
+            continue;
+        }
+        // validate() cached a pattern hatch's loops turned by -m_loopAngle
+        // about m_pivot: turn them back to draw the tint over the hatch.
+        RS_EntityContainer turned{nullptr, true};
+        for (RS_Entity* edge : *cont) {
+            if (edge != nullptr) {
+                RS_Entity* copy = edge->clone();
+                copy->rotate(m_pivot, RS_Vector{m_loopAngle});
+                turned.addEntity(copy);
+            }
+        }
+        path.addPath(LC_LoopUtils::buildLoopPath(painter, turned, m_tolerance));
     }
     painter->drawPath(path);
 
