@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W255; chronological evidence follows): planned product
+Current status (W257; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -9913,3 +9913,34 @@ Continue to treat W193 GUI creation/undo as local interaction evidence only.
 Physical stale-peer testing, true held-drag/preview/commit parity, deployed and
 cross-platform W0-W2 acceptance, reviewer approval, and final R integration
 remain open.
+
+## 215. W257 Reapproved Rebuilt-App Offset Recheck
+
+After the user reapproved the rebuilt test copy at
+`/private/tmp/LibreCAD-PR3193-visible.app`, it launched and opened
+`/private/tmp/offset-W193-multi-entity.dxf`. The two groups of three ellipses
+rendered. With Offset set to distance `0.5`, two copies, and Keep Originals, a
+direction pick added two exterior ellipses to the right-hand group. Canceling
+the active command and invoking Undo restored the original three-per-group
+layout; no Save command was issued. The input SHA256 remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+This recheck corroborates W256 on the newly approved rebuilt app. It did not
+perform a second entity selection after the first creation, so GUI repeat-after-
+creation is not claimed here. This run did not capture a frame during a held-
+button move; physical transient-preview parity and stale-peer interaction remain
+unverified. No durable screenshot or display-DPR measurement was retained. The
+product source stayed unchanged. PR #3193 remains open, draft, and mergeable at exact head
+`f1acb2867882fc0e30aa13e79a18f0312097e3a8`; Headless ON/OFF pass, while analysis,
+DWG/DXF Linux and Windows, and Pixi jobs are still pending (Security scan is
+skipped by policy).
+
+| W257 check | Result |
+|---|---|
+| Reapproved rebuilt-app launch and W193 rendering | PASS; two groups of three displayed |
+| Offset creation | PASS; two exterior copies visibly added |
+| Undo and source integrity | PASS; original layout restored, input hash unchanged, no Save issued |
+| GUI repeat-after-creation | OPEN; no second entity was selected in this run |
+| Physical held preview and stale-peer interaction | OPEN; UI automation cannot hold the button during movement |
+| Durable screenshot / display-DPR | OPEN; neither retained |
+| PR #3193 CI at `f1acb286` | IN PROGRESS; Headless ON/OFF passed, other required jobs pending |
