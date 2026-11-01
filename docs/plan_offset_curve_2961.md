@@ -34,10 +34,12 @@ has been identified in the latest audit. W218's exact product-source head
 `71ecf102b36017d57bd30db39d0de630ac11bb75` passed Headless ON/OFF, CodeQL,
 DWG/DXF Linux and Windows x64/ARM64, and all five-platform Pixi checks. Exact
 head CI is re-run after pushed test/acceptance receipts; its live state is
-tracked in the PR comment. At current PR head `e9fe078f4e31eb6917d4dfe3cf1be9e8204b6960`,
-Headless ON/OFF and Text Foundations pass; CodeQL, DWG/DXF verification, and
-five-platform Pixi builds are in progress (Security scan skipped by policy).
-The W260 roadmap/refusal suite passes 99/99.
+tracked in the PR checks and latest PR comment. At the W260 CI snapshot
+(2026-11-01 19:48 UTC; PR head
+`e9fe078f4e31eb6917d4dfe3cf1be9e8204b6960`), Headless ON/OFF and Text
+Foundations passed while CodeQL, DWG/DXF verification, and five-platform Pixi
+builds were in progress (Security scan skipped by policy). The W260
+roadmap/refusal suite passes 99/99.
 
 W253 records the approved FreeCAD first-run setup and a second, keyboard-driven
 attempt to import the W171-derived DXF. The import dialog recognized about 233
