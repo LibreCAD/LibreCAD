@@ -141,11 +141,9 @@ RS_Entity* RS_Hatch::clone() const {
     cloneHatch->m_secondMomentValid = false;
     cloneHatch->m_updated = false;
     cloneHatch->m_boundaryContainers.clear();  // Will be regenerated
-    // An insert expansion updates the clone again once it is placed, and that
-    // update is the one its shared piece budget pays for.
-    cloneHatch->m_chargeSharedBudget = false;
+    cloneHatch->m_awaitingPlacement = true;
     cloneHatch->update();
-    cloneHatch->m_chargeSharedBudget = true;
+    cloneHatch->m_awaitingPlacement = false;
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::clone(): OK");
     return cloneHatch;
@@ -603,6 +601,12 @@ void RS_Hatch::updateSolidHatch([[maybe_unused]] RS_Layer* layer, [[maybe_unused
 void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updatePatternHatch");
 
+    // An insert expansion updates its clones again once they are placed. Only
+    // that update generates lines, so each clone is trimmed and charged once.
+    if (m_awaitingPlacement && LC_HatchDensity::sharedBudget() != nullptr) {
+        return;
+    }
+
     // A NaN scale propagates through pattern->scale() without touching the
     // existing size checks (NaN comparisons never trip 1e-6 / RS_MAXDOUBLE);
     // treat it as a non-finite density outcome so the hatch stays empty of
@@ -761,7 +765,7 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     // The next hatch clone in the same expansion sees a smaller remaining
     // budget; its sharedBudget comparison and softCap adjustment above keep
     // the pool bounded even when every clone would independently fit.
-    if (shared != nullptr && m_chargeSharedBudget) {
+    if (shared != nullptr) {
         const std::size_t charge = budget.tripped ? budget.taken + 1 : budget.taken;
         if (shared->limit - shared->taken >= charge) {
             shared->taken += charge;

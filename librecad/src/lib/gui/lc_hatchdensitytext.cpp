@@ -49,6 +49,11 @@ QString formatScale(double v) {
 namespace LC_HatchDensityText {
 
 QString tooDenseMessage(const LC_HatchDensityReport& r, double currentScale) {
+    // The work limit depends on the boundary's edges, not on the piece count.
+    if (r.reason == LC_HatchDensityReport::Reason::Work) {
+        return tr_("Hatch boundary too complex for its pattern; shown as a fill. "
+                   "Use a larger scale.");
+    }
     const QString tmpl = tr_(
         "Hatch pattern too dense: about %1 pieces (limit %2); shown as a fill. "
         "Use scale >= %3.");
@@ -67,6 +72,9 @@ QString patternLinesStatus(const LC_HatchDensityReport& r) {
     const bool dense = r.reason != LC_HatchDensityReport::Reason::None;
     if (!dense) {
         return tr_("generated");
+    }
+    if (r.reason == LC_HatchDensityReport::Reason::Work) {
+        return tr_("not generated (boundary too complex)");
     }
     const QString tmpl = tr_("not generated (~ %1 > limit %2)");
     const QString pieces = r.reason == LC_HatchDensityReport::Reason::Budget

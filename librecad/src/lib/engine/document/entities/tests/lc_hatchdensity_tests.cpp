@@ -282,7 +282,7 @@ TEST_CASE("A hatch over the old area limit is not invisible",
 
     const QRgb centre = canvas.image.pixel(canvas.W / 2, canvas.H / 2);
     // Non-white: tint drew at least some ink here, and the lines are about
-    // 2 units apart at 0.024 pixels per unit: red/green/blue must each be <= 10.
+    // 1.4 units apart at 0.024 pixels per unit: red/green/blue must each be <= 10.
     CHECK(qRed(centre) <= 10);
     CHECK(qGreen(centre) <= 10);
     CHECK(qBlue(centre) <= 10);
@@ -302,7 +302,7 @@ TEST_CASE("The tint follows the pattern's coverage",
     REQUIRE(h);
     REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE);
 
-    // Factor 1, DPR 1, cosmetic pen: wPhys = 1, kPhys = 1 so f = L/A + E/A^2.
+    // Factor 1, DPR 1, cosmetic pen: wPhys = 1, kPhys = 1 so f = L/A + E/A.
     // BRICK has 4 lines per 100 x 100 tile: 300 units of ink over A_t = 10,000
     // and E = 4 pieces. So lineDensity = 0.03, whatever the boundary's length,
     // pieceDensity = 4e-4 and tintAlpha = 1 - exp(-0.0304) ~= 0.02994. The
@@ -340,9 +340,11 @@ TEST_CASE("The tint of a rotated hatch is drawn over the hatch",
     policy.maxPieces = 1;
     LC_HatchDensity::ScopedPolicy guard{policy};
 
-    // A 200 x 20 bar at hatch angle 90 degrees. The hatch keeps its loops
-    // turned about the bar's centre (120, 120), which would be a 20 x 200 bar.
-    std::vector<Ring> rings = {rectRing(20.0, 110.0, 220.0, 130.0)};
+    // A 200 x 20 bar with a hole, at hatch angle 90 degrees. The hatch keeps
+    // its loops turned about the bar's centre (120, 120), which would be a
+    // 20 x 200 bar.
+    std::vector<Ring> rings = {rectRing(20.0, 110.0, 220.0, 130.0),
+                               rectRing(190.0, 115.0, 210.0, 125.0)};
     auto h = makePatternHatch("BRICK", 1.0, M_PI / 2.0, rings);
     REQUIRE(h);
     REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_TOO_DENSE);
@@ -352,10 +354,33 @@ TEST_CASE("The tint of a rotated hatch is drawn over the hatch",
     h->draw(&canvas.painter);
     canvas.painter.end();
 
-    CHECK(qRed(canvas.image.pixel(200, canvas.H - 120)) < 255);
+    CHECK(qRed(canvas.image.pixel(180, canvas.H - 120)) < 255);
     CHECK(qRed(canvas.image.pixel(40, canvas.H - 120)) < 255);
+    // The hole stays white.
+    CHECK(qRed(canvas.image.pixel(200, canvas.H - 120)) == 255);
     CHECK(qRed(canvas.image.pixel(120, canvas.H - 200)) == 255);
     CHECK(qRed(canvas.image.pixel(120, canvas.H - 40)) == 255);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A clone in an insert expansion generates its lines once it is placed",
+          "[lc-hatchfix][density]") {
+    SourcePatterns patterns;
+    auto h = makePatternHatch("ANSI31", 1.0, 0.0, {rectRing(0.0, 0.0, 30.0, 30.0)});
+    REQUIRE(h);
+    REQUIRE(h->getUpdateError() == RS_Hatch::HATCH_OK);
+    const std::size_t n = h->getDensityReport().attempted;
+    REQUIRE(n > 0u);
+
+    LC_HatchPieceBudget pool{10U * n};
+    LC_HatchDensity::ScopedSharedBudget scope{pool};
+    const std::unique_ptr<RS_Hatch> clone{static_cast<RS_Hatch*>(h->clone())};
+    CHECK(pool.taken == 0u);
+    CHECK(patternPieceCount(*clone) == 0);
+
+    clone->update();
+    CHECK(pool.taken == n);
+    CHECK(patternPieceCount(*clone) > 0);
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
@@ -408,8 +433,8 @@ TEST_CASE("An insert array never blanks its block and never exceeds the hatch bu
             CHECK_THAT(h->getTotalArea(), WithinRel(1800.0, 1e-9));
         }
     }
-    // Each clone costs about n1 pieces, so the pool of 5 n1 pays for about five
-    // clones: it charges each one once, not for clone() and again for update().
+    // Each clone costs a little under n1 pieces, so the pool of 5 n1 pays for
+    // about five clones. Charged twice, only two would fit.
     CHECK(okHatches >= 4);
     CHECK(okHatches <= 5);
     CHECK(okHatches + denseHatches == 100);
@@ -481,6 +506,19 @@ TEST_CASE("ScopedSharedBudget restores the previous shared budget",
 // -----------------------------------------------------------------------
 // Density texts: numbers carried through the user-visible strings.
 // -----------------------------------------------------------------------
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A work-limit trip does not quote the piece limit",
+          "[lc-hatchfix][density]") {
+    LC_HatchDensityReport r;
+    r.reason = LC_HatchDensityReport::Reason::Work;
+    r.estimatedPieces = 500000.0;
+    r.limit = 1000000.0;
+    r.finite = true;
+    CHECK_FALSE(LC_HatchDensityText::tooDenseMessage(r, 1.0).contains(QStringLiteral("1000000")));
+    CHECK_FALSE(LC_HatchDensityText::patternLinesStatus(r).contains(QStringLiteral("1000000")));
+    CHECK(LC_HatchDensityText::patternLinesStatus(r).startsWith(QStringLiteral("not generated")));
+}
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("Density texts carry the numbers",

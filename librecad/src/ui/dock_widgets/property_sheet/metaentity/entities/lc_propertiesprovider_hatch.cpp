@@ -77,8 +77,9 @@ void LC_PropertiesProviderHatch::doCreateCalculatedProperties(LC_PropertyContain
     addReadOnlyString<RS_Hatch>(
         {"patternLines", tr("Pattern lines"),
          tr("Whether the pattern lines were generated")},
-        []([[maybe_unused]] const RS_Hatch* e) -> QString {
-            return LC_HatchDensityText::patternLinesStatus(e->getDensityReport());
+        [](const RS_Hatch* e) -> QString {
+            return e->isSolid() ? QStringLiteral("-")
+                                : LC_HatchDensityText::patternLinesStatus(e->getDensityReport());
         }, list, container);
 }
 

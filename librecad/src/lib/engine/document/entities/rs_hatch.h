@@ -329,8 +329,8 @@ private:
 
     // Internal: Vector of boundary subcontainers (one per loop, recursive)
     mutable std::vector<std::shared_ptr<RS_EntityContainer>> m_boundaryContainers;
-    /// False while clone() updates a copy that its insert expansion updates again.
-    bool m_chargeSharedBudget = true;
+    /// True while clone() updates a copy, which an insert expansion updates again.
+    bool m_awaitingPlacement = false;
 };
 
 #endif
