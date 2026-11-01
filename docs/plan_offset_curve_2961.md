@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W264; chronological evidence follows): planned product
+Current status (W265; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -37,7 +37,16 @@ head CI is re-run after pushed test/acceptance receipts; its live state is
 tracked in the PR checks and latest PR comment. W263/W264 close the W171 numeric
 expected-contour fidelity check across both curve degrees and all 24 DWG matrix
 rows using an independent FreeCAD kernel; visible FreeCAD viewport and DPR
-evidence remain open. At the W264 CI snapshot (2026-11-01; PR head
+evidence remain open. W265 reruns the full validation-tool suite successfully
+and the combined roadmap/refusal gates pass 99/99, with 93 obligations, zero
+pending declarations, and no H6 production mismatches. At the W265 CI snapshot
+(2026-11-01 20:59 UTC; PR head `a81f227a5db73e65efcf8544d2d1d277e48bdb23`),
+Headless ON/OFF and Text Foundations pass. DWG/DXF Linux and Windows x64/ARM64
+are still building; CodeQL and current-run Pixi jobs are pending. A duplicate
+macOS-latest Pixi job from an earlier run passed. Security scan is skipped by
+policy. The W265 app-control retry is still blocked because CUA reports the Mac
+locked despite the user's approval of the rebuilt test app. At the W264 CI
+snapshot (2026-11-01; PR head
 `f095a12a7b92bbfe6ecd4f6bed748e8499e240b3`), Headless ON/OFF are pending,
 Text Foundations and CodeQL are running, DWG/DXF and Pixi are pending, and
 Security scan is skipped by policy. The W264 roadmap/refusal suite passes
@@ -10225,3 +10234,36 @@ an independent reader; it is not visible CAD viewport or DPR evidence.
 | Source DWG integrity | PASS; saved manifest verifies 24/24 after conversion |
 | Visible viewport / DPR | OPEN; numerical headless reader comparison only |
 | PR #3193 exact-head CI at `f095a12a7` | Headless pending; Text Foundations and CodeQL running; DWG/DXF and Pixi pending; Security skipped by policy |
+
+## 223. W265 Current-Head Validation and Reapproved-App Retry
+
+On exact PR head `a81f227a5db73e65efcf8544d2d1d277e48bdb23`, reran the complete
+offset validation-tool Node suite with
+`node --test --test-reporter=dot scripts/offset-curve-validation/test-*.js`;
+it exited 0 without a reported failure. The focused roadmap/refusal checks also
+passed: refusal inventory 94/94 plus the independent roadmap parser 5/5. The
+inventory reports 93 unique obligations, zero pending declarations, and zero
+H6 production mismatches.
+
+The user approved the rebuilt `/private/tmp/LibreCAD-PR3193-visible.app` again.
+The CUA inventory still reports no native apps and the explicit Mac-locked
+error, including when binding directly to that app path. No visible GUI
+interaction occurred and approval is not counted as a pass. No drawing or
+product-source file was changed.
+
+At 2026-11-01 20:59 UTC, Headless ON/OFF and Text Foundations pass. DWG/DXF
+Linux and Windows x64/ARM64 are still in their build steps; CodeQL and the
+current-run Pixi jobs are pending, with no failures reported. An older duplicate
+macOS-latest Pixi job passed. Security scan is skipped by policy. This status
+applies to the exact head above; any documentation commit will trigger fresh CI.
+
+| W265 check | Result |
+|---|---|
+| Complete offset validation-tool Node suite | PASS; exit 0 |
+| Roadmap/refusal suite | PASS; 99/99 total; 93 obligations, zero pending declarations and zero H6 mismatches |
+| Reapproval of rebuilt test app | PASS; user approval received |
+| Native LibreCAD GUI access | BLOCKED; CUA still reports the Mac locked |
+| Headless ON/OFF and Text Foundations | PASS |
+| DWG/DXF Linux and Windows x64/ARM64 | IN PROGRESS; build steps, no failures reported |
+| CodeQL and current-run Pixi | PENDING; no failures reported |
+| Visible stale-peer/preview/FreeCAD GUI, deployed cross-platform W0-W2, reviewer approval, final R integration | OPEN |
