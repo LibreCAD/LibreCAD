@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W248; chronological evidence follows): planned product
+Current status (W249; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -9579,3 +9579,52 @@ Do not treat either the 93-entity W193 acceptance import or this 233-entity
 W171 import-dialog estimate as a visual pass. Independent rendering, retained
 screenshot/display-DPR evidence, physical GUI receipts, deployed/cross-platform
 W0-W2 acceptance, review approval, and final R integration remain open.
+
+## 207. W249 FreeCAD Retry and Local Validation
+
+With user approval of the FreeCAD first-run defaults, retried the actual
+W171-derived ODA-converted AC1032 file
+`/private/tmp/offset-W200-oda-output/offset-matrix-write-dwg-R2018-d3_actual.dxf`
+read-only. FreeCAD 1.1.4 estimated 233 geometric entities. Selected Individual
+Part shapes and confirmed import; the application terminated before exposing a
+viewport. The new report
+`~/Library/Logs/DiagnosticReports/freecad-2026-11-01-011414.ips` records
+`EXC_BAD_ACCESS` in `QMacAccessibilityElement` teardown. The input SHA256 still
+matches `b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`.
+No drawing was saved or modified. This is not visual-fidelity evidence and
+does not establish a geometry/parser defect.
+
+Local CTest passed all 25 registered tests against the current product source.
+The full `node --test --test-reporter=dot scripts/offset-curve-validation/test-*.js`
+suite also exited successfully. The dot reporter does not report a case count;
+the latest explicitly counted full run remains W245's 412/412. After writing
+this receipt, the focused roadmap parser/refusal suite passed 99/99 and reported
+93 obligations, zero pending declarations, and zero production mismatches. The
+current PR head `81fbcb96fc065edd9629c869e7a9bd80fbf84fcd` changes only this
+roadmap file relative to product-source head
+`c54ecd29ed04fdb6d2bd76a0f017764f53aefeb7`.
+Headless ON/OFF passed on the current head; CodeQL analysis, DWG/DXF
+verification (including Windows x64/ARM64), and all five Pixi platform jobs
+were still in progress at this receipt. The Security scan is skipped under
+workflow policy. The same facts and the W249 FreeCAD result were posted to the
+existing PR validation comment.
+
+| W249 check | Result |
+|---|---|
+| FreeCAD file recognition | PARTIAL; import dialog estimated 233 entities |
+| Individual Part-shape import | OPEN; FreeCAD exited before viewport |
+| Crash report | `EXC_BAD_ACCESS` in `QMacAccessibilityElement` teardown |
+| DXF integrity | PASS; recorded SHA256 unchanged; no save |
+| Local CTest | PASS; 25/25 |
+| Full Node validation-tool suite | PASS; exit 0; dot reporter omitted case count |
+| Roadmap parser/refusal suite | PASS; 99/99; 93 obligations, zero pending declarations/mismatches |
+| Headless ON/OFF | PASS on `81fbcb96` |
+| CodeQL, DWG/DXF, Pixi | IN PROGRESS on `81fbcb96`; Security scan skipped by policy |
+
+The independent W171 contour-fidelity review, durable preview/commit and
+held-drag screenshots with display-DPR, physical stale-peer interaction,
+deployed/cross-platform W0-W2 acceptance, reviewer approval, and final R
+integration remain open. FreeCAD's accessibility crash is not grounds for
+changing product geometry code. Exact-source LibreCAD GUI control for the
+temporary relocated bundle has been requested; no permission or app setting is
+changed by this receipt.
