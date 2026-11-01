@@ -57,8 +57,9 @@ constexpr double kPi = M_PI;
 constexpr double kTwoPi = 2.0 * M_PI;
 constexpr double kHalfPi = M_PI / 2.0;
 
+// An invalid vector holds (0, 0), so its coordinates alone would pass as a point.
 bool isFiniteV(const RS_Vector& v) {
-    return std::isfinite(v.x) && std::isfinite(v.y);
+    return v.valid && std::isfinite(v.x) && std::isfinite(v.y);
 }
 
 /** Normalise angle to [0, 2*pi). */
@@ -519,6 +520,9 @@ void appendHyperbolaPieces(const LC_Hyperbola& hyp,
     const double phi1 = std::min(d.angle1, d.angle2);
     const double phi2 = std::max(d.angle1, d.angle2);
     if (phi2 - phi1 <= 1e-14) return;
+    // revertDirection() swaps angle1 and angle2, so va then sits at phi2.
+    const RS_Vector& vLo = d.angle1 <= d.angle2 ? va : vb;
+    const RS_Vector& vHi = d.angle1 <= d.angle2 ? vb : va;
 
     // Interior extremum iff |B| < |A|, at phi* = atanh(-B/A).
     std::vector<double> splits;
@@ -549,8 +553,8 @@ void appendHyperbolaPieces(const LC_Hyperbola& hyp,
         const RS_Vector qLoRaw = pointAt(pLo);
         const RS_Vector qHiRaw = pointAt(pHi);
         if (!isFiniteV(qLoRaw) || !isFiniteV(qHiRaw)) continue;
-        const RS_Vector qLo = (i == 0 && isFiniteV(va)) ? va : qLoRaw;
-        const RS_Vector qHi = (i + 1 == splits.size() - 1 && isFiniteV(vb)) ? vb : qHiRaw;
+        const RS_Vector qLo = (i == 0 && isFiniteV(vLo)) ? vLo : qLoRaw;
+        const RS_Vector qHi = (i + 1 == splits.size() - 1 && isFiniteV(vHi)) ? vHi : qHiRaw;
         if (qLo.y == qHi.y) continue;
         MonoPiece p;
         p.kind = MonoPiece::Kind::Hyperbola;

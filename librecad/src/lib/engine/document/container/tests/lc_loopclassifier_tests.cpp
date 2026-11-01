@@ -553,3 +553,65 @@ TEST_CASE("Reversed arc and ellipse pieces trace the same path as their non-reve
     }
 }
 
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A closed curve away from the origin keeps to its own outline",
+          "[lc-hatchfix][classifier]") {
+    // A closed curve has no end points, so its pieces get an invalid vector
+    // for them. That vector holds (0, 0), which must not end a piece.
+    const auto loopOf = [](RS_Entity* edge) {
+        auto cont = std::make_shared<RS_EntityContainer>(nullptr);
+        cont->addEntity(edge);
+        return std::make_pair(cont, LoopGeometry::fromChain(*cont, {}));
+    };
+
+    for (const RS_Vector& c : {RS_Vector(5.0, 5.0), RS_Vector(5.0, -5.0), RS_Vector(-8.0, 3.0)}) {
+        INFO("centre " << c.x << ", " << c.y);
+
+        LC_SplinePointsData spline(true, false);
+        spline.useControlPoints = true;
+        spline.controlPoints = {c + RS_Vector(-4.0, -2.0), c + RS_Vector(4.0, -2.0),
+                                c + RS_Vector(4.0, 2.0), c + RS_Vector(-4.0, 2.0)};
+        const auto ellipseLoop = loopOf(new RS_Ellipse(
+            nullptr, RS_EllipseData{c, RS_Vector(4.0, 0.0), 0.5, 0.0, 2.0 * M_PI, false}));
+        const auto splineLoop = loopOf(new LC_SplinePoints(nullptr, spline));
+
+        for (const auto* g : {ellipseLoop.second.get(), splineLoop.second.get()}) {
+            CHECK(oddParity(c, {g}));
+            CHECK(oddParity(c + RS_Vector(1.5, 0.0), {g}));
+            CHECK_FALSE(oddParity(c + RS_Vector(2.0, 3.0), {g}));
+            CHECK_FALSE(oddParity(c + RS_Vector(2.0, -3.0), {g}));
+            CHECK_FALSE(oddParity(c + RS_Vector(-5.0, 0.0), {g}));
+        }
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A reversed hyperbola edge with an interior extremum keeps its pieces",
+          "[lc-hatchfix][classifier]") {
+    // x = -sinh(phi), y = 2 cosh(phi), phi from -0.5 to 1.5, closed by its
+    // chord. y turns at phi = 0, inside the range, so the edge has two pieces.
+    const LC_HyperbolaData data(RS_Vector(0.0, 0.0), RS_Vector(0.0, 2.0), 0.5, -0.5, 1.5, false);
+    LC_Hyperbola hyperbola(nullptr, data);
+    const RS_Vector s = hyperbola.getStartpoint();
+    const RS_Vector e = hyperbola.getEndpoint();
+
+    auto forward = std::make_shared<RS_EntityContainer>(nullptr);
+    forward->addEntity(hyperbola.clone());
+    forward->addEntity(new RS_Line(forward.get(), e, s));
+    auto g0 = LoopGeometry::fromChain(*forward, {s, e});
+
+    auto reversed = std::make_shared<RS_EntityContainer>(nullptr);
+    RS_Entity* turned = hyperbola.clone();
+    turned->revertDirection();
+    reversed->addEntity(turned);
+    reversed->addEntity(new RS_Line(reversed.get(), s, e));
+    auto g1 = LoopGeometry::fromChain(*reversed, {e, s});
+
+    const RS_Vector inside(-0.8, 3.2);
+    const RS_Vector outside(0.0, 3.2);
+    CHECK(oddParity(inside, {g0.get()}));
+    CHECK_FALSE(oddParity(outside, {g0.get()}));
+    CHECK(oddParity(inside, {g1.get()}));
+    CHECK_FALSE(oddParity(outside, {g1.get()}));
+}
