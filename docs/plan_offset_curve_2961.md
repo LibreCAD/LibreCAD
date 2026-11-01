@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W259; chronological evidence follows): planned product
+Current status (W260; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -34,7 +34,9 @@ has been identified in the latest audit. W218's exact product-source head
 `71ecf102b36017d57bd30db39d0de630ac11bb75` passed Headless ON/OFF, CodeQL,
 DWG/DXF Linux and Windows x64/ARM64, and all five-platform Pixi checks. Exact
 head CI is re-run after pushed test/acceptance receipts; its live state is
-tracked in the PR comment.
+tracked in the PR comment. At current PR head `77eb64eeb`, Headless ON/OFF pass;
+Analysis, DWG/DXF, and Pixi jobs are in progress (Security scan skipped by
+policy). The W260 roadmap/refusal suite passes 99/99.
 
 W253 records the approved FreeCAD first-run setup and a second, keyboard-driven
 attempt to import the W171-derived DXF. The import dialog recognized about 233
@@ -10003,3 +10005,41 @@ was skipped by policy.
 | Physical preview parity / stale-peer | OPEN; neither demonstrated |
 | Durable screenshot / display-DPR | OPEN; neither retained |
 | Exact-head CI at `8abe1473` | IN PROGRESS; Headless OFF passed, remaining required checks pending |
+
+## 218. W260 Visible Transient Preview, Commit, and Undo
+
+In the user-approved rebuilt test copy at
+`/private/tmp/LibreCAD-PR3193-visible.app`, opened the unchanged
+`/private/tmp/offset-W193-multi-entity.dxf`. The visible model contains two
+groups of three ellipse contours. Started Offset with fixed distance `0.5`,
+two copies, Keep Originals, and Editable Offset Curve enabled; selected the
+left group's outer ellipse and advanced to the direction prompt. During a
+drag-to-direction operation, requested a screenshot while the pointer move was
+in flight. The captured frame showed a distinct red offset preview outside the
+white source contours while the command remained at the direction stage. A
+subsequent direction click committed two copies; the left group visibly gained
+two contours and the action returned to Default. One Undo restored both groups
+to their original three-contour state. No Save command was issued.
+
+This is visible preview plus commit/Undo interaction evidence, but the inline
+frames were not retained as durable files and display DPR was not measured.
+The preview frame is not a pixel-level parity artifact, so exact preview versus
+committed-geometry parity remains open. Physical stale-peer interaction was not
+tested; W236's native event-pipeline stale-peer test remains the available
+evidence. The separate W171 independent-reader contour-fidelity gate remains
+open. The W193 source SHA256 is
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`; it was
+rechecked after the UI interaction. Product source stayed unchanged.
+
+| W260 check | Result |
+|---|---|
+| Transient Offset preview | PASS; distinct red preview visible before the direction click |
+| Offset commit | PASS; two copies visibly added to the left group |
+| Undo and fixture restoration | PASS; original two groups of three visibly restored |
+| Source integrity | PASS; W193 SHA256 unchanged, no Save issued |
+| Physical stale-peer interaction | OPEN; not exercised in the visible app |
+| Exact preview/commit visual parity | OPEN; no durable/pixel-comparable captures |
+| Durable screenshot / display-DPR | OPEN; inline view only, neither retained nor measured |
+| Independent W171 contour-fidelity review | OPEN; no useful external contour comparison |
+| Roadmap/refusal suite | PASS; 99 tests, 0 failures |
+| PR #3193 CI at `77eb64eeb` | IN PROGRESS; Headless ON/OFF passed, Analysis, DWG/DXF, and Pixi pending |
