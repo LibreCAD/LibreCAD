@@ -3438,6 +3438,7 @@ if (BUILD_TESTS)
     target_sources(librecad_hatch_tests PRIVATE
         librecad/src/lib/engine/document/container/tests/lc_loopclassifier_tests.cpp
         librecad/src/lib/engine/document/container/tests/lc_looputils_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_hatchdensity_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_hatchpattern_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_hyperbola_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_secondmoment_tests.cpp
