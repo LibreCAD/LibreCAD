@@ -3416,6 +3416,19 @@ if (BUILD_TESTS)
         librecad_entity_container_replace_tests
         librecad/src/lib/engine/document/entities/tests/rs_entitycontainer_replace_tests.cpp)
 
+    # Exercise the hatch geometry without building the complete test suite.
+    add_librecad_filter_micro_test(
+        librecad_hatch_tests
+        librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp)
+    target_sources(librecad_hatch_tests PRIVATE
+        librecad/src/lib/engine/document/container/tests/lc_loopclassifier_tests.cpp
+        librecad/src/lib/engine/document/container/tests/lc_looputils_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_hatchpattern_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_hyperbola_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_secondmoment_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_splinepoints_tests.cpp
+        librecad/src/lib/information/tests/lc_insidecontour_tests.cpp)
+
     # This standalone main interposes C++ allocation only in its own process.
     # Never link these overrides into a Catch2 or application executable.
     add_executable(librecad_entity_container_replace_failure_tests EXCLUDE_FROM_ALL
@@ -3811,6 +3824,13 @@ if (BUILD_TESTS)
             TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
+        add_test(NAME librecad_hatch_tests
+            COMMAND $<TARGET_FILE:librecad_hatch_tests>
+                ${LIBRECAD_FAST_TEST_EXCLUDES} --reporter compact)
+        set_tests_properties(librecad_hatch_tests PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+            LABELS hatch TIMEOUT 300)
         add_test(NAME librecad_dimension_clipboard_tests
             COMMAND $<TARGET_FILE:librecad_dimension_clipboard_tests> "[clipboard]" --reporter compact)
         set_tests_properties(librecad_dimension_clipboard_tests PROPERTIES

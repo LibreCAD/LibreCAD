@@ -19,9 +19,8 @@
 #ifndef LC_HATCHTESTSUPPORT_H
 #define LC_HATCHTESTSUPPORT_H
 
-// Shared hatch-test helpers for librecad_tests only. The header walks the
-// bundled hatch patterns under librecad/support/patterns and must never be
-// included from a headless fast-lane target.
+// Shared helpers for GUI-enabled hatch tests, including the offscreen CI lane.
+// Pattern tests read the bundled patterns under librecad/support/patterns.
 
 #include <algorithm>
 #include <array>

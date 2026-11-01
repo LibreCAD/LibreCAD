@@ -29,6 +29,7 @@
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include "drw_entities.h"
 #include "libdxfrw.h"
@@ -191,6 +192,64 @@ TEST_CASE("DXF MPOLYGON: an omitted 71 reads as a pattern (solid = 0)",
     CHECK(cap.m_mpolygon.solid == 0);
 }
 
+TEST_CASE("DXF MPOLYGON: version is a nonnegative signed short",
+          "[lc-hatchfix][mpolygon]") {
+    const int version = GENERATE(-1, 0, 32767, 32768);
+    std::string dxf = kPatternMPolygon;
+    const auto pos = dxf.find("70\n1\n");
+    REQUIRE(pos != std::string::npos);
+    dxf.replace(pos, 5, "70\n" + std::to_string(version) + "\n");
+    CaptureIface cap;
+    const bool valid = version >= 0 && version <= 32767;
+    CHECK(readDxfString(dxf, cap, "lc_mpoly_version.dxf") == valid);
+    CHECK(cap.m_count == (valid ? 1 : 0));
+    if (valid) CHECK(cap.m_mpolygon.mpVersion == version);
+}
+
+TEST_CASE("DXF MPOLYGON: trailer codes do not overwrite the last boundary edge",
+          "[lc-hatchfix][mpolygon]") {
+    const int kind = GENERATE(0, 1, 2, 3); // polyline, line, arc, ellipse
+    const std::string boundaries[] = {
+        "92\n3\n73\n1\n72\n0\n93\n3\n10\n0\n20\n0\n10\n10\n20\n0\n10\n0\n20\n10\n",
+        "92\n1\n93\n1\n72\n1\n10\n0\n20\n0\n11\n10\n21\n20\n",
+        "92\n1\n93\n1\n72\n2\n10\n0\n20\n0\n40\n5\n50\n0\n51\n180\n73\n1\n",
+        "92\n1\n93\n1\n72\n3\n10\n0\n20\n0\n11\n10\n21\n20\n40\n0.5\n50\n0\n51\n180\n73\n1\n"
+    };
+    const std::string dxf =
+        "0\nSECTION\n2\nENTITIES\n0\nMPOLYGON\n100\nAcDbEntity\n8\n0\n100\nAcDbMPolygon\n"
+        "70\n1\n2\nSOLID\n71\n1\n91\n1\n" + boundaries[kind] +
+        "76\n1\n73\n42\n11\n7.5\n21\n-2.5\n99\n0\n0\nENDSEC\n0\nEOF\n";
+    CaptureIface cap;
+    REQUIRE(readDxfString(dxf, cap, "lc_mpoly_trailer.dxf"));
+    REQUIRE(cap.m_count == 1);
+    const auto& mp = cap.m_mpolygon;
+    CHECK(mp.annotatedBoundary == 42);
+    CHECK(mp.xDirX == 7.5);
+    CHECK(mp.xDirY == -2.5);
+    REQUIRE(mp.looplist.size() == 1);
+    REQUIRE(mp.looplist[0]->objlist.size() == 1);
+    const auto* edge = mp.looplist[0]->objlist[0].get();
+    if (kind == 0) {
+        const auto* polyline = dynamic_cast<const DRW_LWPolyline*>(edge);
+        REQUIRE(polyline != nullptr);
+        CHECK(polyline->flags == 1);
+    } else if (kind == 2) {
+        const auto* arc = dynamic_cast<const DRW_Arc*>(edge);
+        REQUIRE(arc != nullptr);
+        CHECK(arc->isccw == 1);
+    } else {
+        const auto* line = dynamic_cast<const DRW_Line*>(edge);
+        REQUIRE(line != nullptr); // DRW_Ellipse also derives from DRW_Line
+        CHECK(line->secPoint.x == 10);
+        CHECK(line->secPoint.y == 20);
+        if (kind == 3) {
+            const auto* ellipse = dynamic_cast<const DRW_Ellipse*>(edge);
+            REQUIRE(ellipse != nullptr);
+            CHECK(ellipse->isccw == 1);
+        }
+    }
+}
+
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DXF MPOLYGON writer: version 70 precedes solid 71 and emits ODA tag order",
           "[lc-hatchfix][mpolygon]") {
@@ -211,7 +270,7 @@ TEST_CASE("DXF MPOLYGON writer: version 70 precedes solid 71 and emits ODA tag o
                 mp.angle = 0.0;
                 mp.doubleflag = 0;
                 DRW_Hatch::PatternLine line;
-                line.angle = 45.0;
+                line.angle = M_PI / 4.0;
                 line.baseX = 0.0;
                 line.baseY = 0.0;
                 line.offsetX = -8.9802561212;
@@ -278,6 +337,12 @@ TEST_CASE("DXF MPOLYGON writer: version 70 precedes solid 71 and emits ODA tag o
     // 97 would appear only after a loop; ensure it is not written there.
     const std::size_t next0 = body.find("\n  0\n", ac);
     CHECK(body.find("\n 97\n", ac) >= next0);
+
+    CaptureIface cap;
+    REQUIRE(readDxfString(body, cap, "lc_mpoly_written.dxf"));
+    REQUIRE(cap.m_count == 1);
+    REQUIRE(cap.m_mpolygon.patternLines.size() == 1);
+    CHECK(cap.m_mpolygon.patternLines.front().angle == Catch::Approx(M_PI / 4.0));
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
@@ -375,33 +440,62 @@ TEST_CASE("DXF MPOLYGON writer flattens an ARC-edge loop into bulges",
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
-TEST_CASE("DXF MPOLYGON writer refuses a SPLINE-edge loop",
+TEST_CASE("DXF MPOLYGON writer rejects unsupported geometry and versions",
           "[lc-hatchfix][mpolygon]") {
-    const auto path = std::filesystem::temp_directory_path() / "lc_mpoly_spline.dxf";
-    std::filesystem::remove(path);
+    const std::string kind = GENERATE("valid", "spline", "ellipse", "empty", "gap",
+                                      "negative version", "large version");
+    const auto path = std::filesystem::temp_directory_path() / "lc_mpoly_payload.dxf";
     dxfRW writer(path.string().c_str());
     class Emit : public CaptureIface {
     public:
         void writeEntities() override {
-            DRW_MPolygon mp;
-            mp.layer = "0";
-            mp.mpVersion = 1;
-            mp.solid = 1;
-            mp.name = "SOLID";
-            auto loop = std::make_shared<DRW_HatchLoop>(0);
-            auto sp = std::make_shared<DRW_Spline>();
-            sp->degree = 2;
-            loop->objlist.push_back(sp);
-            mp.looplist.push_back(loop);
+            // A valid HATCH spline/ellipse must reach the MPOLYGON-specific
+            // refusal rather than failing the generic edge validator first.
+            DRW_Hatch hatch = mp;
+            genericOk = m_writer->writeHatch(&hatch);
             m_ok = m_writer->writeMPolygon(&mp);
         }
+        DRW_MPolygon mp;
         dxfRW* m_writer{nullptr};
         bool m_ok{true};
+        bool genericOk{false};
     } emit;
+    emit.mp.layer = "0";
+    emit.mp.solid = 1;
+    emit.mp.name = "SOLID";
+    auto loop = std::make_shared<DRW_HatchLoop>(1);
+    if (kind == "spline") {
+        auto spline = std::make_shared<DRW_Spline>();
+        spline->degree = 2;
+        spline->knotslist = {0, 0, 0, 1, 1, 1};
+        for (const auto& p : {DRW_Coord{0, 0, 0}, DRW_Coord{5, 5, 0}, DRW_Coord{10, 0, 0}})
+            spline->controllist.push_back(std::make_shared<DRW_Coord>(p));
+        loop->objlist.push_back(spline);
+    } else if (kind == "ellipse") {
+        auto ellipse = std::make_shared<DRW_Ellipse>();
+        ellipse->secPoint = {10, 0, 0};
+        ellipse->ratio = 0.5;
+        ellipse->endparam = 2 * M_PI;
+        loop->objlist.push_back(ellipse);
+    } else if (kind != "empty") {
+        const DRW_Coord points[] = {{0, 0, 0}, {10, 0, 0}, {0, 10, 0}};
+        for (int i = 0; i < 3; ++i) {
+            auto line = std::make_shared<DRW_Line>();
+            line->basePoint = points[i];
+            line->secPoint = points[(i + 1) % 3];
+            loop->objlist.push_back(line);
+        }
+        if (kind == "gap")
+            static_cast<DRW_Line*>(loop->objlist.back().get())->secPoint.x = 1;
+    }
+    emit.mp.looplist.push_back(loop);
+    if (kind == "negative version") emit.mp.mpVersion = -1;
+    if (kind == "large version") emit.mp.mpVersion = 32768;
     emit.m_writer = &writer;
-    (void)writer.write(&emit, DRW::AC1021, /*bin=*/false);
-    CHECK_FALSE(emit.m_ok);
-    std::filesystem::remove(path);
+    const bool valid = kind == "valid";
+    CHECK(writer.write(&emit, DRW::AC1021, /*bin=*/false) == valid);
+    CHECK(emit.m_ok == valid);
+    if (kind == "spline" || kind == "ellipse") CHECK(emit.genericOk);
 }
 
 } // namespace
